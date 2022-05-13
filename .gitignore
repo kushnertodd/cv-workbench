@@ -1,3 +1,9 @@
+doc/
+.idea/
+cmake-build-debug/
+CMakeLists.txt
+*.laccdb
+
 # Prerequisites
 *.d
 
