@@ -1,8 +1,10 @@
 doc/
+json/
 .idea/
 cmake-build-debug/
 CMakeLists.txt
 *.laccdb
+*.log
 
 # Prerequisites
 *.d
