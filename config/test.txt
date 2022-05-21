@@ -1,0 +1,52 @@
+3 bufsize 379
+2 bufsize 379
+JSON string: {
+  "1-D by 2": {
+    "id": 1,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 1] (horiz)",
+          "90 = [1, -1] (vert)"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  }
+}
+
+type: key '1-D by 2            '  json_type_object
+type: key 'id                  '  type: json_type_int
+          value: 1
+type: key 'domain              '  type: json_type_string
+          value: filters
+type: key 'class               '  type: json_type_string
+          value: edge detection
+type: key 'parameters          '  type: json_type_array, 
+          Array Length: 1
+type: key '__comment1          '  type: json_type_array, 
+          Array Length: 2
+value[0]: type: json_type_string
+          value:  0 = [-1, 1] (horiz)
+value[1]: type: json_type_string
+          value: 90 = [1, -1] (vert)
+type: key 'name                '  type: json_type_string
+          value: orientation
+type: key 'data-type           '  type: json_type_string
+          value: int
+type: key 'default             '  type: json_type_int
+          value: 0
+type: key 'valid-values        '  type: json_type_array, 
+          Array Length: 2
+value[0]: type: json_type_int
+          value: 0
+value[1]: type: json_type_int
+          value: 90

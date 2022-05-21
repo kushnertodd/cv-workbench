@@ -7,7 +7,6 @@ long file_size(FILE *fp) {
   // Get the number of bytes
   fseek(fp, 0L, SEEK_END);
   numbytes = ftell(fp);
-  printf("3 bufsize %ld\n", numbytes);
 
   // reset the file position indicator to the beginning of the file
   fseek(fp, 0L, SEEK_SET);
@@ -30,7 +29,6 @@ char *read_file(char *filename, long *file_bytes) {
 
   // Get the size of the file.
   long bufsize = file_size(fp);
-  printf("2 bufsize %ld\n", bufsize);
   if (bufsize == -1)
     return NULL;
 

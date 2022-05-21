@@ -1,6 +1,21 @@
 #include <json-c/json.h>
 #include <stdio.h>
 #include <string.h>
+#include "file_utils.h"
+
+struct parameters_string {
+  char* name;
+  char* data_type;
+  char* default_value;
+  char* valid_values[];
+};
+
+struct json_string {
+  char* id;
+  char* domain;
+  char* class;
+  struct parameters_string parameters;
+};
 
 char* indent_str(int indent) {
   char buf[] = "                                ";
@@ -78,6 +93,16 @@ void json_parse(int indent, json_object *jobj) {
       case json_type_string:
         printf("%skey '%-20s'  ", indent_str(indent), key);
         print_json_value(indent, val);
+if (!strcmp(key, "id")) {
+} else if (!strcmp(key, "domain")) {
+} else if (!strcmp(key, "class")) {
+} else if (!strcmp(key, "parameters")) {
+} else if (!strcmp(key, "name")) {
+} else if (!strcmp(key, "data_type")) {
+} else if (!strcmp(key, "default")) {
+} else if (!strcmp(key, "valid_values")) {
+} else 
+  printf("what is this key? '%s'\n", key);
         break;
       case json_type_object:
         printf("%skey '%-20s'  ", indent_str(indent), key);
@@ -94,8 +119,8 @@ void json_parse(int indent, json_object *jobj) {
   }
 }
 
-int main() {
-  char *string = 
+int main(int argc, char** argv) {
+  char *string1 = 
 /*
 "{\"sitename\" : \"joys of programming\", "
                  "\"categories\" : [ \"c\" , [\"c++\" , \"c\" ], \"java\", "
@@ -119,10 +144,18 @@ int main() {
 "    \"Number of Posts\": 10               "
 "  }                                       "
 "}                                         ";
+  if (argc < 2) {
+    printf("usage: %s filename\n", argv[0]);
+    exit(0);
+  }
+  char *filename = argv[1];
+  long bufsize;
+  char* string = read_file(filename, &bufsize);
   printf("JSON string: %s\n", string);
   json_object *jobj = json_tokener_parse(string);
   if (jobj == NULL)
     printf("json_tokener_parse() failed\n");
   else
     json_parse(0, jobj);
+  free(string);
 }
