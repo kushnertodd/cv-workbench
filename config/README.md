@@ -241,7 +241,7 @@ Example parameters for a Sobel edge operator is this.
   "Sobel": {
     "id": 4,
     "domain": "filters",
-    "class": "edge detection",
+    "class": "edge-detection",
     "parameters": [
       {
         "name": "orientation",
@@ -252,3 +252,10 @@ Example parameters for a Sobel edge operator is this.
 }
 
 ```
+The corresponding command would be:
+`domain=filters class=edge-detection orientation=0 input=... output=...`
+
+The input and output images may be specified in different ways,
+such as with the name of a file, 
+id of the image in a database, or
+url of the image on the Internet.
