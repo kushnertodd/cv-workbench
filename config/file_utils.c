@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * returns size of file in bytes
+ * @param fp file pointer
+ * @return long byte count
+ */
 long file_size(FILE *fp) {
   long numbytes;
 
@@ -13,15 +18,13 @@ long file_size(FILE *fp) {
   return numbytes;
 }
 
-/*
+/**
  * reads all characters in filename and returns length in file_bytes
- * if failure
- *   returns NULL
- * else
- *    returns pointer to buffer with characters
- *    be sure to free()
+ * (m)allocates buffer and fills with file contents
+ * be sure to free()
+ * @return file contents or NULL on failure
  */
-char *read_file(char *filename, long *file_bytes) {
+ char *read_file(char *filename, long *file_bytes) {
 
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)
