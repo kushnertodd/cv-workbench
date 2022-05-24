@@ -1,4 +1,22 @@
 {
+  "id": 1
+  "domain": "filters"
+  "class": "edge detection"
+  "instance": "1Dx2"
+  "parameters": [
+    {
+      "name": "orientation"
+      "data-type"": "int"
+      "default": 0
+      "valid-values": [
+        0,
+        90
+      ]
+    }
+  ]
+}
+
+{
   "id": 1,
   "domain": "filters",
   "class": "edge detection",

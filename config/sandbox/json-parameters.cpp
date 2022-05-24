@@ -86,8 +86,8 @@ class Request_parameters {
 
   std::string toString() {
     std::ostringstream os;
-    std::string indent = "    ";
-    os << "  {" << std::endl;
+    std::string indent = "      ";
+    os << "    {" << std::endl;
     os << indent << "\"name\": " << name << std::endl;
     os << indent << "\"data-type\"\": " << data_type << std::endl;
     os << indent << "\"default\": " << default_value << std::endl;
@@ -102,7 +102,7 @@ class Request_parameters {
         os << indent << "  " << valid_value << ", " << std::endl;
     }
     os << indent << "]" << std::endl;
-    os << "  }" << std::endl;
+    os << "    }" << std::endl;
     return os.str();
   }
 };
