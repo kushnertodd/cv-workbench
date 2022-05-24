@@ -2,6 +2,7 @@
     "id": 1,
     "domain": "filters",
     "class": "edge detection",
+    "instance": "1Dx2",
     "parameters": [
       {
         "__comment1": [

@@ -1,0 +1,36 @@
+{
+  "operator-name-1": {
+    "id": 1,
+    "domain": "string",
+    "class": "string",
+    "instance": "string",
+    "_comment1": [
+      "line1",
+      "line2"
+    ],
+    "parameters":
+    [
+      {
+        "_comment1": [
+          "line1",
+          "line2"
+        ],
+        "name": "parameter-1",
+        "required": "true|false",
+        "data-type": "int|real|string|boolean",
+        "range": {
+          "min-value": "value",
+          "max-value": "value"
+        },
+        "valid-values": [
+          "value-1",
+          "value-2"
+        ],
+        "default": "value"
+      },
+      {
+        "name": "parameter-2, etc."
+      }
+    ]
+  }
+}
