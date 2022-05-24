@@ -112,6 +112,7 @@ class Operator_request {
   std::string id_name;
   std::string domain_name;
   std::string class_name;
+  std::string instance_name;
   std::list<Request_parameters *> parameters_list;
   Errors errors;
 
@@ -139,6 +140,14 @@ class Operator_request {
       class_name = json_object_to_json_string(class_json);
       if (errors.debug)
         std::cout << "class: " << json_object_to_json_string_ext(class_json, JSON_C_TO_STRING_PRETTY) << std::endl;
+    }
+
+    // parse "instance"
+    json_object *instance_json = json_object_object_get(root, "instance");
+    if (errors.check_field(instance_json, "request: instance")) {
+      instance_name = json_object_to_json_string(instance_json);
+      if (errors.debug)
+        std::cout << "instance: " << json_object_to_json_string_ext(instance_json, JSON_C_TO_STRING_PRETTY) << std::endl;
     }
 
     // parse "parameters"
@@ -174,6 +183,7 @@ class Operator_request {
     os << indent << "\"id\": " << id_name << std::endl;
     os << indent << "\"domain\": " << domain_name << std::endl;
     os << indent << "\"class\": " << class_name << std::endl;
+    os << indent << "\"instance\": " << instance_name << std::endl;
     os << indent << "\"parameters\": [" << std::endl;
 
     for (std::list<Request_parameters *>::iterator it = parameters_list.begin(); it != parameters_list.end(); it++) {
@@ -187,7 +197,8 @@ class Operator_request {
 };
 
 int main(int argc, char **argv) {
-  json_object *root = json_object_from_file("operator_request.json");
+  //json_object *root = json_object_from_file("operator_request.json");
+  json_object *root = json_object_from_file("template-sobel.json");
   if (!root)
     return 1;
   Operator_request *request = new Operator_request();
