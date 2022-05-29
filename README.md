@@ -13,6 +13,11 @@ The software is assumed to run under Linux [Ubuntu](https://ubuntu.com/) or comp
 such as Microsoft WSL2 [Pengwin](https://www.whitewaterfoundry.com/).
 The following Linux modules need to be installed.
 
+### gcc and g++
+Install the `gcc` and `g++` build utilities with:
+```
+$ sudo apt install build-essential
+```
 ### Json-c
 Install the Json-c C/C++ Json parsing library under Linux with:
 ```
