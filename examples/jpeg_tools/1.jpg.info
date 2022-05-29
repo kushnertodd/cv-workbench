@@ -1,0 +1,22 @@
+     actual_number_of_colors        0   number of entries in use
+     comps_in_scan                  3   # of JPEG components in this scan
+     data_precision                 8   bits of precision in image data
+     image_height                 240   nominal image height
+     image_width                  320   nominal image width (from SOF marker)
+     input_iMCU_row                 0   Number of iMCU rows completed
+     input_scan_number              1   Number of SOS markers seen so far
+     max_h_samp_factor              2   largest h_samp_factor
+     max_v_samp_factor              1   largest v_samp_factor
+     num_components                 3   # of color components in JPEG image
+     out_color_components           3   # of color components in out_color_space
+     output_components              3   # of color components returned
+     output_height                240   scaled image height
+     output_iMCU_row                0   Number of iMCU rows read
+     output_scanline                0   0 .. output_height-1 
+     output_scan_number             1   Nominal scan number being displayed
+     output_width                 320   scaled image width
+     rec_outbuf_height              1   min recommended height of scanline buffer
+     row_stride                   960   JSAMPLEs per row in output buffer
+     scale_denom                    1   fraction by which to scale image
+     scale_num                      1   fraction by which to scale image
+     total_iMCU_rows               30   # of iMCU rows in image

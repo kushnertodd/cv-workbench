@@ -1,0 +1,23 @@
+  JDIMENSION image_width;	/* nominal image width (from SOF marker) */
+  JDIMENSION image_height;	/* nominal image height */
+  int num_components;		/* # of color components in JPEG image */
+  unsigned int scale_num, scale_denom; /* fraction by which to scale image */
+  JDIMENSION output_width;	/* scaled image width */
+  JDIMENSION output_height;	/* scaled image height */
+  int out_color_components;	/* # of color components in out_color_space */
+  int output_components;	/* # of color components returned */
+  int rec_outbuf_height;	/* min recommended height of scanline buffer */
+  int actual_number_of_colors;	/* number of entries in use */
+  JDIMENSION output_scanline;	/* 0 .. output_height-1  */
+  int input_scan_number;	/* Number of SOS markers seen so far */
+  JDIMENSION input_iMCU_row;	/* Number of iMCU rows completed */
+  int output_scan_number;	/* Nominal scan number being displayed */
+  JDIMENSION output_iMCU_row;	/* Number of iMCU rows read */
+  int data_precision;		/* bits of precision in image data */
+  int max_h_samp_factor;	/* largest h_samp_factor */
+  int max_v_samp_factor;	/* largest v_samp_factor */
+  int min_DCT_h_scaled_size;	/* smallest DCT_h_scaled_size of any component */
+  int min_DCT_v_scaled_size;	/* smallest DCT_v_scaled_size of any component */
+  JDIMENSION total_iMCU_rows;	/* # of iMCU rows in image */
+  int comps_in_scan;		/* # of JPEG components in this scan */
+  int block_size;		/* the basic DCT block size: 1..16 */

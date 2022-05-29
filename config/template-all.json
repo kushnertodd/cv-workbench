@@ -1,0 +1,194 @@
+{
+  "__comment1": [
+    "templates for image operator parameters                      ",
+    "valid usage (double quote for single quote):                 ",
+    "{                                                            ",
+    "   <operator-name-1> : {                                     ",
+    "      'id' : <int>,                                          ",
+    "      'domain' : '<string>',                                 ",
+    "      'class' : '<string>',                                  ",
+    "      'parameters' : [                                       ",
+    "         {                                                   ",
+    "            '_comment1': [                                   ",
+    "               ...,                                          ",
+    "            ],                                               ",
+    "            'name' : '<parameter-1>',                        ",
+    "            'data-type' : 'int'|'real'|'string'|'boolean',   ",
+    "            'default'   : <value>,                           ",
+    "            'range'     : {                                  ",
+    "               'min-value' : <value>,                        ",
+    "               'max-value' : <value>                         ",
+    "             },                                              ",
+    "            'valid-values'  : [                              ",
+    "               <value-1>,                                    ",
+    "               <value-2>,                                    ",
+    "               ...                                           ",
+    "            ]                                                ",
+    "         },                                                  ",
+    "         {                                                   ",
+    "            'name' : '<parameter-2',                         ",
+    "                ...                                          ",
+    "         }                                                   ",
+    "      ]                                                      ",
+    "   },                                                        ",
+    "   <operator-name-2> : {                                     ",
+    "      ...                                                    ",
+    "   }                                                         ",
+    "}                                                            "
+  ],
+  "__comment2": "edge operators https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf",
+  "1-D by 2": {
+    "id": 1,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 1] (horiz)",
+          "90 = [1, -1] (vert)"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  },
+  "2-D by 2": {
+    "id": 2,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 1], [-1, 1]",
+          "90 = [1, 1],  [-1, -1]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  },
+  "Roberts cross": {
+    "id": 3,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 45 = [1, 0],  [0, -1]",
+          "135 = [0, -1], [1, 0]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 45,
+        "valid-values": [
+          45,
+          135
+        ]
+      }
+    ]
+  },
+  "Sobel": {
+    "id": 4,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  },
+  "Prewitt": {
+    "id": 5,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 0, 1], [-1, 0, 1], [-1, 0, 1]",
+          "90 = [1, 1, 1],  [0, 0, 0],  [-1, -1, -1]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  },
+  "Kirsch": {
+    "id": 6,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          "  0 = [+5, +5, +5], [-3, 0, -3], [-3, -3, -3]",
+          " 45 = [-3, +5, +5], [-3, 0, +5], [-3, -3, -3]",
+          " 90 = [-3, -3, +5], [-3, 0, +5], [-3, -3, +5]",
+          "135 = [-3, -3, -3], [-3, 0, +5], [-3, +5, +5]",
+          "180 = [-3, -3, -3], [-3, 0, -3], [+5, +5, +5]",
+          "225 = [-3, -3, -3], [-3, 0, -3], [+5, +5, -3]",
+          "270 = [+5, -3, -3], [-3, 0, -3], [+5, -3, -3]",
+          "315 = [+5, +5, -3], [-3, 0, -3], [-3, -3, -3]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          45,
+          90,
+          135,
+          180,
+          225,
+          270,
+          315
+        ]
+      }
+    ]
+  },
+  "Laplacian": {
+    "id": 7,
+    "domain": "filters",
+    "class": "edge detection",
+    "parameters": [
+      {
+        "__comment1": [
+          "1 = [0, 1, 0],   [1, -4, 1], [0, 4, 0]",
+          "2 = [1, 1, 1],   [1, -8, 1], [1, 1, 1]",
+          "3 = [-1, 2, -1], [2, -4, 2], [-1, 2, -1]"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 1,
+        "valid-values": [
+          1,
+          2,
+          3
+        ]
+      }
+    ]
+  }
+}

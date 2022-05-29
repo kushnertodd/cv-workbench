@@ -1,0 +1,11332 @@
+./example_database_load
+databases opened successfully
+databases closed.
+Done loading databases.
+./example_database_read
+databases opened successfully
+name: Allspice
+	SKU: AllsfruibJGK4R
+	Category: fruits
+	Price: 0.94
+	Quantity: 669
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Allspice
+	SKU: Allsfruilfvoeg
+	Category: fruits
+	Price: 0.94
+	Quantity: 244
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Allspice
+	SKU: Allsfruio12BOS
+	Category: fruits
+	Price: 0.95
+	Quantity: 739
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Almonds
+	SKU: Almofrui7K0xzH
+	Category: fruits
+	Price: 0.53
+	Quantity: 405
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Almonds
+	SKU: AlmofruiPPCLz8
+	Category: fruits
+	Price: 0.55
+	Quantity: 600
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Almonds
+	SKU: AlmofruidMyKmp
+	Category: fruits
+	Price: 0.54
+	Quantity: 745
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Alogbati
+	SKU: AlogvegeB1WaJU
+	Category: vegetables
+	Price: 0.41
+	Quantity: 775
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Alogbati
+	SKU: AlogvegeVr5cPP
+	Category: vegetables
+	Price: 0.40
+	Quantity: 789
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Alogbati
+	SKU: AlogvegeyTUQzy
+	Category: vegetables
+	Price: 0.40
+	Quantity: 416
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ampalaya
+	SKU: AmpavegeJDu9Im
+	Category: vegetables
+	Price: 0.90
+	Quantity: 676
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ampalaya
+	SKU: AmpavegemR9fSd
+	Category: vegetables
+	Price: 0.85
+	Quantity: 107
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Ampalaya
+	SKU: AmpavegepL8GH5
+	Category: vegetables
+	Price: 0.86
+	Quantity: 728
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Apple Fritters
+	SKU: AppldessDj96hw
+	Category: desserts
+	Price: 6.12
+	Quantity: 16
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Apple Fritters
+	SKU: AppldessrN1kvM
+	Category: desserts
+	Price: 6.06
+	Quantity: 7
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Apples
+	SKU: Applfrui8fewZe
+	Category: fruits
+	Price: 1.21
+	Quantity: 402
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Apples
+	SKU: ApplfruiXoT6xG
+	Category: fruits
+	Price: 1.20
+	Quantity: 728
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Apples
+	SKU: ApplfruiZls4Du
+	Category: fruits
+	Price: 1.20
+	Quantity: 472
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Apricot
+	SKU: AprifruiU1zIDn
+	Category: fruits
+	Price: 0.91
+	Quantity: 980
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Apricot
+	SKU: AprifruichcwYS
+	Category: fruits
+	Price: 0.95
+	Quantity: 668
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Apricot
+	SKU: AprifruijphEpM
+	Category: fruits
+	Price: 0.89
+	Quantity: 560
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Artichoke
+	SKU: ArtivegeIuqmS4
+	Category: vegetables
+	Price: 0.71
+	Quantity: 282
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Artichoke
+	SKU: ArtivegeTa2lcF
+	Category: vegetables
+	Price: 0.70
+	Quantity: 618
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Artichoke
+	SKU: Artivegebljjnf
+	Category: vegetables
+	Price: 0.69
+	Quantity: 66
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Asparagus
+	SKU: AspavegeM1q5Kt
+	Category: vegetables
+	Price: 0.24
+	Quantity: 546
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Asparagus
+	SKU: AspavegeXWbCb8
+	Category: vegetables
+	Price: 0.24
+	Quantity: 117
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Asparagus
+	SKU: AspavegezC0cDl
+	Category: vegetables
+	Price: 0.23
+	Quantity: 70
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Avocado
+	SKU: AvocfruiT6IwWE
+	Category: fruits
+	Price: 1.02
+	Quantity: 711
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Avocado
+	SKU: AvocfruisbK1h5
+	Category: fruits
+	Price: 0.97
+	Quantity: 856
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Avocado
+	SKU: AvocfruiwYYomu
+	Category: fruits
+	Price: 0.99
+	Quantity: 379
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Bael Fruit
+	SKU: BaelfruiX2KvqV
+	Category: fruits
+	Price: 0.40
+	Quantity: 770
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Bael Fruit
+	SKU: Baelfruidjne4e
+	Category: fruits
+	Price: 0.39
+	Quantity: 778
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Bael Fruit
+	SKU: BaelfruilAU7Hj
+	Category: fruits
+	Price: 0.41
+	Quantity: 833
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Banana Split
+	SKU: Banadess7tpjkJ
+	Category: desserts
+	Price: 10.86
+	Quantity: 10
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Bananas Flambe
+	SKU: Banadess8qNfxd
+	Category: desserts
+	Price: 7.07
+	Quantity: 16
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Bananas Flambe
+	SKU: BanadesscczumD
+	Category: desserts
+	Price: 6.94
+	Quantity: 12
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Banana Split
+	SKU: Banadessfif758
+	Category: desserts
+	Price: 11.07
+	Quantity: 14
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Bananas
+	SKU: BanafruiEQhWuj
+	Category: fruits
+	Price: 0.50
+	Quantity: 518
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Bananas
+	SKU: BanafruimpRgPO
+	Category: fruits
+	Price: 0.50
+	Quantity: 741
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Bananas
+	SKU: BanafruipIlluX
+	Category: fruits
+	Price: 0.50
+	Quantity: 207
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Basil
+	SKU: BasivegeF3Uha7
+	Category: vegetables
+	Price: 0.29
+	Quantity: 651
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Basil
+	SKU: BasivegeqR8SHC
+	Category: vegetables
+	Price: 0.31
+	Quantity: 606
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Basil
+	SKU: Basivegev08fzf
+	Category: vegetables
+	Price: 0.31
+	Quantity: 213
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Bean
+	SKU: Beanvege4IGUwX
+	Category: vegetables
+	Price: 0.27
+	Quantity: 463
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Bean
+	SKU: BeanvegegCFUOp
+	Category: vegetables
+	Price: 0.27
+	Quantity: 794
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Bean
+	SKU: BeanvegeqMSEVq
+	Category: vegetables
+	Price: 0.27
+	Quantity: 468
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Beet
+	SKU: BeetvegedEv4Ic
+	Category: vegetables
+	Price: 0.35
+	Quantity: 120
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Beet
+	SKU: Beetvegegi1bz1
+	Category: vegetables
+	Price: 0.35
+	Quantity: 540
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Beet
+	SKU: BeetvegemztZcN
+	Category: vegetables
+	Price: 0.36
+	Quantity: 386
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Betel Nut
+	SKU: Betefrui32BKAz
+	Category: fruits
+	Price: 0.37
+	Quantity: 523
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Betel Nut
+	SKU: BetefruiQYdHqQ
+	Category: fruits
+	Price: 0.34
+	Quantity: 926
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Betel Nut
+	SKU: BetefruisaWzY4
+	Category: fruits
+	Price: 0.34
+	Quantity: 510
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Black Walnut
+	SKU: BlacfruiXxIuMU
+	Category: fruits
+	Price: 0.57
+	Quantity: 923
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Black Walnut
+	SKU: BlacfruiZXgY9t
+	Category: fruits
+	Price: 0.59
+	Quantity: 312
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Black Walnut
+	SKU: BlacfruikWO0vz
+	Category: fruits
+	Price: 0.60
+	Quantity: 877
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Blackeyed Pea
+	SKU: Blacvege3TPldr
+	Category: vegetables
+	Price: 0.86
+	Quantity: 133
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Blackeyed Pea
+	SKU: Blacvege3Zqnep
+	Category: vegetables
+	Price: 0.88
+	Quantity: 67
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Blackeyed Pea
+	SKU: Blacvege3khffZ
+	Category: vegetables
+	Price: 0.90
+	Quantity: 790
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Blueberry Boy Bait
+	SKU: Bluedess9zLhaH
+	Category: desserts
+	Price: 3.93
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Blueberry Boy Bait
+	SKU: BluedesseX2LVU
+	Category: desserts
+	Price: 3.72
+	Quantity: 16
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Blueberry
+	SKU: BluefruiBuCfgO
+	Category: fruits
+	Price: 1.03
+	Quantity: 522
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Blueberry
+	SKU: BluefruiCbxb4t
+	Category: fruits
+	Price: 1.02
+	Quantity: 276
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Blueberry
+	SKU: Bluefruixz8MkE
+	Category: fruits
+	Price: 1.01
+	Quantity: 278
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Boysenberry
+	SKU: Boysfrui3hTRQu
+	Category: fruits
+	Price: 1.09
+	Quantity: 628
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Boysenberry
+	SKU: BoysfruinpLvr3
+	Category: fruits
+	Price: 1.02
+	Quantity: 349
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Boysenberry
+	SKU: BoysfruizxyMuz
+	Category: fruits
+	Price: 1.05
+	Quantity: 239
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Breadnut
+	SKU: Breafrui0kDPs6
+	Category: fruits
+	Price: 0.31
+	Quantity: 558
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Breadnut
+	SKU: Breafrui44s3og
+	Category: fruits
+	Price: 0.32
+	Quantity: 879
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Breadnut
+	SKU: BreafruiwyLKhJ
+	Category: fruits
+	Price: 0.30
+	Quantity: 407
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Brownies, Mint Chip
+	SKU: Browdess0j9PBD
+	Category: desserts
+	Price: 1.84
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Caramel
+	SKU: Browdess5jvVMM
+	Category: desserts
+	Price: 3.13
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies
+	SKU: Browdess84Qc1z
+	Category: desserts
+	Price: 7.55
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Mint Chip
+	SKU: BrowdessDDMvF7
+	Category: desserts
+	Price: 1.81
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Cream Chee
+	SKU: BrowdessGVBlML
+	Category: desserts
+	Price: 2.86
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Apple
+	SKU: BrowdessIDW1Cc
+	Category: desserts
+	Price: 5.44
+	Quantity: 12
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Chocolate 
+	SKU: BrowdessIg2JuF
+	Category: desserts
+	Price: 3.39
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Caramel
+	SKU: BrowdessVGfoA8
+	Category: desserts
+	Price: 3.07
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Coconut
+	SKU: BrowdessWPHrVR
+	Category: desserts
+	Price: 3.06
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Fudge Mint
+	SKU: Browdessl7DP7k
+	Category: desserts
+	Price: 11.45
+	Quantity: 14
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Fudge
+	SKU: BrowdessmIHIFJ
+	Category: desserts
+	Price: 5.19
+	Quantity: 8
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies
+	SKU: BrowdessmogdTl
+	Category: desserts
+	Price: 7.62
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Brownies, Butterscot
+	SKU: BrowdessqewJ38
+	Category: desserts
+	Price: 5.10
+	Quantity: 17
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Fudge Mint
+	SKU: Browdessv70VKQ
+	Category: desserts
+	Price: 11.34
+	Quantity: 16
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Apple
+	SKU: BrowdessyRMrAH
+	Category: desserts
+	Price: 5.14
+	Quantity: 12
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Brownies, Cherry
+	SKU: Browdessyoa66A
+	Category: desserts
+	Price: 3.39
+	Quantity: 17
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Burdock
+	SKU: BurdvegeZsqAjT
+	Category: vegetables
+	Price: 0.56
+	Quantity: 582
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Burdock
+	SKU: BurdvegeyLstLV
+	Category: vegetables
+	Price: 0.56
+	Quantity: 761
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Burdock
+	SKU: BurdvegeycF7mo
+	Category: vegetables
+	Price: 0.55
+	Quantity: 566
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cabbage
+	SKU: CabbvegeVvO646
+	Category: vegetables
+	Price: 0.82
+	Quantity: 490
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cabbage
+	SKU: CabbvegeY0c4Fw
+	Category: vegetables
+	Price: 0.82
+	Quantity: 726
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Cabbage
+	SKU: CabbvegeoaK7Co
+	Category: vegetables
+	Price: 0.85
+	Quantity: 439
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: California Wild Grap
+	SKU: Cactfrui4ioUav
+	Category: fruits
+	Price: 0.55
+	Quantity: 896
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cactus
+	SKU: CactfruixTOLv5
+	Category: fruits
+	Price: 0.54
+	Quantity: 477
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Cactus
+	SKU: Cactfruiyo2ddH
+	Category: fruits
+	Price: 0.56
+	Quantity: 601
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cake, Double-Lemon
+	SKU: Cakedess50vx53
+	Category: desserts
+	Price: 3.60
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Angel Food
+	SKU: CakedessEaqGaE
+	Category: desserts
+	Price: 11.18
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, Angel Food
+	SKU: CakedessJyAyFe
+	Category: desserts
+	Price: 11.18
+	Quantity: 14
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Chocolate
+	SKU: CakedessKLXFbn
+	Category: desserts
+	Price: 10.11
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, French Apple
+	SKU: CakedessNBHCk0
+	Category: desserts
+	Price: 1.86
+	Quantity: 20
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Fig
+	SKU: CakedessOncX4y
+	Category: desserts
+	Price: 6.82
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, Lemon Blueberr
+	SKU: CakedessQdkaYg
+	Category: desserts
+	Price: 4.00
+	Quantity: 3
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Fig
+	SKU: CakedessTJtffn
+	Category: desserts
+	Price: 7.08
+	Quantity: 10
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Carrot
+	SKU: CakedessUTgMoV
+	Category: desserts
+	Price: 4.20
+	Quantity: 13
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake Triple Fudge
+	SKU: CakedessWRrSXP
+	Category: desserts
+	Price: 8.00
+	Quantity: 15
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Walnut
+	SKU: Cakedesse22rT5
+	Category: desserts
+	Price: 11.04
+	Quantity: 7
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Chocolate
+	SKU: CakedessfNP5Hg
+	Category: desserts
+	Price: 9.91
+	Quantity: 14
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Maple
+	SKU: CakedessfVattM
+	Category: desserts
+	Price: 3.22
+	Quantity: 4
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Devil's Food
+	SKU: CakedessiXcDCt
+	Category: desserts
+	Price: 4.73
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake Triple Fudge
+	SKU: CakedessiZ75lR
+	Category: desserts
+	Price: 7.92
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, French Apple
+	SKU: CakedessjA2Kxv
+	Category: desserts
+	Price: 1.95
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, Double-Lemon
+	SKU: CakedesskeS0Vd
+	Category: desserts
+	Price: 3.46
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, Devil's Food
+	SKU: CakedessnBZk45
+	Category: desserts
+	Price: 4.82
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cake, Maple
+	SKU: CakedessnoGPRF
+	Category: desserts
+	Price: 3.04
+	Quantity: 11
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cake, Walnut
+	SKU: CakedessveYVXZ
+	Category: desserts
+	Price: 10.83
+	Quantity: 17
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Candied Cranberries
+	SKU: CanddessjW92p3
+	Category: desserts
+	Price: 1.77
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Candied Cranberries
+	SKU: CanddesskhtVoQ
+	Category: desserts
+	Price: 1.72
+	Quantity: 0
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cantaloupe
+	SKU: CantvegeEaDdST
+	Category: vegetables
+	Price: 0.66
+	Quantity: 638
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cantaloupe
+	SKU: CantvegeIHs9vJ
+	Category: vegetables
+	Price: 0.66
+	Quantity: 411
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Cantaloupe
+	SKU: CantvegewWQEa0
+	Category: vegetables
+	Price: 0.64
+	Quantity: 682
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Carrot
+	SKU: CarrvegeEZndWL
+	Category: vegetables
+	Price: 0.49
+	Quantity: 284
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Carrot
+	SKU: CarrvegeEbI0sw
+	Category: vegetables
+	Price: 0.45
+	Quantity: 717
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Carraway
+	SKU: CarrvegeMjb1i9
+	Category: vegetables
+	Price: 0.31
+	Quantity: 732
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Carrot
+	SKU: CarrvegewUkHao
+	Category: vegetables
+	Price: 0.47
+	Quantity: 122
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Carraway
+	SKU: CarrvegewuL4Ma
+	Category: vegetables
+	Price: 0.32
+	Quantity: 740
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Carraway
+	SKU: CarrvegeyiWfBj
+	Category: vegetables
+	Price: 0.32
+	Quantity: 265
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cashew
+	SKU: CashfruihaOFVP
+	Category: fruits
+	Price: 0.37
+	Quantity: 221
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cashew
+	SKU: CashfruiqtMe2Q
+	Category: fruits
+	Price: 0.38
+	Quantity: 515
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cashew
+	SKU: Cashfruizzcw1E
+	Category: fruits
+	Price: 0.38
+	Quantity: 825
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Cauliflower
+	SKU: Caulvege1CPeNG
+	Category: vegetables
+	Price: 0.68
+	Quantity: 756
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Cauliflower
+	SKU: CaulvegeT6cka8
+	Category: vegetables
+	Price: 0.65
+	Quantity: 728
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cauliflower
+	SKU: CaulvegedrPqib
+	Category: vegetables
+	Price: 0.66
+	Quantity: 269
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Celery
+	SKU: Celevege67eimC
+	Category: vegetables
+	Price: 0.58
+	Quantity: 619
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Celeriac
+	SKU: Celevege9LUeww
+	Category: vegetables
+	Price: 0.70
+	Quantity: 298
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Celeriac
+	SKU: CelevegeCNABoZ
+	Category: vegetables
+	Price: 0.70
+	Quantity: 261
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Celery
+	SKU: Celevegej40ZCc
+	Category: vegetables
+	Price: 0.59
+	Quantity: 740
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Celeriac
+	SKU: CelevegeoTBicd
+	Category: vegetables
+	Price: 0.74
+	Quantity: 350
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Celery
+	SKU: CelevegerYlVRy
+	Category: vegetables
+	Price: 0.58
+	Quantity: 734
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chayote
+	SKU: ChayvegePRReGE
+	Category: vegetables
+	Price: 0.14
+	Quantity: 233
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chayote
+	SKU: ChayvegeoxO40S
+	Category: vegetables
+	Price: 0.14
+	Quantity: 611
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chayote
+	SKU: Chayvegep058f7
+	Category: vegetables
+	Price: 0.14
+	Quantity: 88
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cheesecake, German C
+	SKU: Cheedess3Nx4jZ
+	Category: desserts
+	Price: 4.65
+	Quantity: 3
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cheesecake, Cherry
+	SKU: CheedessEahRkC
+	Category: desserts
+	Price: 4.40
+	Quantity: 14
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Apricot
+	SKU: CheedessKUxTYY
+	Category: desserts
+	Price: 12.34
+	Quantity: 16
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Turtle
+	SKU: CheedessLqgeIA
+	Category: desserts
+	Price: 12.19
+	Quantity: 6
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Apple
+	SKU: CheedessMYKaKK
+	Category: desserts
+	Price: 11.01
+	Quantity: 14
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cheesecake, Australi
+	SKU: CheedessMvB1pr
+	Category: desserts
+	Price: 11.88
+	Quantity: 18
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cheesecake, Amaretto
+	SKU: CheedessOJBqfD
+	Category: desserts
+	Price: 11.89
+	Quantity: 5
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Arkansas
+	SKU: CheedessTbqzmw
+	Category: desserts
+	Price: 6.98
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Amaretto
+	SKU: CheedessVnDf14
+	Category: desserts
+	Price: 11.89
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cheesecake, Blueberr
+	SKU: CheedesstWJZfC
+	Category: desserts
+	Price: 6.66
+	Quantity: 5
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cheesecake, Apple
+	SKU: Cheedessuks1YK
+	Category: desserts
+	Price: 11.22
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cheesecake, Turtle
+	SKU: CheedessvyNohA
+	Category: desserts
+	Price: 12.07
+	Quantity: 19
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Chervil
+	SKU: Chervegea1OyKO
+	Category: vegetables
+	Price: 0.09
+	Quantity: 299
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chervil
+	SKU: Chervegeq56gMO
+	Category: vegetables
+	Price: 0.09
+	Quantity: 474
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chervil
+	SKU: ChervegeuH4Dge
+	Category: vegetables
+	Price: 0.09
+	Quantity: 502
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chico Sapote
+	SKU: ChicfruiSqL3Lc
+	Category: fruits
+	Price: 0.45
+	Quantity: 476
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Chico Sapote
+	SKU: ChicfruiY534SX
+	Category: fruits
+	Price: 0.47
+	Quantity: 216
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chico Sapote
+	SKU: ChicfruiurzIp4
+	Category: fruits
+	Price: 0.47
+	Quantity: 200
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chicory
+	SKU: Chicvege6qpcyi
+	Category: vegetables
+	Price: 0.10
+	Quantity: 282
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chicory
+	SKU: Chicvege79qoQ8
+	Category: vegetables
+	Price: 0.09
+	Quantity: 709
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chicory
+	SKU: ChicvegeTSVBQq
+	Category: vegetables
+	Price: 0.10
+	Quantity: 477
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chinese Jello
+	SKU: ChinfruiuIUj0X
+	Category: fruits
+	Price: 0.65
+	Quantity: 624
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Chinese Jello
+	SKU: ChinfruiwXbRrL
+	Category: fruits
+	Price: 0.67
+	Quantity: 719
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chinese Jello
+	SKU: ChinfruiyRg75u
+	Category: fruits
+	Price: 0.64
+	Quantity: 772
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chinese Cabbage
+	SKU: Chinvege2ldNr3
+	Category: vegetables
+	Price: 0.80
+	Quantity: 799
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chines Kale
+	SKU: Chinvege6V6Dne
+	Category: vegetables
+	Price: 0.65
+	Quantity: 548
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chinese Mustard
+	SKU: Chinvege8NPwa2
+	Category: vegetables
+	Price: 0.34
+	Quantity: 389
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chinese Mustard
+	SKU: ChinvegeABDhNd
+	Category: vegetables
+	Price: 0.32
+	Quantity: 320
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chines Kale
+	SKU: ChinvegeB7vE3x
+	Category: vegetables
+	Price: 0.66
+	Quantity: 380
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chines Kale
+	SKU: ChinvegeCfdkss
+	Category: vegetables
+	Price: 0.70
+	Quantity: 239
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chinese Cabbage
+	SKU: ChinvegeFNsSRn
+	Category: vegetables
+	Price: 0.78
+	Quantity: 408
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chinese Cabbage
+	SKU: ChinvegeK3R2Td
+	Category: vegetables
+	Price: 0.80
+	Quantity: 180
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chinese Radish
+	SKU: ChinvegeMXMms8
+	Category: vegetables
+	Price: 0.22
+	Quantity: 402
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chinese Mustard
+	SKU: ChinvegeRDdpdl
+	Category: vegetables
+	Price: 0.33
+	Quantity: 149
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chinese Radish
+	SKU: ChinvegeTdUBqN
+	Category: vegetables
+	Price: 0.22
+	Quantity: 257
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Chinese Radish
+	SKU: ChinvegeXcM4eq
+	Category: vegetables
+	Price: 0.22
+	Quantity: 190
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chinese Beans
+	SKU: ChinvegebxbyPy
+	Category: vegetables
+	Price: 0.45
+	Quantity: 654
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Chinese Beans
+	SKU: ChinvegevVjzC0
+	Category: vegetables
+	Price: 0.47
+	Quantity: 643
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Chinese Beans
+	SKU: ChinvegewKGwgx
+	Category: vegetables
+	Price: 0.45
+	Quantity: 206
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cilantro
+	SKU: CilavegeQXBEsW
+	Category: vegetables
+	Price: 0.60
+	Quantity: 674
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Cilantro
+	SKU: CilavegeRgjkUG
+	Category: vegetables
+	Price: 0.60
+	Quantity: 355
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cilantro
+	SKU: CilavegelT2msu
+	Category: vegetables
+	Price: 0.59
+	Quantity: 464
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cobbler, Rhubarb
+	SKU: Cobbdess22X40Z
+	Category: desserts
+	Price: 9.54
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Huckleberry
+	SKU: Cobbdess3t6O8d
+	Category: desserts
+	Price: 3.99
+	Quantity: 18
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Zucchini
+	SKU: Cobbdess4Ez8kS
+	Category: desserts
+	Price: 10.51
+	Quantity: 10
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Zucchini
+	SKU: Cobbdess5rK4dP
+	Category: desserts
+	Price: 11.24
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Cherry
+	SKU: CobbdessA1dADa
+	Category: desserts
+	Price: 12.10
+	Quantity: 10
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Huckleberry
+	SKU: CobbdessGI9euK
+	Category: desserts
+	Price: 3.88
+	Quantity: 0
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Strawberry
+	SKU: CobbdessH3LdgQ
+	Category: desserts
+	Price: 12.20
+	Quantity: 3
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Strawberry
+	SKU: CobbdessI78188
+	Category: desserts
+	Price: 12.43
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Blueberry
+	SKU: CobbdessMXxbBN
+	Category: desserts
+	Price: 3.57
+	Quantity: 2
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Cherry
+	SKU: CobbdessNSa8QW
+	Category: desserts
+	Price: 12.58
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Rhubarb
+	SKU: CobbdessPfnCT0
+	Category: desserts
+	Price: 9.27
+	Quantity: 18
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Peach
+	SKU: CobbdessXfEtUK
+	Category: desserts
+	Price: 10.43
+	Quantity: 16
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Peach
+	SKU: CobbdessYUGeOB
+	Category: desserts
+	Price: 10.14
+	Quantity: 20
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Blueberry
+	SKU: CobbdessbiI0oF
+	Category: desserts
+	Price: 3.78
+	Quantity: 11
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Cobbler, Berry-Pecan
+	SKU: Cobbdesse4FUVI
+	Category: desserts
+	Price: 5.41
+	Quantity: 8
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cobbler, Berry-Pecan
+	SKU: Cobbdessx3htak
+	Category: desserts
+	Price: 5.36
+	Quantity: 12
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Collard
+	SKU: CollvegeAwdor5
+	Category: vegetables
+	Price: 0.32
+	Quantity: 124
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Collard
+	SKU: CollvegeQe900L
+	Category: vegetables
+	Price: 0.30
+	Quantity: 796
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Collard
+	SKU: CollvegesTGGNw
+	Category: vegetables
+	Price: 0.32
+	Quantity: 745
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Common Guava
+	SKU: Commfrui6eUivL
+	Category: fruits
+	Price: 0.81
+	Quantity: 688
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Common Guava
+	SKU: Commfruib6znSI
+	Category: fruits
+	Price: 0.80
+	Quantity: 483
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Common Guava
+	SKU: CommfruibWKnz3
+	Category: fruits
+	Price: 0.84
+	Quantity: 581
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cookies, Peanut Butt
+	SKU: CookdessBhgp7p
+	Category: desserts
+	Price: 2.68
+	Quantity: 10
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Cookies, Oatmeal
+	SKU: Cookdessnq9Oya
+	Category: desserts
+	Price: 2.84
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Coriander
+	SKU: Corivege9xBAT0
+	Category: vegetables
+	Price: 0.27
+	Quantity: 321
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Coriander
+	SKU: CorivegeCfNjBx
+	Category: vegetables
+	Price: 0.27
+	Quantity: 709
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Coriander
+	SKU: CorivegeXxp4xY
+	Category: vegetables
+	Price: 0.26
+	Quantity: 560
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Corn
+	SKU: CornvegeO0GwoQ
+	Category: vegetables
+	Price: 0.70
+	Quantity: 664
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Corn
+	SKU: CornvegePnPREC
+	Category: vegetables
+	Price: 0.72
+	Quantity: 609
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Corn
+	SKU: CornvegeukXkv6
+	Category: vegetables
+	Price: 0.72
+	Quantity: 632
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Crabapple
+	SKU: CrabfruibvWd8K
+	Category: fruits
+	Price: 0.95
+	Quantity: 213
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Crabapple
+	SKU: Crabfruijxcxyt
+	Category: fruits
+	Price: 0.94
+	Quantity: 278
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Crabapple
+	SKU: CrabfruioY2L63
+	Category: fruits
+	Price: 0.94
+	Quantity: 582
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cranberry
+	SKU: Cranfrui3G5XL9
+	Category: fruits
+	Price: 0.84
+	Quantity: 880
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cranberry
+	SKU: CranfruiJxmKr5
+	Category: fruits
+	Price: 0.83
+	Quantity: 923
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Cranberry
+	SKU: CranfruiPlklAF
+	Category: fruits
+	Price: 0.84
+	Quantity: 434
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Cucumber
+	SKU: CucuvegeEqQeA7
+	Category: vegetables
+	Price: 0.94
+	Quantity: 499
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Cucumber
+	SKU: CucuvegeUW6JaA
+	Category: vegetables
+	Price: 0.94
+	Quantity: 565
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Cucumber
+	SKU: CucuvegewmKbJ1
+	Category: vegetables
+	Price: 0.94
+	Quantity: 738
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Dahon ng sili
+	SKU: Dahovege6X9grk
+	Category: vegetables
+	Price: 0.11
+	Quantity: 369
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Dahon ng sili
+	SKU: DahovegeiHZjQT
+	Category: vegetables
+	Price: 0.11
+	Quantity: 141
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Dahon ng sili
+	SKU: DahovegeoCDAH8
+	Category: vegetables
+	Price: 0.12
+	Quantity: 517
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Daikon Radish
+	SKU: DaikvegeHHsd7M
+	Category: vegetables
+	Price: 0.61
+	Quantity: 743
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Daikon Radish
+	SKU: DaikvegeIu17yC
+	Category: vegetables
+	Price: 0.62
+	Quantity: 459
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Daikon Radish
+	SKU: DaikvegePzFjqf
+	Category: vegetables
+	Price: 0.63
+	Quantity: 296
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Daiquiri Souffle
+	SKU: DaiqdessebnYcy
+	Category: desserts
+	Price: 9.54
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Daiquiri Souffle
+	SKU: DaiqdessfM1DnX
+	Category: desserts
+	Price: 9.72
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Damson Plum
+	SKU: DamsfruiLhqFrQ
+	Category: fruits
+	Price: 0.98
+	Quantity: 489
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Damson Plum
+	SKU: DamsfruiV6wFLk
+	Category: fruits
+	Price: 1.03
+	Quantity: 400
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Damson Plum
+	SKU: DamsfruibMRMwe
+	Category: fruits
+	Price: 0.98
+	Quantity: 782
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Dandelion
+	SKU: DandvegeGwBkHZ
+	Category: vegetables
+	Price: 0.11
+	Quantity: 733
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Dandelion
+	SKU: DandvegeJNcnbr
+	Category: vegetables
+	Price: 0.11
+	Quantity: 285
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Dandelion
+	SKU: DandvegeZfwVqn
+	Category: vegetables
+	Price: 0.11
+	Quantity: 57
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Date Palm
+	SKU: Datefrui5fTyNS
+	Category: fruits
+	Price: 1.14
+	Quantity: 539
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Date Palm
+	SKU: DatefruigS31GU
+	Category: fruits
+	Price: 1.14
+	Quantity: 315
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Date Palm
+	SKU: DatefruipKPaJK
+	Category: fruits
+	Price: 1.09
+	Quantity: 588
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Dragon's Eye
+	SKU: DragfruiBotxqt
+	Category: fruits
+	Price: 0.27
+	Quantity: 705
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: East Indian Wine Pal
+	SKU: DragfruiPsSnV9
+	Category: fruits
+	Price: 0.29
+	Quantity: 482
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Dragon's Eye
+	SKU: DragfruirGJ3aI
+	Category: fruits
+	Price: 0.28
+	Quantity: 315
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Edamame
+	SKU: Edamvege1jiqGY
+	Category: vegetables
+	Price: 0.75
+	Quantity: 115
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Edamame
+	SKU: Edamvege608vXi
+	Category: vegetables
+	Price: 0.78
+	Quantity: 700
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Edamame
+	SKU: EdamvegeVYtk8z
+	Category: vegetables
+	Price: 0.79
+	Quantity: 296
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Eggplant
+	SKU: EggpvegeKJtydN
+	Category: vegetables
+	Price: 0.55
+	Quantity: 200
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Eggplant
+	SKU: EggpvegeN0WnSo
+	Category: vegetables
+	Price: 0.51
+	Quantity: 761
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Eggplant
+	SKU: EggpvegeQMKrNs
+	Category: vegetables
+	Price: 0.53
+	Quantity: 208
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: English Walnut
+	SKU: Englfrui18Tc9n
+	Category: fruits
+	Price: 1.06
+	Quantity: 339
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: English Walnut
+	SKU: EnglfruiBMtHtW
+	Category: fruits
+	Price: 1.04
+	Quantity: 787
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: English Walnut
+	SKU: EnglfruiHmVzxV
+	Category: fruits
+	Price: 1.03
+	Quantity: 779
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: English Pea
+	SKU: EnglvegeCmkd3y
+	Category: vegetables
+	Price: 0.39
+	Quantity: 430
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: English Pea
+	SKU: Englvegea1ytIn
+	Category: vegetables
+	Price: 0.40
+	Quantity: 457
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: English Pea
+	SKU: EnglvegerU9Vty
+	Category: vegetables
+	Price: 0.37
+	Quantity: 263
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: False Mangosteen
+	SKU: FalsfruiPrFfhe
+	Category: fruits
+	Price: 0.70
+	Quantity: 386
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: False Mangosteen
+	SKU: FalsfruibkmYqH
+	Category: fruits
+	Price: 0.66
+	Quantity: 971
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: False Mangosteen
+	SKU: FalsfruipBsbcX
+	Category: fruits
+	Price: 0.68
+	Quantity: 250
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Fennel
+	SKU: FennvegeQzjtZ3
+	Category: vegetables
+	Price: 0.78
+	Quantity: 795
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Fennel
+	SKU: FennvegeXSrW61
+	Category: vegetables
+	Price: 0.75
+	Quantity: 79
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Fennel
+	SKU: Fennvegebz2UM7
+	Category: vegetables
+	Price: 0.76
+	Quantity: 545
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Fried Egg Tree
+	SKU: FriefruiihHUdc
+	Category: fruits
+	Price: 0.29
+	Quantity: 649
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Fried Egg Tree
+	SKU: FriefruimdD1rf
+	Category: fruits
+	Price: 0.28
+	Quantity: 527
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Fried Egg Tree
+	SKU: FriefruivyAzYq
+	Category: fruits
+	Price: 0.29
+	Quantity: 332
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Fudge Bar
+	SKU: Fudgdess8iXSyf
+	Category: desserts
+	Price: 11.72
+	Quantity: 6
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Fudge Bar
+	SKU: FudgdessakU1Id
+	Category: desserts
+	Price: 12.29
+	Quantity: 5
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Gabi
+	SKU: GabivegeVm4Xk3
+	Category: vegetables
+	Price: 0.44
+	Quantity: 396
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Gabi
+	SKU: Gabivegeu6woqK
+	Category: vegetables
+	Price: 0.42
+	Quantity: 722
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Gabi
+	SKU: GabivegezcA7q1
+	Category: vegetables
+	Price: 0.42
+	Quantity: 394
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Garlic
+	SKU: GarlvegeEQvt8W
+	Category: vegetables
+	Price: 0.77
+	Quantity: 349
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Garlic
+	SKU: GarlvegedljBdK
+	Category: vegetables
+	Price: 0.80
+	Quantity: 708
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Garlic
+	SKU: GarlvegesR2yel
+	Category: vegetables
+	Price: 0.76
+	Quantity: 478
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Genipap
+	SKU: GenifruiDtKusQ
+	Category: fruits
+	Price: 0.62
+	Quantity: 986
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Genipap
+	SKU: GenifruiXq32eP
+	Category: fruits
+	Price: 0.61
+	Quantity: 326
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Genipap
+	SKU: Genifruiphwwyq
+	Category: fruits
+	Price: 0.61
+	Quantity: 794
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ginger
+	SKU: GingfruiQLbRZI
+	Category: fruits
+	Price: 0.28
+	Quantity: 841
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ginger
+	SKU: GingfruiS8kK4p
+	Category: fruits
+	Price: 0.29
+	Quantity: 432
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Ginger
+	SKU: GingfruioL3Y4S
+	Category: fruits
+	Price: 0.27
+	Quantity: 928
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ginger
+	SKU: GingvegeMNiTc2
+	Category: vegetables
+	Price: 0.88
+	Quantity: 563
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Ginger
+	SKU: Gingvegeq366Sn
+	Category: vegetables
+	Price: 0.89
+	Quantity: 738
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ginger
+	SKU: GingvegeznyyVj
+	Category: vegetables
+	Price: 0.89
+	Quantity: 598
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Grapefruit
+	SKU: Grapfruih86Zxh
+	Category: fruits
+	Price: 1.07
+	Quantity: 473
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Grapefruit
+	SKU: GrapfruihmJzWm
+	Category: fruits
+	Price: 1.02
+	Quantity: 466
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Grapefruit
+	SKU: GrapfruiwL1v0N
+	Category: fruits
+	Price: 1.08
+	Quantity: 878
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Hackberry
+	SKU: Hackfrui0MIv6J
+	Category: fruits
+	Price: 0.21
+	Quantity: 345
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Hackberry
+	SKU: HackfruiQjomN7
+	Category: fruits
+	Price: 0.22
+	Quantity: 938
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Hackberry
+	SKU: HackfruiWS0eKp
+	Category: fruits
+	Price: 0.20
+	Quantity: 780
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Hairy melon
+	SKU: HairvegeFYFHIw
+	Category: vegetables
+	Price: 0.71
+	Quantity: 789
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Hairy melon
+	SKU: HairvegeO6WJHL
+	Category: vegetables
+	Price: 0.72
+	Quantity: 444
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Hairy melon
+	SKU: HairvegeS7AAqI
+	Category: vegetables
+	Price: 0.72
+	Quantity: 302
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Honey Locust
+	SKU: Honefrui6UXtvW
+	Category: fruits
+	Price: 1.03
+	Quantity: 422
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Honey Locust
+	SKU: HonefruiPSqILB
+	Category: fruits
+	Price: 1.00
+	Quantity: 427
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Honey Locust
+	SKU: HonefruiebXGRc
+	Category: fruits
+	Price: 1.08
+	Quantity: 298
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Horseradish
+	SKU: HorsvegemSwISt
+	Category: vegetables
+	Price: 0.12
+	Quantity: 622
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Horseradish
+	SKU: HorsvegetCOS0x
+	Category: vegetables
+	Price: 0.11
+	Quantity: 279
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Horseradish
+	SKU: Horsvegew6XXaS
+	Category: vegetables
+	Price: 0.12
+	Quantity: 478
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ice Cream, Chocolate
+	SKU: Ice dessASBohf
+	Category: desserts
+	Price: 1.41
+	Quantity: 13
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Ice Cream Sundae
+	SKU: Ice dessByapxl
+	Category: desserts
+	Price: 5.72
+	Quantity: 16
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Ice Cream, Mint Choc
+	SKU: Ice dessUBBKp8
+	Category: desserts
+	Price: 11.58
+	Quantity: 10
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Ice Cream, Vanilla
+	SKU: Ice dessYnzbbt
+	Category: desserts
+	Price: 11.92
+	Quantity: 19
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Ice Cream Sundae
+	SKU: Ice dessbhlAXt
+	Category: desserts
+	Price: 5.62
+	Quantity: 11
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Ice Cream, Chocolate
+	SKU: Ice desseXuyxx
+	Category: desserts
+	Price: 1.44
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Irish Potato
+	SKU: IrisvegeAfFLdO
+	Category: vegetables
+	Price: 0.68
+	Quantity: 740
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Irish Potato
+	SKU: IrisvegeJNQqby
+	Category: vegetables
+	Price: 0.72
+	Quantity: 355
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Irish Potato
+	SKU: Irisvegewq1PLd
+	Category: vegetables
+	Price: 0.72
+	Quantity: 601
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Japanese Plum
+	SKU: JapafruifGqz0l
+	Category: fruits
+	Price: 0.40
+	Quantity: 700
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Japanese Plum
+	SKU: JapafruihTmoYR
+	Category: fruits
+	Price: 0.40
+	Quantity: 658
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Japanese Plum
+	SKU: JapafruiufWkLx
+	Category: fruits
+	Price: 0.39
+	Quantity: 790
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Japanese Eggplant
+	SKU: JapavegeCIrIxd
+	Category: vegetables
+	Price: 0.57
+	Quantity: 777
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Japanese Eggplant
+	SKU: JapavegeTdKDCL
+	Category: vegetables
+	Price: 0.57
+	Quantity: 539
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Japanese Eggplant
+	SKU: JapavegevsJfGa
+	Category: vegetables
+	Price: 0.58
+	Quantity: 782
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Jerusalem Artichoke
+	SKU: Jeruvege928cr0
+	Category: vegetables
+	Price: 0.13
+	Quantity: 231
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Jerusalem Artichoke
+	SKU: JeruvegeC2v086
+	Category: vegetables
+	Price: 0.14
+	Quantity: 123
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Jerusalem Artichoke
+	SKU: JeruvegeehCYzi
+	Category: vegetables
+	Price: 0.14
+	Quantity: 196
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Jicama
+	SKU: JicavegeGk5LKH
+	Category: vegetables
+	Price: 0.71
+	Quantity: 292
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Jicama
+	SKU: JicavegeRWYj9n
+	Category: vegetables
+	Price: 0.75
+	Quantity: 79
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Jicama
+	SKU: JicavegeUjpaX1
+	Category: vegetables
+	Price: 0.70
+	Quantity: 308
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Jojoba
+	SKU: JojofruigMD1ej
+	Category: fruits
+	Price: 0.96
+	Quantity: 899
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Jojoba
+	SKU: JojofruisE0wTh
+	Category: fruits
+	Price: 0.97
+	Quantity: 553
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Jojoba
+	SKU: JojofruiwiYLp2
+	Category: fruits
+	Price: 1.02
+	Quantity: 969
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Jostaberry
+	SKU: JostfruiUBerur
+	Category: fruits
+	Price: 0.53
+	Quantity: 562
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Jostaberry
+	SKU: JostfruiV3oo1h
+	Category: fruits
+	Price: 0.52
+	Quantity: 423
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Jostaberry
+	SKU: JostfruiglsEGV
+	Category: fruits
+	Price: 0.50
+	Quantity: 300
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kabute
+	SKU: Kabuvege6Tqrif
+	Category: vegetables
+	Price: 0.16
+	Quantity: 123
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kabute
+	SKU: KabuvegeA3uYdG
+	Category: vegetables
+	Price: 0.15
+	Quantity: 183
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kabute
+	SKU: KabuvegeXW6ZiI
+	Category: vegetables
+	Price: 0.16
+	Quantity: 624
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kale
+	SKU: KalevegeAffBTS
+	Category: vegetables
+	Price: 0.57
+	Quantity: 573
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kale
+	SKU: KalevegeFsp17B
+	Category: vegetables
+	Price: 0.53
+	Quantity: 107
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kale
+	SKU: Kalevegext6RNT
+	Category: vegetables
+	Price: 0.55
+	Quantity: 765
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kamoteng Kahoy
+	SKU: KamovegeAdW37X
+	Category: vegetables
+	Price: 0.42
+	Quantity: 782
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kamoteng Kahoy
+	SKU: KamovegeMvxoLn
+	Category: vegetables
+	Price: 0.40
+	Quantity: 166
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kamote
+	SKU: KamovegeSQX7IA
+	Category: vegetables
+	Price: 0.14
+	Quantity: 703
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kamote
+	SKU: KamovegegdON75
+	Category: vegetables
+	Price: 0.13
+	Quantity: 218
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kamoteng Kahoy
+	SKU: KamovegetFlqpC
+	Category: vegetables
+	Price: 0.42
+	Quantity: 515
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kamote
+	SKU: KamovegevupDBf
+	Category: vegetables
+	Price: 0.13
+	Quantity: 98
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kangaroo Apple
+	SKU: Kangfrui7hky1i
+	Category: fruits
+	Price: 0.60
+	Quantity: 326
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kangaroo Apple
+	SKU: KangfruiEQknz8
+	Category: fruits
+	Price: 0.60
+	Quantity: 661
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kangaroo Apple
+	SKU: KangfruiNabdFq
+	Category: fruits
+	Price: 0.60
+	Quantity: 377
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Kangkong
+	SKU: Kangvege9BFo14
+	Category: vegetables
+	Price: 0.35
+	Quantity: 783
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kangkong
+	SKU: KangvegeRLR6gL
+	Category: vegetables
+	Price: 0.34
+	Quantity: 695
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kangkong
+	SKU: KangvegeSFTvEz
+	Category: vegetables
+	Price: 0.35
+	Quantity: 759
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Ken's Red
+	SKU: Ken'frui5rmbd4
+	Category: fruits
+	Price: 0.22
+	Quantity: 972
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ken's Red
+	SKU: Ken'fruiAoZlpl
+	Category: fruits
+	Price: 0.21
+	Quantity: 902
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Ken's Red
+	SKU: Ken'fruinPUSIm
+	Category: fruits
+	Price: 0.21
+	Quantity: 337
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ketembilla
+	SKU: Ketefrui16Rsts
+	Category: fruits
+	Price: 0.33
+	Quantity: 887
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ketembilla
+	SKU: Ketefrui3yAKxQ
+	Category: fruits
+	Price: 0.31
+	Quantity: 303
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ketembilla
+	SKU: KetefruiROn6F5
+	Category: fruits
+	Price: 0.34
+	Quantity: 283
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: King Orange
+	SKU: KingfruiBmzRJT
+	Category: fruits
+	Price: 0.74
+	Quantity: 500
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: King Orange
+	SKU: KingfruiGsrgRX
+	Category: fruits
+	Price: 0.78
+	Quantity: 994
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: King Orange
+	SKU: KingfruisOFzWk
+	Category: fruits
+	Price: 0.74
+	Quantity: 429
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kiwifruit
+	SKU: Kiwivege0Gi3P2
+	Category: vegetables
+	Price: 0.59
+	Quantity: 235
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kiwifruit
+	SKU: KiwivegeloZBKJ
+	Category: vegetables
+	Price: 0.60
+	Quantity: 769
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kiwifruit
+	SKU: KiwivegenCQAHw
+	Category: vegetables
+	Price: 0.59
+	Quantity: 307
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kohlrabi
+	SKU: Kohlvege32UTAj
+	Category: vegetables
+	Price: 0.28
+	Quantity: 613
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kohlrabi
+	SKU: KohlvegeJFKZDl
+	Category: vegetables
+	Price: 0.26
+	Quantity: 406
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Kohlrabi
+	SKU: KohlvegejNQC1M
+	Category: vegetables
+	Price: 0.28
+	Quantity: 326
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kola Nut
+	SKU: Kolafrui1ItXJx
+	Category: fruits
+	Price: 0.58
+	Quantity: 273
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kola Nut
+	SKU: KolafruiBbtAuw
+	Category: fruits
+	Price: 0.58
+	Quantity: 991
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kola Nut
+	SKU: KolafruirbnLVS
+	Category: fruits
+	Price: 0.62
+	Quantity: 733
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Kuko
+	SKU: Kukofrui6YH5Ds
+	Category: fruits
+	Price: 0.41
+	Quantity: 647
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kuko
+	SKU: Kukofrui7WZaZK
+	Category: fruits
+	Price: 0.39
+	Quantity: 241
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Kuko
+	SKU: Kukofruig9MQFT
+	Category: fruits
+	Price: 0.40
+	Quantity: 204
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kumquat
+	SKU: KumqfruiL6zhQX
+	Category: fruits
+	Price: 0.71
+	Quantity: 994
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Kumquat
+	SKU: KumqfruiT6WKQL
+	Category: fruits
+	Price: 0.73
+	Quantity: 388
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kumquat
+	SKU: KumqfruidLiFLU
+	Category: fruits
+	Price: 0.70
+	Quantity: 393
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Kwai Muk
+	SKU: KwaifruiQK1zOE
+	Category: fruits
+	Price: 1.10
+	Quantity: 249
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Kwai Muk
+	SKU: KwaifruifbCRlT
+	Category: fruits
+	Price: 1.14
+	Quantity: 657
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Kwai Muk
+	SKU: Kwaifruipe7T2m
+	Category: fruits
+	Price: 1.09
+	Quantity: 617
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Labanos
+	SKU: Labavege3qrWJL
+	Category: vegetables
+	Price: 0.94
+	Quantity: 514
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Labanos
+	SKU: LabavegeiVPgMx
+	Category: vegetables
+	Price: 0.89
+	Quantity: 207
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Labanos
+	SKU: LabavegekgVWDH
+	Category: vegetables
+	Price: 0.89
+	Quantity: 210
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Labong
+	SKU: LabovegeI1wSEs
+	Category: vegetables
+	Price: 0.87
+	Quantity: 472
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Labong
+	SKU: LabovegeOPiQht
+	Category: vegetables
+	Price: 0.85
+	Quantity: 740
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Labong
+	SKU: LabovegeX3O8yz
+	Category: vegetables
+	Price: 0.85
+	Quantity: 722
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Lanzone
+	SKU: LanzfruiYgHwv6
+	Category: fruits
+	Price: 0.34
+	Quantity: 237
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lanzone
+	SKU: LanzfruibU3QoL
+	Category: fruits
+	Price: 0.34
+	Quantity: 404
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lanzone
+	SKU: LanzfruijsPf1v
+	Category: fruits
+	Price: 0.34
+	Quantity: 835
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Leek
+	SKU: Leekvege5iaFtg
+	Category: vegetables
+	Price: 0.70
+	Quantity: 580
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Leek
+	SKU: Leekvegei9Wxbz
+	Category: vegetables
+	Price: 0.68
+	Quantity: 188
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Leek
+	SKU: LeekvegewY4mAc
+	Category: vegetables
+	Price: 0.70
+	Quantity: 473
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lemon
+	SKU: Lemofrui4Tgsg2
+	Category: fruits
+	Price: 0.46
+	Quantity: 843
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Lemon Grass
+	SKU: LemofruiGVAow0
+	Category: fruits
+	Price: 0.39
+	Quantity: 918
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lemon Grass
+	SKU: LemofruiVFgVh5
+	Category: fruits
+	Price: 0.40
+	Quantity: 575
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Lemon Grass
+	SKU: LemofruiWIelvi
+	Category: fruits
+	Price: 0.41
+	Quantity: 386
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lemon
+	SKU: LemofruiXSXqJ0
+	Category: fruits
+	Price: 0.44
+	Quantity: 910
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lemon
+	SKU: LemofruivK6qvj
+	Category: fruits
+	Price: 0.43
+	Quantity: 207
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lettuce
+	SKU: LettvegeHgfGG8
+	Category: vegetables
+	Price: 0.56
+	Quantity: 268
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lettuce
+	SKU: LettvegeWzMyCM
+	Category: vegetables
+	Price: 0.57
+	Quantity: 83
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Lettuce
+	SKU: LettvegesK9wDR
+	Category: vegetables
+	Price: 0.55
+	Quantity: 716
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Lilly-pilly
+	SKU: LillfruiEQnW1m
+	Category: fruits
+	Price: 1.21
+	Quantity: 974
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Lilly-pilly
+	SKU: LillfruiMqVuR5
+	Category: fruits
+	Price: 1.23
+	Quantity: 303
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lilly-pilly
+	SKU: LillfruiVGH9p4
+	Category: fruits
+	Price: 1.17
+	Quantity: 512
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ling Nut
+	SKU: LingfruiGtOf8X
+	Category: fruits
+	Price: 0.85
+	Quantity: 540
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ling Nut
+	SKU: LingfruiuO5qf5
+	Category: fruits
+	Price: 0.81
+	Quantity: 319
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ling Nut
+	SKU: LingfruiuP0Jf9
+	Category: fruits
+	Price: 0.83
+	Quantity: 200
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lipote
+	SKU: LipofruiHNdIqL
+	Category: fruits
+	Price: 0.85
+	Quantity: 579
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lipote
+	SKU: LipofruiSQ2pKK
+	Category: fruits
+	Price: 0.83
+	Quantity: 472
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lipote
+	SKU: LipofruisxD2Qc
+	Category: fruits
+	Price: 0.85
+	Quantity: 249
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Litchee
+	SKU: Litcfrui1R6Ydz
+	Category: fruits
+	Price: 0.99
+	Quantity: 806
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Litchee
+	SKU: LitcfruilpPZbC
+	Category: fruits
+	Price: 1.05
+	Quantity: 419
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Litchee
+	SKU: LitcfruiwtDM79
+	Category: fruits
+	Price: 1.01
+	Quantity: 219
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Longan
+	SKU: LongfruiEI0lWF
+	Category: fruits
+	Price: 1.02
+	Quantity: 573
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Longan
+	SKU: LongfruiPQxxSF
+	Category: fruits
+	Price: 1.04
+	Quantity: 227
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Longan
+	SKU: LongfruisdI812
+	Category: fruits
+	Price: 0.99
+	Quantity: 993
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Love-in-a-mist
+	SKU: LovefruiHrgjDa
+	Category: fruits
+	Price: 0.67
+	Quantity: 478
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Love-in-a-mist
+	SKU: LovefruiKYPW70
+	Category: fruits
+	Price: 0.69
+	Quantity: 388
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Love-in-a-mist
+	SKU: LovefruipSOWVz
+	Category: fruits
+	Price: 0.71
+	Quantity: 748
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lychee
+	SKU: LychfruiGY6yJr
+	Category: fruits
+	Price: 0.38
+	Quantity: 602
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Lychee
+	SKU: LychfruiTzDCq2
+	Category: fruits
+	Price: 0.40
+	Quantity: 572
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Lychee
+	SKU: LychfruiicVLnY
+	Category: fruits
+	Price: 0.38
+	Quantity: 276
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mabolo
+	SKU: MabofruiOWWk0n
+	Category: fruits
+	Price: 0.98
+	Quantity: 729
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Mabolo
+	SKU: MabofruiSY8RQS
+	Category: fruits
+	Price: 0.97
+	Quantity: 263
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mabolo
+	SKU: MabofruixQLOTF
+	Category: fruits
+	Price: 0.98
+	Quantity: 771
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Macadamia Nut
+	SKU: Macafrui4x8bxV
+	Category: fruits
+	Price: 1.20
+	Quantity: 536
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Macadamia Nut
+	SKU: MacafruiI7XFMV
+	Category: fruits
+	Price: 1.24
+	Quantity: 484
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Macadamia Nut
+	SKU: MacafruiZppJPw
+	Category: fruits
+	Price: 1.22
+	Quantity: 888
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Madagascar Plum
+	SKU: Madafrui7MTe1x
+	Category: fruits
+	Price: 1.17
+	Quantity: 355
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Madagascar Plum
+	SKU: MadafruiVj5fDf
+	Category: fruits
+	Price: 1.14
+	Quantity: 596
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Madagascar Plum
+	SKU: MadafruivJhAFI
+	Category: fruits
+	Price: 1.15
+	Quantity: 807
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Magnolia Vine
+	SKU: MagnfruiLPDSCp
+	Category: fruits
+	Price: 1.23
+	Quantity: 324
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Magnolia Vine
+	SKU: MagnfruicKtiHd
+	Category: fruits
+	Price: 1.15
+	Quantity: 353
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Magnolia Vine
+	SKU: MagnfruiigN4Y1
+	Category: fruits
+	Price: 1.17
+	Quantity: 321
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Malunggay
+	SKU: MaluvegeHkwAFm
+	Category: vegetables
+	Price: 0.30
+	Quantity: 252
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Malunggay
+	SKU: MaluvegewzY37D
+	Category: vegetables
+	Price: 0.31
+	Quantity: 405
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Malunggay
+	SKU: Maluvegez6TiSY
+	Category: vegetables
+	Price: 0.30
+	Quantity: 245
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mamey
+	SKU: Mamefrui5rjLF6
+	Category: fruits
+	Price: 0.36
+	Quantity: 683
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mamey
+	SKU: MamefruiM6ndnR
+	Category: fruits
+	Price: 0.38
+	Quantity: 404
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Mamey
+	SKU: Mamefruiq9KntD
+	Category: fruits
+	Price: 0.36
+	Quantity: 527
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Mandarin Orange
+	SKU: Mandfrui1V0KLG
+	Category: fruits
+	Price: 0.42
+	Quantity: 548
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Mandarin Orange
+	SKU: MandfruiRKpmKL
+	Category: fruits
+	Price: 0.42
+	Quantity: 352
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mandarin Orange
+	SKU: Mandfruig2o9Fg
+	Category: fruits
+	Price: 0.41
+	Quantity: 686
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Marany Nut
+	SKU: MarafruiB1YE5x
+	Category: fruits
+	Price: 1.09
+	Quantity: 412
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Marany Nut
+	SKU: MarafruiCGKpke
+	Category: fruits
+	Price: 1.12
+	Quantity: 482
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Marany Nut
+	SKU: MarafruiqkrwoJ
+	Category: fruits
+	Price: 1.14
+	Quantity: 273
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Marula
+	SKU: MarufruiIS8BEp
+	Category: fruits
+	Price: 0.21
+	Quantity: 454
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Marula
+	SKU: MarufruiXF4biH
+	Category: fruits
+	Price: 0.22
+	Quantity: 403
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Marula
+	SKU: MarufruidZiVKZ
+	Category: fruits
+	Price: 0.23
+	Quantity: 317
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Mayhaw
+	SKU: MayhfruiCSrm7k
+	Category: fruits
+	Price: 0.24
+	Quantity: 220
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mayhaw
+	SKU: MayhfruiIUCyEg
+	Category: fruits
+	Price: 0.24
+	Quantity: 818
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Mayhaw
+	SKU: MayhfruiNRDzWs
+	Category: fruits
+	Price: 0.25
+	Quantity: 710
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Meiwa Kumquat
+	SKU: MeiwfruiYhv3AY
+	Category: fruits
+	Price: 0.21
+	Quantity: 997
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Meiwa Kumquat
+	SKU: Meiwfruict4OUp
+	Category: fruits
+	Price: 0.21
+	Quantity: 923
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Meiwa Kumquat
+	SKU: MeiwfruiyzQFNR
+	Category: fruits
+	Price: 0.22
+	Quantity: 347
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Melons
+	SKU: Melovege6t93WF
+	Category: vegetables
+	Price: 0.11
+	Quantity: 252
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Melons
+	SKU: Melovege9kLTXN
+	Category: vegetables
+	Price: 0.12
+	Quantity: 382
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Melons
+	SKU: Melovegeq9kz7T
+	Category: vegetables
+	Price: 0.12
+	Quantity: 558
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mexican Barberry
+	SKU: Mexifrui2P2dXi
+	Category: fruits
+	Price: 0.28
+	Quantity: 914
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Mexican Barberry
+	SKU: MexifruijPHu5X
+	Category: fruits
+	Price: 0.29
+	Quantity: 367
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Mexican Barberry
+	SKU: MexifruiywUTMI
+	Category: fruits
+	Price: 0.29
+	Quantity: 782
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Meyer Lemon
+	SKU: MeyefruiNeQpjO
+	Category: fruits
+	Price: 0.37
+	Quantity: 617
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Mississippi Honeyber
+	SKU: MeyefruiYEVznZ
+	Category: fruits
+	Price: 0.37
+	Quantity: 741
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Meyer Lemon
+	SKU: Meyefruin9901J
+	Category: fruits
+	Price: 0.38
+	Quantity: 824
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Monkey Pot
+	SKU: Monkfrui1p7a4h
+	Category: fruits
+	Price: 0.88
+	Quantity: 344
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Monkey Pot
+	SKU: Monkfrui4eKggb
+	Category: fruits
+	Price: 0.92
+	Quantity: 917
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Monkey Pot
+	SKU: MonkfruiXlTW4j
+	Category: fruits
+	Price: 0.90
+	Quantity: 896
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Monos Plum
+	SKU: Monofrui0Mv9aV
+	Category: fruits
+	Price: 1.11
+	Quantity: 842
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Monos Plum
+	SKU: Monofrui6iTGQY
+	Category: fruits
+	Price: 1.14
+	Quantity: 570
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Monos Plum
+	SKU: MonofruiNu2uGH
+	Category: fruits
+	Price: 1.13
+	Quantity: 978
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Moosewood
+	SKU: Moosfrui8805mB
+	Category: fruits
+	Price: 0.86
+	Quantity: 963
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Moosewood
+	SKU: MoosfruiMXEGex
+	Category: fruits
+	Price: 0.86
+	Quantity: 969
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Moosewood
+	SKU: MoosfruiOsnDFL
+	Category: fruits
+	Price: 0.88
+	Quantity: 594
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Mousse, Cherry
+	SKU: Mousdess0ujevx
+	Category: desserts
+	Price: 12.43
+	Quantity: 1
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Mousse, Chocolate Ba
+	SKU: Mousdess8FyFT8
+	Category: desserts
+	Price: 5.96
+	Quantity: 1
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Mousse, Chocolate
+	SKU: MousdessDpN4sQ
+	Category: desserts
+	Price: 6.25
+	Quantity: 20
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Mousse, Strawberry
+	SKU: MousdessHCDlBK
+	Category: desserts
+	Price: 5.58
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Mousse, Strawberry
+	SKU: MousdessSZ4PyW
+	Category: desserts
+	Price: 5.36
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Mousse, Eggnog
+	SKU: MousdessZ38hXj
+	Category: desserts
+	Price: 9.07
+	Quantity: 10
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Mousse, Eggnog
+	SKU: Mousdesshs05ST
+	Category: desserts
+	Price: 8.81
+	Quantity: 8
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Mousse, Cherry
+	SKU: Mousdesss1bF8H
+	Category: desserts
+	Price: 13.05
+	Quantity: 20
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Munggo
+	SKU: MungvegeGxNxQC
+	Category: vegetables
+	Price: 0.25
+	Quantity: 555
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Munggo
+	SKU: MungvegeNhqWvL
+	Category: vegetables
+	Price: 0.26
+	Quantity: 360
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Munggo
+	SKU: MungvegeqeuwGw
+	Category: vegetables
+	Price: 0.25
+	Quantity: 362
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Mushroom
+	SKU: Mushvege8o27D2
+	Category: vegetables
+	Price: 0.55
+	Quantity: 467
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Mushroom
+	SKU: MushvegeSq53h8
+	Category: vegetables
+	Price: 0.59
+	Quantity: 365
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Mushroom
+	SKU: Mushvegedq6lYP
+	Category: vegetables
+	Price: 0.59
+	Quantity: 444
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Natal Orange
+	SKU: NatafruiOhqRrd
+	Category: fruits
+	Price: 0.42
+	Quantity: 982
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Natal Orange
+	SKU: NatafruiRObMf6
+	Category: fruits
+	Price: 0.41
+	Quantity: 268
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Natal Orange
+	SKU: NatafruitB8Kh2
+	Category: fruits
+	Price: 0.42
+	Quantity: 332
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Nectarine
+	SKU: Nectfrui5U7U96
+	Category: fruits
+	Price: 0.37
+	Quantity: 930
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Nectarine
+	SKU: NectfruiQfjt6b
+	Category: fruits
+	Price: 0.35
+	Quantity: 818
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Nectarine
+	SKU: NectfruilNfeD8
+	Category: fruits
+	Price: 0.36
+	Quantity: 601
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Neem Tree
+	SKU: NeemfruiCruEMF
+	Category: fruits
+	Price: 0.24
+	Quantity: 222
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Neem Tree
+	SKU: NeemfruiGv0pv5
+	Category: fruits
+	Price: 0.24
+	Quantity: 645
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Neem Tree
+	SKU: NeemfruiUFPVfk
+	Category: fruits
+	Price: 0.25
+	Quantity: 601
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: New Zealand Spinach
+	SKU: New fruiaoR9TP
+	Category: fruits
+	Price: 0.87
+	Quantity: 630
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: New Zealand Spinach
+	SKU: New fruihDIgec
+	Category: fruits
+	Price: 0.87
+	Quantity: 428
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: New Zealand Spinach
+	SKU: New fruiy8LBul
+	Category: fruits
+	Price: 0.94
+	Quantity: 570
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Okra
+	SKU: OkravegeD6tF9n
+	Category: vegetables
+	Price: 0.55
+	Quantity: 77
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Okra
+	SKU: OkravegeJBWmfh
+	Category: vegetables
+	Price: 0.58
+	Quantity: 165
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Okra
+	SKU: OkravegeTszQSL
+	Category: vegetables
+	Price: 0.55
+	Quantity: 62
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Olosapo
+	SKU: OlosfruiESlpB3
+	Category: fruits
+	Price: 0.76
+	Quantity: 560
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Olosapo
+	SKU: OlosfruiFNEkER
+	Category: fruits
+	Price: 0.76
+	Quantity: 962
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Olosapo
+	SKU: OlosfruiGXvaMm
+	Category: fruits
+	Price: 0.76
+	Quantity: 388
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Onion
+	SKU: OniovegeUOwwks
+	Category: vegetables
+	Price: 0.80
+	Quantity: 417
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Onion
+	SKU: OniovegejwimQo
+	Category: vegetables
+	Price: 0.80
+	Quantity: 186
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Onion
+	SKU: OniovegezcRDrc
+	Category: vegetables
+	Price: 0.80
+	Quantity: 435
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Oranges
+	SKU: OranfruiLEuzQj
+	Category: fruits
+	Price: 0.69
+	Quantity: 261
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Oranges
+	SKU: OranfruiRu6Ghr
+	Category: fruits
+	Price: 0.71
+	Quantity: 451
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Oranges
+	SKU: OranfruiXRPFn1
+	Category: fruits
+	Price: 0.73
+	Quantity: 263
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Oregon Grape
+	SKU: OregfruiC5UCxX
+	Category: fruits
+	Price: 1.17
+	Quantity: 419
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Oregon Grape
+	SKU: OregfruiMgjHUn
+	Category: fruits
+	Price: 1.20
+	Quantity: 959
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Oregon Grape
+	SKU: OregfruiWxhzrf
+	Category: fruits
+	Price: 1.14
+	Quantity: 892
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Oregano
+	SKU: Oregvege9h9ZKy
+	Category: vegetables
+	Price: 0.70
+	Quantity: 173
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Oregano
+	SKU: OregvegebXr0PJ
+	Category: vegetables
+	Price: 0.70
+	Quantity: 773
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Oregano
+	SKU: OregvegetlU7Ez
+	Category: vegetables
+	Price: 0.71
+	Quantity: 119
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Otaheite Apple
+	SKU: Otahfrui92PyMY
+	Category: fruits
+	Price: 0.22
+	Quantity: 857
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Otaheite Apple
+	SKU: OtahfruiLGD1EH
+	Category: fruits
+	Price: 0.20
+	Quantity: 807
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Otaheite Apple
+	SKU: OtahfruilT0iFj
+	Category: fruits
+	Price: 0.21
+	Quantity: 579
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Oyster Plant
+	SKU: Oystfrui1kudBX
+	Category: fruits
+	Price: 0.81
+	Quantity: 989
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Oyster Plant
+	SKU: OystfruiaX3uO2
+	Category: fruits
+	Price: 0.80
+	Quantity: 505
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Oyster Plant
+	SKU: OystfruimGxOsj
+	Category: fruits
+	Price: 0.77
+	Quantity: 835
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Panama Berry
+	SKU: PanafruiZG0Vp4
+	Category: fruits
+	Price: 1.19
+	Quantity: 288
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Panama Berry
+	SKU: PanafruiobvXPE
+	Category: fruits
+	Price: 1.21
+	Quantity: 541
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Panama Berry
+	SKU: PanafruipaW8F3
+	Category: fruits
+	Price: 1.16
+	Quantity: 471
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Parsnip
+	SKU: ParsvegeSxXHSA
+	Category: vegetables
+	Price: 0.47
+	Quantity: 411
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Parsley
+	SKU: ParsvegeXFEjjN
+	Category: vegetables
+	Price: 0.83
+	Quantity: 502
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Parsnip
+	SKU: Parsvegea0stPf
+	Category: vegetables
+	Price: 0.44
+	Quantity: 403
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Parsnip
+	SKU: Parsvegee9Lp6D
+	Category: vegetables
+	Price: 0.46
+	Quantity: 626
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Parsley
+	SKU: ParsvegehAtH2H
+	Category: vegetables
+	Price: 0.84
+	Quantity: 523
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Parsley
+	SKU: ParsvegejAg5C4
+	Category: vegetables
+	Price: 0.80
+	Quantity: 454
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Peach Tomato
+	SKU: PeacfruiILDYAp
+	Category: fruits
+	Price: 1.23
+	Quantity: 876
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Peach Tomato
+	SKU: PeacfruiQpovYH
+	Category: fruits
+	Price: 1.20
+	Quantity: 475
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Peach Tomato
+	SKU: PeacfruixYXLTN
+	Category: fruits
+	Price: 1.18
+	Quantity: 655
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Peanut Butter Fruit
+	SKU: Peanfrui7jeRN2
+	Category: fruits
+	Price: 0.27
+	Quantity: 938
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Peanut
+	SKU: PeanfruiEimbED
+	Category: fruits
+	Price: 0.65
+	Quantity: 307
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Peanut Butter Fruit
+	SKU: PeanfruiST0T0R
+	Category: fruits
+	Price: 0.27
+	Quantity: 910
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Peanut
+	SKU: Peanfruic452Vc
+	Category: fruits
+	Price: 0.68
+	Quantity: 937
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Peanut Butter Fruit
+	SKU: PeanfruixEDt9Y
+	Category: fruits
+	Price: 0.27
+	Quantity: 628
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Peanut
+	SKU: Peanfruiy8M7pt
+	Category: fruits
+	Price: 0.69
+	Quantity: 275
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pear
+	SKU: PearfruiA93XZx
+	Category: fruits
+	Price: 0.21
+	Quantity: 333
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Pear
+	SKU: PearfruiB5YmSJ
+	Category: fruits
+	Price: 0.20
+	Quantity: 945
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pear
+	SKU: PearfruioNKiIf
+	Category: fruits
+	Price: 0.21
+	Quantity: 715
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pea
+	SKU: Peavege46Gdp9
+	Category: vegetables
+	Price: 0.18
+	Quantity: 255
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pea
+	SKU: Peavegecq4SxR
+	Category: vegetables
+	Price: 0.18
+	Quantity: 342
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Pea
+	SKU: Peavegeov1gc5
+	Category: vegetables
+	Price: 0.18
+	Quantity: 251
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pecan
+	SKU: Pecafrui1szYz2
+	Category: fruits
+	Price: 0.25
+	Quantity: 929
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pecan
+	SKU: PecafruiMGkqla
+	Category: fruits
+	Price: 0.26
+	Quantity: 889
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Pecan
+	SKU: PecafruiiTIv1Z
+	Category: fruits
+	Price: 0.26
+	Quantity: 471
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pechay
+	SKU: Pechvege8Pq8Eo
+	Category: vegetables
+	Price: 0.36
+	Quantity: 141
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pechay
+	SKU: Pechvegehi4Fcx
+	Category: vegetables
+	Price: 0.35
+	Quantity: 723
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pechay
+	SKU: PechvegezDeHFZ
+	Category: vegetables
+	Price: 0.36
+	Quantity: 401
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Pepper
+	SKU: PeppvegeB60btP
+	Category: vegetables
+	Price: 0.35
+	Quantity: 107
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pepper
+	SKU: PeppvegeG4tP3e
+	Category: vegetables
+	Price: 0.34
+	Quantity: 481
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pepper
+	SKU: PeppvegeUcBYRp
+	Category: vegetables
+	Price: 0.33
+	Quantity: 52
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Pie, Cranberry Apple
+	SKU: Pie,dess1mL7IS
+	Category: desserts
+	Price: 10.16
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Pecan
+	SKU: Pie,dess2NqhNR
+	Category: desserts
+	Price: 12.70
+	Quantity: 20
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Lemon Meringue
+	SKU: Pie,dess9naVkX
+	Category: desserts
+	Price: 3.74
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Pecan
+	SKU: Pie,dessB1LfcE
+	Category: desserts
+	Price: 12.33
+	Quantity: 12
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Pumpkin
+	SKU: Pie,dessDg3NWl
+	Category: desserts
+	Price: 6.24
+	Quantity: 19
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Banana Cream
+	SKU: Pie,dessH80DuG
+	Category: desserts
+	Price: 7.35
+	Quantity: 6
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Raspberry
+	SKU: Pie,dessJflbf5
+	Category: desserts
+	Price: 2.36
+	Quantity: 2
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Lemon Meringue
+	SKU: Pie,dessKYcNML
+	Category: desserts
+	Price: 3.67
+	Quantity: 5
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Key Lime
+	SKU: Pie,dessMwQkKm
+	Category: desserts
+	Price: 5.13
+	Quantity: 1
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Caramel
+	SKU: Pie,dessSUuiIU
+	Category: desserts
+	Price: 2.27
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Apple
+	SKU: Pie,dessTbiwDp
+	Category: desserts
+	Price: 7.88
+	Quantity: 15
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Raspberry
+	SKU: Pie,dessUHhMlS
+	Category: desserts
+	Price: 2.36
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Banana Cream
+	SKU: Pie,dessf1YvFb
+	Category: desserts
+	Price: 7.08
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Apple
+	SKU: Pie,desshcSHhT
+	Category: desserts
+	Price: 7.88
+	Quantity: 11
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Key Lime
+	SKU: Pie,desshtli5N
+	Category: desserts
+	Price: 4.85
+	Quantity: 2
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Blueberry
+	SKU: Pie,dessiSjZKD
+	Category: desserts
+	Price: 2.12
+	Quantity: 1
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Cranberry Apple
+	SKU: Pie,dessmDhkUA
+	Category: desserts
+	Price: 10.16
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Caramel
+	SKU: Pie,dessvo8uHh
+	Category: desserts
+	Price: 2.33
+	Quantity: 4
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Pie, Blueberry
+	SKU: Pie,dessw9VdgD
+	Category: desserts
+	Price: 2.14
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pie, Pumpkin
+	SKU: Pie,desswhPBPB
+	Category: desserts
+	Price: 6.00
+	Quantity: 20
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Pigeon Pea
+	SKU: Pigevegeb93eLi
+	Category: vegetables
+	Price: 0.91
+	Quantity: 447
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Pigeon Pea
+	SKU: Pigevegec5bAtm
+	Category: vegetables
+	Price: 0.94
+	Quantity: 391
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Pigeon Pea
+	SKU: PigevegejEBDRa
+	Category: vegetables
+	Price: 0.89
+	Quantity: 259
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pumpkin
+	SKU: Pumpvegeb3nQU5
+	Category: vegetables
+	Price: 0.26
+	Quantity: 207
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Pumpkin
+	SKU: PumpvegeiYsPR8
+	Category: vegetables
+	Price: 0.25
+	Quantity: 776
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Pumpkin
+	SKU: PumpvegelqP1Kh
+	Category: vegetables
+	Price: 0.25
+	Quantity: 189
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Purple Passion Fruit
+	SKU: Purpfrui4mMGkD
+	Category: fruits
+	Price: 1.04
+	Quantity: 914
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Purple Passion Fruit
+	SKU: Purpfrui5XOW3K
+	Category: fruits
+	Price: 1.06
+	Quantity: 423
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Purple Passion Fruit
+	SKU: PurpfruifDTAgW
+	Category: fruits
+	Price: 1.05
+	Quantity: 549
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Radish
+	SKU: Radivege0tIBnL
+	Category: vegetables
+	Price: 0.16
+	Quantity: 779
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Radish
+	SKU: RadivegeNLqJCf
+	Category: vegetables
+	Price: 0.16
+	Quantity: 731
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Radish
+	SKU: RadivegeNwwSBJ
+	Category: vegetables
+	Price: 0.16
+	Quantity: 613
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Red Princess
+	SKU: Red frui0jl9mg
+	Category: fruits
+	Price: 0.24
+	Quantity: 252
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Red Mulberry
+	SKU: Red fruiUseWLG
+	Category: fruits
+	Price: 1.21
+	Quantity: 795
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Red Mulberry
+	SKU: Red fruiVLOXIW
+	Category: fruits
+	Price: 1.24
+	Quantity: 270
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Red Mulberry
+	SKU: Red fruiXNXt4a
+	Category: fruits
+	Price: 1.21
+	Quantity: 836
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Red Princess
+	SKU: Red fruigJLR4V
+	Category: fruits
+	Price: 0.23
+	Quantity: 829
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Red Princess
+	SKU: Red fruinVKps5
+	Category: fruits
+	Price: 0.23
+	Quantity: 558
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Rhubarb
+	SKU: Rhubvege4Jc3b7
+	Category: vegetables
+	Price: 0.12
+	Quantity: 557
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Rhubarb
+	SKU: RhubvegeREfOti
+	Category: vegetables
+	Price: 0.12
+	Quantity: 301
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Rhubarb
+	SKU: RhubvegeaXqF7H
+	Category: vegetables
+	Price: 0.12
+	Quantity: 378
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Rosemary
+	SKU: Rosevege16QStc
+	Category: vegetables
+	Price: 0.73
+	Quantity: 380
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Rosemary
+	SKU: RosevegeFgsOyN
+	Category: vegetables
+	Price: 0.74
+	Quantity: 631
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Rosemary
+	SKU: RosevegeNf6Oem
+	Category: vegetables
+	Price: 0.75
+	Quantity: 622
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Rutabaga
+	SKU: RutavegecUYfQ3
+	Category: vegetables
+	Price: 0.55
+	Quantity: 676
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Rutabaga
+	SKU: RutavegejOG5DF
+	Category: vegetables
+	Price: 0.55
+	Quantity: 273
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Rutabaga
+	SKU: RutavegewEVjzV
+	Category: vegetables
+	Price: 0.53
+	Quantity: 452
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Salsify
+	SKU: SalsvegeViS9HF
+	Category: vegetables
+	Price: 0.11
+	Quantity: 537
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Salsify
+	SKU: Salsvegemd3HAL
+	Category: vegetables
+	Price: 0.11
+	Quantity: 753
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Salsify
+	SKU: SalsvegeuRCnmq
+	Category: vegetables
+	Price: 0.10
+	Quantity: 787
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Savory
+	SKU: Savovegee4DRWl
+	Category: vegetables
+	Price: 0.21
+	Quantity: 456
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Savory
+	SKU: Savovegeje7yy7
+	Category: vegetables
+	Price: 0.22
+	Quantity: 328
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Savory
+	SKU: SavovegerZ90Xm
+	Category: vegetables
+	Price: 0.21
+	Quantity: 642
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sesame
+	SKU: Sesavege4NAWZE
+	Category: vegetables
+	Price: 0.84
+	Quantity: 54
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sesame
+	SKU: SesavegeMTc9IN
+	Category: vegetables
+	Price: 0.84
+	Quantity: 458
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sesame
+	SKU: SesavegegOwAjo
+	Category: vegetables
+	Price: 0.83
+	Quantity: 125
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Shallots
+	SKU: ShalvegeSDC8VY
+	Category: vegetables
+	Price: 0.27
+	Quantity: 369
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Shallots
+	SKU: ShalvegeUO2pDO
+	Category: vegetables
+	Price: 0.26
+	Quantity: 599
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Shallots
+	SKU: ShalvegeY1sekb
+	Category: vegetables
+	Price: 0.27
+	Quantity: 647
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sherbet, Lemon Milk
+	SKU: Sherdess1JVFOS
+	Category: desserts
+	Price: 7.57
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sherbet, Cantaloupe
+	SKU: Sherdess3DCxUg
+	Category: desserts
+	Price: 3.11
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sherbet, Orange Crus
+	SKU: SherdessC865vu
+	Category: desserts
+	Price: 7.57
+	Quantity: 0
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Sherbet, Blueberry
+	SKU: SherdessFAgxqp
+	Category: desserts
+	Price: 3.46
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sherbet, Strawberry
+	SKU: SherdessFwv09m
+	Category: desserts
+	Price: 4.63
+	Quantity: 17
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sherbet, Strawberry
+	SKU: SherdessKB0H7q
+	Category: desserts
+	Price: 4.81
+	Quantity: 20
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Sherbet, Blueberry
+	SKU: SherdessMPL87u
+	Category: desserts
+	Price: 3.60
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Sherbet, Cantaloupe
+	SKU: Sherdesscp2VIz
+	Category: desserts
+	Price: 2.99
+	Quantity: 7
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Sherbet, Raspberry
+	SKU: Sherdesse86ugA
+	Category: desserts
+	Price: 6.08
+	Quantity: 1
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sherbet, Raspberry
+	SKU: Sherdesslc1etR
+	Category: desserts
+	Price: 5.85
+	Quantity: 12
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Sigarilyas
+	SKU: SigavegeLhsoOB
+	Category: vegetables
+	Price: 0.87
+	Quantity: 768
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sigarilyas
+	SKU: SigavegeMJrtlV
+	Category: vegetables
+	Price: 0.88
+	Quantity: 335
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sigarilyas
+	SKU: SigavegeS6RJcA
+	Category: vegetables
+	Price: 0.93
+	Quantity: 356
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Sitaw
+	SKU: Sitavege0BCNeF
+	Category: vegetables
+	Price: 0.66
+	Quantity: 674
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Sitaw
+	SKU: Sitavege0hMi9z
+	Category: vegetables
+	Price: 0.65
+	Quantity: 153
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sitaw
+	SKU: Sitavegeez1g6N
+	Category: vegetables
+	Price: 0.67
+	Quantity: 561
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Snake gourd
+	SKU: Snakvegec5n1UM
+	Category: vegetables
+	Price: 0.92
+	Quantity: 143
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Snake gourd
+	SKU: SnakvegedlNiBk
+	Category: vegetables
+	Price: 0.92
+	Quantity: 669
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Snake gourd
+	SKU: SnakvegesfHGvt
+	Category: vegetables
+	Price: 0.92
+	Quantity: 626
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sorbet, Blackberry
+	SKU: SorbdessQoa0CE
+	Category: desserts
+	Price: 9.88
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Sorbet, Blackberry
+	SKU: SorbdessqoOYzv
+	Category: desserts
+	Price: 9.78
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Soybean
+	SKU: SoybvegebanSFq
+	Category: vegetables
+	Price: 0.67
+	Quantity: 268
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Soybean
+	SKU: SoybvegeqxSVRL
+	Category: vegetables
+	Price: 0.70
+	Quantity: 639
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Soybean
+	SKU: SoybvegezEMjOG
+	Category: vegetables
+	Price: 0.68
+	Quantity: 423
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Spaghetti Squash
+	SKU: SpagvegeAOoZNX
+	Category: vegetables
+	Price: 0.13
+	Quantity: 431
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Spaghetti Squash
+	SKU: SpagvegeMNO1yC
+	Category: vegetables
+	Price: 0.12
+	Quantity: 753
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Spaghetti Squash
+	SKU: SpagvegeilpUaD
+	Category: vegetables
+	Price: 0.13
+	Quantity: 604
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Spinach
+	SKU: SpinvegeVcqXL6
+	Category: vegetables
+	Price: 0.11
+	Quantity: 708
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Spinach
+	SKU: SpinvegeegXXou
+	Category: vegetables
+	Price: 0.10
+	Quantity: 742
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Spinach
+	SKU: SpinvegetZ26DN
+	Category: vegetables
+	Price: 0.11
+	Quantity: 625
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Striped Screw Pine
+	SKU: StrifruiUKzjoU
+	Category: fruits
+	Price: 0.60
+	Quantity: 226
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Striped Screw Pine
+	SKU: StrifruiiF7CGH
+	Category: fruits
+	Price: 0.60
+	Quantity: 983
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Striped Screw Pine
+	SKU: StrifruivWLDzH
+	Category: fruits
+	Price: 0.64
+	Quantity: 685
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Sugar Snap Peas
+	SKU: Sugavege1XyzNH
+	Category: vegetables
+	Price: 0.48
+	Quantity: 205
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sugar Snap Peas
+	SKU: SugavegeJuaG7f
+	Category: vegetables
+	Price: 0.46
+	Quantity: 348
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Sugar Snap Peas
+	SKU: SugavegepUZDTl
+	Category: vegetables
+	Price: 0.47
+	Quantity: 308
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sweet Potato
+	SKU: SweevegepNDQWb
+	Category: vegetables
+	Price: 0.94
+	Quantity: 720
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Sweet Potato
+	SKU: Sweevegepnw7Tm
+	Category: vegetables
+	Price: 0.90
+	Quantity: 377
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Sweet Potato
+	SKU: Sweevegeyk0C82
+	Category: vegetables
+	Price: 0.89
+	Quantity: 242
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Swiss Chard
+	SKU: SwisvegeKm2Kze
+	Category: vegetables
+	Price: 0.54
+	Quantity: 472
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Swiss Chard
+	SKU: SwisvegehteuMk
+	Category: vegetables
+	Price: 0.56
+	Quantity: 142
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Swiss Chard
+	SKU: SwisvegeksalTA
+	Category: vegetables
+	Price: 0.54
+	Quantity: 545
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Talong
+	SKU: TalovegeO3U2ze
+	Category: vegetables
+	Price: 0.10
+	Quantity: 126
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Talong
+	SKU: TalovegevZjVK6
+	Category: vegetables
+	Price: 0.10
+	Quantity: 530
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Talong
+	SKU: TalovegexX4MRw
+	Category: vegetables
+	Price: 0.09
+	Quantity: 305
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tapioca
+	SKU: TapifruiZ6Igg3
+	Category: fruits
+	Price: 0.41
+	Quantity: 655
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Tapioca
+	SKU: Tapifruib4LCqt
+	Category: fruits
+	Price: 0.40
+	Quantity: 955
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tapioca
+	SKU: TapifruiwgQLj9
+	Category: fruits
+	Price: 0.41
+	Quantity: 889
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Taro
+	SKU: Tarovege3fpGV6
+	Category: vegetables
+	Price: 0.87
+	Quantity: 155
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Taro
+	SKU: TarovegeXKPuzc
+	Category: vegetables
+	Price: 0.89
+	Quantity: 443
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Taro
+	SKU: TarovegerZkmof
+	Category: vegetables
+	Price: 0.86
+	Quantity: 371
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tarragon
+	SKU: TarrvegeCzVC6U
+	Category: vegetables
+	Price: 0.18
+	Quantity: 491
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Tarragon
+	SKU: TarrvegerZsKFP
+	Category: vegetables
+	Price: 0.18
+	Quantity: 180
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Tarragon
+	SKU: TarrvegesIkEfS
+	Category: vegetables
+	Price: 0.17
+	Quantity: 65
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tart, Almond
+	SKU: Tartdess1V1A1c
+	Category: desserts
+	Price: 6.68
+	Quantity: 13
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Strawberry
+	SKU: Tartdess2BeEDb
+	Category: desserts
+	Price: 4.61
+	Quantity: 17
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Chocolate-Pear
+	SKU: Tartdess2pdOE4
+	Category: desserts
+	Price: 5.67
+	Quantity: 17
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Strawberry
+	SKU: Tartdess4IUcZW
+	Category: desserts
+	Price: 4.75
+	Quantity: 8
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Pear
+	SKU: Tartdess4a1BUc
+	Category: desserts
+	Price: 10.09
+	Quantity: 2
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Raspberry
+	SKU: Tartdess5fqxgy
+	Category: desserts
+	Price: 1.94
+	Quantity: 20
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Pecan
+	SKU: Tartdess6YXJec
+	Category: desserts
+	Price: 11.04
+	Quantity: 13
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Lemon Fudge
+	SKU: Tartdess9DhZUT
+	Category: desserts
+	Price: 3.88
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Pineapple
+	SKU: TartdessA2Wftr
+	Category: desserts
+	Price: 8.44
+	Quantity: 13
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Raspberry
+	SKU: TartdessAVnpP6
+	Category: desserts
+	Price: 6.18
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Almond
+	SKU: TartdessC7FARL
+	Category: desserts
+	Price: 6.62
+	Quantity: 10
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Chocolate-Pear
+	SKU: TartdessL3aEDd
+	Category: desserts
+	Price: 5.51
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Pear
+	SKU: TartdessNw8YPG
+	Category: desserts
+	Price: 10.68
+	Quantity: 5
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Blueberry
+	SKU: TartdessUSJSuc
+	Category: desserts
+	Price: 10.28
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Pineapple
+	SKU: TartdesseMfJFe
+	Category: desserts
+	Price: 9.01
+	Quantity: 18
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Raspberry
+	SKU: TartdessfVxZFf
+	Category: desserts
+	Price: 5.95
+	Quantity: 9
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Raspberry
+	SKU: TartdesshyBd24
+	Category: desserts
+	Price: 1.85
+	Quantity: 5
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Lemon Fudge
+	SKU: TartdesshzLOWt
+	Category: desserts
+	Price: 3.96
+	Quantity: 13
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Apple
+	SKU: Tartdessp7pyiy
+	Category: desserts
+	Price: 3.13
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Tart, Apple
+	SKU: TartdessrsTyXA
+	Category: desserts
+	Price: 3.35
+	Quantity: 18
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Blueberry
+	SKU: TartdesssQZRXX
+	Category: desserts
+	Price: 10.28
+	Quantity: 10
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tart, Pecan
+	SKU: TartdessvSbXzd
+	Category: desserts
+	Price: 11.80
+	Quantity: 3
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Tavola
+	SKU: Tavofrui0k9XOt
+	Category: fruits
+	Price: 1.16
+	Quantity: 938
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tavola
+	SKU: Tavofrui8DuRxL
+	Category: fruits
+	Price: 1.08
+	Quantity: 979
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Tavola
+	SKU: TavofruiNZEuJZ
+	Category: fruits
+	Price: 1.16
+	Quantity: 215
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Tea
+	SKU: TeafruiD5soTf
+	Category: fruits
+	Price: 1.13
+	Quantity: 970
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Tea
+	SKU: TeafruiL0357s
+	Category: fruits
+	Price: 1.11
+	Quantity: 516
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tea
+	SKU: TeafruiOWq4oO
+	Category: fruits
+	Price: 1.19
+	Quantity: 357
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Thyme
+	SKU: Thymvege8Rv72c
+	Category: vegetables
+	Price: 0.41
+	Quantity: 442
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Thyme
+	SKU: ThymvegeJoUdQS
+	Category: vegetables
+	Price: 0.42
+	Quantity: 237
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Thyme
+	SKU: ThymvegeRck5uO
+	Category: vegetables
+	Price: 0.43
+	Quantity: 491
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Toge
+	SKU: TogevegeYelJUw
+	Category: vegetables
+	Price: 0.54
+	Quantity: 449
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Toge
+	SKU: Togevegeilr1xK
+	Category: vegetables
+	Price: 0.54
+	Quantity: 274
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Toge
+	SKU: Togevegesvjnyn
+	Category: vegetables
+	Price: 0.51
+	Quantity: 316
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Tomato
+	SKU: TomavegeKAjRUn
+	Category: vegetables
+	Price: 0.30
+	Quantity: 630
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Tomato
+	SKU: TomavegePZOHlH
+	Category: vegetables
+	Price: 0.30
+	Quantity: 70
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Tomato
+	SKU: Tomavegey0NHGK
+	Category: vegetables
+	Price: 0.31
+	Quantity: 60
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Trifle, Scotch Whisk
+	SKU: Trifdess1rtW0A
+	Category: desserts
+	Price: 3.58
+	Quantity: 3
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, English
+	SKU: Trifdess52l955
+	Category: desserts
+	Price: 8.12
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, Scottish
+	SKU: TrifdessAAUQCN
+	Category: desserts
+	Price: 14.03
+	Quantity: 6
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, Berry
+	SKU: TrifdessAV9Ix8
+	Category: desserts
+	Price: 12.60
+	Quantity: 18
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, Strawberry
+	SKU: TrifdessAd5TpV
+	Category: desserts
+	Price: 3.58
+	Quantity: 11
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Scottish
+	SKU: TrifdessFa0JdK
+	Category: desserts
+	Price: 13.63
+	Quantity: 0
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Orange
+	SKU: TrifdessFrfCHP
+	Category: desserts
+	Price: 10.22
+	Quantity: 1
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, Pumpkin
+	SKU: TrifdessJKFN96
+	Category: desserts
+	Price: 4.72
+	Quantity: 7
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Pumpkin
+	SKU: TrifdessMNw4EV
+	Category: desserts
+	Price: 4.95
+	Quantity: 16
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, American
+	SKU: TrifdessTArskm
+	Category: desserts
+	Price: 4.35
+	Quantity: 11
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Trifle, English
+	SKU: TrifdessX87q8T
+	Category: desserts
+	Price: 8.20
+	Quantity: 9
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, American
+	SKU: TrifdesscsdSCd
+	Category: desserts
+	Price: 4.70
+	Quantity: 17
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Sherry
+	SKU: TrifdesscuttJg
+	Category: desserts
+	Price: 4.42
+	Quantity: 5
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Orange
+	SKU: TrifdesslUwxwe
+	Category: desserts
+	Price: 9.74
+	Quantity: 15
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Berry
+	SKU: TrifdessmEkbU2
+	Category: desserts
+	Price: 12.48
+	Quantity: 19
+	Vendor:
+		Mom's Kitchen
+		53 Yerman Ct.
+		Middle Town, MN
+		55432
+
+		763 554 9200
+
+		Contact: Maggie Kultgen
+		763 554 9200 x12
+name: Trifle, Sherry
+	SKU: TrifdesspRGpfP
+	Category: desserts
+	Price: 4.21
+	Quantity: 19
+	Vendor:
+		The Baking Pan
+		1415 53rd Ave.
+		Dutchin, MN
+		56304
+
+		320 442 2277
+
+		Contact: Mike Roan
+		320 442 6879
+name: Turnip
+	SKU: TurnvegeRVQiV5
+	Category: vegetables
+	Price: 0.44
+	Quantity: 580
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Turnip
+	SKU: TurnvegeVjIX9D
+	Category: vegetables
+	Price: 0.45
+	Quantity: 743
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Turnip
+	SKU: TurnvegelFhvuJ
+	Category: vegetables
+	Price: 0.44
+	Quantity: 219
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ube
+	SKU: Ubevege2CNyve
+	Category: vegetables
+	Price: 0.55
+	Quantity: 450
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ube
+	SKU: UbevegeC43sVj
+	Category: vegetables
+	Price: 0.55
+	Quantity: 263
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Ube
+	SKU: UbevegeoPnxvb
+	Category: vegetables
+	Price: 0.56
+	Quantity: 397
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Ugli Fruit
+	SKU: UglifruifbDrzc
+	Category: fruits
+	Price: 0.24
+	Quantity: 642
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Ugli Fruit
+	SKU: UglifruipKNCpf
+	Category: fruits
+	Price: 0.24
+	Quantity: 501
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ugli Fruit
+	SKU: Uglifruiwx8or4
+	Category: fruits
+	Price: 0.24
+	Quantity: 280
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Upo
+	SKU: UpovegecOGRqC
+	Category: vegetables
+	Price: 0.22
+	Quantity: 404
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Upo
+	SKU: Upovegekjl2wl
+	Category: vegetables
+	Price: 0.22
+	Quantity: 541
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Upo
+	SKU: UpovegemTTTwI
+	Category: vegetables
+	Price: 0.23
+	Quantity: 459
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Vegetable Brain
+	SKU: VegefruiKBfzN0
+	Category: fruits
+	Price: 0.72
+	Quantity: 453
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Vegetable Brain
+	SKU: VegefruieXLBoc
+	Category: fruits
+	Price: 0.73
+	Quantity: 355
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Vegetable Brain
+	SKU: Vegefruik5FSdl
+	Category: fruits
+	Price: 0.71
+	Quantity: 498
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Wasabi
+	SKU: Wasavege1ve7TY
+	Category: vegetables
+	Price: 0.65
+	Quantity: 61
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Wasabi
+	SKU: Wasavege5P5pZp
+	Category: vegetables
+	Price: 0.67
+	Quantity: 751
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Wasabi
+	SKU: Wasavege6EEE9r
+	Category: vegetables
+	Price: 0.68
+	Quantity: 559
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Watercress
+	SKU: Watevege8oeDCT
+	Category: vegetables
+	Price: 0.54
+	Quantity: 774
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Watermelon
+	SKU: WatevegeL83MRH
+	Category: vegetables
+	Price: 0.19
+	Quantity: 698
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Watermelon
+	SKU: WatevegeR2S4Dq
+	Category: vegetables
+	Price: 0.21
+	Quantity: 488
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Watercress
+	SKU: WatevegelwzPLQ
+	Category: vegetables
+	Price: 0.54
+	Quantity: 230
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Watermelon
+	SKU: WatevegepFPXQu
+	Category: vegetables
+	Price: 0.21
+	Quantity: 439
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Watercress
+	SKU: Watevegexr8L1t
+	Category: vegetables
+	Price: 0.55
+	Quantity: 185
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: White Walnut
+	SKU: WhitfruiHygydw
+	Category: fruits
+	Price: 0.30
+	Quantity: 913
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: White Walnut
+	SKU: WhitfruieNtplo
+	Category: fruits
+	Price: 0.30
+	Quantity: 401
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: White Walnut
+	SKU: Whitfruit3oVHL
+	Category: fruits
+	Price: 0.30
+	Quantity: 501
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Wood Apple
+	SKU: Woodfrui4Zk69T
+	Category: fruits
+	Price: 0.68
+	Quantity: 616
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Wood Apple
+	SKU: WoodfruijVPRqA
+	Category: fruits
+	Price: 0.68
+	Quantity: 501
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Wood Apple
+	SKU: WoodfruiuSLHZK
+	Category: fruits
+	Price: 0.70
+	Quantity: 474
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Yam
+	SKU: YamvegeI1AnyI
+	Category: vegetables
+	Price: 0.56
+	Quantity: 456
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Yam
+	SKU: YamvegeRN9ONH
+	Category: vegetables
+	Price: 0.57
+	Quantity: 438
+	Vendor:
+		The Pantry
+		1206 N. Creek Way
+		Middle Town, MN
+		55432
+
+		763 555 3391
+
+		Contact: Sully Beckstrom
+		763 555 3391
+name: Yam
+	SKU: YamvegeWjdzeA
+	Category: vegetables
+	Price: 0.56
+	Quantity: 564
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Yellow Horn
+	SKU: Yellfrui0DiPqa
+	Category: fruits
+	Price: 1.13
+	Quantity: 517
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Yellow Horn
+	SKU: Yellfrui0ljvqC
+	Category: fruits
+	Price: 1.14
+	Quantity: 853
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Yellow Sapote
+	SKU: Yellfrui4J2mke
+	Category: fruits
+	Price: 0.88
+	Quantity: 269
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Yellow Horn
+	SKU: Yellfrui5igjjf
+	Category: fruits
+	Price: 1.18
+	Quantity: 729
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Yellow Sapote
+	SKU: Yellfrui6PuXaL
+	Category: fruits
+	Price: 0.86
+	Quantity: 575
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Yellow Sapote
+	SKU: YellfruilGmCfq
+	Category: fruits
+	Price: 0.93
+	Quantity: 204
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ylang-ylang
+	SKU: Ylanfrui3rmByO
+	Category: fruits
+	Price: 0.76
+	Quantity: 429
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Ylang-ylang
+	SKU: YlanfruiA80Nkq
+	Category: fruits
+	Price: 0.76
+	Quantity: 886
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Ylang-ylang
+	SKU: YlanfruinUEm5d
+	Category: fruits
+	Price: 0.72
+	Quantity: 747
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Zapote Blanco
+	SKU: ZapofruiAe6Eu1
+	Category: fruits
+	Price: 0.68
+	Quantity: 255
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Zapote Blanco
+	SKU: ZapofruilKxl7N
+	Category: fruits
+	Price: 0.65
+	Quantity: 924
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+name: Zapote Blanco
+	SKU: ZapofruisZ5sMA
+	Category: fruits
+	Price: 0.67
+	Quantity: 428
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Zulu Nut
+	SKU: Zulufrui0LJnWK
+	Category: fruits
+	Price: 0.71
+	Quantity: 858
+	Vendor:
+		Off the Vine
+		133 American Ct.
+		Centennial, IA
+		52002
+
+		563 121 3800
+
+		Contact: Bob King
+		563 121 3800 x54
+name: Zulu Nut
+	SKU: Zulufrui469K4k
+	Category: fruits
+	Price: 0.71
+	Quantity: 445
+	Vendor:
+		TriCounty Produce
+		309 S. Main Street
+		Middle Town, MN
+		55432
+
+		763 555 5761
+
+		Contact: Mort Dufresne
+		763 555 5765
+name: Zulu Nut
+	SKU: ZulufruiWbz6vU
+	Category: fruits
+	Price: 0.71
+	Quantity: 653
+	Vendor:
+		Simply Fresh
+		15612 Bogart Lane
+		Harrigan, WI
+		53704
+
+		420 333 3912
+
+		Contact: Cheryl Swedberg
+		420 333 3952
+databases closed.
