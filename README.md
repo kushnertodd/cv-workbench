@@ -42,8 +42,15 @@ or in some IDEs such as [notepad++](https://notepad-plus-plus.org/) or JetBrains
 and link with `-ljson-c`.
 
 ### Berkeley DB
-Install the [Berkeley DB](https://cryptoandcoffee.com/mining-gems/install-berkeley-4-8-db-libs-on-ubuntu-16-04/) 
-open source embedded database system.
+Install the Berkeley DB open source embedded database system from the zip
+[source](https://www.oracle.com/database/technologies/related/berkeleydb-downloads.html)
+with these [instructions](https://docs.oracle.com/cd/E17076_05/html/installation/index.html).
+- See alternate install [instructions](https://cryptoandcoffee.com/mining-gems/install-berkeley-4-8-db-libs-on-ubuntu-16-04)
+for the freesource version.
+- You make need to install these packages:
+```
+sudo apt install autoconf libtool
+```
 - See the Oracle Berkeley DB [documentation](https://docs.oracle.com/cd/E17276_01/html/programmer_reference/index.html).
 - Other documentation is at [DZone](https://dzone.com/refcardz/getting-started-oracle)
 - See Berkeley DB [tutorials](https://web.stanford.edu/class/cs276a/projects/docs/berkeleydb/reftoc.html)
