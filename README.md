@@ -1,4 +1,4 @@
-# cv-workbench
+# CV-Workbench
 
 Computer vision experimentation workbench
 
@@ -7,6 +7,38 @@ Computer vision experimentation workbench
 Computer vision is an experimental science. Developing computer vision algorithms involves experimentation with
 vision [*operators*](#fn_operator) and finding appropriate parameters to measure the characteristics of interest in
 images.
+The CV-Workbench is a framework to perform reproducible computer vision experiments. 
+- Users define experiment steps and store them allowing experiments to easily be reproduced.
+- An experiment management module guides running image processing operations.
+- Image processing modules run with the specified input images and data.
+- Experiment results with notes and explanations, and output images and data are stored on completion.
+- Experiments can be shared between CV-Workbench instances installed on different machines.
+
+![Workbench overview](workbench_overview.jpeg)
+
+Image and other data may reside in different data stores. 
+Each data store is accessed by a different method.
+- Relational databases (RDBMS) can be accessed by a key for each data item. The data is likely
+stored in a *binary large object* (BLOB) associated with the key.
+- Berkeley DB is a non-relational database where each data item can be accessed by an id.
+- Data can reside in files on the filesystem, where the filename identifies where to access the data.
+- The Internet can provide data via a *URL* that sends data. This usually is a read-only access.  
+
+![Workbench data store](workbench_data_store.jpeg)
+
+Each data item consists of various components.
+- The type of data being stored, e.g., images, histograms, etc.
+Experiment definitions may be stored in any data store, 
+though simplest is to store them in a file.
+- The dimensions of the data, if relevant. 
+This include image size and pixel bit width,
+histogram bucket count and value range, etc.
+- Other parameters of the data.
+- The data itself, stored as binary or text.
+
+The non-binary portions of the data will usually be stored as [JSON](https://json.org).
+JSON allows a flexible format for data, and allows easily changing
+the contents and format as needed.
 
 ## Prerequisites
 The software is assumed to run under Linux [Ubuntu](https://ubuntu.com/) or compatible Linux version, 
@@ -376,8 +408,8 @@ understanding the Sobel operators.
 
 ## Command Parameters
 In the record of an experiment,
-the commands performed and the actual parameters used
-in the commands will be stored. 
+the operators performed and the actual parameters used
+in the operators will be stored. 
 They will be recorded as JSON text
 with parameters matching the template format for them.
 
@@ -385,47 +417,92 @@ with parameters matching the template format for them.
 
 These will vary for different operators.
 Each command performing an operator must have a valid name.
-The parameters JSON will match the template format like this;
+A generic operator parameter definition would be this.
+It defines the attributes required,
+their types,
+and constraints on the parameters such as whether they are required or default value if omitted,
+and allowed value range or permitted values if applicable.
 ```
 {
-  "operator-name-1": {
-    "id": 1,
-    "domain": "string",
-    "class": "string",
-    "instance": "string",
-    "parameters": [
-      {
-        "name": "parameter-1",
-        "value": "value",
+  "_comment": [
+    "string, etc."
+  ],
+  "id": 1,
+  "domain": "string",
+  "class": "string",
+  "instance": "string",
+  "input-data": {
+  },
+  "output-data": {
+  },
+  "parameters": [
+    {
+      "_comment": [
+        "string, etc."
+      ],
+      "name": "string",
+      "required": "true|false",
+      "data-type": "int|real|string|boolean",
+      "default": "string",
+      "range": {
+        "min-value": "string",
+        "max-value": "string"
       },
-      {
-        "name": "parameter-2, etc."
-      }
-    ]
-  }
+      "valid-values": [
+        "string",
+        "string"
+      ]
+    },
+    {
+      "name": "string, etc."
+    }
+  ]
 }
 ```
-Example parameters for a Sobel edge operator is this.
+An example parameters for a Sobel edge operator definition is this.
 ```
 {
-  "Sobel": {
-    "id": 4,
-    "domain": "filters",
-    "class": "edge-detection",
-    "parameters": [
-      {
-        "name": "orientation",
-        "value": 0
-      }
-    ]
-  }
+  "_comment": [
+    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
+  ],
+  "id": 4,
+  "domain": "filters",
+  "class": "edge detection",
+  "instance": "Sobel",
+  "input-data": {
+    "type": "image",
+    "channels": "grayscale"
+  },
+  "output-data": {
+    "type": "image",
+    "channels": "grayscale"  },
+  "parameters": [
+    {
+      "__comment": [
+        " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+        "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
+      ],
+      "name": "orientation",
+      "required": "true",
+      "data-type": "int",
+      "default": 0,
+      "valid-values": [
+        0,
+        90
+      ]
+    }
+  ]
 }
 
 ```
-The corresponding command would be:
-`domain=filters class=edge-detection orientation=0 input=... output=...`
+## Image format
+Image formats will conform to __OpenCV__ so that operators can be implemented
+through the __OpenCV__ API if desired.
+For example, image formats will be specified using __OpenCV__ pixel types as follows.
 
-The input and output images may be specified in different ways,
-such as with the name of a file, 
-id of the image in a database, or
-url of the image on the Internet.
+![opencv-pixel-formats](opencv-pixel-types.jpeg)
+
+Images will be stored on the filesystem in [JPEG](http://www.ijg.org/) format,
+which includes parameters of the image, to 
+permit easily viewing images. Images in other data stores will be stored in 
+binary as described above where the image parameters are specified as part of the data.
