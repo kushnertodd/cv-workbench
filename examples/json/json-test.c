@@ -15,12 +15,12 @@ struct parameters {
   struct valid_values values[10];
 } parameter_set;
 
-struct template {
+struct template_ {
   char id[100];
   char domain[100];
   char class[100];
   struct parameters params[10];
-} template;
+} template_struct;
 
 int
 main(void)

@@ -2,7 +2,7 @@
 #include <cerrno>
 #include <cstring>
 #include "file_utils.hpp"
-#include "json.hpp"
+#include "json-incomplete.hpp"
 
 json_exception::json_exception(std::string m_errmsg, std::string m_filename) :
     errmsg(m_errmsg),

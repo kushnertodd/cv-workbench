@@ -1,7 +1,11 @@
 #include <json-c/json.h>
-#include <stdio.h>
-#include <string.h>
-#include "file_utils.h"
+#include <iostream>
+#include <list>
+#include <cstdio>
+#include <cstring>
+#include "file_utils.hpp"
+
+using namespace std;
 
 /* json format
 
@@ -39,7 +43,7 @@ class json_template_parameter {
  public:
   json_key_value_pair name;
   json_key_value_pair data_type;
-  json_key_value_pair default;
+  json_key_value_pair default_value;
   list<string> valid_values;
 };
 
@@ -47,30 +51,30 @@ class json_template {
  public:
   json_key_value_pair id;
   json_key_value_pair domain;
-  json_key_value_pair class;
+  json_key_value_pair class_value;
   list<json_template_parameter> parameters;
-void json_template_parse(string json) {
+  void json_template_parse(string json) {
 
-}
+  }
 };
 
 struct parameters_string {
-  char* name;
-  char* data_type;
-  char* default_value;
-  char* valid_values[];
+  char *name;
+  char *data_type;
+  char *default_value;
+  char *valid_values[];
 };
 
 struct json_string {
-  char* id;
-  char* domain;
-  char* class;
+  char *id;
+  char *domain;
+  char *class_value;
   struct parameters_string parameters;
 };
 
-char* indent_str(int indent) {
+char *indent_str(int indent) {
   char buf[] = "                                ";
-  char* ret = malloc(strlen(buf) + 1);
+  char *ret = (char *) malloc(strlen(buf) + 1);
   strcpy(ret, buf);
   ret[indent] = '\0';
   return ret;
@@ -120,7 +124,7 @@ void json_parse_array(int indent, json_object *jobj, char *key) {
     jvalue = json_object_array_get_idx(jarray, i); //Getting the array element at position i
     type = json_object_get_type(jvalue);
     if (type == json_type_array) {
-      json_parse_array(indent+4, jvalue, NULL);
+      json_parse_array(indent + 4, jvalue, NULL);
     } else if (type != json_type_object) {
       printf("%svalue[%d]: ", indent_str(indent), i);
       print_json_value(indent, jvalue);
@@ -133,8 +137,7 @@ void json_parse_array(int indent, json_object *jobj, char *key) {
 //Parsing the json object
 void json_parse(int indent, json_object *jobj) {
   enum json_type type;
-  json_object_object_foreach(jobj, key, val)
-  { //Passing through every array element
+  json_object_object_foreach(jobj, key, val) { //Passing through every array element
     printf("%stype: ", indent_str(indent), type);
     type = json_object_get_type(val);
     switch (type) {
@@ -144,16 +147,16 @@ void json_parse(int indent, json_object *jobj) {
       case json_type_string:
         printf("%skey '%-20s'  ", indent_str(indent), key);
         print_json_value(indent, val);
-if (!strcmp(key, "id")) {
-} else if (!strcmp(key, "domain")) {
-} else if (!strcmp(key, "class")) {
-} else if (!strcmp(key, "parameters")) {
-} else if (!strcmp(key, "name")) {
-} else if (!strcmp(key, "data_type")) {
-} else if (!strcmp(key, "default")) {
-} else if (!strcmp(key, "valid_values")) {
-} else 
-  printf("what is this key? '%s'\n", key);
+        if (!strcmp(key, "id")) {
+        } else if (!strcmp(key, "domain")) {
+        } else if (!strcmp(key, "class")) {
+        } else if (!strcmp(key, "parameters")) {
+        } else if (!strcmp(key, "name")) {
+        } else if (!strcmp(key, "data_type")) {
+        } else if (!strcmp(key, "default")) {
+        } else if (!strcmp(key, "valid_values")) {
+        } else
+          printf("what is this key? '%s'\n", key);
         break;
       case json_type_object:
         printf("%skey '%-20s'  ", indent_str(indent), key);
@@ -170,7 +173,7 @@ if (!strcmp(key, "id")) {
   }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 /*
   char *string1 =
 
@@ -202,13 +205,14 @@ int main(int argc, char** argv) {
     exit(0);
   }
   char *filename = argv[1];
-  long bufsize;
-  char* string = read_file(filename, &bufsize);
-  printf("JSON string: %s\n", string);
-  json_object *jobj = json_tokener_parse(string);
+//  long bufsize;
+//  char* string = read_file(filename, &bufsize);
+  string string_val = file_utils::read_file(filename);
+  printf("JSON string: %s\n", string_val.c_str());
+  json_object *jobj = json_tokener_parse(string_val.c_str());
   if (jobj == NULL)
     printf("json_tokener_parse() failed\n");
   else
     json_parse(0, jobj);
-  free(string);
+  //free(string);
 }

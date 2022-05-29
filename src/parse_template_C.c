@@ -1,7 +1,7 @@
 #include <json-c/json.h>
 #include <stdio.h>
 #include <string.h>
-#include "file_utils.h"
+#include "file_utils_C.h"
 
 struct parameters_string {
   char* name;

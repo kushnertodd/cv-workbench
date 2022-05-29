@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "file_utils.h"
+#include "file_utils_C.h"
 
 int main(int argc, char **argv) {
   if (argc < 2) {

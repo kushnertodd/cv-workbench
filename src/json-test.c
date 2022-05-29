@@ -20,7 +20,7 @@ struct template {
   char domain[100];
   char class[100];
   struct parameters params[10];
-} template;
+} template_;
 
 int
 main(void)
@@ -32,7 +32,7 @@ main(void)
 
   json_object *id_name =
     json_object_object_get(root, "id");
-  strcpy(template.id,
+  strcpy(template_.id,
          (char *) json_object_to_json_string(id_name));
   printf("id: %s\n",
          json_object_to_json_string_ext(
@@ -42,7 +42,7 @@ main(void)
   json_object *domain_name =
     json_object_object_get(root,
                            "domain");
-  strcpy(template.domain,
+  strcpy(template_.domain,
          json_object_to_json_string(domain_name));
   printf("domain: %s\n",
          json_object_to_json_string_ext(
@@ -51,7 +51,7 @@ main(void)
 
   json_object *class_name =
     json_object_object_get(root, "class");
-  strcpy(template.class,
+  strcpy(template_.class,
          json_object_to_json_string(class_name));
   printf("class: %s\n",
          json_object_to_json_string_ext(
@@ -108,8 +108,12 @@ main(void)
   for (int i = 0; i < nvalues; i++) {
     json_object *next_value =
       json_object_array_get_idx(valid_values, 0);
+    printf("parameters[0].valid-values: %s\n",
+           json_object_to_json_string_ext(
+               next_value,
+               JSON_C_TO_STRING_PRETTY));
   }
-  template.params[0] = parameter_set;
+  template_.params[0] = parameter_set;
 
   json_object_put(root);
   return 0;

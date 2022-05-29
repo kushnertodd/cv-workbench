@@ -1,7 +1,10 @@
 #include <json-c/json.h>
 #include <stdio.h>
+#include <list>
 #include <string.h>
 #include "file_utils.h"
+
+using namespace std;
 
 /* json format
 
