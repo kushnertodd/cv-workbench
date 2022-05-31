@@ -2,112 +2,218 @@
 #include <iostream>
 #include <list>
 #include <cstdio>
-#include <cstring>
 #include "file_utils.hpp"
 
 using namespace std;
 
-/* json format
+bool string_to_int(string str, int &value) {
+  stringstream s;
+  s << str;
+  if (s >> value)
+    return true;
+  else
+    return false;
+}
 
-{
-  "1-D by 2": {
-    "id": 1,
-    "domain": "filters",
-    "class": "edge detection",
-    "parameters": [
-      {
-        "__comment1": [
-          " 0 = [-1, 1] (horiz)",
-          "90 = [1, -1] (vert)"
-        ],
-        "name": "orientation",
-        "data-type": "int",
-        "default": 0,
-        "valid-values": [
-          0,
-          90
-        ]
-      }
-    ]
+bool string_to_bool(string str, bool &bvalue) {
+  if (str == "true") {
+    bvalue = true;
+    return true;
+  } else if (str == "false") {
+    bvalue = false;
+    return true;
+  } else {
+    return false;
   }
 }
-*/
 
-class json_key_value_pair {
+class Errors {
  public:
-  string key;
-  string value;
-};
-
-class json_template_parameter {
- public:
-  json_key_value_pair name;
-  json_key_value_pair data_type;
-  json_key_value_pair default_value;
-  list<string> valid_values;
-};
-
-class json_template {
- public:
-  json_key_value_pair id;
-  json_key_value_pair domain;
-  json_key_value_pair class_value;
-  list<json_template_parameter> parameters;
-  void json_template_parse(string json) {
-
+  int error_ct = 0;
+  list<string> error_list;
+  void add(string error) {
+    error_ct++;
+    error_list.push_back(error);
   }
-};
-
-struct parameters_string {
-  char *name;
-  char *data_type;
-  char *default_value;
-  char *valid_values[];
-};
-
-struct json_string {
-  char *id;
-  char *domain;
-  char *class_value;
-  struct parameters_string parameters;
+  void merge(Errors &errors) {
+    error_ct += errors.error_ct;
+    error_list.insert(a.end(), errors.error_list.begin(), errors.error_list.end());
+  }
 };
 
 char *indent_str(int indent) {
-  char buf[] = "                                ";
-  char *ret = (char *) malloc(strlen(buf) + 1);
-  strcpy(ret, buf);
-  ret[indent] = '\0';
-  return ret;
+  string buf = "";
+  for (int i = 0; i < indent; i++)
+    buf += " ";
+  return buf;
 }
 
+class Json_key_string_value_pair {
+ public:
+  string key;
+  string value;
+  Json_key_string_value_pair(string m_key, string m_value):
+  key(m_key),
+  value(m_value){}
+};
+class Json_key_int_value_pair {
+ public:
+  string key;
+  int value;
+  Json_key_int_value_pair(string m_key, int m_value):
+      key(m_key),
+      value(m_value){}
+};
+
+class Json_berkeley_db {
+ public:
+  string database;
+  int id;
+  Json_berkeley_db() {}
+  static Json_berkeley_db *create_json_berkeley_db(string key, string value, Errors errors) {
+    int id;
+    Errors local_errors;
+    if (!string_to_int(value, &id)) {
+      ostringstream os;
+      os << "Json_berkeley_db: cannot convert id '" << value << "' to int";
+      local_errors.add(os.str());
+    }
+    if (local_errors.error_ct > 0) {
+      errors.merge(local_errors);
+      return null;
+    } else {
+      Json_berkeley_db *jbd = new Json_berkeley_db();
+      jbd->key = key;
+      jbd->id = id;
+      return jbd;
+    }
+  }
+};
+
+class Json_file_descriptor {
+ public:
+  string directory;
+  string filename;
+  Json_file_descriptor() {}
+  Json_file_descriptor(string m_directory, string m_filename) :
+      directory(m_directory),
+      filename(m_filename) {
+  }
+};
+class Json_internet_url {
+ public:
+  string url;
+  int rows;
+  int columns;
+  Errors local_errors;
+  Json_internet_url() {}
+  static Json_internet_url *create_json_internet_url(string key, string value, Errors errors) {
+    Errors local_errors;
+    int rows;
+    if (!string_to_int(value, &rows)) {
+      ostringstream os;
+      os << "Json_internet_url: cannot convert rows '" << value << "' to int";
+      local_errors.add(os.str());
+    }
+    int columns;
+    if (!string_to_int(value, &columns)) {
+      ostringstream os;
+      os << "Json_internet_url: cannot convert columns '" << value << "' to int";
+      local_errors.add(os.str());
+    }
+    if (local_errors.error_ct > 0) {
+      errors.merge(local_errors);
+      return null;
+    } else {
+      Json_internet_url *jiu = new Json_internet_url();
+      jiu->key = key;
+      jiu->rows = rows;
+      jiu->columns = columns;
+      return jiu;
+    }
+  }
+};
+
+class Json_data_descriptor {
+ public:
+  Json_berkeley_db *db;
+  Json_file_descriptor *file;
+  Json_internet_url *internet;
+  ~Json_data_descriptor() {
+    if (db != null) delete db;
+    if (file != null) delete file;
+    if (internet != null) delete internet;
+  }
+  Json_data_descriptor() {
+    db = null;
+    file = null;
+    internet = null;
+  }
+};
+
+class Json_template_parameter {
+ public:
+  Json_key_value_pair *name;
+  Json_key_value_pair *required;
+  Json_key_value_pair *data_type;
+  Json_key_value_pair *default_value;
+  list<string> valid_values;
+  ~Json_template_parameter() {
+    if (name != null) delete name;
+    if (required != null) delete file;
+    if (data_type != null) delete internet;
+    if (default_value != null) delete internet;
+  }
+  Json_template_parameter() {
+    name = null;
+    required = null;
+    data_type = null;
+    default_value = null;
+  }
+};
+
+class Json_template {
+ public:
+  int  id;
+  string domain;
+  string class_value;
+  string instance_value;
+  Json_data_descriptor *input_data;
+  Json_data_descriptor *output_data;
+  list<Json_template_parameter *> parameters;
+  void Json_template_parse(string json) {
+
+  }
+};
+
 //printing the value corresponding to boolean, double, integer and strings
-void print_json_value(int indent, json_object *jobj) {
+void print_json_value(int indent, json_object *jobj, Errors &errors) {
   enum json_type type;
-  printf("%stype: ", indent_str(indent), type);
+  printf("%stype: ", indent_str(indent).c_str(), type);
   type = json_object_get_type(jobj); //Getting the type of the json object
   switch (type) {
     case json_type_boolean:
-      printf("%sjson_type_boolean\n", indent_str(indent));
-      printf("%s          value: %s\n", indent_str(indent), json_object_get_boolean(jobj) ? "true" : "false");
+      printf("%sjson_type_boolean\n", indent_str(indent).c_str());
+      printf("%s          value: %s\n", indent_str(indent).c_str(), json_object_get_boolean(jobj) ? "true" : "false");
       break;
     case json_type_double:
       printf("json_type_double\n");
-      printf("%s          value: %lf\n", indent_str(indent), json_object_get_double(jobj));
+      printf("%s          value: %lf\n", indent_str(indent).c_str(), json_object_get_double(jobj));
       break;
     case json_type_int:
       printf("json_type_int\n");
-      printf("%s          value: %d\n", indent_str(indent), json_object_get_int(jobj));
+      printf("%s          value: %d\n", indent_str(indent).c_str(), json_object_get_int(jobj));
       break;
     case json_type_string:
       printf("json_type_string\n");
-      printf("%s          value: %s\n", indent_str(indent), json_object_get_string(jobj));
+      printf("%s          value: %s\n", indent_str(indent).c_str(), json_object_get_string(jobj));
       break;
   }
 
 }
 
-void json_parse_array(int indent, json_object *jobj, char *key) {
-  void json_parse(int indent, json_object *jobj); //Forward Declaration
+void json_parse_array(int indent, json_object *jobj, char *key, Errors &errors) {
+  void json_parse(int indent, json_object *jobj, Errors &errors); //Forward Declaration
   enum json_type type;
 
   json_object *jarray = jobj; //Simply get the array
@@ -116,7 +222,7 @@ void json_parse_array(int indent, json_object *jobj, char *key) {
   }
 
   int arraylen = json_object_array_length(jarray); //Getting the length of the array
-  printf("\n%s          Array Length: %d\n", indent_str(indent), arraylen);
+  printf("\n%s          Array Length: %d\n", indent_str(indent).c_str(), arraylen);
   int i;
   json_object *jvalue;
 
@@ -124,28 +230,44 @@ void json_parse_array(int indent, json_object *jobj, char *key) {
     jvalue = json_object_array_get_idx(jarray, i); //Getting the array element at position i
     type = json_object_get_type(jvalue);
     if (type == json_type_array) {
-      json_parse_array(indent + 4, jvalue, NULL);
+      json_parse_array(indent + 4, jvalue, NULL, errors);
     } else if (type != json_type_object) {
-      printf("%svalue[%d]: ", indent_str(indent), i);
+      printf("%svalue[%d]: ", indent_str(indent).c_str(), i);
       print_json_value(indent, jvalue);
     } else {
-      json_parse(indent, jvalue);
+      json_parse(indent, jvalue, errors);
     }
   }
 }
 
-//Parsing the json object
-void json_parse(int indent, json_object *jobj) {
+// Parsing the json object
+void json_parse(int indent, json_object *jobj, Errors &errors) {
   enum json_type type;
-  json_object_object_foreach(jobj, key, val) { //Passing through every array element
-    printf("%stype: ", indent_str(indent), type);
+  Json_template *json_template = new Json_template();
+  json_object_object_foreach(jobj, key, val) {
     type = json_object_get_type(val);
+      if (key == "id") {
+        if (type == json_type_int)
+         Json_key_int_value_pair *create_json_key_int_value_pair(string key, string value, Errors errors) {
+
+        } else if (key == "domain") {
+      } else if (key == "class") {
+      } else if (key == "instance") {
+      } else if (key == "input-data") {
+      } else if (key == "output-data") {
+      } else if (key == "parameters") {
+      } else {      ostringstream os;
+        os << "json_parse: unrecognized tag  '"<< key;
+        errors.add(os.str());
+      }
+    }
+    /*
     switch (type) {
       case json_type_boolean:
       case json_type_double:
       case json_type_int:
       case json_type_string:
-        printf("%skey '%-20s'  ", indent_str(indent), key);
+        printf("%skey '%-20s'  ", indent_str(indent).c_str(), key);
         print_json_value(indent, val);
         if (!strcmp(key, "id")) {
         } else if (!strcmp(key, "domain")) {
@@ -159,60 +281,34 @@ void json_parse(int indent, json_object *jobj) {
           printf("what is this key? '%s'\n", key);
         break;
       case json_type_object:
-        printf("%skey '%-20s'  ", indent_str(indent), key);
-        printf("%sjson_type_object\n", indent_str(indent));
+        printf("%skey '%-20s'  ", indent_str(indent).c_str(), key);
+        printf("%sjson_type_object\n", indent_str(indent).c_str());
         jobj = json_object_object_get(jobj, key);
-        json_parse(indent, jobj);
+        json_parse(indent, jobj, errors);
         break;
       case json_type_array:
-        printf("%skey '%-20s'  ", indent_str(indent), key);
-        printf("%stype: json_type_array, ", indent_str(indent));
+        printf("%skey '%-20s'  ", indent_str(indent).c_str(), key);
+        printf("%stype: json_type_array, ", indent_str(indent).c_str());
         json_parse_array(indent, jobj, key);
         break;
     }
+     */
   }
 }
 
 int main(int argc, char **argv) {
-/*
-  char *string1 =
-
-"{\"sitename\" : \"joys of programming\", "
-                 "\"categories\" : [ \"c\" , [\"c++\" , \"c\" ], \"java\", "
-                 "\"PHP\" ],\"author-details\": { \"admin\": false, "
-                 "\"name\" : \"Joys of Programming\", \"Number of Posts\" : 10 } }";
-
-"{                                         "
-"  \"sitename\": \"joys of programming\",  "
-"  \"categories\": [                       "
-"    \"c\",                                "
-"    [                                     "
-"      \"c++\",                            "
-"      \"c\"                               "
-"    ],                                    "
-"    \"java\",                             "
-"    \"PHP\"                               "
-"  ],                                      "
-"  \"author-details\": {                   "
-"    \"admin\": false,                     "
-"    \"name\": \"Joys of Programming\",    "
-"    \"Number of Posts\": 10               "
-"  }                                       "
-"}                                         ";
- */
+  Errors errors;
   if (argc < 2) {
-    printf("usage: %s json-filename\n", argv[0]);
+    printf("usage: %s json-template-filename\n", argv[0]);
     exit(0);
   }
   char *filename = argv[1];
-//  long bufsize;
-//  char* string = read_file(filename, &bufsize);
   string string_val = file_utils::read_file(filename);
   printf("JSON string: %s\n", string_val.c_str());
   json_object *jobj = json_tokener_parse(string_val.c_str());
   if (jobj == NULL)
     printf("json_tokener_parse() failed\n");
   else
-    json_parse(0, jobj);
+    json_parse(0, jobj, errors);
   //free(string);
 }

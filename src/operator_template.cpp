@@ -9,8 +9,8 @@ void json_parse(int indent, json_object *jobj) {
   enum json_type type;
   json_object_object_foreach(jobj, key, val)
   { //Passing through every array element
-    printf("%stype: ", indent_str(indent), type);
     type = json_object_get_type(val);
+    printf("%stype: ", indent_str(indent), type);
     switch (type) {
       case json_type_boolean:
       case json_type_double:
