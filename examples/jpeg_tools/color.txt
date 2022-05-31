@@ -1,0 +1,11 @@
+
+blocks_in_MCU                   4  # of DCT blocks per MCU
+comps_in_scan                   3  # of JPEG components in this scan
+jpeg_color_space                3  colorspace of JPEG image
+max_h_samp_factor               2  largest h_samp_factor
+MCUs_per_row                   20  # of MCUs across the image
+num_components                  3  # of color components in JPEG image
+out_color_components            3  # of color components in out_color_space
+out_color_space                 2  colorspace for output
+output_components               3  # of color components returned
+row_stride                    960  JSAMPLEs per row in output buffer

@@ -1,0 +1,59 @@
+    actual_number_of_colors         0  number of entries in use
+    Adobe_transform                 0  Color transform code from Adobe marker
+    arith_code                      0  TRUE=arithmetic coding, FALSE=Huffman
+    blocks_in_MCU                   1  # of DCT blocks per MCU
+    block_size                      8  the basic DCT block size: 1..16
+    buffered_image                  0  TRUE=multiple output passes
+    CCIR601_sampling                0  TRUE=first samples are cosited
+    color_transform                 0 
+    comps_in_scan                   1  # of JPEG components in this scan
+    data_precision                  8  bits of precision in image data
+    dct_method                      0  IDCT algorithm selector
+    density_unit                    1  JFIF code for pixel size units
+    desired_number_of_colors      256  max # colors to use in created colormap
+    dither_mode                     2  type of color dithering to use
+    do_block_smoothing              1  TRUE=apply interblock smoothing
+    do_fancy_upsampling             1  TRUE=apply fancy upsampling
+    enable_1pass_quant              0  enable future use of 1-pass quantizer
+    enable_2pass_quant              0  enable future use of 2-pass quantizer
+    enable_external_quant           0  enable future use of external colormap
+    image_height                  240  nominal image height
+    image_width                   320  nominal image width (from SOF marker)
+    input_iMCU_row                  0  Number of iMCU rows completed
+    input_scan_number               1  Number of SOS markers seen so far
+    is_baseline                     1  TRUE if Baseline SOF0 encountered
+    JFIF_major_version              1  JFIF major version number
+    JFIF_minor_version              1  JFIF minor version number
+    jpeg_color_space                1  colorspace of JPEG image
+    lim_Se                         63  min( Se, DCTSIZE2-1 ) for entropy decode
+    max_h_samp_factor               1  largest h_samp_factor
+    max_v_samp_factor               1  largest v_samp_factor
+    MCU_rows_in_scan               30  # of MCU rows in the image
+    MCUs_per_row                   40  # of MCUs across the image
+    min_DCT_h_scaled_size           8  smallest DCT_h_scaled_size of any component
+    min_DCT_v_scaled_size           8  smallest DCT_v_scaled_size of any component
+    num_components                  1  # of color components in JPEG image
+    out_color_components            1  # of color components in out_color_space
+    out_color_space                 1  colorspace for output
+    output_components               1  # of color components returned
+    output_gamma              -2108892535  image gamma wanted in output
+    output_height                 240  scaled image height
+    output_iMCU_row                 0  Number of iMCU rows read
+    output_scanline                 0  0 .. output_height-1
+    output_scanline                 0  0 .. output_height-1 
+    output_scan_number              1  Nominal scan number being displayed
+    output_width                  320  scaled image width
+    progressive_mode                0  TRUE if SOFn specifies progressive mode
+    quantize_colors                 0  TRUE=colormapped output wanted
+    raw_data_out                    0  TRUE=downsampled data wanted
+    rec_outbuf_height               1  min recommended height of scanline buffer
+    restart_interval                0  MCUs per restart interval, or 0 for no restart
+    row_stride                    320  JSAMPLEs per row in output buffer
+    saw_Adobe_marker                0  TRUE iff an Adobe APP14 marker was found
+    saw_JFIF_marker                 1  TRUE iff a JFIF APP0 marker was found
+    scale_denom                     8  fraction by which to scale image
+    scale_num                       8  fraction by which to scale image
+    total_iMCU_rows                30  # of iMCU rows in image
+    two_pass_quantize               1  TRUE=use two-pass color quantization
+    X_density                       0  Horizontal pixel density
+    Y_density                       0  Vertical pixel density
