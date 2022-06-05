@@ -1,0 +1,27 @@
+{
+  "data-source": [
+    {
+      "source": "berkeley_db",
+      "id": "int",
+    },
+    {
+      "source": "file",
+      "directory": "string",
+      "filename": "string",
+      "depth": "string",
+      "rows": "int",
+      "columns": "int"
+    },
+    {
+      "source": "internet",
+      "url": "string",
+      "depth": "string",
+      "rows": "int",
+      "columns": "int"
+    },
+    {
+      "source": "step",
+      "index": "int"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "step": 1,
+        "operator": "filter-edge-Sobel",
+        "input-data": [
+          {
+            "index": 1,
+            "source": "berkeley_db",
+            "id": 1
+          }
+        ],
+        "output-data": [
+          {
+            "index": 1,
+            "source": "berkeley_db"
+          }
+        ],
+        "parameters": {
+          "orientation": 0
+        }
+      },
+      {
+        "step": 2,
+        "operator": "histogram-image",
+        "input-data": [
+          {
+            "source": "step",
+            "index": 1
+          }
+        ],
+        "output-data": [
+          {
+            "index": 1,
+            "source": "berkeley_db"
+          }
+        ],
+        "parameters": [
+          {
+            "n-bins": 256
+          }
+        ]
+      }
+    ]
+  }
+}
