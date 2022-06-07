@@ -25,6 +25,7 @@ PROGRAMS = \
   json-parameters \
   json_parser_example \
   json-test \
+  parse_experiment_json \
   parse_template_C \
   parse_template \
   read_file
@@ -48,6 +49,8 @@ json_parser_example_cpp: json_parser_example_cpp.cpp
 	$(CXX) $< -o $@ file_utils.o $(CXXFLAGS) $(LDFLAGS_JSON)
 json-test: json-test.c
 	 $(CC) $< -o $@ $(CCFLAGS) $(LDFLAGS_JSON)
+parse_experiment_json: parse_experiment_json.cpp file_utils.cpp
+	$(CXX) $< -o $@ file_utils.o $(CXXFLAGS)  $(LDFLAGS_JSON)
 parse_template_C: parse_template_C.c file_utils_C.h
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JSON)
 parse_template: parse_template.o file_utilskk.hpp file_utils.o

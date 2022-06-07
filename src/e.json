@@ -22,6 +22,7 @@
             "store": {
               "repository": "berkeley_db",
               "type": "image",
+              "ref-id": "generate"
             }
           }
         ],
@@ -51,6 +52,7 @@
             "store": {
               "repository": "berkeley_db",
               "type": "histogram",
+              "ref-id": "generate"
             }
           }
         ],
