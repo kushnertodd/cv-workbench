@@ -1,27 +1,61 @@
 {
-  "data-source": [
+  "input-data": [
     {
-      "source": "berkeley_db",
       "id": "int",
+      "source": {
+        "__comment": "image depth, size obtained from berkeley db",
+        "repository": "berkeley_db",
+        "type": "image",
+        "ref-id": "int"
+      }
     },
     {
-      "source": "file",
-      "directory": "string",
-      "filename": "string",
-      "depth": "string",
-      "rows": "int",
-      "columns": "int"
+      "source": {
+        "repository": "file",
+        "directory": "string",
+        "filename": "string",
+        "depth": "string",
+        "rows": "int",
+        "columns": "int"
+      }
     },
     {
-      "source": "internet",
-      "url": "string",
-      "depth": "string",
-      "rows": "int",
-      "columns": "int"
+      "source": {
+        "repository": "internet",
+        "url": "string",
+        "depth": "string",
+        "rows": "int",
+        "columns": "int"
+      }
     },
     {
-      "source": "step",
-      "index": "int"
+      "source": {
+        "repository": "step-output",
+        "step-id": 1,
+        "type": "image",
+        "ref-id": 1
+      }
+    }
+  ],
+  "output-data": [
+    {
+      "id": "int",
+      "__comment": "output image depth, size determined by operator",
+      "store": {
+        "repository": "berkeley_db",
+        "type": "image",
+        "ref-id": "generate"
+      }
+    },
+    {
+      "id": "int",
+      "store": {
+        "directory": "string",
+        "filename": "string",
+        "depth": "string",
+        "rows": "int",
+        "columns": "int"
+      }
     }
   ]
 }

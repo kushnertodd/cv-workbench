@@ -116,19 +116,19 @@ void json_parse(json_object *jobj) {
 }
 
 int main() {
-  char *string = "{"
-  sitename
-  " : "
-  joys
-  of
-  programming
-  ",
-  "categories" : [ "c", ["c++", "c" ], "java", "PHP" ],
-  "author-details": { "admin": false, "name" : "Joys of Programming", "Number of Posts" : 10 }
-}
-";
-printf("JSON string: %sn", string);
-json_object *jobj = json_tokener_parse(string);
-json_parse(jobj);
+  if (argc < 2) {
+    printf("usage: %s filename\n", argv[0]);
+    exit(0);
+  }
+  char *filename = argv[1];
+  long bufsize;
+  char* string = read_file(filename, &bufsize);
+  printf("JSON string: %s\n", string);
+  json_object *jobj = json_tokener_parse(string);
+  if (jobj == NULL)
+    printf("json_tokener_parse() failed\n");
+  else
+    json_parse(0, jobj);
+  free(string);
 }
 

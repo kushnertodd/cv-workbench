@@ -43,12 +43,14 @@ djpeginfo: djpeginfo.c
 json-parameters: json-parameters.o
 	$(CXX) $< -o $@ $(CXXFLAGS)  $(LDFLAGS_JSON)
 json_parser_example: json_parser_example.c
-	echo $(CC) $< -o $@ $(CCFLAGS) $(LDFLAGS_JSON)
+	$(CC) $< -o $@ file_utils_C.c $(CCFLAGS) $(LDFLAGS_JSON)
+json_parser_example_cpp: json_parser_example_cpp.cpp
+	$(CXX) $< -o $@ file_utils.o $(CXXFLAGS) $(LDFLAGS_JSON)
 json-test: json-test.c
 	 $(CC) $< -o $@ $(CCFLAGS) $(LDFLAGS_JSON)
 parse_template_C: parse_template_C.c file_utils_C.h
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JSON)
-parse_template: parse_template.o file_utils.hpp file_utils.o
+parse_template: parse_template.o file_utilskk.hpp file_utils.o
 	$(CXX) $< -o $@ $(CXXFLAGS) file_utils.o $(LDFLAGS_JSON)
 read_file: read_file.c file_utils_C.h
 	$(CC) $< -o $@ $(CCFLAGS)

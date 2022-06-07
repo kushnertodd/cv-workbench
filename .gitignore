@@ -4,6 +4,10 @@ cmake-build-debug/
 CMakeLists.txt
 *.laccdb
 *.log
+.*.swp
+*.xx
+*.yy
+src/json_parser_example
 
 # Prerequisites
 *.d

@@ -28,9 +28,17 @@ char* indent_str(int indent) {
 /*printing the value corresponding to boolean, double, integer and strings*/
 void print_json_value(int indent, json_object *jobj) {
   enum json_type type;
-  printf("%stype: ", indent_str(indent), type);
+  printf("%stype: %d\n", indent_str(indent), type);
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
   switch (type) {
+    case json_type_object:
+      printf("%skey '%-20s'  ", indent_str(indent), key);
+      printf("%sjson_type_object\n", indent_str(indent));
+      jobj = json_object_object_get(jobj, key);
+      json_parse(indent, jobj);
+      break;
+    case json_type_null:
+      printf("%sjson_type_null\n", indent_str(indent));
     case json_type_boolean:
       printf("%sjson_type_boolean\n", indent_str(indent));
       printf("%s          value: %s\n", indent_str(indent), json_object_get_boolean(jobj) ? "true" : "false");
@@ -84,25 +92,16 @@ void json_parse(int indent, json_object *jobj) {
   enum json_type type;
   json_object_object_foreach(jobj, key, val)
   { /*Passing through every array element*/
-    printf("%stype: ", indent_str(indent), type);
+    printf("%stype: %\n", indent_str(indent), type);
     type = json_object_get_type(val);
     switch (type) {
       case json_type_boolean:
       case json_type_double:
       case json_type_int:
       case json_type_string:
+      case:json_type_null:
         printf("%skey '%-20s'  ", indent_str(indent), key);
         print_json_value(indent, val);
-if (!strcmp(key, "id")) {
-} else if (!strcmp(key, "domain")) {
-} else if (!strcmp(key, "class")) {
-} else if (!strcmp(key, "parameters")) {
-} else if (!strcmp(key, "name")) {
-} else if (!strcmp(key, "data_type")) {
-} else if (!strcmp(key, "default")) {
-} else if (!strcmp(key, "valid_values")) {
-} else 
-  printf("what is this key? '%s'\n", key);
         break;
       case json_type_object:
         printf("%skey '%-20s'  ", indent_str(indent), key);

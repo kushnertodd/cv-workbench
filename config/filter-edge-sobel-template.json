@@ -5,14 +5,16 @@
   "operator": "filter-edge-Sobel",
   "input-data": [
     {
-      "index": 1,
-      "type": "image-data-descriptor"
+      "id": 1,
+      "__comment": "depth = 8U",
+      "source": "image-data-descriptor"
     }
   ],
   "output-data": [
     {
-      "index": 1,
-      "type": "image-data-descriptor"
+      "id": 1,
+      "__comment": "depth = 8U",
+      "source": "image-data-descriptor"
     }
   ],
   "parameters": [
