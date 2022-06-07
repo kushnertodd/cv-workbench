@@ -231,6 +231,11 @@ class Experiment_step_data_source_descriptor : Data_source_descriptor {
       ref_id(m_ref_id) {}
 };
 
+Data_source_descriptor *json_parse_data_descriptor(json_object *json_input_data_descriptor,
+                                                   Errors &errors) {
+  return nullptr;
+}
+
 class Experiment_step {
  public:
   int id;
@@ -260,9 +265,6 @@ bool json_parse_step_item_type_check(string item, json_type type_expected, json_
   }
   return true;
 }
-
-Data_source_descriptor *json_parse_data_descriptor(json_object *json_input_data_descriptor,
-                                                   Errors &errors) { return nullptr; }
 
 /**
  * parse json experiment step;
