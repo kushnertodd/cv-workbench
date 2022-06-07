@@ -21,7 +21,7 @@
             "__comment": "depth = 8U",
             "store": {
               "repository": "berkeley_db",
-              "type": "image",
+              "type": "image"
             }
           }
         ],
