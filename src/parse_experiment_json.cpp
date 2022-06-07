@@ -233,15 +233,22 @@ class operator_parameters {
   // not sure
 };
 
-class experiment_step {
+class Experiment_step {
  public:
   int id;
   string operator;
   list<data_source_descriptor *> input_data_sources;
   list<data_source_descriptor *> output_data_stores;
   list<operator_parameter> operator_parameters;
-  experiment_step(int m_id, string m_operator) : id(m_id), operator(
+  Experiment_step() {}
+  Experiment_step(int m_id, string m_operator) : id(m_id), operator(
   m_operator) {}
+};
+
+class Experiment {
+ public:
+  list<Experiment_step *> experiment_steps;
+  Experiment() {}
 };
 
 void json_parse_step_item_type_check(string item, json_type type_expected,
@@ -264,7 +271,7 @@ void json_parse_step_item_type_check(string item, json_type type_expected,
  * @param json_output_data
  * @param json_parameters
  */
-void json_parse_step(
+Experiment_step *json_parse_step(
     int id,
     json_object *json_id,
     json_object *json_operator,
@@ -273,18 +280,18 @@ void json_parse_step(
     json_object *json_parameters,
     Errors &errors
 ) {
-  experiment_step experiment_step_;
+  Experiment_step *experiment_step = new Experiment_step();
   json_type json_id_type = json_object_get_type(json_id);
   if (json_id_type != json_type_int) {
     json_parse_step_item_type_check("id", json_type_int, json_id_type, errors);
   } else {
-    experiment_step_.id = json_object_get_int(json_id);
+    experiment_step->id = json_object_get_int(json_id);
   }
   json_type json_operator_type = json_object_get_type(json_operator);
   if (json_operator_type != json_type_string) {
     json_parse_step_item_type_check("operator", json_type_string, json_operator_type, errors);
   } else {
-    experiment_step_.operator=
+    experiment_step->operator=
     json_object_get_int(json_operator);
   }
   json_type json_input_data_input_data = json_object_get_type(json_input_data);
@@ -295,9 +302,23 @@ void json_parse_step(
     int nsteps = json_object_array_length(json_input_data);
     for (int i = 0; i < nsteps; i++) {
       json_object *json_input_data_descriptor = json_object_array_get_idx(json_input_data, i);
-      json_parse_data_descriptor(json_input_data_descriptor, errors)
+      experiment_step->input_data_sources.push_back(
+          json_parse_data_descriptor(json_input_data_descriptor, errors));
     }
   }
+  json_type json_output_data_output_data = json_object_get_type(json_output_data);
+  if (json_output_data_type != json_type_array) {
+    json_parse_step_item_type_check("output-data", json_type_array, json_output_data_type, errors);
+  } else {
+    // parse output data array
+    int nsteps = json_object_array_length(json_output_data);
+    for (int i = 0; i < nsteps; i++) {
+      json_object *json_output_data_descriptor = json_object_array_get_idx(json_output_data, i);
+      experiment_step->output_data_sources.push_back(
+          json_parse_data_descriptor(json_output_data_descriptor, errors));
+    }
+  }
+  return experiment_step;
 }
 
 void json_parse_step_item_check(json_object *jobj, int i, string key, Errors &errors) {
@@ -312,8 +333,8 @@ void json_parse_step_item_check(json_object *jobj, int i, string key, Errors &er
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-void json_parse_steps(json_object *jobj, Errors &errors) {
-  //enum json_type type;
+Experiment_step *json_parse_steps(json_object *jobj, Experiment *experiment, Errors &errors) {
+  Experiment_step *experiment_step = new Experiment_step();
   json_object *json_steps = json_object_object_get(jobj, "steps");
   if (json_steps == nullptr) {
     errors.add("'steps' key missing");
@@ -337,12 +358,12 @@ void json_parse_steps(json_object *jobj, Errors &errors) {
         json_object *json_parameters = json_object_get(json_step, "parameters"));
         json_parse_step_item_check(json_parameters, i, "parameters", errors);
         if (errors.error_ct == 0) {
-          json_parse_step(i, json_id,
-                          json_operator,
-                          json_input_data,
-                          json_output_data,
-                          json_parameters,
-                          errors);
+          experiment->experiment_steps.push_back(json_parse_step(i, json_id,
+                                                                 json_operator,
+                                                                 json_input_data,
+                                                                 json_output_data,
+                                                                 json_parameters,
+                                                                 errors));
         }
       }
     }
@@ -353,8 +374,8 @@ void json_parse_steps(json_object *jobj, Errors &errors) {
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-void json_parse_experiment(json_object *jobj, Errors &errors) {
-  //enum json_type type;
+Experiment *json_parse_experiment(json_object *jobj, Errors &errors) {
+  Experiment *experiment = nullptr;
   json_object *json_experiment = json_object_object_get(jobj, "experiment");
   if (json_experiment == nullptr) {
     errors.add("'experiment' key missing");
@@ -364,9 +385,11 @@ void json_parse_experiment(json_object *jobj, Errors &errors) {
       errors.add("expected 'experiment' value as json object, not "
                      + string(json_type_to_name(type)) + ".");
     } else {
-      json_parse_steps(json_experiment, errors);
+      experiment = new Experiment();
+      json_parse_steps(json_experiment, experiment, errors);
     }
   }
+  return experiment;
 }
 
 /**
@@ -415,7 +438,8 @@ int main(int argc, char **argv) {
     printf("json_tokener_parse() failed\n");
   else {
     Errors errors;
-    json_parse_experiment(jobj, errors);
+    Experiment *experiment_ =
+        json_parse_experiment(jobj, errors);
     if (errors.error_ct > 0) {
       cout << "parse_experiment_json: there were errors." << endl << errors.toString();
     }
