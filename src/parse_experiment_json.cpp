@@ -18,6 +18,14 @@ This parser makes use of all the functions which reads the value of a json objec
 
 using namespace std;
 
+string indent(int n) {
+  string s;
+  for (int i = 0; i < n; i++) {
+    s += " ";
+  }
+  return s;
+}
+
 bool string_to_int(string str, int &value) {
   stringstream s;
   s << str;
@@ -113,10 +121,9 @@ void json_parse_array(json_object *jobj, char *key) {
   int arraylen = json_object_array_length(jarray); /*Getting the length of the array*/
   //printf("Array Length: %d\n",arraylen);
   cout << "Array Length: " << arraylen << endl;
-  int i;
   json_object *jvalue;
 
-  for (i = 0; i < arraylen; i++) {
+  for (int i = 0; i < arraylen; i++) {
     jvalue = json_object_array_get_idx(jarray, i); /*Getting the array element at position i*/
     type = json_object_get_type(jvalue);
     if (type == json_type_array) {
@@ -156,23 +163,71 @@ enum Cv_data_type_enum {
   REGION // complex area, shape properties
 };
 
+bool error_check_type(string key, json_object *jobj, enum json_type expected_type, Errors &errors) {
+  enum json_type actual_type = json_object_get_type(jobj);
+  if (expected_type != actual_type) {
+    ostringstream os;
+    os << "invalid " << key << "type, expected " << json_type_to_name(expected_type)
+       << " not " << json_type_to_name(actual_type) << ".";
+    errors.add(os.str());
+    return false;
+  }
+  return true;
+}
+
+json_object *get_json_object(json_object *jobj, string key,
+                             enum json_type expected_type, Errors &errors) {
+  json_object *jobj_from_key = json_object_object_get(jobj, "experiment");
+  if (jobj_from_key == nullptr) {
+    errors.add("'" + key + "' key missing");
+  } else {
+    if (!error_check_type(key, jobj_from_key, expected_type, errors)) {
+      return nullptr;
+    }
+  }
+  return jobj_from_key;
+}
+class Image {
+};
+class Histogram {
+};
+class Hough {
+};
 class Data_source_descriptor {
  public:
   int id;
   Repository_type_enum repository_type_;
-  Data_source_descriptor(int m_id, Repository_type_enum m_repository_type_) :
+  string type;
+  Data_source_descriptor(int m_id, Repository_type_enum m_repository_type_, string m_type) :
       id(m_id),
-      repository_type_(m_repository_type_) {}
+      repository_type_(m_repository_type_), type(m_type) {}
+  virtual void read(string json) {}
+  virtual void read(Image *image) {}
+  virtual void read(Histogram *histogram) {}
+  virtual void read(Hough *hough) {}
+  virtual void write(string json) {}
+  virtual void write(Image *image) {}
+  virtual void write(Histogram *histogram) {}
+  virtual void write(Hough *hough) {}
 };
 
 class Berkeley_db_data_source_descriptor : Data_source_descriptor {
  public:
   Cv_data_type_enum cv_data_type_; // implies database file
   int ref_id; // database key
-  Berkeley_db_data_source_descriptor(int m_id, Cv_data_type_enum m_cv_data_type, int m_ref_id) :
-      Data_source_descriptor(m_id, BERKELEY_DB),
+  Berkeley_db_data_source_descriptor(int m_id, Cv_data_type_enum m_cv_data_type,
+                                     string m_type, int m_ref_id) :
+      Data_source_descriptor(m_id, BERKELEY_DB, type),
       cv_data_type_(m_cv_data_type),
       ref_id(m_ref_id) {}
+  void read(string json) {}
+  void read(Image *image) {}
+  void read(Histogram *histogram) {}
+  void read(Hough *hough) {}
+  void write(string json) {}
+  void write(Image *image) {}
+  void write(Histogram *histogram) {}
+  void write(Hough *hough) {}
 };
 
 class Filesystem_data_source_descriptor : Data_source_descriptor {
@@ -188,16 +243,25 @@ class Filesystem_data_source_descriptor : Data_source_descriptor {
                                     string m_directory,
                                     string m_filename,
                                     Cv_data_type_enum m_cv_data_type,
+                                    string m_type,
                                     string m_depth,
                                     int m_rows,
                                     int m_cols) :
-      Data_source_descriptor(m_id, FILESYSTEM),
+      Data_source_descriptor(m_id, FILESYSTEM, m_type),
       directory(m_directory),
       filename(m_filename),
       cv_data_type_(m_cv_data_type),
       depth(m_depth),
       rows(m_rows),
       cols(m_cols) {}
+  void read(string json) {}
+  void read(Image *image) {}
+  void read(Histogram *histogram) {}
+  void read(Hough *hough) {}
+  void write(string json) {}
+  void write(Image *image) {}
+  void write(Histogram *histogram) {}
+  void write(Hough *hough) {}
 };
 
 class Internet_data_source_descriptor : Data_source_descriptor {
@@ -209,30 +273,55 @@ class Internet_data_source_descriptor : Data_source_descriptor {
   int cols;
   Internet_data_source_descriptor(int m_id, string m_directory,
                                   string m_url,
-                                  Cv_data_type_enum m_cv_data_type,
-                                  string depth, string m_depth,
+                                  string m_type,
+                                  string m_depth,
                                   int m_rows,
                                   int m_cols) :
-      Data_source_descriptor(m_id, INTERNET),
+      Data_source_descriptor(m_id, INTERNET, m_type),
       url(m_url),
-      cv_data_type_(m_cv_data_type),
       depth(m_depth),
       rows(m_rows),
       cols(m_cols) {}
+  void read(string json) {}
+  void read(Image *image) {}
+  void read(Histogram *histogram) {}
+  void read(Hough *hough) {}
 };
 
 class Experiment_step_data_source_descriptor : Data_source_descriptor {
  public:
-  int step_id; // prior step id; implies Cv_data_type_enum
+  int id; // prior step id; implies Cv_data_type_enum
+  int step_id;
   int ref_id; // output data source id
-  Experiment_step_data_source_descriptor(int m_id, int m_step_id, int m_ref_id) :
-      Data_source_descriptor(m_id, EXPERIMENT_STEP),
+  Experiment_step_data_source_descriptor(int m_id, string m_type, int m_step_id, int m_ref_id) :
+      Data_source_descriptor(m_id, EXPERIMENT_STEP, m_type),
       step_id(m_step_id),
       ref_id(m_ref_id) {}
+  void read(Image *image) {}
+  void read(Histogram *histogram) {}
+  void read(Hough *hough) {}
 };
 
-Data_source_descriptor *json_parse_data_descriptor(json_object *json_input_data_descriptor,
-                                                   Errors &errors) {
+static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
+  Data_source_descriptor *data_source_descriptor = nullptr;
+  // parse: ' { "id": ... `
+  json_object *json_id =
+      get_json_object(json_data_descriptor, "id",
+                      json_type_int, errors);
+  json_object *json_repository =
+      get_json_object(json_data_descriptor, "repository",
+                      json_type_string, errors);
+  if (json_repository != nullptr) {
+    string repository = json_object_get_string(json_repository);
+    if (repository == "berkeley_db") {
+
+    } else if (repository == "file") {
+    } else if (repository == "internet") {
+    } else if (repository == "step-output") {
+    } else {
+      errors.add("invalid data descriptor repository: " + repository);
+    }
+  }
   return nullptr;
 }
 
@@ -245,12 +334,94 @@ class Experiment_step {
   map<string, string> Operator_parameters;
   Experiment_step() {}
   Experiment_step(int m_id, string m_step_operator) : id(m_id), step_operator(m_step_operator) {}
+/**
+ * Parse experiment json
+ * @param jobj  json-c parsed json
+ * @param errors experiment parse errors
+ */
+  static Experiment_step *json_parse(json_object *json_step, Errors &errors) {
+    // parse: ' { "id": ... `
+    json_object *json_id = get_json_object(json_step, "id", json_type_int, errors);
+    json_object *json_operator = get_json_object(json_step, "operator",
+                                                 json_type_string, errors);
+    json_object *json_input_data = get_json_object(json_step, "input-data",
+                                                   json_type_array, errors);
+    json_object *json_output_data = get_json_object(json_step, "output-data",
+                                                    json_type_array, errors);
+    json_object *json_parameters = get_json_object(json_step, "parameters",
+                                                   json_type_object, errors);
+    Experiment_step *experiment_step = new Experiment_step();
+    if (json_id != nullptr)
+      experiment_step->id = json_object_get_int(json_id);
+    if (json_operator != nullptr)
+      experiment_step->step_operator = json_object_get_string(json_operator);
+    // parse input data array
+    if (json_input_data != nullptr) {
+      int nsteps = json_object_array_length(json_input_data);
+      for (int i = 0; i < nsteps; i++) {
+        json_object *json_input_data_descriptor =
+            json_object_array_get_idx(json_input_data, i);
+        if (error_check_type("input-data descriptor",
+                             json_input_data_descriptor,
+                             json_type_object, errors)) {
+          Data_source_descriptor *input_data_store_descriptor =
+              json_parse_data_descriptor(json_input_data_descriptor, errors);
+          if (input_data_store_descriptor != nullptr)
+            experiment_step->input_data_sources.push_back(input_data_store_descriptor);
+        }
+      }
+    }
+    // parse output data array
+    if (json_output_data != nullptr) {
+      int nsteps = json_object_array_length(json_output_data);
+      for (int i = 0; i < nsteps; i++) {
+        json_object *json_output_data_descriptor =
+            json_object_array_get_idx(json_output_data, i);
+        if (error_check_type("output-data descriptor",
+                             json_output_data_descriptor, json_type_object, errors)) {
+          Data_source_descriptor *output_data_store_descriptor =
+              json_parse_data_descriptor(json_output_data_descriptor, errors);
+          if (output_data_store_descriptor != nullptr)
+            experiment_step->output_data_stores.push_back(output_data_store_descriptor);
+        }
+      }
+    }
+    return experiment_step;
+  }
 };
 
 class Experiment {
  public:
   list<Experiment_step *> experiment_steps;
   Experiment() {}
+  /**
+  * Parse experiment json
+  * @param jobj  json-c parsed json
+  * @param errors experiment parse errors
+  */
+  static Experiment *json_parse(json_object *jobj, Errors &errors) {
+    // parse: ' "experiment": { ... `
+    Experiment *experiment = new Experiment();
+    json_object *json_experiment =
+        get_json_object(jobj, "experiment", json_type_object, errors);
+    if (json_experiment != nullptr) {
+      // parse: ' "steps": [ ... '
+      json_object *json_steps = get_json_object(jobj, "steps", json_type_array, errors);
+      if (json_steps != nullptr) {
+        int nsteps = json_object_array_length(json_steps);
+        for (int i = 0; i < nsteps; i++) {
+          json_object *json_step = json_object_array_get_idx(json_steps, i);
+          if (error_check_type("step", json_step, json_type_object, errors)) {
+            Experiment_step *experiment_step = Experiment_step::json_parse(json_step, errors);
+            if (experiment_step != nullptr) {
+              experiment->experiment_steps.push_back(experiment_step);
+            }
+          }
+        }
+      }
+    }
+    return experiment;
+  }
 };
 
 bool json_parse_step_item_type_check(string item, json_type type_expected, json_type type_found, Errors &errors) {
@@ -264,130 +435,6 @@ bool json_parse_step_item_type_check(string item, json_type type_expected, json_
     return false;
   }
   return true;
-}
-
-/**
- * parse json experiment step;
- * Assumes:
- *   all json_object* arguments non-null
- * @param id
- * @param json_id
- * @param json_operator
- * @param json_input_data
- * @param json_output_data
- * @param json_parameters
- */
-Experiment_step *json_parse_step(
-    int id,
-    json_object *json_id,
-    json_object *json_operator,
-    json_object *json_input_data,
-    json_object *json_output_data,
-    json_object *json_parameters,
-    Errors &errors) {
-  Experiment_step *experiment_step = new Experiment_step();
-  json_type json_id_type = json_object_get_type(json_id);
-  if (json_parse_step_item_type_check("id", json_type_int, json_id_type, errors)) {
-    experiment_step->id = json_object_get_int(json_id);
-  }
-  json_type json_operator_type = json_object_get_type(json_operator);
-  if (json_parse_step_item_type_check("operator", json_type_string, json_operator_type, errors)) {
-    experiment_step->step_operator = json_object_get_string(json_operator);
-  }
-  json_type json_input_data_type = json_object_get_type(json_input_data);
-  if (json_parse_step_item_type_check("input-data", json_type_array, json_input_data_type, errors)) {
-    // parse input data array
-    int nsteps = json_object_array_length(json_input_data);
-    for (int i = 0; i < nsteps; i++) {
-      json_object *json_input_data_descriptor = json_object_array_get_idx(json_input_data, i);
-      Data_source_descriptor *input_data_store = json_parse_data_descriptor(json_input_data_descriptor, errors);
-      if (input_data_store != nullptr)
-        experiment_step->input_data_sources.push_back(input_data_store);
-    }
-  }
-  json_type json_output_data_type = json_object_get_type(json_output_data);
-  if (json_parse_step_item_type_check("output-data", json_type_array, json_output_data_type, errors)) {
-    // parse output data array
-    int nsteps = json_object_array_length(json_output_data);
-    for (int i = 0; i < nsteps; i++) {
-      json_object *json_output_data_descriptor = json_object_array_get_idx(json_output_data, i);
-      Data_source_descriptor *output_data_store = json_parse_data_descriptor(json_output_data_descriptor, errors);
-      if (output_data_store != nullptr)
-        experiment_step->output_data_stores.push_back(output_data_store);
-    }
-  }
-  return experiment_step;
-}
-
-void json_parse_step_item_check(json_object *jobj, int i, string key, Errors &errors) {
-  ostringstream os;
-  if (jobj == nullptr) {
-    os << "steps: step " << i << " missing key " << key;
-    errors.add(os.str());
-  }
-}
-/**
- * Parse experiment json
- * @param jobj  json-c parsed json
- * @param errors experiment parse errors
- */
-void json_parse_steps(json_object *jobj, Experiment *experiment, Errors &errors) {
-  json_object *json_steps = json_object_object_get(jobj, "steps");
-  if (json_steps == nullptr) {
-    errors.add("'steps' key missing");
-  } else {
-    enum json_type type = json_object_get_type(json_steps);
-    if (type != json_type_array) {
-      errors.add("expected 'steps' value as json array, not " + string(json_type_to_name(type)) + ".");
-    } else {
-      int nsteps = json_object_array_length(json_steps);
-      for (int i = 0; i < nsteps; i++) {
-        json_object *json_step = json_object_array_get_idx(json_steps, i);
-        json_object *json_id = json_object_object_get(json_step, "id");
-        json_parse_step_item_check(json_id, i, "id", errors);
-        json_object *json_operator = json_object_object_get(json_step, "operator");
-        json_parse_step_item_check(json_operator, i, "operator", errors);
-        json_object *json_input_data = json_object_object_get(json_step, "input-data");
-        json_parse_step_item_check(json_input_data, i, "input-data", errors);
-        json_object *json_output_data = json_object_object_get(json_step, "output-data");
-        json_parse_step_item_check(json_output_data, i, "output-data", errors);
-        json_object *json_parameters = json_object_object_get(json_step, "parameters");
-        json_parse_step_item_check(json_parameters, i, "parameters", errors);
-        if (errors.error_ct == 0) {
-          Experiment_step *experiment_step = json_parse_step(i, json_id,
-                                                             json_operator,
-                                                             json_input_data,
-                                                             json_output_data,
-                                                             json_parameters, errors);
-          if (experiment_step != nullptr)
-            experiment->experiment_steps.push_back(experiment_step);
-        }
-      }
-    }
-  }
-
-}
-/**
- * Parse experiment json
- * @param jobj  json-c parsed json
- * @param errors experiment parse errors
- */
-Experiment *json_parse_experiment(json_object *jobj, Errors &errors) {
-  Experiment *experiment = nullptr;
-  json_object *json_experiment = json_object_object_get(jobj, "experiment");
-  if (json_experiment == nullptr) {
-    errors.add("'experiment' key missing");
-  } else {
-    enum json_type type = json_object_get_type(json_experiment);
-    if (type != json_type_object) {
-      errors.add("expected 'experiment' value as json object, not "
-                     + string(json_type_to_name(type)) + ".");
-    } else {
-      experiment = new Experiment();
-      json_parse_steps(json_experiment, experiment, errors);
-    }
-  }
-  return experiment;
 }
 
 /**
@@ -436,7 +483,7 @@ int main(int argc, char **argv) {
     printf("json_tokener_parse() failed\n");
   else {
     Errors errors;
-    Experiment *experiment = json_parse_experiment(jobj, errors);
+    Experiment *experiment = Experiment::json_parse(jobj, errors);
     if (errors.error_ct > 0) {
       cout << "parse_experiment_json: there were errors." << endl << errors.toString();
     }
