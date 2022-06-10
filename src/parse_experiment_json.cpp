@@ -196,11 +196,14 @@ class Hough {
 class Data_source_descriptor {
  public:
   int id;
-  Repository_type_enum repository_type_;
-  string type;
-  Data_source_descriptor(int m_id, Repository_type_enum m_repository_type_, string m_type) :
+  Repository_type_enum repository_type;
+  Cv_data_type_enum data_type;
+  Data_source_descriptor(int m_id, Repository_type_enum m_repository_type_,
+                         string m_data_type) :
       id(m_id),
-      repository_type_(m_repository_type_), type(m_type) {}
+      repository_type(m_repository_type_), data_type(m_data_type) {
+
+  }
   virtual void read(string json) {}
   virtual void read(Image *image) {}
   virtual void read(Histogram *histogram) {}
@@ -228,6 +231,13 @@ class Berkeley_db_data_source_descriptor : Data_source_descriptor {
   void write(Image *image) {}
   void write(Histogram *histogram) {}
   void write(Hough *hough) {}
+  static Berkeley_db_data_source_descriptor *json_parse(json_object *json_data_descriptor,
+                                                        Repository_type_enum repository_type,
+                                                        Cv_data_type_enum data_type) {
+
+  }
+
+}
 };
 
 class Filesystem_data_source_descriptor : Data_source_descriptor {
@@ -235,7 +245,7 @@ class Filesystem_data_source_descriptor : Data_source_descriptor {
   string directory;
   string filename;
   Cv_data_type_enum cv_data_type_;
-// image data type
+  // image data type
   string depth; // CV_8U, CV_32S, or CV_32F
   int rows;
   int cols;
@@ -303,26 +313,49 @@ class Experiment_step_data_source_descriptor : Data_source_descriptor {
 };
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
-  Data_source_descriptor *data_source_descriptor = nullptr;
+  Data_source_descriptor *data_source_descriptor = new Data_source_descriptor();
   // parse: ' { "id": ... `
   json_object *json_id =
-      get_json_object(json_data_descriptor, "id",
-                      json_type_int, errors);
+      get_json_object(json_data_descriptor, "id", json_type_int, errors);
+  int id;
+  if (json_id != nullptr) {
+    id = json_object_get_int(json_id);
+  }
+  Cv_data_type_enum cv_data_type_enum;
+  json_object *json_type =
+      get_json_object(json_data_descriptor, "type", json_type_string, errors);
+  if (json_type != nullptr) {
+    string data_type = json_object_get_string(json_type);
+    if (data_type == "image") {
+      cv_data_type_enum = IMAGE;
+    } else if (data_type == "histogram") {
+      cv_data_type_enum = HISTOGRAM;
+    } else if (data_type == "hough") {
+      cv_data_type_enum = HOUGH;
+    } else {
+      errors.add("invalid data descriptor type: " + data_type);
+    }
+  }
   json_object *json_repository =
-      get_json_object(json_data_descriptor, "repository",
-                      json_type_string, errors);
+      get_json_object(json_data_descriptor, "repository", json_type_string, errors);
   if (json_repository != nullptr) {
     string repository = json_object_get_string(json_repository);
     if (repository == "berkeley_db") {
-
-    } else if (repository == "file") {
+      data_source_descriptor =
+          Berkeley_db_data_source_descriptor::json_parse(json_data_descriptor,
+                                                         BERKELEY_DB, id, data_type)
+    } else if (repository == "filesystem") {
+      data_source_descriptor->repository_type = FILESYSTEM;
     } else if (repository == "internet") {
+      data_source_descriptor->repository_type = INTERNET;
     } else if (repository == "step-output") {
+      data_source_descriptor->repository_type = EXPERIMENT_STEP;
     } else {
-      errors.add("invalid data descriptor repository: " + repository);
+      errors.add("unrecognized repository type: " + repository);
     }
   }
-  return nullptr;
+  return data_source_descriptor;
+}
 }
 
 class Experiment_step {
