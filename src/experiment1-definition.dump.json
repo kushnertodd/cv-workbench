@@ -1,0 +1,198 @@
+JSON string: {
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-Sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8U",
+            "type": "image",
+            "repository": "berkeley_db",
+            "ref-id": 1
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8U",
+            "type": "image",
+            "repository": "berkeley_db"
+          }
+        ],
+        "parameters": {
+          "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "orientation": 0
+        }
+      },
+      {
+        "id": 2,
+        "operator": "histogram-image",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8U",
+            "type": "image",
+            "repository": "step-output",
+            "step-id": 1,
+            "ref-id": 1
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "histogram",
+            "repository": "berkeley_db"
+          }
+        ],
+        "parameters": [
+        ]
+      }
+    ]
+  }
+}
+
+key: 'experiment' type: 4 'object'
+json_type_object
+
+key: 'steps' type: 5 'array'
+type: json_type_array, Array Length: 2
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: 'operator' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: filter-edge-Sobel
+
+key: 'input-data' type: 5 'array'
+type: json_type_array, Array Length: 1
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: '__comment' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: depth = 8U
+
+key: 'type' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: image
+
+key: 'repository' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: berkeley_db
+
+key: 'ref-id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: 'output-data' type: 5 'array'
+type: json_type_array, Array Length: 1
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: '__comment' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: depth = 8U
+
+key: 'type' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: image
+
+key: 'repository' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: berkeley_db
+
+key: 'parameters' type: 4 'object'
+json_type_object
+
+key: '__comment' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value:  0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
+
+key: 'orientation' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 0
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 2
+
+key: 'operator' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: histogram-image
+
+key: 'input-data' type: 5 'array'
+type: json_type_array, Array Length: 1
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: '__comment' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: depth = 8U
+
+key: 'type' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: image
+
+key: 'repository' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: step-output
+
+key: 'step-id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: 'ref-id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: 'output-data' type: 5 'array'
+type: json_type_array, Array Length: 1
+
+key: 'id' type: 3 'int'
+type: 3 'int'
+json_type_int
+          value: 1
+
+key: 'type' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: histogram
+
+key: 'repository' type: 6 'string'
+type: 6 'string'
+json_type_string
+          value: berkeley_db
+
+key: 'parameters' type: 5 'array'
+type: json_type_array, Array Length: 0

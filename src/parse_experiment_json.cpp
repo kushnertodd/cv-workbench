@@ -162,12 +162,16 @@ enum Cv_data_type_enum {
   QUADTREE, // Samet structure
   REGION // complex area, shape properties
 };
-
-bool error_check_type(string key, json_object *jobj, enum json_type expected_type, Errors &errors) {
+bool debug = true;
+bool error_check_type(string module, string key, json_object *jobj, enum json_type expected_type, Errors &errors) {
   enum json_type actual_type = json_object_get_type(jobj);
+  if (debug)
+    cout << "error_check_type: key '" << key << "' expected type '"
+         << json_type_to_name(expected_type) << "' actual type '" <<
+         json_type_to_name(actual_type) << "'" << endl;
   if (expected_type != actual_type) {
     ostringstream os;
-    os << "invalid " << key << "type, expected " << json_type_to_name(expected_type)
+    os << module << ": invalid '" << key << "' type, expected " << json_type_to_name(expected_type)
        << " not " << json_type_to_name(actual_type) << ".";
     errors.add(os.str());
     return false;
@@ -175,13 +179,22 @@ bool error_check_type(string key, json_object *jobj, enum json_type expected_typ
   return true;
 }
 
-json_object *get_json_object(json_object *jobj, string key,
-                             enum json_type expected_type, Errors &errors) {
-  json_object *jobj_from_key = json_object_object_get(jobj, "experiment");
+json_object *get_json_object(string module, json_object *jobj, string key,
+                             enum json_type expected_type, Errors &errors, bool optional = false) {
+  cout << "get_json_object: key '" << key << "' expected type '"
+       << json_type_to_name(expected_type)
+       //<< "' key.c_str() '"       << key.c_str()
+       << "'" << endl;
+  json_object *jobj_from_key = json_object_object_get(jobj, key.c_str());
   if (jobj_from_key == nullptr) {
-    errors.add("'" + key + "' key missing");
+    if (!optional) {
+      string message = module + ": '" + key + "' key missing";
+      errors.add(message);
+      if (debug)
+        cout << message << endl;
+    }
   } else {
-    if (!error_check_type(key, jobj_from_key, expected_type, errors)) {
+    if (!error_check_type(module, key, jobj_from_key, expected_type, errors)) {
       return nullptr;
     }
   }
@@ -230,10 +243,18 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   static Berkeley_db_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                         int id,
                                                         Cv_data_type_enum cv_data_type_enum, Errors &errors) {
+    if (debug)
+      cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
+           << cv_data_type_enum << endl;
     Berkeley_db_data_source_descriptor *berkeley_db_data_source_descriptor =
         new Berkeley_db_data_source_descriptor(id, cv_data_type_enum);
     json_object *json_ref_id =
-        get_json_object(json_data_descriptor, "ref-id", json_type_int, errors);
+        get_json_object("Berkeley_db_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "ref-id",
+                        json_type_int,
+                        errors,
+                        true);
     if (json_ref_id != nullptr) {
       berkeley_db_data_source_descriptor->ref_id = json_object_get_int(json_ref_id);
     }
@@ -263,26 +284,49 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   static Filesystem_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                        int id,
                                                        Cv_data_type_enum cv_data_type_enum, Errors &errors) {
+    if (debug)
+      cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
+           << cv_data_type_enum << endl;
     Filesystem_data_source_descriptor *filesystem_data_source_descriptor =
         new Filesystem_data_source_descriptor(id, cv_data_type_enum);
     json_object *json_directory =
-        get_json_object(json_data_descriptor, "directory", json_type_string, errors);
+        get_json_object("Filesystem_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "directory",
+                        json_type_string,
+                        errors);
     if (json_directory != nullptr)
       filesystem_data_source_descriptor->directory = json_object_get_string(json_directory);
     json_object *json_filename =
-        get_json_object(json_data_descriptor, "filename", json_type_string, errors);
+        get_json_object("Filesystem_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "filename",
+                        json_type_string,
+                        errors);
     if (json_filename != nullptr)
       filesystem_data_source_descriptor->filename = json_object_get_string(json_filename);
     json_object *json_depth =
-        get_json_object(json_data_descriptor, "depth", json_type_string, errors);
+        get_json_object("Filesystem_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "depth",
+                        json_type_string,
+                        errors);
     if (json_depth != nullptr)
       filesystem_data_source_descriptor->depth = json_object_get_string(json_depth);
     json_object *json_rows =
-        get_json_object(json_data_descriptor, "rows", json_type_int, errors);
+        get_json_object("Filesystem_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "rows",
+                        json_type_int,
+                        errors);
     if (json_rows != nullptr)
       filesystem_data_source_descriptor->rows = json_object_get_int(json_rows);
     json_object *json_columns =
-        get_json_object(json_data_descriptor, "columns", json_type_int, errors);
+        get_json_object("Filesystem_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "columns",
+                        json_type_int,
+                        errors);
     if (json_columns != nullptr)
       filesystem_data_source_descriptor->cols = json_object_get_int(json_columns);
     return filesystem_data_source_descriptor;
@@ -305,22 +349,41 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
   static Internet_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                      int id,
                                                      Cv_data_type_enum cv_data_type_enum, Errors &errors) {
+    if (debug)
+      cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
+           << cv_data_type_enum << endl;
     Internet_data_source_descriptor *internet_data_source_descriptor =
         new Internet_data_source_descriptor(id, cv_data_type_enum);
     json_object *json_url =
-        get_json_object(json_data_descriptor, "url", json_type_string, errors);
+        get_json_object("Internet_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "url",
+                        json_type_string,
+                        errors);
     if (json_url != nullptr)
       internet_data_source_descriptor->url = json_object_get_string(json_url);
     json_object *json_depth =
-        get_json_object(json_data_descriptor, "depth", json_type_string, errors);
+        get_json_object("Internet_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "depth",
+                        json_type_string,
+                        errors);
     if (json_depth != nullptr)
       internet_data_source_descriptor->depth = json_object_get_string(json_depth);
     json_object *json_rows =
-        get_json_object(json_data_descriptor, "rows", json_type_int, errors);
+        get_json_object("Internet_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "rows",
+                        json_type_int,
+                        errors);
     if (json_rows != nullptr)
       internet_data_source_descriptor->rows = json_object_get_int(json_rows);
     json_object *json_columns =
-        get_json_object(json_data_descriptor, "columns", json_type_int, errors);
+        get_json_object("Internet_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "columns",
+                        json_type_int,
+                        errors);
     if (json_columns != nullptr)
       internet_data_source_descriptor->cols = json_object_get_int(json_columns);
     return internet_data_source_descriptor;
@@ -340,14 +403,25 @@ class Experiment_step_data_source_descriptor : public Data_source_descriptor {
   static Experiment_step_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                             int id,
                                                             Cv_data_type_enum cv_data_type_enum, Errors &errors) {
+    if (debug)
+      cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
+           << cv_data_type_enum << endl;
     Experiment_step_data_source_descriptor *experiment_step_data_source_descriptor =
         new Experiment_step_data_source_descriptor(id, cv_data_type_enum);
     json_object *json_step_id =
-        get_json_object(json_data_descriptor, "step_id", json_type_int, errors);
+        get_json_object("Experiment_step_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "step-id",
+                        json_type_int,
+                        errors);
     if (json_step_id != nullptr)
       experiment_step_data_source_descriptor->step_id = json_object_get_int(json_step_id);
     json_object *json_ref_id =
-        get_json_object(json_data_descriptor, "ref_id", json_type_int, errors);
+        get_json_object("Experiment_step_data_source_descriptor::json_parse",
+                        json_data_descriptor,
+                        "ref-id",
+                        json_type_int,
+                        errors);
     if (json_ref_id != nullptr)
       experiment_step_data_source_descriptor->ref_id = json_object_get_int(json_ref_id);
     return experiment_step_data_source_descriptor;
@@ -359,14 +433,14 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   // parse: ' { "id": ... `
   int id;
   json_object *json_id =
-      get_json_object(json_data_descriptor, "id",
+      get_json_object("json_parse_data_descriptor", json_data_descriptor, "id",
                       json_type_int, errors);
   if (json_id != nullptr) {
     id = json_object_get_int(json_id);
   }
   Cv_data_type_enum cv_data_type_enum;
   json_object *json_type =
-      get_json_object(json_data_descriptor, "type",
+      get_json_object("json_parse_data_descriptor", json_data_descriptor, "type",
                       json_type_string, errors);
   if (json_type != nullptr) {
     string data_type = json_object_get_string(json_type);
@@ -381,7 +455,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     }
   }
   json_object *json_repository =
-      get_json_object(json_data_descriptor, "repository",
+      get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",
                       json_type_string, errors);
   if (json_repository != nullptr) {
     string repository = json_object_get_string(json_repository);
@@ -391,15 +465,15 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
               json_data_descriptor, id, cv_data_type_enum, errors);
     } else if (repository == "filesystem") {
       data_source_descriptor =
-          Berkeley_db_data_source_descriptor::json_parse(
+          Filesystem_data_source_descriptor::json_parse(
               json_data_descriptor, id, cv_data_type_enum, errors);
     } else if (repository == "internet") {
       data_source_descriptor =
-          Berkeley_db_data_source_descriptor::json_parse(
+          Internet_data_source_descriptor::json_parse(
               json_data_descriptor, id, cv_data_type_enum, errors);
     } else if (repository == "step-output") {
       data_source_descriptor =
-          Berkeley_db_data_source_descriptor::json_parse(
+          Experiment_step_data_source_descriptor::json_parse(
               json_data_descriptor, id, cv_data_type_enum, errors);
     } else {
       errors.add("invalid data repository type: " + repository);
@@ -424,14 +498,14 @@ class Experiment_step {
  */
   static Experiment_step *json_parse(json_object *json_step, Errors &errors) {
     // parse: ' { "id": ... `
-    json_object *json_id = get_json_object(json_step, "id", json_type_int, errors);
-    json_object *json_operator = get_json_object(json_step, "operator",
+    json_object *json_id = get_json_object("Experiment_step::json_parse", json_step, "id", json_type_int, errors);
+    json_object *json_operator = get_json_object("Experiment_step::json_parse", json_step, "operator",
                                                  json_type_string, errors);
-    json_object *json_input_data = get_json_object(json_step, "input-data",
+    json_object *json_input_data = get_json_object("Experiment_step::json_parse", json_step, "input-data",
                                                    json_type_array, errors);
-    json_object *json_output_data = get_json_object(json_step, "output-data",
+    json_object *json_output_data = get_json_object("Experiment_step::json_parse", json_step, "output-data",
                                                     json_type_array, errors);
-    json_object *json_parameters = get_json_object(json_step, "parameters",
+    json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "parameters",
                                                    json_type_object, errors);
     Experiment_step *experiment_step = new Experiment_step();
     if (json_id != nullptr)
@@ -444,7 +518,7 @@ class Experiment_step {
       for (int i = 0; i < nsteps; i++) {
         json_object *json_input_data_descriptor =
             json_object_array_get_idx(json_input_data, i);
-        if (error_check_type("input-data descriptor",
+        if (error_check_type("Experiment_step::json_parse", "input-data descriptor",
                              json_input_data_descriptor,
                              json_type_object, errors)) {
           Data_source_descriptor *input_data_store_descriptor =
@@ -460,7 +534,7 @@ class Experiment_step {
       for (int i = 0; i < nsteps; i++) {
         json_object *json_output_data_descriptor =
             json_object_array_get_idx(json_output_data, i);
-        if (error_check_type("output-data descriptor",
+        if (error_check_type("Experiment_step::json_parse", "output-data descriptor",
                              json_output_data_descriptor, json_type_object, errors)) {
           Data_source_descriptor *output_data_store_descriptor =
               json_parse_data_descriptor(json_output_data_descriptor, errors);
@@ -486,15 +560,16 @@ class Experiment {
     // parse: ' "experiment": { ... `
     Experiment *experiment = new Experiment();
     json_object *json_experiment =
-        get_json_object(jobj, "experiment", json_type_object, errors);
+        get_json_object("Experiment::json_parse", jobj, "experiment", json_type_object, errors);
     if (json_experiment != nullptr) {
       // parse: ' "steps": [ ... '
-      json_object *json_steps = get_json_object(jobj, "steps", json_type_array, errors);
+      json_object
+          *json_steps = get_json_object("Experiment::json_parse", json_experiment, "steps", json_type_array, errors);
       if (json_steps != nullptr) {
         int nsteps = json_object_array_length(json_steps);
         for (int i = 0; i < nsteps; i++) {
           json_object *json_step = json_object_array_get_idx(json_steps, i);
-          if (error_check_type("step", json_step, json_type_object, errors)) {
+          if (error_check_type("Experiment::json_parse", "step", json_step, json_type_object, errors)) {
             Experiment_step *experiment_step = Experiment_step::json_parse(json_step, errors);
             if (experiment_step != nullptr) {
               experiment->experiment_steps.push_back(experiment_step);

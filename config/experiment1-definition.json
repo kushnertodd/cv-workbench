@@ -46,8 +46,8 @@
             "repository": "berkeley_db"
           }
         ],
-        "parameters": [
-        ]
+        "parameters": {
+        }
       }
     ]
   }
