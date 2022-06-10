@@ -8,8 +8,8 @@
           {
             "id": 1,
             "__comment": "depth = 8U",
-            "repository": "berkeley_db",
             "type": "image",
+            "repository": "berkeley_db",
             "ref-id": 1
           }
         ],
@@ -17,8 +17,8 @@
           {
             "id": 1,
             "__comment": "depth = 8U",
-            "repository": "berkeley_db",
-            "type": "image"
+            "type": "image",
+            "repository": "berkeley_db"
           }
         ],
         "parameters": {
@@ -33,17 +33,17 @@
           {
             "id": 1,
             "__comment": "depth = 8U",
+            "type": "image",
             "repository": "step-output",
             "step-id": 1,
-            "type": "image",
             "ref-id": 1
           }
         ],
         "output-data": [
           {
             "id": 1,
-            "repository": "berkeley_db",
-            "type": "histogram"
+            "type": "histogram",
+            "repository": "berkeley_db"
           }
         ],
         "parameters": [
