@@ -20,11 +20,6 @@ LDFLAGS_JPEG = -ljpeg
 
 SRCFILES := $(wildcard *.cpp) 
 OBJS := $(patsubst %.cpp,%.o,$(SRCFILES))
-SRCOBJS :=  \
-  errors.o \
-  file_utils.o \
-  wb_utils.o
-
 PROGRAMS = \
   djpeginfo \
   json_parser_example \
@@ -43,8 +38,8 @@ djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
 json_parser_example: json_parser_example.o
 	$(CC) $< -o $@ file_utils_C.o $(CCFLAGS) $(LDFLAGS_JSON)
-parse_experiment_json: parse_experiment_json.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON)
+parse_experiment_json: $(OBJS)
+	$(CXX) $< -o $@  $(CXXFLAGS) $(LDFLAGS_JSON)
 
 objs:
 	@echo $(OBJS)

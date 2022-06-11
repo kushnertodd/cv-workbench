@@ -14,5 +14,7 @@ string indent(int n);
 bool string_to_int(string str, int &value);
 bool string_to_bool(string str, bool &bvalue);
 void print_json_value(json_object *jobj);
+void json_parse_array(json_object *jobj, char *key);
+void json_parse(json_object *jobj);
 
 #endif //CV_WORKBENCH_SRC_WB_UTILS_HPP_
