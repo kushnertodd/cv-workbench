@@ -59,7 +59,7 @@ read_file: read_file.c file_utils_C.h
 	$(CC) $< -o $@ $(CCFLAGS)
 
 clean:
-	rm -f $(OBJS) 
+	rm -f $(OBJS)  $(PROGRAMS)
 
 clobber: 
 	rm -f $(OBJS) $(PROGRAMS)
