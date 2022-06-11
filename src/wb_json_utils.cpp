@@ -8,7 +8,8 @@
 
 using namespace std;
 
-bool debug = true;
+extern bool debug;
+
 bool error_check_type(string module, string key, json_object *jobj, enum json_type expected_type, Errors &errors) {
   enum json_type actual_type = json_object_get_type(jobj);
   if (debug)

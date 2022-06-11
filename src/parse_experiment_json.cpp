@@ -15,35 +15,16 @@ This parser makes use of all the functions which reads the value of a json objec
 #include <string>
 #include <json-c/json.h>
 #include "file_utils.hpp"
-//#include "wb_utils.hpp"
+#include "wb_utils.hpp"
+#include "wb_json_utils.hpp"
 #include "errors.hpp"
 #include "wb_enums.hpp"
+#include "image.hpp"
+#include "histogram.hpp"
+#include "hough.hpp"
+#include "data_source_descriptor.hpp"
 
-class Image {
-};
-class Histogram {
-};
-class Hough {
-};
-class Data_source_descriptor {
- public:
-  int id;
-  Repository_type_enum repository_type;
-  Cv_data_type_enum cv_data_type_enum;
-  Data_source_descriptor(int m_id, Repository_type_enum m_repository_type,
-                         Cv_data_type_enum m_cv_data_type_enum) :
-      id(m_id),
-      repository_type(m_repository_type),
-      cv_data_type_enum(m_cv_data_type_enum) {}
-  virtual void read(string json) {}
-  virtual void read(Image *image) {}
-  virtual void read(Histogram *histogram) {}
-  virtual void read(Hough *hough) {}
-  virtual void write(string json) {}
-  virtual void write(Image *image) {}
-  virtual void write(Histogram *histogram) {}
-  virtual void write(Hough *hough) {}
-};
+bool debug = false;
 
 class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
  public:
