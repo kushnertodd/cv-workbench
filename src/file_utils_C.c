@@ -24,7 +24,7 @@ long file_size(FILE *fp) {
  * be sure to free()
  * @return file contents or NULL on failure
  */
- char *read_file(char *filename, long *file_bytes) {
+char *read_file(char *filename, long *file_bytes) {
 
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)
@@ -48,4 +48,13 @@ long file_size(FILE *fp) {
   fclose(fp);
   *file_bytes = bufsize;
   return buf;
+}
+
+void write_file(char *filename, long file_bytes, char* buf) {
+  FILE *fp;
+  fp = fopen(filename, "w");
+  if (fp != NULL) {
+    fwrite(buf, 1, file_bytes, fp);
+    fclose(fp);
+  }
 }
