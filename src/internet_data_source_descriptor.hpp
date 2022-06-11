@@ -30,6 +30,4 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
                                                      Cv_data_type_enum cv_data_type_enum, Errors &errors);
 };
 
-
-
 #endif //CV_WORKBENCH_SRC_INTERNET_DATA_SOURCE_DESCRIPTOR_HPP_

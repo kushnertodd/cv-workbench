@@ -48,7 +48,6 @@ json_object *get_json_object(string module, json_object *jobj, string key,
   return jobj_from_key;
 }
 
-
 bool json_parse_step_item_type_check(string item, json_type type_expected, json_type type_found, Errors &errors) {
   ostringstream os;
   if (type_expected != type_found) {

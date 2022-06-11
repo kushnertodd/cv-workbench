@@ -7,27 +7,27 @@ This parser makes use of all the functions which reads the value of a json objec
 
 */
 
-#include <fstream>
+//#include <fstream>
 #include <iostream>
-#include <list>
+//#include <list>
 #include <map>
 #include <sstream>
 #include <string>
 #include <json-c/json.h>
 #include "file_utils.hpp"
-#include "wb_utils.hpp"
+//#include "wb_utils.hpp"
 #include "wb_json_utils.hpp"
-#include "errors.hpp"
+//#include "errors.hpp"
 #include "wb_enums.hpp"
 #include "image.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
 #include "data_source_descriptor.hpp"
-#include "berkeley_db_data_source_descriptor.hpp"
+//#include "berkeley_db_data_source_descriptor.hpp"
 #include "experiment_step.hpp"
-#include "filesystem_data_source_descriptor.hpp"
-#include "internet_data_source_descriptor.hpp"
-#include "experiment_step_data_source_descriptor.hpp"
+//#include "filesystem_data_source_descriptor.hpp"
+//#include "internet_data_source_descriptor.hpp"
+//#include "experiment_step_data_source_descriptor.hpp"
 #include "experiment.hpp"
 
 bool debug = false;
