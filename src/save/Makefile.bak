@@ -22,8 +22,12 @@ SRCFILES := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp,%.o,$(SRCFILES))
 PROGRAMS = \
   djpeginfo \
+  json-parameters \
   json_parser_example \
+  json-test \
   parse_experiment_json \
+  parse_template_C \
+  parse_template \
   read_file
 
 %.o: %.cpp %.hpp
@@ -64,6 +68,3 @@ depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
 
 # DO NOT DELETE
-
-file_utils.o: file_utils.hpp
-parse_experiment_json.o: file_utils.hpp
