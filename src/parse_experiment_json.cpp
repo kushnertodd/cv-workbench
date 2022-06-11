@@ -26,46 +26,9 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "berkeley_db_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
+#include "experiment_step_data_source_descriptor.hpp"
 
 bool debug = false;
-
-class Experiment_step_data_source_descriptor : public Data_source_descriptor {
- public:
-  int step_id; // prior step id
-  int ref_id; // output data source id
-  Experiment_step_data_source_descriptor(int m_id,
-                                         Cv_data_type_enum m_cv_data_type_enum) :
-      Data_source_descriptor(m_id, EXPERIMENT_STEP, m_cv_data_type_enum) {}
-  void read(Image *image) {}
-  void read(Histogram *histogram) {}
-  void read(Hough *hough) {}
-  static Experiment_step_data_source_descriptor *json_parse(json_object *json_data_descriptor,
-                                                            int id,
-                                                            Cv_data_type_enum cv_data_type_enum, Errors &errors) {
-    if (debug)
-      cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
-           << cv_data_type_enum << endl;
-    Experiment_step_data_source_descriptor *experiment_step_data_source_descriptor =
-        new Experiment_step_data_source_descriptor(id, cv_data_type_enum);
-    json_object *json_step_id =
-        get_json_object("Experiment_step_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "step-id",
-                        json_type_int,
-                        errors);
-    if (json_step_id != nullptr)
-      experiment_step_data_source_descriptor->step_id = json_object_get_int(json_step_id);
-    json_object *json_ref_id =
-        get_json_object("Experiment_step_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "ref-id",
-                        json_type_int,
-                        errors);
-    if (json_ref_id != nullptr)
-      experiment_step_data_source_descriptor->ref_id = json_object_get_int(json_ref_id);
-    return experiment_step_data_source_descriptor;
-  }
-};
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
