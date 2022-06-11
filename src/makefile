@@ -24,6 +24,7 @@ SRCOBJS :=  \
   berkeley_db_data_source_descriptor.o \
   data_source_descriptor.o \
   errors.o \
+  experiment_step.o \
   experiment_step_data_source_descriptor.o \
   filesystem_data_source_descriptor.o \
   histogram.o \
