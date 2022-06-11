@@ -28,6 +28,7 @@ SRCOBJS :=  \
   histogram.o \
   hough.o \
   image.o \
+  internet_data_source_descriptor.o \
   file_utils.o \
   wb_json_utils.o \
   wb_utils.o

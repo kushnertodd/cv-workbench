@@ -25,65 +25,9 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
+#include "internet_data_source_descriptor.hpp"
 
 bool debug = false;
-
-class Internet_data_source_descriptor : public Data_source_descriptor {
- public:
-  string url;
-  string depth; // CV_8U, CV_32S, or CV_32F
-  int rows;
-  int cols;
-  Internet_data_source_descriptor(int m_id,
-                                  Cv_data_type_enum m_cv_data_type_enum) :
-      Data_source_descriptor(m_id, INTERNET, m_cv_data_type_enum) {}
-  void read(string json) {}
-  void read(Image *image) {}
-  void read(Histogram *histogram) {}
-  void read(Hough *hough) {}
-  static Internet_data_source_descriptor *json_parse(json_object *json_data_descriptor,
-                                                     int id,
-                                                     Cv_data_type_enum cv_data_type_enum, Errors &errors) {
-    if (debug)
-      cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
-           << cv_data_type_enum << endl;
-    Internet_data_source_descriptor *internet_data_source_descriptor =
-        new Internet_data_source_descriptor(id, cv_data_type_enum);
-    json_object *json_url =
-        get_json_object("Internet_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "url",
-                        json_type_string,
-                        errors);
-    if (json_url != nullptr)
-      internet_data_source_descriptor->url = json_object_get_string(json_url);
-    json_object *json_depth =
-        get_json_object("Internet_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "depth",
-                        json_type_string,
-                        errors);
-    if (json_depth != nullptr)
-      internet_data_source_descriptor->depth = json_object_get_string(json_depth);
-    json_object *json_rows =
-        get_json_object("Internet_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "rows",
-                        json_type_int,
-                        errors);
-    if (json_rows != nullptr)
-      internet_data_source_descriptor->rows = json_object_get_int(json_rows);
-    json_object *json_columns =
-        get_json_object("Internet_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "columns",
-                        json_type_int,
-                        errors);
-    if (json_columns != nullptr)
-      internet_data_source_descriptor->cols = json_object_get_int(json_columns);
-    return internet_data_source_descriptor;
-  }
-};
 
 class Experiment_step_data_source_descriptor : public Data_source_descriptor {
  public:
