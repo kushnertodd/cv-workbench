@@ -24,6 +24,7 @@ SRCOBJS :=  \
   berkeley_db_data_source_descriptor.o \
   data_source_descriptor.o \
   errors.o \
+  experiment.o \
   experiment_step.o \
   experiment_step_data_source_descriptor.o \
   filesystem_data_source_descriptor.o \
@@ -77,6 +78,13 @@ berkeley_db_data_source_descriptor.o: berkeley_db_data_source_descriptor.hpp
 data_source_descriptor.o: Data_source_descriptor.hpp wb_enums.hpp
 data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 errors.o: errors.hpp
+experiment.o: experiment.hpp
+experiment_step.o: wb_json_utils.hpp errors.hpp data_source_descriptor.hpp
+experiment_step.o: wb_enums.hpp histogram.hpp hough.hpp image.hpp
+experiment_step.o: experiment_step.hpp berkeley_db_data_source_descriptor.hpp
+experiment_step.o: experiment_step_data_source_descriptor.hpp
+experiment_step.o: filesystem_data_source_descriptor.hpp
+experiment_step.o: internet_data_source_descriptor.hpp
 experiment_step_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 experiment_step_data_source_descriptor.o: data_source_descriptor.hpp
 experiment_step_data_source_descriptor.o: wb_enums.hpp histogram.hpp
@@ -98,8 +106,10 @@ parse_experiment_json.o: file_utils.hpp wb_utils.hpp wb_json_utils.hpp
 parse_experiment_json.o: errors.hpp wb_enums.hpp image.hpp histogram.hpp
 parse_experiment_json.o: hough.hpp data_source_descriptor.hpp
 parse_experiment_json.o: berkeley_db_data_source_descriptor.hpp
+parse_experiment_json.o: experiment_step.hpp
 parse_experiment_json.o: filesystem_data_source_descriptor.hpp
 parse_experiment_json.o: internet_data_source_descriptor.hpp
 parse_experiment_json.o: experiment_step_data_source_descriptor.hpp
+parse_experiment_json.o: experiment.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
 wb_utils.o: wb_utils.hpp

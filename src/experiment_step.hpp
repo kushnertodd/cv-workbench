@@ -13,6 +13,7 @@
 #include "image.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
+#include "data_source_descriptor.hpp"
 
 class Experiment_step {
  public:
