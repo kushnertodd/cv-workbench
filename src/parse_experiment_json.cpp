@@ -15,34 +15,10 @@ This parser makes use of all the functions which reads the value of a json objec
 #include <sstream>
 #include <string>
 #include "file_utils.hpp"
-#include "wb_utils.hpp"
+//#include "wb_utils.hpp"
 #include "errors.hpp"
+#include "wb_enums.hpp"
 
-
-enum Repository_type_enum {
-  BERKELEY_DB, // separate file for each Cv_data_type_enum
-  FILESYSTEM, // directory, filename
-  INTERNET, // endpoint that produced binary data
-  EXPERIMENT_STEP // output of experiment step
-};
-
-enum Cv_data_type_enum {
-  // maybe BINARY_IMAGE for morphological operations
-  CONTOUR, // boundary polygon
-  CONVOLUTION_KERNEL,
-  CONVOLVED_IMAGE, // CV_32F, maybe e.g. FLOAT_IMAGE instead
-  CORRELATED_IMAGE, // probably CV_32S/F, image correlated with patter
-  IMAGE, // pixels, size, depth is CV_8U, CV_32S, or CV_32F images initially
-  JSON_EXPERIMENT, // experiment definition
-  JSON_EXPERIMENT_RESULTS, // result of experiment run
-  HISTOGRAM, // CV_8U images initially
-  HOUGH, // accumulation space + found features
-  PATTERN_FEATURE, // e.g. lines, circles for matching
-  PATTERN_IMAGE, // for exact sub-image matching
-  PYRAMID, // Burt structure
-  QUADTREE, // Samet structure
-  REGION // complex area, shape properties
-};
 bool debug = true;
 bool error_check_type(string module, string key, json_object *jobj, enum json_type expected_type, Errors &errors) {
   enum json_type actual_type = json_object_get_type(jobj);
