@@ -23,44 +23,9 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "histogram.hpp"
 #include "hough.hpp"
 #include "data_source_descriptor.hpp"
+#include "berkeley_db_data_source_descriptor.hpp"
 
 bool debug = false;
-
-class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
- public:
-  int ref_id; // database key
-  Berkeley_db_data_source_descriptor(int m_id,
-                                     Cv_data_type_enum m_cv_data_type_enum) :
-      Data_source_descriptor(m_id, BERKELEY_DB, m_cv_data_type_enum) {}
-  void read(string json) {}
-  void read(Image *image) {}
-  void read(Histogram *histogram) {}
-  void read(Hough *hough) {}
-  void write(string json) {}
-  void write(Image *image) {}
-  void write(Histogram *histogram) {}
-  void write(Hough *hough) {}
-  static Berkeley_db_data_source_descriptor *json_parse(json_object *json_data_descriptor,
-                                                        int id,
-                                                        Cv_data_type_enum cv_data_type_enum, Errors &errors) {
-    if (debug)
-      cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
-           << cv_data_type_enum << endl;
-    Berkeley_db_data_source_descriptor *berkeley_db_data_source_descriptor =
-        new Berkeley_db_data_source_descriptor(id, cv_data_type_enum);
-    json_object *json_ref_id =
-        get_json_object("Berkeley_db_data_source_descriptor::json_parse",
-                        json_data_descriptor,
-                        "ref-id",
-                        json_type_int,
-                        errors,
-                        true);
-    if (json_ref_id != nullptr) {
-      berkeley_db_data_source_descriptor->ref_id = json_object_get_int(json_ref_id);
-    }
-    return berkeley_db_data_source_descriptor;
-  }
-};
 
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
  public:

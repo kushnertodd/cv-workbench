@@ -21,6 +21,7 @@ LDFLAGS_JPEG = -ljpeg
 SRCFILES := $(wildcard *.cpp) 
 OBJS := $(patsubst %.cpp,%.o,$(SRCFILES))
 SRCOBJS :=  \
+  berkeley_db_data_source_descriptor.o \
   data_source_descriptor.o \
   errors.o \
   histogram.o \
@@ -65,14 +66,20 @@ depend:
 
 # DO NOT DELETE
 
-Data_source_descriptor.o: Data_source_descriptor.hpp
+berkeley_db_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
+berkeley_db_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
+berkeley_db_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
+berkeley_db_data_source_descriptor.o: berkeley_db_data_source_descriptor.hpp
+data_source_descriptor.o: Data_source_descriptor.hpp wb_enums.hpp
+data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 errors.o: errors.hpp
 file_utils.o: file_utils.hpp
-Histogram.o: Histogram.hpp
-Hough.o: Hough.hpp
-Image.o: Image.hpp
+histogram.o: Histogram.hpp
+hough.o: Hough.hpp
+image.o: Image.hpp
 parse_experiment_json.o: file_utils.hpp wb_utils.hpp wb_json_utils.hpp
 parse_experiment_json.o: errors.hpp wb_enums.hpp image.hpp histogram.hpp
 parse_experiment_json.o: hough.hpp data_source_descriptor.hpp
+parse_experiment_json.o: berkeley_db_data_source_descriptor.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
 wb_utils.o: wb_utils.hpp
