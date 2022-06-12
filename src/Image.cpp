@@ -26,7 +26,7 @@ const char *Image_exception::what() const noexcept {
   return errmsg.c_str();
 }
 
- Image::~Image() {
+Image::~Image() {
   if (allocated && buf != nullptr) {
     delete[] buf;
   }
@@ -63,19 +63,19 @@ Image *Image::read_binary(string path, Errors &errors) {
   int rows;
   size_t newLen;
   newLen = fread(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
+  if (ferror(fp) != 0 || newLen != sizeof(int)) {
     errors.add("Filesystem_data_source_descriptor::read_image: missing image rows in '" + path + "'");
     return nullptr;
   }
   int cols;
   newLen = fread(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
+  if (ferror(fp) != 0 || newLen != sizeof(int)) {
     errors.add("Filesystem_data_source_descriptor::read_image: missing image cols in '" + path + "'");
     return nullptr;
   }
   int components;
   newLen = fread(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
+  if (ferror(fp) != 0 || newLen != sizeof(int)) {
     errors.add("Filesystem_data_source_descriptor::read_image: missing image components in '" + path + "'");
     return nullptr;
   }
@@ -83,13 +83,18 @@ Image *Image::read_binary(string path, Errors &errors) {
 
   // Read the data into buffer.
   newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
-  if (ferror(fp) != 0) {
+  if (ferror(fp) != 0 || newLen != sizeof(char) * image->nbytes) {
     errors.add("Filesystem_data_source_descriptor::read_image: cannot read image data in '" + path + "'");
     return nullptr;
   }
   fclose(fp);
   return image;
 }
+
+Image *Image::read_jpeg(string path, Errors &errors) {
+return nullptr;
+}
+
 void Image::add(char *src, int count) {
   if (!allocated)
     throw new Image_exception("Image::add: cannot add to assigned buffer");
