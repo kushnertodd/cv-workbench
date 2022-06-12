@@ -27,7 +27,7 @@ void test_read() {
   } else {
     if (debug) {
       cout
-          << "Image '" << binary_image << "'" << endl
+          << "Image '" << binary_image_file << "'" << endl
           << "   rows " << binary_image->rows << endl
           << "   cols " << binary_image->cols << endl
           << "   components " << binary_image->components << endl
@@ -46,7 +46,7 @@ void test_read() {
   } else {
     if (debug) {
       cout
-          << "Image '" << jpeg_image << "'" << endl
+          << "Image '" << jpeg_image_file << "'" << endl
           << "   rows " << jpeg_image->rows << endl
           << "   cols " << jpeg_image->cols << endl
           << "   components " << jpeg_image->components << endl

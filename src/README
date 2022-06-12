@@ -1,4 +1,0 @@
-to test:
-
-jpegtran -grayscale 320x240color.jpg >320x240gray.jpg
-./image-test
