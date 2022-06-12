@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "wb_json_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
@@ -20,6 +21,7 @@ void Berkeley_db_data_source_descriptor::write(string json) {}
 void Berkeley_db_data_source_descriptor::write(Image *image) {}
 void Berkeley_db_data_source_descriptor::write(Histogram *histogram) {}
 void Berkeley_db_data_source_descriptor::write(Hough *hough) {}
+
 Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                       int id,
                                                       Cv_data_type_enum cv_data_type_enum, Errors &errors) {
@@ -39,4 +41,11 @@ Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_par
     berkeley_db_data_source_descriptor->ref_id = json_object_get_int(json_ref_id);
   }
   return berkeley_db_data_source_descriptor;
+}
+
+string Berkeley_db_data_source_descriptor::toString() {
+  ostringstream os;
+  os << Data_source_descriptor::toString()
+     << " ref id " << ref_id;
+  return os.str();
 }

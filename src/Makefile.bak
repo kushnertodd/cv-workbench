@@ -38,7 +38,7 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   djpeginfo \
-  image-test \
+  image_test \
   json_parser_example \
   parse_experiment_json
 
@@ -79,9 +79,11 @@ berkeley_db_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
 berkeley_db_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 berkeley_db_data_source_descriptor.o: berkeley_db_data_source_descriptor.hpp
 data_source_descriptor.o: Data_source_descriptor.hpp wb_enums.hpp
-data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
+data_source_descriptor.o: histogram.hpp hough.hpp image.hpp errors.hpp
 errors.o: errors.hpp
-experiment.o: experiment.hpp
+experiment.o: experiment.hpp wb_enums.hpp errors.hpp image.hpp histogram.hpp
+experiment.o: hough.hpp experiment_step.hpp data_source_descriptor.hpp
+experiment.o: wb_json_utils.hpp
 experiment_step.o: wb_json_utils.hpp errors.hpp data_source_descriptor.hpp
 experiment_step.o: wb_enums.hpp histogram.hpp hough.hpp image.hpp
 experiment_step.o: experiment_step.hpp berkeley_db_data_source_descriptor.hpp
@@ -100,19 +102,15 @@ filesystem_data_source_descriptor.o: filesystem_data_source_descriptor.hpp
 file_utils.o: file_utils.hpp
 histogram.o: Histogram.hpp
 hough.o: Hough.hpp
-image.o: Image.hpp
+image.o: /usr/include/jpeglib.h /usr/include/jmorecfg.h image.hpp errors.hpp
+image_test.o: errors.hpp image.hpp
 internet_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 internet_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
 internet_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 internet_data_source_descriptor.o: internet_data_source_descriptor.hpp
-parse_experiment_json.o: file_utils.hpp wb_utils.hpp wb_json_utils.hpp
-parse_experiment_json.o: errors.hpp wb_enums.hpp image.hpp histogram.hpp
-parse_experiment_json.o: hough.hpp data_source_descriptor.hpp
-parse_experiment_json.o: berkeley_db_data_source_descriptor.hpp
-parse_experiment_json.o: experiment_step.hpp
-parse_experiment_json.o: filesystem_data_source_descriptor.hpp
-parse_experiment_json.o: internet_data_source_descriptor.hpp
-parse_experiment_json.o: experiment_step_data_source_descriptor.hpp
+parse_experiment_json.o: file_utils.hpp wb_json_utils.hpp errors.hpp
+parse_experiment_json.o: wb_enums.hpp image.hpp histogram.hpp hough.hpp
+parse_experiment_json.o: data_source_descriptor.hpp experiment_step.hpp
 parse_experiment_json.o: experiment.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
 wb_utils.o: wb_utils.hpp

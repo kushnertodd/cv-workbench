@@ -28,6 +28,7 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
   static Internet_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                      int id,
                                                      Cv_data_type_enum cv_data_type_enum, Errors &errors);
-};
+
+  string toString();};
 
 #endif //CV_WORKBENCH_SRC_INTERNET_DATA_SOURCE_DESCRIPTOR_HPP_

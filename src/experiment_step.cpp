@@ -134,4 +134,14 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
 
 void Experiment_step::run() {
   cout << "Experiment_step::run: id " << id << " operator " << step_operator << endl;
+  cout << "Experiment_step::run: input data sources" << endl;
+  for (Data_source_descriptor *descriptor: input_data_sources) {
+    if (descriptor != nullptr)
+      cout << "   " << descriptor->toString() << endl;
+  }
+  cout << "Experiment_step::run: output data stores" << endl;
+  for (Data_source_descriptor *descriptor: output_data_stores) {
+    if (descriptor != nullptr)
+        cout << "   " << descriptor->toString() << endl;
+  }
 }

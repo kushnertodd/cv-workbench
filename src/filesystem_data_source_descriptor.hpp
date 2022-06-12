@@ -33,6 +33,7 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
                                                        int id,
                                                        Cv_data_type_enum cv_data_type_enum,
                                                        Errors &errors);
+  string toString();
 };
 
 #endif //CV_WORKBENCH_SRC_FILESYSTEM_DATA_SOURCE_DESCRIPTOR_HPP_

@@ -22,6 +22,7 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   int ref_id; // database key
   Berkeley_db_data_source_descriptor(int m_id,
                                      Cv_data_type_enum m_cv_data_type_enum);
+  string name();
   void read(string json);
   void read(Image *image);
   void read(Histogram *histogram);
@@ -34,6 +35,7 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
                                                         int id,
                                                         Cv_data_type_enum cv_data_type_enum,
                                                         Errors &errors);
+  string toString();
 };
 
 #endif //CV_WORKBENCH_SRC_BERKELEY_DB_DATA_SOURCE_DESCRIPTOR_HPP_

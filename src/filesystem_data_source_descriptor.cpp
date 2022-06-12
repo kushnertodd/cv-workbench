@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "wb_json_utils.hpp"
+#include "wb_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 
@@ -95,3 +97,13 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
 
   return filesystem_data_source_descriptor;
 }
+string Filesystem_data_source_descriptor::toString() {
+  ostringstream os;
+  os << Data_source_descriptor::toString()
+  << " file format " <<image_format_to_string(file_format)
+  << " directory '" << directory
+  << "' filename '" << filename
+  << "' ext '" << ext << "'";
+  return os.str();
+}
+

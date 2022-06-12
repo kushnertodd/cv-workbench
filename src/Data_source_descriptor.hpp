@@ -28,6 +28,7 @@ class Data_source_descriptor {
   virtual void write(Image *image);
   virtual void write(Histogram *histogram);
   virtual void write(Hough *hough);
+  virtual string toString();
 };
 
 #endif //CV_WORKBENCH_SRC_DATA_SOURCE_DESCRIPTOR_HPP_

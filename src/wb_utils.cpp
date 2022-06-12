@@ -137,6 +137,65 @@ void json_parse(json_object *jobj) {
         break;
     }
   }
-
 }
 
+string repository_name_to_string(Repository_type_enum type) {
+  switch (type) {
+    case BERKELEY_DB:
+      return "Berkeley DB";
+    case FILESYSTEM:
+      return "Filesystem";
+    case INTERNET:
+      return "Internet";
+    case EXPERIMENT_STEP:
+      return "Experiment step";
+    default:
+      return "unknown repository type";
+  }
+}
+
+string data_type_to_string(Cv_data_type_enum type) {
+  switch (type) {
+    case CONTOUR:
+      return "Contour";
+    case CONVOLUTION_KERNEL:
+      return "Convolution_kernel";
+    case CONVOLVED_IMAGE:
+      return "Convolved_image";
+    case CORRELATED_IMAGE:
+      return "Correlated_image";
+    case IMAGE:
+      return "Image";
+    case JSON_EXPERIMENT:
+      return "Json_experiment";
+    case JSON_EXPERIMENT_RESULTS:
+      return "Json_experiment_results";
+    case HISTOGRAM:
+      return "Histogram";
+    case HOUGH:
+      return "Hough";
+    case PATTERN_FEATURE:
+      return "Pattern_feature";
+    case PATTERN_IMAGE:
+      return "Pattern_image";
+    case PYRAMID:
+      return "Pyramid";
+    case QUADTREE:
+      return "Quadtree";
+    case REGION:
+      return "Region";
+    default:
+      return "unknown data type";
+  }
+}
+
+string image_format_to_string(Cv_image_file_format_enum type) {
+  switch (type) {
+    case BINARY:
+      return "binary";
+    case JPEG:
+      return "jpeg";
+    default:
+      return "invalid image format";
+  }
+}
