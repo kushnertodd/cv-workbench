@@ -55,7 +55,7 @@ djpeginfo: djpeginfo.o
 json_parser_example: json_parser_example.o
 	$(CC) $< -o $@ file_utils_C.o $(CCFLAGS) $(LDFLAGS_JSON)
 parse_experiment_json: parse_experiment_json.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 objs:
 	@echo $(OBJS)
