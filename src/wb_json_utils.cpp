@@ -28,6 +28,7 @@ bool error_check_type(string module, string key, json_object *jobj, enum json_ty
 
 json_object *get_json_object(string module, json_object *jobj, string key,
                              enum json_type expected_type, Errors &errors, bool optional) {
+ if (debug)
   cout << "get_json_object: key '" << key << "' expected type '"
        << json_type_to_name(expected_type)
        //<< "' key.c_str() '"       << key.c_str()

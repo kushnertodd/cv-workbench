@@ -7,46 +7,28 @@
         "input-data": [
           {
             "id": 1,
-            "__comment": "depth = 8U",
+            "__comment": "depth = 8UC1 320x240",
             "type": "image",
-            "repository": "berkeley_db",
-            "ref-id": 1
+            "repository": "filesystem",
+            "directory": ".",
+            "filename": "320x240gray",
+            "ext": "jpg"
           }
         ],
         "output-data": [
           {
             "id": 1,
-            "__comment": "depth = 8U",
+            "__comment": "depth = 8UC1 320x240",
             "type": "image",
-            "repository": "berkeley_db"
+            "repository": "filesystem",
+            "directory": ".",
+            "filename": "320x240gray_sobel",
+            "ext": "jpg"
           }
         ],
         "parameters": {
           "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
           "orientation": 0
-        }
-      },
-      {
-        "id": 2,
-        "operator": "histogram-image",
-        "input-data": [
-          {
-            "id": 1,
-            "__comment": "depth = 8U",
-            "type": "image",
-            "repository": "step-output",
-            "step-id": 1,
-            "ref-id": 1
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "histogram",
-            "repository": "berkeley_db"
-          }
-        ],
-        "parameters": {
         }
       }
     ]
