@@ -14,11 +14,13 @@ using namespace std;
   Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
                                     Cv_data_type_enum m_cv_data_type_enum) :
       Data_source_descriptor(m_id, FILESYSTEM, m_cv_data_type_enum) {}
-  void Filesystem_data_source_descriptor::read(string json) {}
-  void Filesystem_data_source_descriptor::read(Image *image) {}
+  void Filesystem_data_source_descriptor::read(string &json) {}
+  void Filesystem_data_source_descriptor::read(Image *image) {
+
+  }
   void Filesystem_data_source_descriptor::read(Histogram *histogram) {}
   void Filesystem_data_source_descriptor::read(Hough *hough) {}
-  void Filesystem_data_source_descriptor::write(string json) {}
+  void Filesystem_data_source_descriptor::write(string &json) {}
   void Filesystem_data_source_descriptor::write(Image *image) {}
   void Filesystem_data_source_descriptor::write(Histogram *histogram) {}
   void Filesystem_data_source_descriptor::write(Hough *hough) {}

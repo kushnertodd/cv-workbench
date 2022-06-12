@@ -17,17 +17,13 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
  public:
   string directory;
   string filename;
-  // image data type
-  string depth; // CV_8U, CV_32S, or CV_32F
-  int rows;
-  int cols;
   Filesystem_data_source_descriptor(int m_id,
                                     Cv_data_type_enum m_cv_data_type_enum);
-  void read(string json);
+  void read(string &json);
   void read(Image *image);
   void read(Histogram *histogram);
   void read(Hough *hough);
-  void write(string json);
+  void write(string &json);
   void write(Image *image);
   void write(Histogram *histogram);
   void write(Hough *hough);

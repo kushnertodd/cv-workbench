@@ -5,7 +5,36 @@
 #ifndef CV_WORKBENCH_SRC_IMAGE_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HPP_
 
+#include <exception>
+#include <string>
+
+using namespace std;
+
+class Image_exception {
+ private:
+  string errmsg;
+ public:
+  Image_exception(string m_errmsg);
+  Image_exception(string m_message, int size, int max_size);
+  virtual const char *what() const noexcept;
+};
+
 class Image {
+ public:
+  int rows;
+  int cols;
+  int components;
+  int row_stride;
+  int nbytes;
+  int next_pos;
+  char *buf;
+  bool allocated;
+
+  virtual ~Image();
+  Image(int m_rows, int m_cols, int m_components);
+  static Image *create_image_allocated_buffer(int m_rows, int m_cols, int m_components);
+  static Image *create_image_assigned_buffer(int m_rows, int m_cols, int m_components, char *m_buf);
+  void add(char *src, int count);
 
 };
 
