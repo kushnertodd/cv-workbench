@@ -13,7 +13,7 @@
       "repository": "filesystem",
       "format": "BINARY|JPEG|default=JPEG",
       "__comment": "path = [directory/]filename.ext",
-      "directory": "string|default=''",
+      "directory": "string|default='.'",
       "filename": "string",
       "ext": "string|default='jpg'"
     },

@@ -168,32 +168,32 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   return image;
 }
 
- void Image::write_binary(Image *image,  string path, Errors &errors){
+ void Image::write_binary(string path, Errors &errors){
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write_binary: invalid file '" + path + "'");
   }
-  fwrite(&image->rows, sizeof(int), 1, fp);
+  fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_binary: cannot write image rows to '" + path + "'");
   }
-  fwrite(&image->cols, sizeof(int), 1, fp);
+  fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_binary: cannot write image cols to '" + path + "'");
   }
-  fwrite(&image->components, sizeof(int), 1, fp);
+  fwrite(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_binary: cannot write image components to '" + path + "'");
   }
   // Write the data from the buffer.
-  fwrite(image->buf, sizeof(char), image->nbytes, fp);
+  fwrite(buf, sizeof(char), nbytes, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_binary: cannot write image data to '" + path + "'");
   }
   fclose(fp);
 }
 
- void Image::write_jpeg(Image *image, string path, Errors &errors) {
+ void Image::write_jpeg(string path, Errors &errors) {
    int quality = 100; // best
      struct jpeg_compress_struct cinfo;
      struct jpeg_error_mgr jerr;
@@ -212,8 +212,8 @@ Image *Image::read_jpeg(string path, Errors &errors) {
      }
      jpeg_stdio_dest(&cinfo, outfile);
      /* Step 3: set parameters for compression */
-     cinfo.image_width = image->cols;
-     cinfo.image_height = image->rows;
+     cinfo.image_width = cols;
+     cinfo.image_height = rows;
      cinfo.input_components = 1; // hardcode grayscale for now
      cinfo.in_color_space = JCS_GRAYSCALE; 	/* colorspace of input image */
      jpeg_set_defaults(&cinfo);
@@ -228,7 +228,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
         * Here the array is only one element long, but you could pass
         * more than one scanline at a time if that's more convenient.
         */
-       row_pointer[0] = (JSAMPROW)&image->buf[cinfo.next_scanline * image->row_stride];
+       row_pointer[0] = (JSAMPROW)&buf[cinfo.next_scanline * row_stride];
        (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
      }
      /* Step 6: Finish compression */

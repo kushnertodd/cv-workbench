@@ -38,10 +38,10 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case BINARY:
-      image->write_binary(image, path, errors);
+      image->write_binary(path, errors);
       break;
     case JPEG:
-      image->write_jpeg(image, path, errors);
+      image->write_jpeg(path, errors);
       break;
     default:
       break;
@@ -69,7 +69,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   if (json_directory != nullptr)
     filesystem_data_source_descriptor->directory = json_object_get_string(json_directory);
   else
-    filesystem_data_source_descriptor->directory = "";
+    filesystem_data_source_descriptor->directory = ".";
 
   json_object *json_filename =
       get_json_object("Filesystem_data_source_descriptor::json_parse",
@@ -79,6 +79,8 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
                       errors);
   if (json_filename != nullptr)
     filesystem_data_source_descriptor->filename = json_object_get_string(json_filename);
+  else
+    errors.add("Filesystem_data_source_descriptor::json_parse: missing required filename");
 
   json_object *json_ext =
       get_json_object("Filesystem_data_source_descriptor::json_parse",

@@ -11,7 +11,7 @@ void test_write() {
   Image* image = Image::create_image_allocated_buffer(2, 2, 1);
   memcpy(image->buf, "test", 4);
   Errors errors;
-  image->write_binary(image, "test-image.bin", errors);
+  image->write_binary("test-image.bin", errors);
   if (errors.error_ct > 0) {
     cout << "image_test.test_write(): there were errors." << endl << errors.toString();
   }
@@ -60,7 +60,7 @@ void test_read() {
   }
 
   string jpeg_image_file_out = "320x240gray_out.jpg";
-  jpeg_image->write_jpeg(jpeg_image, jpeg_image_file_out, errors);
+  jpeg_image->write_jpeg(jpeg_image_file_out, errors);
   if (errors.error_ct > 0) {
     cout << "image_test.write_jpeg('"<<jpeg_image_file_out<<"'): there were errors." << endl << errors.toString();
   }
