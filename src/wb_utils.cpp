@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include "image.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -243,6 +244,15 @@ Cv_image_file_format_enum string_to_file_format(string type) {
   else return UNDEFINED_FILE_FORMAT;
 }
 
+/**
+ * orientation:
+ *      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
+ *     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
+ * @param input_data_source
+ * @param output_data_store
+ * @param operator_parameters
+ * @param errors
+ */
 void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
                                 Data_source_descriptor *output_data_store,
                                 map<string, string> operator_parameters,
@@ -273,8 +283,23 @@ void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
     if (string_to_int(orientation_str, orientation)) {
       cout << "sobeling! orientation " << orientation << endl;
       Image *input = input_data_source->read_image(errors);
-      Image *output = output_data_store->read_image(errors);
+      Image *output =
+          Image::create_image_allocated_buffer(input->rows,
+                                               input->cols, input->components);
+      // Image *output = output_data_store->read_image(errors);
       cout << "still sobeling!" << endl;
+      int ptr = 0;
+      for (int row = 0; row < input->rows; row++) {
+        for (int col = 0; col < input->cols; col++) {
+          if (col < input->cols - 1) {
+            output->buf[row * input->row_stride + col] =
+                abs(input->buf[row * input->row_stride + col] -
+                    input->buf[row * input->row_stride + col + 1]);
+          }
+          ptr++;
+        }
+      }
+      output->write_jpeg("output.jpg", errors);
     } else {
       errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
     }
