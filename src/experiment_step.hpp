@@ -21,11 +21,11 @@ class Experiment_step {
   string step_operator;
   list<Data_source_descriptor *> input_data_sources;
   list<Data_source_descriptor *> output_data_stores;
-  map<string, string> Operator_parameters;
+  map<string, string> operator_parameters;
   ~Experiment_step();
   Experiment_step();
   Experiment_step(int m_id, string m_step_operator);
-  void run();
+  void run(Errors &errors);
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json

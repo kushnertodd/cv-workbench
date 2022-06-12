@@ -10,6 +10,7 @@
 #include "experiment_step_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
+#include "wb_utils.hpp"
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
@@ -26,16 +27,10 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "type",
                       json_type_string, errors);
   if (json_type != nullptr) {
-    string data_type = json_object_get_string(json_type);
-    if (data_type == "image") {
-      data_type = IMAGE;
-    } else if (data_type == "histogram") {
-      data_type = HISTOGRAM;
-    } else if (data_type == "hough") {
-      data_type = HOUGH;
-    } else {
-      errors.add("invalid data descriptor type: " + data_type);
-    }
+    string data_type_str = json_object_get_string(json_type);
+    if (true)
+      cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << endl;
+    data_type = string_to_data_type(data_type_str);
   }
   json_object *json_repository =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",
@@ -129,10 +124,29 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
       }
     }
   }
+  // parse parameters
+  if (json_parameters != nullptr) {
+    cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << endl;
+    if (error_check_type("Experiment_step::json_parse", "parameters",
+                         json_parameters, json_type_object, errors)) {
+      json_object_object_foreach(json_parameters, key, val) {
+        json_type type = json_object_get_type(val);
+        if (type == json_type_string) {
+          string val_str = json_object_get_string(val);
+          experiment_step->operator_parameters[key] = val_str;
+        } else {
+          errors.add("Experiment_step::json_parse: invalid parameter type '"
+                         + string(json_type_to_name(type))
+                         + "' for key '"
+                         + string(key) + "'");
+        }
+      }
+    }
+  }
   return experiment_step;
 }
 
-void Experiment_step::run() {
+void Experiment_step::run(Errors &errors) {
   cout << "Experiment_step::run: id " << id << " operator " << step_operator << endl;
   cout << "Experiment_step::run: input data sources" << endl;
   for (Data_source_descriptor *descriptor: input_data_sources) {
@@ -142,6 +156,18 @@ void Experiment_step::run() {
   cout << "Experiment_step::run: output data stores" << endl;
   for (Data_source_descriptor *descriptor: output_data_stores) {
     if (descriptor != nullptr)
-        cout << "   " << descriptor->toString() << endl;
+      cout << "   " << descriptor->toString() << endl;
+  }
+  if (step_operator == "filter-edge-Sobel") {
+    if (input_data_sources.size() == 0)
+      errors.add("Experiment_step::run filter-edge-Sobel: missing input data source");
+    else if (input_data_sources.size() > 1)
+      errors.add("Experiment_step::run filter-edge-Sobel: too many input data sources");
+    if (output_data_stores.size() == 0)
+      errors.add("Experiment_step::run filter-edge-Sobel: missing output data source");
+    else if (output_data_stores.size() > 1)
+      errors.add("Experiment_step::run filter-edge-Sobel: too many output data sources");
+    operator_filter_edge_sobel(input_data_sources.front(), output_data_stores.front(),
+                               operator_parameters);
   }
 }

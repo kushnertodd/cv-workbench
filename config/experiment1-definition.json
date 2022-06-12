@@ -10,6 +10,7 @@
             "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
+            "format": "jpeg",
             "directory": ".",
             "filename": "320x240gray",
             "ext": "jpg"
@@ -21,6 +22,7 @@
             "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
+            "format": "jpeg",
             "directory": ".",
             "filename": "320x240gray_sobel",
             "ext": "jpg"
@@ -28,7 +30,7 @@
         ],
         "parameters": {
           "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
-          "orientation": 0
+          "orientation": "0"
         }
       }
     ]

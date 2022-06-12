@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
     if (errors.error_ct > 0) {
       cout << "parse_experiment_json: there were errors." << endl << errors.toString();
     } else {
-      experiment->run();
+      experiment->run(errors);
     }
   }
 }

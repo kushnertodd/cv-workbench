@@ -27,7 +27,7 @@ class Experiment {
   * @param errors experiment parse errors
   */
   static Experiment *json_parse(json_object *jobj, Errors &errors);
-  void run();
+  void run(Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_HPP_

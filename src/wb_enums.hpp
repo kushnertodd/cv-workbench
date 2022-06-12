@@ -27,12 +27,14 @@ enum Cv_data_type_enum {
   PATTERN_IMAGE, // for exact sub-image matching
   PYRAMID, // Burt structure
   QUADTREE, // Samet structure
-  REGION // complex area, shape properties
+  REGION, // complex area, shape properties
+  UNDEFINED_DATA_TYPE
 };
 
 enum Cv_image_file_format_enum {
   BINARY, // includes header [int rows, int cols, int components]
-  JPEG
+  JPEG,
+  UNDEFINED_FILE_FORMAT
 };
 
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_

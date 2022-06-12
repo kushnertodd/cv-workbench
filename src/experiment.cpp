@@ -42,9 +42,9 @@ Experiment *Experiment::json_parse(json_object *jobj, Errors &errors) {
   return experiment;
 }
 
-void Experiment::run() {
+void Experiment::run(Errors &errors) {
   for (Experiment_step *step: experiment_steps) {
-    step->run();
+    step->run(errors);
   }
 }
 

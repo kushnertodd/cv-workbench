@@ -62,6 +62,21 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   Filesystem_data_source_descriptor *filesystem_data_source_descriptor =
       new Filesystem_data_source_descriptor(id, data_type);
 
+  json_object *json_file_format =
+      get_json_object("Filesystem_data_source_descriptor::json_parse",
+                      json_data_descriptor,
+                      "format",
+                      json_type_string,
+                      errors);
+  if (json_file_format != nullptr) {
+    string file_format_str = json_object_get_string(json_file_format);
+    Cv_image_file_format_enum file_format =
+        string_to_file_format(file_format_str);
+    if (file_format == UNDEFINED_FILE_FORMAT)
+      errors.add("Filesystem_data_source_descriptor::json_parse: invalid file format '" + file_format_str + "'");
+    else
+      filesystem_data_source_descriptor->file_format = file_format;
+  }
   json_object *json_directory =
       get_json_object("Filesystem_data_source_descriptor::json_parse",
                       json_data_descriptor,
@@ -97,13 +112,14 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
 
   return filesystem_data_source_descriptor;
 }
+
 string Filesystem_data_source_descriptor::toString() {
   ostringstream os;
   os << Data_source_descriptor::toString()
-  << " file format " <<image_format_to_string(file_format)
-  << " directory '" << directory
-  << "' filename '" << filename
-  << "' ext '" << ext << "'";
+     << " file format '" << file_format_to_string(file_format)
+     << "' directory '" << directory
+     << "' filename '" << filename
+     << "' ext '" << ext << "'";
   return os.str();
 }
 

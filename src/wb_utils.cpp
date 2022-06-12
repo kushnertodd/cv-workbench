@@ -157,39 +157,73 @@ string repository_name_to_string(Repository_type_enum type) {
 string data_type_to_string(Cv_data_type_enum type) {
   switch (type) {
     case CONTOUR:
-      return "Contour";
+      return "contour";
     case CONVOLUTION_KERNEL:
-      return "Convolution_kernel";
+      return "convolution kernel";
     case CONVOLVED_IMAGE:
-      return "Convolved_image";
+      return "convolved image";
     case CORRELATED_IMAGE:
-      return "Correlated_image";
+      return "correlated image";
     case IMAGE:
-      return "Image";
+      return "image";
     case JSON_EXPERIMENT:
-      return "Json_experiment";
+      return "json experiment";
     case JSON_EXPERIMENT_RESULTS:
-      return "Json_experiment_results";
+      return "json experiment results";
     case HISTOGRAM:
-      return "Histogram";
+      return "histogram";
     case HOUGH:
-      return "Hough";
+      return "hough";
     case PATTERN_FEATURE:
-      return "Pattern_feature";
+      return "pattern feature";
     case PATTERN_IMAGE:
-      return "Pattern_image";
+      return "pattern image";
     case PYRAMID:
-      return "Pyramid";
+      return "pyramid";
     case QUADTREE:
-      return "Quadtree";
+      return "quadtree";
     case REGION:
-      return "Region";
+      return "region";
     default:
       return "unknown data type";
   }
 }
 
-string image_format_to_string(Cv_image_file_format_enum type) {
+Cv_data_type_enum string_to_data_type(string type) {
+  if (type == "contour")
+    return CONTOUR;
+  else if (type == "convolution kernel")
+    return CONVOLUTION_KERNEL;
+  else if (type == "convolved image")
+    return CONVOLVED_IMAGE;
+  else if (type == "correlated image")
+    return CORRELATED_IMAGE;
+  else if (type == "image")
+    return IMAGE;
+  else if (type == "json experiment")
+    return JSON_EXPERIMENT;
+  else if (type == "json experiment results")
+    return JSON_EXPERIMENT_RESULTS;
+  else if (type == "histogram")
+    return HISTOGRAM;
+  else if (type == "hough")
+    return HOUGH;
+  else if (type == "pattern feature")
+    return PATTERN_FEATURE;
+  else if (type == "pattern image")
+    return PATTERN_IMAGE;
+  else if (type == "pyramid")
+    return PYRAMID;
+  else if (type == "quadtree")
+    return QUADTREE;
+  else if (type == "region")
+    return REGION;
+  else
+    return UNDEFINED_DATA_TYPE;
+}
+
+
+string file_format_to_string(Cv_image_file_format_enum type) {
   switch (type) {
     case BINARY:
       return "binary";
@@ -198,4 +232,33 @@ string image_format_to_string(Cv_image_file_format_enum type) {
     default:
       return "invalid image format";
   }
+}
+
+Cv_image_file_format_enum string_to_file_format(string type) {
+  if (type == "binary")
+    return BINARY;
+  else if (type == "jpeg")
+    return JPEG;
+  else return UNDEFINED_FILE_FORMAT;
+}
+
+void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
+                                Data_source_descriptor *output_data_store,
+                                map<string, string> operator_parameters) {
+  cout << "operator_filter_edge_sobel: " << endl
+       << "   input_data_source '"
+       << input_data_source->toString()
+       << "'" << endl
+       << "   output_data_store '"
+       << output_data_store->toString()
+       << "'" << endl << "   parameters " << endl;
+
+  map<string, string>::iterator it;
+  for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
+    std::cout << "      '" << it->first    // string (key)
+              << "': '"
+              << it->second   // string's value
+              << "'" << endl;
+  }
+  cout << endl;
 }

@@ -24,7 +24,7 @@ void Data_source_descriptor::write(Hough *hough) {}
 string Data_source_descriptor::toString() {
   ostringstream os;
   os << "id " << id
-     << " repository " << repository_name_to_string(repository_type)
-     << " data type " << data_type_to_string(data_type);
+     << " repository '" << repository_name_to_string(repository_type)
+     << "' data type '" << data_type_to_string(data_type) << "'";
   return os.str();
 }
