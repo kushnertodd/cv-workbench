@@ -6,6 +6,8 @@
 #include <sstream>
 #include "wb_utils.hpp"
 
+extern bool debug;
+
 using namespace std;
 
 string indent(int n) {
@@ -222,7 +224,6 @@ Cv_data_type_enum string_to_data_type(string type) {
     return UNDEFINED_DATA_TYPE;
 }
 
-
 string file_format_to_string(Cv_image_file_format_enum type) {
   switch (type) {
     case BINARY:
@@ -244,21 +245,35 @@ Cv_image_file_format_enum string_to_file_format(string type) {
 
 void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
                                 Data_source_descriptor *output_data_store,
-                                map<string, string> operator_parameters) {
-  cout << "operator_filter_edge_sobel: " << endl
-       << "   input_data_source '"
-       << input_data_source->toString()
-       << "'" << endl
-       << "   output_data_store '"
-       << output_data_store->toString()
-       << "'" << endl << "   parameters " << endl;
+                                map<string, string> operator_parameters,
+                                Errors &errors) {
+  if (debug)
+    cout << "operator_filter_edge_sobel: " << endl
+         << "   input_data_source '"
+         << input_data_source->toString()
+         << "'" << endl
+         << "   output_data_store '"
+         << output_data_store->toString()
+         << "'" << endl << "   parameters " << endl;
 
-  map<string, string>::iterator it;
-  for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
-    std::cout << "      '" << it->first    // string (key)
-              << "': '"
-              << it->second   // string's value
-              << "'" << endl;
+  if (debug) {
+    map<string, string>::iterator it;
+    for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
+      cout << "      '" << it->first    // string (key)
+           << "': '"
+           << it->second   // string's value
+           << "'" << endl;
+    }
   }
-  cout << endl;
+  if (operator_parameters.find("orientation") == operator_parameters.end()) {
+    errors.add("operator_filter_edge_sobel: missing 'orientation' parameter");
+  } else {
+    int orientation;
+    string orientation_str = operator_parameters["orientation"];
+    if (string_to_int(orientation_str, orientation)) {
+      cout << "sobeling! orientation " << orientation << endl;
+    } else {
+      errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
+    }
+  }
 }

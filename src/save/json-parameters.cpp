@@ -147,7 +147,8 @@ class Operator_request {
     if (errors.check_field(instance_json, "request: instance")) {
       instance_name = json_object_to_json_string(instance_json);
       if (errors.debug)
-        std::cout << "instance: " << json_object_to_json_string_ext(instance_json, JSON_C_TO_STRING_PRETTY) << std::endl;
+        std::cout << "instance: " << json_object_to_json_string_ext(instance_json, JSON_C_TO_STRING_PRETTY)
+                  << std::endl;
     }
 
     // parse "parameters"

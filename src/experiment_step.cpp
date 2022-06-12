@@ -28,7 +28,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
                       json_type_string, errors);
   if (json_type != nullptr) {
     string data_type_str = json_object_get_string(json_type);
-    if (true)
+    if (debug)
       cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << endl;
     data_type = string_to_data_type(data_type_str);
   }
@@ -126,7 +126,8 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
   }
   // parse parameters
   if (json_parameters != nullptr) {
-    cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << endl;
+    if (debug)
+      cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << endl;
     if (error_check_type("Experiment_step::json_parse", "parameters",
                          json_parameters, json_type_object, errors)) {
       json_object_object_foreach(json_parameters, key, val) {
@@ -168,6 +169,6 @@ void Experiment_step::run(Errors &errors) {
     else if (output_data_stores.size() > 1)
       errors.add("Experiment_step::run filter-edge-Sobel: too many output data sources");
     operator_filter_edge_sobel(input_data_sources.front(), output_data_stores.front(),
-                               operator_parameters);
+                               operator_parameters, errors);
   }
 }

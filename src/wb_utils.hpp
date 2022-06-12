@@ -27,5 +27,6 @@ Cv_image_file_format_enum string_to_file_format(string type);
 
 void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
                                 Data_source_descriptor *output_data_store,
-    map<string, string> operator_parameters);
+                                map<string, string> operator_parameters,
+                                Errors &errors);
 #endif //CV_WORKBENCH_SRC_WB_UTILS_HPP_
