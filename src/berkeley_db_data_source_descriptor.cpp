@@ -24,12 +24,12 @@ void Berkeley_db_data_source_descriptor::write(Hough *hough) {}
 
 Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                       int id,
-                                                      Cv_data_type_enum cv_data_type_enum, Errors &errors) {
+                                                      Cv_data_type_enum data_type, Errors &errors) {
   if (debug)
     cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
-         << cv_data_type_enum << endl;
+         << data_type << endl;
   Berkeley_db_data_source_descriptor *berkeley_db_data_source_descriptor =
-      new Berkeley_db_data_source_descriptor(id, cv_data_type_enum);
+      new Berkeley_db_data_source_descriptor(id, data_type);
   json_object *json_ref_id =
       get_json_object("Berkeley_db_data_source_descriptor::json_parse",
                       json_data_descriptor,

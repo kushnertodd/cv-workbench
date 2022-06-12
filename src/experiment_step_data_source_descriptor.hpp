@@ -24,7 +24,7 @@ class Experiment_step_data_source_descriptor : public Data_source_descriptor {
   void read(Hough *hough);
   static Experiment_step_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                             int id,
-                                                            Cv_data_type_enum cv_data_type_enum, Errors &errors);
+                                                            Cv_data_type_enum data_type, Errors &errors);
   string toString();
 };
 

@@ -21,18 +21,18 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   if (json_id != nullptr) {
     id = json_object_get_int(json_id);
   }
-  Cv_data_type_enum cv_data_type_enum;
+  Cv_data_type_enum data_type;
   json_object *json_type =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "type",
                       json_type_string, errors);
   if (json_type != nullptr) {
     string data_type = json_object_get_string(json_type);
     if (data_type == "image") {
-      cv_data_type_enum = IMAGE;
+      data_type = IMAGE;
     } else if (data_type == "histogram") {
-      cv_data_type_enum = HISTOGRAM;
+      data_type = HISTOGRAM;
     } else if (data_type == "hough") {
-      cv_data_type_enum = HOUGH;
+      data_type = HOUGH;
     } else {
       errors.add("invalid data descriptor type: " + data_type);
     }
@@ -45,19 +45,19 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     if (repository == "berkeley_db") {
       data_source_descriptor =
           Berkeley_db_data_source_descriptor::json_parse(
-              json_data_descriptor, id, cv_data_type_enum, errors);
+              json_data_descriptor, id, data_type, errors);
     } else if (repository == "filesystem") {
       data_source_descriptor =
           Filesystem_data_source_descriptor::json_parse(
-              json_data_descriptor, id, cv_data_type_enum, errors);
+              json_data_descriptor, id, data_type, errors);
     } else if (repository == "internet") {
       data_source_descriptor =
           Internet_data_source_descriptor::json_parse(
-              json_data_descriptor, id, cv_data_type_enum, errors);
+              json_data_descriptor, id, data_type, errors);
     } else if (repository == "step-output") {
       data_source_descriptor =
           Experiment_step_data_source_descriptor::json_parse(
-              json_data_descriptor, id, cv_data_type_enum, errors);
+              json_data_descriptor, id, data_type, errors);
     } else {
       errors.add("invalid data repository type: " + repository);
     }

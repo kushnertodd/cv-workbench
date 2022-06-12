@@ -31,7 +31,7 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   void write_hough(Hough *hough, Errors &errors);
   static Filesystem_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                        int id,
-                                                       Cv_data_type_enum cv_data_type_enum,
+                                                       Cv_data_type_enum data_type,
                                                        Errors &errors);
   string toString();
 };

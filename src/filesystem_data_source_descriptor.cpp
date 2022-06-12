@@ -54,13 +54,13 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                                  int id,
-                                                                                 Cv_data_type_enum cv_data_type_enum,
+                                                                                 Cv_data_type_enum data_type,
                                                                                  Errors &errors) {
   if (debug)
     cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
-         << cv_data_type_enum << endl;
+         << data_type << endl;
   Filesystem_data_source_descriptor *filesystem_data_source_descriptor =
-      new Filesystem_data_source_descriptor(id, cv_data_type_enum);
+      new Filesystem_data_source_descriptor(id, data_type);
 
   json_object *json_directory =
       get_json_object("Filesystem_data_source_descriptor::json_parse",

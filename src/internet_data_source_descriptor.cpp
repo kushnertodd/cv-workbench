@@ -21,13 +21,13 @@ void Internet_data_source_descriptor::read(Histogram *histogram) {}
 void Internet_data_source_descriptor::read(Hough *hough) {}
 Internet_data_source_descriptor *Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                              int id,
-                                                                             Cv_data_type_enum cv_data_type_enum,
+                                                                             Cv_data_type_enum data_type,
                                                                              Errors &errors) {
   if (debug)
     cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
-         << cv_data_type_enum << endl;
+         << data_type << endl;
   Internet_data_source_descriptor *internet_data_source_descriptor =
-      new Internet_data_source_descriptor(id, cv_data_type_enum);
+      new Internet_data_source_descriptor(id, data_type);
   json_object *json_url =
       get_json_object("Internet_data_source_descriptor::json_parse",
                       json_data_descriptor,

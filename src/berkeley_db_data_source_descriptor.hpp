@@ -33,7 +33,7 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   void write(Hough *hough);
   static Berkeley_db_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                         int id,
-                                                        Cv_data_type_enum cv_data_type_enum,
+                                                        Cv_data_type_enum data_type,
                                                         Errors &errors);
   string toString();
 };

@@ -17,7 +17,7 @@ class Data_source_descriptor {
  public:
   int id;
   Repository_type_enum repository_type;
-  Cv_data_type_enum cv_data_type_enum;
+  Cv_data_type_enum data_type;
   Data_source_descriptor(int m_id, Repository_type_enum m_repository_type,
                          Cv_data_type_enum m_cv_data_type_enum);
   virtual void read(string json);
