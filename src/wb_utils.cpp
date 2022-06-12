@@ -293,13 +293,13 @@ void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
         for (int col = 0; col < input->cols; col++) {
           if (col < input->cols - 1) {
             output->buf[row * input->row_stride + col] =
-                abs(input->buf[row * input->row_stride + col] -
+                255 - abs(input->buf[row * input->row_stride + col] -
                     input->buf[row * input->row_stride + col + 1]);
           }
           ptr++;
         }
       }
-      output->write_jpeg("output.jpg", errors);
+      output->write_jpeg("sobel.jpg", errors);
     } else {
       errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
     }
