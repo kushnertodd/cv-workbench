@@ -185,6 +185,49 @@ Image *Image::read_jpeg(string path, Errors &errors) {
 }
 
  void Image::write_jpeg(Image *image, string path, Errors &errors) {
+   int quality = 100; // best
+     struct jpeg_compress_struct cinfo;
+     struct jpeg_error_mgr jerr;
+     /* More stuff */
+     FILE * outfile;		/* target file */
+     JSAMPROW row_pointer[1];	/* pointer to JSAMPLE row[s] */
+    // int row_stride;		/* physical row width in image buffer */
+
+     /* Step 1: allocate and initialize JPEG compression object */
+     cinfo.err = jpeg_std_error(&jerr);
+     /* Now we can initialize the JPEG compression object. */
+     jpeg_create_compress(&cinfo);
+     /* Step 2: specify data destination (eg, a file) */
+     if ((outfile = fopen(path.c_str(), "wb")) == NULL) {
+     errors.add("Filesystem_data_source_descriptor::write_jpeg: invalid file '" + path + "'");
+     }
+     jpeg_stdio_dest(&cinfo, outfile);
+     /* Step 3: set parameters for compression */
+     cinfo.image_width = image->cols;
+     cinfo.image_height = image->rows;
+     cinfo.input_components = 1; // hardcode grayscale for now
+     cinfo.in_color_space = JCS_GRAYSCALE; 	/* colorspace of input image */
+     jpeg_set_defaults(&cinfo);
+     jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+     /* Step 4: Start compressor */
+     jpeg_start_compress(&cinfo, TRUE);
+     /* Step 5: while (scan lines remain to be written) */
+     /*           jpeg_write_scanlines(...); */
+
+     while (cinfo.next_scanline < cinfo.image_height) {
+       /* jpeg_write_scanlines expects an array of pointers to scanlines.
+        * Here the array is only one element long, but you could pass
+        * more than one scanline at a time if that's more convenient.
+        */
+       row_pointer[0] = (JSAMPROW)&image->buf[cinfo.next_scanline * image->row_stride];
+       (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+     }
+     /* Step 6: Finish compression */
+     jpeg_finish_compress(&cinfo);
+     /* After finish_compress, we can close the output file. */
+     fclose(outfile);
+     /* Step 7: release JPEG compression object */
+     jpeg_destroy_compress(&cinfo);
 
 }
 
