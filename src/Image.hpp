@@ -33,11 +33,13 @@ class Image {
 
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components);
+  void add(char *src, int count);
   static Image *create_image_allocated_buffer(int m_rows, int m_cols, int m_components);
   static Image *create_image_assigned_buffer(int m_rows, int m_cols, int m_components, char *m_buf);
   static Image *read_binary(string path, Errors &errors);
   static Image *read_jpeg(string path, Errors &errors);
-  void add(char *src, int count);
+   void write_binary(Image *image,  string path, Errors &errors);
+   void write_jpeg(Image *image, string path, Errors &errors);
 
 };
 

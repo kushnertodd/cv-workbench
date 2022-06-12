@@ -38,8 +38,10 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case BINARY:
+       image->write_binary(image, path, errors);
       break;
     case JPEG:
+      image->write_jpeg(image, path, errors);
       break;
     default:
       break;

@@ -41,6 +41,15 @@ Image::Image(int m_rows, int m_cols, int m_components) :
     nbytes(rows * row_stride),
     next_pos(0) {}
 
+void Image::add(char *src, int count) {
+  if (!allocated)
+    throw new Image_exception("Image::add: cannot add to assigned buffer");
+  if (next_pos + count > nbytes)
+    throw new Image_exception("Image::add", next_pos + count, nbytes);
+  memcpy(buf + next_pos, src, count);
+  next_pos += count;
+}
+
 Image *Image::create_image_allocated_buffer(int m_rows, int m_cols, int m_components) {
   Image *image = new Image(m_rows, m_cols, m_components);
   image->buf = new char[image->nbytes];
@@ -58,26 +67,26 @@ Image *Image::create_image_assigned_buffer(int m_rows, int m_cols, int m_compone
 Image *Image::read_binary(string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Filesystem_data_source_descriptor::read_image: invalid file '" + path + "'");
+    errors.add("Filesystem_data_source_descriptor::read_binary: invalid file '" + path + "'");
     return nullptr;
   }
   int rows;
   size_t newLen;
   newLen = fread(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_image: missing image rows in '" + path + "'");
+    errors.add("Filesystem_data_source_descriptor::read_binary: missing image rows in '" + path + "'");
     return nullptr;
   }
   int cols;
   newLen = fread(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_image: missing image cols in '" + path + "'");
+    errors.add("Filesystem_data_source_descriptor::read_binary: missing image cols in '" + path + "'");
     return nullptr;
   }
   int components;
   newLen = fread(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_image: missing image components in '" + path + "'");
+    errors.add("Filesystem_data_source_descriptor::read_binary: missing image components in '" + path + "'");
     return nullptr;
   }
   Image *image = Image::create_image_allocated_buffer(rows, cols, components);
@@ -85,7 +94,7 @@ Image *Image::read_binary(string path, Errors &errors) {
   // Read the data into buffer.
   newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
   if (ferror(fp) != 0 || newLen != sizeof(char) * image->nbytes) {
-    errors.add("Filesystem_data_source_descriptor::read_image: cannot read image data in '" + path + "'");
+    errors.add("Filesystem_data_source_descriptor::read_binary: cannot read image data in '" + path + "'");
     return nullptr;
   }
   fclose(fp);
@@ -150,13 +159,33 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   return image;
 }
 
-void Image::add(char *src, int count) {
-  if (!allocated)
-    throw new Image_exception("Image::add: cannot add to assigned buffer");
-  if (next_pos + count > nbytes)
-    throw new Image_exception("Image::add", next_pos + count, nbytes);
-  memcpy(buf + next_pos, src, count);
-  next_pos += count;
+ void Image::write_binary(Image *image,  string path, Errors &errors){
+  FILE *fp = fopen(path.c_str(), "w");
+  if (fp == nullptr) {
+    errors.add("Filesystem_data_source_descriptor::write_binary: invalid file '" + path + "'");
+  }
+  fwrite(&image->rows, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image rows to '" + path + "'");
+  }
+  fwrite(&image->cols, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image cols to '" + path + "'");
+  }
+  fwrite(&image->components, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image components to '" + path + "'");
+  }
+  // Write the data from the buffer.
+  fwrite(image->buf, sizeof(char), image->nbytes, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image data to '" + path + "'");
+  }
+  fclose(fp);
+}
+
+ void Image::write_jpeg(Image *image, string path, Errors &errors) {
+
 }
 
 
