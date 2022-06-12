@@ -32,7 +32,7 @@ enum Cv_data_type_enum {
 
 enum Cv_image_file_format_enum {
   BINARY, // includes header [int rows, int cols, int components]
-JPEG
+  JPEG
 };
 
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_
