@@ -15,10 +15,15 @@ using namespace std;
 Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
                                                                  Cv_data_type_enum m_cv_data_type_enum) :
     Data_source_descriptor(m_id, INTERNET, m_cv_data_type_enum) {}
-void Internet_data_source_descriptor::read(string json) {}
-void Internet_data_source_descriptor::read(Image *image) {}
-void Internet_data_source_descriptor::read(Histogram *histogram) {}
-void Internet_data_source_descriptor::read(Hough *hough) {}
+string Internet_data_source_descriptor::read_json(Errors &errors) { return nullptr; }
+Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
+Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
+void Internet_data_source_descriptor::write_json(string &json, Errors &errors) {}
+void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Internet_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+
 Internet_data_source_descriptor *Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                              int id,
                                                                              Cv_data_type_enum data_type,

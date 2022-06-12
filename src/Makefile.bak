@@ -78,8 +78,9 @@ berkeley_db_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 berkeley_db_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
 berkeley_db_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 berkeley_db_data_source_descriptor.o: berkeley_db_data_source_descriptor.hpp
-data_source_descriptor.o: Data_source_descriptor.hpp wb_enums.hpp
-data_source_descriptor.o: histogram.hpp hough.hpp image.hpp errors.hpp
+data_source_descriptor.o: wb_utils.hpp wb_enums.hpp
+data_source_descriptor.o: Data_source_descriptor.hpp histogram.hpp hough.hpp
+data_source_descriptor.o: image.hpp errors.hpp
 errors.o: errors.hpp
 experiment.o: experiment.hpp wb_enums.hpp errors.hpp image.hpp histogram.hpp
 experiment.o: hough.hpp experiment_step.hpp data_source_descriptor.hpp
@@ -96,8 +97,9 @@ experiment_step_data_source_descriptor.o: wb_enums.hpp histogram.hpp
 experiment_step_data_source_descriptor.o: hough.hpp image.hpp
 experiment_step_data_source_descriptor.o: experiment_step_data_source_descriptor.hpp
 filesystem_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
-filesystem_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
-filesystem_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
+filesystem_data_source_descriptor.o: wb_utils.hpp wb_enums.hpp
+filesystem_data_source_descriptor.o: data_source_descriptor.hpp histogram.hpp
+filesystem_data_source_descriptor.o: hough.hpp image.hpp
 filesystem_data_source_descriptor.o: filesystem_data_source_descriptor.hpp
 file_utils.o: file_utils.hpp
 histogram.o: Histogram.hpp
@@ -113,4 +115,4 @@ parse_experiment_json.o: wb_enums.hpp image.hpp histogram.hpp hough.hpp
 parse_experiment_json.o: data_source_descriptor.hpp experiment_step.hpp
 parse_experiment_json.o: experiment.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
-wb_utils.o: wb_utils.hpp
+wb_utils.o: wb_utils.hpp wb_enums.hpp

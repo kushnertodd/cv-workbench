@@ -18,16 +18,17 @@ class Data_source_descriptor {
   int id;
   Repository_type_enum repository_type;
   Cv_data_type_enum data_type;
+  virtual ~Data_source_descriptor();
   Data_source_descriptor(int m_id, Repository_type_enum m_repository_type,
                          Cv_data_type_enum m_cv_data_type_enum);
-  virtual void read(string json);
-  virtual void read(Image *image);
-  virtual void read(Histogram *histogram);
-  virtual void read(Hough *hough);
-  virtual void write(string json);
-  virtual void write(Image *image);
-  virtual void write(Histogram *histogram);
-  virtual void write(Hough *hough);
+  virtual string read_json(Errors &errors) = 0;
+  virtual Image *read_image(Errors &errors)= 0;
+  virtual Histogram *read_histogram(Errors &errors)= 0;
+  virtual Hough *read_hough(Errors &errors)= 0;
+  virtual   void write_json(string &json, Errors &errors)= 0;
+  virtual void write_image(Image *image, Errors &errors)= 0;
+  virtual void write_histogram(Histogram *histogram, Errors &errors)= 0;
+  virtual void write_hough(Hough *hough, Errors &errors)= 0;
   virtual string toString();
 };
 

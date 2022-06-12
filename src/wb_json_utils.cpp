@@ -28,11 +28,11 @@ bool error_check_type(string module, string key, json_object *jobj, enum json_ty
 
 json_object *get_json_object(string module, json_object *jobj, string key,
                              enum json_type expected_type, Errors &errors, bool optional) {
- if (debug)
-  cout << "get_json_object: key '" << key << "' expected type '"
-       << json_type_to_name(expected_type)
-       //<< "' key.c_str() '"       << key.c_str()
-       << "'" << endl;
+  if (debug)
+    cout << "get_json_object: key '" << key << "' expected type '"
+         << json_type_to_name(expected_type)
+         //<< "' key.c_str() '"       << key.c_str()
+         << "'" << endl;
   json_object *jobj_from_key = json_object_object_get(jobj, key.c_str());
   if (jobj_from_key == nullptr) {
     if (!optional) {

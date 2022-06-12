@@ -272,6 +272,9 @@ void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
     string orientation_str = operator_parameters["orientation"];
     if (string_to_int(orientation_str, orientation)) {
       cout << "sobeling! orientation " << orientation << endl;
+      Image *input = input_data_source->read_image(errors);
+      Image *output = output_data_store->read_image(errors);
+      cout << "still sobeling!" << endl;
     } else {
       errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
     }
