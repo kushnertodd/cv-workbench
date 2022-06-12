@@ -2,8 +2,6 @@
 // Created by kushn on 6/11/2022.
 //
 
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include "wb_json_utils.hpp"
 #include "data_source_descriptor.hpp"
@@ -20,43 +18,15 @@ string Filesystem_data_source_descriptor::read_json(Errors &errors) {return "";}
 
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   string path =(directory == "" ? "" : directory + "/") + filename + "." + ext;
-  if (file_format == BINARY) {
-    FILE *fp = fopen(path.c_str(), "r");
-    if (fp == nullptr) {
-      errors.add("Filesystem_data_source_descriptor::read_image: invalid file '" + path + "'");
+  switch (file_format) {
+    case BINARY:
+      return Image::read_binary(path, errors);
+      break;
+    case JPEG:
       return nullptr;
-    }
-    int rows;
-    size_t newLen;
-    newLen = fread(&rows, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-      errors.add("Filesystem_data_source_descriptor::read_image: missing image rows in '" + path + "'");
+      break;
+    default:
       return nullptr;
-    }
-    int cols;
-    newLen = fread(&cols, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-      errors.add("Filesystem_data_source_descriptor::read_image: missing image cols in '" + path + "'");
-      return nullptr;
-    }
-    int components;
-    newLen = fread(&components, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-      errors.add("Filesystem_data_source_descriptor::read_image: missing image components in '" + path + "'");
-      return nullptr;
-    }
-    Image *image = Image::create_image_allocated_buffer(rows, cols, components);
-
-    // Read the data into buffer.
-    newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
-    if (ferror(fp) != 0) {
-      errors.add("Filesystem_data_source_descriptor::read_image: cannot read image data in '" + path + "'");
-      return nullptr;
-    }
-    fclose(fp);
-    return image;
-  } else if (file_format == JPEG) {
-    return nullptr;
   }
 }
 

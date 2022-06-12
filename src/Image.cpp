@@ -2,6 +2,8 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include "image.hpp"
@@ -52,6 +54,42 @@ Image *Image::create_image_assigned_buffer(int m_rows, int m_cols, int m_compone
   return image;
 }
 
+Image *Image::read_binary(string path, Errors &errors) {
+  FILE *fp = fopen(path.c_str(), "r");
+  if (fp == nullptr) {
+    errors.add("Filesystem_data_source_descriptor::read_image: invalid file '" + path + "'");
+    return nullptr;
+  }
+  int rows;
+  size_t newLen;
+  newLen = fread(&rows, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::read_image: missing image rows in '" + path + "'");
+    return nullptr;
+  }
+  int cols;
+  newLen = fread(&cols, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::read_image: missing image cols in '" + path + "'");
+    return nullptr;
+  }
+  int components;
+  newLen = fread(&components, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::read_image: missing image components in '" + path + "'");
+    return nullptr;
+  }
+  Image *image = Image::create_image_allocated_buffer(rows, cols, components);
+
+  // Read the data into buffer.
+  newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Filesystem_data_source_descriptor::read_image: cannot read image data in '" + path + "'");
+    return nullptr;
+  }
+  fclose(fp);
+  return image;
+}
 void Image::add(char *src, int count) {
   if (!allocated)
     throw new Image_exception("Image::add: cannot add to assigned buffer");
