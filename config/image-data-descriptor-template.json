@@ -11,16 +11,17 @@
       "id": "int",
       "type": "image",
       "repository": "filesystem",
-      "directory": "string",
+      "format": "BINARY|JPEG|default=JPEG",
+      "__comment": "path = [directory/]filename.ext",
+      "directory": "string|default=''",
       "filename": "string",
-      "depth": "string",
-      "rows": "int",
-      "columns": "int"
+      "ext": "string|default='jpg'"
     },
     {
       "id": "int",
       "type": "image",
       "repository": "internet",
+      "__comment": "format is raw binary",
       "url": "string",
       "depth": "string",
       "rows": "int",
@@ -37,21 +38,19 @@
   "output-data": [
     {
       "id": "int",
-      "__comment": "output image depth, size determined by operator",
       "type": "image",
       "repository": "berkeley_db",
-      "id": "int",
       "ref-id": "generate"
     },
     {
       "id": "int",
       "type": "image",
       "repository": "filesystem",
-      "directory": "string",
+      "format": "BINARY|JPEG|default=JPEG",
+      "__comment": "path = [directory/]filename.ext",
+      "directory": "string|default=''",
       "filename": "string",
-      "depth": "string",
-      "rows": "int",
-      "columns": "int"
+      "ext": "string|default='jpg'"
     }
   ]
 }
