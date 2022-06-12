@@ -5,9 +5,14 @@
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
+#include <iostream>
 #include <sstream>
 #include "jpeglib.h"
 #include "image.hpp"
+
+using namespace std;
+
+extern bool debug;
 
 Image_exception::Image_exception(string m_errmsg) :
     errmsg(m_errmsg) {
@@ -67,34 +72,38 @@ Image *Image::create_image_assigned_buffer(int m_rows, int m_cols, int m_compone
 Image *Image::read_binary(string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Filesystem_data_source_descriptor::read_binary: invalid file '" + path + "'");
+    errors.add("Image::read_binary: invalid file '" + path + "'");
     return nullptr;
   }
   int rows;
   size_t newLen;
   newLen = fread(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_binary: missing image rows in '" + path + "'");
+
+  if (ferror(fp) != 0 || newLen != 1) {
+    errors.add("Image::read_binary: missing image rows in '" + path + "'");
     return nullptr;
   }
   int cols;
   newLen = fread(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_binary: missing image cols in '" + path + "'");
+
+  if (ferror(fp) != 0 || newLen != 1) {
+    errors.add("Image::read_binary: missing image cols in '" + path + "'");
     return nullptr;
   }
   int components;
   newLen = fread(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != sizeof(int)) {
-    errors.add("Filesystem_data_source_descriptor::read_binary: missing image components in '" + path + "'");
+
+  if (ferror(fp) != 0 || newLen != 1) {
+    errors.add("Image::read_binary: missing image components in '" + path + "'");
     return nullptr;
   }
   Image *image = Image::create_image_allocated_buffer(rows, cols, components);
 
   // Read the data into buffer.
   newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
+
   if (ferror(fp) != 0 || newLen != sizeof(char) * image->nbytes) {
-    errors.add("Filesystem_data_source_descriptor::read_binary: cannot read image data in '" + path + "'");
+    errors.add("Image::read_binary: cannot read image data in '" + path + "'");
     return nullptr;
   }
   fclose(fp);
@@ -120,7 +129,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   JSAMPARRAY buffer;
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Filesystem_data_source_descriptor::read_jpeg: invalid file '" + path + "'");
+    errors.add("Image::read_jpeg: invalid file '" + path + "'");
     return nullptr;
   }
   cinfo.err = jpeg_std_error(&jerr.pub);
@@ -128,7 +137,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   if (setjmp(jerr.setjmp_buffer)) {
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    errors.add("Filesystem_data_source_descriptor::read_jpeg: jpeg read error in '" + path + "'");
+    errors.add("Image::read_jpeg: jpeg read error in '" + path + "'");
     return nullptr;
   }
   /* Step 1: allocate and initialize JPEG decompression object */
@@ -162,24 +171,24 @@ Image *Image::read_jpeg(string path, Errors &errors) {
  void Image::write_binary(Image *image,  string path, Errors &errors){
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
-    errors.add("Filesystem_data_source_descriptor::write_binary: invalid file '" + path + "'");
+    errors.add("Image::write_binary: invalid file '" + path + "'");
   }
   fwrite(&image->rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image rows to '" + path + "'");
+    errors.add("Image::write_binary: cannot write image rows to '" + path + "'");
   }
   fwrite(&image->cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image cols to '" + path + "'");
+    errors.add("Image::write_binary: cannot write image cols to '" + path + "'");
   }
   fwrite(&image->components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image components to '" + path + "'");
+    errors.add("Image::write_binary: cannot write image components to '" + path + "'");
   }
   // Write the data from the buffer.
   fwrite(image->buf, sizeof(char), image->nbytes, fp);
   if (ferror(fp) != 0) {
-    errors.add("Filesystem_data_source_descriptor::write_binary: cannot write image data to '" + path + "'");
+    errors.add("Image::write_binary: cannot write image data to '" + path + "'");
   }
   fclose(fp);
 }
@@ -199,7 +208,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
      jpeg_create_compress(&cinfo);
      /* Step 2: specify data destination (eg, a file) */
      if ((outfile = fopen(path.c_str(), "wb")) == NULL) {
-     errors.add("Filesystem_data_source_descriptor::write_jpeg: invalid file '" + path + "'");
+     errors.add("Image::write_jpeg: invalid file '" + path + "'");
      }
      jpeg_stdio_dest(&cinfo, outfile);
      /* Step 3: set parameters for compression */
