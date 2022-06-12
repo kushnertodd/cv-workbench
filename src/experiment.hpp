@@ -19,6 +19,7 @@
 class Experiment {
  public:
   list<Experiment_step *> experiment_steps;
+  virtual ~Experiment();
   Experiment();
   /**
   * Parse experiment json
@@ -26,6 +27,7 @@ class Experiment {
   * @param errors experiment parse errors
   */
   static Experiment *json_parse(json_object *jobj, Errors &errors);
+  void run();
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_HPP_

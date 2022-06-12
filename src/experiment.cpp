@@ -4,6 +4,13 @@
 
 #include "experiment.hpp"
 
+Experiment::~Experiment() {
+  list<Experiment_step *> experiment_steps;
+  for (Experiment_step *step: experiment_steps) {
+    if (step != nullptr)
+      delete step;
+  }
+}
 Experiment::Experiment() {}
 /**
 * Parse experiment json
@@ -33,5 +40,11 @@ Experiment *Experiment::json_parse(json_object *jobj, Errors &errors) {
     }
   }
   return experiment;
+}
+
+void Experiment::run() {
+  for (Experiment_step *step: experiment_steps) {
+    step->run();
+  }
 }
 

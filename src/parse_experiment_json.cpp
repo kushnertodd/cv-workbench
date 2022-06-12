@@ -40,6 +40,8 @@ int main(int argc, char **argv) {
     Experiment *experiment = Experiment::json_parse(jobj, errors);
     if (errors.error_ct > 0) {
       cout << "parse_experiment_json: there were errors." << endl << errors.toString();
+    } else {
+      experiment->run();
     }
   }
 }
