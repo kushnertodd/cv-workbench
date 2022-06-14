@@ -37,4 +37,10 @@ enum Cv_image_file_format_enum {
   UNDEFINED_FILE_FORMAT
 };
 
+enum Cv_image_depth {
+  CV_8U,
+  CV_32S,
+  CV_32F
+};
+
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_

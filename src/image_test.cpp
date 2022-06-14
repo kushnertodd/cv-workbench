@@ -32,7 +32,7 @@ void test_read() {
           << "   cols " << binary_image->cols << endl
           << "   components " << binary_image->components << endl
           << "   buf " << endl;
-      for (int i = 0; i < binary_image->nbytes; i++) {
+      for (int i = 0; i < binary_image->npixels; i++) {
         cout << "      " << i << ": '" << binary_image->buf[i] << "'" << endl;
       }
     }
@@ -50,7 +50,7 @@ void test_read() {
           << "   cols " << jpeg_image->cols << endl
           << "   components " << jpeg_image->components << endl
           << "   buf " << endl;
-      //for (int i = 0; i < jpeg_image->nbytes; i++) {
+      //for (int i = 0; i < jpeg_image->npixels; i++) {
       for (int i = 0; i < 10; i++) {
         cout << "      " << i << ": '" << jpeg_image->buf[i] << "'" << endl;
       }

@@ -43,21 +43,21 @@ Image::Image(int m_rows, int m_cols, int m_components) :
     cols(m_cols),
     components(m_components),
     row_stride(cols * components),
-    nbytes(rows * row_stride),
-    next_pos(0) {}
+    npixels(rows * row_stride),
+    next_pixel(0) {}
 
 void Image::add(char *src, int count) {
   if (!allocated)
     throw new Image_exception("Image::add: cannot add to assigned buffer");
-  if (next_pos + count > nbytes)
-    throw new Image_exception("Image::add", next_pos + count, nbytes);
-  memcpy(buf + next_pos, src, count);
-  next_pos += count;
+  if (next_pixel + count > npixels)
+    throw new Image_exception("Image::add", next_pixel + count, npixels);
+  memcpy(buf + next_pixel, src, count);
+  next_pixel += count;
 }
 
 Image *Image::create_image_allocated_buffer(int m_rows, int m_cols, int m_components) {
   Image *image = new Image(m_rows, m_cols, m_components);
-  image->buf = new char[image->nbytes];
+  image->buf = new char[image->npixels];
   image->allocated = true;
   return image;
 }
@@ -100,9 +100,9 @@ Image *Image::read_binary(string path, Errors &errors) {
   Image *image = Image::create_image_allocated_buffer(rows, cols, components);
 
   // Read the data into buffer.
-  newLen = fread(image->buf, sizeof(char), image->nbytes, fp);
+  newLen = fread(image->buf, sizeof(char), image->npixels, fp);
 
-  if (ferror(fp) != 0 || newLen != sizeof(char) * image->nbytes) {
+  if (ferror(fp) != 0 || newLen != sizeof(char) * image->npixels) {
     errors.add("Image::read_binary: cannot read image data in '" + path + "'");
     return nullptr;
   }
@@ -186,7 +186,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
     errors.add("Image::write_binary: cannot write image components to '" + path + "'");
   }
   // Write the data from the buffer.
-  fwrite(buf, sizeof(char), nbytes, fp);
+  fwrite(buf, sizeof(char), npixels, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_binary: cannot write image data to '" + path + "'");
   }
