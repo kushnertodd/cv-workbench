@@ -12,7 +12,7 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "file_utils_C.h"
 
 /*printing the value corresponding to boolean, double, integer and strings*/
-void print_json_value(json_object *jobj){
+void json_print_value(json_object *jobj){
   enum json_type type;
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
   printf("type: %d '%s'\n",type, json_type_to_name(type));
@@ -56,7 +56,7 @@ void json_parse_array( json_object *jobj, char *key) {
     }
     else if (type != json_type_object) {
       printf("value[%d]: ",i);
-      print_json_value(jvalue);
+      json_print_value(jvalue);
     }
     else {
       json_parse(jvalue);
@@ -74,7 +74,7 @@ void json_parse(json_object * jobj) {
       case json_type_boolean:
       case json_type_double:
       case json_type_int:
-      case json_type_string: print_json_value(val);
+      case json_type_string: json_print_value(val);
         break;
       case json_type_object: printf("json_type_object\n");
         jobj = json_object_object_get(jobj, key);

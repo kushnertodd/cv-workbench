@@ -35,7 +35,7 @@ value[1]: type: json_type_string
 #include <stdio.h>
 
 /*printing the value corresponding to boolean, double, integer and strings*/
-void print_json_value(json_object *jobj) {
+void json_print_value(json_object *jobj) {
   enum json_type type;
   printf("type: ", type);
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
@@ -81,7 +81,7 @@ void json_parse_array(json_object *jobj, char *key) {
       json_parse_array(jvalue, NULL);
     } else if (type != json_type_object) {
       printf("value[%d]: ", i);
-      print_json_value(jvalue);
+      json_print_value(jvalue);
     } else {
       json_parse(jvalue);
     }
@@ -100,7 +100,7 @@ void json_parse(json_object *jobj) {
       case json_type_double:
       case json_type_int:
       case json_type_string:
-        print_json_value(val);
+        json_print_value(val);
         break;
       case json_type_object:
         printf("json_type_objectn");

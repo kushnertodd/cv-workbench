@@ -71,7 +71,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   if (json_file_format != nullptr) {
     string file_format_str = json_object_get_string(json_file_format);
     Cv_image_file_format_enum file_format =
-        string_to_file_format(file_format_str);
+        string_to_file_format_enum(file_format_str);
     if (file_format == UNDEFINED_FILE_FORMAT)
       errors.add("Filesystem_data_source_descriptor::json_parse: invalid file format '" + file_format_str + "'");
     else

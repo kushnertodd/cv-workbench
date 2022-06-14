@@ -8,6 +8,7 @@
 #include <exception>
 #include <string>
 #include "errors.hpp"
+#include "image_header.hpp"
 #include "wb_enums.hpp"
 
 using namespace std;
@@ -21,28 +22,34 @@ class Image_exception {
   virtual const char *what() const noexcept;
 };
 
-typedef unsigned char pixel_8U;
-typedef int pixel_32S;
-typedef float pixel_32F;
-
-template<typename T>
 class Image {
  public:
-  int rows;
-  int cols;
-  int components; // we're only supported 1 grayscale component now
-  int row_stride; // for jpeg
-  int npixels;
+  Image_header *image_header;
   int next_pixel;
-  bool allocated;
-  Cv_image_depth depth;
-  T* buf;
+  // image stores one buffer per image_header->depth
+  pixel_8U *buf_8U;
+  pixel_8S *buf_8S; // unsupported
+  pixel_16U *buf_16U; // unsupported
+  pixel_16S *buf_16S; // unsupported
+  pixel_32S *buf_32S;
+  pixel_32F *buf_32F;
+  pixel_64F *buf_64F; // unsupported
+  pixel_16F *buf_16F; // unsupported
 
   virtual ~Image();
-  Image(int m_rows, int m_cols, int m_components);
-  void add(T *src, int count);
-  static Image *create_image_allocated_buffer(int m_rows, int m_cols, int m_components);
-  static Image *create_image_assigned_buffer(int m_rows, int m_cols, int m_components, T *m_buf);
+  Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth);
+  Image(Image_header *image_header);
+
+  int get_rows();
+  int get_cols();
+  int get_components();
+  int get_row_stride();
+  int get_npixels();
+  Cv_image_depth_enum get_depth();
+
+  void add_8U(pixel_8U *src, int count, Errors &errors);
+  void add_32S(pixel_32S *src, int count, Errors &errors);
+  void add_32F(pixel_32F *src, int count, Errors &errors);
   static Image *read_binary(string path, Errors &errors);
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);

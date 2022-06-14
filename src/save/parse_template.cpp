@@ -188,7 +188,7 @@ class Json_template {
 };
 
 //printing the value corresponding to boolean, double, integer and strings
-void print_json_value(int indent, json_object *jobj, Errors &errors) {
+void json_print_value(int indent, json_object *jobj, Errors &errors) {
   enum json_type type;
   cout << indent_str(indent)<<"type: " << type);
   type = json_object_get_type(jobj); //Getting the type of the json object
@@ -235,7 +235,7 @@ void json_parse_array(int indent, json_object *jobj, char *key, Errors &errors) 
       json_parse_array(indent + 4, jvalue, NULL, errors);
     } else if (type != json_type_object) {
       cout << indent_str(indent)<<"value["<< i<<"]: "<<endl;
-      print_json_value(indent, jvalue);
+      json_print_value(indent, jvalue);
     } else {
       json_parse(indent, jvalue, errors);
     }
@@ -270,7 +270,7 @@ void json_parse(int indent, json_object *jobj, Errors &errors) {
       case json_type_int:
       case json_type_string:
         printf("%skey '%-20s'  ", indent_str(indent).c_str(), key);
-        print_json_value(indent, val);
+        json_print_value(indent, val);
         if (!strcmp(key, "id")) {
         } else if (!strcmp(key, "domain")) {
         } else if (!strcmp(key, "class")) {

@@ -5,13 +5,6 @@
 #ifndef CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 #define CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 
-enum Repository_type_enum {
-  BERKELEY_DB, // separate file for each Cv_data_type_enum
-  FILESYSTEM, // directory, filename
-  INTERNET, // endpoint that produced binary data
-  EXPERIMENT_STEP // output of experiment step
-};
-
 enum Cv_data_type_enum {
   // maybe BINARY_IMAGE for morphological operations
   CONTOUR, // boundary polygon
@@ -37,10 +30,40 @@ enum Cv_image_file_format_enum {
   UNDEFINED_FILE_FORMAT
 };
 
-enum Cv_image_depth {
+enum Cv_image_depth_enum {
   CV_8U,
+  CV_8S,
+  CV_16U,
+  CV_16S,
   CV_32S,
-  CV_32F
+  CV_32F,
+  CV_64F,
+  CV_16F
 };
+
+enum Cv_repository_type_enum {
+  BERKELEY_DB, // separate file for each Cv_data_type_enum
+  FILESYSTEM, // directory, filename
+  INTERNET, // endpoint that produced binary data
+  EXPERIMENT_STEP // output of experiment step
+};
+
+// built-in types
+// 0..255
+typedef unsigned char pixel_8U;
+// unsupported -128..127
+typedef char pixel_8S;
+// unsupported 0..65535
+typedef unsigned short pixel_16U;
+// unsupported -32768..32767
+typedef short pixel_16S;
+// -2147483648..2147483647
+typedef int pixel_32S;
+// -FLT_MAX..FLT_MAX
+typedef float pixel_32F;
+// unsupported -DBL_MAX..DBL_MAX
+typedef double pixel_64F;
+// unsupported -- CV_16F pretty much doesn't exist in C++
+typedef float pixel_16F;
 
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_

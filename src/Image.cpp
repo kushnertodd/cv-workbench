@@ -9,6 +9,7 @@
 #include <sstream>
 #include "jpeglib.h"
 #include "image.hpp"
+#include "wb_utils.hpp"
 
 using namespace std;
 
@@ -33,40 +34,118 @@ const char *Image_exception::what() const noexcept {
 }
 
 Image::~Image() {
-  if (allocated && buf != nullptr) {
-    delete[] buf;
+  if (image_header != nullptr) {
+    delete image_header;
+  }
+  if (buf_8U = nullptr) {
+    delete[] buf_8U;
+  }
+  if (buf_32S = nullptr) {
+    delete[] buf_32S;
+  }
+  if (buf_32F = nullptr) {
+    delete[] buf_32F;
   }
 }
 
-Image::Image(int m_rows, int m_cols, int m_components) :
-    rows(m_rows),
-    cols(m_cols),
-    components(m_components),
-    row_stride(cols * components),
-    npixels(rows * row_stride),
-    next_pixel(0) {}
-
-void Image::add(char *src, int count) {
-  if (!allocated)
-    throw new Image_exception("Image::add: cannot add to assigned buffer");
-  if (next_pixel + count > npixels)
-    throw new Image_exception("Image::add", next_pixel + count, npixels);
-  memcpy(buf + next_pixel, src, count);
-  next_pixel += count;
+Image::Image(Image_header *image_header) :
+    image_header(image_header),
+    next_pixel(0) {
+  switch (image_header->depth) {
+    case CV_8U:
+      buf_8U = new pixel_8U[image_header->npixels];
+      break;
+    case CV_32S:
+      buf_32S = new pixel_32S[image_header->npixels];
+      break;
+    case CV_32F:
+      buf_32F = new pixel_32F[image_header->npixels];
+      break;
+    default:
+      break;
+  }
+}
+Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
+    image_header(new Image_header(m_rows, m_cols, m_components, m_depth)) {
 }
 
-Image *Image::create_image_allocated_buffer(int m_rows, int m_cols, int m_components) {
-  Image *image = new Image(m_rows, m_cols, m_components);
-  image->buf = new char[image->npixels];
-  image->allocated = true;
-  return image;
+int Image::get_rows() { return image_header->rows; }
+int Image::get_cols() { return image_header->cols; }
+int Image::get_components() { return image_header->components; }
+int Image::get_row_stride() { return image_header->row_stride; }
+int Image::get_npixels() { return image_header->npixels; }
+Cv_image_depth_enum Image::get_depth() { return image_header->depth; }
+
+void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
+  if (next_pixel + count > image_header->npixels)
+    errors.add("Image::add_8U: adding "
+                   + int_to_string(count) + " pixels at position " +
+        int_to_string(next_pixel)
+                   + " too large for buffer length "
+                   + int_to_string(image_header->npixels));
+  for (int i = 0; i < count; i++, next_pixel++) {
+    switch (image_header->depth) {
+      case CV_8U:
+        buf_8U[next_pixel++] = src[i];
+        break;
+      case CV_32S:
+        buf_32S[next_pixel++] = src[i];
+        break;
+      case CV_32F:
+        buf_32F[next_pixel++] = src[i];
+        break;
+      default:
+        break;
+    }
+  }
 }
 
-Image *Image::create_image_assigned_buffer(int m_rows, int m_cols, int m_components, char *m_buf) {
-  Image *image = new Image(m_rows, m_cols, m_components);
-  image->buf = m_buf;
-  image->allocated = false;
-  return image;
+void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
+  if (next_pixel + count > image_header->npixels)
+    errors.add("Image::add_8U: adding "
+                   + int_to_string(count) + " pixels at position " +
+        int_to_string(next_pixel)
+                   + " too large for buffer length "
+                   + int_to_string(image_header->npixels));
+  for (int i = 0; i < count; i++, next_pixel++) {
+    switch (image_header->depth) {
+      case CV_8U:
+        errors.add("Image::add_32S: cannot add to 8U buffer");
+        break;
+      case CV_32S:
+        buf_32S[next_pixel++] = src[i];
+        break;
+      case CV_32F:
+        buf_32F[next_pixel++] = src[i];
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
+  if (next_pixel + count > image_header->npixels)
+    errors.add("Image::add_8U: adding "
+                   + int_to_string(count) + " pixels at position " +
+        int_to_string(next_pixel)
+                   + " too large for buffer length "
+                   + int_to_string(image_header->npixels));
+  for (int i = 0; i < count; i++) {
+    switch (image_header->depth) {
+      case CV_8U:
+        errors.add("Image::add_32F: cannot add to 8U buffer");
+        break;
+      case CV_32S:
+        buf_32S[next_pixel++] = src[i];
+        break;
+      case CV_32F:
+        buf_32F[next_pixel++] = src[i];
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 Image *Image::read_binary(string path, Errors &errors) {
@@ -75,36 +154,36 @@ Image *Image::read_binary(string path, Errors &errors) {
     errors.add("Image::read_binary: invalid file '" + path + "'");
     return nullptr;
   }
-  int rows;
-  size_t newLen;
-  newLen = fread(&rows, sizeof(int), 1, fp);
-
-  if (ferror(fp) != 0 || newLen != 1) {
-    errors.add("Image::read_binary: missing image rows in '" + path + "'");
-    return nullptr;
-  }
-  int cols;
-  newLen = fread(&cols, sizeof(int), 1, fp);
-
-  if (ferror(fp) != 0 || newLen != 1) {
-    errors.add("Image::read_binary: missing image cols in '" + path + "'");
-    return nullptr;
-  }
-  int components;
-  newLen = fread(&components, sizeof(int), 1, fp);
-
-  if (ferror(fp) != 0 || newLen != 1) {
-    errors.add("Image::read_binary: missing image components in '" + path + "'");
-    return nullptr;
-  }
-  Image *image = Image::create_image_allocated_buffer(rows, cols, components);
+  Image_header *image_header = Image_header::read_header(fp, path, errors);
+  Image *image = new Image(image_header);
 
   // Read the data into buffer.
-  newLen = fread(image->buf, sizeof(char), image->npixels, fp);
+  int newLen;
 
-  if (ferror(fp) != 0 || newLen != sizeof(char) * image->npixels) {
-    errors.add("Image::read_binary: cannot read image data in '" + path + "'");
-    return nullptr;
+  switch (image_header->depth) {
+    case CV_8U:
+      newLen = fread(image->buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
+      if (ferror(fp) != 0 || newLen != sizeof(pixel_8U) * image_header->npixels) {
+        errors.add("Image::read_binary: cannot read 8U image data in '" + path + "'");
+        return nullptr;
+      }
+      break;
+    case CV_32S:
+      newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
+      if (ferror(fp) != 0 || newLen != sizeof(pixel_32S) * image_header->npixels) {
+        errors.add("Image::read_binary: cannot read 32S image data in '" + path + "'");
+        return nullptr;
+      }
+      break;
+    case CV_32F:
+      newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
+      if (ferror(fp) != 0 || newLen != sizeof(pixel_32F) * image_header->npixels) {
+        errors.add("Image::read_binary: cannot read 32F image data in '" + path + "'");
+        return nullptr;
+      }
+      break;
+    default:
+      break;
   }
   fclose(fp);
   return image;
@@ -150,15 +229,15 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   /* Step 5: Start decompressor */
   (void) jpeg_start_decompress(&cinfo);
   /* JSAMPLEs per row in output buffer */
-  Image *image = Image::create_image_allocated_buffer(cinfo.output_height, cinfo.output_width, cinfo.num_components);
+  Image *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_8U);
   /* Make a one-row-high sample array that will go away when done with image */
   buffer = (*cinfo.mem->alloc_sarray)
-      ((j_common_ptr) & cinfo, JPOOL_IMAGE, image->row_stride, 1);
+      ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
   /* Step 6: while (scan lines remain to be read) */
   while (cinfo.output_scanline < cinfo.output_height) {
     (void) jpeg_read_scanlines(&cinfo, buffer, 1);
     /* Assume put_scanline_someplace wants a pointer and sample count. */
-    image->add((char *)buffer[0], image->row_stride);
+    image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
   }
   /* Step 7: Finish decompression */
   (void) jpeg_finish_decompress(&cinfo);
@@ -168,75 +247,88 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   return image;
 }
 
- void Image::write_binary(string path, Errors &errors){
+void Image::write_binary(string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write_binary: invalid file '" + path + "'");
   }
-  fwrite(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image::write_binary: cannot write image rows to '" + path + "'");
-  }
-  fwrite(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image::write_binary: cannot write image cols to '" + path + "'");
-  }
-  fwrite(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image::write_binary: cannot write image components to '" + path + "'");
-  }
+  image_header->write_header(fp, path, errors);
   // Write the data from the buffer.
-  fwrite(buf, sizeof(char), npixels, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image::write_binary: cannot write image data to '" + path + "'");
+  int newLen;
+  switch (image_header->depth) {
+    case CV_8U:
+      newLen = fwrite(buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
+      if (ferror(fp) != 0) {
+        errors.add("Image::write_binary: cannot write 8U image data to '" + path + "'");
+      }
+      break;
+    case CV_32S:
+      newLen = fwrite(buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
+      if (ferror(fp) != 0) {
+        errors.add("Image::write_binary: cannot write 32S image data to '" + path + "'");
+      }
+      break;
+    case CV_32F:
+      newLen = fwrite(buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
+      if (ferror(fp) != 0) {
+        errors.add("Image::write_binary: cannot write 32F image data to '" + path + "'");
+      }
+      break;
+    default:
+      break;
   }
   fclose(fp);
 }
 
- void Image::write_jpeg(string path, Errors &errors) {
-   int quality = 100; // best
-     struct jpeg_compress_struct cinfo;
-     struct jpeg_error_mgr jerr;
-     /* More stuff */
-     FILE * outfile;		/* target file */
-     JSAMPROW row_pointer[1];	/* pointer to JSAMPLE row[s] */
-    // int row_stride;		/* physical row width in image buffer */
+void Image::write_jpeg(string path, Errors &errors) {
+  if (get_depth() != CV_8U) {
+    errors.add("Image::write_jpeg: cannot write "
+                   + image_depth_enum_to_string(get_depth())
+                   + " image");
+  }
+  int quality = 100; // best
+  struct jpeg_compress_struct cinfo;
+  struct jpeg_error_mgr jerr;
+  /* More stuff */
+  FILE *outfile;        /* target file */
+  JSAMPROW row_pointer[1];    /* pointer to JSAMPLE row[s] */
+  // int row_stride;		/* physical row width in image buffer */
 
-     /* Step 1: allocate and initialize JPEG compression object */
-     cinfo.err = jpeg_std_error(&jerr);
-     /* Now we can initialize the JPEG compression object. */
-     jpeg_create_compress(&cinfo);
-     /* Step 2: specify data destination (eg, a file) */
-     if ((outfile = fopen(path.c_str(), "wb")) == NULL) {
-     errors.add("Image::write_jpeg: invalid file '" + path + "'");
-     }
-     jpeg_stdio_dest(&cinfo, outfile);
-     /* Step 3: set parameters for compression */
-     cinfo.image_width = cols;
-     cinfo.image_height = rows;
-     cinfo.input_components = 1; // hardcode grayscale for now
-     cinfo.in_color_space = JCS_GRAYSCALE; 	/* colorspace of input image */
-     jpeg_set_defaults(&cinfo);
-     jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
-     /* Step 4: Start compressor */
-     jpeg_start_compress(&cinfo, TRUE);
-     /* Step 5: while (scan lines remain to be written) */
-     /*           jpeg_write_scanlines(...); */
+  /* Step 1: allocate and initialize JPEG compression object */
+  cinfo.err = jpeg_std_error(&jerr);
+  /* Now we can initialize the JPEG compression object. */
+  jpeg_create_compress(&cinfo);
+  /* Step 2: specify data destination (eg, a file) */
+  if ((outfile = fopen(path.c_str(), "wb")) == NULL) {
+    errors.add("Image::write_jpeg: invalid file '" + path + "'");
+  }
+  jpeg_stdio_dest(&cinfo, outfile);
+  /* Step 3: set parameters for compression */
+  cinfo.image_width = get_cols();
+  cinfo.image_height = get_rows();
+  cinfo.input_components = 1; // hardcode grayscale for now
+  cinfo.in_color_space = JCS_GRAYSCALE;    /* colorspace of input image */
+  jpeg_set_defaults(&cinfo);
+  jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+  /* Step 4: Start compressor */
+  jpeg_start_compress(&cinfo, TRUE);
+  /* Step 5: while (scan lines remain to be written) */
+  /*           jpeg_write_scanlines(...); */
 
-     while (cinfo.next_scanline < cinfo.image_height) {
-       /* jpeg_write_scanlines expects an array of pointers to scanlines.
-        * Here the array is only one element long, but you could pass
-        * more than one scanline at a time if that's more convenient.
-        */
-       row_pointer[0] = (JSAMPROW)&buf[cinfo.next_scanline * row_stride];
-       (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-     }
-     /* Step 6: Finish compression */
-     jpeg_finish_compress(&cinfo);
-     /* After finish_compress, we can close the output file. */
-     fclose(outfile);
-     /* Step 7: release JPEG compression object */
-     jpeg_destroy_compress(&cinfo);
+  while (cinfo.next_scanline < cinfo.image_height) {
+    /* jpeg_write_scanlines expects an array of pointers to scanlines.
+     * Here the array is only one element long, but you could pass
+     * more than one scanline at a time if that's more convenient.
+     */
+    row_pointer[0] = (JSAMPROW) &buf_8U[cinfo.next_scanline * get_row_stride()];
+    (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+  }
+  /* Step 6: Finish compression */
+  jpeg_finish_compress(&cinfo);
+  /* After finish_compress, we can close the output file. */
+  fclose(outfile);
+  /* Step 7: release JPEG compression object */
+  jpeg_destroy_compress(&cinfo);
 
 }
 

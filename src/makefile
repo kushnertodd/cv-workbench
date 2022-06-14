@@ -104,8 +104,8 @@ filesystem_data_source_descriptor.o: filesystem_data_source_descriptor.hpp
 file_utils.o: file_utils.hpp
 histogram.o: Histogram.hpp
 hough.o: Hough.hpp
-image.o: /usr/include/jpeglib.h /usr/include/jmorecfg.h image.hpp errors.hpp
-image_test.o: errors.hpp image.hpp
+image.o: image.hpp errors.hpp wb_enums.hpp
+image_test.o: errors.hpp image.hpp wb_enums.hpp
 internet_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 internet_data_source_descriptor.o: data_source_descriptor.hpp wb_enums.hpp
 internet_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
@@ -115,5 +115,5 @@ parse_experiment_json.o: wb_enums.hpp image.hpp histogram.hpp hough.hpp
 parse_experiment_json.o: data_source_descriptor.hpp experiment_step.hpp
 parse_experiment_json.o: experiment.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
-wb_utils.o: wb_utils.hpp data_source_descriptor.hpp wb_enums.hpp
-wb_utils.o: histogram.hpp hough.hpp image.hpp errors.hpp
+wb_utils.o: image.hpp errors.hpp wb_enums.hpp wb_utils.hpp
+wb_utils.o: data_source_descriptor.hpp histogram.hpp hough.hpp

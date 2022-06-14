@@ -26,7 +26,7 @@ char* indent_str(int indent) {
 }
 
 /*printing the value corresponding to boolean, double, integer and strings*/
-void print_json_value(int indent, json_object *jobj) {
+void json_print_value(int indent, json_object *jobj) {
   enum json_type type;
   printf("%stype: %d\n", indent_str(indent), type);
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
@@ -80,7 +80,7 @@ void json_parse_array(int indent, json_object *jobj, char *key) {
       json_parse_array(indent+4, jvalue, NULL);
     } else if (type != json_type_object) {
       printf("%svalue[%d]: ", indent_str(indent), i);
-      print_json_value(indent, jvalue);
+      json_print_value(indent, jvalue);
     } else {
       json_parse(indent, jvalue);
     }
@@ -101,7 +101,7 @@ void json_parse(int indent, json_object *jobj) {
       case json_type_string:
       case:json_type_null:
         printf("%skey '%-20s'  ", indent_str(indent), key);
-        print_json_value(indent, val);
+        json_print_value(indent, val);
         break;
       case json_type_object:
         printf("%skey '%-20s'  ", indent_str(indent), key);

@@ -30,7 +30,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     string data_type_str = json_object_get_string(json_type);
     if (debug)
       cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << endl;
-    data_type = string_to_data_type(data_type_str);
+    data_type = string_to_data_type_enum(data_type_str);
   }
   json_object *json_repository =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",

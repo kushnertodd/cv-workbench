@@ -17,7 +17,7 @@ void json_parse(int indent, json_object *jobj) {
       case json_type_int:
       case json_type_string:
         printf("%skey '%-20s'  ", indent_str(indent), key);
-        print_json_value(indent, val);
+        json_print_value(indent, val);
         if (!strcmp(key, "id")) {
         } else if (!strcmp(key, "domain")) {
         } else if (!strcmp(key, "class")) {
