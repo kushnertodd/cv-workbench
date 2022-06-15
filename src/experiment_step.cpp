@@ -162,5 +162,5 @@ void Experiment_step::run(Errors &errors) {
       cout << "   " << descriptor->toString() << endl;
   }
   Operator *step_operator = Operator_producer::create_operator(operator_name);
-  step_operator->run(input_data_sources,output_data_stores,operator_parameters,errors);
+  step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
 }

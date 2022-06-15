@@ -14,7 +14,7 @@ class Operator_filter_edge_sobel : public Operator {
   Operator_filter_edge_sobel();
   void run(list<Data_source_descriptor *> &input_data_sources,
            list<Data_source_descriptor *> &output_data_stores,
-           map<string, string> operator_parameters,
+           map<string, string> &operator_parameters,
            Errors &errors);
 };
 
