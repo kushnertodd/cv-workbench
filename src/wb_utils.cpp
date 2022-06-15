@@ -111,6 +111,8 @@ string image_depth_enum_to_string(Cv_image_depth_enum depth) {
       return "CV_64F";
     case CV_16F:
       return "CV_16F";
+    default:
+      return "unknown image depth";
   }
 }
 
@@ -398,7 +400,7 @@ Cv_image_depth_enum string_to_image_depth_enum(string depth) {
   else if (depth == "CV_32F") return CV_32F;
   else if (depth == "CV_64F") return CV_64F;
   else if (depth == "CV_16F") return CV_16F;
-
+  else return UNDEFINED_IMAGE_DEPTH;
 }
 
 Cv_repository_type_enum string_to_repository_type_enum(string type) {
@@ -406,6 +408,7 @@ Cv_repository_type_enum string_to_repository_type_enum(string type) {
   else if (type == "filesystem") return FILESYSTEM;
   else if (type == "internet") return INTERNET;
   else if (type == "step-output") return EXPERIMENT_STEP;
+  else return UNDEFINED_REPOSITORY_TYPE;
 }
 
 bool string_to_int(string str, int &value) {
@@ -418,69 +421,6 @@ bool string_to_real(string arg, double &value) {
   stringstream ss(arg);
   if (ss >> value) return true;
   else return false;
-}
-
-/**
- * orientation:
- *      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
- *     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
- * @param input_data_source
- * @param output_data_store
- * @param operator_parameters
- * @param errors
- */
-void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
-                                Data_source_descriptor *output_data_store,
-                                map<string, string> operator_parameters,
-                                Errors &errors) {
-  if (debug)
-    cout << "operator_filter_edge_sobel: " << endl
-         << "   input_data_source '"
-         << input_data_source->toString()
-         << "'" << endl
-         << "   output_data_store '"
-         << output_data_store->toString()
-         << "'" << endl << "   parameters " << endl;
-
-  if (debug) {
-    map<string, string>::iterator it;
-    for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
-      cout << "      '" << it->first    // string (key)
-           << "': '"
-           << it->second   // string's value
-           << "'" << endl;
-    }
-  }
-  if (operator_parameters.find("orientation") == operator_parameters.end()) {
-    errors.add("operator_filter_edge_sobel: missing 'orientation' parameter");
-  } else {
-    int orientation;
-    string orientation_str = operator_parameters["orientation"];
-    if (string_to_int(orientation_str, orientation)) {
-      cout << "sobeling! orientation " << orientation << endl;
-      Image *input = input_data_source->read_image(errors);
-      int rows = input->get_rows();
-      int cols = input->get_cols();
-      int row_stride = input->get_row_stride();
-      Image *output = new Image(rows, cols, input->get_components(), CV_8U);
-      // Image *output = output_data_store->read_image(errors);
-      cout << "still sobeling!" << endl;
-      int ptr = 0;
-      for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; col++) {
-          if (col < cols - 1) {
-            output->buf_8U[row * row_stride + col] =
-                255 - abs(input->buf_8U[row * row_stride + col] -
-                    input->buf_8U[row * row_stride + col + 1]);
-          }
-          ptr++;
-        }
-      }
-      output->write_jpeg("sobel.jpg", errors);
-    } else {
-      errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
-    }
-  }
 }
 
 

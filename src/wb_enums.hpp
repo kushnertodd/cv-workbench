@@ -38,14 +38,16 @@ enum Cv_image_depth_enum {
   CV_32S,
   CV_32F,
   CV_64F,
-  CV_16F
+  CV_16F,
+  UNDEFINED_IMAGE_DEPTH
 };
 
 enum Cv_repository_type_enum {
   BERKELEY_DB, // separate file for each Cv_data_type_enum
   FILESYSTEM, // directory, filename
   INTERNET, // endpoint that produced binary data
-  EXPERIMENT_STEP // output of experiment step
+  EXPERIMENT_STEP, // output of experiment step
+  UNDEFINED_REPOSITORY_TYPE
 };
 
 // built-in types

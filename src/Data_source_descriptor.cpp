@@ -4,7 +4,7 @@
 
 #include <sstream>
 #include "wb_utils.hpp"
-#include "Data_source_descriptor.hpp"
+#include "data_source_descriptor.hpp"
 
 Data_source_descriptor::~Data_source_descriptor() {}
 Data_source_descriptor::Data_source_descriptor(int m_id, Cv_repository_type_enum m_repository_type,

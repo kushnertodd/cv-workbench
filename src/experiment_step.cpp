@@ -10,6 +10,8 @@
 #include "experiment_step_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
+#include "operator.hpp"
+#include "operator_producer.hpp"
 #include "wb_utils.hpp"
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
@@ -71,7 +73,7 @@ Experiment_step::~Experiment_step() {
   }
 }
 Experiment_step::Experiment_step() {}
-Experiment_step::Experiment_step(int m_id, string m_step_operator) : id(m_id), step_operator(m_step_operator) {}
+Experiment_step::Experiment_step(int m_id, string m_operator_name) : id(m_id), operator_name(m_operator_name) {}
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json
@@ -92,7 +94,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
   if (json_id != nullptr)
     experiment_step->id = json_object_get_int(json_id);
   if (json_operator != nullptr)
-    experiment_step->step_operator = json_object_get_string(json_operator);
+    experiment_step->operator_name = json_object_get_string(json_operator);
   // parse input data array
   if (json_input_data != nullptr) {
     int nsteps = json_object_array_length(json_input_data);
@@ -148,7 +150,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
 }
 
 void Experiment_step::run(Errors &errors) {
-  cout << "Experiment_step::run: id " << id << " operator " << step_operator << endl;
+  cout << "Experiment_step::run: id " << id << " operator " << operator_name << endl;
   cout << "Experiment_step::run: input data sources" << endl;
   for (Data_source_descriptor *descriptor: input_data_sources) {
     if (descriptor != nullptr)
@@ -159,16 +161,6 @@ void Experiment_step::run(Errors &errors) {
     if (descriptor != nullptr)
       cout << "   " << descriptor->toString() << endl;
   }
-  if (step_operator == "filter-edge-Sobel") {
-    if (input_data_sources.size() == 0)
-      errors.add("Experiment_step::run filter-edge-Sobel: missing input data source");
-    else if (input_data_sources.size() > 1)
-      errors.add("Experiment_step::run filter-edge-Sobel: too many input data sources");
-    if (output_data_stores.size() == 0)
-      errors.add("Experiment_step::run filter-edge-Sobel: missing output data source");
-    else if (output_data_stores.size() > 1)
-      errors.add("Experiment_step::run filter-edge-Sobel: too many output data sources");
-    operator_filter_edge_sobel(input_data_sources.front(), output_data_stores.front(),
-                               operator_parameters, errors);
-  }
+  Operator *step_operator = Operator_producer::create_operator(operator_name);
+  step_operator->run(input_data_sources,output_data_stores,operator_parameters,errors);
 }

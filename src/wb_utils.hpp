@@ -36,8 +36,4 @@ bool string_to_int(string str, int &value);
 bool string_to_real(string text, double &value);
 bool string_to_real(string arg, double &value);
 
-void operator_filter_edge_sobel(Data_source_descriptor *input_data_source,
-                                Data_source_descriptor *output_data_store,
-                                map<string, string> operator_parameters,
-                                Errors &errors);
 #endif //CV_WORKBENCH_SRC_WB_UTILS_HPP_
