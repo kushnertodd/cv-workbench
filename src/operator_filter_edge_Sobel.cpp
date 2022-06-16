@@ -45,6 +45,9 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
     string orientation_str = operator_parameters["orientation"];
     if (!string_to_int(orientation_str, orientation)) {
       errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter: '" + orientation_str + "'");
+    } else if (orientation != 0 && orientation != 1) {
+      errors.add("operator_filter_edge_sobel: invalid 'orientation' parameter not 0 or 1: '"
+                     + orientation_str + "'");
     } else {
       Data_source_descriptor *input_data_source = input_data_sources.front();
       Data_source_descriptor *output_data_store = output_data_stores.front();
@@ -53,18 +56,46 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
       int rows = input->get_rows();
       int cols = input->get_cols();
       int row_stride = input->get_row_stride();
-      Image *output = new Image(rows, cols, input->get_components(), CV_8U);
+      Image *output = new Image(rows, cols, input->get_components(), CV_32S);
       // Image *output = output_data_store->read_image(errors);
       cout << "still sobeling!" << endl;
-      int ptr = 0;
-      for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; col++) {
-          if (col < cols - 1) {
-            output->buf_8U[row * row_stride + col] =
-                255 - abs(input->buf_8U[row * row_stride + col] -
-                    input->buf_8U[row * row_stride + col + 1]);
+      for (int row = 1; row < rows - 1; row++) {
+        for (int col = 1; col < cols - 1; col++) {
+          int ulc = (row - 1) * row_stride + col;
+          int cl = row * row_stride + col;
+          int llc = (row + 1) * row_stride + col;
+          int center = cl + 1;
+          int sum = 0;
+          if (orientation == 0) {
+            /*
+             * orientation 0
+             *     [-1,  0,  1]
+             *     [-2,  0,  2]
+             *     [-1,  0,  1]
+             */
+            sum += 0
+                + input->buf_8U[ulc] * -1
+                + input->buf_8U[cl] * -2
+                + input->buf_8U[llc] * -1
+                + input->buf_8U[ulc + 2] * 1
+                + input->buf_8U[cl + 2] * 2
+                + input->buf_8U[llc + 2] * 1;
+          } else if (orientation == 1) {
+            /*
+             * orientation 90
+             *     [ 1,  2,  1]
+             *     [ 0,  0,  0]
+             *     [-1, -2, -1]
+             */
+            sum += 0
+                + input->buf_8U[ulc] * 1
+                + input->buf_8U[ulc + 1] * 2
+                + input->buf_8U[ulc + 2] * 1
+                + input->buf_8U[llc] * -1
+                + input->buf_8U[llc + 1] * -2
+                + input->buf_8U[llc + 2] * -1;
           }
-          ptr++;
+          output->buf_32S[center] = sum;
         }
       }
       //output->write_jpeg("sobel.jpg", errors);
