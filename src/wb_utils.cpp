@@ -306,6 +306,17 @@ void json_print_value(json_object *jobj) {
   }
 }
 
+void parameters_to_string(map<string, string> parameters) {
+  cout << "operator_filter_edge_sobel: '" << endl << "   parameters " << endl;
+  map<string, string>::iterator it;
+  for (it = parameters.begin(); it != parameters.end(); it++) {
+    cout << "      '" << it->first    // string (key)
+         << "': '"
+         << it->second   // string's value
+         << "'" << endl;
+  }
+}
+
 /**
  * convert int to string
  * @param i integer toconvert

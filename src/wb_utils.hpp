@@ -26,6 +26,7 @@ bool is_numeric(string number);
 void json_parse_array(json_object *jobj, char *key);
 void json_parse(json_object *jobj);
 void json_print_value(json_object *jobj);
+void parameters_to_string(map<string, string> parameters);
 string real_to_string(double i, int width = -1);
 string repository_type_enum_to_string(Cv_repository_type_enum type);
 bool string_to_bool(string str, bool &bvalue);

@@ -28,13 +28,7 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
 
   if (debug) {
     cout << "operator_filter_edge_sobel: '" << endl << "   parameters " << endl;
-    map<string, string>::iterator it;
-    for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
-      cout << "      '" << it->first    // string (key)
-           << "': '"
-           << it->second   // string's value
-           << "'" << endl;
-    }
+    parameters_to_string(operator_parameters);
   }
   if (input_data_sources.size() == 0)
     errors.add("Experiment_step::run filter-edge-Sobel: missing input data source");

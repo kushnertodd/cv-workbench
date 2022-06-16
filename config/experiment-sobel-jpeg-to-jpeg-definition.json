@@ -22,10 +22,10 @@
             "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
-            "format": "binary",
+            "format": "jpeg",
             "directory": ".",
             "filename": "320x240gray_sobel",
-            "ext": "bin"
+            "ext": "jpg"
           }
         ],
         "parameters": {
