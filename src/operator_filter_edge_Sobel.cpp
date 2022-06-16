@@ -73,7 +73,8 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
           ptr++;
         }
       }
-      output->write_jpeg("sobel.jpg", errors);
+      //output->write_jpeg("sobel.jpg", errors);
+      output_data_store->write_image(output, errors);
     }
   }
 }

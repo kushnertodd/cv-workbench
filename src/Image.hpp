@@ -39,6 +39,7 @@ class Image {
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth);
   Image(Image_header *image_header);
+  void init();
 
   int get_rows();
   int get_cols();

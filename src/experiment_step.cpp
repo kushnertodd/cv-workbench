@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "wb_json_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "experiment_step.hpp"
@@ -150,17 +151,50 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
 }
 
 void Experiment_step::run(Errors &errors) {
-  cout << "Experiment_step::run: id " << id << " operator " << operator_name << endl;
-  cout << "Experiment_step::run: input data sources" << endl;
+  Operator *step_operator = Operator_producer::create_operator(operator_name);
+  if (step_operator == nullptr) {
+    if (debug)
+      cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << endl;
+    errors.add("Experiment_step::run: invalid operator '" + operator_name + "'");
+  } else {
+    if (debug) {
+      for (Data_source_descriptor *input_data_source: input_data_sources) {
+        cout << "Experiment_step::run input_data_source: " << input_data_source->toString() << endl;
+      }
+      for (Data_source_descriptor *output_data_store: output_data_stores) {
+        cout << "Experiment_step::run output_data_store: " << output_data_store->toString() << endl;
+      }
+      cout << "Experiment_step::run operator_parameters: " << endl;
+      map<string, string>::iterator it;
+      for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
+        cout << it->first    // string (key)
+             << ':'
+             << it->second   // string's value
+             << std::endl;
+      }
+    }
+    /*
+     * void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_sources,
+                                       list<Data_source_descriptor *> &output_data_stores,
+                                       map<string, string> &operator_parameters,
+                                       Errors &errors) {
+     */
+    step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
+  }
+}
+
+string Experiment_step::toString() {
+  ostringstream os;
+  os << "Experiment_step::run: id " << id << " operator " << operator_name << endl;
+  os << "Experiment_step::run: input data sources" << endl;
   for (Data_source_descriptor *descriptor: input_data_sources) {
     if (descriptor != nullptr)
-      cout << "   " << descriptor->toString() << endl;
+      os << "   " << descriptor->toString() << endl;
   }
   cout << "Experiment_step::run: output data stores" << endl;
   for (Data_source_descriptor *descriptor: output_data_stores) {
     if (descriptor != nullptr)
-      cout << "   " << descriptor->toString() << endl;
+      os << "   " << descriptor->toString() << endl;
   }
-  Operator *step_operator = Operator_producer::create_operator(operator_name);
-  step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
+  return os.str();
 }

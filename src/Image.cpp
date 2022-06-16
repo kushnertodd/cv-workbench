@@ -48,9 +48,23 @@ Image::~Image() {
   }
 }
 
+//Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
 Image::Image(Image_header *image_header) :
-    image_header(image_header),
     next_pixel(0) {
+  // image_header=new Image_header(m_rows, m_cols, m_components, m_depth);
+  if (debug)
+    cout << "Image::Image: *image_header" << image_header->toString() << endl;
+  init();
+}
+Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) {
+  if (debug)
+    printf("Image::Image: m_rows %d m_cols %d m_components %d m_depth %d\n",
+           m_rows, m_cols, m_components, m_depth);
+  image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
+  init();
+}
+
+void Image::init() {
   switch (image_header->depth) {
     case CV_8U:
       buf_8U = new pixel_8U[image_header->npixels];
@@ -64,9 +78,6 @@ Image::Image(Image_header *image_header) :
     default:
       break;
   }
-}
-Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
-    image_header(new Image_header(m_rows, m_cols, m_components, m_depth)) {
 }
 
 int Image::get_rows() { return image_header->rows; }
@@ -83,7 +94,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
         int_to_string(next_pixel)
                    + " too large for buffer length "
                    + int_to_string(image_header->npixels));
-  for (int i = 0; i < count; i++, next_pixel++) {
+  for (int i = 0; i < count; i++) {
     switch (image_header->depth) {
       case CV_8U:
         buf_8U[next_pixel++] = src[i];
@@ -102,7 +113,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
 
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
-    errors.add("Image::add_8U: adding "
+    errors.add("Image::add_32S: adding "
                    + int_to_string(count) + " pixels at position " +
         int_to_string(next_pixel)
                    + " too large for buffer length "
@@ -126,7 +137,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 
 void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
-    errors.add("Image::add_8U: adding "
+    errors.add("Image::add_32F: adding "
                    + int_to_string(count) + " pixels at position " +
         int_to_string(next_pixel)
                    + " too large for buffer length "

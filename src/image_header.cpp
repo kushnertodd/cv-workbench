@@ -2,15 +2,22 @@
 // Created by kushn on 6/14/2022.
 //
 
+#include <iostream>
+#include <sstream>
 #include "image_header.hpp"
 
-Image_header::Image_header(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
-    rows(m_rows),
-    cols(m_cols),
-    components(m_components),
-    depth(m_depth),
+extern bool debug;
+
+Image_header::Image_header(int rows, int cols, int components, Cv_image_depth_enum depth) :
+    rows(rows),
+    cols(cols),
+    components(components),
+    depth(depth),
     row_stride(cols * components),
-    npixels(rows * row_stride) {}
+    npixels(rows * row_stride) {
+  if (debug)
+    cout << "Image_header::Image_header: " << toString() << endl;
+}
 
 Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
   int rows;
@@ -58,5 +65,10 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
   if (ferror(fp) != 0) {
     errors.add("Image_header::write_header: cannot write image components to '" + path + "'");
   }
-
+}
+string Image_header::toString() {
+  ostringstream os;
+  os << "rows " << rows << " cols " << cols << " components " << components << " depth " << depth
+     << " row_stride " << row_stride << " npixels " << npixels;
+  return os.str();
 }

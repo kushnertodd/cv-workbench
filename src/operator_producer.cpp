@@ -13,9 +13,9 @@ Operator *Operator_producer::create_operator(string operator_name) {
   if (debug)
     cout << "Operator_producer::create_operator operator_name '" << operator_name << "'" << endl;
   // Creator explicitly creates classes according to type
-  if (operator_name == "operator-filter-edge-prewitt")
+  if (operator_name == "filter-edge-prewitt")
     pOperator = new Operator_filter_edge_prewitt();
-  else if (operator_name == "operator-filter-edge-sobel")
+  else if (operator_name == "filter-edge-sobel")
     pOperator = new Operator_filter_edge_sobel();
   else
     pOperator = nullptr;
