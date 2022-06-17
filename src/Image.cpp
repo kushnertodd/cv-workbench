@@ -68,14 +68,20 @@ void Image::init() {
   switch (image_header->depth) {
     case CV_8U:
       buf_8U = new pixel_8U[image_header->npixels];
+      for (int i = 0; i < image_header->npixels; i++)
+        buf_8U[i] = 0;
       break;
 
     case CV_32S:
       buf_32S = new pixel_32S[image_header->npixels];
+      for (int i = 0; i < image_header->npixels; i++)
+        buf_32S[i] = 0;
       break;
 
     case CV_32F:
       buf_32F = new pixel_32F[image_header->npixels];
+      for (int i = 0; i < image_header->npixels; i++)
+        buf_32F[i] = 0.0;
       break;
 
     default:
@@ -90,26 +96,45 @@ int Image::get_row_stride() { return image_header->row_stride; }
 int Image::get_npixels() { return image_header->npixels; }
 Cv_image_depth_enum Image::get_depth() { return image_header->depth; }
 
-int Image::row_col_to_index(int row, int col){
+int Image::row_col_to_index(int row, int col) {
   return row * image_header->row_stride + col;
 }
+pixel_32F Image::get(int row, int col) {
+  switch (image_header->depth) {
+    case CV_8U:
+      return buf_8U[row_col_to_index(row, col)];;
+      break;
 
-void Image::set_8U(int row, int col, pixel_8U value){
+    case CV_32S:
+      return buf_32S[row_col_to_index(row, col)];
+      break;
+
+    case CV_32F:
+      return buf_32F[row_col_to_index(row, col)];
+      break;
+
+    default:
+      return 0.0;
+      break;
+  }
+}
+
+void Image::set_8U(int row, int col, pixel_8U value) {
   buf_32F[row_col_to_index(row, col)] = value;
 }
-pixel_8U Image::get_8U(int row, int col){
+pixel_8U Image::get_8U(int row, int col) {
   return buf_32F[row_col_to_index(row, col)];
 }
-void Image::set_32S(int row, int col, pixel_32S value){
+void Image::set_32S(int row, int col, pixel_32S value) {
   buf_32F[row_col_to_index(row, col)] = value;
 }
-pixel_32S Image::get_32s(int row, int col){
+pixel_32S Image::get_32s(int row, int col) {
   return buf_32F[row_col_to_index(row, col)];
 }
-void Image::set_32F(int row, int col, pixel_32F value){
+void Image::set_32F(int row, int col, pixel_32F value) {
   buf_32F[row_col_to_index(row, col)] = value;
 }
-pixel_32S Image::get_32F(int row, int col){
+pixel_32S Image::get_32F(int row, int col) {
   return buf_32F[row_col_to_index(row, col)];
 }
 

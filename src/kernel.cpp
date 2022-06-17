@@ -2,6 +2,8 @@
 // Created by kushn on 6/16/2022.
 //
 
+#include <cstdio>
+#include <cstdlib>
 #include "image_header.hpp"
 #include "kernel.hpp"
 
@@ -10,35 +12,36 @@ Kernel::~Kernel() {
     delete kernel;
 }
 
-Kernel::Kernel(int m_kernel_rows, int m_kernel_cols):
+Kernel::Kernel(int m_kernel_rows, int m_kernel_cols) :
     kernel_rows(m_kernel_rows),
     kernel_cols(m_kernel_cols),
-size(kernel_rows*kernel_cols){
+    size(kernel_rows * kernel_cols) {
   kernel = new float[size];
 }
 
-int Kernel::row_col_to_index(int row, int col){
+int Kernel::row_col_to_index(int row, int col) {
   return row * kernel_rows + col;
 }
 
-void Kernel::set(int row, int col, float value) { 
+void Kernel::set(int row, int col, float value) {
   kernel[row_col_to_index(row, col)] = value;
 }
 
-float Kernel::get(int row, int col){
+float Kernel::get(int row, int col) {
   return kernel[row_col_to_index(row, col)];
 }
 
-Image* Kernel::convolve(Image* src){
-  Image_header* header = src->image_header;
+Image *Kernel::convolve(Image *src) {
+  Image_header *header = src->image_header;
   int rows = header->rows;
   int cols = header->cols;
   int components = header->components;
   Cv_image_depth_enum depth = header->depth;
-  Image* out = new Image(header->rows, header->cols,
+  Image *out = new Image(header->rows, header->cols,
                          header->components, CV_32S);
 
-/*
+  int rows_half = (kernel_rows + 1) / 2;
+  int cols_half = (kernel_cols + 1) / 2;
   int row_lower = 0;
   int row_upper = rows - kernel_rows;
   int col_lower = 0;
@@ -59,11 +62,12 @@ Image* Kernel::convolve(Image* src){
         printf("     ");
         for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
           printf("(%d,%d) ", i, j);
-          sum +=
+          sum += get(i, j) * src->get_32F(row + i, col + j);
         }
+        out->set_32F(row, col, sum);
         printf("\n");
       }
     }
   }
- */
+  return out;
 }

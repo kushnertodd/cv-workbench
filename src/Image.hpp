@@ -49,6 +49,7 @@ class Image {
   Cv_image_depth_enum get_depth();
 
   int row_col_to_index(int row, int col);
+  pixel_32F get(int row, int col);
   void set_8U(int row, int col, pixel_8U value);
   pixel_8U get_8U(int row, int col);
   void set_32S(int row, int col, pixel_32S value);
