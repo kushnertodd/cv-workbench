@@ -1,0 +1,16 @@
+sed \
+ -e 's,wh,cols_yalf,g' \
+ -e 's,hh,roxs_yalf,g' \
+ -e 's,row,rox,g' \
+ -e 's,w,kernel_cols,g' \
+ -e 's,h,kernel_rows,g' \
+ -e 's,x,w,g' \
+ -e 's,y,h,g' \
+ -e 's,H,rows,g' \
+ -e 's,W,cols,g' \
+ -e 's,rl,row_lower,g' \
+ -e 's,ru,row_upper,g' \
+ -e 's,cl,col_lower,g' \
+ -e 's,cu,col_upper,g' \
+ -e 's,rc,row_center,g' \
+ -e 's,cc,col_center,g'  $1
