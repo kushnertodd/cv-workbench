@@ -69,12 +69,15 @@ void Image::init() {
     case CV_8U:
       buf_8U = new pixel_8U[image_header->npixels];
       break;
+
     case CV_32S:
       buf_32S = new pixel_32S[image_header->npixels];
       break;
+
     case CV_32F:
       buf_32F = new pixel_32F[image_header->npixels];
       break;
+
     default:
       break;
   }
@@ -86,6 +89,29 @@ int Image::get_components() { return image_header->components; }
 int Image::get_row_stride() { return image_header->row_stride; }
 int Image::get_npixels() { return image_header->npixels; }
 Cv_image_depth_enum Image::get_depth() { return image_header->depth; }
+
+int Image::row_col_to_index(int row, int col){
+  return row * image_header->row_stride + col;
+}
+
+void Image::set_8U(int row, int col, pixel_8U value){
+  buf_32F[row_col_to_index(row, col)] = value;
+}
+pixel_8U Image::get_8U(int row, int col){
+  return buf_32F[row_col_to_index(row, col)];
+}
+void Image::set_32S(int row, int col, pixel_32S value){
+  buf_32F[row_col_to_index(row, col)] = value;
+}
+pixel_32S Image::get_32s(int row, int col){
+  return buf_32F[row_col_to_index(row, col)];
+}
+void Image::set_32F(int row, int col, pixel_32F value){
+  buf_32F[row_col_to_index(row, col)] = value;
+}
+pixel_32S Image::get_32F(int row, int col){
+  return buf_32F[row_col_to_index(row, col)];
+}
 
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
@@ -99,12 +125,15 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
       case CV_8U:
         buf_8U[next_pixel++] = src[i];
         break;
+
       case CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
+
       case CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
+
       default:
         break;
     }
@@ -123,12 +152,15 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
       case CV_8U:
         errors.add("Image::add_32S: cannot add to 8U buffer");
         break;
+
       case CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
+
       case CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
+
       default:
         break;
     }
@@ -147,12 +179,15 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
       case CV_8U:
         errors.add("Image::add_32F: cannot add to 8U buffer");
         break;
+
       case CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
+
       case CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
+
       default:
         break;
     }
@@ -165,6 +200,7 @@ Image *Image::read_binary(string path, Errors &errors) {
     errors.add("Image::read_binary: invalid file '" + path + "'");
     return nullptr;
   }
+
   Image_header *image_header = Image_header::read_header(fp, path, errors);
   Image *image = new Image(image_header);
 
@@ -179,6 +215,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       break;
+
     case CV_32S:
       newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != sizeof(pixel_32S) * image_header->npixels) {
@@ -186,6 +223,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       break;
+
     case CV_32F:
       newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != sizeof(pixel_32F) * image_header->npixels) {
@@ -193,6 +231,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       break;
+
     default:
       break;
   }
@@ -340,7 +379,6 @@ void Image::write_jpeg(string path, Errors &errors) {
   fclose(outfile);
   /* Step 7: release JPEG compression object */
   jpeg_destroy_compress(&cinfo);
-
 }
 
 
