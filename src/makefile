@@ -44,6 +44,8 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   djpeginfo \
+  image-dump \
+  image-test \
   parse_experiment_json
   # json_parser_example \
 
@@ -58,6 +60,10 @@ all: $(PROGRAMS)
 
 djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
+image-dump: image-dump.o
+	$(CXX) $< -o $@ 
+image-test: image-test.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 #json_parser_example: json_parser_example.o
 #	$(CC) $< -o $@ file_utils_C.o $(CCFLAGS) $(LDFLAGS_JSON)
 parse_experiment_json: parse_experiment_json.o $(SRCOBJS)

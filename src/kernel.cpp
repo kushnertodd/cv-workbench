@@ -16,7 +16,9 @@ Kernel::Kernel(int m_kernel_rows, int m_kernel_cols) :
     kernel_rows(m_kernel_rows),
     kernel_cols(m_kernel_cols),
     size(kernel_rows * kernel_cols) {
-  kernel = new float[size];
+  kernel = new pixel_32F[size];
+  for (int i = 0; i < size; i++)
+    kernel[i] = 0.0;
 }
 
 int Kernel::row_col_to_index(int row, int col) {
@@ -35,10 +37,10 @@ Image *Kernel::convolve(Image *src) {
   Image_header *header = src->image_header;
   int rows = header->rows;
   int cols = header->cols;
-  int components = header->components;
-  Cv_image_depth_enum depth = header->depth;
+//  int components = header->components;
+//  Cv_image_depth_enum depth = header->depth;
   Image *out = new Image(header->rows, header->cols,
-                         header->components, CV_32S);
+                         header->components, CV_32F);
 
   int rows_half = (kernel_rows + 1) / 2;
   int cols_half = (kernel_cols + 1) / 2;
@@ -62,7 +64,7 @@ Image *Kernel::convolve(Image *src) {
         printf("     ");
         for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
           printf("(%d,%d) ", i, j);
-          sum += get(i, j) * src->get_32F(row + i, col + j);
+          sum += get(i, j) * src->get(row + i, col + j);
         }
         out->set_32F(row, col, sum);
         printf("\n");

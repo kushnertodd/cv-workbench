@@ -8,11 +8,11 @@
 
 extern bool debug;
 
-Image_header::Image_header(int rows, int cols, int components, Cv_image_depth_enum depth) :
-    rows(rows),
-    cols(cols),
-    components(components),
-    depth(depth),
+Image_header::Image_header(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
+    rows(m_rows),
+    cols(m_cols),
+    components(m_components),
+    depth(m_depth),
     row_stride(cols * components),
     npixels(rows * row_stride) {
   if (debug)
@@ -64,6 +64,10 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
   fwrite(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image_header::write_header: cannot write image components to '" + path + "'");
+  }
+  fwrite(&depth, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image_header::write_header: cannot write image depth to '" + path + "'");
   }
 }
 string Image_header::toString() {
