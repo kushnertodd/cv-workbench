@@ -60,7 +60,7 @@ all: $(PROGRAMS)
 
 djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
-image-dump: image-dump.o
+image-dump: image-dump.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 image-test: image-test.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)

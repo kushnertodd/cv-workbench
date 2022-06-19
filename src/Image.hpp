@@ -64,7 +64,7 @@ class Image {
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);
   void write_jpeg(string path, Errors &errors);
-string toString();
+  string toString();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HPP_

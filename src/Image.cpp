@@ -49,14 +49,14 @@ Image::~Image() {
 }
 
 Image::Image(Image_header *m_image_header) :
-image_header(m_image_header),
+    image_header(m_image_header),
     next_pixel(0) {
   if (debug)
     cout << "Image::Image: " << toString() << endl;
   init();
 }
 Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
-next_pixel(0){
+    next_pixel(0) {
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
     cout << "Image::Image: " << toString() << endl;
