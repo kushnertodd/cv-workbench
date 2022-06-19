@@ -9,20 +9,13 @@ This parser makes use of all the functions which reads the value of a json objec
 
 #include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
 #include <json-c/json.h>
 #include "file_utils.hpp"
-#include "wb_json_utils.hpp"
-#include "wb_enums.hpp"
 #include "image.hpp"
-#include "histogram.hpp"
-#include "hough.hpp"
-#include "data_source_descriptor.hpp"
-#include "experiment_step.hpp"
 #include "experiment.hpp"
 
-bool debug = false;
+bool debug = true;
 
 int main(int argc, char **argv) {
   if (argc < 2) {

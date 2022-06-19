@@ -48,19 +48,18 @@ Image::~Image() {
   }
 }
 
-//Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
-Image::Image(Image_header *image_header) :
+Image::Image(Image_header *m_image_header) :
+image_header(m_image_header),
     next_pixel(0) {
-  // image_header=new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
-    cout << "Image::Image: *image_header" << image_header->toString() << endl;
+    cout << "Image::Image: " << toString() << endl;
   init();
 }
-Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) {
-  if (debug)
-    printf("Image::Image: m_rows %d m_cols %d m_components %d m_depth %d\n",
-           m_rows, m_cols, m_components, m_depth);
+Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
+next_pixel(0){
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
+  if (debug)
+    cout << "Image::Image: " << toString() << endl;
   init();
 }
 
@@ -166,13 +165,15 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
 }
 
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
+  if (debug)
+    cout << "Image::add_32S src " << src << " count " << count << " " << toString() << endl;
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32S: adding "
                    + int_to_string(count) + " pixels at position " +
         int_to_string(next_pixel)
                    + " too large for buffer length "
                    + int_to_string(image_header->npixels));
-  for (int i = 0; i < count; i++, next_pixel++) {
+  for (int i = 0; i < count; i++) {
     switch (image_header->depth) {
       case CV_8U:
         errors.add("Image::add_32S: cannot add to 8U buffer");
@@ -323,6 +324,8 @@ Image *Image::read_jpeg(string path, Errors &errors) {
 }
 
 void Image::write_binary(string path, Errors &errors) {
+  if (debug)
+    cout << "Image::write_binary path '" << path << "' " << toString() << endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write_binary: invalid file '" + path + "'");
@@ -406,7 +409,12 @@ void Image::write_jpeg(string path, Errors &errors) {
   jpeg_destroy_compress(&cinfo);
 }
 
-
+string Image::toString() {
+  ostringstream os;
+  os << image_header->toString()
+     << " next_pixel " << next_pixel;
+  return os.str();
+}
 
 
 

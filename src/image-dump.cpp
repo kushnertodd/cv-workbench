@@ -40,6 +40,7 @@ void read_int(FILE *fp, string name, int& var) {
   }
 }
 
+bool debug = true;
 int main(int argc, char** argv) {
 
   if (argc < 2)
@@ -88,17 +89,23 @@ int main(int argc, char** argv) {
     for (int i = 0; i < newLen; i++) 
       printf("0x%02x ", buf_8U[i]);
     printf("\n");
+      for (int i = 0; i < newLen; i++)
+        printf("%4d ", buf_8U[i]);
+      printf("\n");
+      for (int i = 0; i < newLen; i++)
+        printf(" '%-1c' ", buf_8U[i]);
+      printf("\n");
     break;
 
   case CV_32S:
     buf_32S = new pixel_32S[npixels];
     newLen = fread(buf_32S, sizeof(pixel_32S), npixels, fp);
       printf("ferror(fp) %d newLen %d sizeof(pixel_32S) %d npixels %d\n", ferror(fp), newLen, sizeof(pixel_32S), npixels);
-    if (ferror(fp) != 0 || newLen != sizeof(pixel_32S) * npixels) {
+    if (ferror(fp) != 0 || newLen != npixels) {
       error_exit("Image::read_binary: cannot read 32S image data in '" + filename + "'");
     }
     for (int i = 0; i < newLen; i++) 
-      printf("%08d ", buf_32S[i]);
+      printf("%8d ", buf_32S[i]);
     printf("\n");
     break;
 
@@ -106,11 +113,11 @@ int main(int argc, char** argv) {
     buf_32F = new pixel_32F[npixels];
     newLen = fread(buf_32F, sizeof(pixel_32F), npixels, fp);
       printf("ferror(fp) %d newLen %d sizeof(pixel_32F) %d npixels %d\n", ferror(fp), newLen, sizeof(pixel_32F), npixels);
-    if (ferror(fp) != 0 || newLen != sizeof(pixel_32F) * npixels) {
+    if (ferror(fp) != 0 || newLen != npixels) {
       error_exit("Image::read_binary: cannot read 32F image data in '" + filename + "'");
     }
     for (int i = 0; i < newLen; i++) 
-      printf("%8.2d ", buf_32F[i]);
+      printf("%8.2f ", buf_32F[i]);
     printf("\n");
     break;
 

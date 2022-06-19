@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include "wb_utils.hpp"
 #include "image_header.hpp"
 
 extern bool debug;
@@ -53,6 +54,8 @@ Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
 }
 
 void Image_header::write_header(FILE *fp, string path, Errors &errors) {
+  if (debug)
+    cout << "Image_header::write_header  path '" << path << "' " << toString() << endl;
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image_header::write_header: cannot write image rows to '" + path + "'");
@@ -72,7 +75,11 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
 }
 string Image_header::toString() {
   ostringstream os;
-  os << "rows " << rows << " cols " << cols << " components " << components << " depth " << depth
-     << " row_stride " << row_stride << " npixels " << npixels;
+  os << "rows " << rows
+     << " cols " << cols
+     << " components " << components
+     << " depth " << depth << " " << image_depth_enum_to_string(depth)
+     << " row_stride " << row_stride
+     << " npixels " << npixels;
   return os.str();
 }

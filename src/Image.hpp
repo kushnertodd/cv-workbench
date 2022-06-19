@@ -31,7 +31,7 @@ class Image {
   // pixel_8S *buf_8S; // unsupported
   // pixel_16U *buf_16U; // unsupported
   // pixel_16S *buf_16S; // unsupported
-  pixel_32S *buf_32S;
+  pixel_32S *buf_32S; // unused yet
   pixel_32F *buf_32F;
   // pixel_64F *buf_64F; // unsupported
   // pixel_16F *buf_16F; // unsupported
@@ -64,7 +64,7 @@ class Image {
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);
   void write_jpeg(string path, Errors &errors);
-
+string toString();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HPP_
