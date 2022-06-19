@@ -6,6 +6,7 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 #### v0.1.0
 ```
   commit ffae304a1fdafae2e1b94a614230e2e153632257  
+  (HEAD -> master, origin/master, origin/HEAD)
   Author: Todd Kushner <kushnertodd@gmail.com>  
   Date:   Fri Jun 17 20:11:03 2022 -0600
 ```
@@ -24,6 +25,7 @@ segvs at end)
 #### v0.1.1
 ```
 commit 6635de89c22792c63cb8515ccc97c7c4eca769df
+(HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Jun 19 12:05:02 2022 -0600
 ```
