@@ -39,6 +39,7 @@ class Image {
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth);
   Image(Image_header *image_header);
+  static Image *clone_image(Image *image, Cv_image_depth_enum depth);
   void init();
 
   int get_rows();
@@ -49,21 +50,35 @@ class Image {
   Cv_image_depth_enum get_depth();
 
   int row_col_to_index(int row, int col);
+
   pixel_32F get(int row, int col);
-  void set_8U(int row, int col, pixel_8U value);
   pixel_8U get_8U(int row, int col);
-  void set_32S(int row, int col, pixel_32S value);
-  pixel_32S get_32s(int row, int col);
-  void set_32F(int row, int col, pixel_32F value);
+  pixel_32S get_32S(int row, int col);
   pixel_32S get_32F(int row, int col);
+
+  void set(int row, int col, pixel_32F value);
+  void set_8U(int row, int col, pixel_8U value);
+  void set_32S(int row, int col, pixel_32S value);
+  void set_32F(int row, int col, pixel_32F value);
 
   void add_8U(pixel_8U *src, int count, Errors &errors);
   void add_32S(pixel_32S *src, int count, Errors &errors);
   void add_32F(pixel_32F *src, int count, Errors &errors);
+
   static Image *read_binary(string path, Errors &errors);
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);
   void write_jpeg(string path, Errors &errors);
+
+  static float scale_pixel(float in_value, float lower_in,
+                           float upper_in, float lower_out,
+                           float upper_out);
+  float get_scaled(int row, int col, float lower_in,
+                   float upper_in, float lower_out,
+                   float upper_out);
+  static Image *convert_to_depth(Image *image, float lower_in,
+                                 float upper_in, float lower_out,
+                                 float upper_out, Cv_image_depth_enum depth);
   string toString();
 };
 

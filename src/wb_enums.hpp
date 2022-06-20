@@ -53,6 +53,8 @@ enum Cv_repository_type_enum {
 // built-in types
 // 0..255
 typedef unsigned char pixel_8U;
+const int pixel_8U_MIN = 0;
+const int pixel_8U_MAX = 255;
 // unsupported -128..127
 typedef char pixel_8S;
 // unsupported 0..65535

@@ -10,8 +10,7 @@ Descriptions of each branch, commit, and version of CV-Workbench.
   Author: Todd Kushner <kushnertodd@gmail.com>  
   Date:   Fri Jun 17 20:11:03 2022 -0600
 ```
-- `src/parse_experiment_json.cpp` takes `320x240gray.jpg` and produces `sobel.jpg`
-  (should be `320x240gray_sobel.jpg`)   
+- `src/parse_experiment_json.cpp` takes `320x240gray.jpg` and produces `320x240gray_sobel.bin`   
   `./parse_experiment_json  ../config/experiment1-definition.json`
 - `src/image-test.cpp` produces `image-test-8U.bin` (2x2 image = 'test'; 
 segvs at end)
@@ -24,10 +23,10 @@ segvs at end)
 
 #### v0.1.1
 ```
-commit 6635de89c22792c63cb8515ccc97c7c4eca769df
+commit 47af0ad1c504a950498559ca4119488218c86d26 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
-Date:   Sun Jun 19 12:05:02 2022 -0600
+Date:   Sun Jun 19 12:19:38 2022 -0600
 ```
 - image-test works
 - image-dump has char mode

@@ -9,6 +9,7 @@
 #include <sstream>
 #include "jpeglib.h"
 #include "image.hpp"
+#include "image_header.hpp"
 #include "wb_utils.hpp"
 
 using namespace std;
@@ -49,18 +50,29 @@ Image::~Image() {
 }
 
 Image::Image(Image_header *m_image_header) :
-    image_header(m_image_header),
+    image_header(new Image_header(m_image_header)),
     next_pixel(0) {
   if (debug)
     cout << "Image::Image: " << toString() << endl;
   init();
 }
+
 Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
     next_pixel(0) {
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
     cout << "Image::Image: " << toString() << endl;
   init();
+}
+
+Image *Image::clone_image(Image *image, Cv_image_depth_enum depth) {
+  if (debug)
+    cout << "Image::clone: depth " << depth << " " << image->toString() << endl;
+  Image_header *image_header = new Image_header(image_header->rows,
+                                                image_header->cols,
+                                                image_header->components,
+                                                depth);
+  return new Image(image_header);
 }
 
 void Image::init() {
@@ -98,6 +110,7 @@ Cv_image_depth_enum Image::get_depth() { return image_header->depth; }
 int Image::row_col_to_index(int row, int col) {
   return row * image_header->row_stride + col;
 }
+
 pixel_32F Image::get(int row, int col) {
   switch (image_header->depth) {
     case CV_8U:
@@ -118,23 +131,47 @@ pixel_32F Image::get(int row, int col) {
   }
 }
 
-void Image::set_8U(int row, int col, pixel_8U value) {
-  buf_32F[row_col_to_index(row, col)] = value;
-}
 pixel_8U Image::get_8U(int row, int col) {
   return buf_32F[row_col_to_index(row, col)];
 }
+
+pixel_32S Image::get_32S(int row, int col) {
+  return buf_32F[row_col_to_index(row, col)];
+}
+
+pixel_32S Image::get_32F(int row, int col) {
+  return buf_32F[row_col_to_index(row, col)];
+}
+
+void Image::set(int row, int col, pixel_32F value) {
+  switch (image_header->depth) {
+    case CV_8U:
+      buf_8U[row_col_to_index(row, col)] = value;
+      break;
+
+    case CV_32S:
+      buf_32S[row_col_to_index(row, col)] = value;
+      break;
+
+    case CV_32F:
+      buf_32F[row_col_to_index(row, col)] = value;
+      break;
+
+    default:
+      break;
+  }
+}
+
+void Image::set_8U(int row, int col, pixel_8U value) {
+  buf_32F[row_col_to_index(row, col)] = value;
+}
+
 void Image::set_32S(int row, int col, pixel_32S value) {
   buf_32F[row_col_to_index(row, col)] = value;
 }
-pixel_32S Image::get_32s(int row, int col) {
-  return buf_32F[row_col_to_index(row, col)];
-}
+
 void Image::set_32F(int row, int col, pixel_32F value) {
   buf_32F[row_col_to_index(row, col)] = value;
-}
-pixel_32S Image::get_32F(int row, int col) {
-  return buf_32F[row_col_to_index(row, col)];
 }
 
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
@@ -407,6 +444,56 @@ void Image::write_jpeg(string path, Errors &errors) {
   fclose(outfile);
   /* Step 7: release JPEG compression object */
   jpeg_destroy_compress(&cinfo);
+}
+
+float Image::scale_pixel(float pixel_in,
+                         float in_lower,
+                         float in_upper,
+                         float out_lower,
+                         float out_upper) {
+  if (pixel_in <= in_lower)
+    return out_lower;
+  else if (pixel_in >= in_upper)
+    return out_upper;
+  else
+    return (pixel_in - in_lower)
+        * (out_upper - out_lower)
+        / (in_upper - in_lower)
+        + out_lower;
+
+}
+
+float Image::get_scaled(int row, int col, float lower_in,
+                        float upper_in, float lower_out,
+                        float upper_out) {
+  return scale_pixel(get(row, col), lower_in,
+                     upper_in, lower_out, upper_out);
+}
+
+/***
+ * preconditions not checked:
+ *   lower_in < lower_out
+ *   upper_in < upper_out
+ *   lower_out >= pixel_8U_MIN
+ *   upper_out <= pixel_8U_MAX
+ * @param image
+ * @param lower_in
+ * @param upper_in
+ * @param lower_out
+ * @param upper_out
+ * @return
+ */
+Image *Image::convert_to_depth(Image *image, float lower_in,
+                               float upper_in, float lower_out,
+                               float upper_out, Cv_image_depth_enum depth) {
+  Image *convert_image = clone_image(image, depth);
+  Image_header *image_header = image->image_header;
+  for (int row = 0; row < image_header->rows; row++) {
+    for (int col = 0; col < image_header->cols; col++) {
+      convert_image->set(row, col, image->get(row, col));
+    }
+  }
+  return convert_image;
 }
 
 string Image::toString() {

@@ -20,6 +20,13 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components, Cv_image_de
     cout << "Image_header::Image_header: " << toString() << endl;
 }
 
+Image_header::Image_header(Image_header *image_header) :
+    Image_header(image_header->rows,
+                 image_header->cols,
+                 image_header->components,
+                 image_header->depth) {
+}
+
 Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
   int rows;
   size_t newLen;
