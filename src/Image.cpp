@@ -25,8 +25,7 @@ Image_exception::Image_exception(string message,
                                  int max_size) {
   ostringstream os;
   os << message << ": cannot allocate " << size <<
-     " bytes, max size " <<
-     max_size;
+     " bytes, max size " << max_size;
   errmsg = os.str();
 }
 
@@ -114,7 +113,7 @@ int Image::row_col_to_index(int row, int col) {
 pixel_32F Image::get(int row, int col) {
   switch (image_header->depth) {
     case CV_8U:
-      return buf_8U[row_col_to_index(row, col)];;
+      return buf_8U[row_col_to_index(row, col)];
       break;
 
     case CV_32S:
@@ -177,10 +176,10 @@ void Image::set_32F(int row, int col, pixel_32F value) {
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_8U: adding "
-                   + int_to_string(count) + " pixels at position " +
-        int_to_string(next_pixel)
+                   + Workbench_utils::int_to_string(count) + " pixels at position " +
+        Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + int_to_string(image_header->npixels));
+                   + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     switch (image_header->depth) {
       case CV_8U:
@@ -206,10 +205,10 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
     cout << "Image::add_32S src " << src << " count " << count << " " << toString() << endl;
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32S: adding "
-                   + int_to_string(count) + " pixels at position " +
-        int_to_string(next_pixel)
+                   + Workbench_utils::int_to_string(count) + " pixels at position " +
+        Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + int_to_string(image_header->npixels));
+                   + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     switch (image_header->depth) {
       case CV_8U:
@@ -233,10 +232,10 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32F: adding "
-                   + int_to_string(count) + " pixels at position " +
-        int_to_string(next_pixel)
+                   + Workbench_utils::int_to_string(count) + " pixels at position " +
+        Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + int_to_string(image_header->npixels));
+                   + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     switch (image_header->depth) {
       case CV_8U:
@@ -398,7 +397,7 @@ void Image::write_binary(string path, Errors &errors) {
 void Image::write_jpeg(string path, Errors &errors) {
   if (get_depth() != CV_8U) {
     errors.add("Image::write_jpeg: cannot write "
-                   + image_depth_enum_to_string(get_depth())
+                   + Workbench_utils::image_depth_enum_to_string(get_depth())
                    + " image");
   }
   int quality = 100; // best
@@ -460,7 +459,6 @@ float Image::scale_pixel(float pixel_in,
         * (out_upper - out_lower)
         / (in_upper - in_lower)
         + out_lower;
-
 }
 
 float Image::get_scaled(int row, int col, float lower_in,
@@ -490,7 +488,9 @@ Image *Image::convert_to_depth(Image *image, float lower_in,
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {
     for (int col = 0; col < image_header->cols; col++) {
-      convert_image->set(row, col, image->get(row, col));
+      convert_image->set(row, col,
+                         image->get_scaled(row, col, lower_in,
+                                           upper_in, lower_out, upper_out));
     }
   }
   return convert_image;

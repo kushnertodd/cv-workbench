@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <sstream>
 #include "image.hpp"
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -18,7 +18,7 @@ using namespace std;
  * @param n to convert
  * @return C char
  */
-char ascii_to_char(int n) {
+char Workbench_utils::ascii_to_char(int n) {
   return char(n);
 }
 
@@ -27,12 +27,12 @@ char ascii_to_char(int n) {
  * @param c to convert
  * @return c++ string
  */
-string char_to_string(char c) {
+string Workbench_utils::char_to_string(char c) {
   string s(1, c);
   return s;
 }
 
-string data_type_enum_to_string(Cv_data_type_enum type) {
+string Workbench_utils::data_type_enum_to_string(Cv_data_type_enum type) {
   switch (type) {
     case CONTOUR:
       return "contour";
@@ -67,7 +67,7 @@ string data_type_enum_to_string(Cv_data_type_enum type) {
   }
 }
 
-string file_format_to_string(Cv_image_file_format_enum type) {
+string Workbench_utils::file_format_to_string(Cv_image_file_format_enum type) {
   switch (type) {
     case BINARY:
       return "binary";
@@ -84,7 +84,7 @@ string file_format_to_string(Cv_image_file_format_enum type) {
  * @param value
  * @return
  */
-bool hex_string_to_int(string arg, unsigned long long &value) {
+bool Workbench_utils::hex_string_to_int(string arg, unsigned long long &value) {
   stringstream ss;
   ss << std::hex << arg;
   if (ss >> value) {
@@ -93,7 +93,7 @@ bool hex_string_to_int(string arg, unsigned long long &value) {
     return false;
 }
 
-string image_depth_enum_to_string(Cv_image_depth_enum depth) {
+string Workbench_utils::image_depth_enum_to_string(Cv_image_depth_enum depth) {
   switch (depth) {
     case CV_8U:
       return "CV_8U";
@@ -116,7 +116,7 @@ string image_depth_enum_to_string(Cv_image_depth_enum depth) {
   }
 }
 
-string indent(int n) {
+string Workbench_utils::indent(int n) {
   string s;
   for (int i = 0; i < n; i++) {
     s += " ";
@@ -130,7 +130,7 @@ string indent(int n) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string int_to_hex_string(unsigned long long i, int width) {
+string Workbench_utils::int_to_hex_string(unsigned long long i, int width) {
   ostringstream os;
   if (width == -1) {
     os << setbase(16) << i;
@@ -146,7 +146,7 @@ string int_to_hex_string(unsigned long long i, int width) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string int_to_string(int i, int width) {
+string Workbench_utils::int_to_string(int i, int width) {
   ostringstream os;
   if (width == -1) {
     os << i;
@@ -178,7 +178,7 @@ string int_to_string(int i, int width) {
  * @param number
  * @return
  */
-bool is_numeric(string number) {
+bool Workbench_utils::is_numeric(string number) {
   int len = number.size();
   int pos = 0;
   // look for [+-]
@@ -204,40 +204,11 @@ bool is_numeric(string number) {
   return false; // 1-2, 4, 6, 8-10, 12
 }
 
-void json_parse_array(json_object *jobj, char *key) {
-  void json_parse(json_object *jobj); /*Forward Declaration*/
-  enum json_type type;
-
-  json_object *jarray = jobj; /*Simply get the array*/
-  if (key) {
-    jarray = json_object_object_get(jobj, key); /*Getting the array if it is a key value pair*/
-  }
-
-  int arraylen = json_object_array_length(jarray); /*Getting the length of the array*/
-  //printf("Array Length: %d\n",arraylen);
-  cout << "Array Length: " << arraylen << endl;
-  json_object *jvalue;
-
-  for (int i = 0; i < arraylen; i++) {
-    jvalue = json_object_array_get_idx(jarray, i); /*Getting the array element at position i*/
-    type = json_object_get_type(jvalue);
-    if (type == json_type_array) {
-      json_parse_array(jvalue, NULL);
-    } else if (type != json_type_object) {
-      //printf("value[%d]: ",i);
-      cout << "value[" << i << "]: " << endl;
-      json_print_value(jvalue);
-    } else {
-      json_parse(jvalue);
-    }
-  }
-}
-
 /**
  * Parsing the json object
  * @param jobj json-c parsed json
  */
-void json_parse(json_object *jobj) {
+void Workbench_utils::json_parse(json_object *jobj) {
   enum json_type type;
   json_object_object_foreach(jobj, key, val) { /*Passing through every array element*/
     type = json_object_get_type(val);
@@ -266,8 +237,37 @@ void json_parse(json_object *jobj) {
   }
 }
 
+void Workbench_utils::json_parse_array(json_object *jobj, char *key) {
+  //void json_parse(json_object *jobj); /*Forward Declaration*/
+  enum json_type type;
+
+  json_object *jarray = jobj; /*Simply get the array*/
+  if (key) {
+    jarray = json_object_object_get(jobj, key); /*Getting the array if it is a key value pair*/
+  }
+
+  int arraylen = json_object_array_length(jarray); /*Getting the length of the array*/
+  //printf("Array Length: %d\n",arraylen);
+  cout << "Array Length: " << arraylen << endl;
+  json_object *jvalue;
+
+  for (int i = 0; i < arraylen; i++) {
+    jvalue = json_object_array_get_idx(jarray, i); /*Getting the array element at position i*/
+    type = json_object_get_type(jvalue);
+    if (type == json_type_array) {
+      json_parse_array(jvalue, NULL);
+    } else if (type != json_type_object) {
+      //printf("value[%d]: ",i);
+      cout << "value[" << i << "]: " << endl;
+      json_print_value(jvalue);
+    } else {
+      json_parse(jvalue);
+    }
+  }
+}
+
 /*printing the value corresponding to boolean, double, integer and strings*/
-void json_print_value(json_object *jobj) {
+void Workbench_utils::json_print_value(json_object *jobj) {
   enum json_type type;
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
   //printf("type: %d '%s'\n",type, json_type_to_name(type));
@@ -306,24 +306,13 @@ void json_print_value(json_object *jobj) {
   }
 }
 
-void parameters_to_string(map<string, string> parameters) {
-  cout << "operator_filter_edge_sobel: '" << endl << "   parameters " << endl;
-  map<string, string>::iterator it;
-  for (it = parameters.begin(); it != parameters.end(); it++) {
-    cout << "      '" << it->first    // string (key)
-         << "': '"
-         << it->second   // string's value
-         << "'" << endl;
-  }
-}
-
 /**
  * convert int to string
  * @param i integer toconvert
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string real_to_string(double i, int width) {
+string Workbench_utils::real_to_string(double i, int width) {
   ostringstream os;
   if (width == -1) {
     os << i;
@@ -333,7 +322,7 @@ string real_to_string(double i, int width) {
   return os.str();
 }
 
-string repository_type_enum_to_string(Cv_repository_type_enum type) {
+string Workbench_utils::repository_type_enum_to_string(Cv_repository_type_enum type) {
   switch (type) {
     case BERKELEY_DB:
       return "Berkeley DB";
@@ -348,7 +337,7 @@ string repository_type_enum_to_string(Cv_repository_type_enum type) {
   }
 }
 
-bool string_to_bool(string str, bool &bvalue) {
+bool Workbench_utils::string_to_bool(string str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
     return true;
@@ -360,7 +349,7 @@ bool string_to_bool(string str, bool &bvalue) {
   }
 }
 
-Cv_data_type_enum string_to_data_type_enum(string type) {
+Cv_data_type_enum Workbench_utils::string_to_data_type_enum(string type) {
   if (type == "contour")
     return CONTOUR;
   else if (type == "convolution kernel")
@@ -393,7 +382,7 @@ Cv_data_type_enum string_to_data_type_enum(string type) {
     return UNDEFINED_DATA_TYPE;
 }
 
-Cv_image_file_format_enum string_to_file_format_enum(string type) {
+Cv_image_file_format_enum Workbench_utils::string_to_file_format_enum(string type) {
   if (type == "binary")
     return BINARY;
   else if (type == "jpeg")
@@ -401,7 +390,7 @@ Cv_image_file_format_enum string_to_file_format_enum(string type) {
   else return UNDEFINED_FILE_FORMAT;
 }
 
-Cv_image_depth_enum string_to_image_depth_enum(string depth) {
+Cv_image_depth_enum Workbench_utils::string_to_image_depth_enum(string depth) {
   if (depth == "CV_8U") return CV_8U;
   else if (depth == "CV_8U") return CV_8U;
   else if (depth == "CV_8S") return CV_8S;
@@ -414,7 +403,13 @@ Cv_image_depth_enum string_to_image_depth_enum(string depth) {
   else return UNDEFINED_IMAGE_DEPTH;
 }
 
-Cv_repository_type_enum string_to_repository_type_enum(string type) {
+bool Workbench_utils::string_to_int(string str, int &value) {
+  stringstream ss(str);
+  if (ss >> value) return true;
+  else return false;
+}
+
+Cv_repository_type_enum Workbench_utils::string_to_repository_type_enum(string type) {
   if (type == "berkeley_db") return BERKELEY_DB;
   else if (type == "filesystem") return FILESYSTEM;
   else if (type == "internet") return INTERNET;
@@ -422,13 +417,7 @@ Cv_repository_type_enum string_to_repository_type_enum(string type) {
   else return UNDEFINED_REPOSITORY_TYPE;
 }
 
-bool string_to_int(string str, int &value) {
-  stringstream ss(str);
-  if (ss >> value) return true;
-  else return false;
-}
-
-bool string_to_real(string arg, double &value) {
+bool Workbench_utils::string_to_real(string arg, double &value) {
   stringstream ss(arg);
   if (ss >> value) return true;
   else return false;

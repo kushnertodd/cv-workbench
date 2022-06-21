@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 #include <json-c/json.h>
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 #include "errors.hpp"
 #include "image.hpp"
 #include "histogram.hpp"
@@ -21,7 +21,7 @@ class Experiment_step {
   string operator_name;
   list<Data_source_descriptor *> input_data_sources;
   list<Data_source_descriptor *> output_data_stores;
-  map<string, string> operator_parameters;
+  String_map operator_parameters;
   ~Experiment_step();
   Experiment_step();
   Experiment_step(int m_id, string m_operator_name);

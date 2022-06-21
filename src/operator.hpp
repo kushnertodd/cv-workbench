@@ -5,7 +5,7 @@
 #ifndef CV_WORKBENCH_SRC_OPERATOR_H_
 #define CV_WORKBENCH_SRC_OPERATOR_H_
 
-#include <map>
+#include "wb_defs.hpp"
 #include "data_source_descriptor.hpp"
 
 class Operator {
@@ -14,7 +14,7 @@ class Operator {
   virtual ~Operator();
   virtual void run(list<Data_source_descriptor *> &input_data_sources,
                    list<Data_source_descriptor *> &output_data_stores,
-                   map<string, string> &operator_parameters,
+                   String_map &operator_parameters,
                    Errors &errors) = 0;
 };
 

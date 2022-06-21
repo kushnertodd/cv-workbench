@@ -7,7 +7,7 @@
 
 #include <cstdio>
 #include "errors.hpp"
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 
 class Image_header {
  public:

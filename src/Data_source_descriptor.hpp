@@ -6,7 +6,7 @@
 #define CV_WORKBENCH_SRC_DATA_SOURCE_DESCRIPTOR_HPP_
 
 #include <string>
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
 #include "image.hpp"

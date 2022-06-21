@@ -7,7 +7,7 @@
 
 #include <string>
 #include <json-c/json.h>
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 #include "errors.hpp"
 #include "image.hpp"
 #include "histogram.hpp"

@@ -5,6 +5,7 @@
 #ifndef CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_SOBEL_HPP_
 #define CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_SOBEL_HPP_
 
+#include "wb_defs.hpp"
 #include "operator.hpp"
 
 using namespace std;
@@ -14,7 +15,7 @@ class Operator_filter_edge_sobel : public Operator {
   Operator_filter_edge_sobel();
   void run(list<Data_source_descriptor *> &input_data_sources,
            list<Data_source_descriptor *> &output_data_stores,
-           map<string, string> &operator_parameters,
+           String_map &operator_parameters,
            Errors &errors);
 };
 

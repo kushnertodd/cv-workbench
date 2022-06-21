@@ -85,7 +85,7 @@ string Image_header::toString() {
   os << "rows " << rows
      << " cols " << cols
      << " components " << components
-     << " depth " << depth << " " << image_depth_enum_to_string(depth)
+     << " depth " << depth << " " << Workbench_utils::image_depth_enum_to_string(depth)
      << " row_stride " << row_stride
      << " npixels " << npixels;
   return os.str();

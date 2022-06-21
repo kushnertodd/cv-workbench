@@ -9,7 +9,7 @@
 #include <string>
 #include "errors.hpp"
 #include "image_header.hpp"
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 
 using namespace std;
 

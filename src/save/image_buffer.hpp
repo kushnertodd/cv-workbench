@@ -5,7 +5,7 @@
 #ifndef CV_WORKBENCH_SRC_IMAGE_BUFFER_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_BUFFER_HPP_
 
-#include "wb_enums.hpp"
+#include "wb_defs.hpp"
 
 class Image_buffer {
  public:

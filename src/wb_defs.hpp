@@ -5,6 +5,11 @@
 #ifndef CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 #define CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 
+#include <map>
+#include <string>
+
+using namespace std;
+
 enum Cv_data_type_enum {
   // maybe BINARY_IMAGE for morphological operations
   CONTOUR, // boundary polygon
@@ -69,5 +74,7 @@ typedef float pixel_32F;
 typedef double pixel_64F;
 // unsupported -- CV_16F pretty much doesn't exist in C++
 typedef float pixel_16F;
+
+typedef map<string, string> String_map;
 
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_

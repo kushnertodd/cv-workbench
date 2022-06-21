@@ -13,6 +13,7 @@
 #include "internet_data_source_descriptor.hpp"
 #include "operator.hpp"
 #include "operator_producer.hpp"
+#include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
@@ -33,7 +34,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     string data_type_str = json_object_get_string(json_type);
     if (debug)
       cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << endl;
-    data_type = string_to_data_type_enum(data_type_str);
+    data_type = Workbench_utils::string_to_data_type_enum(data_type_str);
   }
   json_object *json_repository =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",
@@ -89,7 +90,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
                                                  json_type_array, errors);
   json_object *json_output_data = get_json_object("Experiment_step::json_parse", json_step, "output-data",
                                                   json_type_array, errors);
-  json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "parameters",
+  json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "Fparameters",
                                                  json_type_object, errors);
   Experiment_step *experiment_step = new Experiment_step();
   if (json_id != nullptr)
@@ -165,7 +166,7 @@ void Experiment_step::run(Errors &errors) {
         cout << "Experiment_step::run output_data_store: " << output_data_store->toString() << endl;
       }
       cout << "Experiment_step::run operator_parameters: " << endl;
-      map<string, string>::iterator it;
+      String_map::iterator it;
       for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
         cout << it->first    // string (key)
              << ':'
@@ -176,7 +177,7 @@ void Experiment_step::run(Errors &errors) {
     /*
      * void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_sources,
                                        list<Data_source_descriptor *> &output_data_stores,
-                                       map<string, string> &operator_parameters,
+                                       String_map &operator_parameters,
                                        Errors &errors) {
      */
     step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
