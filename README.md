@@ -437,9 +437,66 @@ Image formats will conform to __OpenCV__ so that operators can be implemented
 through the __OpenCV__ API if desired.
 For example, image formats will be specified using __OpenCV__ pixel types as follows.
 
-![opencv-pixel-formats](opencv-pixel-types.jpeg)
+|depth|bit-width|type-specifier|minimum|maximum
+|-----|---------|--------------|-------|-------
+|CV_8U|8|unsigned|0|255
+|CV_8S|8|signed|-128|127
+|CV_16U|16|unsigned|0|65535
+|CV_16S|16|signed|-32768|32767
+|CV_32S|32|signed|-2147483648|2147483647
+|CV_32F|32|float|-FLT_MAX|FLT_MAX
+|CV_64F|64|float|-DBL_MAX|DBL_MAX
 
-Images will be stored on the filesystem in [JPEG](http://www.ijg.org/) format,
-which includes parameters of the image, to 
-permit easily viewing images. Images in other data stores will be stored in 
-binary as described above where the image parameters are specified as part of the data.
+
+Images may be stored on the filesystem in 
+[JPEG](http://www.ijg.org/) format,
+which permits easily viewing images. 
+Other images will be stored in 
+binary format, which cannot be directly viewed but can be used
+as input to any image operator.
+JPEG images are limited to unsigned 8 bit format so 
+pixel values are limited to 0 to 255.
+# Operators
+These are the supported operators, input, parameters, and results.
+
+## Transform operators
+These are operators that transform image in some way to a new image.
+
+### Transform Intensity operators
+These are operators that transform image pixels to different values.
+
+#### Transform Itensity map operators
+These are operators that perform a linear scaling on image pixels. The parameters are:
+
+|Parameter|Description|Default
+|---------|-----------|-------
+|depth|output image depth, e.g., CV_8U, CV_32F.|same as input image
+|lower_in|lower input image pixel value
+|upper_in|upper input image pixel value
+|lower_out|lower output image pixel value
+|upper_out|upper output image pixel value
+
+This shows the pixel intensity mapping. 
+
+- If the input pixel value is <= lower_in, the output pixel values is out_lower
+- If the input pixel value is >= upper_in, the output pixel values is out_upper
+- Else, the output pixel value is:  
+`lower_out + (pixel in - lower_in) * (upper_out - lower_out) / (upper_in - lower_in)`
+
+![Operator_transform_intensity-map](readme-operator-transform-map.jpeg)
+
+That is, all pixel values less than lower_in are *clipped* to lower_out, 
+all pixel values greater than upper_in are *clipped* to upper_out,
+and all others are scaled by the equation above.
+
+When the output image depth is CV_8U,
+when the input image depth is CV_32S or CV_32F 
+are copied to the
+output image, pixel values from 0 to 255 are copied properly
+but the result of copying pixel values < 0 or > 255 are undefined.
+
+If no parameter scaling is specified,
+the image pixel values are copied from input to output unchanged.
+This can be useful for reformatting an image from, e.g.,
+jpeg to binary or the reverse.
+
