@@ -13,7 +13,17 @@ using namespace std;
 
 class Operator_utils {
  public:
-  static bool get_int_parameter(string module, String_map &parameters, string parameter, int &int_value, Errors &errors);
+  static bool get_int_parameter(string module,
+                                String_map &parameters,
+                                string parameter,
+                                int &int_value,
+                                Errors &errors);
+  static bool get_real_parameter(string module,
+                                 String_map &parameters,
+                                 string parameter,
+                                 double &real_value,
+                                 Errors &errors);
+  static string get_parameter(String_map &parameters, string parameter);
   static bool has_parameter(String_map &parameters, string parameter);
   static string parameters_to_string(String_map &parameters);
 };

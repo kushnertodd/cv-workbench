@@ -377,34 +377,6 @@ Each command performing an operator must have a valid name.
   }
 }
 ```
-An example for a Sobel edge operator is this.
-The meaning of the parameters requires 
-understanding the Sobel operators.
-```
-{
-  "Sobel": {
-    "id": 4,
-    "domain": "filters",
-    "class": "edge detection",
-    "parameters": [
-      {
-        "__comment1": [
-          " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
-          "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
-        ],
-        "name": "orientation",
-        "data-type": "int",
-        "default": 0,
-        "valid-values": [
-          0,
-          90
-        ]
-      }
-    ]
-  }
-}
-
-```
 
 ## Command Parameters
 In the record of an experiment,
@@ -459,42 +431,7 @@ and allowed value range or permitted values if applicable.
   ]
 }
 ```
-An example parameters for a Sobel edge operator definition is this.
-```
-{
-  "_comment": [
-    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
-  ],
-  "id": 4,
-  "domain": "filters",
-  "class": "edge detection",
-  "instance": "Sobel",
-  "input-data": {
-    "type": "image",
-    "channels": "grayscale"
-  },
-  "output-data": {
-    "type": "image",
-    "channels": "grayscale"  },
-  "parameters": [
-    {
-      "__comment": [
-        " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
-        "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
-      ],
-      "name": "orientation",
-      "required": "true",
-      "data-type": "int",
-      "default": 0,
-      "valid-values": [
-        0,
-        90
-      ]
-    }
-  ]
-}
 
-```
 ## Image format
 Image formats will conform to __OpenCV__ so that operators can be implemented
 through the __OpenCV__ API if desired.

@@ -144,7 +144,9 @@ operator_filter_edge_sobel.o: wb_utils.hpp
 operator_producer.o: operator_filter_edge_prewitt.hpp operator.hpp
 operator_producer.o: wb_defs.hpp data_source_descriptor.hpp histogram.hpp
 operator_producer.o: hough.hpp image.hpp errors.hpp image_header.hpp
-operator_producer.o: operator_filter_edge_sobel.hpp operator_producer.hpp
+operator_producer.o: operator_filter_edge_sobel.hpp
+operator_producer.o: operator_transform_intensity_map.hpp
+operator_producer.o: operator_producer.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp
 operator_transform_intensity_map.o: data_source_descriptor.hpp histogram.hpp

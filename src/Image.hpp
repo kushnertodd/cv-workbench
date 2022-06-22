@@ -76,7 +76,7 @@ class Image {
   float get_scaled(int row, int col, float lower_in,
                    float upper_in, float lower_out,
                    float upper_out);
-  static Image *convert_to_depth(Image *image, float lower_in,
+  static Image *scale_image(Image *image, float lower_in,
                                  float upper_in, float lower_out,
                                  float upper_out, Cv_image_depth_enum depth);
   string toString();

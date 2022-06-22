@@ -7,11 +7,12 @@
 
 #include <string>
 #include <json-c/json.h>
-#include "wb_defs.hpp"
+#include "data_source_descriptor.hpp"
 #include "errors.hpp"
-#include "image.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
+#include "image.hpp"
+#include "wb_defs.hpp"
 
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
  public:

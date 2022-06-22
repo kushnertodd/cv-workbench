@@ -10,10 +10,10 @@
             "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
+            "format": "binary",
             "directory": ".",
-            "filename": "320x240gray",
-            "ext": "jpg"
+            "filename": "320x240gray_exp4_bin",
+            "ext": "bin"
           }
         ],
         "output-data": [
@@ -24,12 +24,12 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "320x240gray_same",
+            "filename": "320x240gray_exp5_jpeg",
             "ext": "jpg"
           }
         ],
         "parameters": {
-            "depth": "CV_8U"
+            "depth": "CV_8U",
         }
       }
     ]

@@ -67,9 +67,9 @@ Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_dep
 Image *Image::clone_image(Image *image, Cv_image_depth_enum depth) {
   if (debug)
     cout << "Image::clone: depth " << depth << " " << image->toString() << endl;
-  Image_header *image_header = new Image_header(image_header->rows,
-                                                image_header->cols,
-                                                image_header->components,
+  Image_header *image_header = new Image_header(image->get_rows(),
+                                                image->get_cols(),
+                                                image->get_components(),
                                                 depth);
   return new Image(image_header);
 }
@@ -454,18 +454,22 @@ float Image::scale_pixel(float pixel_in,
     return out_lower;
   else if (pixel_in >= in_upper)
     return out_upper;
-  else
-    return (pixel_in - in_lower)
+  else {
+    float pixel_out = (pixel_in - in_lower)
         * (out_upper - out_lower)
         / (in_upper - in_lower)
         + out_lower;
+    return pixel_out;
+  }
 }
 
 float Image::get_scaled(int row, int col, float lower_in,
                         float upper_in, float lower_out,
                         float upper_out) {
-  return scale_pixel(get(row, col), lower_in,
-                     upper_in, lower_out, upper_out);
+  float pixel_in = get(row, col);
+  float pixel_out = scale_pixel(pixel_in, lower_in,
+                                upper_in, lower_out, upper_out);
+  return pixel_out;
 }
 
 /***
@@ -481,9 +485,9 @@ float Image::get_scaled(int row, int col, float lower_in,
  * @param upper_out
  * @return
  */
-Image *Image::convert_to_depth(Image *image, float lower_in,
-                               float upper_in, float lower_out,
-                               float upper_out, Cv_image_depth_enum depth) {
+Image *Image::scale_image(Image *image, float lower_in,
+                          float upper_in, float lower_out,
+                          float upper_out, Cv_image_depth_enum depth) {
   Image *convert_image = clone_image(image, depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {

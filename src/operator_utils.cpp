@@ -19,7 +19,7 @@ bool Operator_utils::get_int_parameter(string module,
     errors.add(module + ": missing '" + parameter + "' parameter");
     return false;
   } else {
-    string parameter_str = parameters[parameter];
+    string parameter_str = get_parameter(parameters,parameter);
     if (!Workbench_utils::is_numeric(parameter_str)) {
       errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
       return false;
@@ -29,6 +29,37 @@ bool Operator_utils::get_int_parameter(string module,
     }
   }
   return true;
+}
+
+bool Operator_utils::get_real_parameter(string module,
+                                       String_map &parameters,
+                                       string parameter,
+                                       double &real_value,
+                                       Errors &errors) {
+  if (!has_parameter(parameters, parameter)) {
+    errors.add(module + ": missing '" + parameter + "' parameter");
+    return false;
+  } else {
+    string parameter_str = get_parameter(parameters,parameter);
+    if (!Workbench_utils::is_numeric(parameter_str)) {
+      errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
+      return false;
+    } else if (!Workbench_utils::string_to_real(parameter_str, real_value)) {
+      errors.add(module + ": invalid integer parameter: '" + parameter_str + "'");
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * parameter value in map
+ * @param parameters
+ * @param parameter
+ * @return empty string '' if parameter not present
+ */
+string Operator_utils::get_parameter(String_map &parameters, string parameter) {
+  return parameters[parameter];
 }
 
 bool Operator_utils::has_parameter(String_map &parameters, string parameter) {

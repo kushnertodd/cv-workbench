@@ -90,7 +90,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
                                                  json_type_array, errors);
   json_object *json_output_data = get_json_object("Experiment_step::json_parse", json_step, "output-data",
                                                   json_type_array, errors);
-  json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "Fparameters",
+  json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "parameters",
                                                  json_type_object, errors);
   Experiment_step *experiment_step = new Experiment_step();
   if (json_id != nullptr)
