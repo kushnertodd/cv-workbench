@@ -32,9 +32,9 @@ Date:   Sun Jun 19 12:19:38 2022 -0600
 
 #### v0.1.2
 ```
-commit 6467c7185f6581c1da989ae10b7491e976f489d5 
+commit b9b4a7a783dcc8c504dac0fc659c3680511900dd 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
-Date:   Wed Jun 22 12:28:06 2022 -0600
+Date:   Wed Jun 22 13:09:39 2022 -0600
 ```
 - operator transform-intensity-map works
