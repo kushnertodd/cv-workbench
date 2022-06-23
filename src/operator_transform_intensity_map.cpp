@@ -68,8 +68,8 @@ void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input
   if (Operator_utils::has_parameter(operator_parameters, "depth")) {
     saw_depth = true;
     string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
-    Cv_image_depth_enum depth_enum = Workbench_utils::string_to_image_depth_enum(depth_str);
-    if (depth_enum == UNDEFINED_IMAGE_DEPTH) {
+    depth = Workbench_utils::string_to_image_depth_enum(depth_str);
+    if (depth == UNDEFINED_IMAGE_DEPTH) {
       errors.add("Operator_transform_intensity_map::run: undefined depth value");
     }
   }
@@ -121,7 +121,7 @@ void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input
   if (errors.error_ct == 0) {
     int rows = input->get_rows();
     int cols = input->get_cols();
-    if (saw_depth) {
+    if (!saw_depth) {
       depth = input->get_depth();
     }
     Image *output = Image::clone_image(input, depth);

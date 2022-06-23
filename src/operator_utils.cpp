@@ -19,7 +19,7 @@ bool Operator_utils::get_int_parameter(string module,
     errors.add(module + ": missing '" + parameter + "' parameter");
     return false;
   } else {
-    string parameter_str = get_parameter(parameters,parameter);
+    string parameter_str = get_parameter(parameters, parameter);
     if (!Workbench_utils::is_numeric(parameter_str)) {
       errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
       return false;
@@ -32,15 +32,15 @@ bool Operator_utils::get_int_parameter(string module,
 }
 
 bool Operator_utils::get_real_parameter(string module,
-                                       String_map &parameters,
-                                       string parameter,
-                                       double &real_value,
-                                       Errors &errors) {
+                                        String_map &parameters,
+                                        string parameter,
+                                        double &real_value,
+                                        Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module + ": missing '" + parameter + "' parameter");
     return false;
   } else {
-    string parameter_str = get_parameter(parameters,parameter);
+    string parameter_str = get_parameter(parameters, parameter);
     if (!Workbench_utils::is_numeric(parameter_str)) {
       errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
       return false;

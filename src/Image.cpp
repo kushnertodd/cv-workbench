@@ -114,19 +114,15 @@ pixel_32F Image::get(int row, int col) {
   switch (image_header->depth) {
     case CV_8U:
       return buf_8U[row_col_to_index(row, col)];
-      break;
 
     case CV_32S:
       return buf_32S[row_col_to_index(row, col)];
-      break;
 
     case CV_32F:
       return buf_32F[row_col_to_index(row, col)];
-      break;
 
     default:
       return 0.0;
-      break;
   }
 }
 
@@ -280,7 +276,7 @@ Image *Image::read_binary(string path, Errors &errors) {
 
     case CV_32S:
       newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != sizeof(pixel_32S) * image_header->npixels) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 32S image data in '" + path + "'");
         return nullptr;
       }
@@ -288,7 +284,7 @@ Image *Image::read_binary(string path, Errors &errors) {
 
     case CV_32F:
       newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != sizeof(pixel_32F) * image_header->npixels) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 32F image data in '" + path + "'");
         return nullptr;
       }
