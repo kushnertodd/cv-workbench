@@ -24,7 +24,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "320x240gray_same",
+            "filename": "320x240gray_same_exp2",
             "ext": "jpg"
           }
         ],

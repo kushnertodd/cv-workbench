@@ -24,7 +24,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "320x240gray_sobel",
+            "filename": "320x240gray_sobel_exp",
             "ext": "bin"
           }
         ],
