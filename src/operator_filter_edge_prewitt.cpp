@@ -49,15 +49,15 @@ void Operator_filter_edge_prewitt::run(list<Data_source_descriptor *> &input_dat
       errors.add("Operator_filter_edge_prewitt::run: missing 'orientation' parameter");
     } else {
       string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
-      if (orientation_str != "0" && orientation_str != "1") {
-        errors.add("Operator_filter_edge_prewitt: invalid 'orientation' parameter not 0 or 1");
+      if (orientation_str != "0" && orientation_str != "90") {
+        errors.add("Operator_filter_edge_prewitt: invalid 'orientation' parameter not 0 or 90");
       } else {
         Kernel *prewitt_kernel = nullptr;
         if (orientation_str == "0") {
           //      0 = [-1, 0, 1], [-1, 0, 1], [-1, 0, 1]
           int coeffs_32S[] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
           prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "1") {
+        } else if (orientation_str == "90") {
           //     90 = [1, 1, 1],  [0, 0, 0],  [-1, -1, -1]
           int coeffs_32S[] = {1, 1, 1, 0, 0, 0, -1, -1, -1};
           prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
