@@ -6,10 +6,10 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.3
 ```
-commit e690983afb190d2d6d7ce2c1c418eb917214defa 
+ccommit 45c09b4f49c2bd44d5497e62de3c53c4a3c0fb4a 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
-Date:   Thu Jun 23 21:24:45 2022 -0600
+Date:   Thu Jun 23 21:33:14 2022 -0600
 ```
 - operator filter-edge-sobel, operator transform-intensity-map, Kernel working
 
