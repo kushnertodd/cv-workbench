@@ -1,0 +1,73 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-prewitt",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "320x240gray",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": ".",
+            "filename": "320x240gray_prewitt",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": ".",
+            "filename": "320x240gray_prewitt",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "320x240gray_prewitt",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-300",
+            "upper_in": "146",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}

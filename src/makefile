@@ -36,7 +36,9 @@ SRCOBJS :=  \
   internet_data_source_descriptor.o \
   kernel.o \
   operator.o \
+  operator_filter_edge_kirsch.o \
   operator_filter_edge_prewitt.o \
+  operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
   operator_producer.o \
   operator_transform_intensity_map.o \
