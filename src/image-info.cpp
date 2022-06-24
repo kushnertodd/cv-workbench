@@ -18,8 +18,8 @@ enum Cv_image_depth_enum {
 };
 string depth_to_string(Cv_image_depth_enum depth) {
   if (depth == CV_8U) return "CV_8U";
-  else if (depth == CV_32S) return "CV_8U";
-  else if (depth == CV_32F) return "CV_8U";
+  else if (depth == CV_32S) return "CV_32S";
+  else if (depth == CV_32F) return "CV_32F";
   else return "invalid depth";
 }
 

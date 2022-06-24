@@ -51,6 +51,7 @@ PROGRAMS = \
   djpeginfo \
   image-create \
   image-dump \
+  image-hist \
   image-info \
   image-stats \
   image-test \
@@ -73,6 +74,9 @@ image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-dump: image-dump.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-hist: image-hist.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-info: image-info.o $(SRCOBJS)
