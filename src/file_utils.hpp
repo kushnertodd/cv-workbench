@@ -5,10 +5,15 @@
 #ifndef CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_
 #define CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_
 
-class file_utils {
+#include <vector>
+
+using namespace std;
+
+class File_utils {
  public:
   static long file_size(std::ifstream &in);
   static std::string read_file(std::string filename);
+  static vector<string> string_split(const string &str);
 };
 
 #endif //CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_

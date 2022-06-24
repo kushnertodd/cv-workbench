@@ -40,20 +40,42 @@ void read_int(FILE *fp, string name, int &var) {
   }
 }
 
+void dump_8U(pixel_8U *buf_8U, int rows, int cols) {
+  int pos = 0;
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      printf("%d\t", buf_8U[pos++]);
+    }
+    printf("\n");
+  }
+}
+
+void dump_32S(pixel_32S *buf_32S, int rows, int cols) {
+  int pos = 0;
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      printf("%d\t", buf_32S[pos++]);
+    }
+    printf("\n");
+  }
+}
+
+void dump_32F(pixel_32F *buf_32F, int rows, int cols) {
+  int pos = 0;
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      printf("%8.3\t", buf_32F[pos++]);
+    }
+    printf("\n");
+  }
+}
+
 bool debug = true;
 int main(int argc, char **argv) {
 
   if (argc < 2)
     error_exit("usage: image-dump filename");
   string filename = argv[1];
-
-  /*
-   *            rows            cols            components      depth
-   * 0000000    0002    0000    0002    0000    0001    0000    0000    0000
-   *         stx nul nul nul stx nul nul nul soh nul nul nul nul nul nul nul
-   * 0000020    6574    7473
-   *           t   e   s   t
-   */
 
   FILE *fp = fopen(filename.c_str(), "r");
   if (fp == NULL) {
@@ -82,19 +104,10 @@ int main(int argc, char **argv) {
     case CV_8U:
       buf_8U = new pixel_8U[npixels];
       newLen = fread(buf_8U, sizeof(pixel_8U), npixels, fp);
-      printf("ferror(fp) %d newLen %d sizeof(pixel_8U) %d npixels %d\n", ferror(fp), newLen, sizeof(pixel_8U), npixels);
-      if (ferror(fp) != 0 || newLen != sizeof(pixel_8U) * npixels) {
+      if (ferror(fp) != 0 || newLen != npixels) {
         error_exit("Image::read_binary: cannot read 8U image data in '" + filename + "'");
       }
-      for (int i = 0; i < newLen; i++)
-        printf("0x%02x ", buf_8U[i]);
-      printf("\n");
-      for (int i = 0; i < newLen; i++)
-        printf("%4d ", buf_8U[i]);
-      printf("\n");
-      for (int i = 0; i < newLen; i++)
-        printf(" '%-1c' ", buf_8U[i]);
-      printf("\n");
+      dump_8U(buf_8U, rows, cols);
       break;
 
     case CV_32S:
@@ -108,9 +121,7 @@ int main(int argc, char **argv) {
       if (ferror(fp) != 0 || newLen != npixels) {
         error_exit("Image::read_binary: cannot read 32S image data in '" + filename + "'");
       }
-      for (int i = 0; i < newLen; i++)
-        printf("%8d ", buf_32S[i]);
-      printf("\n");
+      dump_32S(buf_32S, rows, cols);
       break;
 
     case CV_32F:
@@ -124,16 +135,13 @@ int main(int argc, char **argv) {
       if (ferror(fp) != 0 || newLen != npixels) {
         error_exit("Image::read_binary: cannot read 32F image data in '" + filename + "'");
       }
-      for (int i = 0; i < newLen; i++)
-        printf("%8.2f ", buf_32F[i]);
-      printf("\n");
+      dump_32F(buf_32F, rows, cols);
       break;
 
     default:
       break;
   }
   fclose(fp);
-
 }
 
 

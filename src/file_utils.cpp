@@ -1,16 +1,20 @@
 #include <fstream>
 #include <string>
 #include <cerrno>
+#include <vector>
+#include <sstream>
 #include "file_utils.hpp"
+
+using namespace std;
 
 /**
  * returns size of file in bytes
  * @param fp file pointer
  * @return long byte count
  */
-long file_utils::file_size(std::ifstream &in) {
+long File_utils::file_size(ifstream &in) {
   // Get the number of bytes
-  in.seekg(0, std::ios::end);
+  in.seekg(0, ios::end);
   return in.tellg();
 }
 
@@ -21,15 +25,23 @@ long file_utils::file_size(std::ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-std::string file_utils::read_file(std::string filename) {
-  std::ifstream in(filename, std::ios::in | std::ios::binary);
+string File_utils::read_file(string filename) {
+  ifstream in(filename, ios::in | ios::binary);
   if (in) {
-    std::string contents;
+    string contents;
     contents.resize(file_size(in));
-    in.seekg(0, std::ios::beg);
+    in.seekg(0, ios::beg);
     in.read(&contents[0], contents.size());
     in.close();
     return (contents);
   }
   throw (errno);
+}
+
+vector<string> File_utils::string_split(const string& str) {
+  vector<string> result;
+  istringstream iss(str);
+  for (string s; iss >> s; )
+    result.push_back(s);
+  return result;
 }

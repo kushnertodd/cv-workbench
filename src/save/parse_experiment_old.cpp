@@ -310,7 +310,7 @@ int main(int argc, char **argv) {
     exit(0);
   }
   char *filename = argv[1];
-  string string_val = file_utils::read_file(filename);
+  string string_val = File_utils::read_file(filename);
   //printf("JSON string: %s\n", string_val.c_str());
   json_object *jobj = json_tokener_parse(string_val.c_str());
   if (jobj == NULL)
