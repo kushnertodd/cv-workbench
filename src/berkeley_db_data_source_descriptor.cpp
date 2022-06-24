@@ -44,9 +44,9 @@ Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_par
   return berkeley_db_data_source_descriptor;
 }
 
-string Berkeley_db_data_source_descriptor::toString() {
+string Berkeley_db_data_source_descriptor::to_string() {
   ostringstream os;
-  os << Data_source_descriptor::toString()
+  os << Data_source_descriptor::to_string()
      << " ref id " << ref_id;
   return os.str();
 }

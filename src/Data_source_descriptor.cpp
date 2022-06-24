@@ -13,7 +13,7 @@ Data_source_descriptor::Data_source_descriptor(int m_id, Cv_repository_type_enum
     repository_type(m_repository_type),
     data_type(m_cv_data_type_enum) {}
 
-string Data_source_descriptor::toString() {
+string Data_source_descriptor::to_string() {
   ostringstream os;
   os << "id " << id
      << " repository '" << Workbench_utils::repository_type_enum_to_string(repository_type)

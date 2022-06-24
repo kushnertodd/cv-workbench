@@ -51,9 +51,9 @@ Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::
   return experiment_step_data_source_descriptor;
 }
 
-string Experiment_step_data_source_descriptor::toString() {
+string Experiment_step_data_source_descriptor::to_string() {
   ostringstream os;
-  os << Data_source_descriptor::toString()
+  os << Data_source_descriptor::to_string()
      << " step id " << step_id
      << " ref id " << ref_id;
   return os.str();

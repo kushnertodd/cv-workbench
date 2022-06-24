@@ -160,10 +160,10 @@ void Experiment_step::run(Errors &errors) {
   } else {
     if (debug) {
       for (Data_source_descriptor *input_data_source: input_data_sources) {
-        cout << "Experiment_step::run input_data_source: " << input_data_source->toString() << endl;
+        cout << "Experiment_step::run input_data_source: " << input_data_source->to_string() << endl;
       }
       for (Data_source_descriptor *output_data_store: output_data_stores) {
-        cout << "Experiment_step::run output_data_store: " << output_data_store->toString() << endl;
+        cout << "Experiment_step::run output_data_store: " << output_data_store->to_string() << endl;
       }
       cout << "Experiment_step::run operator_parameters: " << endl;
       String_map::iterator it;
@@ -174,28 +174,23 @@ void Experiment_step::run(Errors &errors) {
              << std::endl;
       }
     }
-    /*
-     * void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_sources,
-                                       list<Data_source_descriptor *> &output_data_stores,
-                                       String_map &operator_parameters,
-                                       Errors &errors) {
-     */
+
     step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
   }
 }
 
-string Experiment_step::toString() {
+string Experiment_step::to_string() {
   ostringstream os;
   os << "Experiment_step::run: id " << id << " operator " << operator_name << endl;
   os << "Experiment_step::run: input data sources" << endl;
   for (Data_source_descriptor *descriptor: input_data_sources) {
     if (descriptor != nullptr)
-      os << "   " << descriptor->toString() << endl;
+      os << "   " << descriptor->to_string() << endl;
   }
   cout << "Experiment_step::run: output data stores" << endl;
   for (Data_source_descriptor *descriptor: output_data_stores) {
     if (descriptor != nullptr)
-      os << "   " << descriptor->toString() << endl;
+      os << "   " << descriptor->to_string() << endl;
   }
   return os.str();
 }

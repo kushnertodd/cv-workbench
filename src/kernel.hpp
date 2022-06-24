@@ -8,6 +8,13 @@
 #include "image.hpp"
 #include "wb_defs.hpp"
 
+/**
+ * Kernel class
+ * Supports convolution of rectangular image filters
+ * Some convolution kernels are separable, e.g., Sobel (http://www.k-zone.nl/Kroon_DerivativePaper.pdf),
+ * Gaussian (http://www-edlab.cs.umass.edu/~smaji/cmpsci370/slides/hh/lec02_hh_advanced_edges.pdf),
+ * but few enough that specially implementing them is not necessarily useful.
+ */
 class Kernel {
  public:
   int kernel_rows;
@@ -39,7 +46,7 @@ class Kernel {
 
   Image *convolve(Image *src);
 
-  string toString();
+  string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

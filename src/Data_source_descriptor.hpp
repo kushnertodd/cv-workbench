@@ -29,7 +29,7 @@ class Data_source_descriptor {
   virtual void write_image(Image *image, Errors &errors) = 0;
   virtual void write_histogram(Histogram *histogram, Errors &errors) = 0;
   virtual void write_hough(Hough *hough, Errors &errors) = 0;
-  virtual string toString();
+  virtual string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_DATA_SOURCE_DESCRIPTOR_HPP_

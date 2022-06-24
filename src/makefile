@@ -41,6 +41,7 @@ SRCOBJS :=  \
   operator_producer.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
+  variance_stats.o \
   wb_json_utils.o \
   wb_utils.o 
 
@@ -48,6 +49,8 @@ PROGRAMS = \
   djpeginfo \
   image-create \
   image-dump \
+  image-info \
+  image-stats \
   image-test \
   parse_experiment_json
   # json_parser_example \
@@ -68,6 +71,12 @@ image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-dump: image-dump.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-info: image-info.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-stats: image-stats.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-test: image-test.o $(SRCOBJS)

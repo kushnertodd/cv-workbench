@@ -17,7 +17,7 @@ void Errors::merge(Errors &errors) {
   error_list.insert(error_list.end(), errors.error_list.begin(), errors.error_list.end());
 }
 
-string Errors::toString() {
+string Errors::to_string() {
   ostringstream os;
   for (string error: error_list) {
     os << error << endl;

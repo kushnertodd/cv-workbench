@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     Errors errors;
     Experiment *experiment = Experiment::json_parse(jobj, errors);
     if (errors.error_ct > 0) {
-      cout << "parse_experiment_json: there were errors." << endl << errors.toString();
+      cout << "parse_experiment_json: there were errors." << endl << errors.to_string();
     } else {
       experiment->run(errors);
     }

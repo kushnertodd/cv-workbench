@@ -52,7 +52,7 @@ Image::Image(Image_header *m_image_header) :
     image_header(new Image_header(m_image_header)),
     next_pixel(0) {
   if (debug)
-    cout << "Image::Image: " << toString() << endl;
+    cout << "Image::Image: " << to_string() << endl;
   init();
 }
 
@@ -60,13 +60,13 @@ Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_dep
     next_pixel(0) {
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
-    cout << "Image::Image: " << toString() << endl;
+    cout << "Image::Image: " << to_string() << endl;
   init();
 }
 
 Image *Image::clone_image(Image *image, Cv_image_depth_enum depth) {
   if (debug)
-    cout << "Image::clone: depth " << depth << " " << image->toString() << endl;
+    cout << "Image::clone: depth " << depth << " " << image->to_string() << endl;
   Image_header *image_header = new Image_header(image->get_rows(),
                                                 image->get_cols(),
                                                 image->get_components(),
@@ -198,7 +198,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
 
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (debug)
-    cout << "Image::add_32S src " << src << " count " << count << " " << toString() << endl;
+    cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << endl;
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32S: adding "
                    + Workbench_utils::int_to_string(count) + " pixels at position " +
@@ -367,7 +367,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
 
 void Image::write_binary(string path, Errors &errors) {
   if (debug)
-    cout << "Image::write_binary path '" << path << "' " << toString() << endl;
+    cout << "Image::write_binary path '" << path << "' " << to_string() << endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write_binary: invalid file '" + path + "'");
@@ -506,9 +506,9 @@ Image *Image::scale_image(Image *image, float lower_in,
   return convert_image;
 }
 
-string Image::toString() {
+string Image::to_string() {
   ostringstream os;
-  os << image_header->toString()
+  os << image_header->to_string()
      << " next_pixel " << next_pixel;
   return os.str();
 }

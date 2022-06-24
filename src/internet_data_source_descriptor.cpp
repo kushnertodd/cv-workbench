@@ -68,9 +68,9 @@ Internet_data_source_descriptor *Internet_data_source_descriptor::json_parse(jso
   return internet_data_source_descriptor;
 }
 
-string Internet_data_source_descriptor::toString() {
+string Internet_data_source_descriptor::to_string() {
   ostringstream os;
-  os << Data_source_descriptor::toString()
+  os << Data_source_descriptor::to_string()
      << " url " << url
      << " depth " << depth
      << " rows " << rows

@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
   }
 
   if (errors.error_ct > 0) {
-    cout << "image_test.test_write(): there were errors." << endl << errors.toString();
+    cout << "image_test.test_write(): there were errors." << endl << errors.to_string();
   }
 }
 

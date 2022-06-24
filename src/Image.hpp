@@ -22,6 +22,11 @@ class Image_exception {
   virtual const char *what() const noexcept;
 };
 
+/**
+ * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
+ * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
+ * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+ */
 class Image {
  public:
   Image_header *image_header;
@@ -79,7 +84,7 @@ class Image {
   static Image *scale_image(Image *image, float lower_in,
                                  float upper_in, float lower_out,
                                  float upper_out, Cv_image_depth_enum depth);
-  string toString();
+  string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HPP_

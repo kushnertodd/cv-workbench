@@ -39,7 +39,7 @@ class Errors {
     error_ct += errors.error_ct;
     error_list.insert(a.end(), errors.error_list.begin(), errors.error_list.end());
   }
-  string toString() {
+  string to_string() {
     ostringstream os;
     for (string error : error_list) {
       os << error << endl;

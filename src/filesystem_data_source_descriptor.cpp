@@ -113,9 +113,9 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   return filesystem_data_source_descriptor;
 }
 
-string Filesystem_data_source_descriptor::toString() {
+string Filesystem_data_source_descriptor::to_string() {
   ostringstream os;
-  os << Data_source_descriptor::toString()
+  os << Data_source_descriptor::to_string()
      << " file format '" << Workbench_utils::file_format_to_string(file_format)
      << "' directory '" << directory
      << "' filename '" << filename

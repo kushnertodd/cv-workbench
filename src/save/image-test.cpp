@@ -13,7 +13,7 @@ void test_write() {
   Errors errors;
   image->write_binary("test-image.bin", errors);
   if (errors.error_ct > 0) {
-    cout << "image_test.test_write(): there were errors." << endl << errors.toString();
+    cout << "image_test.test_write(): there were errors." << endl << errors.to_string();
   }
   system("od -xa test-image.bin");
 }
@@ -23,7 +23,7 @@ void test_read() {
   string binary_image_file = "test-image.bin";
   Image *binary_image = Image::read_binary(binary_image_file, errors);
   if (errors.error_ct > 0) {
-    cout << "image_test.read_binary('" << binary_image_file << "'): there were errors." << endl << errors.toString();
+    cout << "image_test.read_binary('" << binary_image_file << "'): there were errors." << endl << errors.to_string();
   } else {
     if (debug) {
       cout
@@ -41,7 +41,7 @@ void test_read() {
   string jpeg_image_file = "320x240gray.jpg";
   Image *jpeg_image = Image::read_jpeg(jpeg_image_file, errors);
   if (errors.error_ct > 0) {
-    cout << "image_test.read_jpeg('" << jpeg_image_file << "'): there were errors." << endl << errors.toString();
+    cout << "image_test.read_jpeg('" << jpeg_image_file << "'): there were errors." << endl << errors.to_string();
   } else {
     if (debug) {
       cout
@@ -60,7 +60,7 @@ void test_read() {
   string jpeg_image_file_out = "320x240gray_out.jpg";
   jpeg_image->write_jpeg(jpeg_image_file_out, errors);
   if (errors.error_ct > 0) {
-    cout << "image_test.write_jpeg('" << jpeg_image_file_out << "'): there were errors." << endl << errors.toString();
+    cout << "image_test.write_jpeg('" << jpeg_image_file_out << "'): there were errors." << endl << errors.to_string();
   }
 }
 

@@ -16,7 +16,7 @@ class Errors {
   list<string> error_list;
   void add(string error);
   void merge(Errors &errors) ;
-  string toString();
+  string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_ERRORS_HPP_

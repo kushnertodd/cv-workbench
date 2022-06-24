@@ -26,7 +26,7 @@ class Experiment_step {
   Experiment_step();
   Experiment_step(int m_id, string m_operator_name);
   void run(Errors &errors);
-  string toString();
+  string to_string();
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json

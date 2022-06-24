@@ -17,7 +17,7 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components, Cv_image_de
     row_stride(cols * components),
     npixels(rows * row_stride) {
   if (debug)
-    cout << "Image_header::Image_header: " << toString() << endl;
+    cout << "Image_header::Image_header: " << to_string() << endl;
 }
 
 Image_header::Image_header(Image_header *image_header) :
@@ -62,7 +62,7 @@ Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
 
 void Image_header::write_header(FILE *fp, string path, Errors &errors) {
   if (debug)
-    cout << "Image_header::write_header  path '" << path << "' " << toString() << endl;
+    cout << "Image_header::write_header  path '" << path << "' " << to_string() << endl;
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image_header::write_header: cannot write image rows to '" + path + "'");
@@ -80,7 +80,7 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
     errors.add("Image_header::write_header: cannot write image depth to '" + path + "'");
   }
 }
-string Image_header::toString() {
+string Image_header::to_string() {
   ostringstream os;
   os << "rows " << rows
      << " cols " << cols

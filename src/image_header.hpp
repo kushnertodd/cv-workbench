@@ -22,7 +22,7 @@ class Image_header {
   Image_header(Image_header *image_header);
   static Image_header *read_header(FILE *fp, string path, Errors &errors);
   void write_header(FILE *fp, string path, Errors &errors);
-  string toString();
+  string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

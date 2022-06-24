@@ -84,7 +84,7 @@ class Request_parameters {
     }
   }
 
-  std::string toString() {
+  std::string to_string() {
     std::ostringstream os;
     std::string indent = "      ";
     os << "    {" << std::endl;
@@ -177,7 +177,7 @@ class Operator_request {
       }
     }
   }
-  std::string toString() {
+  std::string to_string() {
     std::ostringstream os;
     std::string indent = "  ";
     os << "{" << std::endl;
@@ -189,7 +189,7 @@ class Operator_request {
 
     for (std::list<Request_parameters *>::iterator it = parameters_list.begin(); it != parameters_list.end(); it++) {
       Request_parameters *parameters = *it;
-      os << parameters->toString();
+      os << parameters->to_string();
     }
 
     os << "  ]" << std::endl << "}" << std::endl;
@@ -211,7 +211,7 @@ int main(int argc, char **argv) {
   }
   Operator_request *request = new Operator_request();
   request->parse_request(root);
-  std::cout << std::endl << std::endl << "request:" << std::endl << std::endl << request->toString() << std::endl;
+  std::cout << std::endl << std::endl << "request:" << std::endl << std::endl << request->to_string() << std::endl;
   json_object_put(root);
   return 0;
 }

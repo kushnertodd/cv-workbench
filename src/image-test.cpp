@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   image_32F->write_binary("image-test-32F.bin", errors);
 
   if (errors.error_ct > 0) {
-    cout << "image_test.test_write(): there were errors." << endl << errors.toString();
+    cout << "image_test.test_write(): there were errors." << endl << errors.to_string();
   }
   printf("od -xa image-test-8U.bin\n");
   system("od -xa image-test-8U.bin");

@@ -192,7 +192,7 @@ Image *Kernel::convolve(Image *src) {
   return out;
 }
 
-string Kernel::toString() {
+string Kernel::to_string() {
   ostringstream os;
   os << "kernel_rows " << kernel_rows
      << " kernel_cols " << kernel_cols

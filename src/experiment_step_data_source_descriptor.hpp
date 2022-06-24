@@ -30,7 +30,7 @@ class Experiment_step_data_source_descriptor : public Data_source_descriptor {
   static Experiment_step_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                             int id,
                                                             Cv_data_type_enum data_type, Errors &errors);
-  string toString();
+  string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_STEP_DATA_SOURCE_DESCRIPTOR_HPP_
