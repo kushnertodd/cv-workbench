@@ -4,6 +4,16 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 - directory  
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.4
+```
+commit bd928d0da6ea1daa5b1a65ac5b649e96c578d385 
+(HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Jun 24 13:34:36 2022 -0600
+```
+- added filter-edge-kirsch, filter-edge-prewitt, and filter-edge-roberts operators
+- add variance_stats.cpp, image-stats.cpp, and image-info.cpp
+
 #### v0.1.3
 ```
 ccommit 45c09b4f49c2bd44d5497e62de3c53c4a3c0fb4a 
