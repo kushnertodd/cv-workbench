@@ -4,9 +4,12 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
 #include <sstream>
 #include "wb_utils.hpp"
 #include "kernel.hpp"
+
+extern bool debug;
 
 Kernel::~Kernel() {
   if (buf_32S = nullptr) {
@@ -129,26 +132,61 @@ Image *Kernel::convolve(Image *src) {
   int col_lower = 0;
   int col_upper = cols - kernel_cols;
   //printf("row_lower %d, row_upper %d, col_lower %d, col_upper %d\n", row_lower, row_upper, col_lower, col_upper);
+  if (debug)
+    cout << "rows_half " << rows_half
+         << " cols_half " << cols_half
+         << "row_lower " << row_lower
+         << ", row_upper " << row_upper
+         << ", col_lower " << col_lower
+         << ", col_upper " << col_upper << endl;
+  int kernel_row_lower = 0;
+  int kernel_row_upper = kernel_rows - 1;
+  int kernel_col_lower = 0;
+  int kernel_col_upper = kernel_cols - 1;
+  if (debug)
+    cout << " kernel_row_lower " << kernel_row_lower
+         << " kernel_row_upper " << kernel_row_upper
+         << " kernel_col_lower " << kernel_col_lower
+         << " kernel_col_upper " << kernel_col_upper << endl;
   for (int row = row_lower; row <= row_upper; row++) {
     int row_center = row + rows_half - 1;
     //printf("row %d row_center %d\n", row, row_center);
+    if (debug)
+      cout << "row " << row
+           << " row_center " << row_center << endl;
     for (int col = col_lower; col <= col_upper; col++) {
       int col_center = col + cols_half - 1;
       //printf("  col %d, col_center %d\n", col, col_center);
-      int kernel_row_lower = row;
-      int kernel_row_upper = row + kernel_rows - 1;
+//      int kernel_row_lower = row;
+//      int kernel_row_upper = row + kernel_rows - 1;
+      if (debug)
+        cout << "col " << col
+             << " col_center " << col_center
+             //             << " kernel_row_lower " << kernel_row_lower
+             //             << " kernel_row_upper " << kernel_row_upper
+             << endl;
       float sum = 0.0;
       for (int i = kernel_row_lower; i <= kernel_row_upper; i++) {
-        int kernel_col_lower = col;
-        int kernel_col_upper = col + kernel_cols - 1;
+//        int kernel_col_lower = col;
+//        int kernel_col_upper = col + kernel_cols - 1;
         //printf("     ");
         for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
-          //printf("(%d,%d) ", i, j);
-          sum += get(i, j) * src->get(row + i, col + j);
+          float kernel_val = get(i, j);
+          float image_val = src->get(row + i, col + j);
+          sum += kernel_val * image_val;
+          //printf("sum += kernel[%d,%d] %7.2f * image[%d,%d] %7.2f = %7.2f\n", i, j, kernel_val, row+i, col+j, image_val, sum);
+          if (debug)
+            cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
+                 << " * image[" << row + i << "," << col + j
+                 << "] " << image_val << " = " << sum << endl;
         }
-        out->set(row_center, col_center, sum);
-        //printf("\n");
+        if (debug)
+          cout << endl;
       }
+      //printf("buf[%d,%d] = %7.2f\n", row_center, col_center, sum);
+      if (debug)
+        cout << "buf[" << row_center << "," << col_center << "] = " << sum << endl;
+      out->set(row_center, col_center, sum);
     }
   }
   return out;

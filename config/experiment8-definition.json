@@ -3,7 +3,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "transform-intensity-map",
+        "operator": "filter-edge-sobel",
         "input-data": [
           {
             "id": 1,
@@ -12,7 +12,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "320x240gray_sobel_exp",
+            "filename": "data_8U",
             "ext": "bin"
           }
         ],
@@ -22,18 +22,15 @@
             "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
+            "format": "binary",
             "directory": ".",
-            "filename": "320x240gray_sobel_exp",
-            "ext": "jpg"
+            "filename": "data_8U_sobel",
+            "ext": "bin"
           }
         ],
         "parameters": {
-            "depth": "CV_8U",
-            "lower_in": "-1024",
-            "upper_in": "1023",
-            "lower_out": "0",
-            "upper_out": "255"
+          "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "orientation": "0"
         }
       }
     ]

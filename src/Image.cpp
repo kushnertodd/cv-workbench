@@ -5,6 +5,7 @@
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
+#include <unistd.h>
 #include <iostream>
 #include <sstream>
 #include "jpeglib.h"
@@ -253,9 +254,19 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
 }
 
 Image *Image::read_binary(string path, Errors &errors) {
+  char cwd[1000];
+  char* res = getcwd(cwd, sizeof(cwd));
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Image::read_binary: invalid file '" + path + "'");
+    errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno))+"'");
+    if ( errno != 0 )
+    {
+      cout << "opening file " << path << endl;
+      perror(path.c_str());
+      //exit(1);
+    } else {
+      cout << "errno seems to be okay " << endl;
+    }
     return nullptr;
   }
 
@@ -268,7 +279,7 @@ Image *Image::read_binary(string path, Errors &errors) {
   switch (image_header->depth) {
     case CV_8U:
       newLen = fread(image->buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != sizeof(pixel_8U) * image_header->npixels) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 8U image data in '" + path + "'");
         return nullptr;
       }
@@ -368,19 +379,19 @@ void Image::write_binary(string path, Errors &errors) {
   switch (image_header->depth) {
     case CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
-      if (ferror(fp) != 0) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 8U image data to '" + path + "'");
       }
       break;
     case CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
-      if (ferror(fp) != 0) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 32S image data to '" + path + "'");
       }
       break;
     case CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
-      if (ferror(fp) != 0) {
+      if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 32F image data to '" + path + "'");
       }
       break;

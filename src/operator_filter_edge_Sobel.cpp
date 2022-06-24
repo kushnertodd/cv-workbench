@@ -44,7 +44,7 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
       errors.add("Operator_filter_edge_sobel::run: missing 'orientation' parameter");
     } else {
-      string orientation_str = Operator_utils::get_parameter(operator_parameters,"orientation");
+      string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "0" && orientation_str != "1") {
         errors.add("Operator_filter_edge_sobel: invalid 'orientation' parameter not 0 or 1");
       } else {
@@ -52,17 +52,19 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
         if (orientation_str == "0") {
           //      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
           int coeffs_32S[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
-          sobel_kernel=          Kernel::create_32S(3, 3, coeffs_32S);
+          sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
         } else if (orientation_str == "1") {
           //     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
           float coeffs_32F[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
-          sobel_kernel=              Kernel::create_32F(3, 3, coeffs_32F);
+          sobel_kernel = Kernel::create_32F(3, 3, coeffs_32F);
         }
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
         Image *input = input_data_source->read_image(errors);
-        Image *output = sobel_kernel->convolve(input);
-        output_data_store->write_image(output, errors);
+        if (errors.error_ct == 0) {
+          Image *output = sobel_kernel->convolve(input);
+          output_data_store->write_image(output, errors);
+        }
       }
     }
   }

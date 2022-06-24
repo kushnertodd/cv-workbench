@@ -15,7 +15,8 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "image.hpp"
 #include "experiment.hpp"
 
-bool debug = true;
+//bool debug = true;
+bool debug = false;
 
 int main(int argc, char **argv) {
   if (argc < 2) {
