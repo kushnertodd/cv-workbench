@@ -4,6 +4,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 - directory  
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.3
+```
+commit e690983afb190d2d6d7ce2c1c418eb917214defa 
+(HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Thu Jun 23 21:24:45 2022 -0600
+```
+- operator filter-edge-sobel, operator transform-intensity-map, Kernel working
+
 #### v0.1.2
 ```
 commit b9b4a7a783dcc8c504dac0fc659c3680511900dd 
