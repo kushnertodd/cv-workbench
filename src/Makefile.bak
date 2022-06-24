@@ -46,6 +46,7 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   djpeginfo \
+  image-create \
   image-dump \
   image-test \
   parse_experiment_json
@@ -62,14 +63,24 @@ all: $(PROGRAMS)
 
 djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
+
+image-create: image-create.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
 image-dump: image-dump.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
 image-test: image-test.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
 #json_parser_example: json_parser_example.o
 #	$(CC) $< -o $@ file_utils_C.o $(CCFLAGS) $(LDFLAGS_JSON)
+
 parse_experiment_json: parse_experiment_json.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+tokens: tokens.o file_utils.o
+	$(CXX) tokens.cpp -o tokens file_utils.o
 
 objs:
 	@echo $(OBJS)
@@ -144,7 +155,9 @@ operator_filter_edge_sobel.o: wb_utils.hpp
 operator_producer.o: operator_filter_edge_prewitt.hpp operator.hpp
 operator_producer.o: wb_defs.hpp data_source_descriptor.hpp histogram.hpp
 operator_producer.o: hough.hpp image.hpp errors.hpp image_header.hpp
-operator_producer.o: operator_filter_edge_sobel.hpp operator_producer.hpp
+operator_producer.o: operator_filter_edge_sobel.hpp
+operator_producer.o: operator_transform_intensity_map.hpp
+operator_producer.o: operator_producer.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp
 operator_transform_intensity_map.o: data_source_descriptor.hpp histogram.hpp

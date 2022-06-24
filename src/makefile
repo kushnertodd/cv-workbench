@@ -132,6 +132,9 @@ hough.o: Hough.hpp
 image.o: /usr/include/jpeglib.h /usr/include/jmorecfg.h image.hpp errors.hpp
 image.o: image_header.hpp wb_defs.hpp wb_utils.hpp data_source_descriptor.hpp
 image.o: histogram.hpp hough.hpp
+image-create.o: errors.hpp image.hpp image_header.hpp wb_defs.hpp
+image-create.o: wb_utils.hpp data_source_descriptor.hpp histogram.hpp
+image-create.o: hough.hpp file_utils.hpp
 image_header.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp
 image_header.o: histogram.hpp hough.hpp image.hpp errors.hpp image_header.hpp
 image-test.o: errors.hpp image.hpp image_header.hpp wb_defs.hpp
@@ -140,18 +143,19 @@ internet_data_source_descriptor.o: data_source_descriptor.hpp wb_defs.hpp
 internet_data_source_descriptor.o: histogram.hpp hough.hpp image.hpp
 internet_data_source_descriptor.o: image_header.hpp
 internet_data_source_descriptor.o: internet_data_source_descriptor.hpp
-kernel.o: image_header.hpp errors.hpp wb_defs.hpp kernel.hpp image.hpp
+kernel.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp histogram.hpp
+kernel.o: hough.hpp image.hpp errors.hpp image_header.hpp kernel.hpp
 operator.o: operator.hpp wb_defs.hpp data_source_descriptor.hpp histogram.hpp
 operator.o: hough.hpp image.hpp errors.hpp image_header.hpp
 operator_filter_edge_prewitt.o: wb_defs.hpp operator_filter_edge_prewitt.hpp
 operator_filter_edge_prewitt.o: operator.hpp data_source_descriptor.hpp
 operator_filter_edge_prewitt.o: histogram.hpp hough.hpp image.hpp errors.hpp
 operator_filter_edge_prewitt.o: image_header.hpp
-operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp wb_defs.hpp
-operator_filter_edge_sobel.o: operator.hpp data_source_descriptor.hpp
-operator_filter_edge_sobel.o: histogram.hpp hough.hpp image.hpp errors.hpp
-operator_filter_edge_sobel.o: image_header.hpp operator_utils.hpp
-operator_filter_edge_sobel.o: wb_utils.hpp
+operator_filter_edge_sobel.o: kernel.hpp image.hpp errors.hpp
+operator_filter_edge_sobel.o: image_header.hpp wb_defs.hpp operator_utils.hpp
+operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp operator.hpp
+operator_filter_edge_sobel.o: data_source_descriptor.hpp histogram.hpp
+operator_filter_edge_sobel.o: hough.hpp
 operator_producer.o: operator_filter_edge_prewitt.hpp operator.hpp
 operator_producer.o: wb_defs.hpp data_source_descriptor.hpp histogram.hpp
 operator_producer.o: hough.hpp image.hpp errors.hpp image_header.hpp
@@ -171,6 +175,7 @@ parse_experiment_json.o: file_utils.hpp image.hpp errors.hpp image_header.hpp
 parse_experiment_json.o: wb_defs.hpp experiment.hpp histogram.hpp hough.hpp
 parse_experiment_json.o: experiment_step.hpp data_source_descriptor.hpp
 parse_experiment_json.o: wb_json_utils.hpp
+tokens.o: file_utils.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
 wb_utils.o: image.hpp errors.hpp image_header.hpp wb_defs.hpp wb_utils.hpp
 wb_utils.o: data_source_descriptor.hpp histogram.hpp hough.hpp
