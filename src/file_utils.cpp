@@ -1,6 +1,8 @@
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <cerrno>
+#include <cstring>
 #include <vector>
 #include <sstream>
 #include "file_utils.hpp"
@@ -35,6 +37,7 @@ string File_utils::read_file(string filename) {
     in.close();
     return (contents);
   }
+  cout << filename << ": " << strerror(errno) << endl;
   throw (errno);
 }
 
