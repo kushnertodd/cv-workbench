@@ -1,12 +1,14 @@
 djpeginfo
 image-create
 image-dump
-images/
-image-info
 image-hist
+image-hist
+image-hough
+image-info
+images/
+image-stats
 image-test
 json_parser_example
 parse_experiment_json
 read_file
 tokens
-image-hist
