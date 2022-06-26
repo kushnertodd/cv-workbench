@@ -10,6 +10,8 @@
 
 using namespace std;
 
+extern bool debug;
+
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                                    Cv_data_type_enum m_cv_data_type_enum) :
     Data_source_descriptor(m_id, BERKELEY_DB, m_cv_data_type_enum) {}

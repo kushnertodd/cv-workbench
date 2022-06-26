@@ -34,47 +34,47 @@ string Workbench_utils::char_to_string(char c) {
 
 string Workbench_utils::data_type_enum_to_string(Cv_data_type_enum type) {
   switch (type) {
-    case CONTOUR:
-      return "contour";
-    case CONVOLUTION_KERNEL:
-      return "convolution kernel";
-    case CONVOLVED_IMAGE:
-      return "convolved image";
-    case CORRELATED_IMAGE:
-      return "correlated image";
-    case IMAGE:
-      return "image";
-    case JSON_EXPERIMENT:
-      return "json experiment";
-    case JSON_EXPERIMENT_RESULTS:
-      return "json experiment results";
-    case HISTOGRAM:
-      return "histogram";
-    case HOUGH:
-      return "hough";
-    case PATTERN_FEATURE:
-      return "pattern feature";
-    case PATTERN_IMAGE:
-      return "pattern image";
-    case PYRAMID:
-      return "pyramid";
-    case QUADTREE:
-      return "quadtree";
-    case REGION:
-      return "region";
-    default:
-      return "unknown data type";
+  case CONTOUR:
+    return "contour";
+  case CONVOLUTION_KERNEL:
+    return "convolution kernel";
+  case CONVOLVED_IMAGE:
+    return "convolved image";
+  case CORRELATED_IMAGE:
+    return "correlated image";
+  case IMAGE:
+    return "image";
+  case JSON_EXPERIMENT:
+    return "json experiment";
+  case JSON_EXPERIMENT_RESULTS:
+    return "json experiment results";
+  case HISTOGRAM:
+    return "histogram";
+  case HOUGH:
+    return "hough";
+  case PATTERN_FEATURE:
+    return "pattern feature";
+  case PATTERN_IMAGE:
+    return "pattern image";
+  case PYRAMID:
+    return "pyramid";
+  case QUADTREE:
+    return "quadtree";
+  case REGION:
+    return "region";
+  default:
+    return "unknown data type";
   }
 }
 
 string Workbench_utils::file_format_to_string(Cv_image_file_format_enum type) {
   switch (type) {
-    case BINARY:
-      return "binary";
-    case JPEG:
-      return "jpeg";
-    default:
-      return "invalid image format";
+  case BINARY:
+    return "binary";
+  case JPEG:
+    return "jpeg";
+  default:
+    return "invalid image format";
   }
 }
 
@@ -95,24 +95,24 @@ bool Workbench_utils::hex_string_to_int(string arg, unsigned long long &value) {
 
 string Workbench_utils::image_depth_enum_to_string(Cv_image_depth_enum depth) {
   switch (depth) {
-    case CV_8U:
-      return "CV_8U";
-    case CV_8S:
-      return "CV_8S";
-    case CV_16U:
-      return "CV_16U";
-    case CV_16S:
-      return "CV_16S";
-    case CV_32S:
-      return "CV_32S";
-    case CV_32F:
-      return "CV_32F";
-    case CV_64F:
-      return "CV_64F";
-    case CV_16F:
-      return "CV_16F";
-    default:
-      return "unknown image depth";
+  case CV_8U:
+    return "CV_8U";
+  case CV_8S:
+    return "CV_8S";
+  case CV_16U:
+    return "CV_16U";
+  case CV_16S:
+    return "CV_16S";
+  case CV_32S:
+    return "CV_32S";
+  case CV_32F:
+    return "CV_32F";
+  case CV_64F:
+    return "CV_64F";
+  case CV_16F:
+    return "CV_16F";
+  default:
+    return "unknown image depth";
   }
 }
 
@@ -215,24 +215,24 @@ void Workbench_utils::json_parse(json_object *jobj) {
     //printf("\nkey: '%s' type: %d '%s'\n",key, type, json_type_to_name(type));
     cout << endl << "key: '" << key << "' type: " << type << " '" << json_type_to_name(type) << "'" << endl;
     switch (type) {
-      case json_type_boolean:
-      case json_type_double:
-      case json_type_int:
-      case json_type_string:
-      case json_type_null:
-        json_print_value(val);
-        break;
-        //case json_type_object: printf("json_type_object\n");
-      case json_type_object:
-        cout << "json_type_object" << endl;
-        jobj = json_object_object_get(jobj, key);
-        json_parse(jobj);
-        break;
-        //case json_type_array: printf("type: json_type_array, ");
-      case json_type_array:
-        cout << "type: json_type_array, ";
-        json_parse_array(jobj, key);
-        break;
+    case json_type_boolean:
+    case json_type_double:
+    case json_type_int:
+    case json_type_string:
+    case json_type_null:
+      json_print_value(val);
+      break;
+    //case json_type_object: printf("json_type_object\n");
+    case json_type_object:
+      cout << "json_type_object" << endl;
+      jobj = json_object_object_get(jobj, key);
+      json_parse(jobj);
+      break;
+    //case json_type_array: printf("type: json_type_array, ");
+    case json_type_array:
+      cout << "type: json_type_array, ";
+      json_parse_array(jobj, key);
+      break;
     }
   }
 }
@@ -273,36 +273,36 @@ void Workbench_utils::json_print_value(json_object *jobj) {
   //printf("type: %d '%s'\n",type, json_type_to_name(type));
   cout << "type: " << type << "'" << json_type_to_name(type) << "'" << endl;
   switch (type) {
-    //case json_type_null: printf("json_type_null\n");
-    case json_type_null:
-      cout << "json_type_null" << endl;
-      //case json_type_boolean: printf("json_type_boolean\n");
-    case json_type_boolean:
-      cout << "json_type_boolean" << endl;
-      //printf("value: %s\n", json_object_get_boolean(jobj)? "true": "false");
-      cout << "value: " << (json_object_get_boolean(jobj) ? "true" : "false") << endl;
-      break;
-      //case json_type_double: printf("json_type_double\n");
-    case json_type_double:
-      cout << "json_type_double" << endl;
-      //printf("          value: %lf\n", json_object_get_double(jobj));
-      cout << "          value: " << json_object_get_double(jobj) << endl;
-      break;
-      //case json_type_int: printf("json_type_int\n");
-    case json_type_int:
-      cout << "json_type_int" << endl;
-      //printf("          value: %d\n", json_object_get_int(jobj));
-      cout << "          value: " << json_object_get_int(jobj) << endl;
-      break;
-      //case json_type_string: printf("json_type_string\n");
-    case json_type_string:
-      cout << "json_type_string" << endl;
-      //printf("          value: %s\n", json_object_get_string(jobj));
-      cout << "          value: " << json_object_get_string(jobj) << endl;
-      break;
-    case json_type_object:
-    case json_type_array:
-      break;
+  //case json_type_null: printf("json_type_null\n");
+  case json_type_null:
+    cout << "json_type_null" << endl;
+  //case json_type_boolean: printf("json_type_boolean\n");
+  case json_type_boolean:
+    cout << "json_type_boolean" << endl;
+    //printf("value: %s\n", json_object_get_boolean(jobj)? "true": "false");
+    cout << "value: " << (json_object_get_boolean(jobj) ? "true" : "false") << endl;
+    break;
+  //case json_type_double: printf("json_type_double\n");
+  case json_type_double:
+    cout << "json_type_double" << endl;
+    //printf("          value: %lf\n", json_object_get_double(jobj));
+    cout << "          value: " << json_object_get_double(jobj) << endl;
+    break;
+  //case json_type_int: printf("json_type_int\n");
+  case json_type_int:
+    cout << "json_type_int" << endl;
+    //printf("          value: %d\n", json_object_get_int(jobj));
+    cout << "          value: " << json_object_get_int(jobj) << endl;
+    break;
+  //case json_type_string: printf("json_type_string\n");
+  case json_type_string:
+    cout << "json_type_string" << endl;
+    //printf("          value: %s\n", json_object_get_string(jobj));
+    cout << "          value: " << json_object_get_string(jobj) << endl;
+    break;
+  case json_type_object:
+  case json_type_array:
+    break;
   }
 }
 
@@ -324,16 +324,16 @@ string Workbench_utils::real_to_string(double i, int width) {
 
 string Workbench_utils::repository_type_enum_to_string(Cv_repository_type_enum type) {
   switch (type) {
-    case BERKELEY_DB:
-      return "Berkeley DB";
-    case FILESYSTEM:
-      return "Filesystem";
-    case INTERNET:
-      return "Internet";
-    case EXPERIMENT_STEP:
-      return "Experiment step";
-    default:
-      return "unknown repository type";
+  case BERKELEY_DB:
+    return "Berkeley DB";
+  case FILESYSTEM:
+    return "Filesystem";
+  case INTERNET:
+    return "Internet";
+  case EXPERIMENT_STEP:
+    return "Experiment step";
+  default:
+    return "unknown repository type";
   }
 }
 
@@ -404,6 +404,7 @@ Cv_image_depth_enum Workbench_utils::string_to_image_depth_enum(string depth) {
 }
 
 bool Workbench_utils::string_to_int(string str, int &value) {
+  if (!is_numeric(str)) return false;
   stringstream ss(str);
   if (ss >> value) return true;
   else return false;
@@ -417,8 +418,9 @@ Cv_repository_type_enum Workbench_utils::string_to_repository_type_enum(string t
   else return UNDEFINED_REPOSITORY_TYPE;
 }
 
-bool Workbench_utils::string_to_real(string arg, double &value) {
-  stringstream ss(arg);
+bool Workbench_utils::string_to_real(string str, double &value) {
+  if (!is_numeric(str)) return false;
+  stringstream ss(str);
   if (ss >> value) return true;
   else return false;
 }

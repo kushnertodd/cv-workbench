@@ -49,13 +49,16 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   djpeginfo \
+  gen-trig \
   image-create \
   image-dump \
   image-hist \
+  image-hough \
   image-info \
   image-stats \
   image-test \
-  parse_experiment_json
+  parse_experiment_json \
+  tokens 
   # json_parser_example \
 
 %.o: %.cpp %.hpp
@@ -69,6 +72,9 @@ all: $(PROGRAMS)
 
 djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
+
+gen-trig: gen-trig.o 
+	$(CXX) $< -o $@ 
 
 image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
@@ -152,6 +158,9 @@ image-create.o: wb_utils.hpp data_source_descriptor.hpp histogram.hpp
 image-create.o: hough.hpp file_utils.hpp
 image_header.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp
 image_header.o: histogram.hpp hough.hpp image.hpp errors.hpp image_header.hpp
+image-hist.o: variance_stats.hpp
+image-hough.o: variance_stats.hpp
+image-stats.o: variance_stats.hpp
 image-test.o: errors.hpp image.hpp image_header.hpp wb_defs.hpp
 internet_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 internet_data_source_descriptor.o: data_source_descriptor.hpp wb_defs.hpp
@@ -162,18 +171,34 @@ kernel.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp histogram.hpp
 kernel.o: hough.hpp image.hpp errors.hpp image_header.hpp kernel.hpp
 operator.o: operator.hpp wb_defs.hpp data_source_descriptor.hpp histogram.hpp
 operator.o: hough.hpp image.hpp errors.hpp image_header.hpp
-operator_filter_edge_prewitt.o: wb_defs.hpp operator_filter_edge_prewitt.hpp
-operator_filter_edge_prewitt.o: operator.hpp data_source_descriptor.hpp
-operator_filter_edge_prewitt.o: histogram.hpp hough.hpp image.hpp errors.hpp
-operator_filter_edge_prewitt.o: image_header.hpp
+operator_filter_edge_kirsch.o: kernel.hpp image.hpp errors.hpp
+operator_filter_edge_kirsch.o: image_header.hpp wb_defs.hpp
+operator_filter_edge_kirsch.o: operator_utils.hpp
+operator_filter_edge_kirsch.o: operator_filter_edge_kirsch.hpp operator.hpp
+operator_filter_edge_kirsch.o: data_source_descriptor.hpp histogram.hpp
+operator_filter_edge_kirsch.o: hough.hpp
+operator_filter_edge_prewitt.o: kernel.hpp image.hpp errors.hpp
+operator_filter_edge_prewitt.o: image_header.hpp wb_defs.hpp
+operator_filter_edge_prewitt.o: operator_utils.hpp
+operator_filter_edge_prewitt.o: operator_filter_edge_prewitt.hpp operator.hpp
+operator_filter_edge_prewitt.o: data_source_descriptor.hpp histogram.hpp
+operator_filter_edge_prewitt.o: hough.hpp
+operator_filter_edge_roberts.o: kernel.hpp image.hpp errors.hpp
+operator_filter_edge_roberts.o: image_header.hpp wb_defs.hpp
+operator_filter_edge_roberts.o: operator_utils.hpp
+operator_filter_edge_roberts.o: operator_filter_edge_roberts.hpp operator.hpp
+operator_filter_edge_roberts.o: data_source_descriptor.hpp histogram.hpp
+operator_filter_edge_roberts.o: hough.hpp
 operator_filter_edge_sobel.o: kernel.hpp image.hpp errors.hpp
 operator_filter_edge_sobel.o: image_header.hpp wb_defs.hpp operator_utils.hpp
 operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp operator.hpp
 operator_filter_edge_sobel.o: data_source_descriptor.hpp histogram.hpp
 operator_filter_edge_sobel.o: hough.hpp
-operator_producer.o: operator_filter_edge_prewitt.hpp operator.hpp
-operator_producer.o: wb_defs.hpp data_source_descriptor.hpp histogram.hpp
-operator_producer.o: hough.hpp image.hpp errors.hpp image_header.hpp
+operator_producer.o: operator_filter_edge_kirsch.hpp wb_defs.hpp operator.hpp
+operator_producer.o: data_source_descriptor.hpp histogram.hpp hough.hpp
+operator_producer.o: image.hpp errors.hpp image_header.hpp
+operator_producer.o: operator_filter_edge_prewitt.hpp
+operator_producer.o: operator_filter_edge_roberts.hpp
 operator_producer.o: operator_filter_edge_sobel.hpp
 operator_producer.o: operator_transform_intensity_map.hpp
 operator_producer.o: operator_producer.hpp
@@ -191,6 +216,7 @@ parse_experiment_json.o: wb_defs.hpp experiment.hpp histogram.hpp hough.hpp
 parse_experiment_json.o: experiment_step.hpp data_source_descriptor.hpp
 parse_experiment_json.o: wb_json_utils.hpp
 tokens.o: file_utils.hpp
+variance_stats.o: variance_stats.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
 wb_utils.o: image.hpp errors.hpp image_header.hpp wb_defs.hpp wb_utils.hpp
 wb_utils.o: data_source_descriptor.hpp histogram.hpp hough.hpp

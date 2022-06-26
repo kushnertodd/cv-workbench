@@ -16,6 +16,8 @@
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
+extern bool debug;
+
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
   // parse: ' { "id": ... `
