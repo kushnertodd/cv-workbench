@@ -12,20 +12,6 @@
 
 using namespace std;
 
-/*
-enum Cv_image_depth_enum {
-  CV_8U,
-  CV_8S,
-  CV_16U,
-  CV_16S,
-  CV_32S,
-  CV_32F,
-  CV_64F,
-  CV_16F,
-  UNDEFINED_IMAGE_DEPTH
-};
-*/
-
 string depth_to_string(Cv_image_depth_enum depth) {
   if (depth == CV_8U) return string("CV_8U");
   else if (depth == CV_32S) return string("CV_32S");
@@ -33,11 +19,6 @@ string depth_to_string(Cv_image_depth_enum depth) {
   else return "invalid depth";
 }
 
-/*
-typedef unsigned char pixel_8U;
-typedef int pixel_32S;
-typedef float pixel_32F;
-*/
 Variance_stats variance_stats;
 
 void error_exit(string message) {
@@ -58,11 +39,6 @@ class Hough_class {
   static const int theta_inc = 3;
   static const int nthetas = 180 / theta_inc;
   static const int rho_buffer = 10;
-  static const int max_degree = 180;
-  static const int min_value = -5;
-  static const int max_value = 5;
-  int accum_val = 0;
-  int value_ct = 0;
   int *accum[nthetas];
   int max_rhos;
   int rows;
@@ -76,7 +52,6 @@ class Hough_class {
       rows(m_rows),
       cols(m_cols) {
     max_rhos = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
-    int sq2 = round(sqrt(rows * rows + cols * cols));
     alloc_accum();
   }
 
@@ -113,14 +88,8 @@ class Hough_class {
   }
 
   void assign_accum(int theta, int rho, int value) {
-    accum_val += abs(value);
-    value_ct++;
     accum[theta][rho + max_rhos / 2] += value;
   }
-
-//  void assign_accum(int index, int value) {
-//    accum[index / max_rhos][index % max_rhos] = value;
-//  }
 
   void dealloc_accum() {
     for (int i = 0; i < nthetas; i++)
@@ -134,10 +103,6 @@ class Hough_class {
     float sin = index_to_theta_sin(theta);
     float rho = x * cos + y * sin;
     int rho_round = round(rho);
-//    cout << "row " << row << " col " << col << " theta " << theta
-//         << " cos " << cos << " sin " << sin << " rho " << rho
-//         << " rho_round " << rho_round << endl;
-//    return x * index_to_theta_cos(theta) + y * index_to_theta_sin(theta);
     return rho_round;
   }
 
@@ -155,8 +120,6 @@ class Hough_class {
         ofs << accum[theta][rho] << delim;
         int value = accum[theta][rho];
         max_val = max(max_val, value);
-//        if (value > 180)
-//          cout << value << "\t" << theta << "\t" << rho << endl;
       }
       ofs << endl;
     }
@@ -168,7 +131,6 @@ class Hough_class {
     if (!ifs)
       throw "Hough:read invalid filename '" + filename + "'";
     string line;
-    int index = 0;
     while (getline(ifs, line)) {
       vector<string> values = File_utils::string_split(line);
       for (string value_str: values) {
@@ -185,32 +147,20 @@ class Hough_class {
 void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
 }
 
-/*
-const int nthetas = 60;
-const int nrhos = 1000;
-const int hough_size = nthetas * nrhos;
-*/
-
 void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
   Hough_class hough(rows, cols);
   int pos = 0;
   int hist[2000];
-  for (int i = 0; i < 2000; i++) hist[i]=0;
+  for (int i = 0; i < 2000; i++) hist[i] = 0;
   int min_val = INT32_MAX;
   int max_val = INT32_MIN;
   for (int i = 0; i < rows * cols; i++) {
     min_val = min(min_val, buf_32S[i]);
     max_val = max(max_val, buf_32S[i]);
   }
-  //for (int i = 0; i < rows*cols; i++) hist[buf_32S[i]-min_val]++;
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
-      //hist[buf_32S[pos]+1000]++;
-      //int value = buf_32S[pos++];
       int index = row * cols + col;
-      if (col > 120) {
-        int a = 0;
-      }
       int value = buf_32S[index];
       static const int min_value = -100;
       static const int max_value = 100;
@@ -218,7 +168,7 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
       if (value < min_value || value > max_value) {
         for (int theta = 0; theta < Hough_class::nthetas; theta++) {
           hough.assign_accum(theta, hough.row_col_to_rho(row, col, theta),
-          abs(value));
+                             abs(value));
         }
       }
     }
@@ -256,9 +206,6 @@ int main(int argc, char **argv) {
   read_int(fp, "depth", depth);
 
   int npixels = rows * cols * components;
-  //cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
-  //     << depth_to_string((Cv_image_depth_enum) depth)
-  //     << " npixels " << npixels << endl;
 
   pixel_32S *buf_32S;
   int newLen;
@@ -292,7 +239,6 @@ int main(int argc, char **argv) {
       break;
   }
   fclose(fp);
-  //cout << variance_stats.to_string();
 }
 
 
