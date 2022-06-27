@@ -218,8 +218,7 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
       if (value < min_value || value > max_value) {
         for (int theta = 0; theta < Hough_class::nthetas; theta++) {
           hough.assign_accum(theta, hough.row_col_to_rho(row, col, theta),
-                             1);
-//          abs(value));
+          abs(value));
         }
       }
     }
