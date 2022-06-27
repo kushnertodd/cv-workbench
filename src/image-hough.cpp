@@ -115,7 +115,7 @@ class Hough_class {
   void assign_accum(int theta, int rho, int value) {
     accum_val += abs(value);
     value_ct++;
-    accum[theta][rho + max_rhos / 2] = value;
+    accum[theta][rho + max_rhos / 2] += value;
   }
 
 //  void assign_accum(int index, int value) {
@@ -130,7 +130,15 @@ class Hough_class {
   int row_col_to_rho(int row, int col, int theta) {
     int x = col - cols / 2;
     int y = row - rows / 2;
-    return x * index_to_theta_cos(theta) + y * index_to_theta_sin(theta);
+    float cos = index_to_theta_cos(theta);
+    float sin = index_to_theta_sin(theta);
+    float rho = x * cos + y * sin;
+    int rho_round = round(rho);
+//    cout << "row " << row << " col " << col << " theta " << theta
+//         << " cos " << cos << " sin " << sin << " rho " << rho
+//         << " rho_round " << rho_round << endl;
+//    return x * index_to_theta_cos(theta) + y * index_to_theta_sin(theta);
+    return rho_round;
   }
 
   void write(string filename, string delim = "\t") {
@@ -146,9 +154,9 @@ class Hough_class {
       for (int rho = 0; rho < max_rhos; rho++) {
         ofs << accum[theta][rho] << delim;
         int value = accum[theta][rho];
-        max_val = max(max_val,value);
-        if (value > 180)
-          cout << value << "\t" << theta << "\t" << rho << endl;
+        max_val = max(max_val, value);
+//        if (value > 180)
+//          cout << value << "\t" << theta << "\t" << rho << endl;
       }
       ofs << endl;
     }
@@ -187,6 +195,7 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
   Hough_class hough(rows, cols);
   int pos = 0;
   int hist[2000];
+  for (int i = 0; i < 2000; i++) hist[i]=0;
   int min_val = INT32_MAX;
   int max_val = INT32_MIN;
   for (int i = 0; i < rows * cols; i++) {
@@ -203,14 +212,14 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
         int a = 0;
       }
       int value = buf_32S[index];
-      static const int min_value = -5;
-      static const int max_value = 5;
+      static const int min_value = -100;
+      static const int max_value = 100;
       hist[value - min_val]++;
-      //if (value < min_value || value > max_value) {
-      if (value != 0) {
+      if (value < min_value || value > max_value) {
         for (int theta = 0; theta < Hough_class::nthetas; theta++) {
           hough.assign_accum(theta, hough.row_col_to_rho(row, col, theta),
-                             abs(value));
+                             1);
+//          abs(value));
         }
       }
     }
