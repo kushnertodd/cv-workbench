@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include <iomanip>
-#include <sstream>
-#include "image.hpp"
+//#include <sstream>
+//#include "image.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
@@ -392,7 +392,6 @@ Cv_image_file_format_enum Workbench_utils::string_to_file_format_enum(string typ
 
 Cv_image_depth_enum Workbench_utils::string_to_image_depth_enum(string depth) {
   if (depth == "CV_8U") return CV_8U;
-  else if (depth == "CV_8U") return CV_8U;
   else if (depth == "CV_8S") return CV_8S;
   else if (depth == "CV_16U") return CV_16U;
   else if (depth == "CV_16S") return CV_16S;

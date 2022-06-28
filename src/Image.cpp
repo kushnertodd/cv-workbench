@@ -139,6 +139,7 @@ pixel_32S Image::get_32F(int row, int col) {
 }
 
 void Image::set(int row, int col, pixel_32F value) {
+  bounds.add(value);
   switch (image_header->depth) {
     case CV_8U:
       buf_8U[row_col_to_index(row, col)] = value;
@@ -158,14 +159,17 @@ void Image::set(int row, int col, pixel_32F value) {
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) {
+  bounds.add(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
 void Image::set_32S(int row, int col, pixel_32S value) {
+  bounds.add(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value) {
+  bounds.add(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
@@ -177,6 +181,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
+    bounds.add(src[i]);
     switch (image_header->depth) {
       case CV_8U:
         buf_8U[next_pixel++] = src[i];
@@ -206,6 +211,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
+    bounds.add(src[i]);
     switch (image_header->depth) {
       case CV_8U:
         errors.add("Image::add_32S: cannot add to 8U buffer");
@@ -233,6 +239,7 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
+    bounds.add(src[i]);
     switch (image_header->depth) {
       case CV_8U:
         errors.add("Image::add_32F: cannot add to 8U buffer");
@@ -257,7 +264,7 @@ Image *Image::read_binary(string path, Errors &errors) {
 //  char* res = getcwd(cwd, sizeof(cwd));
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno))+"'");
+    errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno)) + "'");
 /*    if ( errno != 0 )
     {
       cout << "opening file " << path << endl;
@@ -282,6 +289,8 @@ Image *Image::read_binary(string path, Errors &errors) {
         errors.add("Image::read_binary: cannot read 8U image data in '" + path + "'");
         return nullptr;
       }
+      for (int i = 0; i < image_header->npixels; i++)
+        image->bounds.add(image->buf_8U[i]);
       break;
 
     case CV_32S:
@@ -290,6 +299,8 @@ Image *Image::read_binary(string path, Errors &errors) {
         errors.add("Image::read_binary: cannot read 32S image data in '" + path + "'");
         return nullptr;
       }
+      for (int i = 0; i < image_header->npixels; i++)
+        image->bounds.add(image->buf_32S[i]);
       break;
 
     case CV_32F:
@@ -298,6 +309,8 @@ Image *Image::read_binary(string path, Errors &errors) {
         errors.add("Image::read_binary: cannot read 32F image data in '" + path + "'");
         return nullptr;
       }
+      for (int i = 0; i < image_header->npixels; i++)
+        image->bounds.add(image->buf_32F[i]);
       break;
 
     default:

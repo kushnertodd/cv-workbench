@@ -2,7 +2,26 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include <cfloat>
+#include <algorithm>
 #include "bounds.hpp"
+
+using namespace std;
+
+Bounds::Bounds() :
+    min_value(FLT_MAX),
+    max_value(FLT_MIN) {
+}
+
+Bounds::Bounds(float m_min_value, float m_max_value) :
+    min_value(m_min_value),
+    max_value(m_max_value) {
+}
+
+void Bounds::add(float value) {
+  min_value = min(min_value, value);
+  max_value = max(max_value, value);
+}
 
 float Bounds::map_input_to_output_bounds(float value, Bounds *input_bounds, Bounds *output_bounds) {
   if (value < input_bounds->min_value)

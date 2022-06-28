@@ -13,8 +13,8 @@ class Point {
   int cols;
   float x;
   float y;
-  Point(int m_row,  int m_col,  int m_rows,  int m_cols);
-  float distance(Point* point);
+  Point(int m_row, int m_col, int m_rows, int m_cols);
+  float distance(Point *point);
 };
 
 #endif //SRC__POINT_HPP_

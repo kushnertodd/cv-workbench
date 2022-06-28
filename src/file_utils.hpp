@@ -13,6 +13,7 @@ class File_utils {
  public:
   static long file_size(std::ifstream &in);
   static std::string read_file(std::string filename);
+  static bool read_int(FILE *fp, int &var);
   static vector<string> string_split(const string &str);
 };
 

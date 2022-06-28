@@ -8,15 +8,16 @@ This parser makes use of all the functions which reads the value of a json objec
 */
 
 #include <iostream>
-#include <map>
 #include <string>
 #include <json-c/json.h>
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "experiment.hpp"
+#include "hough_trig.hpp"
 
 //bool debug = true;
 bool debug = false;
+Hough_trig hough_trig(3);
 
 int main(int argc, char **argv) {
   if (argc < 2) {

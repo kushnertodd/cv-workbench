@@ -29,30 +29,25 @@ Image_header::Image_header(Image_header *image_header) :
 
 Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
   int rows;
-  size_t newLen;
-  newLen = fread(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != 1) {
+  if (!File_utils::read_int(fp, rows)) {
     errors.add("Image_header::read_header: missing image rows in '" + path + "'");
     return nullptr;
   }
 
   int cols;
-  newLen = fread(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != 1) {
+  if (!File_utils::read_int(fp, cols)) {
     errors.add("Image_header::read_header: missing image cols in '" + path + "'");
     return nullptr;
   }
 
   int components;
-  newLen = fread(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != 1) {
+  if (!File_utils::read_int(fp, components)) {
     errors.add("Image_header::read_header: missing image components in '" + path + "'");
     return nullptr;
   }
 
   int depth;
-  newLen = fread(&depth, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != 1) {
+  if (!File_utils::read_int(fp, depth)) {
     errors.add("Image_header::read_header: missing image depth in '" + path + "'");
     return nullptr;
   }
@@ -80,6 +75,7 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
     errors.add("Image_header::write_header: cannot write image depth to '" + path + "'");
   }
 }
+
 string Image_header::to_string() {
   ostringstream os;
   os << "rows " << rows

@@ -1,23 +1,28 @@
-#include <cmath>
+//#include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <fstream>      // std::ofstream
+//#include <fstream>      // std::ofstream
 #include <iostream>
 #include <vector>
 #include "variance_stats.hpp"
-#include "file_utils.hpp"
-#include "hough_theta.hpp"
-#include "wb_utils.hpp"
+//#include "file_utils.hpp"
+//#include "hough_theta.hpp"
+#include "hough.hpp"
+//#include "wb_utils.hpp"
 #include "wb_defs.hpp"
+#include "hough_trig.hpp"
 
 using namespace std;
 
+
+/*
 string depth_to_string(Cv_image_depth_enum depth) {
   if (depth == CV_8U) return string("CV_8U");
   else if (depth == CV_32S) return string("CV_32S");
   else if (depth == CV_32F) return string("CV_32F");
   else return "invalid depth";
 }
+*/
 
 Variance_stats variance_stats;
 
@@ -26,13 +31,16 @@ void error_exit(string message) {
   exit(0);
 }
 
+/*
 void read_int(FILE *fp, string name, int &var) {
   int newLen = fread(&var, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != 1) {
     error_exit("Image_header::read_header: missing value " + name);
   }
 }
+*/
 
+/*
 class Hough_class {
  public:
   string hough_filename;
@@ -143,13 +151,15 @@ class Hough_class {
   }
 
 };
+*/
 
 void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
 }
 
 void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
-  Hough_class hough(rows, cols);
+  Hough hough(rows, cols);
   int pos = 0;
+/*
   int hist[2000];
   for (int i = 0; i < 2000; i++) hist[i] = 0;
   int min_val = INT32_MAX;
@@ -158,15 +168,16 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
     min_val = min(min_val, buf_32S[i]);
     max_val = max(max_val, buf_32S[i]);
   }
+*/
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
       int index = row * cols + col;
       int value = buf_32S[index];
       static const int min_value = -100;
       static const int max_value = 100;
-      hist[value - min_val]++;
+      //hist[value - min_val]++;
       if (value < min_value || value > max_value) {
-        for (int theta = 0; theta < Hough_class::nthetas; theta++) {
+        for (int theta = 0; theta < hough_trig.nthetas; theta++) {
           hough.assign_accum(theta, hough.row_col_to_rho(row, col, theta),
                              abs(value));
         }
@@ -174,9 +185,11 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
     }
   }
 
+/*
   ofstream o("hist.txt");
   for (int i = 0; i < 2000; i++) o << i << " " << hist[i] << endl;
   o.close();
+*/
   string hough_filename = filename + ".hough.txt";
   hough.write(hough_filename);
 }
@@ -184,11 +197,13 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
 void stat_32F(pixel_32F *buf_32F, int rows, int cols) {
 }
 
+
+Hough_trig hough_trig(3);
 bool debug = true;
 int main(int argc, char **argv) {
 
   if (argc < 2)
-    error_exit("usage: image-stat filename");
+    error_exit("usage: image-hough filename");
   string filename = argv[1];
 
   FILE *fp = fopen(filename.c_str(), "r");
@@ -196,22 +211,40 @@ int main(int argc, char **argv) {
     error_exit("cannot open file '" + filename + "'");
   }
 
+/*
   int rows;
-  read_int(fp, "rows", rows);
+  if (!File_utils::read_int(fp, rows))
+    error_exit("missing image rows");
   int cols;
-  read_int(fp, "cols", cols);
+  if (!File_utils::read_int(fp, cols))
+    error_exit("missing image cols");
   int components;
-  read_int(fp, "components", components);
+  if (!File_utils::read_int(fp, components))
+    error_exit("missing image components");
   int depth;
-  read_int(fp, "depth", depth);
+  if (!File_utils::read_int(fp, depth))
+    error_exit("missing image depth");
+*/
 
-  int npixels = rows * cols * components;
+  Errors errors;
+  Image_header* image_header =
+      Image_header::read_header(fp, filename, errors);
+  if (image_header == nullptr) {
+    error_exit(errors.to_string());
+  }
+
+
+  int rows = image_header->rows;
+  int cols = image_header->cols;
+  int components = image_header->components;
+  int depth = image_header->depth;
+    int npixels = rows * cols * components;
 
   pixel_32S *buf_32S;
   int newLen;
-  int hist[2000];
-  int min_val = INT32_MAX;
-  int max_val = INT32_MIN;
+//  int hist[2000];
+//  int min_val = INT32_MAX;
+//  int max_val = INT32_MIN;
   switch (depth) {
     case CV_8U:
       break;
@@ -224,11 +257,13 @@ int main(int argc, char **argv) {
         error_exit("Image::read_binary: cannot read 32S image data in '" + filename + "'");
       }
 
+/*
       for (int i = 0; i < rows * cols; i++) {
         min_val = min(min_val, buf_32S[i]);
         max_val = max(max_val, buf_32S[i]);
       }
       for (int i = 0; i < rows * cols; i++) hist[buf_32S[i] - min_val]++;
+*/
       stat_32S(buf_32S, rows, cols, filename);
       break;
 
@@ -240,5 +275,3 @@ int main(int argc, char **argv) {
   }
   fclose(fp);
 }
-
-

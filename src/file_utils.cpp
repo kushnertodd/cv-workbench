@@ -41,6 +41,11 @@ string File_utils::read_file(string filename) {
   throw (errno);
 }
 
+bool File_utils::read_int(FILE *fp, int &var) {
+  int newLen = fread(&var, sizeof(int), 1, fp);
+  return (ferror(fp) == 0 && newLen == 1);
+}
+
 vector<string> File_utils::string_split(const string& str) {
   vector<string> result;
   istringstream iss(str);

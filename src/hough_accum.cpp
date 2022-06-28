@@ -1,62 +1,51 @@
 //
-// Created by kushn on 6/11/2022.
+// Created by kushn on 6/27/2022.
 //
 
-#include <cmath>
-#include <fstream>
-#include "file_utils.hpp"
-#include "wb_utils.hpp"
 #include "hough_accum.hpp"
-#include "hough_trig.hpp"
-#include "hough.hpp"
 
-using namespace std;
-
-extern Hough_trig hough_trig;
-
-Hough::~Hough() {
+Hough_accum::~Hough_accum() {
   dealloc_accum();
 }
 
-Hough::Hough(int m_rows, int m_cols) :
+Hough_accum::Hough_accum(int m_rows, int m_cols) :
     rows(m_rows),
     cols(m_cols) {
-  accum = new Hough_accum(rows, cols);
-  //max_rhos = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
-  //alloc_accum();
+  max_rhos = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
+  alloc_accum();
 }
 
-/*
-void Hough::alloc_accum() {
-  for (int i = 0; i < nthetas; i++) {
+void Hough_accum::alloc_accum() {
+  accum = new int *[hough_trig.nthetas];
+  for (int i = 0; i < hough_trig.nthetas; i++) {
     accum[i] = new int[max_rhos];
     for (int j = 0; j < max_rhos; j++)
       accum[i][j] = 0;
   }
 }
 
-int Hough::rho_to_index(int rho) {
+int Hough_accum::rho_to_index(int rho) {
   return rho + max_rhos / 2;
 }
 
-int Hough::index_to_rho(int index) {
+int Hough_accum::index_to_rho(int index) {
   return index - max_rhos / 2;
 }
 
-int Hough::theta_rho_to_index(int theta, int rho) {
+int Hough_accum::theta_rho_to_index(int theta, int rho) {
   return theta * max_rhos + rho;
 }
 
-void Hough::assign_accum(int theta, int rho, int value) {
+void Hough_accum::assign_accum(int theta, int rho, int value) {
   accum[theta][rho + max_rhos / 2] += value;
 }
 
-void Hough::dealloc_accum() {
-  for (int i = 0; i < nthetas; i++)
+void Hough_accum::dealloc_accum() {
+  for (int i = 0; i < hough_trig.nthetas; i++)
     delete accum[i];
 }
 
-int Hough::row_col_to_rho(int row, int col, int theta) {
+int Hough_accum::row_col_to_rho(int row, int col, int theta) {
   int x = col - cols / 2;
   int y = row - rows / 2;
   float cos = hough_trig.cos(theta);
@@ -66,7 +55,7 @@ int Hough::row_col_to_rho(int row, int col, int theta) {
   return rho_round;
 }
 
-void Hough::write(string filename, string delim) {
+void Hough_accum::write(string filename, string delim) {
   ofstream ofs(filename, ofstream::out);
   int max_val = 0;
   if (!ofs)
@@ -74,7 +63,7 @@ void Hough::write(string filename, string delim) {
   for (int rho = 0; rho < max_rhos; rho++)
     ofs << rho << delim;
   ofs << endl;
-  for (int theta = 0; theta < nthetas; theta++) {
+  for (int theta = 0; theta < hough_trig.nthetas; theta++) {
     ofs << hough_trig.index_to_deg(theta) << delim;
     for (int rho = 0; rho < max_rhos; rho++) {
       ofs << accum[theta][rho] << delim;
@@ -86,7 +75,7 @@ void Hough::write(string filename, string delim) {
   ofs.close();
 }
 
-void Hough::read(string filename) {
+void Hough_accum::read(string filename) {
   ifstream ifs(filename, ofstream::in);
   if (!ifs)
     throw "Hough:read invalid filename '" + filename + "'";
@@ -101,7 +90,3 @@ void Hough::read(string filename) {
   }
   ifs.close();
 }
-*/
-
-
-

@@ -7,6 +7,7 @@
 
 #include <exception>
 #include <string>
+#include "bounds.hpp"
 #include "errors.hpp"
 #include "image_header.hpp"
 #include "wb_defs.hpp"
@@ -30,6 +31,7 @@ class Image_exception {
 class Image {
  public:
   Image_header *image_header;
+  Bounds bounds;
   int next_pixel;
   // image stores one buffer per image_header->depth
   pixel_8U *buf_8U;
