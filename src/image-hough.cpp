@@ -32,7 +32,7 @@ int Hough_trig::nthetas;
 float *Hough_trig::hough_cos;
 float *Hough_trig::hough_sin;
 int main(int argc, char **argv) {
-
+  Hough_trig::init(3);
   if (argc < 3)
     error_exit("usage: image-hough image-filename hough-filename");
   string image_filename = argv[1];
