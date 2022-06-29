@@ -3,6 +3,7 @@
 //
 
 #include <cmath>
+#include "hough_trig.hpp"
 #include "point.hpp"
 
 Point::Point(
@@ -20,6 +21,14 @@ Point::Point(
 
 float Point::distance(Point *point) {
   return sqrt((x - point->x) * (x - point->x));
+}
+
+int Point::to_rho(int theta) {
+  float cos = Hough_trig::cos(theta);
+  float sin = Hough_trig::sin(theta);
+  float rho = x * cos + y * sin;
+  int rho_round = round(rho);
+  return rho_round;
 }
 
 

@@ -57,6 +57,10 @@ enum CV_repository_type {
   UNDEFINED_REPOSITORY_TYPE
 };
 
+enum CV_threshold_type {
+  FIXED,
+  PERCENTAGE
+};
 }
 
 // built-in types

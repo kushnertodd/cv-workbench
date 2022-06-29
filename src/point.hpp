@@ -15,6 +15,7 @@ class Point {
   float y;
   Point(int m_row, int m_col, int m_rows, int m_cols);
   float distance(Point *point);
+  int to_rho(int theta);
 };
 
 #endif //SRC__POINT_HPP_

@@ -48,7 +48,7 @@ class Hough_class {
   static const int nthetas = 180 / theta_inc;
   static const int rho_buffer = 10;
   int *accum[nthetas];
-  int max_rhos;
+  int max_rho;
   int rows;
   int cols;
 
@@ -59,7 +59,7 @@ class Hough_class {
   Hough_class(int m_rows, int m_cols) :
       rows(m_rows),
       cols(m_cols) {
-    max_rhos = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
+    max_rho = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
     alloc_accum();
   }
 
@@ -77,26 +77,26 @@ class Hough_class {
 
   void alloc_accum() {
     for (int i = 0; i < nthetas; i++) {
-      accum[i] = new int[max_rhos];
-      for (int j = 0; j < max_rhos; j++)
+      accum[i] = new int[max_rho];
+      for (int j = 0; j < max_rho; j++)
         accum[i][j] = 0;
     }
   }
 
   int rho_to_index(int rho) {
-    return rho + max_rhos / 2;
+    return rho + max_rho / 2;
   }
 
   int index_to_rho(int index) {
-    return index - max_rhos / 2;
+    return index - max_rho / 2;
   }
 
   int theta_rho_to_index(int theta, int rho) {
-    return theta * max_rhos + rho;
+    return theta * max_rho + rho;
   }
 
   void assign_accum(int theta, int rho, int value) {
-    accum[theta][rho + max_rhos / 2] += value;
+    accum[theta][rho + max_rho / 2] += value;
   }
 
   void dealloc_accum() {
@@ -119,12 +119,12 @@ class Hough_class {
     int max_val = 0;
     if (!ofs)
       throw "Hough:write invalid filename '" + filename + "'";
-    for (int rho = 0; rho < max_rhos; rho++)
+    for (int rho = 0; rho < max_rho; rho++)
       ofs << rho << delim;
     ofs << endl;
     for (int theta = 0; theta < nthetas; theta++) {
       ofs << index_to_theta_deg(theta) << delim;
-      for (int rho = 0; rho < max_rhos; rho++) {
+      for (int rho = 0; rho < max_rho; rho++) {
         ofs << accum[theta][rho] << delim;
         int value = accum[theta][rho];
         max_val = max(max_val, value);
