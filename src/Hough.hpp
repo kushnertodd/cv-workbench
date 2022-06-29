@@ -22,7 +22,7 @@ class Hough {
   list<Polar_line *> lines;
 
   ~Hough();
-  Hough(int m_rows, int m_cols);
+  Hough(Image* image, int threshold = 100);
   void find_peaks();
   bool read(string filename, Errors &errors);
   bool write(string filename, string delim, Errors &errors);

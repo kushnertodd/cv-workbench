@@ -46,6 +46,8 @@ SRCOBJS :=  \
   operator_producer.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
+  point.o \
+  polar_line.o \
   variance_stats.o \
   wb_json_utils.o \
   wb_utils.o 

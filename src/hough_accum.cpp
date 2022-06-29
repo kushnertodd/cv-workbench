@@ -2,6 +2,7 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include "image.hpp"
 #include "hough_trig.hpp"
 #include "polar_line.hpp"
 #include "hough_accum.hpp"
@@ -10,11 +11,23 @@ Hough_accum::~Hough_accum() {
   dealloc_accum();
 }
 
-Hough_accum::Hough_accum(int m_rows, int m_cols) :
-    rows(m_rows),
-    cols(m_cols) {
+Hough_accum::Hough_accum(Image *image, int threshold) :
+    rows(image->image_header->rows),
+    cols(image->image_header->cols) {
   max_rho = round(sqrt(rows * rows + cols * cols)) + rho_buffer;
   alloc_accum();
+  for (int row = 0; row < image->image_header->rows; row++) {
+    for (int col = 0; col < image->image_header->cols; col++) {
+      Point *point = new Point(row, col, rows, cols);
+      //hist[value - min_val]++;
+      float value = image->get(row, col);
+      if (value < -threshold || value > threshold) {
+        for (int theta = 0; theta < Hough_trig::nthetas; theta++) {
+          add(theta, point->to_rho(theta),abs(value));
+        }
+      }
+    }
+  }
 }
 
 void Hough_accum::add(int theta, int rho, int value) {
@@ -32,7 +45,7 @@ void Hough_accum::alloc_accum() {
   }
 }
 
-int choose_threshold(cv_enums::CV_threshold_type threshold_type) {
+int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
     return 5;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {

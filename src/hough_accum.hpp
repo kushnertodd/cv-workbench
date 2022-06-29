@@ -30,7 +30,7 @@ class Hough_accum {
   Variance_stats variance_stats;
 
   ~Hough_accum();
-  Hough_accum(int m_rows, int m_cols);
+  Hough_accum(Image *image, int threshold);
   void add(int theta, int rho, int value);
   void alloc_accum();
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);

@@ -16,10 +16,10 @@ using namespace std;
 Hough::~Hough() {
 }
 
-Hough::Hough(int m_rows, int m_cols) :
-    rows(m_rows),
-    cols(m_cols) {
-  accum = new Hough_accum(rows, cols);
+Hough::Hough(Image* image, int threshold) :
+    rows(image->image_header->rows),
+    cols(image->image_header->cols) {
+  accum = new Hough_accum(image, threshold);
 }
 
 void Hough::find_peaks() {

@@ -265,14 +265,6 @@ Image *Image::read_binary(string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
     errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno)) + "'");
-/*    if ( errno != 0 )
-    {
-      cout << "opening file " << path << endl;
-      perror(path.c_str());
-      //exit(1);
-    } else {
-      cout << "errno seems to be okay " << endl;
-    }*/
     return nullptr;
   }
 
