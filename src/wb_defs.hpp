@@ -10,7 +10,9 @@
 
 using namespace std;
 
-enum Cv_data_type_enum {
+namespace cv_enums {
+
+enum CV_data_type {
   // maybe BINARY_IMAGE for morphological operations
   CONTOUR, // boundary polygon
   CONVOLUTION_KERNEL,
@@ -29,13 +31,13 @@ enum Cv_data_type_enum {
   UNDEFINED_DATA_TYPE
 };
 
-enum Cv_image_file_format_enum {
+enum CV_image_file_format {
   BINARY, // includes header [int rows, int cols, int components]
   JPEG,
   UNDEFINED_FILE_FORMAT
 };
 
-enum Cv_image_depth_enum {
+enum CV_image_depth {
   CV_8U,
   CV_8S,
   CV_16U,
@@ -47,13 +49,15 @@ enum Cv_image_depth_enum {
   UNDEFINED_IMAGE_DEPTH
 };
 
-enum Cv_repository_type_enum {
-  BERKELEY_DB, // separate file for each Cv_data_type_enum
+enum CV_repository_type {
+  BERKELEY_DB, // separate file for each CV_data_type
   FILESYSTEM, // directory, filename
   INTERNET, // endpoint that produced binary data
   EXPERIMENT_STEP, // output of experiment step
   UNDEFINED_REPOSITORY_TYPE
 };
+
+}
 
 // built-in types
 // 0..255

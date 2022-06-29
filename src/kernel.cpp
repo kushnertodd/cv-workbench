@@ -20,19 +20,19 @@ Kernel::~Kernel() {
   }
 }
 
-Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, Cv_image_depth_enum m_depth) :
+Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, cv_enums::CV_image_depth m_depth) :
     kernel_rows(m_kernel_rows),
     kernel_cols(m_kernel_cols),
     depth(m_depth),
     size(kernel_rows * kernel_cols) {
   switch (depth) {
-    case CV_32S:
+    case cv_enums::CV_32S:
       buf_32S = new pixel_32S[size];
       for (int i = 0; i < size; i++)
         buf_32S[i] = 0;
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       buf_32F = new pixel_32F[size];
       for (int i = 0; i < size; i++)
         buf_32F[i] = 0.0;
@@ -44,13 +44,13 @@ Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, Cv_image_depth_enum m_depth
 }
 
 Kernel *Kernel::create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S) {
-  Kernel *kernel = new Kernel(kernel_rows, kernel_cols, CV_32S);
+  Kernel *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32S);
   kernel->add_32S(buf_32S, kernel->size);
   return kernel;
 }
 
 Kernel *Kernel::create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F) {
-  Kernel *kernel = new Kernel(kernel_rows, kernel_cols, CV_32F);
+  Kernel *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32F);
   kernel->add_32F(buf_32F, kernel->size);
   return kernel;
 }
@@ -61,10 +61,10 @@ int Kernel::row_col_to_index(int row, int col) {
 
 pixel_32F Kernel::get(int row, int col) {
   switch (depth) {
-    case CV_32S:
+    case cv_enums::CV_32S:
       return buf_32S[row_col_to_index(row, col)];
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       return buf_32F[row_col_to_index(row, col)];
 
     default:
@@ -83,11 +83,11 @@ pixel_32S Kernel::get_32F(int row, int col) {
 void Kernel::set(int row, int col, pixel_32F value) {
   switch (depth) {
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       buf_32S[row_col_to_index(row, col)] = value;
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       buf_32F[row_col_to_index(row, col)] = value;
       break;
 
@@ -121,8 +121,8 @@ Image *Kernel::convolve(Image *src) {
   int rows = header->rows;
   int cols = header->cols;
 
-  // output image is CV_32F if either the image and kernel are CV_32F, else it is CV_32S
-  Cv_image_depth_enum out_depth = (header->depth == CV_32F || depth == CV_32F ? CV_32F : CV_32S);
+  // output image is cv_enums::CV_32F if either the image and kernel are cv_enums::CV_32F, else it is cv_enums::CV_32S
+  cv_enums::CV_image_depth out_depth = (header->depth == cv_enums::CV_32F || depth == cv_enums::CV_32F ? cv_enums::CV_32F : cv_enums::CV_32S);
   Image *out = new Image(header->rows, header->cols,
                          header->components, out_depth);
   int rows_half = (kernel_rows + 1) / 2;

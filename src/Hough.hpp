@@ -13,11 +13,11 @@ using namespace std;
 class Hough {
  public:
   string hough_filename;
-//    static const int theta_inc = 3;
-//    static const int nthetas = 180 / theta_inc;
-//    static const int rho_buffer = 10;
+    static const int theta_inc = 3;
+    static const int nthetas = 180 / theta_inc;
+    static const int rho_buffer = 10;
   Hough_accum *accum;
-//    int max_rhos;
+    int max_rhos;
   int rows;
   int cols;
 

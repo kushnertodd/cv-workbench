@@ -9,7 +9,7 @@
 
 class Image_buffer {
  public:
-Cv_image_depth_enum depth;
+Cv_image_depth depth;
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_BUFFER_HPP_

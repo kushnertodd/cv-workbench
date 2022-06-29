@@ -44,9 +44,9 @@ class Image {
   // pixel_16F *buf_16F; // unsupported
 
   virtual ~Image();
-  Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth);
+  Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
   Image(Image_header *image_header);
-  static Image *clone_image(Image *image, Cv_image_depth_enum depth);
+  static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
   void init();
 
   int get_rows();
@@ -54,7 +54,7 @@ class Image {
   int get_components();
   int get_row_stride();
   int get_npixels();
-  Cv_image_depth_enum get_depth();
+  cv_enums::CV_image_depth get_depth();
 
   int row_col_to_index(int row, int col);
 
@@ -85,7 +85,7 @@ class Image {
                    float upper_out);
   static Image *scale_image(Image *image, float lower_in,
                                  float upper_in, float lower_out,
-                                 float upper_out, Cv_image_depth_enum depth);
+                                 float upper_out, cv_enums::CV_image_depth depth);
   string to_string();
 };
 

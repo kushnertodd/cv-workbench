@@ -20,9 +20,9 @@ Operator_transform_intensity_map::Operator_transform_intensity_map() {}
      depth_enum depth
        depth of output image
        optional: defaults to input image depth
-         CV_8U   unsigned byte
-         CV_32S  int
-         CV_32F  float
+         cv_enums::CV_8U   unsigned byte
+         cv_enums::CV_32S  int
+         cv_enums::CV_32F  float
      real lower_in
      real upper_in
      real lower_out
@@ -55,7 +55,7 @@ void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input
     errors.add("Operator_transform_intensity_map::run:transform-intensity-map: missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run:transform-intensity-map: too many output data sources");
-  Cv_image_depth_enum depth;
+  cv_enums::CV_image_depth depth;
   double lower_in;
   double upper_in;
   double lower_out;
@@ -69,7 +69,7 @@ void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input
     saw_depth = true;
     string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
     depth = Workbench_utils::string_to_image_depth_enum(depth_str);
-    if (depth == UNDEFINED_IMAGE_DEPTH) {
+    if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH) {
       errors.add("Operator_transform_intensity_map::run: undefined depth value");
     }
   }

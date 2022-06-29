@@ -28,7 +28,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   if (json_id != nullptr) {
     id = json_object_get_int(json_id);
   }
-  Cv_data_type_enum data_type;
+  cv_enums::CV_data_type data_type;
   json_object *json_type =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "type",
                       json_type_string, errors);

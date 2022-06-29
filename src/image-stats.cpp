@@ -2,10 +2,11 @@
 #include <cstdlib>
 #include <iostream>
 #include "variance_stats.hpp"
+#include "hough_trig.hpp"
 
 using namespace std;
 
-enum Cv_image_depth_enum {
+enum CV_image_depth {
   CV_8U,
   CV_8S,
   CV_16U,
@@ -17,7 +18,7 @@ enum Cv_image_depth_enum {
   UNDEFINED_IMAGE_DEPTH
 };
 
-string depth_to_string(Cv_image_depth_enum depth) {
+string depth_to_string( CV_image_depth depth) {
   if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
@@ -69,6 +70,10 @@ void stat_32F(pixel_32F *buf_32F, int rows, int cols) {
 }
 
 bool debug = true;
+int Hough_trig::theta_inc;
+int Hough_trig::nthetas;
+float *Hough_trig::hough_cos;
+float *Hough_trig::hough_sin;
 int main(int argc, char **argv) {
 
   if (argc < 2)
@@ -91,7 +96,7 @@ int main(int argc, char **argv) {
 
   int npixels = rows * cols * components;
   cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
-       << depth_to_string((Cv_image_depth_enum) depth)
+       << depth_to_string(( CV_image_depth) depth)
        << " npixels " << npixels << endl;
 
   pixel_8U *buf_8U;

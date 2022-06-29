@@ -14,17 +14,17 @@ extern bool debug;
 using namespace std;
 
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
-                                                                     Cv_data_type_enum m_cv_data_type_enum) :
-    Data_source_descriptor(m_id, FILESYSTEM, m_cv_data_type_enum) {}
+                                                                     cv_enums::CV_data_type m_cv_data_type) :
+    Data_source_descriptor(m_id, cv_enums::FILESYSTEM, m_cv_data_type) {}
 string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
-    case BINARY:
+    case cv_enums::BINARY:
       return Image::read_binary(path, errors);
       break;
-    case JPEG:
+    case cv_enums::JPEG:
       return Image::read_jpeg(path, errors);
       break;
     default:
@@ -39,10 +39,10 @@ void Filesystem_data_source_descriptor::write_json(string &json, Errors &errors)
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
-    case BINARY:
+    case cv_enums::BINARY:
       image->write_binary(path, errors);
       break;
-    case JPEG:
+    case cv_enums::JPEG:
       image->write_jpeg(path, errors);
       break;
     default:
@@ -54,7 +54,7 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                                  int id,
-                                                                                 Cv_data_type_enum data_type,
+                                                                                 cv_enums::CV_data_type data_type,
                                                                                  Errors &errors) {
   if (debug)
     cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
@@ -70,9 +70,9 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
                       errors);
   if (json_file_format != nullptr) {
     string file_format_str = json_object_get_string(json_file_format);
-    Cv_image_file_format_enum file_format =
+    cv_enums::CV_image_file_format file_format =
         Workbench_utils::string_to_file_format_enum(file_format_str);
-    if (file_format == UNDEFINED_FILE_FORMAT)
+    if (file_format == cv_enums::UNDEFINED_FILE_FORMAT)
       errors.add("Filesystem_data_source_descriptor::json_parse: invalid file format '" + file_format_str + "'");
     else
       filesystem_data_source_descriptor->file_format = file_format;

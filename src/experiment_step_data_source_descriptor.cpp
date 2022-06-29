@@ -13,8 +13,8 @@ extern bool debug;
 using namespace std;
 
 Experiment_step_data_source_descriptor::Experiment_step_data_source_descriptor(int m_id,
-                                                                               Cv_data_type_enum m_cv_data_type_enum) :
-    Data_source_descriptor(m_id, EXPERIMENT_STEP, m_cv_data_type_enum) {}
+                                                                               cv_enums::CV_data_type m_cv_data_type) :
+    Data_source_descriptor(m_id, cv_enums::EXPERIMENT_STEP, m_cv_data_type) {}
 string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return nullptr; }
 Image *Experiment_step_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Histogram *Experiment_step_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
@@ -25,7 +25,7 @@ void Experiment_step_data_source_descriptor::write_histogram(Histogram *histogra
 void Experiment_step_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                                            int id,
-                                                                                           Cv_data_type_enum data_type,
+                                                                                           cv_enums::CV_data_type data_type,
                                                                                            Errors &errors) {
   if (debug)
     cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "

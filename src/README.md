@@ -439,12 +439,12 @@ For example, image formats will be specified using __OpenCV__ pixel types as fol
 
 |depth|bit-width|type-specifier|minimum|maximum
 |-----|---------|--------------|-------|-------
-|CV_8U|8|unsigned|0|255
+|cv_enums::CV_8U|8|unsigned|0|255
 |CV_8S|8|signed|-128|127
 |CV_16U|16|unsigned|0|65535
 |CV_16S|16|signed|-32768|32767
-|CV_32S|32|signed|-2147483648|2147483647
-|CV_32F|32|float|-FLT_MAX|FLT_MAX
+|cv_enums::CV_32S|32|signed|-2147483648|2147483647
+|cv_enums::CV_32F|32|float|-FLT_MAX|FLT_MAX
 |CV_64F|64|float|-DBL_MAX|DBL_MAX
 
 
@@ -470,7 +470,7 @@ These are operators that perform a linear scaling on image pixels. The parameter
 
 |Parameter|Description|Default
 |---------|-----------|-------
-|depth|output image depth, e.g., CV_8U, CV_32F.|same as input image
+|depth|output image depth, e.g., cv_enums::CV_8U, cv_enums::CV_32F.|same as input image
 |lower_in|lower input image pixel value
 |upper_in|upper input image pixel value
 |lower_out|lower output image pixel value
@@ -489,8 +489,8 @@ That is, all pixel values less than lower_in are *clipped* to lower_out,
 all pixel values greater than upper_in are *clipped* to upper_out,
 and all others are scaled by the equation above.
 
-When the output image depth is CV_8U,
-when the input image depth is CV_32S or CV_32F 
+When the output image depth is cv_enums::CV_8U,
+when the input image depth is cv_enums::CV_32S or cv_enums::CV_32F 
 are copied to the
 output image, pixel values from 0 to 255 are copied properly
 but the result of copying pixel values < 0 or > 255 are undefined.

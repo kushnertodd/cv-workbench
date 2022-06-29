@@ -14,7 +14,7 @@ Experiment::~Experiment() {
 Experiment::Experiment() {}
 /**
 * Parse experiment json
-* @param jobj  json-c parsed json
+* @param jobj  json-cR parsed json
 * @param errors experiment parse errors
 */
 Experiment *Experiment::json_parse(json_object *jobj, Errors &errors) {

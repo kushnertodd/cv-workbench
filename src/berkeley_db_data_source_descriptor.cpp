@@ -13,8 +13,8 @@ using namespace std;
 extern bool debug;
 
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
-                                   Cv_data_type_enum m_cv_data_type_enum) :
-    Data_source_descriptor(m_id, BERKELEY_DB, m_cv_data_type_enum) {}
+                                   cv_enums::CV_data_type m_cv_data_type) :
+    Data_source_descriptor(m_id,cv_enums::BERKELEY_DB, m_cv_data_type) {}
 
 string Berkeley_db_data_source_descriptor::read_json(Errors &errors){return "";}
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors){return nullptr;}
@@ -27,7 +27,7 @@ void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &error
 
 Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                       int id,
-                                                      Cv_data_type_enum data_type, Errors &errors) {
+                                                      cv_enums::CV_data_type data_type, Errors &errors) {
   if (debug)
     cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
          << data_type << endl;

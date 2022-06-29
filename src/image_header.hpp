@@ -16,9 +16,9 @@ class Image_header {
   int components; // we're only supported 1 grayscale component now
   int row_stride; // for jpeg
   int npixels;
-  Cv_image_depth_enum depth;
+  cv_enums::CV_image_depth depth;
   Image_header(int m_rows, int m_cols, int m_components,
-               Cv_image_depth_enum m_depth);
+               cv_enums::CV_image_depth m_depth);
   Image_header(Image_header *image_header);
   static Image_header *read_header(FILE *fp, string path, Errors &errors);
   void write_header(FILE *fp, string path, Errors &errors);

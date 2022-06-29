@@ -29,16 +29,17 @@
  */
 class Hough_trig {
  public:
-  int theta_inc;
-  int nthetas;
-  float *hough_cos;
-  float *hough_sin;
+  static int theta_inc;
+  static int nthetas;
+  static float *hough_cos;
+  static float *hough_sin;
 
-  Hough_trig(int m_theta_inc);
+  Hough_trig();
+  static void init(int m_theta_inc);
   static float deg_to_rad(float deg);
-  int index_to_deg(int index);
-  float cos(int theta_index);
-  float sin(int theta_index);
+  static int index_to_deg(int index);
+  static float cos(int theta_index);
+  static float sin(int theta_index);
 };
 
 #endif //SRC__HOUGH_TRIG_HPP_

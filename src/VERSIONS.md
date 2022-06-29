@@ -69,7 +69,7 @@ segvs at end)
 - `examples/c/image-dump.cpp` dumps above binary file  
 ```
 ./image-dump image-test.bin
-  rows 2 cols 2 components 1 depth CV_8U npixels 4
+  rows 2 cols 2 components 1 depth cv_enums::CV_8U npixels 4
   0x74 0x65 0x73 0x74
 ```
 

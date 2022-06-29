@@ -12,8 +12,6 @@
 
 using namespace std;
 
-extern Hough_trig hough_trig;
-
 Hough::~Hough() {
   dealloc_accum();
 }
@@ -26,13 +24,12 @@ Hough::Hough(int m_rows, int m_cols) :
   //alloc_accum();
 }
 
-/*
 void Hough::alloc_accum() {
-  for (int i = 0; i < nthetas; i++) {
+/*  for (int i = 0; i < nthetas; i++) {
     accum[i] = new int[max_rhos];
     for (int j = 0; j < max_rhos; j++)
       accum[i][j] = 0;
-  }
+  }*/
 }
 
 int Hough::rho_to_index(int rho) {
@@ -48,19 +45,19 @@ int Hough::theta_rho_to_index(int theta, int rho) {
 }
 
 void Hough::assign_accum(int theta, int rho, int value) {
-  accum[theta][rho + max_rhos / 2] += value;
+//  accum[theta][rho + max_rhos / 2] += value;
 }
 
 void Hough::dealloc_accum() {
-  for (int i = 0; i < nthetas; i++)
-    delete accum[i];
+//  for (int i = 0; i < nthetas; i++)
+//    delete accum[i];
 }
 
 int Hough::row_col_to_rho(int row, int col, int theta) {
   int x = col - cols / 2;
   int y = row - rows / 2;
-  float cos = hough_trig.cos(theta);
-  float sin = hough_trig.sin(theta);
+  float cos = Hough_trig::cos(theta);
+  float sin = Hough_trig::sin(theta);
   float rho = x * cos + y * sin;
   int rho_round = round(rho);
   return rho_round;
@@ -75,11 +72,11 @@ void Hough::write(string filename, string delim) {
     ofs << rho << delim;
   ofs << endl;
   for (int theta = 0; theta < nthetas; theta++) {
-    ofs << hough_trig.index_to_deg(theta) << delim;
+    ofs << Hough_trig::index_to_deg(theta) << delim;
     for (int rho = 0; rho < max_rhos; rho++) {
-      ofs << accum[theta][rho] << delim;
-      int value = accum[theta][rho];
-      max_val = max(max_val, value);
+//      ofs << accum[theta][rho] << delim;
+//      int value = accum[theta][rho];
+//      max_val = max(max_val, value);
     }
     ofs << endl;
   }
@@ -101,7 +98,7 @@ void Hough::read(string filename) {
   }
   ifs.close();
 }
-*/
+
 
 
 

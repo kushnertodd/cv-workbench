@@ -16,10 +16,10 @@ using namespace std;
 
 
 /*
-string depth_to_string(Cv_image_depth_enum depth) {
-  if (depth == CV_8U) return string("CV_8U");
-  else if (depth == CV_32S) return string("CV_32S");
-  else if (depth == CV_32F) return string("CV_32F");
+string depth_to_string( cv_enums::CV_image_depth depth) {
+  if (depth == cv_enums::CV_8U) return string("cv_enums::CV_8U");
+  else if (depth == cv_enums::CV_32S) return string("cv_enums::CV_32S");
+  else if (depth == cv_enums::CV_32F) return string("cv_enums::CV_32F");
   else return "invalid depth";
 }
 */
@@ -177,7 +177,7 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols, string filename) {
       static const int max_value = 100;
       //hist[value - min_val]++;
       if (value < min_value || value > max_value) {
-        for (int theta = 0; theta < hough_trig.nthetas; theta++) {
+        for (int theta = 0; theta < Hough_trig::nthetas; theta++) {
           hough.assign_accum(theta, hough.row_col_to_rho(row, col, theta),
                              abs(value));
         }
@@ -198,8 +198,12 @@ void stat_32F(pixel_32F *buf_32F, int rows, int cols) {
 }
 
 
-Hough_trig hough_trig(3);
+//Hough_trig hough_trig(3);
 bool debug = true;
+int Hough_trig::theta_inc = 3;
+int Hough_trig::nthetas = 0;
+float *Hough_trig::hough_cos = nullptr;
+float *Hough_trig::hough_sin = nullptr;
 int main(int argc, char **argv) {
 
   if (argc < 2)
@@ -246,10 +250,10 @@ int main(int argc, char **argv) {
 //  int min_val = INT32_MAX;
 //  int max_val = INT32_MIN;
   switch (depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       break;
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       buf_32S = new pixel_32S[npixels];
       for (int i = 0; i < rows * cols; i++) buf_32S[i] = 0;
       newLen = fread(buf_32S, sizeof(pixel_32S), npixels, fp);
@@ -267,7 +271,7 @@ int main(int argc, char **argv) {
       stat_32S(buf_32S, rows, cols, filename);
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       break;
 
     default:

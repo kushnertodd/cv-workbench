@@ -2,6 +2,7 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include "hough_trig.hpp"
 #include "hough_accum.hpp"
 
 Hough_accum::~Hough_accum() {
@@ -16,8 +17,8 @@ Hough_accum::Hough_accum(int m_rows, int m_cols) :
 }
 
 void Hough_accum::alloc_accum() {
-  accum = new int *[hough_trig.nthetas];
-  for (int i = 0; i < hough_trig.nthetas; i++) {
+  accum = new int *[Hough_trig::nthetas];
+  for (int i = 0; i < Hough_trig::nthetas; i++) {
     accum[i] = new int[max_rhos];
     for (int j = 0; j < max_rhos; j++)
       accum[i][j] = 0;
@@ -41,15 +42,15 @@ void Hough_accum::assign_accum(int theta, int rho, int value) {
 }
 
 void Hough_accum::dealloc_accum() {
-  for (int i = 0; i < hough_trig.nthetas; i++)
+  for (int i = 0; i < Hough_trig::nthetas; i++)
     delete accum[i];
 }
 
 int Hough_accum::row_col_to_rho(int row, int col, int theta) {
   int x = col - cols / 2;
   int y = row - rows / 2;
-  float cos = hough_trig.cos(theta);
-  float sin = hough_trig.sin(theta);
+  float cos = Hough_trig::cos(theta);
+  float sin = Hough_trig::sin(theta);
   float rho = x * cos + y * sin;
   int rho_round = round(rho);
   return rho_round;
@@ -63,8 +64,8 @@ void Hough_accum::write(string filename, string delim) {
   for (int rho = 0; rho < max_rhos; rho++)
     ofs << rho << delim;
   ofs << endl;
-  for (int theta = 0; theta < hough_trig.nthetas; theta++) {
-    ofs << hough_trig.index_to_deg(theta) << delim;
+  for (int theta = 0; theta < Hough_trig::nthetas; theta++) {
+    ofs << Hough_trig::index_to_deg(theta) << delim;
     for (int rho = 0; rho < max_rhos; rho++) {
       ofs << accum[theta][rho] << delim;
       int value = accum[theta][rho];

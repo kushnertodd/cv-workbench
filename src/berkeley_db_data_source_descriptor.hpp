@@ -21,7 +21,7 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
  public:
   int ref_id; // database key
   Berkeley_db_data_source_descriptor(int m_id,
-                                     Cv_data_type_enum m_cv_data_type_enum);
+                                     cv_enums::CV_data_type m_cv_data_type);
   string read_json(Errors &errors);
   Image *read_image(Errors &errors);
   Histogram *read_histogram(Errors &errors);
@@ -32,7 +32,7 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   void write_hough(Hough *hough, Errors &errors);
   static Berkeley_db_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                         int id,
-                                                        Cv_data_type_enum data_type,
+                                                        cv_enums::CV_data_type data_type,
                                                         Errors &errors);
   string to_string();
 };

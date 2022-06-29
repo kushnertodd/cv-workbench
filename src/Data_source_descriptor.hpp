@@ -7,8 +7,6 @@
 
 #include <string>
 #include "wb_defs.hpp"
-#include "histogram.hpp"
-#include "hough.hpp"
 #include "image.hpp"
 
 using namespace std;
@@ -16,19 +14,15 @@ using namespace std;
 class Data_source_descriptor {
  public:
   int id;
-  Cv_repository_type_enum repository_type;
-  Cv_data_type_enum data_type;
+  cv_enums::CV_repository_type repository_type;
+  cv_enums::CV_data_type data_type;
   virtual ~Data_source_descriptor();
-  Data_source_descriptor(int m_id, Cv_repository_type_enum m_repository_type,
-                         Cv_data_type_enum m_cv_data_type_enum);
+  Data_source_descriptor(int m_id, cv_enums::CV_repository_type m_repository_type,
+                         cv_enums::CV_data_type m_cv_data_type);
   virtual string read_json(Errors &errors) = 0;
   virtual Image *read_image(Errors &errors) = 0;
-  virtual Histogram *read_histogram(Errors &errors) = 0;
-  virtual Hough *read_hough(Errors &errors) = 0;
   virtual void write_json(string &json, Errors &errors) = 0;
   virtual void write_image(Image *image, Errors &errors) = 0;
-  virtual void write_histogram(Histogram *histogram, Errors &errors) = 0;
-  virtual void write_hough(Hough *hough, Errors &errors) = 0;
   virtual string to_string();
 };
 

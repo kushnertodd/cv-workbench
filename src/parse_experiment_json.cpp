@@ -17,9 +17,13 @@ This parser makes use of all the functions which reads the value of a json objec
 
 //bool debug = true;
 bool debug = false;
-Hough_trig hough_trig(3);
+int Hough_trig::theta_inc;
+int Hough_trig::nthetas;
+float *Hough_trig::hough_cos;
+float *Hough_trig::hough_sin;
 
 int main(int argc, char **argv) {
+  Hough_trig::init(3);
   if (argc < 2) {
     cout << "usage: %s json-template-filename" << argv[0] << endl;
     exit(0);

@@ -5,8 +5,11 @@
 #include <cmath>
 #include "hough_trig.hpp"
 
-Hough_trig::Hough_trig(int m_theta_inc) :
-    theta_inc(m_theta_inc) {
+Hough_trig::Hough_trig() {
+}
+
+void Hough_trig::init(int m_theta_inc) {
+  theta_inc = m_theta_inc;
   nthetas = 180 / theta_inc;
   hough_cos = new float[nthetas];
   hough_sin = new float[nthetas];
@@ -25,7 +28,7 @@ float Hough_trig::deg_to_rad(float deg) {
 }
 
 int Hough_trig::index_to_deg(int index) {
-  return index * theta_inc;
+  return index * Hough_trig::theta_inc;
 }
 
 float Hough_trig::cos(int theta_index) {

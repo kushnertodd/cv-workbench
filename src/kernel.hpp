@@ -19,7 +19,7 @@ class Kernel {
  public:
   int kernel_rows;
   int kernel_cols;
-  Cv_image_depth_enum depth;
+  cv_enums::CV_image_depth depth;
   int size;
 
   // image stores one buffer per image_header->depth
@@ -27,7 +27,7 @@ class Kernel {
   pixel_32F *buf_32F;
 
   ~Kernel();
-  Kernel(int m_kernel_rows, int m_kernel_cols, Cv_image_depth_enum m_depth);
+  Kernel(int m_kernel_rows, int m_kernel_cols, cv_enums::CV_image_depth m_depth);
   static Kernel *create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S);
   static Kernel *create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F);
 

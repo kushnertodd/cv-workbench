@@ -5,6 +5,7 @@
 #include "wb_utils.hpp"
 #include "wb_defs.hpp"
 #include "file_utils.hpp"
+#include "hough_trig.hpp"
 
 using namespace std;
 
@@ -14,6 +15,11 @@ void error_exit(string message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
+
+int Hough_trig::theta_inc;
+int Hough_trig::nthetas;
+float *Hough_trig::hough_cos;
+float *Hough_trig::hough_sin;
 
 int main(int argc, char **argv) {
 
@@ -27,8 +33,8 @@ int main(int argc, char **argv) {
   if (!Workbench_utils::string_to_int(string(argv[3]), cols))
     error_exit("invalid cols value: '" + string(argv[3]) + "'");
   string depth_str = argv[4];
-  Cv_image_depth_enum depth = Workbench_utils::string_to_image_depth_enum(depth_str);
-  if (depth == UNDEFINED_IMAGE_DEPTH)
+  cv_enums::CV_image_depth depth = Workbench_utils::string_to_image_depth_enum(depth_str);
+  if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH)
     error_exit("invalid depth value: '" + depth_str + "'");
   string image_file = argv[5];
 
@@ -41,7 +47,7 @@ int main(int argc, char **argv) {
   vector<string> tokens = File_utils::string_split(data);
   Errors errors;
 
-  if (depth == CV_8U) {
+  if (depth == cv_enums::CV_8U) {
     Image *image_8U = new Image(rows, cols, 1, depth);
     vector<int> values;
     for (string token: tokens) {
@@ -62,7 +68,7 @@ int main(int argc, char **argv) {
 //      cout << i << ": " << buf_8U[i] << endl;
     image_8U->add_8U(buf_8U, size, errors);
     image_8U->write_binary(image_file, errors);
-  } else if (depth == CV_32S) {
+  } else if (depth == cv_enums::CV_32S) {
     Image *image_32S = new Image(rows, cols, 1, depth);
     vector<int> values;
     for (string token: tokens) {
@@ -80,7 +86,7 @@ int main(int argc, char **argv) {
     }
     image_32S->add_32S(buf_32S, size, errors);
     image_32S->write_binary(image_file, errors);
-  } else if (depth == CV_32F) {
+  } else if (depth == cv_enums::CV_32F) {
     Image *image_32F = new Image(rows, cols, 1, depth);
     vector<float> values;
     for (string token: tokens) {

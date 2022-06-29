@@ -13,8 +13,6 @@
 
 using namespace std;
 
-extern Hough_trig hough_trig;
-
 class Hough_accum {
  public:
   static const int rho_buffer = 10;

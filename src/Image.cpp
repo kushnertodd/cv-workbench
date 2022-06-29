@@ -56,7 +56,7 @@ Image::Image(Image_header *m_image_header) :
   init();
 }
 
-Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_depth) :
+Image::Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth) :
     next_pixel(0) {
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
@@ -64,7 +64,7 @@ Image::Image(int m_rows, int m_cols, int m_components, Cv_image_depth_enum m_dep
   init();
 }
 
-Image *Image::clone_image(Image *image, Cv_image_depth_enum depth) {
+Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   if (debug)
     cout << "Image::clone: depth " << depth << " " << image->to_string() << endl;
   Image_header *image_header = new Image_header(image->get_rows(),
@@ -76,19 +76,19 @@ Image *Image::clone_image(Image *image, Cv_image_depth_enum depth) {
 
 void Image::init() {
   switch (image_header->depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       buf_8U = new pixel_8U[image_header->npixels];
       for (int i = 0; i < image_header->npixels; i++)
         buf_8U[i] = 0;
       break;
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       buf_32S = new pixel_32S[image_header->npixels];
       for (int i = 0; i < image_header->npixels; i++)
         buf_32S[i] = 0;
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       buf_32F = new pixel_32F[image_header->npixels];
       for (int i = 0; i < image_header->npixels; i++)
         buf_32F[i] = 0.0;
@@ -104,7 +104,7 @@ int Image::get_cols() { return image_header->cols; }
 int Image::get_components() { return image_header->components; }
 int Image::get_row_stride() { return image_header->row_stride; }
 int Image::get_npixels() { return image_header->npixels; }
-Cv_image_depth_enum Image::get_depth() { return image_header->depth; }
+ cv_enums::CV_image_depth Image::get_depth() { return image_header->depth; }
 
 int Image::row_col_to_index(int row, int col) {
   return row * image_header->row_stride + col;
@@ -112,13 +112,13 @@ int Image::row_col_to_index(int row, int col) {
 
 pixel_32F Image::get(int row, int col) {
   switch (image_header->depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       return buf_8U[row_col_to_index(row, col)];
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       return buf_32S[row_col_to_index(row, col)];
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       return buf_32F[row_col_to_index(row, col)];
 
     default:
@@ -141,15 +141,15 @@ pixel_32S Image::get_32F(int row, int col) {
 void Image::set(int row, int col, pixel_32F value) {
   bounds.add(value);
   switch (image_header->depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       buf_8U[row_col_to_index(row, col)] = value;
       break;
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       buf_32S[row_col_to_index(row, col)] = value;
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       buf_32F[row_col_to_index(row, col)] = value;
       break;
 
@@ -183,15 +183,15 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
   for (int i = 0; i < count; i++) {
     bounds.add(src[i]);
     switch (image_header->depth) {
-      case CV_8U:
+      case cv_enums::CV_8U:
         buf_8U[next_pixel++] = src[i];
         break;
 
-      case CV_32S:
+      case cv_enums::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
 
-      case CV_32F:
+      case cv_enums::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
 
@@ -213,15 +213,15 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   for (int i = 0; i < count; i++) {
     bounds.add(src[i]);
     switch (image_header->depth) {
-      case CV_8U:
+      case cv_enums::CV_8U:
         errors.add("Image::add_32S: cannot add to 8U buffer");
         break;
 
-      case CV_32S:
+      case cv_enums::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
 
-      case CV_32F:
+      case cv_enums::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
 
@@ -241,15 +241,15 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   for (int i = 0; i < count; i++) {
     bounds.add(src[i]);
     switch (image_header->depth) {
-      case CV_8U:
+      case cv_enums::CV_8U:
         errors.add("Image::add_32F: cannot add to 8U buffer");
         break;
 
-      case CV_32S:
+      case cv_enums::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
 
-      case CV_32F:
+      case cv_enums::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
 
@@ -283,7 +283,7 @@ Image *Image::read_binary(string path, Errors &errors) {
   int newLen;
 
   switch (image_header->depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       newLen = fread(image->buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 8U image data in '" + path + "'");
@@ -293,7 +293,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         image->bounds.add(image->buf_8U[i]);
       break;
 
-    case CV_32S:
+    case cv_enums::CV_32S:
       newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 32S image data in '" + path + "'");
@@ -303,7 +303,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         image->bounds.add(image->buf_32S[i]);
       break;
 
-    case CV_32F:
+    case cv_enums::CV_32F:
       newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::read_binary: cannot read 32F image data in '" + path + "'");
@@ -360,7 +360,7 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   /* Step 5: Start decompressor */
   (void) jpeg_start_decompress(&cinfo);
   /* JSAMPLEs per row in output buffer */
-  Image *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_8U);
+  Image *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, cv_enums::CV_8U);
   /* Make a one-row-high sample array that will go away when done with image */
   buffer = (*cinfo.mem->alloc_sarray)
       ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
@@ -389,19 +389,19 @@ void Image::write_binary(string path, Errors &errors) {
   // Write the data from the buffer.
   int newLen;
   switch (image_header->depth) {
-    case CV_8U:
+    case cv_enums::CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 8U image data to '" + path + "'");
       }
       break;
-    case CV_32S:
+    case cv_enums::CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 32S image data to '" + path + "'");
       }
       break;
-    case CV_32F:
+    case cv_enums::CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
         errors.add("Image::write_binary: cannot write 32F image data to '" + path + "'");
@@ -414,7 +414,7 @@ void Image::write_binary(string path, Errors &errors) {
 }
 
 void Image::write_jpeg(string path, Errors &errors) {
-  if (get_depth() != CV_8U) {
+  if (get_depth() != cv_enums::CV_8U) {
     errors.add("Image::write_jpeg: cannot write "
                    + Workbench_utils::image_depth_enum_to_string(get_depth())
                    + " image");
@@ -506,7 +506,7 @@ float Image::get_scaled(int row, int col, float lower_in,
  */
 Image *Image::scale_image(Image *image, float lower_in,
                           float upper_in, float lower_out,
-                          float upper_out, Cv_image_depth_enum depth) {
+                          float upper_out, cv_enums::CV_image_depth depth) {
   Image *convert_image = clone_image(image, depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {

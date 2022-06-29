@@ -32,46 +32,46 @@ string Workbench_utils::char_to_string(char c) {
   return s;
 }
 
-string Workbench_utils::data_type_enum_to_string(Cv_data_type_enum type) {
+string Workbench_utils::data_type_enum_to_string( cv_enums::CV_data_type type) {
   switch (type) {
-  case CONTOUR:
+  case cv_enums::CONTOUR:
     return "contour";
-  case CONVOLUTION_KERNEL:
+  case cv_enums::CONVOLUTION_KERNEL:
     return "convolution kernel";
-  case CONVOLVED_IMAGE:
+  case cv_enums::CONVOLVED_IMAGE:
     return "convolved image";
-  case CORRELATED_IMAGE:
+  case cv_enums::CORRELATED_IMAGE:
     return "correlated image";
-  case IMAGE:
+  case cv_enums::IMAGE:
     return "image";
-  case JSON_EXPERIMENT:
+  case cv_enums::JSON_EXPERIMENT:
     return "json experiment";
-  case JSON_EXPERIMENT_RESULTS:
+  case cv_enums::JSON_EXPERIMENT_RESULTS:
     return "json experiment results";
-  case HISTOGRAM:
+  case cv_enums::HISTOGRAM:
     return "histogram";
-  case HOUGH:
+  case cv_enums::HOUGH:
     return "hough";
-  case PATTERN_FEATURE:
+  case cv_enums::PATTERN_FEATURE:
     return "pattern feature";
-  case PATTERN_IMAGE:
+  case cv_enums::PATTERN_IMAGE:
     return "pattern image";
-  case PYRAMID:
+  case cv_enums::PYRAMID:
     return "pyramid";
-  case QUADTREE:
+  case cv_enums::QUADTREE:
     return "quadtree";
-  case REGION:
+  case cv_enums::REGION:
     return "region";
   default:
     return "unknown data type";
   }
 }
 
-string Workbench_utils::file_format_to_string(Cv_image_file_format_enum type) {
+string Workbench_utils::file_format_to_string( cv_enums::CV_image_file_format type) {
   switch (type) {
-  case BINARY:
+  case cv_enums::BINARY:
     return "binary";
-  case JPEG:
+  case cv_enums::JPEG:
     return "jpeg";
   default:
     return "invalid image format";
@@ -93,23 +93,23 @@ bool Workbench_utils::hex_string_to_int(string arg, unsigned long long &value) {
     return false;
 }
 
-string Workbench_utils::image_depth_enum_to_string(Cv_image_depth_enum depth) {
+string Workbench_utils::image_depth_enum_to_string( cv_enums::CV_image_depth depth) {
   switch (depth) {
-  case CV_8U:
-    return "CV_8U";
-  case CV_8S:
+  case cv_enums::CV_8U:
+    return "cv_enums::CV_8U";
+  case cv_enums::CV_8S:
     return "CV_8S";
-  case CV_16U:
+  case cv_enums::CV_16U:
     return "CV_16U";
-  case CV_16S:
+  case cv_enums::CV_16S:
     return "CV_16S";
-  case CV_32S:
-    return "CV_32S";
-  case CV_32F:
-    return "CV_32F";
-  case CV_64F:
+  case cv_enums::CV_32S:
+    return "cv_enums::CV_32S";
+  case cv_enums::CV_32F:
+    return "cv_enums::CV_32F";
+  case cv_enums::CV_64F:
     return "CV_64F";
-  case CV_16F:
+  case cv_enums::CV_16F:
     return "CV_16F";
   default:
     return "unknown image depth";
@@ -322,15 +322,15 @@ string Workbench_utils::real_to_string(double i, int width) {
   return os.str();
 }
 
-string Workbench_utils::repository_type_enum_to_string(Cv_repository_type_enum type) {
+string Workbench_utils::repository_type_enum_to_string( cv_enums::CV_repository_type type) {
   switch (type) {
-  case BERKELEY_DB:
+  case cv_enums::BERKELEY_DB:
     return "Berkeley DB";
-  case FILESYSTEM:
+  case cv_enums::FILESYSTEM:
     return "Filesystem";
-  case INTERNET:
+  case cv_enums::INTERNET:
     return "Internet";
-  case EXPERIMENT_STEP:
+  case cv_enums::EXPERIMENT_STEP:
     return "Experiment step";
   default:
     return "unknown repository type";
@@ -349,57 +349,57 @@ bool Workbench_utils::string_to_bool(string str, bool &bvalue) {
   }
 }
 
-Cv_data_type_enum Workbench_utils::string_to_data_type_enum(string type) {
+ cv_enums::CV_data_type Workbench_utils::string_to_data_type_enum(string type) {
   if (type == "contour")
-    return CONTOUR;
+    return cv_enums::CONTOUR;
   else if (type == "convolution kernel")
-    return CONVOLUTION_KERNEL;
+    return cv_enums::CONVOLUTION_KERNEL;
   else if (type == "convolved image")
-    return CONVOLVED_IMAGE;
+    return cv_enums::CONVOLVED_IMAGE;
   else if (type == "correlated image")
-    return CORRELATED_IMAGE;
+    return cv_enums::CORRELATED_IMAGE;
   else if (type == "image")
-    return IMAGE;
+    return cv_enums::IMAGE;
   else if (type == "json experiment")
-    return JSON_EXPERIMENT;
+    return cv_enums::JSON_EXPERIMENT;
   else if (type == "json experiment results")
-    return JSON_EXPERIMENT_RESULTS;
+    return cv_enums::JSON_EXPERIMENT_RESULTS;
   else if (type == "histogram")
-    return HISTOGRAM;
+    return cv_enums::HISTOGRAM;
   else if (type == "hough")
-    return HOUGH;
+    return cv_enums::HOUGH;
   else if (type == "pattern feature")
-    return PATTERN_FEATURE;
+    return cv_enums::PATTERN_FEATURE;
   else if (type == "pattern image")
-    return PATTERN_IMAGE;
+    return cv_enums::PATTERN_IMAGE;
   else if (type == "pyramid")
-    return PYRAMID;
+    return cv_enums::PYRAMID;
   else if (type == "quadtree")
-    return QUADTREE;
+    return cv_enums::QUADTREE;
   else if (type == "region")
-    return REGION;
+    return cv_enums::REGION;
   else
-    return UNDEFINED_DATA_TYPE;
+    return cv_enums::UNDEFINED_DATA_TYPE;
 }
 
-Cv_image_file_format_enum Workbench_utils::string_to_file_format_enum(string type) {
+ cv_enums::CV_image_file_format Workbench_utils::string_to_file_format_enum(string type) {
   if (type == "binary")
-    return BINARY;
+    return cv_enums::BINARY;
   else if (type == "jpeg")
-    return JPEG;
-  else return UNDEFINED_FILE_FORMAT;
+    return cv_enums::JPEG;
+  else return cv_enums::UNDEFINED_FILE_FORMAT;
 }
 
-Cv_image_depth_enum Workbench_utils::string_to_image_depth_enum(string depth) {
-  if (depth == "CV_8U") return CV_8U;
-  else if (depth == "CV_8S") return CV_8S;
-  else if (depth == "CV_16U") return CV_16U;
-  else if (depth == "CV_16S") return CV_16S;
-  else if (depth == "CV_32S") return CV_32S;
-  else if (depth == "CV_32F") return CV_32F;
-  else if (depth == "CV_64F") return CV_64F;
-  else if (depth == "CV_16F") return CV_16F;
-  else return UNDEFINED_IMAGE_DEPTH;
+ cv_enums::CV_image_depth Workbench_utils::string_to_image_depth_enum(string depth) {
+  if (depth == "cv_enums::CV_8U") return cv_enums::CV_8U;
+  else if (depth == "CV_8S") return cv_enums::CV_8S;
+  else if (depth == "CV_16U") return cv_enums::CV_16U;
+  else if (depth == "CV_16S") return cv_enums::CV_16S;
+  else if (depth == "cv_enums::CV_32S") return cv_enums::CV_32S;
+  else if (depth == "cv_enums::CV_32F") return cv_enums::CV_32F;
+  else if (depth == "CV_64F") return cv_enums::CV_64F;
+  else if (depth == "CV_16F") return cv_enums::CV_16F;
+  else return cv_enums::UNDEFINED_IMAGE_DEPTH;
 }
 
 bool Workbench_utils::string_to_int(string str, int &value) {
@@ -409,12 +409,12 @@ bool Workbench_utils::string_to_int(string str, int &value) {
   else return false;
 }
 
-Cv_repository_type_enum Workbench_utils::string_to_repository_type_enum(string type) {
-  if (type == "berkeley_db") return BERKELEY_DB;
-  else if (type == "filesystem") return FILESYSTEM;
-  else if (type == "internet") return INTERNET;
-  else if (type == "step-output") return EXPERIMENT_STEP;
-  else return UNDEFINED_REPOSITORY_TYPE;
+ cv_enums::CV_repository_type Workbench_utils::string_to_repository_type_enum(string type) {
+  if (type == "berkeley_db") return cv_enums::BERKELEY_DB;
+  else if (type == "filesystem") return cv_enums::FILESYSTEM;
+  else if (type == "internet") return cv_enums::INTERNET;
+  else if (type == "step-output") return cv_enums::EXPERIMENT_STEP;
+  else return cv_enums::UNDEFINED_REPOSITORY_TYPE;
 }
 
 bool Workbench_utils::string_to_real(string str, double &value) {

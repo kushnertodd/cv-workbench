@@ -16,12 +16,12 @@
 
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
  public:
-  Cv_image_file_format_enum file_format;
+  cv_enums::CV_image_file_format file_format;
   string directory;
   string filename;
   string ext;
   Filesystem_data_source_descriptor(int m_id,
-                                    Cv_data_type_enum m_cv_data_type_enum);
+                                    cv_enums::CV_data_type m_cv_data_type);
   string read_json(Errors &errors);
   Image *read_image(Errors &errors);
   Histogram *read_histogram(Errors &errors);
@@ -32,7 +32,7 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   void write_hough(Hough *hough, Errors &errors);
   static Filesystem_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                        int id,
-                                                       Cv_data_type_enum data_type,
+                                                       cv_enums::CV_data_type data_type,
                                                        Errors &errors);
   string to_string();
 };
