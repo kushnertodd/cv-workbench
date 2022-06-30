@@ -15,9 +15,8 @@ Variance_stats::Variance_stats() :
     mean(0.0),
     M2(0.0),
     variance(0.0),
-    sample_variance(0.0),
-    min_value(FLT_MAX),
-    max_value(FLT_MIN) {}
+    sample_variance(0.0)
+    {}
 
 /**
  *  For a new value newValue, compute the new count, new mean, the new M2.
@@ -40,11 +39,7 @@ void Variance_stats::update(double new_value) {
   mean += delta / count;
   double delta2 = new_value - mean;
   M2 += delta * delta2;
-  //cout << "before min_value " << min_value << " new_value " << new_value ;
-  min_value = min(min_value, new_value);
-  //cout << " after min_value " << min_value << " before max_value " << max_value << " new_value " << new_value;
-  max_value = max(max_value, new_value);
-  //cout << " after max_value " << max_value << endl;
+  bounds.update(new_value);
 }
 
 /**
@@ -72,12 +67,6 @@ void Variance_stats::finalize() {
   sample_variance = M2 / (count - 1);
 }
 
-int Variance_stats::get_count() { return count; }
-
-double Variance_stats::get_min_value() { return min_value; }
-
-double Variance_stats::get_max_value() { return max_value; }
-
 double Variance_stats::get_mean() {
   finalize();
   return mean;
@@ -100,12 +89,12 @@ double Variance_stats::get_standard_deviation() {
 
 string Variance_stats::to_string() {
   ostringstream os;
-  os << "count " << get_count()
+  os << "count " << count
      << " mean " << get_mean()
      << " variance " << get_variance()
      << " sample variance " << get_sample_variance()
      << " standard deviation " << get_standard_deviation()
-     << " min value " << get_min_value()
-     << " max value " << get_max_value();
+     << " min value " << bounds.min_value
+     << " max value " << bounds.max_value;
   return os.str();
 }

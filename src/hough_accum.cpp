@@ -18,22 +18,20 @@ Hough_accum::Hough_accum(Image *image, int threshold) :
   alloc_accum();
   for (int row = 0; row < image->image_header->rows; row++) {
     for (int col = 0; col < image->image_header->cols; col++) {
-      Point *point = new Point(row, col, rows, cols);
-      //hist[value - min_val]++;
+      Point *point = Point::from_row_col(row, col, rows, cols);
       float value = image->get(row, col);
       if (value < -threshold || value > threshold) {
         for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
-          add(theta_index, point->to_rho(theta_index),abs(value));
+          add(theta_index, point->to_rho(theta_index), abs(value));
         }
       }
     }
   }
+  update_stats();
 }
 
-void Hough_accum::add(int theta, int rho, int value) {
-  accum[theta][rho_to_index(rho)] += value;
-  bounds.add(accum[theta][rho_to_index(rho)]);
-  variance_stats.update(accum[theta][rho_to_index(rho)]);
+void Hough_accum::add(int theta_index, int rho, int value) {
+  accum[theta_index][rho_to_index(rho)] += value;
 }
 
 void Hough_accum::alloc_accum() {
@@ -47,9 +45,9 @@ void Hough_accum::alloc_accum() {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return 5;
+    return bounds.max_value * 0.9;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
-    return 5;
+    return bounds.max_value * 0.9;
   } else return -1;
 }
 
@@ -60,17 +58,26 @@ void Hough_accum::dealloc_accum() {
 
 void Hough_accum::find_peaks(list<Polar_line *> &lines, int threshold) {
   for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
-    for (int rho = 0; rho < max_rho; rho++) {
-      if (accum[theta_index][rho] > threshold) {
-        Polar_line *line = new Polar_line(rho, theta_index);
+    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
+      int count = accum[theta_index][rho_index];
+      if (count > threshold) {
+        Polar_line *line = new Polar_line(index_to_rho(rho_index), theta_index);
         lines.push_back(line);
       }
     }
   }
 }
 
-int Hough_accum::index_to_rho(int index) {
-  return index - max_rho / 2;
+void Hough_accum::update_stats() {
+  for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
+    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
+      bounds.update(accum[theta_index][rho_index]);
+    }
+  }
+}
+
+int Hough_accum::index_to_rho(int rho_index) {
+  return rho_index - max_rho / 2;
 }
 
 bool Hough_accum::read(ifstream &ifs, Errors &errors) {
@@ -91,16 +98,18 @@ int Hough_accum::rho_to_index(int rho) {
   return rho + max_rho / 2;
 }
 
-int Hough_accum::theta_rho_to_index(int theta, int rho) {
-  return theta * max_rho + rho;
+int Hough_accum::theta_rho_to_index(int theta_index, int rho) {
+  return theta_index * max_rho + rho;
 }
 
 bool Hough_accum::write(ofstream &ofs, string delim, Errors &errors) {
-  ofs << "nthetas " << Hough_trig::nthetas  << " "
-  << "theta_inc " << Hough_trig::theta_inc << " "
-      << bounds.to_string() << " "
-      << variance_stats.to_string()
-      <<endl;
+  ofs << "nthetas " << Hough_trig::nthetas
+      << " theta_inc " << Hough_trig::theta_inc
+      << " max_rho " << max_rho
+      << " rows " << rows
+      << " cols " << cols
+      << bounds.to_string()
+      << endl;
   ofs << delim;
   for (int rho = 0; rho < max_rho; rho++)
     ofs << index_to_rho(rho) << delim;

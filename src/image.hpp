@@ -47,6 +47,7 @@ class Image {
   Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
   Image(Image_header *image_header);
   static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
+   Image *to_rgb(int components);
   void init();
 
   int get_rows();

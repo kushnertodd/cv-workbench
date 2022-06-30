@@ -11,8 +11,7 @@
 using namespace std;
 
 Bounds::Bounds() :
-    min_value(FLT_MAX),
-    max_value(FLT_MIN) {
+    Bounds(1000000, -1000000) {
 }
 
 Bounds::Bounds(float m_min_value, float m_max_value) :
@@ -20,7 +19,7 @@ Bounds::Bounds(float m_min_value, float m_max_value) :
     max_value(m_max_value) {
 }
 
-void Bounds::add(float value) {
+void Bounds::update(float value) {
   min_value = min(min_value, value);
   max_value = max(max_value, value);
 }

@@ -13,9 +13,20 @@ class Point {
   int cols;
   float x;
   float y;
-  Point(int m_row, int m_col, int m_rows, int m_cols);
+  Point();
+  static Point* from_row_col(
+      int m_row,
+      int m_col,
+      int m_rows,
+      int m_cols);
+  static Point* from_x_y(
+      int m_x,
+      int m_y,
+      int m_rows,
+      int m_cols);
   float distance(Point *point);
-  int to_rho(int theta);
+  float to_rho(int theta);
+  float to_rho(float cos, float sin);
 };
 
 #endif //SRC__POINT_HPP_

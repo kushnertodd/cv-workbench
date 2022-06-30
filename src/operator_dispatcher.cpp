@@ -7,14 +7,14 @@
 #include "operator_filter_edge_roberts.hpp"
 #include "operator_filter_edge_sobel.hpp"
 #include "operator_transform_intensity_map.hpp"
-#include "operator_producer.hpp"
+#include "operator_dispatcher.hpp"
 
 using namespace std;
 extern bool debug;
-Operator *Operator_producer::create_operator(string operator_name) {
+Operator *Operator_dispatcher::create_operator(string operator_name) {
   Operator *pOperator;
   if (debug)
-    cout << "Operator_producer::create_operator operator_name '" << operator_name << "'" << endl;
+    cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << endl;
   // Creator explicitly creates classes according to type
   if (operator_name == "filter-edge-kirsch")
     pOperator = new Operator_filter_edge_kirsch();

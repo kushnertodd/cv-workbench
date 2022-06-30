@@ -33,7 +33,7 @@ Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Jun 24 13:34:36 2022 -0600
 ```
 - added filter-edge-kirsch, filter-edge-prewitt, and filter-edge-roberts operators
-- add variance_stats.cpp, image-stats.cpp, and image-info.cpp
+- update variance_stats.cpp, image-stats.cpp, and image-info.cpp
 
 #### v0.1.3
 ```

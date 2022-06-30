@@ -10,10 +10,10 @@
 
 using namespace std;
 
-class Operator_producer {
+class Operator_dispatcher {
  public:
-  Operator_producer() {}
-  ~Operator_producer() {}
+  Operator_dispatcher() {}
+  ~Operator_dispatcher() {}
   static Operator *create_operator(string operator_name);
 };
 

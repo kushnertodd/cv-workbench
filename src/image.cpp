@@ -74,23 +74,57 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   return new Image(image_header);
 }
 
+/**
+ * convert grayscale image to rgb
+ * preconditions:
+ *   components = 1
+ * @param component
+ * @return
+ */
+Image *Image::to_rgb(int component) {
+  if (debug)
+    cout << "Image::clone: component " << component << " " << to_string() << endl;
+  Image_header *image_header = new Image_header(image_header->rows,
+                                                image_header->cols,
+                                                3,
+                                                image_header->depth);
+  Image *new_image = new Image(image_header);
+  for (int i = 0; i < image_header->npixels; i++) {
+    switch (image_header->depth) {
+      case cv_enums::CV_8U:
+        new_image->buf_8U[i * 3 + component] = buf_8U[i];
+        break;
+      case cv_enums::CV_32S:
+        new_image->buf_32S[i * 3 + component] = buf_32S[i];
+        break;
+      case cv_enums::CV_32F:
+        new_image->buf_32F[i * 3 + component] = buf_32F[i];
+        break;
+      default:
+        break;
+    }
+  }
+  return new_image;
+}
+
 void Image::init() {
+  int size = image_header->npixels * image_header->components;
   switch (image_header->depth) {
     case cv_enums::CV_8U:
-      buf_8U = new pixel_8U[image_header->npixels];
-      for (int i = 0; i < image_header->npixels; i++)
+      buf_8U = new pixel_8U[size];
+      for (int i = 0; i < size; i++)
         buf_8U[i] = 0;
       break;
 
     case cv_enums::CV_32S:
-      buf_32S = new pixel_32S[image_header->npixels];
-      for (int i = 0; i < image_header->npixels; i++)
+      buf_32S = new pixel_32S[size];
+      for (int i = 0; i < size; i++)
         buf_32S[i] = 0;
       break;
 
     case cv_enums::CV_32F:
-      buf_32F = new pixel_32F[image_header->npixels];
-      for (int i = 0; i < image_header->npixels; i++)
+      buf_32F = new pixel_32F[size];
+      for (int i = 0; i < size; i++)
         buf_32F[i] = 0.0;
       break;
 
@@ -104,7 +138,7 @@ int Image::get_cols() { return image_header->cols; }
 int Image::get_components() { return image_header->components; }
 int Image::get_row_stride() { return image_header->row_stride; }
 int Image::get_npixels() { return image_header->npixels; }
- cv_enums::CV_image_depth Image::get_depth() { return image_header->depth; }
+cv_enums::CV_image_depth Image::get_depth() { return image_header->depth; }
 
 int Image::row_col_to_index(int row, int col) {
   return row * image_header->row_stride + col;
@@ -139,7 +173,7 @@ pixel_32S Image::get_32F(int row, int col) {
 }
 
 void Image::set(int row, int col, pixel_32F value) {
-  bounds.add(value);
+  bounds.update(value);
   switch (image_header->depth) {
     case cv_enums::CV_8U:
       buf_8U[row_col_to_index(row, col)] = value;
@@ -159,17 +193,17 @@ void Image::set(int row, int col, pixel_32F value) {
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) {
-  bounds.add(value);
+  bounds.update(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
 void Image::set_32S(int row, int col, pixel_32S value) {
-  bounds.add(value);
+  bounds.update(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value) {
-  bounds.add(value);
+  bounds.update(value);
   buf_32F[row_col_to_index(row, col)] = value;
 }
 
@@ -181,7 +215,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
-    bounds.add(src[i]);
+    bounds.update(src[i]);
     switch (image_header->depth) {
       case cv_enums::CV_8U:
         buf_8U[next_pixel++] = src[i];
@@ -211,10 +245,10 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
-    bounds.add(src[i]);
+    bounds.update(src[i]);
     switch (image_header->depth) {
       case cv_enums::CV_8U:
-        errors.add("Image::add_32S: cannot add to 8U buffer");
+        errors.add("Image::add_32S: cannot update to 8U buffer");
         break;
 
       case cv_enums::CV_32S:
@@ -239,10 +273,10 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
                    + " too large for buffer length "
                    + Workbench_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
-    bounds.add(src[i]);
+    bounds.update(src[i]);
     switch (image_header->depth) {
       case cv_enums::CV_8U:
-        errors.add("Image::add_32F: cannot add to 8U buffer");
+        errors.add("Image::add_32F: cannot update to 8U buffer");
         break;
 
       case cv_enums::CV_32S:
@@ -280,7 +314,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
-        image->bounds.add(image->buf_8U[i]);
+        image->bounds.update(image->buf_8U[i]);
       break;
 
     case cv_enums::CV_32S:
@@ -290,7 +324,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
-        image->bounds.add(image->buf_32S[i]);
+        image->bounds.update(image->buf_32S[i]);
       break;
 
     case cv_enums::CV_32F:
@@ -300,7 +334,7 @@ Image *Image::read_binary(string path, Errors &errors) {
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
-        image->bounds.add(image->buf_32F[i]);
+        image->bounds.update(image->buf_32F[i]);
       break;
 
     default:

@@ -68,8 +68,8 @@ void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
       variance_stats.update(buf_8U[pos++]);
     }
   }
-  int min_value = variance_stats.get_min_value();
-  int max_value = variance_stats.get_max_value();
+  int min_value = variance_stats.bounds.min_value;
+  int max_value = variance_stats.bounds.max_value;
   int hist_len = max_value + 1 - min_value;
   int* histogram = new int[hist_len];
   for (int i = 0; i < hist_len; i++) histogram[i] = 0;

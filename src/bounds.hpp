@@ -16,7 +16,7 @@ class Bounds {
   float max_value;
   Bounds();
   Bounds(float m_min_value, float m_max_value);
-  void add(float value);
+  void update(float value);
   static float map_input_to_output_bounds(float value, Bounds *input_bounds, Bounds *output_bounds);
   float map_to_output_bounds(float value, Bounds *output_bounds);
   float map_from_input_bounds(float value, Bounds *input_bounds);

@@ -6,6 +6,7 @@
 #define SRC__VARIANCE_STATS_HPP_
 
 #include <string>
+#include "bounds.hpp"
 
 using namespace std;
 
@@ -21,20 +22,16 @@ class Variance_stats {
   double M2;
   double variance;
   double sample_variance;
-  double min_value;
-  double max_value;
+  Bounds bounds;
 
   Variance_stats();
   void update(double new_value);
   bool is_valid();
   void finalize();
-  int get_count();
   double get_mean();
   double get_variance();
   double get_sample_variance();
   double get_standard_deviation();
-  double get_min_value();
-  double get_max_value();
   string to_string();
 };
 

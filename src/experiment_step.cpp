@@ -12,7 +12,7 @@
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
 #include "operator.hpp"
-#include "operator_producer.hpp"
+#include "operator_dispatcher.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
@@ -154,7 +154,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
 }
 
 void Experiment_step::run(Errors &errors) {
-  Operator *step_operator = Operator_producer::create_operator(operator_name);
+  Operator *step_operator = Operator_dispatcher::create_operator(operator_name);
   if (step_operator == nullptr) {
     if (debug)
       cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << endl;

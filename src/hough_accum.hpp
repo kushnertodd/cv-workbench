@@ -27,19 +27,19 @@ class Hough_accum {
   int rows;
   int cols;
   Bounds bounds;
-  Variance_stats variance_stats;
 
   ~Hough_accum();
   Hough_accum(Image *image, int threshold);
-  void add(int theta, int rho, int value);
+  void add(int theta_index, int rho, int value);
   void alloc_accum();
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);
   void dealloc_accum();
   void find_peaks(list<Polar_line *> &lines, int threshold);
-  int index_to_rho(int index);
+  void update_stats();
+  int index_to_rho(int rho_index);
   bool read(ifstream &ifs, Errors& errors);
   int rho_to_index(int rho);
-  int theta_rho_to_index(int theta, int rho);
+  int theta_rho_to_index(int theta_index, int rho);
   bool write(ofstream &ofs, string delim, Errors& errors);
 };
 

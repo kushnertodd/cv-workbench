@@ -43,7 +43,7 @@ SRCOBJS :=  \
   operator_filter_edge_prewitt.o \
   operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
-  operator_producer.o \
+  operator_dispatcher.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
   point.o \
@@ -151,7 +151,7 @@ experiment_step.o: hough_trig.hpp berkeley_db_data_source_descriptor.hpp
 experiment_step.o: experiment_step_data_source_descriptor.hpp
 experiment_step.o: filesystem_data_source_descriptor.hpp
 experiment_step.o: internet_data_source_descriptor.hpp operator.hpp
-experiment_step.o: operator_producer.hpp
+experiment_step.o: operator_dispatcher.hpp
 experiment_step_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 experiment_step_data_source_descriptor.o: data_source_descriptor.hpp
 experiment_step_data_source_descriptor.o: wb_defs.hpp image.hpp bounds.hpp
@@ -224,14 +224,14 @@ operator_filter_edge_sobel.o: errors.hpp image_header.hpp wb_defs.hpp
 operator_filter_edge_sobel.o: operator_utils.hpp
 operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp operator.hpp
 operator_filter_edge_sobel.o: data_source_descriptor.hpp
-operator_producer.o: operator_filter_edge_kirsch.hpp wb_defs.hpp operator.hpp
-operator_producer.o: data_source_descriptor.hpp image.hpp bounds.hpp
-operator_producer.o: point.hpp errors.hpp image_header.hpp
-operator_producer.o: operator_filter_edge_prewitt.hpp
-operator_producer.o: operator_filter_edge_roberts.hpp
-operator_producer.o: operator_filter_edge_sobel.hpp
-operator_producer.o: operator_transform_intensity_map.hpp
-operator_producer.o: operator_producer.hpp
+operator_dispatcher.o: operator_filter_edge_kirsch.hpp wb_defs.hpp operator.hpp
+operator_dispatcher.o: data_source_descriptor.hpp image.hpp bounds.hpp
+operator_dispatcher.o: point.hpp errors.hpp image_header.hpp
+operator_dispatcher.o: operator_filter_edge_prewitt.hpp
+operator_dispatcher.o: operator_filter_edge_roberts.hpp
+operator_dispatcher.o: operator_filter_edge_sobel.hpp
+operator_dispatcher.o: operator_transform_intensity_map.hpp
+operator_dispatcher.o: operator_dispatcher.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp
 operator_transform_intensity_map.o: data_source_descriptor.hpp image.hpp

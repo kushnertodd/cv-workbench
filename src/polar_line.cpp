@@ -6,25 +6,53 @@
 #include "hough_trig.hpp"
 #include "polar_line.hpp"
 
-Polar_line::Polar_line(int m_rho_index, int m_theta_index) :
-    rho_index(m_rho_index),
-    theta_index(m_theta_index),
-    cos_theta(Hough_trig::cos(theta_index)),
-    sin_theta(Hough_trig::sin(theta_index)) {
-
+Polar_line::Polar_line() {
 }
 
 /**
- * distance from origin to point on polar line
- * @param point
- * @return
+ * initialize (rho, theta) line
+ * @param m_rho
+ * @param m_theta_index
  */
-float Polar_line::point_to_rho(Point *point) {
-  return point->x * cos_theta + point->y * sin_theta;
+Polar_line::Polar_line(int m_rho, int m_theta_index) :
+    rho(m_rho),
+    theta_index(m_theta_index),
+    cos_theta(Hough_trig::cos(theta_index)),
+    sin_theta(Hough_trig::sin(theta_index)) {
 }
 
+/**
+ * create line from point and theta
+ * @param point
+ * @param m_theta_index
+ * @return
+ */
+Polar_line *Polar_line::from_point_theta(Point *point, int m_theta_index) {
+  Polar_line *polar_line = new Polar_line(point->to_rho(m_theta_index), m_theta_index);
+  return polar_line;
+}
+
+/**
+ * point resulting from projecting point unto line
+ * @param from_point
+ * @return
+ */
+Point *Polar_line::project_onto(Point *from_point) {
+  float from_rho = from_point->to_rho(cos_theta, sin_theta);
+  float x = rho * cos_theta + from_rho * sin_theta;
+  float y = rho * sin_theta - from_rho * cos_theta;
+  Point *to_point = Point::from_x_y(x, y, from_point->rows, from_point->cols);
+  return to_point;
+}
+
+/**
+ * difference of rho difference to these two points
+ * @param point1
+ * @param point2
+ * @return
+ */
 float Polar_line::rho_difference(Point *point1, Point *point2) {
-  return abs(point_to_rho(point1) - point_to_rho(point2));
+  return point1->to_rho(cos_theta, sin_theta) - point2->to_rho(cos_theta, sin_theta);
 }
 
 /**
