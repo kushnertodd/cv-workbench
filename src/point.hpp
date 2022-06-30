@@ -14,12 +14,12 @@ class Point {
   float x;
   float y;
   Point();
-  static Point* from_row_col(
+  static Point *from_row_col(
       int m_row,
       int m_col,
       int m_rows,
       int m_cols);
-  static Point* from_x_y(
+  static Point *from_x_y(
       int m_x,
       int m_y,
       int m_rows,

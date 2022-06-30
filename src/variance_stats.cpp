@@ -15,8 +15,7 @@ Variance_stats::Variance_stats() :
     mean(0.0),
     M2(0.0),
     variance(0.0),
-    sample_variance(0.0)
-    {}
+    sample_variance(0.0) {}
 
 /**
  *  For a new value newValue, compute the new count, new mean, the new M2.
