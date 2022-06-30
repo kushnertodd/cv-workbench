@@ -100,12 +100,12 @@ double Variance_stats::get_standard_deviation() {
 
 string Variance_stats::to_string() {
   ostringstream os;
-  os << "count " << get_count() << endl
-     << "mean " << get_mean() << endl
-     << "variance " << get_variance() << endl
-     << "sample variance " << get_sample_variance() << endl
-     << "standard deviation " << get_standard_deviation() << endl
-     << "min value " << get_min_value() << endl
-     << "max value " << get_max_value() << endl;
+  os << "count " << get_count()
+     << " mean " << get_mean()
+     << " variance " << get_variance()
+     << " sample variance " << get_sample_variance()
+     << " standard deviation " << get_standard_deviation()
+     << " min value " << get_min_value()
+     << " max value " << get_max_value();
   return os.str();
 }

@@ -31,8 +31,8 @@ class Hough_trig {
  public:
   static int theta_inc;
   static int nthetas;
-  static float *hough_cos;
-  static float *hough_sin;
+  static float hough_cos[180];
+  static float hough_sin[180];
 
   Hough_trig();
   static void init(int m_theta_inc);

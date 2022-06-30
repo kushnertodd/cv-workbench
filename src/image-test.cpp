@@ -9,8 +9,8 @@ using namespace std;
 bool debug = true;
 int Hough_trig::theta_inc;
 int Hough_trig::nthetas;
-float *Hough_trig::hough_cos;
-float *Hough_trig::hough_sin;
+float Hough_trig::hough_cos[180];
+float Hough_trig::hough_sin[180];
 int main(int argc, char **argv) {
   Errors errors;
 

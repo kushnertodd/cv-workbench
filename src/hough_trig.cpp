@@ -11,15 +11,13 @@ Hough_trig::Hough_trig() {
 void Hough_trig::init(int m_theta_inc) {
   theta_inc = m_theta_inc;
   nthetas = 180 / theta_inc;
-  hough_cos = new float[nthetas];
-  hough_sin = new float[nthetas];
 
-  for (int theta = 0; theta < 180; theta += theta_inc) {
-    hough_cos[theta] = std::cos(deg_to_rad(theta));
+  for (int theta_index = 0; theta_index < nthetas; theta_index++) {
+    hough_cos[theta_index] = std::cos(deg_to_rad(index_to_deg(theta_index)));
   }
 
-  for (int theta = 0; theta < 180; theta += theta_inc) {
-    hough_sin[theta] = std::sin(deg_to_rad(theta));
+  for (int theta_index = 0; theta_index < nthetas; theta_index ++) {
+    hough_sin[theta_index] = std::sin(deg_to_rad(index_to_deg(theta_index)));
   }
 }
 

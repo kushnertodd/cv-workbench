@@ -260,8 +260,6 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
 }
 
 Image *Image::read_binary(string path, Errors &errors) {
-  char cwd[1000];
-//  char* res = getcwd(cwd, sizeof(cwd));
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
     errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno)) + "'");

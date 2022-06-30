@@ -4,6 +4,8 @@
 
 #include <cfloat>
 #include <algorithm>
+#include <string>
+#include <sstream>
 #include "bounds.hpp"
 
 using namespace std;
@@ -52,4 +54,10 @@ int Bounds::bin(float value, int nbins) {
     return nbins - 1;
   else
     return (nbins - 1) * (value - min_value) / (max_value - min_value);
+}
+
+string Bounds::to_string() {
+  ostringstream os;
+  os << "min_value " << min_value << " max_value " << max_value;
+  return os.str();
 }

@@ -5,7 +5,10 @@
 #ifndef SRC__BOUNDS_HPP_
 #define SRC__BOUNDS_HPP_
 
+#include <string>
 #include "point.hpp"
+
+using namespace std;
 
 class Bounds {
  public:
@@ -18,6 +21,7 @@ class Bounds {
   float map_to_output_bounds(float value, Bounds *output_bounds);
   float map_from_input_bounds(float value, Bounds *input_bounds);
   int bin(float value, int nbins);
+  string to_string();
 };
 
 #endif //SRC__BOUNDS_HPP_
