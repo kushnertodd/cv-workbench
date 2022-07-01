@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <list>
 #include "hough_trig.hpp"
 #include "polar_line.hpp"
 
@@ -30,6 +31,18 @@ Polar_line::Polar_line(int m_rho, int m_theta_index) :
 Polar_line *Polar_line::from_point_theta(Point *point, int m_theta_index) {
   Polar_line *polar_line = new Polar_line(point->to_rho(m_theta_index), m_theta_index);
   return polar_line;
+}
+
+Point *Polar_line::point_from_x(float x, int rows, int cols) {
+  float y = y_from_x(x);
+  Point *point = Point::from_x_y(x, y, rows, cols);
+  return point;
+}
+
+Point *Polar_line::point_from_y(float y, int rows, int cols) {
+  float x = x_from_y(y);
+  Point *point = Point::from_x_y(x, y, rows, cols);
+  return point;
 }
 
 /**
@@ -63,3 +76,35 @@ float Polar_line::rho_difference(Point *point1, Point *point2) {
 float Polar_line::rho_normal(Point *point) {
   return point->x * sin_theta - point->y * cos_theta;
 }
+
+std::list<Point *> Polar_line::to_points(int rows, int cols) {
+  std::list<Point *> points;
+  int theta1 = Hough_trig::nthetas / 4;
+  int theta2 = 3 * Hough_trig::nthetas / 4;
+
+  if (theta_index >= theta1 && theta_index <= theta2) {
+    // pi/4..3*pi/4
+    for (int row = 0; row < rows; row++) {
+      float y = Point::row_to_y(row, rows);
+      Point *point = point_from_y(y, rows, cols);
+      points.push_back(point);
+    }
+  } else {
+    // 0..pi/4, 3*pi/4..pi
+    for (int col = 0; col < cols; col++) {
+      float x = Point::col_to_x(col, cols);
+      Point *point = point_from_x(x, rows, cols);
+      points.push_back(point);
+    }
+  }
+  return points;
+}
+
+float Polar_line::y_from_x(float x) {
+  return (rho - x * cos_theta) / sin_theta;
+}
+
+float Polar_line::x_from_y(float y) {
+  return (rho - y * sin_theta) / cos_theta;
+}
+

@@ -26,8 +26,8 @@ Point *Point::from_row_col(
   point->col = m_col;
   point->rows = m_rows;
   point->cols = m_cols;
-  point->y = m_row + m_rows / 2;
-  point->x = m_col - m_cols / 2;
+  point->y = row_to_y(m_row, m_rows);
+  point->x = col_to_x(m_col, m_cols);
   return point;
 }
 
@@ -49,8 +49,8 @@ Point *Point::from_x_y(
   point->y = m_y;
   point->rows = m_rows;
   point->cols = m_cols;
-  point->row = m_y - m_rows / 2;
-  point->col = m_x + m_cols / 2;
+  point->row = y_to_row(m_y, m_rows);
+  point->col = x_to_col(m_x, m_cols);
   return point;
 }
 
@@ -80,4 +80,20 @@ float Point::to_rho(int theta_index) {
  */
 float Point::to_rho(float cos, float sin) {
   return x * cos + y * sin;
+}
+
+float Point::row_to_y(int row, int rows) {
+  return row + rows / 2.0;
+}
+
+float Point::col_to_x(int col, int cols) {
+  return col - cols / 2.0;
+}
+
+int Point::y_to_row(float y, int rows) {
+  return round(y - rows / 2.0);
+}
+
+int Point::x_to_col(float x, int cols) {
+  return round(x + cols / 2.0);
 }

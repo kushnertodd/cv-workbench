@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
 
     case cv_enums::CV_32S:
       stat_32S(in_image, hough);
-      hough.find_peaks();
+      hough.find_lines();
       hough.write(hough_filename, "\t", errors);
       break;
 

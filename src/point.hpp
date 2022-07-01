@@ -27,6 +27,10 @@ class Point {
   float distance(Point *point);
   float to_rho(int theta);
   float to_rho(float cos, float sin);
+  static float row_to_y(int row, int rows);
+  static float col_to_x(int col, int cols);
+  static int y_to_row(float y, int rows);
+  static int x_to_col(float x, int cols);
 };
 
 #endif //SRC__POINT_HPP_

@@ -47,7 +47,7 @@ class Image {
   Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
   Image(Image_header *image_header);
   static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
-   Image *to_rgb(int components);
+  Image *to_rgb(int components);
   void init();
 
   int get_rows();
@@ -60,11 +60,13 @@ class Image {
   int row_col_to_index(int row, int col);
 
   pixel_32F get(int row, int col);
+  pixel_32F get(Point *point);
   pixel_8U get_8U(int row, int col);
   pixel_32S get_32S(int row, int col);
   pixel_32S get_32F(int row, int col);
 
   void set(int row, int col, pixel_32F value);
+  void set(Point *point, pixel_32F value);
   void set_8U(int row, int col, pixel_8U value);
   void set_32S(int row, int col, pixel_32S value);
   void set_32F(int row, int col, pixel_32F value);
@@ -85,8 +87,8 @@ class Image {
                    float upper_in, float lower_out,
                    float upper_out);
   static Image *scale_image(Image *image, float lower_in,
-                                 float upper_in, float lower_out,
-                                 float upper_out, cv_enums::CV_image_depth depth);
+                            float upper_in, float lower_out,
+                            float upper_out, cv_enums::CV_image_depth depth);
   string to_string();
 };
 

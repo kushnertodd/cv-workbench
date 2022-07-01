@@ -11,8 +11,6 @@
 #include "hough_accum.hpp"
 #include "polar_line.hpp"
 
-using namespace std;
-
 class Hough {
  public:
   string hough_filename;
@@ -20,9 +18,11 @@ class Hough {
   int rows;
   int cols;
   list<Polar_line *> lines;
+  std::list<std::list<Point *>> line_points;
 
   ~Hough();
-  Hough(Image* image, int threshold = 100);
+  Hough(Image *image, int threshold = 100);
+  void find_lines();
   void find_peaks();
   bool read(string filename, Errors &errors);
   bool write(string filename, string delim, Errors &errors);

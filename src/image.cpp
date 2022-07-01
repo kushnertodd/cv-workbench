@@ -160,6 +160,10 @@ pixel_32F Image::get(int row, int col) {
   }
 }
 
+pixel_32F Image::get(Point *point) {
+  return get(point->row, point->cols);
+}
+
 pixel_8U Image::get_8U(int row, int col) {
   return buf_32F[row_col_to_index(row, col)];
 }
@@ -190,6 +194,10 @@ void Image::set(int row, int col, pixel_32F value) {
     default:
       break;
   }
+}
+
+void Image::set(Point *point, pixel_32F value) {
+  set(point->row, point->cols, value);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) {
