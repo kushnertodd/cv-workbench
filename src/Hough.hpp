@@ -23,6 +23,7 @@ class Hough {
   ~Hough();
   Hough(Image *image, int threshold = 100);
   void find_lines();
+  void draw_lines(Image *image, float value);
   void find_peaks();
   bool read(string filename, Errors &errors);
   bool write(string filename, string delim, Errors &errors);

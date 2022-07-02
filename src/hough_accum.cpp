@@ -2,10 +2,13 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include <iostream>
 #include "image.hpp"
 #include "hough_trig.hpp"
 #include "polar_line.hpp"
 #include "hough_accum.hpp"
+
+extern bool debug;
 
 Hough_accum::~Hough_accum() {
   dealloc_accum();
@@ -22,7 +25,10 @@ Hough_accum::Hough_accum(Image *image, int threshold) :
       float value = image->get(row, col);
       if (value < -threshold || value > threshold) {
         for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
-          add(theta_index, point->to_rho(theta_index), abs(value));
+          float rho = point->to_rho(theta_index);
+          if (debug && false) std::cout << "Hough_accum::Hough_accum: point '" << point->to_string() <<
+          "' value " << value << " threshold " << threshold << " rho " << rho << " theta_index " << theta_index<< std::endl;
+          add(theta_index, rho, abs(value));
         }
       }
     }

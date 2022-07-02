@@ -3,6 +3,7 @@
 //
 
 #include <cmath>
+#include <sstream>
 #include "hough_trig.hpp"
 #include "point.hpp"
 
@@ -54,6 +55,10 @@ Point *Point::from_x_y(
   return point;
 }
 
+bool Point::in_window() {
+  return (row >= 0 && row < rows && col >= 0 && col < cols);
+}
+
 /**
  * distance between current and passed point
  * @param point
@@ -83,7 +88,7 @@ float Point::to_rho(float cos, float sin) {
 }
 
 float Point::row_to_y(int row, int rows) {
-  return row + rows / 2.0;
+  return -row + rows / 2.0;
 }
 
 float Point::col_to_x(int col, int cols) {
@@ -91,9 +96,21 @@ float Point::col_to_x(int col, int cols) {
 }
 
 int Point::y_to_row(float y, int rows) {
-  return round(y - rows / 2.0);
+  return round(-y + rows / 2.0);
 }
 
 int Point::x_to_col(float x, int cols) {
   return round(x + cols / 2.0);
+}
+
+std::string Point::to_string() {
+std::ostringstream os;
+os
+        << " row " << row
+        << " col " << col
+        << " rows " << rows
+        << " cols " << cols
+        << " x " << x
+        << " y " << y;
+return os.str();
 }

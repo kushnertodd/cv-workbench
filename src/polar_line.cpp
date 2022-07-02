@@ -4,8 +4,11 @@
 
 #include <algorithm>
 #include <list>
+#include <iostream>
 #include "hough_trig.hpp"
 #include "polar_line.hpp"
+
+extern bool debug;
 
 Polar_line::Polar_line() {
 }
@@ -77,7 +80,7 @@ float Polar_line::rho_normal(Point *point) {
   return point->x * sin_theta - point->y * cos_theta;
 }
 
-std::list<Point *> Polar_line::to_points(int rows, int cols) {
+std::list<Point *> Polar_line::to_line_points(int rows, int cols) {
   std::list<Point *> points;
   int theta1 = Hough_trig::nthetas / 4;
   int theta2 = 3 * Hough_trig::nthetas / 4;
@@ -87,13 +90,37 @@ std::list<Point *> Polar_line::to_points(int rows, int cols) {
     for (int row = 0; row < rows; row++) {
       float y = Point::row_to_y(row, rows);
       Point *point = point_from_y(y, rows, cols);
-      points.push_back(point);
+
+      if (debug)
+        std::cout << "Polar_line::to_line_points: row-wise "
+                  << " theta1 " << theta1 << " theta2 " << theta2
+                  << " rho " << rho
+                  << " theta_index " << theta_index
+                  << " cos_theta " << cos_theta
+                  << " sin_theta " << sin_theta
+                  << " rows " << rows << " cols " << cols << " row " << row
+                  << " y " << y << " point '" << point->to_string() << "'" << std::endl;
+      if (point->in_window()) {
+        points.push_back(point);
+      }
     }
   } else {
-    // 0..pi/4, 3*pi/4..pi
+// 0..pi/4, 3*pi/4..pi
+
     for (int col = 0; col < cols; col++) {
       float x = Point::col_to_x(col, cols);
       Point *point = point_from_x(x, rows, cols);
+
+      if (debug)
+        std::cout << "Polar_line::to_line_points: col-wise "
+                  << " theta1 " << theta1 << " theta2 " << theta2
+                  << " rho " << rho
+                  << " theta_index " << theta_index
+                  << " cos_theta " << cos_theta
+                  << " sin_theta " << sin_theta
+                  << " rows " << rows << " cols " << cols << " col " << col
+                  << " x " << x << " point '" << point->to_string() << "'" << std::endl;
+
       points.push_back(point);
     }
   }

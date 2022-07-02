@@ -4,6 +4,7 @@
 
 #ifndef SRC__POINT_HPP_
 #define SRC__POINT_HPP_
+#include <string>
 
 class Point {
  public:
@@ -24,6 +25,7 @@ class Point {
       int m_y,
       int m_rows,
       int m_cols);
+bool in_window();
   float distance(Point *point);
   float to_rho(int theta);
   float to_rho(float cos, float sin);
@@ -31,6 +33,7 @@ class Point {
   static float col_to_x(int col, int cols);
   static int y_to_row(float y, int rows);
   static int x_to_col(float x, int cols);
+  std::string to_string();
 };
 
 #endif //SRC__POINT_HPP_

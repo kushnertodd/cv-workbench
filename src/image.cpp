@@ -145,15 +145,19 @@ int Image::row_col_to_index(int row, int col) {
 }
 
 pixel_32F Image::get(int row, int col) {
+  int index;
   switch (image_header->depth) {
     case cv_enums::CV_8U:
-      return buf_8U[row_col_to_index(row, col)];
+       index = row_col_to_index(row, col);
+      return buf_8U[index];
 
     case cv_enums::CV_32S:
-      return buf_32S[row_col_to_index(row, col)];
+       index = row_col_to_index(row, col);
+      return buf_32S[index];
 
     case cv_enums::CV_32F:
-      return buf_32F[row_col_to_index(row, col)];
+       index = row_col_to_index(row, col);
+      return buf_32F[index];
 
     default:
       return 0.0;
@@ -165,15 +169,18 @@ pixel_32F Image::get(Point *point) {
 }
 
 pixel_8U Image::get_8U(int row, int col) {
-  return buf_32F[row_col_to_index(row, col)];
+  int index = row_col_to_index(row, col);
+  return buf_8U[index];
 }
 
 pixel_32S Image::get_32S(int row, int col) {
-  return buf_32F[row_col_to_index(row, col)];
+  int index = row_col_to_index(row, col);
+  return buf_32S[index];
 }
 
 pixel_32S Image::get_32F(int row, int col) {
-  return buf_32F[row_col_to_index(row, col)];
+  int index = row_col_to_index(row, col);
+  return buf_32F[index];
 }
 
 void Image::set(int row, int col, pixel_32F value) {
@@ -197,7 +204,7 @@ void Image::set(int row, int col, pixel_32F value) {
 }
 
 void Image::set(Point *point, pixel_32F value) {
-  set(point->row, point->cols, value);
+  set(point->row, point->col, value);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) {
@@ -520,6 +527,10 @@ float Image::get_scaled(int row, int col, float lower_in,
   float pixel_in = get(row, col);
   float pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
+  if (debug && false)
+    cout << "Image::get_scaled: pixel_in "<<pixel_in<<" pixel_out " << pixel_out <<" row " <<row << " col " <<col<< " lower_in " << lower_in
+                           << " upper_in " << upper_in <<  " lower_out " << lower_out
+                           << " upper_out " << upper_out<< endl;
   return pixel_out;
 }
 
@@ -539,13 +550,18 @@ float Image::get_scaled(int row, int col, float lower_in,
 Image *Image::scale_image(Image *image, float lower_in,
                           float upper_in, float lower_out,
                           float upper_out, cv_enums::CV_image_depth depth) {
+  if (debug)
+    cout << "Image *Image::scale_image: lower_in " << lower_in
+<< " upper_in " << upper_in
+ << " lower_out " << lower_out
+       << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth)<<endl;
   Image *convert_image = clone_image(image, depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {
     for (int col = 0; col < image_header->cols; col++) {
-      convert_image->set(row, col,
-                         image->get_scaled(row, col, lower_in,
-                                           upper_in, lower_out, upper_out));
+      float value = image->get_scaled(row, col, lower_in,
+                        upper_in, lower_out, upper_out);
+      convert_image->set(row, col, value);
     }
   }
   return convert_image;
