@@ -51,7 +51,7 @@ void Hough_accum::alloc_accum() {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.9;
+    return bounds.max_value * 0.6;//0.9;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
     return bounds.max_value * 0.9;
   } else return -1;

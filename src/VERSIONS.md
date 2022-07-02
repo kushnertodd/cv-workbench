@@ -4,6 +4,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 - directory  
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.6
+```
+commit 523f239f1deda6722ca90c18fdfb911d9c901bb7 
+(HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Jul 1 18:40:55 2022 -0600
+```
+- image-hough with drawing hough line works, found only most significant hough line
+
 #### v0.1.5
 ```
 commit 1037a5a4dc647a60e26328cb3cb5a5c5d66e36c6
