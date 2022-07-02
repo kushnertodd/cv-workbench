@@ -6,12 +6,12 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.6
 ```
-commit 523f239f1deda6722ca90c18fdfb911d9c901bb7 
+commit 3f77c8ec6225b5f806826c44c656f8d2fdf53279 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
-Date:   Fri Jul 1 18:40:55 2022 -0600
+Date:   Fri Jul 1 18:55:40 2022 -0600
 ```
-- image-hough with drawing hough line works, found only most significant hough line
+- image-hough with drawing hough line works, found most significant 7 hough lines
 
 #### v0.1.5
 ```
