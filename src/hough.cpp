@@ -26,10 +26,10 @@ Hough::Hough(Image *image, int threshold) :
 void Hough::draw_lines(Image *image, float value) {
   if (debug)
     std::cout << "Hough::draw_lines; image " <<image->to_string() << " value " << value<< std::endl;
-  for (std::list<Point *> point_list :  line_points){
+  for (std::list<Image_point *> point_list :  line_points){
     if (debug)
       std::cout << "Hough::draw_lines; line_points size  " <<line_points.size()<< std::endl;
-    for (Point* point : point_list) {
+    for (Image_point* point : point_list) {
       if (!point->in_window()) {
         std::cout << "Hough::draw_lines; bad point  " <<point->to_string()<< std::endl;
       } else {
@@ -42,7 +42,7 @@ void Hough::draw_lines(Image *image, float value) {
 void Hough::find_lines() {
   find_peaks();
   for (Polar_line *polar_line: lines) {
-    std::list<Point *> point_list = polar_line->to_line_points(rows, cols);
+    std::list<Image_point *> point_list = polar_line->to_line_points(rows, cols);
     line_points.push_back(point_list);
   }
 }

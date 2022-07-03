@@ -21,7 +21,7 @@ Hough_accum::Hough_accum(Image *image, int threshold) :
   alloc_accum();
   for (int row = 0; row < image->image_header->rows; row++) {
     for (int col = 0; col < image->image_header->cols; col++) {
-      Point *point = Point::from_row_col(row, col, rows, cols);
+      Image_point *point = Image_point::from_row_col(row, col, rows, cols);
       float value = image->get(row, col);
       if (value < -threshold || value > threshold) {
         for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {

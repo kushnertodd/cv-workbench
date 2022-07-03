@@ -18,7 +18,7 @@ class Hough {
   int rows;
   int cols;
   list<Polar_line *> lines;
-  std::list<std::list<Point *>> line_points;
+  std::list<std::list<Image_point *>> line_points;
 
   ~Hough();
   Hough(Image *image, int threshold = 100);

@@ -32,21 +32,21 @@ rho(m_rho),
  * @param m_theta_index
  * @return
  */
-Polar_line *Polar_line::from_point_theta(Point *point, int m_theta_index) {
+Polar_line *Polar_line::from_point_theta(Image_point *point, int m_theta_index) {
   int rho = point->to_rho(m_theta_index);
   Polar_line *polar_line = new Polar_line(rho, m_theta_index);
   return polar_line;
 }
 
-Point *Polar_line::point_from_x(float x, int rows, int cols) {
+Image_point *Polar_line::point_from_x(float x, int rows, int cols) {
   float y = y_from_x(x);
-  Point *point = Point::from_x_y(x, y, rows, cols);
+  Image_point *point = Image_point::from_x_y(x, y, rows, cols);
   return point;
 }
 
-Point *Polar_line::point_from_y(float y, int rows, int cols) {
+Image_point *Polar_line::point_from_y(float y, int rows, int cols) {
   float x = x_from_y(y);
-  Point *point = Point::from_x_y(x, y, rows, cols);
+  Image_point *point = Image_point::from_x_y(x, y, rows, cols);
   return point;
 }
 
@@ -55,11 +55,11 @@ Point *Polar_line::point_from_y(float y, int rows, int cols) {
  * @param from_point
  * @return
  */
-Point *Polar_line::project_onto(Point *from_point) {
+Image_point *Polar_line::project_onto(Image_point *from_point) {
   float from_rho = from_point->to_rho(cos_theta, sin_theta);
   float x = rho * cos_theta + from_rho * sin_theta;
   float y = rho * sin_theta - from_rho * cos_theta;
-  Point *to_point = Point::from_x_y(x, y, from_point->rows, from_point->cols);
+  Image_point *to_point = Image_point::from_x_y(x, y, from_point->rows, from_point->cols);
   return to_point;
 }
 
@@ -69,7 +69,7 @@ Point *Polar_line::project_onto(Point *from_point) {
  * @param point2
  * @return
  */
-float Polar_line::rho_difference(Point *point1, Point *point2) {
+float Polar_line::rho_difference(Image_point *point1, Image_point *point2) {
   return point1->to_rho(cos_theta, sin_theta) - point2->to_rho(cos_theta, sin_theta);
 }
 
@@ -78,20 +78,20 @@ float Polar_line::rho_difference(Point *point1, Point *point2) {
  * @param point
  * @return
  */
-float Polar_line::rho_normal(Point *point) {
+float Polar_line::rho_normal(Image_point *point) {
   return point->x * sin_theta - point->y * cos_theta;
 }
 
-std::list<Point *> Polar_line::to_line_points(int rows, int cols) {
-  std::list<Point *> points;
+std::list<Image_point *> Polar_line::to_line_points(int rows, int cols) {
+  std::list<Image_point *> points;
   int theta1 = Hough_trig::nthetas / 4;
   int theta2 = 3 * Hough_trig::nthetas / 4;
 
   if (theta_index >= theta1 && theta_index <= theta2) {
     // pi/4..3*pi/4
     for (int col = 0; col < cols; col++) {
-      float x = Point::col_to_x(col, cols);
-      Point *point = point_from_x(x, rows, cols);
+      float x = Image_point::col_to_x(col, cols);
+      Image_point *point = point_from_x(x, rows, cols);
 
       if (debug)
         std::cout << "Polar_line::to_line_points: col-wise "
@@ -110,8 +110,8 @@ std::list<Point *> Polar_line::to_line_points(int rows, int cols) {
   } else {
 // 0..pi/4, 3*pi/4..pi
     for (int row = 0; row < rows; row++) {
-      float y = Point::row_to_y(row, rows);
-      Point *point = point_from_y(y, rows, cols);
+      float y = Image_point::row_to_y(row, rows);
+      Image_point *point = point_from_y(y, rows, cols);
       if (debug)
         std::cout << "Polar_line::to_line_points: row-wise "
                   << " theta1 " << theta1 << " theta2 " << theta2

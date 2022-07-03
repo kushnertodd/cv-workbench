@@ -164,7 +164,7 @@ pixel_32F Image::get(int row, int col) {
   }
 }
 
-pixel_32F Image::get(Point *point) {
+pixel_32F Image::get(Image_point *point) {
   return get(point->row, point->cols);
 }
 
@@ -203,7 +203,7 @@ void Image::set(int row, int col, pixel_32F value) {
   }
 }
 
-void Image::set(Point *point, pixel_32F value) {
+void Image::set(Image_point *point, pixel_32F value) {
   set(point->row, point->col, value);
 }
 

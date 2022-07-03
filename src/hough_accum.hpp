@@ -11,7 +11,7 @@
 #include "file_utils.hpp"
 #include "wb_utils.hpp"
 #include "bounds.hpp"
-#include "point.hpp"
+#include "image_point.hpp"
 #include "polar_line.hpp"
 #include "hough_trig.hpp"
 #include "variance_stats.hpp"

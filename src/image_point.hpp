@@ -2,11 +2,11 @@
 // Created by kushn on 6/27/2022.
 //
 
-#ifndef SRC__POINT_HPP_
-#define SRC__POINT_HPP_
+#ifndef SRC__IMAGE_POINT_HPP_
+#define SRC__IMAGE_POINT_HPP_
 #include <string>
 
-class Point {
+class Image_point {
  public:
   int row;
   int col;
@@ -14,19 +14,19 @@ class Point {
   int cols;
   float x;
   float y;
-  Point();
-  static Point *from_row_col(
+  Image_point();
+  static Image_point *from_row_col(
       int m_row,
       int m_col,
       int m_rows,
       int m_cols);
-  static Point *from_x_y(
+  static Image_point *from_x_y(
       int m_x,
       int m_y,
       int m_rows,
       int m_cols);
 bool in_window();
-  float distance(Point *point);
+  float distance(Image_point *point);
   float to_rho(int theta);
   float to_rho(float cos, float sin);
   static float row_to_y(int row, int rows);
@@ -36,4 +36,4 @@ bool in_window();
   std::string to_string();
 };
 
-#endif //SRC__POINT_HPP_
+#endif //SRC__IMAGE_POINT_HPP_

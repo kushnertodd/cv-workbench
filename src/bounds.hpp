@@ -6,7 +6,6 @@
 #define SRC__BOUNDS_HPP_
 
 #include <string>
-#include "point.hpp"
 
 using namespace std;
 
