@@ -18,8 +18,9 @@ Polar_line::Polar_line() {
  * @param m_rho
  * @param m_theta_index
  */
-Polar_line::Polar_line(int m_rho, int m_theta_index) :
-    rho(m_rho),
+
+Polar_line::Polar_line(int m_rho, int m_theta_index):
+rho(m_rho),
     theta_index(m_theta_index),
     cos_theta(Hough_trig::cos(theta_index)),
     sin_theta(Hough_trig::sin(theta_index)) {
@@ -32,7 +33,8 @@ Polar_line::Polar_line(int m_rho, int m_theta_index) :
  * @return
  */
 Polar_line *Polar_line::from_point_theta(Point *point, int m_theta_index) {
-  Polar_line *polar_line = new Polar_line(point->to_rho(m_theta_index), m_theta_index);
+  int rho = point->to_rho(m_theta_index);
+  Polar_line *polar_line = new Polar_line(rho, m_theta_index);
   return polar_line;
 }
 
@@ -87,26 +89,6 @@ std::list<Point *> Polar_line::to_line_points(int rows, int cols) {
 
   if (theta_index >= theta1 && theta_index <= theta2) {
     // pi/4..3*pi/4
-    for (int row = 0; row < rows; row++) {
-      float y = Point::row_to_y(row, rows);
-      Point *point = point_from_y(y, rows, cols);
-
-      if (debug)
-        std::cout << "Polar_line::to_line_points: row-wise "
-                  << " theta1 " << theta1 << " theta2 " << theta2
-                  << " rho " << rho
-                  << " theta_index " << theta_index
-                  << " cos_theta " << cos_theta
-                  << " sin_theta " << sin_theta
-                  << " rows " << rows << " cols " << cols << " row " << row
-                  << " y " << y << " point '" << point->to_string() << "'" << std::endl;
-      if (point->in_window()) {
-        points.push_back(point);
-      }
-    }
-  } else {
-// 0..pi/4, 3*pi/4..pi
-
     for (int col = 0; col < cols; col++) {
       float x = Point::col_to_x(col, cols);
       Point *point = point_from_x(x, rows, cols);
@@ -123,6 +105,27 @@ std::list<Point *> Polar_line::to_line_points(int rows, int cols) {
 
       points.push_back(point);
     }
+
+
+  } else {
+// 0..pi/4, 3*pi/4..pi
+    for (int row = 0; row < rows; row++) {
+      float y = Point::row_to_y(row, rows);
+      Point *point = point_from_y(y, rows, cols);
+      if (debug)
+        std::cout << "Polar_line::to_line_points: row-wise "
+                  << " theta1 " << theta1 << " theta2 " << theta2
+                  << " rho " << rho
+                  << " theta_index " << theta_index
+                  << " cos_theta " << cos_theta
+                  << " sin_theta " << sin_theta
+                  << " rows " << rows << " cols " << cols << " row " << row
+                  << " y " << y << " point addr " << point << " point '" << point->to_string() << "'" << std::endl;
+      if (point->in_window()) {
+        points.push_back(point);
+      }
+    }
+
   }
   return points;
 }

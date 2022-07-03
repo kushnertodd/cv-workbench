@@ -26,8 +26,10 @@ Hough_accum::Hough_accum(Image *image, int threshold) :
       if (value < -threshold || value > threshold) {
         for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
           float rho = point->to_rho(theta_index);
-          if (debug && false) std::cout << "Hough_accum::Hough_accum: point '" << point->to_string() <<
-          "' value " << value << " threshold " << threshold << " rho " << rho << " theta_index " << theta_index<< std::endl;
+          if (debug && false)
+            std::cout << "Hough_accum::Hough_accum: point '" << point->to_string() <<
+                      "' value " << value << " threshold " << threshold << " rho " << rho << " theta_index "
+                      << theta_index << std::endl;
           add(theta_index, rho, abs(value));
         }
       }
@@ -51,9 +53,9 @@ void Hough_accum::alloc_accum() {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.6;//0.9;
+    return bounds.max_value * 0.85;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
-    return bounds.max_value * 0.9;
+    return bounds.max_value * 0.85;
   } else return -1;
 }
 
@@ -62,13 +64,40 @@ void Hough_accum::dealloc_accum() {
     delete accum[theta_index];
 }
 
+bool Hough_accum::maximum(int theta_index, int rho_index) {
+  for (int i = -1; i <= 1; i++) {
+    for (int j = -1; j <= 1; j++) {
+      int check_rho = rho_index + i;
+      if (check_rho >= 0 && check_rho < max_rho) {
+        int check_theta = theta_index + j;
+        if (check_theta >= 0 && check_theta < Hough_trig::nthetas) {
+          if (accum[check_theta][check_rho] > accum[theta_index][rho_index]) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+  return true;
+}
+
 void Hough_accum::find_peaks(list<Polar_line *> &lines, int threshold) {
   for (int theta_index = 0; theta_index < Hough_trig::nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
       int count = accum[theta_index][rho_index];
+      int rho = index_to_rho(rho_index);
       if (count > threshold) {
-        Polar_line *line = new Polar_line(index_to_rho(rho_index), theta_index);
-        lines.push_back(line);
+        if (true) { //maximum(theta_index, rho_index)) {
+          Polar_line *line = new Polar_line(rho, theta_index);
+          lines.push_back(line);
+          if (debug) {
+            cout << "Hough_accum::find_peaks: rho_index " << rho_index
+                 << " rho " << rho
+                 << " theta " << theta_index
+                 << " count " << accum[theta_index][rho_index]
+                 << endl;
+          }
+        }
       }
     }
   }

@@ -11,6 +11,7 @@ class Polar_line {
  public:
   int rho;
   int theta_index;
+  int count;
   float cos_theta;
   float sin_theta;
   Polar_line();

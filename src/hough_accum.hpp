@@ -34,6 +34,7 @@ class Hough_accum {
   void alloc_accum();
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);
   void dealloc_accum();
+  bool maximum(int theta, int rho_index);
   void find_peaks(list<Polar_line *> &lines, int threshold);
   void update_stats();
   int index_to_rho(int rho_index);

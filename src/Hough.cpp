@@ -30,9 +30,12 @@ void Hough::draw_lines(Image *image, float value) {
     if (debug)
       std::cout << "Hough::draw_lines; line_points size  " <<line_points.size()<< std::endl;
     for (Point* point : point_list) {
-      std::cout << "Hough::draw_lines; point  " <<point->to_string()<< std::endl;
+      if (!point->in_window()) {
+        std::cout << "Hough::draw_lines; bad point  " <<point->to_string()<< std::endl;
+      } else {
       image->set(point, value);
-    }
+        std::cout << "Hough::draw_lines; good point  " <<point->to_string()<< std::endl;
+    }}
   }
 }
 
@@ -47,11 +50,6 @@ void Hough::find_lines() {
 void Hough::find_peaks() {
   int threshold = accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
   accum->find_peaks(lines, threshold);
-
-  for (Polar_line *polar_line: lines) {
-    std::list<Point *> point_list = polar_line->to_line_points(rows, cols);
-    line_points.push_back(point_list);
-  }
 }
 
 bool Hough::read(string filename, Errors &errors) {
