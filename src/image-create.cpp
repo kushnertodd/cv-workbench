@@ -5,7 +5,7 @@
 #include "wb_utils.hpp"
 #include "wb_defs.hpp"
 #include "file_utils.hpp"
-#include "hough_trig.hpp"
+#include "hough_accum.hpp"
 
 using namespace std;
 
@@ -16,10 +16,10 @@ void error_exit(string message) {
   exit(0);
 }
 
-int Hough_trig::theta_inc;
-int Hough_trig::nthetas;
-float Hough_trig::hough_cos[180];
-float Hough_trig::hough_sin[180];
+int Hough_accum::theta_inc;
+int Hough_accum::nthetas;
+float Hough_accum::hough_cos[180];
+float Hough_accum::hough_sin[180];
 
 int main(int argc, char **argv) {
 

@@ -7,23 +7,21 @@
 
 #include <string>
 #include "errors.hpp"
-#include "hough_trig.hpp"
 #include "hough_accum.hpp"
 #include "polar_line.hpp"
 
 class Hough {
  public:
-  string hough_filename;
+  const int max_theta = 180;
+  int theta_inc;
+Image *image;
   Hough_accum *accum;
-  int rows;
-  int cols;
   list<Polar_line *> lines;
-  std::list<std::list<Image_point *>> line_points;
 
   ~Hough();
-  Hough(Image *image, int threshold = 100);
+  Hough(Image *m_image, int m_theta_inc);
   void find_lines();
-  void draw_lines(Image *image, float value);
+//  void draw_lines(Image *image, float value);
   void find_peaks();
   bool read(string filename, Errors &errors);
   bool write(string filename, string delim, Errors &errors);

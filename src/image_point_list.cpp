@@ -5,7 +5,7 @@
 #include "image_point_list.hpp"
 
 Image_point_list::~Image_point_list(){
-  for (Image_point* point : points) {
+  for (Point* point : points) {
     delete point;
   }
 }
@@ -14,6 +14,6 @@ Image_point_list::Image_point_list() {
 
 }
 
-void Image_point_list::add(Image_point* point) {
+void Image_point_list::add(Point* point) {
   points.push_back(point);
 }

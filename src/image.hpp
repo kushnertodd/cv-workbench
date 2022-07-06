@@ -10,7 +10,7 @@
 #include "bounds.hpp"
 #include "errors.hpp"
 #include "image_header.hpp"
-#include "image_point.hpp"
+#include "point.hpp"
 #include "wb_defs.hpp"
 
 using namespace std;
@@ -61,13 +61,13 @@ class Image {
   int row_col_to_index(int row, int col);
 
   pixel_32F get(int row, int col);
-  pixel_32F get(Image_point *point);
+  pixel_32F get(Point *point);
   pixel_8U get_8U(int row, int col);
   pixel_32S get_32S(int row, int col);
   pixel_32S get_32F(int row, int col);
 
   void set(int row, int col, pixel_32F value);
-  void set(Image_point *point, pixel_32F value);
+  void set(Point *point, pixel_32F value);
   void set_8U(int row, int col, pixel_8U value);
   void set_32S(int row, int col, pixel_32S value);
   void set_32F(int row, int col, pixel_32F value);

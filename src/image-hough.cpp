@@ -4,7 +4,7 @@
 #include <vector>
 #include "errors.hpp"
 #include "hough.hpp"
-#include "hough_trig.hpp"
+#include "hough_accum.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
 
@@ -27,12 +27,7 @@ void stat_32F(pixel_32F *buf_32F, int rows, int cols) {
 }
 
 bool debug = true;
-int Hough_trig::theta_inc;
-int Hough_trig::nthetas;
-float Hough_trig::hough_cos[180];
-float Hough_trig::hough_sin[180];
 int main(int argc, char **argv) {
-  Hough_trig::init(3);
   if (argc < 3)
     error_exit("usage: image-hough image-filename hough-filename");
   string image_filename = argv[1];
@@ -40,7 +35,7 @@ int main(int argc, char **argv) {
   Errors errors;
   Image *in_image = Image::read_binary(image_filename, errors);
 
-  Hough hough(in_image);
+  Hough hough(in_image, 3);
 
   Image  *out_image;
   switch (in_image->image_header->depth) {
@@ -50,7 +45,7 @@ int main(int argc, char **argv) {
     case cv_enums::CV_32S:
       stat_32S(in_image, hough);
       hough.find_lines();
-      hough.draw_lines(in_image, 255);
+      //hough.draw_lines(in_image, 255);
        out_image = Image::scale_image(in_image, -500,
                                 255, 0,
                                 255, cv_enums::CV_8U);

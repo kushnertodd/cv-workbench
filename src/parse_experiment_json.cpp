@@ -13,16 +13,16 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "experiment.hpp"
-#include "hough_trig.hpp"
+#include "hough_accum.hpp"
 
 //bool debug = true;
 bool debug = false;
-int Hough_trig::theta_inc;
-int Hough_trig::nthetas;
-float Hough_trig::hough_cos[180];
-float Hough_trig::hough_sin[180];
+int Hough_accum::theta_inc;
+int Hough_accum::nthetas;
+float Hough_accum::hough_cos[180];
+float Hough_accum::hough_sin[180];
 int main(int argc, char **argv) {
-  Hough_trig::init(3);
+  Hough_accum::init(3);
   if (argc < 2) {
     cout << "usage: %s json-template-filename" << argv[0] << endl;
     exit(0);
