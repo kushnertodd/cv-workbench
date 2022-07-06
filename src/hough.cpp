@@ -43,15 +43,20 @@ void Hough::draw_lines(Image *image, float value) {
 
 void Hough::find_lines() {
   find_peaks();
-  for (Polar_line *polar_line: lines) {
-    std::list<Point *> point_list = polar_line->to_line_points(rows, cols);
-    line_points.push_back(point_list);
-  }
+  lines_to_line_segments();
 }
 
 void Hough::find_peaks() {
   int peak_threshold = accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
   accum->find_peaks(lines, peak_threshold);
+}
+
+void Hough::lines_to_line_segments() {
+  for (Polar_line *line: lines) {
+    Line_segment* line_segment = accum->clip_window(line);
+    if (line_segment != nullptr)
+      line_segments.push_back(line_segment);
+  }
 }
 
 bool Hough::read(string filename, Errors &errors) {

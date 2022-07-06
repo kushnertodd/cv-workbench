@@ -2,6 +2,7 @@
 // Created by kushn on 7/5/2022.
 //
 
+#include <sstream>
 #include "line_segment.hpp"
 
 Line_segment::~Line_segment() {
@@ -27,10 +28,6 @@ Line_segment::Line_segment(Point *point1, Point *point2) :
  * https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
  * This fills in line segment points with Bresenham's line algorithm
  */
-void Line_segment::to_line_points() {
-  plotLine(point1->col, point1->row, point2->col, point2->row);
-}
-
 void Line_segment::add(int x, int y) {
   add(new Point(y, x));
 }
@@ -82,7 +79,11 @@ void Line_segment::plotLineHigh(int x0, int y0, int x1, int y1) {
   }
 }
 
-void Line_segment::plotLine(int x0, int y0, int x1, int y1) {
+void Line_segment::plotLine() {
+  int x0 = point1->col;
+  int y0= point1->row;
+  int x1 = point2->col;
+  int y1=point2->row;
   if (abs(y1 - y0) < abs(x1 - x0)) {
     if (x0 > x1) {
       plotLineLow(x1, y1, x0, y0);
@@ -96,6 +97,13 @@ void Line_segment::plotLine(int x0, int y0, int x1, int y1) {
       plotLineHigh(x0, y0, x1, y1);
     }
   }
+}
+
+std::string Line_segment::to_string() {
+  std::ostringstream  os;
+  os << "point 1 " << point1->to_string()
+  << " point 2 " << point2->to_string();
+  return os.str();
 }
 
 

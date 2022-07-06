@@ -37,6 +37,7 @@ SRCOBJS :=  \
   image_header.o \
   internet_data_source_descriptor.o \
   kernel.o \
+  line_segment.o \
   operator.o \
   operator_filter_edge_kirsch.o \
   operator_filter_edge_prewitt.o \

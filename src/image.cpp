@@ -2,6 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cmath>
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
@@ -148,15 +149,15 @@ pixel_32F Image::get(int row, int col) {
   int index;
   switch (image_header->depth) {
     case cv_enums::CV_8U:
-       index = row_col_to_index(row, col);
+      index = row_col_to_index(row, col);
       return buf_8U[index];
 
     case cv_enums::CV_32S:
-       index = row_col_to_index(row, col);
+      index = row_col_to_index(row, col);
       return buf_32S[index];
 
     case cv_enums::CV_32F:
-       index = row_col_to_index(row, col);
+      index = row_col_to_index(row, col);
       return buf_32F[index];
 
     default:
@@ -165,7 +166,7 @@ pixel_32F Image::get(int row, int col) {
 }
 
 pixel_32F Image::get(Point *point) {
-  return get(point->row, point->cols);
+  return get(point->row, point->col);
 }
 
 pixel_8U Image::get_8U(int row, int col) {
@@ -183,15 +184,15 @@ pixel_32S Image::get_32F(int row, int col) {
   return buf_32F[index];
 }
 
-void Image::set(int row, int col, pixel_32F value) {
+void Image::set(int row, int col, float value) {
   bounds.update(value);
   switch (image_header->depth) {
     case cv_enums::CV_8U:
-      buf_8U[row_col_to_index(row, col)] = value;
+      buf_8U[row_col_to_index(row, col)] = round(value);
       break;
 
     case cv_enums::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = value;
+      buf_32S[row_col_to_index(row, col)] = round(value);
       break;
 
     case cv_enums::CV_32F:
@@ -203,7 +204,7 @@ void Image::set(int row, int col, pixel_32F value) {
   }
 }
 
-void Image::set(Point *point, pixel_32F value) {
+void Image::set(Point *point, float value) {
   set(point->row, point->col, value);
 }
 
@@ -305,6 +306,21 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
       default:
         break;
     }
+  }
+}
+
+void Image::draw_line_segments(list<Line_segment *> line_segments, float value) {
+  for (Line_segment *line_segment: line_segments) {
+    draw_line_segment(line_segment, value);
+  }
+}
+
+void Image::draw_line_segment(Line_segment *line_segment, float value) {
+  if (debug)
+    std::cout << "Hough::draw_lines; line_segment (" << line_segment->to_string()
+              << ") value " << value << std::endl;
+  for (Point *point: line_segment->line_points) {
+    set(point, value);
   }
 }
 
@@ -528,9 +544,10 @@ float Image::get_scaled(int row, int col, float lower_in,
   float pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
   if (debug && false)
-    cout << "Image::get_scaled: pixel_in "<<pixel_in<<" pixel_out " << pixel_out <<" row " <<row << " col " <<col<< " lower_in " << lower_in
-                           << " upper_in " << upper_in <<  " lower_out " << lower_out
-                           << " upper_out " << upper_out<< endl;
+    cout << "Image::get_scaled: pixel_in " << pixel_in << " pixel_out " << pixel_out << " row " << row << " col " << col
+         << " lower_in " << lower_in
+         << " upper_in " << upper_in << " lower_out " << lower_out
+         << " upper_out " << upper_out << endl;
   return pixel_out;
 }
 
@@ -552,15 +569,15 @@ Image *Image::scale_image(Image *image, float lower_in,
                           float upper_out, cv_enums::CV_image_depth depth) {
   if (debug)
     cout << "Image *Image::scale_image: lower_in " << lower_in
-<< " upper_in " << upper_in
- << " lower_out " << lower_out
-       << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth)<<endl;
+         << " upper_in " << upper_in
+         << " lower_out " << lower_out
+         << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << endl;
   Image *convert_image = clone_image(image, depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {
     for (int col = 0; col < image_header->cols; col++) {
       float value = image->get_scaled(row, col, lower_in,
-                        upper_in, lower_out, upper_out);
+                                      upper_in, lower_out, upper_out);
       convert_image->set(row, col, value);
     }
   }

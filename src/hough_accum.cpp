@@ -6,6 +6,7 @@
 #include "image.hpp"
 #include "polar_line.hpp"
 #include "hough_accum.hpp"
+#include "line_segment.hpp"
 
 extern bool debug;
 
@@ -79,15 +80,20 @@ int Hough_accum::get_cols() { return image->image_header->cols; }
 float Hough_accum::get_cos(int theta_index) { return hough_cos[theta_index]; }
 int Hough_accum::get_rows() { return image->image_header->rows; }
 float Hough_accum::get_sin(int theta_index) { return hough_sin[theta_index]; }
+bool Hough_accum::in_window(Point *point) {
+  return point->row > 0 && point->row < get_rows() &&
+      point->col > 0 && point->col < get_cols();
+}
+
 int Hough_accum::index_to_theta(int theta_index) { return theta_index * theta_inc; }
 float Hough_accum::index_to_rho(int rho_index) { return rho_index - max_rho / 2.0; }
-float Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
-  return (col_to_x(col) * get_cos(theta_index) - index_to_rho(rho_index))
-      / get_sin(theta_index) + get_rows() / 2.0;
+int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
+  return round((col_to_x(col) * get_cos(theta_index) - index_to_rho(rho_index))
+                   / get_sin(theta_index) + get_rows() / 2.0);
 }
-float Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
-  return (index_to_rho(rho_index) - row_to_y(row) * get_sin(theta_index))
-      / get_cos(theta_index) + get_cols() / 2.0;
+int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
+  return round((index_to_rho(rho_index) - row_to_y(row) * get_sin(theta_index))
+                   / get_cos(theta_index) + get_cols() / 2.0);
 }
 int Hough_accum::rho_to_index(float rho) { return round(rho + max_rho / 2.0); }
 int Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
@@ -100,6 +106,38 @@ int Hough_accum::y_to_row(float y) { return round((get_rows() - y) / 2.0); }
 
 void Hough_accum::add(int theta_index, int rho, int value) {
   accum[theta_index][rho_to_index(rho)] += value;
+}
+
+Line_segment *Hough_accum::clip_window(Polar_line *line) {
+  Line_segment *line_segment = nullptr;
+  if (line->theta_index < nthetas / 4 && line->theta_index > nthetas * 3 / 4) {
+
+    Point *point_top = new Point(rho_theta_col_to_row(line->rho_index,
+                                                      line->theta_index,
+                                                      0), 0);
+    Point *point_bottom = new Point(rho_theta_col_to_row(line->rho_index,
+                                                         line->theta_index,
+                                                         get_cols() - 1), get_cols());
+    if (in_window(point_top) && in_window(point_bottom)) {
+      line_segment = new Line_segment(point_top, point_bottom);
+    }
+
+
+  } else {
+
+    Point *point_left = new Point(0, rho_theta_row_to_col(line->rho_index,
+                                                          line->theta_index,
+                                                          0));
+    Point *point_right = new Point(get_rows() - 1, rho_theta_row_to_col(line->rho_index,
+                                                                        line->theta_index,
+                                                                        get_rows() - 1));
+    if (in_window(point_left) && in_window(point_right)) {
+      line_segment = new Line_segment(point_left, point_right);
+      line_segment->plotLine();
+    }
+
+  }
+  return line_segment;
 }
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
@@ -117,7 +155,7 @@ void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold) {
       int rho = index_to_rho(rho_index);
       if (count > peak_threshold) {
         if (true) { //maximum(theta_index, rho_index)) {
-          Polar_line *line = new Polar_line(rho, get_cos(theta_index),
+          Polar_line *line = new Polar_line(rho_index, rho, get_cos(theta_index),
                                             get_sin(theta_index));
           lines.push_back(line);
           if (debug) {

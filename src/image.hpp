@@ -12,6 +12,7 @@
 #include "image_header.hpp"
 #include "point.hpp"
 #include "wb_defs.hpp"
+#include "line_segment.hpp"
 
 using namespace std;
 
@@ -60,14 +61,15 @@ class Image {
 
   int row_col_to_index(int row, int col);
 
+  // TODO: add component
   pixel_32F get(int row, int col);
   pixel_32F get(Point *point);
   pixel_8U get_8U(int row, int col);
   pixel_32S get_32S(int row, int col);
   pixel_32S get_32F(int row, int col);
 
-  void set(int row, int col, pixel_32F value);
-  void set(Point *point, pixel_32F value);
+  void set(int row, int col, float value);
+  void set(Point *point, float value);
   void set_8U(int row, int col, pixel_8U value);
   void set_32S(int row, int col, pixel_32S value);
   void set_32F(int row, int col, pixel_32F value);
@@ -76,6 +78,8 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
   void add_32F(pixel_32F *src, int count, Errors &errors);
 
+  void draw_line_segments(list<Line_segment*> line_segments, float value);
+  void draw_line_segment(Line_segment* line_segment, float value);
   static Image *read_binary(string path, Errors &errors);
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);

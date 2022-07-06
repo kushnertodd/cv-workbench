@@ -15,6 +15,7 @@
 #include "polar_line.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
+#include "line_segment.hpp"
 
 using namespace std;
 
@@ -39,15 +40,16 @@ class Hough_accum {
   // accessors
 
   float col_to_x(int col);
-  float deg_to_rad(float deg); //
-  int get_cols();//
-  float get_cos(int theta_index);//
-  int get_rows();//
-  float get_sin(int theta_index);//
-  int index_to_theta(int index); //
+  float deg_to_rad(float deg);
+  int get_cols();
+  float get_cos(int theta_index);
+  int get_rows();
+  float get_sin(int theta_index);
+  bool in_window(Point* point);
+  int index_to_theta(int index);
   float index_to_rho(int rho_index);
-  float rho_theta_row_to_col(int rho_index, int theta_index, int row);
-  float rho_theta_col_to_row(int rho_index, int theta_index, int col);
+  int rho_theta_row_to_col(int rho_index, int theta_index, int row);
+  int rho_theta_col_to_row(int rho_index, int theta_index, int col);
   int rho_to_index(float rho);
   int row_col_theta_to_rho(int row, int col, int theta_index);
   float row_to_y(int row);
@@ -57,6 +59,7 @@ class Hough_accum {
   // methods
 
   void add(int theta_index, int rho, int value);
+  Line_segment* clip_window(Polar_line* line);
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);
   void find_peaks(list<Polar_line *> &lines, int peak_threshold);
   void initialize(int image_theshold);

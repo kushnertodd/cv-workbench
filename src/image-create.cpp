@@ -16,10 +16,7 @@ void error_exit(string message) {
   exit(0);
 }
 
-int Hough_accum::theta_inc;
-int Hough_accum::nthetas;
-float Hough_accum::hough_cos[180];
-float Hough_accum::hough_sin[180];
+
 
 int main(int argc, char **argv) {
 

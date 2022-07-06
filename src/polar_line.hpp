@@ -9,13 +9,14 @@
 
 class Polar_line {
  public:
+  int rho_index;
   int rho;
   int theta_index;
   int count;
   float cos_theta;
   float sin_theta;
   Polar_line();
-  Polar_line(int m_rho, float m_cos_theta, float m_sin_theta);
+  Polar_line(int m_rho_index, int m_rho, float m_cos_theta, float m_sin_theta);
 /*
   static Polar_line *from_point_theta(Point *point, int m_theta_index);
   Point *point_from_x(float x, int rows, int cols);

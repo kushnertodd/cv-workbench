@@ -45,12 +45,12 @@ int main(int argc, char **argv) {
     case cv_enums::CV_32S:
       stat_32S(in_image, hough);
       hough.find_lines();
-      //hough.draw_lines(in_image, 255);
        out_image = Image::scale_image(in_image, -500,
                                 255, 0,
                                 255, cv_enums::CV_8U);
        if (debug)
          cout << "image-hough: out_image " << out_image->to_string() << endl;
+    out_image->draw_line_segments(hough.line_segments, 255);
       hough.write(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename+".jpg", errors);
       break;

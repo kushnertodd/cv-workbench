@@ -19,7 +19,8 @@ Polar_line::Polar_line() {
  * @param m_theta_index
  */
 
-Polar_line::Polar_line(int m_rho, float m_cos_theta, float m_sin_theta):
+Polar_line::Polar_line(int m_rho_index, int m_rho, float m_cos_theta, float m_sin_theta):
+rho_index(m_rho_index),
 rho(m_rho),
     cos_theta(m_cos_theta),
     sin_theta(m_sin_theta) {

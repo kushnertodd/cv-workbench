@@ -17,12 +17,13 @@ class Hough {
 Image *image;
   Hough_accum *accum;
   list<Polar_line *> lines;
+  list<Line_segment*> line_segments;
 
   ~Hough();
   Hough(Image *m_image, int m_theta_inc);
   void find_lines();
-//  void draw_lines(Image *image, float value);
   void find_peaks();
+  void lines_to_line_segments();
   bool read(string filename, Errors &errors);
   bool write(string filename, string delim, Errors &errors);
 };
