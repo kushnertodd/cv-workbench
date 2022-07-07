@@ -17,12 +17,9 @@ This parser makes use of all the functions which reads the value of a json objec
 
 //bool debug = true;
 bool debug = false;
-int Hough_accum::theta_inc;
-int Hough_accum::nthetas;
-float Hough_accum::hough_cos[180];
-float Hough_accum::hough_sin[180];
+
+
 int main(int argc, char **argv) {
-  Hough_accum::init(3);
   if (argc < 2) {
     cout << "usage: %s json-template-filename" << argv[0] << endl;
     exit(0);

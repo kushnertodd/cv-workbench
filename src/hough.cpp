@@ -10,8 +10,6 @@
 #include "hough_accum.hpp"
 #include "hough.hpp"
 
-using namespace std;
-
 extern bool debug;
 
 Hough::~Hough() {
@@ -20,7 +18,10 @@ Hough::~Hough() {
 Hough::Hough(Image *m_image, int m_theta_inc) :
     image(m_image),
     theta_inc(m_theta_inc){
+  if (debug)
+  std::cout<<  "Hough::Hough image " << image << " theta_inc " << theta_inc << std::endl;
   accum = new Hough_accum(theta_inc, image);
+  accum->initialize(100);
 }
 
 /*

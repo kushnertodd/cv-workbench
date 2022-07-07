@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <list>
 #include <iostream>
+#include <sstream>
 #include "hough_accum.hpp"
 #include "polar_line.hpp"
 
@@ -19,11 +20,13 @@ Polar_line::Polar_line() {
  * @param m_theta_index
  */
 
-Polar_line::Polar_line(int m_rho_index, int m_rho, float m_cos_theta, float m_sin_theta):
+Polar_line::Polar_line(int m_rho_index, int m_rho, int m_theta_index, float m_cos_theta, float m_sin_theta, int m_count):
 rho_index(m_rho_index),
 rho(m_rho),
+theta_index(m_theta_index),
     cos_theta(m_cos_theta),
-    sin_theta(m_sin_theta) {
+    sin_theta(m_sin_theta),
+    count(m_count){
 }
 
 /**
@@ -149,4 +152,23 @@ float Polar_line::x_from_y(float y) {
   return (rho - y * sin_theta) / cos_theta;
 }
 */
+
+std::string Polar_line::to_string() {
+  std::ostringstream os;
+  os << " rho_index "
+     << rho_index
+     << " rho "
+     << rho
+     << " theta_index "
+     << theta_index
+     << " count "
+     << count
+     << " cos_theta "
+     << cos_theta
+     << " sin_theta "
+     << sin_theta
+     << " count "
+     << count;
+  return os.str();
+}
 

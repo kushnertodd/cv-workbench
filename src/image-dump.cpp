@@ -72,10 +72,7 @@ void dump_32F(pixel_32F *buf_32F, int rows, int cols) {
 }
 
 bool debug = true;
-int Hough_accum::theta_inc;
-int Hough_accum::nthetas;
-float Hough_accum::hough_cos[180];
-float Hough_accum::hough_sin[180];
+
 int main(int argc, char **argv) {
 
   if (argc < 2)

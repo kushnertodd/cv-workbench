@@ -14,8 +14,6 @@
 #include "wb_defs.hpp"
 #include "line_segment.hpp"
 
-using namespace std;
-
 class Image_exception {
  private:
   string errmsg;

@@ -3,7 +3,10 @@
 //
 
 #include <sstream>
+#include <iostream>
 #include "line_segment.hpp"
+
+extern bool debug;
 
 Line_segment::~Line_segment() {
   if (point1 != nullptr)
@@ -18,21 +21,36 @@ Line_segment::Line_segment() {}
 
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     point1(new Point(min_row, min_col)),
-    point2(new Point(max_row, max_col)) {}
+    point2(new Point(max_row, max_col)) {
+  if (debug)
+    std::cout << "Line_segment::Line_segment min_row " << min_row
+              << " min_col " << min_col << " max_row " << max_row
+              << " max_col " << max_col << std::endl;
+}
 
 Line_segment::Line_segment(Point *point1, Point *point2) :
     point1(new Point(point1)),
-    point2(new Point(point2)) {}
+    point2(new Point(point2)) {
+  if (debug)
+    std::cout << "Line_segment::Line_segment point1 (" <<
+              point1->to_string()
+              << ") point2 ("
+              << point2->to_string() << ")" << std::endl;
+}
 
 /**
  * https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
  * This fills in line segment points with Bresenham's line algorithm
  */
 void Line_segment::add(int x, int y) {
+  if (debug && false)
+    std::cout << "Line_segment::add x " << x << " y " << y << std::endl;
   add(new Point(y, x));
 }
 
 void Line_segment::add(Point *point) {
+  if (debug && false)
+    std::cout << "Line_segment::add point (" << point->to_string() << ")" << std::endl;
   line_points.push_back(point);
 }
 
@@ -81,9 +99,9 @@ void Line_segment::plotLineHigh(int x0, int y0, int x1, int y1) {
 
 void Line_segment::plotLine() {
   int x0 = point1->col;
-  int y0= point1->row;
+  int y0 = point1->row;
   int x1 = point2->col;
-  int y1=point2->row;
+  int y1 = point2->row;
   if (abs(y1 - y0) < abs(x1 - x0)) {
     if (x0 > x1) {
       plotLineLow(x1, y1, x0, y0);
@@ -100,9 +118,9 @@ void Line_segment::plotLine() {
 }
 
 std::string Line_segment::to_string() {
-  std::ostringstream  os;
+  std::ostringstream os;
   os << "point 1 " << point1->to_string()
-  << " point 2 " << point2->to_string();
+     << " point 2 " << point2->to_string();
   return os.str();
 }
 

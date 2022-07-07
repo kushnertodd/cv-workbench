@@ -27,7 +27,14 @@ Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
   max_rho = round(sqrt(get_rows() * get_rows() + get_cols() * get_cols())) + rho_buffer;
   hough_cos = new float[nthetas];
   hough_sin = new float[nthetas];
-
+if (debug)
+  std::cout << "Hough_accum::Hough_accum theta_inc " << theta_inc
+  << " max_theta " << max_theta
+  << " nthetas " << nthetas
+  << " rows " << get_rows()
+  << " cols " << get_cols()
+  << " max_rho " << max_rho
+  << std::endl;
   // allocate cosine table
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     hough_cos[theta_index] = std::cos(deg_to_rad(index_to_theta(theta_index)));
@@ -58,14 +65,15 @@ void Hough_accum::initialize(int image_theshold) {
       float value = image->get(row, col);
       if (value < -image_theshold || value > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-          float rho = row_col_theta_to_rho(row, col, theta_index);
-          if (debug)
+          int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
+          if (debug && false)
             std::cout << "Hough_accum::Hough_accum: value " << value
-                      << " threshold " << image_theshold
-                      << " rho " << rho
+                      << " image_theshold " << image_theshold
+                      << " rho_index " << rho_index
                       << " theta_index " << theta_index
+                      << " value " << value
                       << std::endl;
-          add(theta_index, rho, abs(value));
+          add(theta_index, rho_index, abs(value));
         }
       }
     }
@@ -81,8 +89,8 @@ float Hough_accum::get_cos(int theta_index) { return hough_cos[theta_index]; }
 int Hough_accum::get_rows() { return image->image_header->rows; }
 float Hough_accum::get_sin(int theta_index) { return hough_sin[theta_index]; }
 bool Hough_accum::in_window(Point *point) {
-  return point->row > 0 && point->row < get_rows() &&
-      point->col > 0 && point->col < get_cols();
+  return point->row >= 0 && point->row < get_rows() &&
+      point->col >= 0 && point->col < get_cols();
 }
 
 int Hough_accum::index_to_theta(int theta_index) { return theta_index * theta_inc; }
@@ -95,35 +103,29 @@ int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
   return round((index_to_rho(rho_index) - row_to_y(row) * get_sin(theta_index))
                    / get_cos(theta_index) + get_cols() / 2.0);
 }
-int Hough_accum::rho_to_index(float rho) { return round(rho + max_rho / 2.0); }
-int Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
-  return rho_to_index(col_to_x(col) * get_cos(theta_index)
-                          + row_to_y(row) * get_sin(theta_index));
+int Hough_accum::rho_to_index(float rho) {
+  return round(rho + max_rho / 2.0);
+}
+float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
+  return col_to_x(col) * get_cos(theta_index)
+                          + row_to_y(row) * get_sin(theta_index);
+}
+int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) {
+  return rho_to_index(row_col_theta_to_rho(row, col, theta_index));
 }
 float Hough_accum::row_to_y(int row) { return get_rows() / 2.0 - row; }
 int Hough_accum::x_to_col(float x) { return round((x + get_cols()) / 2.0); }
 int Hough_accum::y_to_row(float y) { return round((get_rows() - y) / 2.0); }
 
-void Hough_accum::add(int theta_index, int rho, int value) {
-  accum[theta_index][rho_to_index(rho)] += value;
+void Hough_accum::add(int theta_index, int rho_index, int value) {
+  accum[theta_index][rho_index] += value;
 }
 
 Line_segment *Hough_accum::clip_window(Polar_line *line) {
+  if (debug)
+    std::cout << "Hough_accum::clip_window line " << line->to_string() << std::endl;
   Line_segment *line_segment = nullptr;
-  if (line->theta_index < nthetas / 4 && line->theta_index > nthetas * 3 / 4) {
-
-    Point *point_top = new Point(rho_theta_col_to_row(line->rho_index,
-                                                      line->theta_index,
-                                                      0), 0);
-    Point *point_bottom = new Point(rho_theta_col_to_row(line->rho_index,
-                                                         line->theta_index,
-                                                         get_cols() - 1), get_cols());
-    if (in_window(point_top) && in_window(point_bottom)) {
-      line_segment = new Line_segment(point_top, point_bottom);
-    }
-
-
-  } else {
+  if (line->theta_index < nthetas / 4 || line->theta_index > nthetas * 3 / 4) {
 
     Point *point_left = new Point(0, rho_theta_row_to_col(line->rho_index,
                                                           line->theta_index,
@@ -131,10 +133,45 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
     Point *point_right = new Point(get_rows() - 1, rho_theta_row_to_col(line->rho_index,
                                                                         line->theta_index,
                                                                         get_rows() - 1));
+    if (debug)
+      std::cout << "Hough_accum::clip_window "
+                << "point_left ("      << point_left->to_string()
+                << ") point_right ("      << point_right->to_string()
+                << ")" << std::endl;
     if (in_window(point_left) && in_window(point_right)) {
       line_segment = new Line_segment(point_left, point_right);
       line_segment->plotLine();
+      std::cout << "Hough_accum::clip_window "
+                << "line_segment (" << line_segment->to_string() << std::endl;
     }
+
+
+
+
+
+  } else {
+
+    Point *point_top = new Point(rho_theta_col_to_row(line->rho_index,
+                                                      line->theta_index,
+                                                      0), 0);
+    Point *point_bottom = new Point(rho_theta_col_to_row(line->rho_index,
+                                                         line->theta_index,
+                                                         get_cols() - 1), get_cols()-1);
+    if (debug)
+      std::cout << "Hough_accum::clip_window "
+                << "point_top ("      << point_top->to_string()
+                << "point_bottom ("      << point_bottom->to_string()
+                << std::endl;
+    if (in_window(point_top) && in_window(point_bottom)) {
+      line_segment = new Line_segment(point_top, point_bottom);
+      line_segment->plotLine();
+      if (debug)
+        std::cout << "Hough_accum::clip_window "
+                  << "line_segment (" << line_segment->to_string() << std::endl;
+    }
+
+
+
 
   }
   return line_segment;
@@ -142,27 +179,25 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.85;
+    return bounds.max_value * 0.40;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
     return bounds.max_value * 0.85;
   } else return -1;
 }
 
-void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold) {
+void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold,
+                             bool non_max_suppression) {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
       int count = accum[theta_index][rho_index];
       int rho = index_to_rho(rho_index);
       if (count > peak_threshold) {
-        if (true) { //maximum(theta_index, rho_index)) {
-          Polar_line *line = new Polar_line(rho_index, rho, get_cos(theta_index),
-                                            get_sin(theta_index));
+        if (!non_max_suppression) { //maximum(theta_index, rho_index)) {
+          Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
+                                            get_sin(theta_index), count);
           lines.push_back(line);
           if (debug) {
-            cout << "Hough_accum::find_peaks: rho_index " << rho_index
-                 << " rho " << rho
-                 << " theta " << theta_index
-                 << " count " << accum[theta_index][rho_index]
+            cout << "Hough_accum::find_peaks: line " << line->to_string()
                  << endl;
           }
         }

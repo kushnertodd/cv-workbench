@@ -17,8 +17,6 @@
 #include "wb_defs.hpp"
 #include "line_segment.hpp"
 
-using namespace std;
-
 class Hough_accum {
  public:
   const int max_theta = 180;
@@ -51,17 +49,19 @@ class Hough_accum {
   int rho_theta_row_to_col(int rho_index, int theta_index, int row);
   int rho_theta_col_to_row(int rho_index, int theta_index, int col);
   int rho_to_index(float rho);
-  int row_col_theta_to_rho(int row, int col, int theta_index);
+  float row_col_theta_to_rho(int row, int col, int theta_index);
+  int row_col_theta_to_rho_index(int row, int col, int theta_index);
   float row_to_y(int row);
   int x_to_col(float x);
   int y_to_row(float y);
 
   // methods
 
-  void add(int theta_index, int rho, int value);
+  void add(int theta_index, int rho_index, int value);
   Line_segment* clip_window(Polar_line* line);
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);
-  void find_peaks(list<Polar_line *> &lines, int peak_threshold);
+  void find_peaks(list<Polar_line *> &lines, int peak_threshold,
+                  bool non_max_suppression = false);
   void initialize(int image_theshold);
   bool maximum(int theta, int rho_index);
   void update_stats();

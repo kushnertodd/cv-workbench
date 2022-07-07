@@ -8,8 +8,6 @@
 #include <sstream>
 #include "bounds.hpp"
 
-using namespace std;
-
 Bounds::Bounds() :
     Bounds(1000000, -1000000) {
 }
@@ -20,8 +18,8 @@ Bounds::Bounds(float m_min_value, float m_max_value) :
 }
 
 void Bounds::update(float value) {
-  min_value = min(min_value, value);
-  max_value = max(max_value, value);
+  min_value = std::min(min_value, value);
+  max_value = std::max(max_value, value);
 }
 
 float Bounds::map_input_to_output_bounds(float value, Bounds *input_bounds, Bounds *output_bounds) {
@@ -55,8 +53,8 @@ int Bounds::bin(float value, int nbins) {
     return (nbins - 1) * (value - min_value) / (max_value - min_value);
 }
 
-string Bounds::to_string() {
-  ostringstream os;
+std::string Bounds::to_string() {
+  std::ostringstream os;
   os << "min_value " << min_value << " max_value " << max_value;
   return os.str();
 }

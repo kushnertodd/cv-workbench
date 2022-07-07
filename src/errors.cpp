@@ -5,8 +5,6 @@
 #include <sstream>
 #include "errors.hpp"
 
-using namespace std;
-
 void Errors::add(string error) {
   error_ct++;
   error_list.push_back(error);

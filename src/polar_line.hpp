@@ -16,7 +16,8 @@ class Polar_line {
   float cos_theta;
   float sin_theta;
   Polar_line();
-  Polar_line(int m_rho_index, int m_rho, float m_cos_theta, float m_sin_theta);
+  Polar_line(int m_rho_index, int m_rho, int m_theta_index, float m_cos_theta, float m_sin_theta,int m_count);
+  std::string to_string();
 /*
   static Polar_line *from_point_theta(Point *point, int m_theta_index);
   Point *point_from_x(float x, int rows, int cols);

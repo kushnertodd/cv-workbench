@@ -28,6 +28,12 @@ Image_header::Image_header(Image_header *image_header) :
                  image_header->depth) {
 }
 
+Image_header::Image_header(Image_header &image_header) :
+    Image_header(image_header.rows,
+                 image_header.cols,
+                 image_header.components,
+                 image_header.depth) {
+}
 Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
   int rows;
   if (!File_utils::read_int(fp, rows)) {

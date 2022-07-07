@@ -8,8 +8,6 @@
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
 
-using namespace std;
-
 Variance_stats variance_stats;
 
 void error_exit(string message) {

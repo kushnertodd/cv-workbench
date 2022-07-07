@@ -7,8 +7,6 @@
 
 #include <string>
 
-using namespace std;
-
 class Bounds {
  public:
   float min_value;
@@ -20,7 +18,7 @@ class Bounds {
   float map_to_output_bounds(float value, Bounds *output_bounds);
   float map_from_input_bounds(float value, Bounds *input_bounds);
   int bin(float value, int nbins);
-  string to_string();
+  std::string to_string();
 };
 
 #endif //SRC__BOUNDS_HPP_

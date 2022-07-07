@@ -13,8 +13,6 @@
 #include "image_header.hpp"
 #include "wb_utils.hpp"
 
-using namespace std;
-
 extern bool debug;
 
 Image_exception::Image_exception(string m_errmsg) :
@@ -68,11 +66,17 @@ Image::Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth 
 Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   if (debug)
     cout << "Image::clone: depth " << depth << " " << image->to_string() << endl;
+/*
   Image_header *image_header = new Image_header(image->get_rows(),
                                                 image->get_cols(),
                                                 image->get_components(),
                                                 depth);
-  return new Image(image_header);
+*/
+  Image *new_image = new Image(image->get_rows(),
+                               image->get_cols(),
+                               image->get_components(),
+                               depth);
+  return new_image;
 }
 
 /**
@@ -572,7 +576,11 @@ Image *Image::scale_image(Image *image, float lower_in,
          << " upper_in " << upper_in
          << " lower_out " << lower_out
          << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << endl;
-  Image *convert_image = clone_image(image, depth);
+  //Image *convert_image = clone_image(image, depth);
+  Image *convert_image = new Image(image->get_rows(),
+                               image->get_cols(),
+                               image->get_components(),
+                               depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {
     for (int col = 0; col < image_header->cols; col++) {

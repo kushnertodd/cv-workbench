@@ -8,8 +8,6 @@
 #include <map>
 #include <string>
 
-using namespace std;
-
 namespace cv_enums {
 
 enum CV_data_type {
@@ -83,6 +81,6 @@ typedef double pixel_64F;
 // unsupported -- CV_16F pretty much doesn't exist in C++
 typedef float pixel_16F;
 
-typedef map<string, string> String_map;
+typedef std::map<std::string, std::string> String_map;
 
 #endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_

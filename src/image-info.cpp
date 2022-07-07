@@ -42,10 +42,7 @@ void read_int(FILE *fp, string name, int &var) {
 }
 
 bool debug = true;
-int Hough_accum::theta_inc;
-int Hough_accum::nthetas;
-float Hough_accum::hough_cos[180];
-float Hough_accum::hough_sin[180];
+
 int main(int argc, char **argv) {
 
   if (argc < 2)
