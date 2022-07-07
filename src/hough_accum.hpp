@@ -37,21 +37,23 @@ class Hough_accum {
 
   // accessors
 
-  float col_to_x(int col);
-  float deg_to_rad(float deg);
   int get_cols();
-  float get_cos(int theta_index);
   int get_rows();
-  float get_sin(int theta_index);
   bool in_window(Point* point);
-  int index_to_theta(int index);
-  float index_to_rho(int rho_index);
-  int rho_theta_row_to_col(int rho_index, int theta_index, int row);
+
+  float get_cos(int theta_index);
+  float get_sin(int theta_index);
+  float deg_to_rad(float deg);
+
+  float col_to_x(int col);
+  float rho_index_to_rho(int rho_index);
   int rho_theta_col_to_row(int rho_index, int theta_index, int col);
+  int rho_theta_row_to_col(int rho_index, int theta_index, int row);
   int rho_to_index(float rho);
   float row_col_theta_to_rho(int row, int col, int theta_index);
   int row_col_theta_to_rho_index(int row, int col, int theta_index);
   float row_to_y(int row);
+  int theta_index_to_theta(int index);
   int x_to_col(float x);
   int y_to_row(float y);
 

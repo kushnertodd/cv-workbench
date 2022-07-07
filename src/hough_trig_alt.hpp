@@ -37,7 +37,7 @@ class Hough_trig_alt {
   Hough_trig_alt();
   static void init(int m_theta_inc);
   static float deg_to_rad(float deg);
-  static int index_to_theta(int index);
+  static int theta_index_to_theta(int index);
   static float cos(int theta_index);
   static float sin(int theta_index);
 };
