@@ -11,8 +11,10 @@ Point::Point(int m_row,
              int m_col) :
     row(m_row),
     col(m_col) {}
+
 Point::Point(Point &point) :
     Point::Point(point.row, point.col) {}
+
 Point::Point(Point *point) :
     Point::Point(point->row, point->col) {}
 
