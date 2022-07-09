@@ -130,7 +130,7 @@ int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
 }
 int Hough_accum::rho_to_index(float rho) {
   float rho_offset = max_rho / 2.0;
-  int rho_index = round(rho);
+  int rho_index = round(rho) + rho_offset;
   return rho_index;
 }
 float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
@@ -138,7 +138,8 @@ float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
   float cos_t = get_cos(theta_index);
   float y = row_to_y(row);
   float sin_t = get_sin(theta_index);
-  return x * cos_t + y * sin_t;
+  float rho = x * cos_t + y * sin_t;
+  return rho;
 }
 int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) {
   float rho = row_col_theta_to_rho(row, col, theta_index);
@@ -451,7 +452,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.99;//0.40; // for all
+    return bounds.max_value * 0.01; // 0.40; // 0.99 for all
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
     return bounds.max_value * 0.85;
   } else return -1;

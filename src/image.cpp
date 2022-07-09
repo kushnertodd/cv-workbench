@@ -578,9 +578,9 @@ Image *Image::scale_image(Image *image, float lower_in,
          << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << endl;
   //Image *convert_image = clone_image(image, depth);
   Image *convert_image = new Image(image->get_rows(),
-                               image->get_cols(),
-                               image->get_components(),
-                               depth);
+                                   image->get_cols(),
+                                   image->get_components(),
+                                   depth);
   Image_header *image_header = image->image_header;
   for (int row = 0; row < image_header->rows; row++) {
     for (int col = 0; col < image_header->cols; col++) {

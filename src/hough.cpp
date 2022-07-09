@@ -17,9 +17,9 @@ Hough::~Hough() {
 
 Hough::Hough(Image *m_image, int m_theta_inc) :
     image(m_image),
-    theta_inc(m_theta_inc){
+    theta_inc(m_theta_inc) {
   if (debug)
-  std::cout<<  "Hough::Hough image " << image << " theta_inc " << theta_inc << std::endl;
+    std::cout << "Hough::Hough image " << image << " theta_inc " << theta_inc << std::endl;
   accum = new Hough_accum(theta_inc, image);
   accum->initialize(100);
 }
@@ -54,7 +54,7 @@ void Hough::find_peaks() {
 
 void Hough::lines_to_line_segments() {
   for (Polar_line *line: lines) {
-    Line_segment* line_segment = accum->clip_window(line);
+    Line_segment *line_segment = accum->clip_window(line);
     if (line_segment != nullptr)
       line_segments.push_back(line_segment);
   }

@@ -14,10 +14,10 @@ class Hough {
  public:
   const int max_theta = 180;
   int theta_inc;
-Image *image;
+  Image *image;
   Hough_accum *accum;
   list<Polar_line *> lines;
-  list<Line_segment*> line_segments;
+  list<Line_segment *> line_segments;
 
   ~Hough();
   Hough(Image *m_image, int m_theta_inc);

@@ -58,7 +58,7 @@ Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
     errors.add("Image_header::read_header: missing image depth in '" + path + "'");
     return nullptr;
   }
-  return new Image_header(rows, cols, components, ( cv_enums::CV_image_depth) depth);
+  return new Image_header(rows, cols, components, (cv_enums::CV_image_depth) depth);
 
 }
 

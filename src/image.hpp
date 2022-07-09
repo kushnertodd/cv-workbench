@@ -76,8 +76,8 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
   void add_32F(pixel_32F *src, int count, Errors &errors);
 
-  void draw_line_segments(list<Line_segment*> line_segments, float value);
-  void draw_line_segment(Line_segment* line_segment, float value);
+  void draw_line_segments(list<Line_segment *> line_segments, float value);
+  void draw_line_segment(Line_segment *line_segment, float value);
   static Image *read_binary(string path, Errors &errors);
   static Image *read_jpeg(string path, Errors &errors);
   void write_binary(string path, Errors &errors);

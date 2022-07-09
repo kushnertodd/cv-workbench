@@ -9,6 +9,7 @@
 extern bool debug;
 
 Line_segment::~Line_segment() {
+  return;
   if (point1 != nullptr)
     delete point1;
   if (point2 != nullptr)
@@ -26,6 +27,7 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     std::cout << "Line_segment::Line_segment min_row " << min_row
               << " min_col " << min_col << " max_row " << max_row
               << " max_col " << max_col << std::endl;
+  plotLine();
 }
 
 Line_segment::Line_segment(Point *point1, Point *point2) :
@@ -36,6 +38,7 @@ Line_segment::Line_segment(Point *point1, Point *point2) :
               point1->to_string()
               << ") point2 ("
               << point2->to_string() << ")" << std::endl;
+  plotLine();
 }
 
 /**
