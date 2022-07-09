@@ -452,7 +452,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.01; // 0.40; // 0.99 for all
+    return bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
     return bounds.max_value * 0.85;
   } else return -1;
@@ -469,7 +469,7 @@ void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold,
           Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
                                             get_sin(theta_index), count);
           lines.push_back(line);
-          if (debug) {
+          if (debug && false) {
             cout << "Hough_accum::find_peaks: line " << line->to_string()
                  << endl;
           }

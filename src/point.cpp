@@ -20,7 +20,7 @@ Point::Point(Point *point) :
 
 std::string Point::to_string() {
   std::ostringstream os;
-  os << " row " << row
+  os << "row " << row
      << " col " << col;
   return os.str();
 }

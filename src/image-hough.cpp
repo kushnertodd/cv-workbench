@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
                                 255, cv_enums::CV_8U);
        if (debug)
          cout << "image-hough: out_image " << out_image->to_string() << endl;
-    out_image->draw_line_segments(hough.line_segments, 255);
+    out_image->draw_line_segments(hough.line_segments, 0);
       hough.write(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename+".jpg", errors);
       break;
