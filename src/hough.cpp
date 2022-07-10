@@ -21,7 +21,7 @@ Hough::Hough(Image *m_image, int m_theta_inc) :
   if (debug)
     std::cout << "Hough::Hough image " << image << " theta_inc " << theta_inc << std::endl;
   accum = new Hough_accum(theta_inc, image);
-  accum->initialize(100);
+  accum->initialize(200);
 }
 
 /*

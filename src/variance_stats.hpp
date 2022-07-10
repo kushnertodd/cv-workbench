@@ -6,6 +6,7 @@
 #define SRC__VARIANCE_STATS_HPP_
 
 #include <string>
+#include "errors.hpp"
 #include "bounds.hpp"
 
 using namespace std;
@@ -33,6 +34,7 @@ class Variance_stats {
   double get_sample_variance();
   double get_standard_deviation();
   string to_string();
+  void write(FILE *fp, string path, Errors &errors);
 };
 
 #endif //SRC__VARIANCE_STATS_HPP_

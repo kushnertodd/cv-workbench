@@ -49,8 +49,8 @@ Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
   accum = new int *[nthetas];
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     accum[theta_index] = new int[max_rho];
-    for (int j = 0; j < max_rho; j++)
-      accum[theta_index][j] = 0;
+    for (int rho_index = 0; rho_index < max_rho; rho_index++)
+      accum[theta_index][rho_index] = 0;
   }
 }
 
@@ -63,7 +63,7 @@ void Hough_accum::initialize(int image_theshold) {
   for (int row = 0; row < image->image_header->rows; row++) {
     for (int col = 0; col < image->image_header->cols; col++) {
       float value = image->get(row, col);
-      if (value < -image_theshold || value > image_theshold) {
+      if (std::abs(value) > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
           int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
           if (debug && false)
@@ -452,7 +452,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return bounds.max_value * 0.55; //0.90;
+    return 90000; //bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
     return bounds.max_value * 0.85;
   } else return -1;
@@ -519,21 +519,21 @@ bool Hough_accum::read(ifstream &ifs, Errors &errors) {
 }
 
 bool Hough_accum::write(ofstream &ofs, string delim, Errors &errors) {
-  ofs << "nthetas " << nthetas
-      << " theta_inc " << theta_inc
-      << " max_rho " << max_rho
-      << " hough_cos " << hough_cos
-      << " hough_sin " << hough_sin
+  ofs << "nthetas " << nthetas << delim
+      << " theta_inc " << theta_inc << delim
+      << " max_rho " << max_rho << delim
+      << " hough_cos " << hough_cos << delim
+      << " hough_sin " << hough_sin << delim
       << bounds.to_string()
       << endl;
   ofs << delim;
-  for (int rho = 0; rho < max_rho; rho++)
-    ofs << rho_index_to_rho(rho) << delim;
+  for (int rho_index = 0; rho_index < max_rho; rho_index++)
+    ofs << rho_index_to_rho(rho_index) << delim;
   ofs << endl;
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     ofs << theta_index_to_theta(theta_index) << delim;
-    for (int rho = 0; rho < max_rho; rho++) {
-      ofs << accum[theta_index][rho] << delim;
+    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
+      ofs << accum[theta_index][rho_index] << delim;
     }
     ofs << endl;
   }

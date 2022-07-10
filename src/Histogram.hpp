@@ -5,8 +5,31 @@
 #ifndef CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 #define CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 
-class Histogram {
+#include "variance_stats.hpp"
+#include "errors.hpp"
 
+
+class Histogram {
+ public:
+  int *bins;
+  int nbins;
+  float min_value;
+  float max_value;
+  Bounds* in_bounds;
+  Variance_stats stats;
+
+  ~Histogram();
+  Histogram();
+  Histogram(int m_nbins,
+  float m_min_value,
+  float m_max_value);
+  void update(double new_value);
+  void finalize();
+  bool read(ifstream &ifs, Errors &errors);
+  void write(string path, string delim, Errors &errors);
+  string to_string();
+  void write(string path, Errors &errors);
+  void write_string(string path, string delim, Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_HISTOGRAM_HPP_

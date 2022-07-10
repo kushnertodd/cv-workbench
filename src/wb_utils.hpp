@@ -37,6 +37,12 @@ class Workbench_utils {
   static bool string_to_int(string str, int &value);
   cv_enums::CV_repository_type string_to_repository_type_enum(string type);
   static bool string_to_real(string text, double &value);
+  static bool write_double(FILE *fp, double value, string message, Errors &errors);
+  static bool write_double_buffer(FILE *fp, double *buf, double count, string message, Errors &errors);
+  static bool write_float(FILE *fp, float value, string message, Errors &errors);
+  static bool write_float_buffer(FILE *fp, float *buf, float count, string message, Errors &errors);
+  static  bool write_int(FILE *fp, int value, string message, Errors &errors);
+  static bool write_int_buffer(FILE *fp, int *buf, int count, string message, Errors &errors);
 
 };
 

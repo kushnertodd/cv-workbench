@@ -2,16 +2,16 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cstdio>
 #include <iostream>
 #include <iomanip>
-//#include <sstream>
-//#include "image.hpp"
+#include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
 
-using namespace std;
+//using namespace std;
 
 /**
  * determine character for Ascii code
@@ -424,6 +424,59 @@ bool Workbench_utils::string_to_real(string str, double &value) {
   else return false;
 }
 
+bool Workbench_utils::write_double(FILE *fp, double value, string message, Errors &errors) {
+  fwrite(&value, sizeof(double), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
+
+bool Workbench_utils::write_double_buffer(FILE *fp, double *buf, double count, string message, Errors &errors) {
+  fwrite(buf, sizeof(double), count, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
+
+bool Workbench_utils::write_float(FILE *fp, float value, string message, Errors &errors) {
+  fwrite(&value, sizeof(float), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
+
+bool Workbench_utils::write_float_buffer(FILE *fp, float *buf, float count, string message, Errors &errors) {
+  fwrite(buf, sizeof(float), count, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
+
+bool Workbench_utils::write_int(FILE *fp, int value, string message, Errors &errors) {
+  fwrite(&value, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
+
+bool Workbench_utils::write_int_buffer(FILE *fp, int *buf, int count, string message, Errors &errors) {
+  fwrite(buf, sizeof(int), count, fp);
+  if (ferror(fp) != 0) {
+    errors.add(message);
+    return false;
+  }
+  return true;
+}
 
 
 

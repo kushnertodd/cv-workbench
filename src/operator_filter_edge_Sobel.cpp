@@ -68,6 +68,10 @@ void Operator_filter_edge_sobel::run(list<Data_source_descriptor *> &input_data_
         if (errors.error_ct == 0) {
           Image *output = sobel_kernel->convolve(input);
           output_data_store->write_image(output, errors);
+
+          Image * out_image = Image::scale_image(output, -569, 590, 0, 255, cv_enums::CV_8U);
+          out_image->write_jpeg("sobel45-90-out.jpg", errors);
+
         }
       }
     }
