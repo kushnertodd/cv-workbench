@@ -36,25 +36,25 @@ Image_header::Image_header(Image_header &image_header) :
 }
 Image_header *Image_header::read_header(FILE *fp, std::string path, Errors &errors) {
   int rows;
-  if (!File_utils::read_int(fp, rows)) {
+  if (!file_utils::read_int(fp, rows)) {
     errors.add("Image_header::read_header", "", "missing image rows in '" + path + "'");
     return nullptr;
   }
 
   int cols;
-  if (!File_utils::read_int(fp, cols)) {
+  if (!file_utils::read_int(fp, cols)) {
     errors.add("Image_header::read_header", "", "missing image cols in '" + path + "'");
     return nullptr;
   }
 
   int components;
-  if (!File_utils::read_int(fp, components)) {
+  if (!file_utils::read_int(fp, components)) {
     errors.add("Image_header::read_header", "", "missing image components in '" + path + "'");
     return nullptr;
   }
 
   int depth;
-  if (!File_utils::read_int(fp, depth)) {
+  if (!file_utils::read_int(fp, depth)) {
     errors.add("Image_header::read_header", "", "missing image depth in '" + path + "'");
     return nullptr;
   }
@@ -88,7 +88,7 @@ std::string Image_header::to_string() {
   os << "rows " << rows
      << " cols " << cols
      << " components " << components
-     << " depth " << depth << " " << Workbench_utils::image_depth_enum_to_string(depth)
+     << " depth " << depth << " " << wb_utils::image_depth_enum_to_string(depth)
      << " row_stride " << row_stride
      << " npixels " << npixels;
   return os.str();

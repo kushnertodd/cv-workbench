@@ -40,10 +40,10 @@ bool Histogram::read(std::ifstream &ifs, Errors &errors) {
 /*
   string line;
   while (getline(ifs, line)) {
-    vector<string> values = File_utils::string_split(line);
+    vector<string> values = file_utils::string_split(line);
     for (std::string value_str: values) {
       int value;
-      if (!Workbench_utils::string_to_int(value_str, value))
+      if (!wb_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
       return false;
     }
@@ -73,11 +73,11 @@ void Histogram::write(std::string path, Errors &errors) {
   if (fp == nullptr) {
     errors.add("Image::write_binary", "", "invalid file '" + path + "'");
   }
-  Workbench_utils::write_int(fp, nbins, "Histogram::write: cannot write nbins to '" + path + "'", errors);
-  Workbench_utils::write_float(fp, min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
-  Workbench_utils::write_float(fp, max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
+  wb_utils::write_int(fp, nbins, "Histogram::write: cannot write nbins to '" + path + "'", errors);
+  wb_utils::write_float(fp, min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
   stats.write(fp, path, errors);
-  Workbench_utils::write_int_buffer(fp, bins, nbins, "Histogram::write: cannot write bins to '" + path + "'", errors);
+  wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write: cannot write bins to '" + path + "'", errors);
   fclose(fp);
 }
 

@@ -68,7 +68,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
   if (Operator_utils::has_parameter(operator_parameters, "depth")) {
     saw_depth = true;
     std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
-    depth = Workbench_utils::string_to_image_depth_enum(depth_str);
+    depth = wb_utils::string_to_image_depth_enum(depth_str);
     if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH) {
       errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
     }

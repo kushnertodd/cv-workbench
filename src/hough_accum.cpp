@@ -507,10 +507,10 @@ void Hough_accum::update_stats() {
 bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   std::string line;
   while (getline(ifs, line)) {
-    std::vector<std::string> values = File_utils::string_split(line);
+    std::vector<std::string> values = file_utils::string_split(line);
     for (std::string value_str: values) {
       int value;
-      if (!Workbench_utils::string_to_int(value_str, value))
+      if (!wb_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
       return false;
     }

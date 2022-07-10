@@ -24,13 +24,13 @@ int main(int argc, char **argv) {
     error_exit("usage: image-dump image-file rows cols depth data-file");
   std::string data_file = argv[1];
   int rows;
-  if (!Workbench_utils::string_to_int(std::string(argv[2]), rows))
+  if (!wb_utils::string_to_int(std::string(argv[2]), rows))
     error_exit("invalid rows value: '" + std::string(argv[2]) + "'");
   int cols;
-  if (!Workbench_utils::string_to_int(std::string(argv[3]), cols))
+  if (!wb_utils::string_to_int(std::string(argv[3]), cols))
     error_exit("invalid cols value: '" + std::string(argv[3]) + "'");
   std::string depth_str = argv[4];
-  cv_enums::CV_image_depth depth = Workbench_utils::string_to_image_depth_enum(depth_str);
+  cv_enums::CV_image_depth depth = wb_utils::string_to_image_depth_enum(depth_str);
   if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH)
     error_exit("invalid depth value: '" + depth_str + "'");
   std::string image_file = argv[5];
@@ -40,8 +40,8 @@ int main(int argc, char **argv) {
 //    error_exit("cannot open image file '" + image_file + "'");
 //  }
 
-  std::string data = File_utils::read_file(data_file);
-  std::vector<std::string> tokens = File_utils::string_split(data);
+  std::string data = file_utils::read_file(data_file);
+  std::vector<std::string> tokens = file_utils::string_split(data);
   Errors errors;
 
   if (depth == cv_enums::CV_8U) {
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     for (std::string token: tokens) {
       //cout << "token '" << token<< "'" << std::endl;
       int value;
-      if (Workbench_utils::string_to_int(token, value))
+      if (wb_utils::string_to_int(token, value))
         values.push_back(value);
       else
         error_exit("invalid integer data value: '" + token + "'");
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
     std::vector<int> values;
     for (std::string token: tokens) {
       int value;
-      if (Workbench_utils::string_to_int(token, value))
+      if (wb_utils::string_to_int(token, value))
         values.push_back(value);
       else
         error_exit("invalid data value: '" + token + "'");
@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
     std::vector<float> values;
     for (std::string token: tokens) {
       double value;
-      if (Workbench_utils::string_to_real(token, value))
+      if (wb_utils::string_to_real(token, value))
         values.push_back(value);
       else
         error_exit("invalid data value: '" + token + "'");

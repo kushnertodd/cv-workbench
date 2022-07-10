@@ -196,7 +196,7 @@ std::string Kernel::to_string() {
   std::ostringstream os;
   os << "kernel_rows " << kernel_rows
      << " kernel_cols " << kernel_cols
-     << " depth " << depth << " " << Workbench_utils::image_depth_enum_to_string(depth)
+     << " depth " << depth << " " << wb_utils::image_depth_enum_to_string(depth)
      << " size " << size;
   return os.str();
 }

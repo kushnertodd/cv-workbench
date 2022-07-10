@@ -14,7 +14,7 @@
  * @param fp file pointer
  * @return long byte count
  */
-long File_utils::file_size(std::ifstream &in) {
+long file_utils::file_size(std::ifstream &in) {
   // Get the number of bytes
   in.seekg(0, std::ios::end);
   return in.tellg();
@@ -27,7 +27,7 @@ long File_utils::file_size(std::ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-std::string File_utils::read_file(std::string filename) {
+std::string file_utils::read_file(std::string filename) {
   std::ifstream in(filename, std::ios::in | std::ios::binary);
   if (in) {
     std::string contents;
@@ -41,12 +41,12 @@ std::string File_utils::read_file(std::string filename) {
   throw (errno);
 }
 
-bool File_utils::read_int(FILE *fp, int &var) {
+bool file_utils::read_int(FILE *fp, int &var) {
   int newLen = fread(&var, sizeof(int), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);
 }
 
-std::vector<std::string> File_utils::string_split(const std::string& str) {
+std::vector<std::string> file_utils::string_split(const std::string& str) {
   std::vector<std::string> result;
   std::istringstream iss(str);
   for (std::string s; iss >> s; )

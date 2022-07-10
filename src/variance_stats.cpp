@@ -101,10 +101,10 @@ std::string Variance_stats::to_string() {
 
 void Variance_stats::write(FILE *fp, std::string path, Errors &errors){
   int count;
-  Workbench_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
-  Workbench_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);
-  Workbench_utils::write_double(fp, variance, "Histogram::write: cannot write variance to '" + path + "'", errors);
-  Workbench_utils::write_double(fp, sample_variance, "Histogram::write: cannot write sample_variance to '" + path + "'", errors);
-  Workbench_utils::write_float(fp, bounds.min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
-  Workbench_utils::write_float(fp, bounds.max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
+  wb_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
+  wb_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);
+  wb_utils::write_double(fp, variance, "Histogram::write: cannot write variance to '" + path + "'", errors);
+  wb_utils::write_double(fp, sample_variance, "Histogram::write: cannot write sample_variance to '" + path + "'", errors);
+  wb_utils::write_float(fp, bounds.min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, bounds.max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
 }

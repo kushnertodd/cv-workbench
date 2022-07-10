@@ -71,7 +71,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   if (json_file_format != nullptr) {
     std::string file_format_str = json_object_get_string(json_file_format);
     cv_enums::CV_image_file_format file_format =
-        Workbench_utils::string_to_file_format_enum(file_format_str);
+        wb_utils::string_to_file_format_enum(file_format_str);
     if (file_format == cv_enums::UNDEFINED_FILE_FORMAT)
       errors.add("Filesystem_data_source_descriptor::json_parse", "", "invalid file format '" + file_format_str + "'");
     else
@@ -116,7 +116,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
 std::string Filesystem_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()
-     << " file format '" << Workbench_utils::file_format_to_string(file_format)
+     << " file format '" << wb_utils::file_format_to_string(file_format)
      << "' directory '" << directory
      << "' filename '" << filename
      << "' ext '" << ext << "'";

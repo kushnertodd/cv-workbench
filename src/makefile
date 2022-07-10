@@ -62,8 +62,7 @@ PROGRAMS = \
   image-info \
   image-stats \
   image-test \
-  parse_experiment_json \
-  tokens 
+  parse_experiment_json 
   # json_parser_example \
 
 %.o: %.cpp %.hpp
@@ -107,9 +106,6 @@ image-test: image-test.o $(SRCOBJS)
 
 parse_experiment_json: parse_experiment_json.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-tokens: tokens.o file_utils.o
-	$(CXX) tokens.cpp -o tokens file_utils.o
 
 objs:
 	@echo $(OBJS)
@@ -285,7 +281,6 @@ polar_line.o: hough_accum.hpp errors.hpp file_utils.hpp wb_utils.hpp
 polar_line.o: data_source_descriptor.hpp wb_defs.hpp image.hpp bounds.hpp
 polar_line.o: image_header.hpp point.hpp line_segment.hpp polar_line.hpp
 polar_line.o: variance_stats.hpp
-tokens.o: file_utils.hpp
 variance_stats.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp
 variance_stats.o: image.hpp bounds.hpp errors.hpp image_header.hpp point.hpp
 variance_stats.o: line_segment.hpp variance_stats.hpp

@@ -9,12 +9,12 @@
 
 //
 
-class File_utils {
- public:
-  static long file_size(std::ifstream &in);
-  static std::string read_file(std::string filename);
-  static bool read_int(FILE *fp, int &var);
-  static std::vector<std::string> string_split(const std::string &str);
-};
+namespace file_utils {
+
+long file_size(std::ifstream &in);
+std::string read_file(std::string filename);
+bool read_int(FILE *fp, int &var);
+std::vector<std::string> string_split(const std::string &str);
+}
 
 #endif //CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_

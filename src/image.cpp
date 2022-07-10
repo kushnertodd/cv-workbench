@@ -213,10 +213,10 @@ void Image::set_32F(int row, int col, pixel_32F value) {
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_8U", "", "adding "
-                   + Workbench_utils::int_to_string(count) + " pixels at position " +
-        Workbench_utils::int_to_string(next_pixel)
+                   + wb_utils::int_to_string(count) + " pixels at position " +
+        wb_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + Workbench_utils::int_to_string(image_header->npixels));
+                   + wb_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
     switch (image_header->depth) {
@@ -243,10 +243,10 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
     std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32S", "" ,"adding "
-                   + Workbench_utils::int_to_string(count) + " pixels at position " +
-        Workbench_utils::int_to_string(next_pixel)
+                   + wb_utils::int_to_string(count) + " pixels at position " +
+        wb_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + Workbench_utils::int_to_string(image_header->npixels));
+                   + wb_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
     switch (image_header->depth) {
@@ -271,10 +271,10 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32F", "", "adding "
-                   + Workbench_utils::int_to_string(count) + " pixels at position " +
-        Workbench_utils::int_to_string(next_pixel)
+                   + wb_utils::int_to_string(count) + " pixels at position " +
+        wb_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
-                   + Workbench_utils::int_to_string(image_header->npixels));
+                   + wb_utils::int_to_string(image_header->npixels));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
     switch (image_header->depth) {
@@ -458,7 +458,7 @@ void Image::write_binary(std::string path, Errors &errors) {
 void Image::write_jpeg(std::string path, Errors &errors) {
   if (get_depth() != cv_enums::CV_8U) {
     errors.add("Image::write_jpeg", "", "cannot write "
-                   + Workbench_utils::image_depth_enum_to_string(get_depth())
+                   + wb_utils::image_depth_enum_to_string(get_depth())
                    + " image");
   }
   int quality = 100; // best
@@ -558,7 +558,7 @@ Image *Image::scale_image(Image *image, float lower_in,
     std::cout << "Image *Image::scale_image: lower_in " << lower_in
          << " upper_in " << upper_in
          << " lower_out " << lower_out
-         << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << std::endl;
+         << " upper_out " << upper_out << " depth " << wb_utils::image_depth_enum_to_string(depth) << std::endl;
   //Image *convert_image = clone_image(image, depth);
   Image *convert_image = new Image(image->get_rows(),
                                    image->get_cols(),

@@ -20,10 +20,10 @@ bool Operator_utils::get_int_parameter(std::string module,
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
-    if (!Workbench_utils::is_numeric(parameter_str)) {
+    if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
       return false;
-    } else if (!Workbench_utils::string_to_int(parameter_str, int_value)) {
+    } else if (!wb_utils::string_to_int(parameter_str, int_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
       return false;
     }
@@ -41,10 +41,10 @@ bool Operator_utils::get_real_parameter(std::string module,
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
-    if (!Workbench_utils::is_numeric(parameter_str)) {
+    if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
       return false;
-    } else if (!Workbench_utils::string_to_real(parameter_str, real_value)) {
+    } else if (!wb_utils::string_to_real(parameter_str, real_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
       return false;
     }

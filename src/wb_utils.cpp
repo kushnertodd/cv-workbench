@@ -18,7 +18,7 @@ extern bool debug;
  * @param n to convert
  * @return C char
  */
-char Workbench_utils::ascii_to_char(int n) {
+char wb_utils::ascii_to_char(int n) {
   return char(n);
 }
 
@@ -27,12 +27,12 @@ char Workbench_utils::ascii_to_char(int n) {
  * @param c to convert
  * @return c++ string
  */
-std::string Workbench_utils::char_to_string(char c) {
+std::string wb_utils::char_to_string(char c) {
   std::string s(1, c);
   return s;
 }
 
-std::string Workbench_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
+std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
   switch (type) {
     case cv_enums::CONTOUR:
       return "contour";
@@ -67,12 +67,12 @@ std::string Workbench_utils::data_type_enum_to_string(cv_enums::CV_data_type typ
   }
 }
 
-void Workbench_utils::error_exit(std::string message){
+void wb_utils::error_exit(std::string message){
 std::cout << message << std::endl;
 exit(0);
 }
 
-std::string Workbench_utils::file_format_to_string(cv_enums::CV_image_file_format type) {
+std::string wb_utils::file_format_to_string(cv_enums::CV_image_file_format type) {
   switch (type) {
     case cv_enums::BINARY:
       return "binary";
@@ -89,7 +89,7 @@ std::string Workbench_utils::file_format_to_string(cv_enums::CV_image_file_forma
  * @param value
  * @return
  */
-bool Workbench_utils::hex_string_to_int(std::string arg, unsigned long long &value) {
+bool wb_utils::hex_string_to_int(std::string arg, unsigned long long &value) {
   std::stringstream ss;
   ss << std::hex << arg;
   if (ss >> value) {
@@ -98,7 +98,7 @@ bool Workbench_utils::hex_string_to_int(std::string arg, unsigned long long &val
     return false;
 }
 
-std::string Workbench_utils::image_depth_enum_to_string(cv_enums::CV_image_depth depth) {
+std::string wb_utils::image_depth_enum_to_string(cv_enums::CV_image_depth depth) {
   switch (depth) {
     case cv_enums::CV_8U:
       return "cv_enums::CV_8U";
@@ -121,7 +121,7 @@ std::string Workbench_utils::image_depth_enum_to_string(cv_enums::CV_image_depth
   }
 }
 
-std::string Workbench_utils::indent(int n) {
+std::string wb_utils::indent(int n) {
   std::string s;
   for (int i = 0; i < n; i++) {
     s += " ";
@@ -135,7 +135,7 @@ std::string Workbench_utils::indent(int n) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-std::string Workbench_utils::int_to_hex_string(unsigned long long i, int width) {
+std::string wb_utils::int_to_hex_string(unsigned long long i, int width) {
   std::ostringstream os;
   if (width == -1) {
     os << std::setbase(16) << i;
@@ -151,7 +151,7 @@ std::string Workbench_utils::int_to_hex_string(unsigned long long i, int width) 
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-std::string Workbench_utils::int_to_string(int i, int width) {
+std::string wb_utils::int_to_string(int i, int width) {
   std::ostringstream os;
   if (width == -1) {
     os << i;
@@ -183,7 +183,7 @@ std::string Workbench_utils::int_to_string(int i, int width) {
  * @param number
  * @return
  */
-bool Workbench_utils::is_numeric(std::string number) {
+bool wb_utils::is_numeric(std::string number) {
   int len = number.size();
   int pos = 0;
   // look for [+-]
@@ -213,7 +213,7 @@ bool Workbench_utils::is_numeric(std::string number) {
  * Parsing the json object
  * @param jobj json-c parsed json
  */
-void Workbench_utils::json_parse(json_object *jobj) {
+void wb_utils::json_parse(json_object *jobj) {
   enum json_type type;
   json_object_object_foreach(jobj, key, val) { /*Passing through every array element*/
     type = json_object_get_type(val);
@@ -242,7 +242,7 @@ void Workbench_utils::json_parse(json_object *jobj) {
   }
 }
 
-void Workbench_utils::json_parse_array(json_object *jobj, char *key) {
+void wb_utils::json_parse_array(json_object *jobj, char *key) {
   //void json_parse(json_object *jobj); /*Forward Declaration*/
   enum json_type type;
 
@@ -272,7 +272,7 @@ void Workbench_utils::json_parse_array(json_object *jobj, char *key) {
 }
 
 /*printing the value corresponding to boolean, double, integer and strings*/
-void Workbench_utils::json_print_value(json_object *jobj) {
+void wb_utils::json_print_value(json_object *jobj) {
   enum json_type type;
   type = json_object_get_type(jobj); /*Getting the type of the json object*/
   //printf("type: %d '%s'\n",type, json_type_to_name(type));
@@ -317,7 +317,7 @@ void Workbench_utils::json_print_value(json_object *jobj) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-std::string Workbench_utils::real_to_string(double i, int width) {
+std::string wb_utils::real_to_string(double i, int width) {
   std::ostringstream os;
   if (width == -1) {
     os << i;
@@ -327,7 +327,7 @@ std::string Workbench_utils::real_to_string(double i, int width) {
   return os.str();
 }
 
-std::string Workbench_utils::repository_type_enum_to_string(cv_enums::CV_repository_type type) {
+std::string wb_utils::repository_type_enum_to_string(cv_enums::CV_repository_type type) {
   switch (type) {
     case cv_enums::BERKELEY_DB:
       return "Berkeley DB";
@@ -342,7 +342,7 @@ std::string Workbench_utils::repository_type_enum_to_string(cv_enums::CV_reposit
   }
 }
 
-bool Workbench_utils::string_to_bool(std::string str, bool &bvalue) {
+bool wb_utils::string_to_bool(std::string str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
     return true;
@@ -354,7 +354,7 @@ bool Workbench_utils::string_to_bool(std::string str, bool &bvalue) {
   }
 }
 
-cv_enums::CV_data_type Workbench_utils::string_to_data_type_enum(std::string type) {
+cv_enums::CV_data_type wb_utils::string_to_data_type_enum(std::string type) {
   if (type == "contour")
     return cv_enums::CONTOUR;
   else if (type == "convolution kernel")
@@ -387,7 +387,7 @@ cv_enums::CV_data_type Workbench_utils::string_to_data_type_enum(std::string typ
     return cv_enums::UNDEFINED_DATA_TYPE;
 }
 
-cv_enums::CV_image_file_format Workbench_utils::string_to_file_format_enum(std::string type) {
+cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(std::string type) {
   if (type == "binary")
     return cv_enums::BINARY;
   else if (type == "jpeg")
@@ -395,7 +395,7 @@ cv_enums::CV_image_file_format Workbench_utils::string_to_file_format_enum(std::
   else return cv_enums::UNDEFINED_FILE_FORMAT;
 }
 
-cv_enums::CV_image_depth Workbench_utils::string_to_image_depth_enum(std::string depth) {
+cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(std::string depth) {
   if (depth == "cv_enums::CV_8U") return cv_enums::CV_8U;
   else if (depth == "CV_8S") return cv_enums::CV_8S;
   else if (depth == "CV_16U") return cv_enums::CV_16U;
@@ -407,14 +407,14 @@ cv_enums::CV_image_depth Workbench_utils::string_to_image_depth_enum(std::string
   else return cv_enums::UNDEFINED_IMAGE_DEPTH;
 }
 
-bool Workbench_utils::string_to_int(std::string str, int &value) {
+bool wb_utils::string_to_int(std::string str, int &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
   if (ss >> value) return true;
   else return false;
 }
 
-cv_enums::CV_repository_type Workbench_utils::string_to_repository_type_enum(std::string type) {
+cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(std::string type) {
   if (type == "berkeley_db") return cv_enums::BERKELEY_DB;
   else if (type == "filesystem") return cv_enums::FILESYSTEM;
   else if (type == "internet") return cv_enums::INTERNET;
@@ -422,14 +422,14 @@ cv_enums::CV_repository_type Workbench_utils::string_to_repository_type_enum(std
   else return cv_enums::UNDEFINED_REPOSITORY_TYPE;
 }
 
-bool Workbench_utils::string_to_real(std::string str, double &value) {
+bool wb_utils::string_to_real(std::string str, double &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
   if (ss >> value) return true;
   else return false;
 }
 
-bool Workbench_utils::write_double(FILE *fp, double value, std::string message, Errors &errors) {
+bool wb_utils::write_double(FILE *fp, double value, std::string message, Errors &errors) {
   fwrite(&value, sizeof(double), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -438,7 +438,7 @@ bool Workbench_utils::write_double(FILE *fp, double value, std::string message, 
   return true;
 }
 
-bool Workbench_utils::write_double_buffer(FILE *fp, double *buf, double count, std::string message, Errors &errors) {
+bool wb_utils::write_double_buffer(FILE *fp, double *buf, double count, std::string message, Errors &errors) {
   fwrite(buf, sizeof(double), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -447,7 +447,7 @@ bool Workbench_utils::write_double_buffer(FILE *fp, double *buf, double count, s
   return true;
 }
 
-bool Workbench_utils::write_float(FILE *fp, float value, std::string message, Errors &errors) {
+bool wb_utils::write_float(FILE *fp, float value, std::string message, Errors &errors) {
   fwrite(&value, sizeof(float), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -456,7 +456,7 @@ bool Workbench_utils::write_float(FILE *fp, float value, std::string message, Er
   return true;
 }
 
-bool Workbench_utils::write_float_buffer(FILE *fp, float *buf, float count, std::string message, Errors &errors) {
+bool wb_utils::write_float_buffer(FILE *fp, float *buf, float count, std::string message, Errors &errors) {
   fwrite(buf, sizeof(float), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -465,7 +465,7 @@ bool Workbench_utils::write_float_buffer(FILE *fp, float *buf, float count, std:
   return true;
 }
 
-bool Workbench_utils::write_int(FILE *fp, int value, std::string message, Errors &errors) {
+bool wb_utils::write_int(FILE *fp, int value, std::string message, Errors &errors) {
   fwrite(&value, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -474,7 +474,7 @@ bool Workbench_utils::write_int(FILE *fp, int value, std::string message, Errors
   return true;
 }
 
-bool Workbench_utils::write_int_buffer(FILE *fp, int *buf, int count, std::string message, Errors &errors) {
+bool wb_utils::write_int_buffer(FILE *fp, int *buf, int count, std::string message, Errors &errors) {
   fwrite(buf, sizeof(int), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);

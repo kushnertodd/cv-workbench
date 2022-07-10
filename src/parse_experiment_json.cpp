@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     exit(0);
   }
   char *filename = argv[1];
-  std::string string_val = File_utils::read_file(filename);
+  std::string string_val = file_utils::read_file(filename);
   std::cout << "JSON string: " << string_val << std::endl;
   json_object *jobj = json_tokener_parse(string_val.c_str());
   if (jobj == NULL)

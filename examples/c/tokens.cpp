@@ -13,8 +13,8 @@ int main(int argc, char **argv) {
     exit(0);
   }
   std::string data_file = argv[1];
-  std::string data = File_utils::read_file(data_file);
-  std::vector<std::string> tokens = File_utils::string_split(data);
+  std::string data = file_utils::read_file(data_file);
+  std::vector<std::string> tokens = file_utils::string_split(data);
   for (std::string token: tokens) {
     std::cout << "'" << token << "'" << std::endl;
   }
