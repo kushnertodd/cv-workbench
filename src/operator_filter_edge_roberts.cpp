@@ -44,11 +44,11 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     errors.add("Operator_filter_edge_roberts::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-      errors.add("Operator_filter_edge_roberts::run: missing 'orientation' parameter");
+      errors.add("Operator_filter_edge_roberts::run", "", "missing 'orientation' parameter");
     } else {
       std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "0" && orientation_str != "90") {
-        errors.add("Operator_filter_edge_roberts: invalid 'orientation' parameter not 0 or 90");
+        errors.add("Operator_filter_edge_roberts::run", "", "invalid 'orientation' parameter not 0 or 90");
       } else {
         Kernel *roberts_kernel = nullptr;
         if (orientation_str == "0") {
@@ -63,6 +63,9 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
         Image *input = input_data_source->read_image(errors);
+        if (input != nullptr && input->image_header->components == 1) {
+          errors.add("Operator_filter_edge_roberts::run", "", "image not grayscale");
+        }
         if (errors.error_ct == 0) {
           Image *output = roberts_kernel->convolve(input);
           output_data_store->write_image(output, errors);

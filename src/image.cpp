@@ -15,23 +15,6 @@
 
 extern bool debug;
 
-Image_exception::Image_exception(std::string m_errmsg) :
-    errmsg(m_errmsg) {
-}
-
-Image_exception::Image_exception(std::string message,
-                                 int size,
-                                 int max_size) {
-  std::ostringstream os;
-  os << message << ": cannot allocate " << size <<
-     " bytes, max size " << max_size;
-  errmsg = os.str();
-}
-
-const char *Image_exception::what() const noexcept {
-  return errmsg.c_str();
-}
-
 Image::~Image() {
   if (image_header != nullptr) {
     delete image_header;
@@ -474,7 +457,7 @@ void Image::write_binary(std::string path, Errors &errors) {
 
 void Image::write_jpeg(std::string path, Errors &errors) {
   if (get_depth() != cv_enums::CV_8U) {
-    errors.add("Image::write_jpeg: cannot write "
+    errors.add("Image::write_jpeg", "", "cannot write "
                    + Workbench_utils::image_depth_enum_to_string(get_depth())
                    + " image");
   }
@@ -492,7 +475,7 @@ void Image::write_jpeg(std::string path, Errors &errors) {
   jpeg_create_compress(&cinfo);
   /* Step 2: specify data destination (eg, a file) */
   if ((outfile = fopen(path.c_str(), "wb")) == NULL) {
-    errors.add("Image::write_jpeg: invalid file '" + path + "'");
+    errors.add("Image::write_jpeg", "", "invalid file '" + path + "'");
   }
   jpeg_stdio_dest(&cinfo, outfile);
   /* Step 3: set parameters for compression */

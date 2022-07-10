@@ -14,14 +14,6 @@
 #include "wb_defs.hpp"
 #include "line_segment.hpp"
 
-class Image_exception {
- private:
-  std::string errmsg;
- public:
-  Image_exception(std::string m_errmsg);
-  Image_exception(std::string m_message, int size, int max_size);
-  virtual const char *what() const noexcept;
-};
 
 /**
  * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz

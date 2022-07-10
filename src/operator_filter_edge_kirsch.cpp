@@ -102,6 +102,9 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
         Image *input = input_data_source->read_image(errors);
+        if (input != nullptr && input->image_header->components == 1) {
+          errors.add("Operator_filter_edge_roberts::run", "", "image not grayscale");
+        }
         if (errors.error_ct == 0) {
           Image *output = kirsch_kernel->convolve(input);
           output_data_store->write_image(output, errors);
