@@ -48,13 +48,13 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
-    errors.add("Operator_transform_intensity_map::run:transform-intensity-map: missing input data source");
+    errors.add("Operator_transform_intensity_map::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
-    errors.add("Operator_transform_intensity_map::run:transform-intensity-map: too many input data sources");
+    errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
   if (output_data_stores.size() == 0)
-    errors.add("Operator_transform_intensity_map::run:transform-intensity-map: missing output data source");
+    errors.add("Operator_transform_intensity_map::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
-    errors.add("Operator_transform_intensity_map::run:transform-intensity-map: too many output data sources");
+    errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
   cv_enums::CV_image_depth depth;
   double lower_in;
   double upper_in;
@@ -70,7 +70,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
     depth = Workbench_utils::string_to_image_depth_enum(depth_str);
     if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH) {
-      errors.add("Operator_transform_intensity_map::run: undefined depth value");
+      errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
     }
   }
   if (Operator_utils::has_parameter(operator_parameters, "lower_in")) {
@@ -98,16 +98,16 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     no_parameters = true;
   } else {
     if (!saw_lower_in) {
-      errors.add("Operator_transform_intensity_map::run: missing 'lower_in' parameters");
+      errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_in' parameters");
     }
     if (!saw_upper_in) {
-      errors.add("Operator_transform_intensity_map::run: missing 'upper_in' parameters");
+      errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_in' parameters");
     }
     if (!saw_lower_out) {
-      errors.add("Operator_transform_intensity_map::run: missing 'lower_out' parameters");
+      errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_out' parameters");
     }
     if (!saw_upper_out) {
-      errors.add("Operator_transform_intensity_map::run: missing 'upper_out' parameters");
+      errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_out' parameters");
     }
   }
   Image *input;

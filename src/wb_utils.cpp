@@ -67,6 +67,11 @@ std::string Workbench_utils::data_type_enum_to_string(cv_enums::CV_data_type typ
   }
 }
 
+void Workbench_utils::error_exit(std::string message){
+std::cout << message << std::endl;
+exit(0);
+}
+
 std::string Workbench_utils::file_format_to_string(cv_enums::CV_image_file_format type) {
   switch (type) {
     case cv_enums::BINARY:

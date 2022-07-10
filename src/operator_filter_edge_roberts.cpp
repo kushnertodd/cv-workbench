@@ -35,13 +35,13 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
-    errors.add("Operator_filter_edge_roberts::run missing input data source");
+    errors.add("Operator_filter_edge_roberts::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
-    errors.add("Operator_filter_edge_roberts::run too many input data sources");
+    errors.add("Operator_filter_edge_roberts::run", "", "too many input data sources");
   else if (output_data_stores.size() == 0)
-    errors.add("Operator_filter_edge_roberts::run missing output data source");
+    errors.add("Operator_filter_edge_roberts::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
-    errors.add("Operator_filter_edge_roberts::run too many output data sources");
+    errors.add("Operator_filter_edge_roberts::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
       errors.add("Operator_filter_edge_roberts::run: missing 'orientation' parameter");

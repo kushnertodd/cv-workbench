@@ -229,7 +229,7 @@ void Image::set_32F(int row, int col, pixel_32F value) {
 
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
-    errors.add("Image::add_8U: adding "
+    errors.add("Image::add_8U", "", "adding "
                    + Workbench_utils::int_to_string(count) + " pixels at position " +
         Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
@@ -259,7 +259,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (debug)
     std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
   if (next_pixel + count > image_header->npixels)
-    errors.add("Image::add_32S: adding "
+    errors.add("Image::add_32S", "" ,"adding "
                    + Workbench_utils::int_to_string(count) + " pixels at position " +
         Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
@@ -268,7 +268,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
     bounds.update(src[i]);
     switch (image_header->depth) {
       case cv_enums::CV_8U:
-        errors.add("Image::add_32S: cannot update to 8U buffer");
+        errors.add("Image::add_32S", "", "cannot update to 8U buffer");
         break;
 
       case cv_enums::CV_32S:
@@ -287,7 +287,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 
 void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   if (next_pixel + count > image_header->npixels)
-    errors.add("Image::add_32F: adding "
+    errors.add("Image::add_32F", "", "adding "
                    + Workbench_utils::int_to_string(count) + " pixels at position " +
         Workbench_utils::int_to_string(next_pixel)
                    + " too large for buffer length "
@@ -296,7 +296,7 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
     bounds.update(src[i]);
     switch (image_header->depth) {
       case cv_enums::CV_8U:
-        errors.add("Image::add_32F: cannot update to 8U buffer");
+        errors.add("Image::add_32F", "", "cannot update to 8U buffer");
         break;
 
       case cv_enums::CV_32S:
@@ -331,7 +331,7 @@ void Image::draw_line_segment(Line_segment *line_segment, float value) {
 Image *Image::read_binary(std::string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Image::read_binary: invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
+    errors.add("Image::read_binary", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
     return nullptr;
   }
 
@@ -345,7 +345,7 @@ Image *Image::read_binary(std::string path, Errors &errors) {
     case cv_enums::CV_8U:
       newLen = fread(image->buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::read_binary: cannot read 8U image data in '" + path + "'");
+        errors.add("Image::read_binary", "", "cannot read 8U image data in '" + path + "'");
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
@@ -355,7 +355,7 @@ Image *Image::read_binary(std::string path, Errors &errors) {
     case cv_enums::CV_32S:
       newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::read_binary: cannot read 32S image data in '" + path + "'");
+        errors.add("Image::read_binary", "", "cannot read 32S image data in '" + path + "'");
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
@@ -365,7 +365,7 @@ Image *Image::read_binary(std::string path, Errors &errors) {
     case cv_enums::CV_32F:
       newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::read_binary: cannot read 32F image data in '" + path + "'");
+        errors.add("Image::read_binary", "", "cannot read 32F image data in '" + path + "'");
         return nullptr;
       }
       for (int i = 0; i < image_header->npixels; i++)
@@ -398,7 +398,7 @@ Image *Image::read_jpeg(std::string path, Errors &errors) {
   JSAMPARRAY buffer;
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Image::read_jpeg: invalid file '" + path + "'");
+    errors.add("Image::read_jpeg", "", "invalid file '" + path + "'");
     return nullptr;
   }
   cinfo.err = jpeg_std_error(&jerr.pub);
@@ -406,7 +406,7 @@ Image *Image::read_jpeg(std::string path, Errors &errors) {
   if (setjmp(jerr.setjmp_buffer)) {
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    errors.add("Image::read_jpeg: jpeg read error in '" + path + "'");
+    errors.add("Image::read_jpeg", "", "jpeg read error in '" + path + "'");
     return nullptr;
   }
   /* Step 1: allocate and initialize JPEG decompression object */
@@ -442,7 +442,7 @@ void Image::write_binary(std::string path, Errors &errors) {
     std::cout << "Image::write_binary path '" << path << "' " << to_string() << std::endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
-    errors.add("Image::write_binary: invalid file '" + path + "'");
+    errors.add("Image::write_binary", "", "invalid file '" + path + "'");
   }
   image_header->write_header(fp, path, errors);
   // Write the data from the buffer.
@@ -451,19 +451,19 @@ void Image::write_binary(std::string path, Errors &errors) {
     case cv_enums::CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::write_binary: cannot write 8U image data to '" + path + "'");
+        errors.add("Image::write_binary", "", "cannot write 8U image data to '" + path + "'");
       }
       break;
     case cv_enums::CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::write_binary: cannot write 32S image data to '" + path + "'");
+        errors.add("Image::write_binary", "", "cannot write 32S image data to '" + path + "'");
       }
       break;
     case cv_enums::CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
       if (ferror(fp) != 0 || newLen != image_header->npixels) {
-        errors.add("Image::write_binary: cannot write 32F image data to '" + path + "'");
+        errors.add("Image::write_binary", "", "cannot write 32F image data to '" + path + "'");
       }
       break;
     default:

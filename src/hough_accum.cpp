@@ -511,7 +511,7 @@ bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
     for (std::string value_str: values) {
       int value;
       if (!Workbench_utils::string_to_int(value_str, value))
-        errors.add("Hough_accum::read: invalid value '" + value_str + "'");
+        errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
       return false;
     }
   }

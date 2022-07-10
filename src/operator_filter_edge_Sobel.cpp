@@ -37,20 +37,20 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
-    errors.add("Operator_filter_edge_sobel::run missing input data source");
+    errors.add("Operator_filter_edge_sobel::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
-    errors.add("Operator_filter_edge_sobel::run too many input data sources");
+    errors.add("Operator_filter_edge_sobel::run", "", "too many input data sources");
   else if (output_data_stores.size() == 0)
-    errors.add("Operator_filter_edge_sobel::run missing output data source");
+    errors.add("Operator_filter_edge_sobel::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
-    errors.add("Operator_filter_edge_sobel::run too many output data sources");
+    errors.add("Operator_filter_edge_sobel::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-      errors.add("Operator_filter_edge_sobel::run: missing 'orientation' parameter");
+      errors.add("Operator_filter_edge_sobel::run", "", "missing 'orientation' parameter");
     } else {
       std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "0" && orientation_str != "90") {
-        errors.add("Operator_filter_edge_sobel: invalid 'orientation' parameter not 0 or 90");
+        errors.add("Operator_filter_edge_sobel::run", "", "invalid 'orientation' parameter not 0 or 90");
       } else {
         Kernel *sobel_kernel = nullptr;
         if (orientation_str == "0") {

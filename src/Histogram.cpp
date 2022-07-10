@@ -44,7 +44,7 @@ bool Histogram::read(std::ifstream &ifs, Errors &errors) {
     for (std::string value_str: values) {
       int value;
       if (!Workbench_utils::string_to_int(value_str, value))
-        errors.add("Hough_accum::read: invalid value '" + value_str + "'");
+        errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
       return false;
     }
   }
@@ -71,7 +71,7 @@ void Histogram::write(std::string path, Errors &errors) {
     std::cout << "Histogram::write path '" << path << "' " << to_string() << std::endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
-    errors.add("Image::write_binary: invalid file '" + path + "'");
+    errors.add("Image::write_binary", "", "invalid file '" + path + "'");
   }
   Workbench_utils::write_int(fp, nbins, "Histogram::write: cannot write nbins to '" + path + "'", errors);
   Workbench_utils::write_float(fp, min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
@@ -86,7 +86,7 @@ void Histogram::write_string(std::string path, std::string delim, Errors &errors
     std::cout << "Histogram::write_string path '" << path << "' " << to_string() << std::endl;
    std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
-    errors.add("Histogram::write_string invalid file '" + path + "'");
+    errors.add("Histogram::write_string", "", "invalid file '" + path + "'");
     return;
   }
   ofs << "nbins " << nbins

@@ -43,16 +43,16 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
-    errors.add("Operator_filter_edge_kirsch::run missing input data source");
+    errors.add("Operator_filter_edge_kirsch::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
-    errors.add("Operator_filter_edge_kirsch::run too many input data sources");
+    errors.add("Operator_filter_edge_kirsch::run", "", "too many input data sources");
   else if (output_data_stores.size() == 0)
-    errors.add("Operator_filter_edge_kirsch::run missing output data source");
+    errors.add("Operator_filter_edge_kirsch::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
-    errors.add("Operator_filter_edge_kirsch::run too many output data sources");
+    errors.add("Operator_filter_edge_kirsch::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-      errors.add("Operator_filter_edge_kirsch::run: missing 'orientation' parameter");
+      errors.add("Operator_filter_edge_kirsch::run", "", "missing 'orientation' parameter");
     } else {
       std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "NW"
@@ -62,7 +62,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
           && orientation_str != "SE"
           && orientation_str != "E"
           && orientation_str != "NE") {
-        errors.add("Operator_filter_edge_kirsch: invalid 'orientation' parameter not E, N, NE, NW, S, SE, SW, or W");
+        errors.add("Operator_filter_edge_kirsch", "", "invalid 'orientation' parameter not E, N, NE, NW, S, SE, SW, or W");
       } else {
         Kernel *kirsch_kernel = nullptr;
         if (orientation_str == "N") {

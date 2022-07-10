@@ -142,7 +142,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
           std::string val_str = json_object_get_string(val);
           experiment_step->operator_parameters[key] = val_str;
         } else {
-          errors.add("Experiment_step::json_parse: invalid parameter type '"
+          errors.add("Experiment_step::json_parse", "", "invalid parameter type '"
                          + std::string(json_type_to_name(type))
                          + "' for key '"
                          + std::string(key) + "'");
@@ -158,7 +158,7 @@ void Experiment_step::run(Errors &errors) {
   if (step_operator == nullptr) {
     if (debug)
       std::cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << std::endl;
-    errors.add("Experiment_step::run: invalid operator '" + operator_name + "'");
+    errors.add("Experiment_step::run", "", "invalid operator '" + operator_name + "'");
   } else {
     if (debug) {
       for (Data_source_descriptor *input_data_source: input_data_sources) {

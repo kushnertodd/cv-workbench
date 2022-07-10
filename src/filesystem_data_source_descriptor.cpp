@@ -73,7 +73,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
     cv_enums::CV_image_file_format file_format =
         Workbench_utils::string_to_file_format_enum(file_format_str);
     if (file_format == cv_enums::UNDEFINED_FILE_FORMAT)
-      errors.add("Filesystem_data_source_descriptor::json_parse: invalid file format '" + file_format_str + "'");
+      errors.add("Filesystem_data_source_descriptor::json_parse", "", "invalid file format '" + file_format_str + "'");
     else
       filesystem_data_source_descriptor->file_format = file_format;
   }
@@ -97,7 +97,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   if (json_filename != nullptr)
     filesystem_data_source_descriptor->filename = json_object_get_string(json_filename);
   else
-    errors.add("Filesystem_data_source_descriptor::json_parse: missing required filename");
+    errors.add("Filesystem_data_source_descriptor::json_parse", "", "missing required filename");
 
   json_object *json_ext =
       get_json_object("Filesystem_data_source_descriptor::json_parse",

@@ -18,6 +18,7 @@ class Workbench_utils {
   static char ascii_to_char(int n);
   static std::string char_to_string(char c);
   static std::string data_type_enum_to_string(cv_enums::CV_data_type type);
+  static void error_exit(std::string message);
   static std::string file_format_to_string(cv_enums::CV_image_file_format type);
   static bool hex_string_to_int(std::string text, unsigned long long &value);
   static std::string image_depth_enum_to_string(cv_enums::CV_image_depth depth);
@@ -35,7 +36,7 @@ class Workbench_utils {
   static cv_enums::CV_image_file_format string_to_file_format_enum(std::string type);
   static cv_enums::CV_image_depth string_to_image_depth_enum(std::string depth);
   static bool string_to_int(std::string str, int &value);
-  cv_enums::CV_repository_type string_to_repository_type_enum(std::string type);
+  static cv_enums::CV_repository_type string_to_repository_type_enum(std::string type);
   static bool string_to_real(std::string text, double &value);
   static bool write_double(FILE *fp, double value, std::string message, Errors &errors);
   static bool write_double_buffer(FILE *fp, double *buf, double count, std::string message, Errors &errors);
