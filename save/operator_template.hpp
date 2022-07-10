@@ -50,7 +50,7 @@ class json_template {
   json_key_value_pair domain;
   json_key_value_pair class;
   list<json_template_parameter> parameters;
-  void json_template_parse(string json) {
+  void json_template_parse(std::string json) {
 
   }
 };

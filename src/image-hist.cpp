@@ -5,7 +5,7 @@
 #include "variance_stats.hpp"
 #include "hough_accum.hpp"
 
-using namespace std;
+//
 
 enum CV_image_depth {
   CV_8U,
@@ -19,10 +19,10 @@ enum CV_image_depth {
   UNDEFINED_IMAGE_DEPTH
 };
 
-string hist_filename;
-string hist_diff_filename;
+std::string hist_filename;
+std::string hist_diff_filename;
 
-string depth_to_string( CV_image_depth depth) {
+std::string depth_to_string( CV_image_depth depth) {
   if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
@@ -34,30 +34,30 @@ typedef int pixel_32S;
 typedef float pixel_32F;
 Variance_stats variance_stats;
 
-void error_exit(string message) {
+void error_exit(std::string message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
 
-void read_int(FILE *fp, string name, int &var) {
+void read_int(FILE *fp, std::string name, int &var) {
   int newLen = fread(&var, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != 1) {
     error_exit("Image_header::read_header: missing value " + name);
   }
 }
 
-void write_gp_script(string filename) {
-  string script_filename = filename + ".hist.gp";
-  ofstream ofs (script_filename, ofstream::out);
-  ofs << "set style data histograms" << endl;
-  ofs << "plot './"<<hist_filename<<"' using 2:xtic(1)" << endl;
-  ofs << "pause -1 \"Hit any key to continue\"" << endl;
+void write_gp_script(std::string filename) {
+  std::string script_filename = filename + ".hist.gp";
+  std::ofstream ofs (script_filename, std::ofstream::out);
+  ofs << "set style data histograms" << std::endl;
+  ofs << "plot './"<<hist_filename<<"' using 2:xtic(1)" << std::endl;
+  ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs.close();
-  string script_diff_filename = filename + ".hist-diff.gp";
-  ofstream ofs_diff (script_diff_filename, ofstream::out);
-  ofs_diff << "set style data histograms" << endl;
-  ofs_diff << "plot './"<<hist_diff_filename<<"' using 2:xtic(1)" << endl;
-  ofs_diff << "pause -1 \"Hit any key to continue\"" << endl;
+  std::string script_diff_filename = filename + ".hist-diff.gp";
+  std::ofstream ofs_diff (script_diff_filename, std::ofstream::out);
+  ofs_diff << "set style data histograms" << std::endl;
+  ofs_diff << "plot './"<<hist_diff_filename<<"' using 2:xtic(1)" << std::endl;
+  ofs_diff << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs_diff.close();
 }
 
@@ -74,21 +74,21 @@ void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
   int* histogram = new int[hist_len];
   for (int i = 0; i < hist_len; i++) histogram[i] = 0;
   pos = 0;
-  //cout << "data: " << endl;
+  //cout << "data: " << std::endl;
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
-      //cout << (int) buf_8U[pos] << endl;
+      //cout << (int) buf_8U[pos] << std::endl;
       histogram[buf_8U[pos++] - min_value]++;
     }
   }
-  //cout << "end data: " << endl;
-  //cout << "histogram: " << endl;
-  ofstream ofs (hist_filename, ofstream::out);
+  //cout << "end data: " << std::endl;
+  //cout << "histogram: " << std::endl;
+  std::ofstream ofs (hist_filename, std::ofstream::out);
   for (int i = 0; i < hist_len; i++)  {
-    ofs << i + min_value << " " << histogram[i] << endl;
+    ofs << i + min_value << " " << histogram[i] << std::endl;
   }
   ofs.close();
-  //cout << "end histogram: " << endl;
+  //cout << "end histogram: " << std::endl;
   delete histogram;
 }
 
@@ -115,19 +115,19 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols) {
       histogram[bin]++;
     }
   }
-  ofstream ofs (hist_filename, ofstream::out);
+  std::ofstream ofs (hist_filename, std::ofstream::out);
   for (int i = 0; i < hist_len; i++)  {
     int val = min_value + i * (max_value - min_value) / nbins;
-    ofs << val << " " << histogram[i] << endl;
+    ofs << val << " " << histogram[i] << std::endl;
   }
   ofs.close();
   int* histogram_diff = new int[hist_len];
   for (int i = 0; i < hist_len - 1; i++) histogram_diff[i] = histogram[i + 1] - histogram[i];
   histogram_diff[hist_len - 1] = 0;
-  ofstream ofs_diff (hist_diff_filename, ofstream::out);
+  std::ofstream ofs_diff (hist_diff_filename, std::ofstream::out);
   for (int i = 0; i < hist_len; i++)  {
     int val = min_value + i * (max_value - min_value) / nbins;
-    ofs_diff << val << " " << histogram_diff[i] << endl;
+    ofs_diff << val << " " << histogram_diff[i] << std::endl;
   }
   ofs_diff.close();
   delete histogram;
@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
 
   if (argc < 2)
     error_exit("usage: image-stat filename");
-  string filename = argv[1];
+  std::string filename = argv[1];
   hist_filename = filename + ".hist.txt";
   hist_diff_filename = filename + ".hist-diff.txt";
 
@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
   int npixels = rows * cols * components;
   //cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
   //     << depth_to_string(( CV_image_depth) depth)
-  //     << " npixels " << npixels << endl;
+  //     << " npixels " << npixels << std::endl;
 
   pixel_8U *buf_8U;
   pixel_32S *buf_32S;

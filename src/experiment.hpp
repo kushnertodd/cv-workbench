@@ -18,7 +18,7 @@
 
 class Experiment {
  public:
-  list<Experiment_step *> experiment_steps;
+  std::list<Experiment_step *> experiment_steps;
   virtual ~Experiment();
   Experiment();
   /**

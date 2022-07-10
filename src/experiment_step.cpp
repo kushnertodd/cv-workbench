@@ -33,16 +33,16 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "type",
                       json_type_string, errors);
   if (json_type != nullptr) {
-    string data_type_str = json_object_get_string(json_type);
+    std::string data_type_str = json_object_get_string(json_type);
     if (debug)
-      cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << endl;
+      std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
     data_type = Workbench_utils::string_to_data_type_enum(data_type_str);
   }
   json_object *json_repository =
       get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",
                       json_type_string, errors);
   if (json_repository != nullptr) {
-    string repository = json_object_get_string(json_repository);
+    std::string repository = json_object_get_string(json_repository);
     if (repository == "berkeley_db") {
       data_source_descriptor =
           Berkeley_db_data_source_descriptor::json_parse(
@@ -77,7 +77,7 @@ Experiment_step::~Experiment_step() {
   }
 }
 Experiment_step::Experiment_step() {}
-Experiment_step::Experiment_step(int m_id, string m_operator_name) : id(m_id), operator_name(m_operator_name) {}
+Experiment_step::Experiment_step(int m_id, std::string m_operator_name) : id(m_id), operator_name(m_operator_name) {}
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json
@@ -133,19 +133,19 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
   // parse parameters
   if (json_parameters != nullptr) {
     if (debug)
-      cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << endl;
+      std::cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << std::endl;
     if (error_check_type("Experiment_step::json_parse", "parameters",
                          json_parameters, json_type_object, errors)) {
       json_object_object_foreach(json_parameters, key, val) {
         json_type type = json_object_get_type(val);
         if (type == json_type_string) {
-          string val_str = json_object_get_string(val);
+          std::string val_str = json_object_get_string(val);
           experiment_step->operator_parameters[key] = val_str;
         } else {
           errors.add("Experiment_step::json_parse: invalid parameter type '"
-                         + string(json_type_to_name(type))
+                         + std::string(json_type_to_name(type))
                          + "' for key '"
-                         + string(key) + "'");
+                         + std::string(key) + "'");
         }
       }
     }
@@ -157,20 +157,20 @@ void Experiment_step::run(Errors &errors) {
   Operator *step_operator = Operator_dispatcher::create_operator(operator_name);
   if (step_operator == nullptr) {
     if (debug)
-      cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << endl;
+      std::cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << std::endl;
     errors.add("Experiment_step::run: invalid operator '" + operator_name + "'");
   } else {
     if (debug) {
       for (Data_source_descriptor *input_data_source: input_data_sources) {
-        cout << "Experiment_step::run input_data_source: " << input_data_source->to_string() << endl;
+        std::cout << "Experiment_step::run input_data_source: " << input_data_source->to_string() << std::endl;
       }
       for (Data_source_descriptor *output_data_store: output_data_stores) {
-        cout << "Experiment_step::run output_data_store: " << output_data_store->to_string() << endl;
+        std::cout << "Experiment_step::run output_data_store: " << output_data_store->to_string() << std::endl;
       }
-      cout << "Experiment_step::run operator_parameters: " << endl;
+      std::cout << "Experiment_step::run operator_parameters: " << std::endl;
       String_map::iterator it;
       for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
-        cout << it->first    // string (key)
+        std::cout << it->first    // string (key)
              << ':'
              << it->second   // string's value
              << std::endl;
@@ -181,18 +181,18 @@ void Experiment_step::run(Errors &errors) {
   }
 }
 
-string Experiment_step::to_string() {
-  ostringstream os;
-  os << "Experiment_step::run: id " << id << " operator " << operator_name << endl;
-  os << "Experiment_step::run: input data sources" << endl;
+std::string Experiment_step::to_string() {
+  std::ostringstream os;
+  os << "Experiment_step::run: id " << id << " operator " << operator_name << std::endl;
+  os << "Experiment_step::run: input data sources" << std::endl;
   for (Data_source_descriptor *descriptor: input_data_sources) {
     if (descriptor != nullptr)
-      os << "   " << descriptor->to_string() << endl;
+      os << "   " << descriptor->to_string() << std::endl;
   }
-  cout << "Experiment_step::run: output data stores" << endl;
+  std::cout << "Experiment_step::run: output data stores" << std::endl;
   for (Data_source_descriptor *descriptor: output_data_stores) {
     if (descriptor != nullptr)
-      os << "   " << descriptor->to_string() << endl;
+      os << "   " << descriptor->to_string() << std::endl;
   }
   return os.str();
 }

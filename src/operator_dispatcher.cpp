@@ -9,12 +9,12 @@
 #include "operator_transform_intensity_map.hpp"
 #include "operator_dispatcher.hpp"
 
-using namespace std;
+//
 extern bool debug;
-Operator *Operator_dispatcher::create_operator(string operator_name) {
+Operator *Operator_dispatcher::create_operator(std::string operator_name) {
   Operator *pOperator;
   if (debug)
-    cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << endl;
+    std::cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << std::endl;
   // Creator explicitly creates classes according to type
   if (operator_name == "filter-edge-kirsch")
     pOperator = new Operator_filter_edge_kirsch();

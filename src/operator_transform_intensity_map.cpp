@@ -8,7 +8,7 @@
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
-using namespace std;
+//
 
 extern bool debug;
 
@@ -38,14 +38,14 @@ Operator_transform_intensity_map::Operator_transform_intensity_map() {}
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input_data_sources,
-                                           list<Data_source_descriptor *> &output_data_stores,
+void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &input_data_sources,
+                                           std::list<Data_source_descriptor *> &output_data_stores,
                                            String_map &operator_parameters,
                                            Errors &errors) {
 
   if (debug) {
-    cout << "Operator_transform_intensity_map::run:parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << endl;
+    std::cout << "Operator_transform_intensity_map::run:parameters: "
+         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
     errors.add("Operator_transform_intensity_map::run:transform-intensity-map: missing input data source");
@@ -67,7 +67,7 @@ void Operator_transform_intensity_map::run(list<Data_source_descriptor *> &input
   bool saw_upper_out = false;
   if (Operator_utils::has_parameter(operator_parameters, "depth")) {
     saw_depth = true;
-    string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
+    std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
     depth = Workbench_utils::string_to_image_depth_enum(depth_str);
     if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH) {
       errors.add("Operator_transform_intensity_map::run: undefined depth value");

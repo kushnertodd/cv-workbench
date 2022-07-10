@@ -9,7 +9,7 @@
 #include "wb_defs.hpp"
 #include "image.hpp"
 
-using namespace std;
+//
 
 class Data_source_descriptor {
  public:
@@ -19,11 +19,11 @@ class Data_source_descriptor {
   virtual ~Data_source_descriptor();
   Data_source_descriptor(int m_id, cv_enums::CV_repository_type m_repository_type,
                          cv_enums::CV_data_type m_cv_data_type);
-  virtual string read_json(Errors &errors) = 0;
+  virtual std::string read_json(Errors &errors) = 0;
   virtual Image *read_image(Errors &errors) = 0;
-  virtual void write_json(string &json, Errors &errors) = 0;
+  virtual void write_json(std::string &json, Errors &errors) = 0;
   virtual void write_image(Image *image, Errors &errors) = 0;
-  virtual string to_string();
+  virtual std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_DATA_SOURCE_DESCRIPTOR_HPP_

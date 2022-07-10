@@ -60,8 +60,8 @@ void Hough::lines_to_line_segments() {
   }
 }
 
-bool Hough::read(string filename, Errors &errors) {
-  ifstream ifs(filename, ofstream::in);
+bool Hough::read(std::string filename, Errors &errors) {
+  std::ifstream ifs(filename, std::ofstream::in);
   if (!ifs) {
     errors.add("Hough:read invalid filename '" + filename + "'");
     return false;
@@ -74,8 +74,8 @@ bool Hough::read(string filename, Errors &errors) {
   return return_value;
 }
 
-bool Hough::write(string filename, string delim, Errors &errors) {
-  ofstream ofs(filename, ofstream::out);
+bool Hough::write(std::string filename, std::string delim, Errors &errors) {
+  std::ofstream ofs(filename, std::ofstream::out);
   if (!ofs) {
     errors.add("Hough:write invalid filename '" + filename + "'");
     return false;

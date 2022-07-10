@@ -15,17 +15,17 @@
 
 class Internet_data_source_descriptor : public Data_source_descriptor {
  public:
-  string url;
-  string depth; // cv_enums::CV_8U, cv_enums::CV_32S, or cv_enums::CV_32F
+  std::string url;
+  std::string depth; // cv_enums::CV_8U, cv_enums::CV_32S, or cv_enums::CV_32F
   int rows;
   int cols;
   Internet_data_source_descriptor(int m_id,
                                   cv_enums::CV_data_type m_cv_data_type);
-  string read_json(Errors &errors);
+  std::string read_json(Errors &errors);
   Image *read_image(Errors &errors);
   Histogram *read_histogram(Errors &errors);
   Hough *read_hough(Errors &errors);
-  void write_json(string &json, Errors &errors);
+  void write_json(std::string &json, Errors &errors);
   void write_image(Image *image, Errors &errors);
   void write_histogram(Histogram *histogram, Errors &errors);
   void write_hough(Hough *hough, Errors &errors);
@@ -34,7 +34,7 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
                                                      int id,
                                                      cv_enums::CV_data_type data_type, Errors &errors);
 
-  string to_string();
+  std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_INTERNET_DATA_SOURCE_DESCRIPTOR_HPP_

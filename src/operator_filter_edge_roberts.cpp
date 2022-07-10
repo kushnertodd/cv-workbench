@@ -8,7 +8,7 @@
 #include "wb_defs.hpp"
 #include "operator_filter_edge_roberts.hpp"
 
-using namespace std;
+//
 
 extern bool debug;
 
@@ -25,14 +25,14 @@ Operator_filter_edge_roberts::Operator_filter_edge_roberts() {}
  * @param operator_parameters
  * @param errors
  */
-void Operator_filter_edge_roberts::run(list<Data_source_descriptor *> &input_data_sources,
-                                     list<Data_source_descriptor *> &output_data_stores,
+void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &input_data_sources,
+                                       std::list<Data_source_descriptor *> &output_data_stores,
                                      String_map &operator_parameters,
                                      Errors &errors) {
 
   if (debug) {
-    cout << "Operator_filter_edge_roberts::run parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << endl;
+    std::cout << "Operator_filter_edge_roberts::run parameters: "
+         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
     errors.add("Operator_filter_edge_roberts::run missing input data source");
@@ -46,7 +46,7 @@ void Operator_filter_edge_roberts::run(list<Data_source_descriptor *> &input_dat
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
       errors.add("Operator_filter_edge_roberts::run: missing 'orientation' parameter");
     } else {
-      string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
+      std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "0" && orientation_str != "90") {
         errors.add("Operator_filter_edge_roberts: invalid 'orientation' parameter not 0 or 90");
       } else {

@@ -21,12 +21,12 @@ bool debug = false;
 
 int main(int argc, char **argv) {
   if (argc < 2) {
-    cout << "usage: %s json-template-filename" << argv[0] << endl;
+    std::cout << "usage: %s json-template-filename" << argv[0] << std::endl;
     exit(0);
   }
   char *filename = argv[1];
-  string string_val = File_utils::read_file(filename);
-  cout << "JSON string: " << string_val << endl;
+  std::string string_val = File_utils::read_file(filename);
+  std::cout << "JSON string: " << string_val << std::endl;
   json_object *jobj = json_tokener_parse(string_val.c_str());
   if (jobj == NULL)
     printf("json_tokener_parse() failed\n");
@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
     Errors errors;
     Experiment *experiment = Experiment::json_parse(jobj, errors);
     if (errors.error_ct > 0) {
-      cout << "parse_experiment_json: there were errors." << endl << errors.to_string();
+      std::cout << "parse_experiment_json: there were errors." << std::endl << errors.to_string();
     } else {
       experiment->run(errors);
     }

@@ -11,15 +11,15 @@
 
 extern bool debug;
 
-using namespace std;
+//
 
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
                                                                      cv_enums::CV_data_type m_cv_data_type) :
     Data_source_descriptor(m_id, cv_enums::FILESYSTEM, m_cv_data_type) {}
-string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
+std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
-  string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
+  std::string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case cv_enums::BINARY:
       return Image::read_binary(path, errors);
@@ -34,10 +34,10 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
 
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-void Filesystem_data_source_descriptor::write_json(string &json, Errors &errors) {}
+void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
-  string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
+  std::string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case cv_enums::BINARY:
       image->write_binary(path, errors);
@@ -57,8 +57,8 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
                                                                                  cv_enums::CV_data_type data_type,
                                                                                  Errors &errors) {
   if (debug)
-    cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
-         << data_type << endl;
+    std::cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
+         << data_type << std::endl;
   Filesystem_data_source_descriptor *filesystem_data_source_descriptor =
       new Filesystem_data_source_descriptor(id, data_type);
 
@@ -69,7 +69,7 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
                       json_type_string,
                       errors);
   if (json_file_format != nullptr) {
-    string file_format_str = json_object_get_string(json_file_format);
+    std::string file_format_str = json_object_get_string(json_file_format);
     cv_enums::CV_image_file_format file_format =
         Workbench_utils::string_to_file_format_enum(file_format_str);
     if (file_format == cv_enums::UNDEFINED_FILE_FORMAT)
@@ -113,8 +113,8 @@ Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse
   return filesystem_data_source_descriptor;
 }
 
-string Filesystem_data_source_descriptor::to_string() {
-  ostringstream os;
+std::string Filesystem_data_source_descriptor::to_string() {
+  std::ostringstream os;
   os << Data_source_descriptor::to_string()
      << " file format '" << Workbench_utils::file_format_to_string(file_format)
      << "' directory '" << directory

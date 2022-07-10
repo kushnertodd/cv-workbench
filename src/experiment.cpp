@@ -5,7 +5,7 @@
 #include "experiment.hpp"
 
 Experiment::~Experiment() {
-  list<Experiment_step *> experiment_steps;
+  std::list<Experiment_step *> experiment_steps;
   for (Experiment_step *step: experiment_steps) {
     if (step != nullptr)
       delete step;

@@ -8,18 +8,18 @@
 #include "wb_utils.hpp"
 #include "operator_utils.hpp"
 
-using namespace std;
+//
 
-bool Operator_utils::get_int_parameter(string module,
+bool Operator_utils::get_int_parameter(std::string module,
                                        String_map &parameters,
-                                       string parameter,
+                                       std::string parameter,
                                        int &int_value,
                                        Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module + ": missing '" + parameter + "' parameter");
     return false;
   } else {
-    string parameter_str = get_parameter(parameters, parameter);
+    std::string parameter_str = get_parameter(parameters, parameter);
     if (!Workbench_utils::is_numeric(parameter_str)) {
       errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
       return false;
@@ -31,16 +31,16 @@ bool Operator_utils::get_int_parameter(string module,
   return true;
 }
 
-bool Operator_utils::get_real_parameter(string module,
+bool Operator_utils::get_real_parameter(std::string module,
                                         String_map &parameters,
-                                        string parameter,
+                                        std::string parameter,
                                         double &real_value,
                                         Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module + ": missing '" + parameter + "' parameter");
     return false;
   } else {
-    string parameter_str = get_parameter(parameters, parameter);
+    std::string parameter_str = get_parameter(parameters, parameter);
     if (!Workbench_utils::is_numeric(parameter_str)) {
       errors.add(module + ": not a numeric parameter: '" + parameter_str + "'");
       return false;
@@ -58,16 +58,16 @@ bool Operator_utils::get_real_parameter(string module,
  * @param parameter
  * @return empty string '' if parameter not present
  */
-string Operator_utils::get_parameter(String_map &parameters, string parameter) {
+std::string Operator_utils::get_parameter(String_map &parameters, std::string parameter) {
   return parameters[parameter];
 }
 
-bool Operator_utils::has_parameter(String_map &parameters, string parameter) {
+bool Operator_utils::has_parameter(String_map &parameters, std::string parameter) {
   return parameters.find(parameter) != parameters.end();
 }
 
-string Operator_utils::parameters_to_string(String_map &parameters) {
-  ostringstream os;
+std::string Operator_utils::parameters_to_string(String_map &parameters) {
+  std::ostringstream os;
   String_map::iterator it;
   for (it = parameters.begin(); it != parameters.end(); it++) {
     os << "'" << it->first    // string (key)

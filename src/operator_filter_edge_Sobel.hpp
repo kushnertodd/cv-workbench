@@ -8,13 +8,13 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
-using namespace std;
+//
 
 class Operator_filter_edge_sobel : public Operator {
  public:
   Operator_filter_edge_sobel();
-  void run(list<Data_source_descriptor *> &input_data_sources,
-           list<Data_source_descriptor *> &output_data_stores,
+  void run(std::list<Data_source_descriptor *> &input_data_sources,
+           std::list<Data_source_descriptor *> &output_data_stores,
            String_map &operator_parameters,
            Errors &errors);
 };

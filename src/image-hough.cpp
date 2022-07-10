@@ -11,7 +11,7 @@
 
 Variance_stats variance_stats;
 
-void error_exit(string message) {
+void error_exit(std::string message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
@@ -29,9 +29,9 @@ bool debug = true;
 int main(int argc, char **argv) {
   if (argc < 4)
     error_exit("usage: image-hough image-filename hough-filename");
-  string image_filename = argv[1];
-  string hough_filename = argv[2];
-  string hist_filename = argv[3];
+  std::string image_filename = argv[1];
+  std::string hough_filename = argv[2];
+  std::string hist_filename = argv[3];
   Errors errors;
   Image *in_image = Image::read_binary(image_filename, errors);
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
       hough.find_lines();
       out_image = Image::scale_image(in_image, -569, 590, 0, 255, cv_enums::CV_8U);
       if (debug)
-        cout << "image-hough: out_image " << out_image->to_string() << endl;
+        std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
      out_image->draw_line_segments(hough.line_segments, 0);
       hough.write(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename + ".jpg", errors);
@@ -76,5 +76,5 @@ int main(int argc, char **argv) {
       break;
   }
   if (errors.error_ct > 0)
-    cout << errors.to_string() << endl;
+    std::cout << errors.to_string() << std::endl;
 }

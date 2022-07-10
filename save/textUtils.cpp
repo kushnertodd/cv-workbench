@@ -3,7 +3,7 @@
 #include <iomanip>
 #include "textUtils.hpp"
 
-using namespace std;
+//
 
 namespace miscutils {
 
@@ -21,7 +21,7 @@ char ascii2char(int n) {
  * @param c to convert
  * @return c++ string
  */
-string char2string(char c) {
+std::string char2string(char c) {
   string s(1, c);
   return s;
 }
@@ -32,8 +32,8 @@ string char2string(char c) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string intToHex(unsigned long long i, int width) {
-  ostringstream os;
+std::string intToHex(unsigned long long i, int width) {
+  std::ostringstream os;
   if (width == -1) {
     os << setbase(16) << i;
   } else {
@@ -48,8 +48,8 @@ string intToHex(unsigned long long i, int width) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string intToText(int i, int width) {
-  ostringstream os;
+std::string intToText(int i, int width) {
+  std::ostringstream os;
   if (width == -1) {
     os << i;
   } else {
@@ -80,7 +80,7 @@ string intToText(int i, int width) {
  * @param number
  * @return
  */
-bool isNumeric(string number) {
+bool isNumeric(std::string number) {
   int len = number.size();
   int pos = 0;
   // look for [+-]
@@ -112,8 +112,8 @@ bool isNumeric(string number) {
  * @param width optional field width
  * @return int formatted in field of width (if specified)
  */
-string realToText(double i, int width) {
-  ostringstream os;
+std::string realToText(double i, int width) {
+  std::ostringstream os;
   if (width == -1) {
     os << i;
   } else {
@@ -128,7 +128,7 @@ string realToText(double i, int width) {
  * @param value
  * @return
  */
-bool textHexToInt(string arg, unsigned long long &value) {
+bool textHexToInt(std::string arg, unsigned long long &value) {
   stringstream ss;
   ss << std::hex << arg;
   if (ss >> value) {
@@ -144,13 +144,13 @@ bool textHexToInt(string arg, unsigned long long &value) {
 * @param message to print on failure
 * @return int from argument
 */
-bool textToInt(string arg, int &value) {
+bool textToInt(std::string arg, int &value) {
   stringstream ss(arg);
   if (ss >> value) return true;
   else return false;
 }
 
-bool textToReal(string arg, double &value) {
+bool textToReal(std::string arg, double &value) {
   stringstream ss(arg);
   if (ss >> value) return true;
   else return false;

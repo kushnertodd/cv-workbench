@@ -7,16 +7,16 @@
 #include <sstream>
 #include "file_utils.hpp"
 
-using namespace std;
+//
 
 /**
  * returns size of file in bytes
  * @param fp file pointer
  * @return long byte count
  */
-long File_utils::file_size(ifstream &in) {
+long File_utils::file_size(std::ifstream &in) {
   // Get the number of bytes
-  in.seekg(0, ios::end);
+  in.seekg(0, std::ios::end);
   return in.tellg();
 }
 
@@ -27,17 +27,17 @@ long File_utils::file_size(ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-string File_utils::read_file(string filename) {
-  ifstream in(filename, ios::in | ios::binary);
+std::string File_utils::read_file(std::string filename) {
+  std::ifstream in(filename, std::ios::in | std::ios::binary);
   if (in) {
-    string contents;
+    std::string contents;
     contents.resize(file_size(in));
-    in.seekg(0, ios::beg);
+    in.seekg(0, std::ios::beg);
     in.read(&contents[0], contents.size());
     in.close();
     return (contents);
   }
-  cout << filename << ": " << strerror(errno) << endl;
+  std::cout << filename << ": " << strerror(errno) << std::endl;
   throw (errno);
 }
 
@@ -46,10 +46,10 @@ bool File_utils::read_int(FILE *fp, int &var) {
   return (ferror(fp) == 0 && newLen == 1);
 }
 
-vector<string> File_utils::string_split(const string& str) {
-  vector<string> result;
-  istringstream iss(str);
-  for (string s; iss >> s; )
+std::vector<std::string> File_utils::string_split(const std::string& str) {
+  std::vector<std::string> result;
+  std::istringstream iss(str);
+  for (std::string s; iss >> s; )
     result.push_back(s);
   return result;
 }

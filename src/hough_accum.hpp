@@ -62,14 +62,14 @@ class Hough_accum {
   void add(int theta_index, int rho_index, int value);
   Line_segment* clip_window(Polar_line* line);
   int choose_threshold(cv_enums::CV_threshold_type threshold_type);
-  void find_peaks(list<Polar_line *> &lines, int peak_threshold,
+  void find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
                   bool non_max_suppression = false);
   void initialize(int image_theshold);
   bool maximum(int theta, int rho_index);
   void update_stats();
 
-  bool read(ifstream &ifs, Errors &errors);
-  bool write(ofstream &ofs, string delim, Errors &errors);
+  bool read(std::ifstream &ifs, Errors &errors);
+  bool write(std::ofstream &ofs, std::string delim, Errors &errors);
 };
 
 #endif //SRC__HOUGH_ACCUM_HPP_

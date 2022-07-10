@@ -21,9 +21,9 @@ class Image_header {
                cv_enums::CV_image_depth m_depth);
   Image_header(Image_header *image_header);
   Image_header(Image_header &image_header);
-  static Image_header *read_header(FILE *fp, string path, Errors &errors);
-  void write_header(FILE *fp, string path, Errors &errors);
-  string to_string();
+  static Image_header *read_header(FILE *fp, std::string path, Errors &errors);
+  void write_header(FILE *fp, std::string path, Errors &errors);
+  std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

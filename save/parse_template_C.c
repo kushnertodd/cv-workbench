@@ -151,10 +151,10 @@ int main(int argc, char** argv) {
   long bufsize;
   char* string = read_file(filename, &bufsize);
   printf("JSON string: %s\n", string);
-  json_object *jobj = json_tokener_parse(string);
+  json_object *jobj = json_tokener_parse(std::string);
   if (jobj == NULL)
     printf("json_tokener_parse() failed\n");
   else
     json_parse(0, jobj);
-  free(string);
+  free(std::string);
 }

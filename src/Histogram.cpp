@@ -36,12 +36,12 @@ Histogram::Histogram(int m_nbins,
   }
 }
 
-bool Histogram::read(ifstream &ifs, Errors &errors) {
+bool Histogram::read(std::ifstream &ifs, Errors &errors) {
 /*
   string line;
   while (getline(ifs, line)) {
     vector<string> values = File_utils::string_split(line);
-    for (string value_str: values) {
+    for (std::string value_str: values) {
       int value;
       if (!Workbench_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read: invalid value '" + value_str + "'");
@@ -52,7 +52,7 @@ bool Histogram::read(ifstream &ifs, Errors &errors) {
   return true;
 }
 
-string Histogram::to_string() {
+std::string Histogram::to_string() {
   std::ostringstream os;
   os << "nbins " << nbins
      << " min_value " << min_value
@@ -66,7 +66,7 @@ int bin = in_bounds->bin(new_value, nbins);
 bins[bin]++;
 }
 
-void Histogram::write(string path, Errors &errors) {
+void Histogram::write(std::string path, Errors &errors) {
   if (debug)
     std::cout << "Histogram::write path '" << path << "' " << to_string() << std::endl;
   FILE *fp = fopen(path.c_str(), "w");
@@ -81,10 +81,10 @@ void Histogram::write(string path, Errors &errors) {
   fclose(fp);
 }
 
-void Histogram::write_string(string path, string delim, Errors &errors) {
+void Histogram::write_string(std::string path, std::string delim, Errors &errors) {
   if (debug)
     std::cout << "Histogram::write_string path '" << path << "' " << to_string() << std::endl;
-   std::ofstream ofs(path, ofstream::out);
+   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
     errors.add("Histogram::write_string invalid file '" + path + "'");
     return;
@@ -96,10 +96,10 @@ void Histogram::write_string(string path, string delim, Errors &errors) {
   << std::endl;
   for (int i = 0; i < nbins; i++)
     ofs << i << delim;
-  ofs << endl;
+  ofs << std::endl;
   for (int i = 0; i < nbins; i++)
     ofs << bins[i] << delim;
-  ofs << endl;
+  ofs << std::endl;
 ofs.close();
 }
 

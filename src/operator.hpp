@@ -12,8 +12,8 @@ class Operator {
  public:
   Operator();
   virtual ~Operator();
-  virtual void run(list<Data_source_descriptor *> &input_data_sources,
-                   list<Data_source_descriptor *> &output_data_stores,
+  virtual void run(std::list<Data_source_descriptor *> &input_data_sources,
+                   std::list<Data_source_descriptor *> &output_data_stores,
                    String_map &operator_parameters,
                    Errors &errors) = 0;
 };

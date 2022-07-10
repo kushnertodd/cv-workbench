@@ -458,7 +458,7 @@ int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   } else return -1;
 }
 
-void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold,
+void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
                              bool non_max_suppression) {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
@@ -470,8 +470,8 @@ void Hough_accum::find_peaks(list<Polar_line *> &lines, int peak_threshold,
                                             get_sin(theta_index), count);
           lines.push_back(line);
           if (debug && false) {
-            cout << "Hough_accum::find_peaks: line " << line->to_string()
-                 << endl;
+            std::cout << "Hough_accum::find_peaks: line " << line->to_string()
+                 << std::endl;
           }
         }
       }
@@ -504,11 +504,11 @@ void Hough_accum::update_stats() {
   }
 }
 
-bool Hough_accum::read(ifstream &ifs, Errors &errors) {
-  string line;
+bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
+  std::string line;
   while (getline(ifs, line)) {
-    vector<string> values = File_utils::string_split(line);
-    for (string value_str: values) {
+    std::vector<std::string> values = File_utils::string_split(line);
+    for (std::string value_str: values) {
       int value;
       if (!Workbench_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read: invalid value '" + value_str + "'");
@@ -518,24 +518,24 @@ bool Hough_accum::read(ifstream &ifs, Errors &errors) {
   return true;
 }
 
-bool Hough_accum::write(ofstream &ofs, string delim, Errors &errors) {
+bool Hough_accum::write(std::ofstream &ofs, std::string delim, Errors &errors) {
   ofs << "nthetas " << nthetas << delim
       << " theta_inc " << theta_inc << delim
       << " max_rho " << max_rho << delim
       << " hough_cos " << hough_cos << delim
       << " hough_sin " << hough_sin << delim
       << bounds.to_string()
-      << endl;
+      << std::endl;
   ofs << delim;
   for (int rho_index = 0; rho_index < max_rho; rho_index++)
     ofs << rho_index_to_rho(rho_index) << delim;
-  ofs << endl;
+  ofs << std::endl;
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     ofs << theta_index_to_theta(theta_index) << delim;
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
       ofs << accum[theta_index][rho_index] << delim;
     }
-    ofs << endl;
+    ofs << std::endl;
   }
   return true;
 }

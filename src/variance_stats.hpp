@@ -9,7 +9,7 @@
 #include "errors.hpp"
 #include "bounds.hpp"
 
-using namespace std;
+//
 
 /**
  * Welford's single pass online algorithm for calculating variance
@@ -33,8 +33,8 @@ class Variance_stats {
   double get_variance();
   double get_sample_variance();
   double get_standard_deviation();
-  string to_string();
-  void write(FILE *fp, string path, Errors &errors);
+  std::string to_string();
+  void write(FILE *fp, std::string path, Errors &errors);
 };
 
 #endif //SRC__VARIANCE_STATS_HPP_

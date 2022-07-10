@@ -8,15 +8,15 @@
 #include <list>
 #include <string>
 
-using namespace std;
+//
 
 class Errors {
  public:
   int error_ct = 0;
-  list<string> error_list;
-  void add(string error);
+  std::list<std::string> error_list;
+  void add(std::string error);
   void merge(Errors &errors) ;
-  string to_string();
+  std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_ERRORS_HPP_

@@ -8,13 +8,13 @@
 #include <iostream>
 #include "operator.hpp"
 
-using namespace std;
+//
 
 class Operator_dispatcher {
  public:
   Operator_dispatcher() {}
   ~Operator_dispatcher() {}
-  static Operator *create_operator(string operator_name);
+  static Operator *create_operator(std::string operator_name);
 };
 
 #endif //CV_WORKBENCH_SRC_PRODUCE_OPERATOR_HPP_

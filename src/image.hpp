@@ -16,10 +16,10 @@
 
 class Image_exception {
  private:
-  string errmsg;
+  std::string errmsg;
  public:
-  Image_exception(string m_errmsg);
-  Image_exception(string m_message, int size, int max_size);
+  Image_exception(std::string m_errmsg);
+  Image_exception(std::string m_message, int size, int max_size);
   virtual const char *what() const noexcept;
 };
 
@@ -76,12 +76,12 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
   void add_32F(pixel_32F *src, int count, Errors &errors);
 
-  void draw_line_segments(list<Line_segment *> line_segments, float value);
+  void draw_line_segments(std::list<Line_segment *> line_segments, float value);
   void draw_line_segment(Line_segment *line_segment, float value);
-  static Image *read_binary(string path, Errors &errors);
-  static Image *read_jpeg(string path, Errors &errors);
-  void write_binary(string path, Errors &errors);
-  void write_jpeg(string path, Errors &errors);
+  static Image *read_binary(std::string path, Errors &errors);
+  static Image *read_jpeg(std::string path, Errors &errors);
+  void write_binary(std::string path, Errors &errors);
+  void write_jpeg(std::string path, Errors &errors);
 
   static float scale_pixel(float in_value, float lower_in,
                            float upper_in, float lower_out,
@@ -92,7 +92,7 @@ class Image {
   static Image *scale_image(Image *image, float lower_in,
                             float upper_in, float lower_out,
                             float upper_out, cv_enums::CV_image_depth depth);
-  string to_string();
+  std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HPP_

@@ -16,16 +16,16 @@ class Hough {
   int theta_inc;
   Image *image;
   Hough_accum *accum;
-  list<Polar_line *> lines;
-  list<Line_segment *> line_segments;
+  std::list<Polar_line *> lines;
+  std::list<Line_segment *> line_segments;
 
   ~Hough();
   Hough(Image *m_image, int m_theta_inc);
   void find_lines();
   void find_peaks();
   void lines_to_line_segments();
-  bool read(string filename, Errors &errors);
-  bool write(string filename, string delim, Errors &errors);
+  bool read(std::string filename, Errors &errors);
+  bool write(std::string filename, std::string delim, Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_HOUGH_HPP_

@@ -4,7 +4,7 @@
 //#include <sstream>
 #include "hough_accum.hpp"
 
-using namespace std;
+//
 
 enum CV_image_depth {
   CV_8U,
@@ -17,7 +17,7 @@ enum CV_image_depth {
   CV_16F,
   UNDEFINED_IMAGE_DEPTH
 };
-string depth_to_string( CV_image_depth depth) {
+std::string depth_to_string( CV_image_depth depth) {
   if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
@@ -28,12 +28,12 @@ typedef unsigned char pixel_8U;
 typedef int pixel_32S;
 typedef float pixel_32F;
 
-void error_exit(string message) {
+void error_exit(std::string message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
 
-void read_int(FILE *fp, string name, int &var) {
+void read_int(FILE *fp, std::string name, int &var) {
   int cols;
   int newLen = fread(&var, sizeof(int), 1, fp);
   if (ferror(fp) != 0 || newLen != 1) {
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 
   if (argc < 2)
     error_exit("usage: image-dump filename");
-  string filename = argv[1];
+  std::string filename = argv[1];
 
   FILE *fp = fopen(filename.c_str(), "r");
   if (fp == NULL) {
@@ -64,9 +64,9 @@ int main(int argc, char **argv) {
   read_int(fp, "depth", depth);
 
   int npixels = rows * cols * components;
-  cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
+  std::cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
        << depth_to_string(( CV_image_depth) depth)
-       << " npixels " << npixels << endl;
+       << " npixels " << npixels << std::endl;
   fclose(fp);
 }
 

@@ -146,7 +146,7 @@ point_test: point_test.o point.o trigLookup.o
 static: static.o
 	$(CXX) static.o -o $@
 
-string_compare: string_compare.o
+std::string_compare: string_compare.o
 	$(CXX) string_compare.o -o $@
 
 test_workbenchGetopt: test_workbenchGetopt.o workbenchGetopt.o

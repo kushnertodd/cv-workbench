@@ -25,11 +25,11 @@ class Histogram {
   float m_max_value);
   void update(double new_value);
   void finalize();
-  bool read(ifstream &ifs, Errors &errors);
-  void write(string path, string delim, Errors &errors);
-  string to_string();
-  void write(string path, Errors &errors);
-  void write_string(string path, string delim, Errors &errors);
+  bool read(std::ifstream &ifs, Errors &errors);
+  void write(std::string path, std::string delim, Errors &errors);
+  std::string to_string();
+  void write(std::string path, Errors &errors);
+  void write_string(std::string path, std::string delim, Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_HISTOGRAM_HPP_

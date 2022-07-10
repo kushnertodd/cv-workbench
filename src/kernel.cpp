@@ -133,38 +133,38 @@ Image *Kernel::convolve(Image *src) {
   int col_upper = cols - kernel_cols;
   //printf("row_lower %d, row_upper %d, col_lower %d, col_upper %d\n", row_lower, row_upper, col_lower, col_upper);
   if (debug)
-    cout << "rows_half " << rows_half
+    std::cout << "rows_half " << rows_half
          << " cols_half " << cols_half
          << "row_lower " << row_lower
          << ", row_upper " << row_upper
          << ", col_lower " << col_lower
-         << ", col_upper " << col_upper << endl;
+         << ", col_upper " << col_upper << std::endl;
   int kernel_row_lower = 0;
   int kernel_row_upper = kernel_rows - 1;
   int kernel_col_lower = 0;
   int kernel_col_upper = kernel_cols - 1;
   if (debug)
-    cout << " kernel_row_lower " << kernel_row_lower
+    std::cout << " kernel_row_lower " << kernel_row_lower
          << " kernel_row_upper " << kernel_row_upper
          << " kernel_col_lower " << kernel_col_lower
-         << " kernel_col_upper " << kernel_col_upper << endl;
+         << " kernel_col_upper " << kernel_col_upper << std::endl;
   for (int row = row_lower; row <= row_upper; row++) {
     int row_center = row + rows_half - 1;
     //printf("row %d row_center %d\n", row, row_center);
     if (debug)
-      cout << "row " << row
-           << " row_center " << row_center << endl;
+      std::cout << "row " << row
+           << " row_center " << row_center << std::endl;
     for (int col = col_lower; col <= col_upper; col++) {
       int col_center = col + cols_half - 1;
       //printf("  col %d, col_center %d\n", col, col_center);
 //      int kernel_row_lower = row;
 //      int kernel_row_upper = row + kernel_rows - 1;
       if (debug)
-        cout << "col " << col
+        std::cout << "col " << col
              << " col_center " << col_center
              //             << " kernel_row_lower " << kernel_row_lower
              //             << " kernel_row_upper " << kernel_row_upper
-             << endl;
+             << std::endl;
       float sum = 0.0;
       for (int i = kernel_row_lower; i <= kernel_row_upper; i++) {
 //        int kernel_col_lower = col;
@@ -176,24 +176,24 @@ Image *Kernel::convolve(Image *src) {
           sum += kernel_val * image_val;
           //printf("sum += kernel[%d,%d] %7.2f * image[%d,%d] %7.2f = %7.2f\n", i, j, kernel_val, row+i, col+j, image_val, sum);
           if (debug)
-            cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
+            std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
                  << " * image[" << row + i << "," << col + j
-                 << "] " << image_val << " = " << sum << endl;
+                 << "] " << image_val << " = " << sum << std::endl;
         }
         if (debug)
-          cout << endl;
+          std::cout << std::endl;
       }
       //printf("buf[%d,%d] = %7.2f\n", row_center, col_center, sum);
       if (debug)
-        cout << "buf[" << row_center << "," << col_center << "] = " << sum << endl;
+        std::cout << "buf[" << row_center << "," << col_center << "] = " << sum << std::endl;
       out->set(row_center, col_center, sum);
     }
   }
   return out;
 }
 
-string Kernel::to_string() {
-  ostringstream os;
+std::string Kernel::to_string() {
+  std::ostringstream os;
   os << "kernel_rows " << kernel_rows
      << " kernel_cols " << kernel_cols
      << " depth " << depth << " " << Workbench_utils::image_depth_enum_to_string(depth)

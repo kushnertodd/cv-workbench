@@ -9,7 +9,7 @@
 #include "wb_utils.hpp"
 #include "variance_stats.hpp"
 
-using namespace std;
+//
 
 Variance_stats::Variance_stats() :
     count(0),
@@ -87,8 +87,8 @@ double Variance_stats::get_standard_deviation() {
   return sqrt(sample_variance);
 }
 
-string Variance_stats::to_string() {
-  ostringstream os;
+std::string Variance_stats::to_string() {
+  std::ostringstream os;
   os << "count " << count
      << " mean " << get_mean()
      << " variance " << get_variance()
@@ -99,7 +99,7 @@ string Variance_stats::to_string() {
   return os.str();
 }
 
-void Variance_stats::write(FILE *fp, string path, Errors &errors){
+void Variance_stats::write(FILE *fp, std::string path, Errors &errors){
   int count;
   Workbench_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
   Workbench_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);

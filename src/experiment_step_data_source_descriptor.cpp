@@ -10,16 +10,16 @@
 
 extern bool debug;
 
-using namespace std;
+//
 
 Experiment_step_data_source_descriptor::Experiment_step_data_source_descriptor(int m_id,
                                                                                cv_enums::CV_data_type m_cv_data_type) :
     Data_source_descriptor(m_id, cv_enums::EXPERIMENT_STEP, m_cv_data_type) {}
-string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return nullptr; }
+std::string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return nullptr; }
 Image *Experiment_step_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Histogram *Experiment_step_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Experiment_step_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-void Experiment_step_data_source_descriptor::write_json(string &json, Errors &errors) {}
+void Experiment_step_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 void Experiment_step_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Experiment_step_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
 void Experiment_step_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
@@ -28,8 +28,8 @@ Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::
                                                                                            cv_enums::CV_data_type data_type,
                                                                                            Errors &errors) {
   if (debug)
-    cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
-         << data_type << endl;
+    std::cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
+         << data_type << std::endl;
   Experiment_step_data_source_descriptor *experiment_step_data_source_descriptor =
       new Experiment_step_data_source_descriptor(id, data_type);
   json_object *json_step_id =
@@ -51,8 +51,8 @@ Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::
   return experiment_step_data_source_descriptor;
 }
 
-string Experiment_step_data_source_descriptor::to_string() {
-  ostringstream os;
+std::string Experiment_step_data_source_descriptor::to_string() {
+  std::ostringstream os;
   os << Data_source_descriptor::to_string()
      << " step id " << step_id
      << " ref id " << ref_id;

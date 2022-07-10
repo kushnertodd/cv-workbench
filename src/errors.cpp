@@ -5,7 +5,7 @@
 #include <sstream>
 #include "errors.hpp"
 
-void Errors::add(string error) {
+void Errors::add(std::string error) {
   error_ct++;
   error_list.push_back(error);
 }
@@ -15,10 +15,10 @@ void Errors::merge(Errors &errors) {
   error_list.insert(error_list.end(), errors.error_list.begin(), errors.error_list.end());
 }
 
-string Errors::to_string() {
-  ostringstream os;
-  for (string error: error_list) {
-    os << error << endl;
+std::string Errors::to_string() {
+  std::ostringstream os;
+  for (std::string error: error_list) {
+    os << error << std::endl;
   }
   return os.str();
 }

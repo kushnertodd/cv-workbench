@@ -8,7 +8,7 @@
 #include "wb_defs.hpp"
 #include "operator_filter_edge_kirsch.hpp"
 
-using namespace std;
+//
 
 extern bool debug;
 
@@ -33,14 +33,14 @@ Operator_filter_edge_kirsch::Operator_filter_edge_kirsch() {}
  * @param operator_parameters
  * @param errors
  */
-void Operator_filter_edge_kirsch::run(list<Data_source_descriptor *> &input_data_sources,
-                                      list<Data_source_descriptor *> &output_data_stores,
+void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input_data_sources,
+                                      std::list<Data_source_descriptor *> &output_data_stores,
                                       String_map &operator_parameters,
                                       Errors &errors) {
 
   if (debug) {
-    cout << "Operator_filter_edge_kirsch::run parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << endl;
+    std::cout << "Operator_filter_edge_kirsch::run parameters: "
+         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
     errors.add("Operator_filter_edge_kirsch::run missing input data source");
@@ -54,7 +54,7 @@ void Operator_filter_edge_kirsch::run(list<Data_source_descriptor *> &input_data
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
       errors.add("Operator_filter_edge_kirsch::run: missing 'orientation' parameter");
     } else {
-      string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
+      std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "NW"
           && orientation_str != "W"
           && orientation_str != "SW"

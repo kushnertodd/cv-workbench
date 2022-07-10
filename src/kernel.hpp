@@ -46,7 +46,7 @@ class Kernel {
 
   Image *convolve(Image *src);
 
-  string to_string();
+  std::string to_string();
 };
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

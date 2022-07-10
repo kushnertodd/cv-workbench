@@ -18,15 +18,15 @@
 class Experiment_step {
  public:
   int id;
-  string operator_name;
-  list<Data_source_descriptor *> input_data_sources;
-  list<Data_source_descriptor *> output_data_stores;
+  std::string operator_name;
+  std:: list<Data_source_descriptor *> input_data_sources;
+  std::list<Data_source_descriptor *> output_data_stores;
   String_map operator_parameters;
   ~Experiment_step();
   Experiment_step();
-  Experiment_step(int m_id, string m_operator_name);
+  Experiment_step(int m_id, std::string m_operator_name);
   void run(Errors &errors);
-  string to_string();
+  std::string to_string();
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json

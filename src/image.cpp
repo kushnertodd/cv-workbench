@@ -15,14 +15,14 @@
 
 extern bool debug;
 
-Image_exception::Image_exception(string m_errmsg) :
+Image_exception::Image_exception(std::string m_errmsg) :
     errmsg(m_errmsg) {
 }
 
-Image_exception::Image_exception(string message,
+Image_exception::Image_exception(std::string message,
                                  int size,
                                  int max_size) {
-  ostringstream os;
+  std::ostringstream os;
   os << message << ": cannot allocate " << size <<
      " bytes, max size " << max_size;
   errmsg = os.str();
@@ -51,7 +51,7 @@ Image::Image(Image_header *m_image_header) :
     image_header(new Image_header(m_image_header)),
     next_pixel(0) {
   if (debug)
-    cout << "Image::Image: " << to_string() << endl;
+    std::cout << "Image::Image: " << to_string() << std::endl;
   init();
 }
 
@@ -59,13 +59,13 @@ Image::Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth 
     next_pixel(0) {
   image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
-    cout << "Image::Image: " << to_string() << endl;
+    std::cout << "Image::Image: " << to_string() << std::endl;
   init();
 }
 
 Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   if (debug)
-    cout << "Image::clone: depth " << depth << " " << image->to_string() << endl;
+    std::cout << "Image::clone: depth " << depth << " " << image->to_string() << std::endl;
 /*
   Image_header *image_header = new Image_header(image->get_rows(),
                                                 image->get_cols(),
@@ -88,7 +88,7 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
  */
 Image *Image::to_rgb(int component) {
   if (debug)
-    cout << "Image::clone: component " << component << " " << to_string() << endl;
+    std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
   Image_header *image_header = new Image_header(image_header->rows,
                                                 image_header->cols,
                                                 3,
@@ -257,7 +257,7 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
 
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (debug)
-    cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << endl;
+    std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
   if (next_pixel + count > image_header->npixels)
     errors.add("Image::add_32S: adding "
                    + Workbench_utils::int_to_string(count) + " pixels at position " +
@@ -313,7 +313,7 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
   }
 }
 
-void Image::draw_line_segments(list<Line_segment *> line_segments, float value) {
+void Image::draw_line_segments(std::list<Line_segment *> line_segments, float value) {
   for (Line_segment *line_segment: line_segments) {
     draw_line_segment(line_segment, value);
   }
@@ -328,10 +328,10 @@ void Image::draw_line_segment(Line_segment *line_segment, float value) {
   }
 }
 
-Image *Image::read_binary(string path, Errors &errors) {
+Image *Image::read_binary(std::string path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
-    errors.add("Image::read_binary: invalid file '" + path + "' " + string(strerror(errno)) + "'");
+    errors.add("Image::read_binary: invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
     return nullptr;
   }
 
@@ -392,7 +392,7 @@ void my_error_exit(j_common_ptr cinfo) {
 }
 
 #define READ_BINARY    "rb"
-Image *Image::read_jpeg(string path, Errors &errors) {
+Image *Image::read_jpeg(std::string path, Errors &errors) {
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr jerr;
   JSAMPARRAY buffer;
@@ -437,9 +437,9 @@ Image *Image::read_jpeg(string path, Errors &errors) {
   return image;
 }
 
-void Image::write_binary(string path, Errors &errors) {
+void Image::write_binary(std::string path, Errors &errors) {
   if (debug)
-    cout << "Image::write_binary path '" << path << "' " << to_string() << endl;
+    std::cout << "Image::write_binary path '" << path << "' " << to_string() << std::endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write_binary: invalid file '" + path + "'");
@@ -472,7 +472,7 @@ void Image::write_binary(string path, Errors &errors) {
   fclose(fp);
 }
 
-void Image::write_jpeg(string path, Errors &errors) {
+void Image::write_jpeg(std::string path, Errors &errors) {
   if (get_depth() != cv_enums::CV_8U) {
     errors.add("Image::write_jpeg: cannot write "
                    + Workbench_utils::image_depth_enum_to_string(get_depth())
@@ -548,10 +548,10 @@ float Image::get_scaled(int row, int col, float lower_in,
   float pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
   if (debug && false)
-    cout << "Image::get_scaled: pixel_in " << pixel_in << " pixel_out " << pixel_out << " row " << row << " col " << col
+    std::cout << "Image::get_scaled: pixel_in " << pixel_in << " pixel_out " << pixel_out << " row " << row << " col " << col
          << " lower_in " << lower_in
          << " upper_in " << upper_in << " lower_out " << lower_out
-         << " upper_out " << upper_out << endl;
+         << " upper_out " << upper_out << std::endl;
   return pixel_out;
 }
 
@@ -572,10 +572,10 @@ Image *Image::scale_image(Image *image, float lower_in,
                           float upper_in, float lower_out,
                           float upper_out, cv_enums::CV_image_depth depth) {
   if (debug)
-    cout << "Image *Image::scale_image: lower_in " << lower_in
+    std::cout << "Image *Image::scale_image: lower_in " << lower_in
          << " upper_in " << upper_in
          << " lower_out " << lower_out
-         << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << endl;
+         << " upper_out " << upper_out << " depth " << Workbench_utils::image_depth_enum_to_string(depth) << std::endl;
   //Image *convert_image = clone_image(image, depth);
   Image *convert_image = new Image(image->get_rows(),
                                    image->get_cols(),
@@ -592,8 +592,8 @@ Image *Image::scale_image(Image *image, float lower_in,
   return convert_image;
 }
 
-string Image::to_string() {
-  ostringstream os;
+std::string Image::to_string() {
+  std::ostringstream os;
   os << image_header->to_string()
      << " next_pixel " << next_pixel;
   return os.str();

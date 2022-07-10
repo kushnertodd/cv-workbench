@@ -18,7 +18,7 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components, cv_enums::C
     row_stride(cols * components),
     npixels(rows * row_stride) {
   if (debug)
-    cout << "Image_header::Image_header: " << to_string() << endl;
+    std::cout << "Image_header::Image_header: " << to_string() << std::endl;
 }
 
 Image_header::Image_header(Image_header *image_header) :
@@ -34,7 +34,7 @@ Image_header::Image_header(Image_header &image_header) :
                  image_header.components,
                  image_header.depth) {
 }
-Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
+Image_header *Image_header::read_header(FILE *fp, std::string path, Errors &errors) {
   int rows;
   if (!File_utils::read_int(fp, rows)) {
     errors.add("Image_header::read_header: missing image rows in '" + path + "'");
@@ -62,9 +62,9 @@ Image_header *Image_header::read_header(FILE *fp, string path, Errors &errors) {
 
 }
 
-void Image_header::write_header(FILE *fp, string path, Errors &errors) {
+void Image_header::write_header(FILE *fp, std::string path, Errors &errors) {
   if (debug)
-    cout << "Image_header::write_header  path '" << path << "' " << to_string() << endl;
+    std::cout << "Image_header::write_header  path '" << path << "' " << to_string() << std::endl;
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image_header::write_header: cannot write image rows to '" + path + "'");
@@ -83,8 +83,8 @@ void Image_header::write_header(FILE *fp, string path, Errors &errors) {
   }
 }
 
-string Image_header::to_string() {
-  ostringstream os;
+std::string Image_header::to_string() {
+  std::ostringstream os;
   os << "rows " << rows
      << " cols " << cols
      << " components " << components

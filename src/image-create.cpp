@@ -7,11 +7,11 @@
 #include "file_utils.hpp"
 #include "hough_accum.hpp"
 
-using namespace std;
+//
 
 bool debug = true;
 
-void error_exit(string message) {
+void error_exit(std::string message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
@@ -22,33 +22,33 @@ int main(int argc, char **argv) {
 
   if (argc < 5)
     error_exit("usage: image-dump image-file rows cols depth data-file");
-  string data_file = argv[1];
+  std::string data_file = argv[1];
   int rows;
-  if (!Workbench_utils::string_to_int(string(argv[2]), rows))
-    error_exit("invalid rows value: '" + string(argv[2]) + "'");
+  if (!Workbench_utils::string_to_int(std::string(argv[2]), rows))
+    error_exit("invalid rows value: '" + std::string(argv[2]) + "'");
   int cols;
-  if (!Workbench_utils::string_to_int(string(argv[3]), cols))
-    error_exit("invalid cols value: '" + string(argv[3]) + "'");
-  string depth_str = argv[4];
+  if (!Workbench_utils::string_to_int(std::string(argv[3]), cols))
+    error_exit("invalid cols value: '" + std::string(argv[3]) + "'");
+  std::string depth_str = argv[4];
   cv_enums::CV_image_depth depth = Workbench_utils::string_to_image_depth_enum(depth_str);
   if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH)
     error_exit("invalid depth value: '" + depth_str + "'");
-  string image_file = argv[5];
+  std::string image_file = argv[5];
 
 //  FILE *fp_image = fopen(image_file.c_str(), "w");
 //  if (fp_image == NULL) {
 //    error_exit("cannot open image file '" + image_file + "'");
 //  }
 
-  string data = File_utils::read_file(data_file);
-  vector<string> tokens = File_utils::string_split(data);
+  std::string data = File_utils::read_file(data_file);
+  std::vector<std::string> tokens = File_utils::string_split(data);
   Errors errors;
 
   if (depth == cv_enums::CV_8U) {
     Image *image_8U = new Image(rows, cols, 1, depth);
-    vector<int> values;
-    for (string token: tokens) {
-      //cout << "token '" << token<< "'" << endl;
+    std::vector<int> values;
+    for (std::string token: tokens) {
+      //cout << "token '" << token<< "'" << std::endl;
       int value;
       if (Workbench_utils::string_to_int(token, value))
         values.push_back(value);
@@ -62,13 +62,13 @@ int main(int argc, char **argv) {
       buf_8U[pos++] = value;
     }
 //    for (int i = 0; i < size; i++)
-//      cout << i << ": " << buf_8U[i] << endl;
+//      cout << i << ": " << buf_8U[i] << std::endl;
     image_8U->add_8U(buf_8U, size, errors);
     image_8U->write_binary(image_file, errors);
   } else if (depth == cv_enums::CV_32S) {
     Image *image_32S = new Image(rows, cols, 1, depth);
-    vector<int> values;
-    for (string token: tokens) {
+    std::vector<int> values;
+    for (std::string token: tokens) {
       int value;
       if (Workbench_utils::string_to_int(token, value))
         values.push_back(value);
@@ -85,8 +85,8 @@ int main(int argc, char **argv) {
     image_32S->write_binary(image_file, errors);
   } else if (depth == cv_enums::CV_32F) {
     Image *image_32F = new Image(rows, cols, 1, depth);
-    vector<float> values;
-    for (string token: tokens) {
+    std::vector<float> values;
+    for (std::string token: tokens) {
       double value;
       if (Workbench_utils::string_to_real(token, value))
         values.push_back(value);
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
   }
 
   if (errors.error_ct > 0) {
-    cout << "image_test.test_write(): there were errors." << endl << errors.to_string();
+    std::cout << "image_test.test_write(): there were errors." << std::endl << errors.to_string();
   }
 }
 
