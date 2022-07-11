@@ -1,0 +1,210 @@
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x5604161fc430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 626 rho -162 theta_index 0 count 0 cos_theta 1 sin_theta 0 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 546 col_at_window_bottom 546
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 546) point2 (row 671 col 546)
+Hough::draw_lines; line_segment (point 1 row 0 col 546 point 2 row 671 col 546) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x5601215fa430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 628 rho -160 theta_index 0 count 0 cos_theta 1 sin_theta 0 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 548 col_at_window_bottom 548
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 548) point2 (row 671 col 548)
+Hough::draw_lines; line_segment (point 1 row 0 col 548 point 2 row 671 col 548) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x560ce4c43430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 791 rho 2 theta_index 0 count 0 cos_theta 1 sin_theta 0 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 711 col_at_window_bottom 711
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 711) point2 (row 671 col 711)
+Hough::draw_lines; line_segment (point 1 row 0 col 711 point 2 row 671 col 711) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x558996d3e430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 793 rho 4 theta_index 0 count 0 cos_theta 1 sin_theta 0 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 713 col_at_window_bottom 713
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 713) point2 (row 671 col 713)
+Hough::draw_lines; line_segment (point 1 row 0 col 713 point 2 row 671 col 713) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x5647e5652430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 625 rho -163 theta_index 1 count 0 cos_theta 0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 527 col_at_window_bottom 562
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 527) point2 (row 671 col 562)
+Hough::draw_lines; line_segment (point 1 row 0 col 527 point 2 row 671 col 562) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x563bece13430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 626 rho -162 theta_index 1 count 0 cos_theta 0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 528 col_at_window_bottom 563
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 528) point2 (row 671 col 563)
+Hough::draw_lines; line_segment (point 1 row 0 col 528 point 2 row 671 col 563) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x56211b414430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 790 rho 1 theta_index 1 count 0 cos_theta 0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 692 col_at_window_bottom 727
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 692) point2 (row 671 col 727)
+Hough::draw_lines; line_segment (point 1 row 0 col 692 point 2 row 671 col 727) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55f0b4b58430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 791 rho 2 theta_index 1 count 0 cos_theta 0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 693 col_at_window_bottom 728
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 693) point2 (row 671 col 728)
+Hough::draw_lines; line_segment (point 1 row 0 col 693 point 2 row 671 col 728) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55d1ea3a5430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 631 rho -157 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 149 col_at_window_bottom 820
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 149) point2 (row 671 col 820)
+Hough::draw_lines; line_segment (point 1 row 0 col 149 point 2 row 671 col 820) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x562b004a7430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 632 rho -156 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 151 col_at_window_bottom 822
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 151) point2 (row 671 col 822)
+Hough::draw_lines; line_segment (point 1 row 0 col 151 point 2 row 671 col 822) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55d373a46430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 633 rho -155 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 152 col_at_window_bottom 823
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 152) point2 (row 671 col 823)
+Hough::draw_lines; line_segment (point 1 row 0 col 152 point 2 row 671 col 823) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x559e75d97430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 634 rho -154 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 154 col_at_window_bottom 825
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 154) point2 (row 671 col 825)
+Hough::draw_lines; line_segment (point 1 row 0 col 154 point 2 row 671 col 825) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55818abb4430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 711 rho -77 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 262 col_at_window_bottom 933
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 262) point2 (row 671 col 933)
+Hough::draw_lines; line_segment (point 1 row 0 col 262 point 2 row 671 col 933) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x556e0cfb7430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 712 rho -76 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 264 col_at_window_bottom 935
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 264) point2 (row 671 col 935)
+Hough::draw_lines; line_segment (point 1 row 0 col 264 point 2 row 671 col 935) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x556cbaeb3430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 713 rho -75 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 265 col_at_window_bottom 936
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 265) point2 (row 671 col 936)
+Hough::draw_lines; line_segment (point 1 row 0 col 265 point 2 row 671 col 936) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55da9397b430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 714 rho -74 theta_index 15 count 0 cos_theta 0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 267 col_at_window_bottom 938
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 267) point2 (row 671 col 938)
+Hough::draw_lines; line_segment (point 1 row 0 col 267 point 2 row 671 col 938) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x558fd05e7430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 1247 rho 458 theta_index 45 count 0 cos_theta -0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window row_at_window_left 396 row_at_window_right -1019
+Hough_accum::clip_window case 2.3 col_at_window_top 396
+Line_segment::Line_segment point1 (row 396 col 0) point2 (row 0 col 396)
+Hough::draw_lines; line_segment (point 1 row 396 col 0 point 2 row 0 col 396) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55a878b5e430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 1249 rho 460 theta_index 45 count 0 cos_theta -0.707107 sin_theta 0.707107 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window row_at_window_left 393 row_at_window_right -1022
+Hough_accum::clip_window case 2.3 col_at_window_top 393
+Line_segment::Line_segment point1 (row 393 col 0) point2 (row 0 col 393)
+Hough::draw_lines; line_segment (point 1 row 393 col 0 point 2 row 0 col 393) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55f689523430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 781 rho -7 theta_index 59 count 0 cos_theta -0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 733 col_at_window_bottom 698
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 733) point2 (row 671 col 698)
+Hough::draw_lines; line_segment (point 1 row 0 col 733 point 2 row 671 col 698) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55688a027430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 782 rho -6 theta_index 59 count 0 cos_theta -0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 732 col_at_window_bottom 697
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 732) point2 (row 671 col 697)
+Hough::draw_lines; line_segment (point 1 row 0 col 732 point 2 row 671 col 697) value 0
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x557da247e430 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough_accum::clip_window line ( rho_index 946 rho 157 theta_index 59 count 0 cos_theta -0.99863 sin_theta 0.052336 count 0)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 568 col_at_window_bottom 533
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 568) point2 (row 671 col 533)
+Hough::draw_lines; line_segment (point 1 row 0 col 568 point 2 row 671 col 533) value 0

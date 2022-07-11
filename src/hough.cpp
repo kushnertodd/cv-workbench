@@ -50,6 +50,11 @@ void Hough::find_lines() {
 void Hough::find_peaks() {
   int peak_threshold = accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
   accum->find_peaks(lines, peak_threshold);
+  if (debug) {
+    for (Polar_line *line : lines) {
+      std::cout << "Hough::find_peaks: lines " << line->to_string() << std::endl;
+    }
+  }
 }
 
 void Hough::lines_to_line_segments() {
@@ -81,7 +86,7 @@ bool Hough::write(std::string filename, std::string delim, Errors &errors) {
     return false;
   }
   bool return_value = true;
-  if (!accum->write(ofs, "\t", errors)) {
+  if (!accum->write_str(ofs, "\t", errors)) {
     return_value = false;
   }
   ofs.close();

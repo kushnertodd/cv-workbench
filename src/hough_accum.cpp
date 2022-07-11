@@ -54,120 +54,16 @@ Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
   }
 }
 
-/**
- * initialize accumulator
- *
- * @param image_theshold
- */
-void Hough_accum::initialize(int image_theshold) {
-  for (int row = 0; row < image->image_header->rows; row++) {
-    for (int col = 0; col < image->image_header->cols; col++) {
-      float value = image->get(row, col);
-      if (std::abs(value) > image_theshold) {
-        for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-          int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
-          if (debug && false)
-            std::cout << "Hough_accum::Hough_accum: value " << value
-                      << " image_theshold " << image_theshold
-                      << " rho_index " << rho_index
-                      << " theta_index " << theta_index
-                      << " value " << value
-                      << std::endl;
-          add(theta_index, rho_index, abs(value));
-        }
-      }
-    }
-  }
-  update_stats();
-}
-
-// accessors
-int Hough_accum::get_cols() { return image->image_header->cols; }
-int Hough_accum::get_rows() { return image->image_header->rows; }
-bool Hough_accum::in_window(Point *point) {
-  bool row_valid = point->row >= 0 && point->row < get_rows();
-  bool col_valid = point->col >= 0 && point->col < get_cols();
-  bool result = row_valid && col_valid;
-  return result;
-}
-
-float Hough_accum::get_cos(int theta_index) { return hough_cos[theta_index]; }
-float Hough_accum::get_sin(int theta_index) { return hough_sin[theta_index]; }
-float Hough_accum::deg_to_rad(float deg) {
-  float rad = deg * pi / max_theta;
-  return rad;
-}
-
-float Hough_accum::col_to_x(int col) {
-  float col_offset = get_cols() / 2.0;
-  float x = col - col_offset;
-  return x;
-}
-float Hough_accum::rho_index_to_rho(int rho_index) {
-  float rho_offset = max_rho / 2.0;
-  float rho = rho_index - rho_offset;
-  return rho;
-}
-// can have a singularity if theta ~= , 180, sin ~= 0
-int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
-  float x = col_to_x(col);
-  float cos_t = get_cos(theta_index);
-  float rho = rho_index_to_rho(rho_index);
-  float sin_t = get_sin(theta_index);
-  float row_offset = get_rows() / 2.0;
-  float row = (x * cos_t - rho) / sin_t + row_offset;
-  return round(row);
-}
-// can have a singularity if theta ~= 90, cos ~= 0
-int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
-  float rho = rho_index_to_rho(rho_index);
-  float cos_t = get_cos(theta_index);
-  float y = row_to_y(row);
-  float sin_t = get_sin(theta_index);
-  float col_offset = get_cols() / 2.0;
-  float col = (rho - y * sin_t) / cos_t + col_offset;
-  return round(col);
-}
-int Hough_accum::rho_to_index(float rho) {
-  float rho_offset = max_rho / 2.0;
-  int rho_index = round(rho) + rho_offset;
-  return rho_index;
-}
-float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
-  float x = col_to_x(col);
-  float cos_t = get_cos(theta_index);
-  float y = row_to_y(row);
-  float sin_t = get_sin(theta_index);
-  float rho = x * cos_t + y * sin_t;
-  return rho;
-}
-int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) {
-  float rho = row_col_theta_to_rho(row, col, theta_index);
-  int rho_index = rho_to_index(rho);
-  return rho_index;
-}
-float Hough_accum::row_to_y(int row) {
-  float row_offset = get_rows() / 2.0;
-  float y = row_offset - row;
-  return y;
-}
-int Hough_accum::theta_index_to_theta(int theta_index) {
-  int theta = theta_index * theta_inc;
-  return theta;
-}
-int Hough_accum::x_to_col(float x) {
-  float col_offset = get_cols() / 2.0;
-  int col = round(x + col_offset);
-  return col;
-}
-int Hough_accum::y_to_row(float y) {
-  float row_offset = get_rows() / 2.0;
-  int row = round(row_offset - y);
-  return row;
-}
-
 void Hough_accum::add(int theta_index, int rho_index, int value) {
   accum[theta_index][rho_index] += value;
+}
+
+int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
+  if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
+    return 40000; //bounds.max_value * 0.55; //0.90;
+  } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
+    return bounds.max_value * 0.85;
+  } else return -1;
 }
 
 /**
@@ -450,19 +346,15 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
   }
 }
 
-int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
-  if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
-    return 90000; //bounds.max_value * 0.55; //0.90;
-  } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
-    return bounds.max_value * 0.85;
-  } else return -1;
+float Hough_accum::col_to_x(int col) {
+  float col_offset = get_cols() / 2.0;
+  float x = col - col_offset;
+  return x;
 }
 
-Polar_line *Hough_accum::make_polar_line(int rho_index, int theta_index, int count) {
-  int rho = rho_index_to_rho(rho_index);
-  Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
-                                    get_sin(theta_index), count);
-  return line;
+float Hough_accum::deg_to_rad(float deg) {
+  float rad = deg * pi / max_theta;
+  return rad;
 }
 
 void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
@@ -485,6 +377,55 @@ void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
   }
 }
 
+int Hough_accum::get_cols() { return image->image_header->cols; }
+
+float Hough_accum::get_cos(int theta_index) { return hough_cos[theta_index]; }
+
+int Hough_accum::get_rows() { return image->image_header->rows; }
+
+float Hough_accum::get_sin(int theta_index) { return hough_sin[theta_index]; }
+
+bool Hough_accum::in_window(Point *point) {
+  bool row_valid = point->row >= 0 && point->row < get_rows();
+  bool col_valid = point->col >= 0 && point->col < get_cols();
+  bool result = row_valid && col_valid;
+  return result;
+}
+
+/**
+ * initialize accumulator
+ *
+ * @param image_theshold
+ */
+void Hough_accum::initialize(int image_theshold) {
+  for (int row = 0; row < image->image_header->rows; row++) {
+    for (int col = 0; col < image->image_header->cols; col++) {
+      float value = image->get(row, col);
+      if (std::abs(value) > image_theshold) {
+        for (int theta_index = 0; theta_index < nthetas; theta_index++) {
+          int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
+          if (debug && false)
+            std::cout << "Hough_accum::Hough_accum: value " << value
+                      << " image_theshold " << image_theshold
+                      << " rho_index " << rho_index
+                      << " theta_index " << theta_index
+                      << " value " << value
+                      << std::endl;
+          add(theta_index, rho_index, abs(value));
+        }
+      }
+    }
+  }
+  update_stats();
+}
+
+Polar_line *Hough_accum::make_polar_line(int rho_index, int theta_index, int count) {
+  int rho = rho_index_to_rho(rho_index);
+  Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
+                                    get_sin(theta_index), count);
+  return line;
+}
+
 bool Hough_accum::maximum(int theta_index, int rho_index) {
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
@@ -502,14 +443,6 @@ bool Hough_accum::maximum(int theta_index, int rho_index) {
   return true;
 }
 
-void Hough_accum::update_stats() {
-  for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      bounds.update(accum[theta_index][rho_index]);
-    }
-  }
-}
-
 bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   std::string line;
   while (getline(ifs, line)) {
@@ -524,7 +457,74 @@ bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   return true;
 }
 
-bool Hough_accum::write(std::ofstream &ofs, std::string delim, Errors &errors) {
+float Hough_accum::rho_index_to_rho(int rho_index) {
+  float rho_offset = max_rho / 2.0;
+  float rho = rho_index - rho_offset;
+  return rho;
+}
+// can have a singularity if theta ~= , 180, sin ~= 0
+int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
+  float x = col_to_x(col);
+  float cos_t = get_cos(theta_index);
+  float rho = rho_index_to_rho(rho_index);
+  float sin_t = get_sin(theta_index);
+  float row_offset = get_rows() / 2.0;
+  float row = (x * cos_t - rho) / sin_t + row_offset;
+  return round(row);
+}
+
+// can have a singularity if theta ~= 90, cos ~= 0
+int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
+  float rho = rho_index_to_rho(rho_index);
+  float cos_t = get_cos(theta_index);
+  float y = row_to_y(row);
+  float sin_t = get_sin(theta_index);
+  float col_offset = get_cols() / 2.0;
+  float col = (rho - y * sin_t) / cos_t + col_offset;
+  return round(col);
+}
+
+int Hough_accum::rho_to_index(float rho) {
+  float rho_offset = max_rho / 2.0;
+  int rho_index = round(rho) + rho_offset;
+  return rho_index;
+}
+
+float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
+  float x = col_to_x(col);
+  float cos_t = get_cos(theta_index);
+  float y = row_to_y(row);
+  float sin_t = get_sin(theta_index);
+  float rho = x * cos_t + y * sin_t;
+  return rho;
+}
+
+int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) {
+  float rho = row_col_theta_to_rho(row, col, theta_index);
+  int rho_index = rho_to_index(rho);
+  return rho_index;
+}
+
+float Hough_accum::row_to_y(int row) {
+  float row_offset = get_rows() / 2.0;
+  float y = row_offset - row;
+  return y;
+}
+
+int Hough_accum::theta_index_to_theta(int theta_index) {
+  int theta = theta_index * theta_inc;
+  return theta;
+}
+
+void Hough_accum::update_stats() {
+  for (int theta_index = 0; theta_index < nthetas; theta_index++) {
+    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
+      bounds.update(accum[theta_index][rho_index]);
+    }
+  }
+}
+
+bool Hough_accum::write_str(std::ofstream &ofs, std::string delim, Errors &errors) {
   ofs << "nthetas " << nthetas << delim
       << " theta_inc " << theta_inc << delim
       << " max_rho " << max_rho << delim
@@ -545,4 +545,18 @@ bool Hough_accum::write(std::ofstream &ofs, std::string delim, Errors &errors) {
   }
   return true;
 }
+
+int Hough_accum::x_to_col(float x) {
+  float col_offset = get_cols() / 2.0;
+  int col = round(x + col_offset);
+  return col;
+}
+
+int Hough_accum::y_to_row(float y) {
+  float row_offset = get_rows() / 2.0;
+  int row = round(row_offset - y);
+  return row;
+}
+
+
 

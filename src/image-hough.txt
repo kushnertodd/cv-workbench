@@ -1,0 +1,158 @@
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x560ece5d2c70 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Hough::find_peaks: lines  rho_index 626 rho -162 theta_index 0 count 80171 cos_theta 1 sin_theta 0 count 80171
+Hough::find_peaks: lines  rho_index 628 rho -160 theta_index 0 count 77044 cos_theta 1 sin_theta 0 count 77044
+Hough::find_peaks: lines  rho_index 792 rho 3 theta_index 0 count 77282 cos_theta 1 sin_theta 0 count 77282
+Hough::find_peaks: lines  rho_index 794 rho 5 theta_index 0 count 80299 cos_theta 1 sin_theta 0 count 80299
+Hough::find_peaks: lines  rho_index 625 rho -163 theta_index 1 count 44461 cos_theta 0.99863 sin_theta 0.052336 count 44461
+Hough::find_peaks: lines  rho_index 626 rho -162 theta_index 1 count 48409 cos_theta 0.99863 sin_theta 0.052336 count 48409
+Hough::find_peaks: lines  rho_index 791 rho 2 theta_index 1 count 47841 cos_theta 0.99863 sin_theta 0.052336 count 47841
+Hough::find_peaks: lines  rho_index 792 rho 3 theta_index 1 count 41900 cos_theta 0.99863 sin_theta 0.052336 count 41900
+Hough::find_peaks: lines  rho_index 631 rho -157 theta_index 15 count 46381 cos_theta 0.707107 sin_theta 0.707107 count 46381
+Hough::find_peaks: lines  rho_index 632 rho -156 theta_index 15 count 74488 cos_theta 0.707107 sin_theta 0.707107 count 74488
+Hough::find_peaks: lines  rho_index 633 rho -155 theta_index 15 count 63484 cos_theta 0.707107 sin_theta 0.707107 count 63484
+Hough::find_peaks: lines  rho_index 634 rho -154 theta_index 15 count 45333 cos_theta 0.707107 sin_theta 0.707107 count 45333
+Hough::find_peaks: lines  rho_index 711 rho -77 theta_index 15 count 42688 cos_theta 0.707107 sin_theta 0.707107 count 42688
+Hough::find_peaks: lines  rho_index 712 rho -76 theta_index 15 count 69044 cos_theta 0.707107 sin_theta 0.707107 count 69044
+Hough::find_peaks: lines  rho_index 713 rho -75 theta_index 15 count 60059 cos_theta 0.707107 sin_theta 0.707107 count 60059
+Hough::find_peaks: lines  rho_index 714 rho -74 theta_index 15 count 43561 cos_theta 0.707107 sin_theta 0.707107 count 43561
+Hough::find_peaks: lines  rho_index 1248 rho 459 theta_index 45 count 53749 cos_theta -0.707107 sin_theta 0.707107 count 53749
+Hough::find_peaks: lines  rho_index 1250 rho 461 theta_index 45 count 54747 cos_theta -0.707107 sin_theta 0.707107 count 54747
+Hough::find_peaks: lines  rho_index 781 rho -7 theta_index 59 count 40867 cos_theta -0.99863 sin_theta 0.052336 count 40867
+Hough::find_peaks: lines  rho_index 782 rho -6 theta_index 59 count 42912 cos_theta -0.99863 sin_theta 0.052336 count 42912
+Hough::find_peaks: lines  rho_index 947 rho 158 theta_index 59 count 43490 cos_theta -0.99863 sin_theta 0.052336 count 43490
+Hough_accum::clip_window line ( rho_index 626 rho -162 theta_index 0 count 80171 cos_theta 1 sin_theta 0 count 80171)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 546 col_at_window_bottom 546
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 546) point2 (row 671 col 546)
+Hough_accum::clip_window line ( rho_index 628 rho -160 theta_index 0 count 77044 cos_theta 1 sin_theta 0 count 77044)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 548 col_at_window_bottom 548
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 548) point2 (row 671 col 548)
+Hough_accum::clip_window line ( rho_index 792 rho 3 theta_index 0 count 77282 cos_theta 1 sin_theta 0 count 77282)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 712 col_at_window_bottom 712
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 712) point2 (row 671 col 712)
+Hough_accum::clip_window line ( rho_index 794 rho 5 theta_index 0 count 80299 cos_theta 1 sin_theta 0 count 80299)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 714 col_at_window_bottom 714
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 714) point2 (row 671 col 714)
+Hough_accum::clip_window line ( rho_index 625 rho -163 theta_index 1 count 44461 cos_theta 0.99863 sin_theta 0.052336 count 44461)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 527 col_at_window_bottom 562
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 527) point2 (row 671 col 562)
+Hough_accum::clip_window line ( rho_index 626 rho -162 theta_index 1 count 48409 cos_theta 0.99863 sin_theta 0.052336 count 48409)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 528 col_at_window_bottom 563
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 528) point2 (row 671 col 563)
+Hough_accum::clip_window line ( rho_index 791 rho 2 theta_index 1 count 47841 cos_theta 0.99863 sin_theta 0.052336 count 47841)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 693 col_at_window_bottom 728
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 693) point2 (row 671 col 728)
+Hough_accum::clip_window line ( rho_index 792 rho 3 theta_index 1 count 41900 cos_theta 0.99863 sin_theta 0.052336 count 41900)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 694 col_at_window_bottom 729
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 694) point2 (row 671 col 729)
+Hough_accum::clip_window line ( rho_index 631 rho -157 theta_index 15 count 46381 cos_theta 0.707107 sin_theta 0.707107 count 46381)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 149 col_at_window_bottom 820
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 149) point2 (row 671 col 820)
+Hough_accum::clip_window line ( rho_index 632 rho -156 theta_index 15 count 74488 cos_theta 0.707107 sin_theta 0.707107 count 74488)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 151 col_at_window_bottom 822
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 151) point2 (row 671 col 822)
+Hough_accum::clip_window line ( rho_index 633 rho -155 theta_index 15 count 63484 cos_theta 0.707107 sin_theta 0.707107 count 63484)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 152 col_at_window_bottom 823
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 152) point2 (row 671 col 823)
+Hough_accum::clip_window line ( rho_index 634 rho -154 theta_index 15 count 45333 cos_theta 0.707107 sin_theta 0.707107 count 45333)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 154 col_at_window_bottom 825
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 154) point2 (row 671 col 825)
+Hough_accum::clip_window line ( rho_index 711 rho -77 theta_index 15 count 42688 cos_theta 0.707107 sin_theta 0.707107 count 42688)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 262 col_at_window_bottom 933
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 262) point2 (row 671 col 933)
+Hough_accum::clip_window line ( rho_index 712 rho -76 theta_index 15 count 69044 cos_theta 0.707107 sin_theta 0.707107 count 69044)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 264 col_at_window_bottom 935
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 264) point2 (row 671 col 935)
+Hough_accum::clip_window line ( rho_index 713 rho -75 theta_index 15 count 60059 cos_theta 0.707107 sin_theta 0.707107 count 60059)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 265 col_at_window_bottom 936
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 265) point2 (row 671 col 936)
+Hough_accum::clip_window line ( rho_index 714 rho -74 theta_index 15 count 43561 cos_theta 0.707107 sin_theta 0.707107 count 43561)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 267 col_at_window_bottom 938
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 267) point2 (row 671 col 938)
+Hough_accum::clip_window line ( rho_index 1248 rho 459 theta_index 45 count 53749 cos_theta -0.707107 sin_theta 0.707107 count 53749)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window row_at_window_left 394 row_at_window_right -1021
+Hough_accum::clip_window case 2.3 col_at_window_top 394
+Line_segment::Line_segment point1 (row 394 col 0) point2 (row 0 col 394)
+Hough_accum::clip_window line ( rho_index 1250 rho 461 theta_index 45 count 54747 cos_theta -0.707107 sin_theta 0.707107 count 54747)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window row_at_window_left 391 row_at_window_right -1024
+Hough_accum::clip_window case 2.3 col_at_window_top 391
+Line_segment::Line_segment point1 (row 391 col 0) point2 (row 0 col 391)
+Hough_accum::clip_window line ( rho_index 781 rho -7 theta_index 59 count 40867 cos_theta -0.99863 sin_theta 0.052336 count 40867)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 733 col_at_window_bottom 698
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 733) point2 (row 671 col 698)
+Hough_accum::clip_window line ( rho_index 782 rho -6 theta_index 59 count 42912 cos_theta -0.99863 sin_theta 0.052336 count 42912)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 732 col_at_window_bottom 697
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 732) point2 (row 671 col 697)
+Hough_accum::clip_window line ( rho_index 947 rho 158 theta_index 59 count 43490 cos_theta -0.99863 sin_theta 0.052336 count 43490)
+Hough_accum::clip_window window_left 0 window_right 1415 window_top 0 window_bottom 671
+Hough_accum::clip_window col_at_window_top 567 col_at_window_bottom 532
+Hough_accum::clip_window case 1.4
+Line_segment::Line_segment point1 (row 0 col 567) point2 (row 671 col 532)
+Image *Image::scale_image: lower_in -569 upper_in 590 lower_out 0 upper_out 255 depth cv_enums::CV_8U
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+image-hough: out_image rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Hough::draw_lines; line_segment (point 1 row 0 col 546 point 2 row 671 col 546) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 548 point 2 row 671 col 548) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 712 point 2 row 671 col 712) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 714 point 2 row 671 col 714) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 527 point 2 row 671 col 562) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 528 point 2 row 671 col 563) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 693 point 2 row 671 col 728) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 694 point 2 row 671 col 729) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 149 point 2 row 671 col 820) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 151 point 2 row 671 col 822) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 152 point 2 row 671 col 823) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 154 point 2 row 671 col 825) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 262 point 2 row 671 col 933) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 264 point 2 row 671 col 935) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 265 point 2 row 671 col 936) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 267 point 2 row 671 col 938) value 0
+Hough::draw_lines; line_segment (point 1 row 394 col 0 point 2 row 0 col 394) value 0
+Hough::draw_lines; line_segment (point 1 row 391 col 0 point 2 row 0 col 391) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 733 point 2 row 671 col 698) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 732 point 2 row 671 col 697) value 0
+Hough::draw_lines; line_segment (point 1 row 0 col 567 point 2 row 671 col 532) value 0
+Histogram::write_string path 'square45-90_sobel_exp.bin.hist.txt' nbins 100 min_value 0 max_value 80299 stats count 100 mean 946.2 variance 6.4039e+07 sample variance 6.46859e+07 standard deviation 8042.75 min value 0 max value 80368
+Histogram::write_string path 'square45-90_sobel_exp.bin.hist.txtimage.txt' nbins 100 min_value -1020 max_value 1020 stats count 100 mean 9515.52 variance 8.89927e+09 sample variance 8.98916e+09 standard deviation 94811.2 min value 0 max value 948146
