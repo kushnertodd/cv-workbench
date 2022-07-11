@@ -1,8 +1,7 @@
-jmage_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
-./image-polar square45-90_sobel.jpg square45-90_sobel-135-461.5.jpg 135 461.5
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
 Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
 Image::Image: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552 next_pixel 0
-Hough::Hough image 0x55b4bb552c70 theta_inc 3
+Hough::Hough image 0x55d6a2099a70 theta_inc 3
 Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
 Image *Image::scale_image: lower_in -569 upper_in 590 lower_out 0 upper_out 255 depth cv_enums::CV_8U
 Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
