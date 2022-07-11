@@ -60,6 +60,7 @@ PROGRAMS = \
   image-hist \
   image-hough \
   image-info \
+  image-polar \
   image-stats \
   image-test \
   parse_experiment_json 
@@ -93,6 +94,9 @@ image-hough: image-hough.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-info: image-info.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-polar: image-polar.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-stats: image-stats.o $(SRCOBJS)

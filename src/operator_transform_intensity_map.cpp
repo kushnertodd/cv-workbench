@@ -117,9 +117,8 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     input_data_source = input_data_sources.front();
     output_data_store = output_data_stores.front();
     input = input_data_source->read_image(errors);
-    if (input != nullptr && input->image_header->components == 1) {
-      errors.add("Operator_filter_edge_roberts::run", "", "image not grayscale");
-    }
+    if (input != nullptr)
+      input->check_grayscale(errors);
   }
   if (errors.error_ct == 0) {
     int rows = input->get_rows();

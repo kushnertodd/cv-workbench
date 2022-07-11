@@ -102,9 +102,6 @@ int main(int argc, char **argv) {
     image_32F->add_32F(buf_32F, size, errors);
     image_32F->write_binary(image_file, errors);
   }
-
-  if (errors.error_ct > 0) {
-    std::cout << "image_test.test_write(): there were errors." << std::endl << errors.to_string();
-  }
+  errors.check_exit("image_test.test_write(): there were errors.");
 }
 

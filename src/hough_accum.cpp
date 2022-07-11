@@ -458,6 +458,13 @@ int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
   } else return -1;
 }
 
+Polar_line *Hough_accum::make_polar_line(int rho_index, int theta_index, int count) {
+  int rho = rho_index_to_rho(rho_index);
+  Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
+                                    get_sin(theta_index), count);
+  return line;
+}
+
 void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
                              bool non_max_suppression) {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
@@ -466,12 +473,11 @@ void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
       int rho = rho_index_to_rho(rho_index);
       if (count > peak_threshold) {
         if (!non_max_suppression) { //maximum(theta_index, rho_index)) {
-          Polar_line *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
-                                            get_sin(theta_index), count);
+          Polar_line *line = make_polar_line(rho_index, theta_index, count);
           lines.push_back(line);
           if (debug && false) {
             std::cout << "Hough_accum::find_peaks: line " << line->to_string()
-                 << std::endl;
+                      << std::endl;
           }
         }
       }

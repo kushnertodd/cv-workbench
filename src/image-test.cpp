@@ -31,9 +31,8 @@ int main(int argc, char **argv) {
   image_32F->add_32F(buf_32F, 6, errors);
   image_32F->write_binary("image-test-32F.bin", errors);
 
-  if (errors.error_ct > 0) {
-    std::cout << "image_test.test_write(): there were errors." << std::endl << errors.to_string();
-  }
+  errors.check_exit("image_test.test_write(): there were errors.");
+
   printf("od -xa image-test-8U.bin\n");
   system("od -xa image-test-8U.bin");
   printf("od -xa image-test-32S.bin\n");

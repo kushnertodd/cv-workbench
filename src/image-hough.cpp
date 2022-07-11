@@ -75,6 +75,5 @@ int main(int argc, char **argv) {
     default:
       break;
   }
-  if (errors.error_ct > 0)
-    std::cout << errors.to_string() << std::endl;
+  errors.check_exit("image-hough");
 }

@@ -65,9 +65,8 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
         Image *input = input_data_source->read_image(errors);
-        if (input != nullptr && input->image_header->components == 1) {
-          errors.add("Operator_filter_edge_roberts::run", "", "image not grayscale");
-        }
+        if (input != nullptr)
+          input->check_grayscale(errors);
         if (errors.error_ct == 0) {
           Image *output = sobel_kernel->convolve(input);
           output_data_store->write_image(output, errors);

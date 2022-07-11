@@ -65,6 +65,7 @@ class Hough_accum {
   void find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
                   bool non_max_suppression = false);
   void initialize(int image_theshold);
+  Polar_line* make_polar_line(int rho_index, int theta_index, int count = 0);
   bool maximum(int theta, int rho_index);
   void update_stats();
 

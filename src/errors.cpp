@@ -2,6 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <iostream>
 #include <sstream>
 #include "errors.hpp"
 
@@ -20,6 +21,13 @@ void Errors::add(std::string module, std::string id, std::string error) {
   else
     message = module + " " + id + ": " + error;
   error_list.push_back(message);
+}
+
+void Errors::check_exit(std::string message){
+  if (error_ct > 0) {
+    std::cout << message << std::endl << to_string() << std::endl;
+    exit(0);
+  }
 }
 
 void Errors::merge(Errors &errors) {

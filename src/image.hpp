@@ -68,6 +68,7 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
   void add_32F(pixel_32F *src, int count, Errors &errors);
 
+  bool check_grayscale(Errors &errors);
   void draw_line_segments(std::list<Line_segment *> line_segments, float value);
   void draw_line_segment(Line_segment *line_segment, float value);
   static Image *read_binary(std::string path, Errors &errors);
