@@ -126,16 +126,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     if (!saw_depth) {
       depth = input->get_depth();
     }
-    Image *output = Image::clone_image(input, depth);
-    for (int row = 0; row < rows; row++) {
-      for (int col = 0; col < cols; col++) {
-        if (no_parameters) {
-          output->set(row, col, input->get(row, col));
-        } else {
-          output->set(row, col, input->get_scaled(row, col, lower_in, upper_in, lower_out, upper_out));
-        }
-      }
-    }
-    output_data_store->write_image(output, errors);
+    Image * output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, cv_enums::CV_8U);
+    output_data_store->write_image(output_image, errors);
   }
 }

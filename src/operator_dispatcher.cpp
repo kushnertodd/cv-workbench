@@ -23,7 +23,8 @@ Operator *Operator_dispatcher::create_operator(std::string operator_name) {
   else if (operator_name == "filter-edge-roberts")
     pOperator = new Operator_filter_edge_roberts();
   else if (operator_name == "filter-edge-sobel")
-    pOperator = new Operator_filter_edge_sobel();  else if (operator_name == "transform-intensity-map")
+    pOperator = new Operator_filter_edge_sobel();
+  else if (operator_name == "transform-intensity-map")
     pOperator = new Operator_transform_intensity_map();
   else
     pOperator = nullptr;

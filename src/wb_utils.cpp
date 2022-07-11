@@ -396,12 +396,12 @@ cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(std::string 
 }
 
 cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(std::string depth) {
-  if (depth == "cv_enums::CV_8U") return cv_enums::CV_8U;
+  if (depth == "CV_8U") return cv_enums::CV_8U;
   else if (depth == "CV_8S") return cv_enums::CV_8S;
   else if (depth == "CV_16U") return cv_enums::CV_16U;
   else if (depth == "CV_16S") return cv_enums::CV_16S;
-  else if (depth == "cv_enums::CV_32S") return cv_enums::CV_32S;
-  else if (depth == "cv_enums::CV_32F") return cv_enums::CV_32F;
+  else if (depth == "CV_32S") return cv_enums::CV_32S;
+  else if (depth == "CV_32F") return cv_enums::CV_32F;
   else if (depth == "CV_64F") return cv_enums::CV_64F;
   else if (depth == "CV_16F") return cv_enums::CV_16F;
   else return cv_enums::UNDEFINED_IMAGE_DEPTH;
