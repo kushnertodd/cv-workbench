@@ -133,7 +133,8 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
   // parse parameters
   if (json_parameters != nullptr) {
     if (debug)
-      std::cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'" << std::endl;
+      std::cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'"
+                << std::endl;
     if (error_check_type("Experiment_step::json_parse", "parameters",
                          json_parameters, json_type_object, errors)) {
       json_object_object_foreach(json_parameters, key, val) {
@@ -143,9 +144,9 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
           experiment_step->operator_parameters[key] = val_str;
         } else {
           errors.add("Experiment_step::json_parse", "", "invalid parameter type '"
-                         + std::string(json_type_to_name(type))
-                         + "' for key '"
-                         + std::string(key) + "'");
+              + std::string(json_type_to_name(type))
+              + "' for key '"
+              + std::string(key) + "'");
         }
       }
     }
@@ -171,9 +172,9 @@ void Experiment_step::run(Errors &errors) {
       String_map::iterator it;
       for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
         std::cout << it->first    // string (key)
-             << ':'
-             << it->second   // string's value
-             << std::endl;
+                  << ':'
+                  << it->second   // string's value
+                  << std::endl;
       }
     }
 

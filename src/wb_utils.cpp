@@ -67,9 +67,9 @@ std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
   }
 }
 
-void wb_utils::error_exit(std::string message){
-std::cout << message << std::endl;
-exit(0);
+void wb_utils::error_exit(std::string message) {
+  std::cout << message << std::endl;
+  exit(0);
 }
 
 std::string wb_utils::file_format_to_string(cv_enums::CV_image_file_format type) {
@@ -218,7 +218,8 @@ void wb_utils::json_parse(json_object *jobj) {
   json_object_object_foreach(jobj, key, val) { /*Passing through every array element*/
     type = json_object_get_type(val);
     //printf("\nkey: '%s' type: %d '%s'\n",key, type, json_type_to_name(type));
-    std::cout << std::endl << "key: '" << key << "' type: " << type << " '" << json_type_to_name(type) << "'" << std::endl;
+    std::cout << std::endl << "key: '" << key << "' type: " << type << " '" << json_type_to_name(type) << "'"
+              << std::endl;
     switch (type) {
       case json_type_boolean:
       case json_type_double:

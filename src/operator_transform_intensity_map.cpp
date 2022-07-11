@@ -45,7 +45,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
 
   if (debug) {
     std::cout << "Operator_transform_intensity_map::run:parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
+              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
     errors.add("Operator_transform_intensity_map::run", "", "missing input data source");
@@ -126,7 +126,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     if (!saw_depth) {
       depth = input->get_depth();
     }
-    Image * output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, cv_enums::CV_8U);
+    Image *output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, cv_enums::CV_8U);
     output_data_store->write_image(output_image, errors);
   }
 }

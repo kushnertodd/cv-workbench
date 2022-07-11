@@ -34,7 +34,7 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
 
   if (debug) {
     std::cout << "Operator_filter_edge_sobel::run parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
+              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.size() == 0)
     errors.add("Operator_filter_edge_sobel::run", "", "missing input data source");
@@ -71,7 +71,7 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
           Image *output = sobel_kernel->convolve(input);
           output_data_store->write_image(output, errors);
 
-          Image * out_image = Image::scale_image(output, -1020, 1020, 0, 255, cv_enums::CV_8U);
+          Image *out_image = Image::scale_image(output, -1020, 1020, 0, 255, cv_enums::CV_8U);
           out_image->write_jpeg("sobel45-90-out.jpg", errors);
 
         }

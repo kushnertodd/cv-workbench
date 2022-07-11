@@ -539,15 +539,15 @@ float Image::get_scaled(int row, int col, float lower_in,
   float pixel_in = get(row, col);
   float pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
-  if (debug&&false)
-    std::cout << "Image::get_scaled: pixel_in " << std::setw(5)<< pixel_in 
-    << "   pixel_out " << std::setw(10)<< pixel_out
-    << "   row " << std::setw(5)<< row
-    << "   col "              << std::setw(5)<< col
-//              << "  lower_in " << std::setw(5) <<lower_in
-//              << "  upper_in " << std::setw(5) << upper_in
-//              << "   lower_out " << std::setw(5) << lower_out
-//              << "   upper_out " << std::setw(5) << upper_out
+  if (debug && false)
+    std::cout << "Image::get_scaled: pixel_in " << std::setw(5) << pixel_in
+              << "   pixel_out " << std::setw(10) << pixel_out
+              << "   row " << std::setw(5) << row
+              << "   col " << std::setw(5) << col
+              //              << "  lower_in " << std::setw(5) <<lower_in
+              //              << "  upper_in " << std::setw(5) << upper_in
+              //              << "   lower_out " << std::setw(5) << lower_out
+              //              << "   upper_out " << std::setw(5) << upper_out
               << std::endl;
   return pixel_out;
 }
