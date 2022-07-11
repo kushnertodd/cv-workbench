@@ -6,6 +6,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.7
 ```
+commit 29d835c3c8dffcb84858ed81681599c9b0ad30da 
+(HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Mon Jul 11 10:26:57 2022 -0600
+```
+- image-polar.cpp works, image-polar.sh runs, image-polar-run has images
+
+#### v0.1.7
+```
 commit bd74de7fdf47dd9eb7761ea1b049eb24c006baf6 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
