@@ -18,7 +18,6 @@ This parser makes use of all the functions which reads the value of a json objec
 //bool debug = true;
 bool debug = false;
 
-
 int main(int argc, char **argv) {
   if (argc < 2) {
     std::cout << "usage: %s json-template-filename" << argv[0] << std::endl;
@@ -34,6 +33,6 @@ int main(int argc, char **argv) {
     Errors errors;
     Experiment *experiment = Experiment::json_parse(jobj, errors);
     errors.check_exit("parse_experiment_json: there were errors.");
-      experiment->run(errors);
+    experiment->run(errors);
   }
 }
