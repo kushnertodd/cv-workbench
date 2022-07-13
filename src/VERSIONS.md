@@ -6,6 +6,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.8
 ```
+commit 07070b8607b9eb7f7775773025ee282ae59dfc80 
+(HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Wed Jul 13 14:15:34 2022 -0600
+```
+- Operator_hough_accumulator_create runs with script experiment-square45-90-sobel-hough.sh and script config/experiment-square45-90-sobel-hough
+
+#### v0.1.8
+```
 commit cb8e00884627c43d6d95d1717d534dfc8ba75b8c 
 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
