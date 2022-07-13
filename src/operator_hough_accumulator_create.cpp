@@ -37,9 +37,9 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
     errors.add("Operator_hough_accumulator_create::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_accumulator_create::run", "", "too many input data sources");
-  else if (output_data_stores.size() < 1)
+  else if (output_data_stores.size() < 2)
     errors.add("Operator_hough_accumulator_create::run", "", "missing output data source");
-  else if (output_data_stores.size() > 1)
+  else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_accumulator_create::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "theta_inc")) {
@@ -51,13 +51,28 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
         errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'theta_inc' parameter");
       else {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        Data_source_descriptor *output_data_store = output_data_stores.front();
+        std::list<Data_source_descriptor *>::iterator it = output_data_stores.begin();
+        Data_source_descriptor *hough_text_output_data_store = *it;
+        std::advance(it, 1);
+        Data_source_descriptor *hough_lines_output_data_store = *it;
+
         Image *input = input_data_source->read_image(errors);
         if (errors.error_ct == 0 && input != nullptr)
           input->check_grayscale(errors);
         if (errors.error_ct == 0) {
           Hough hough(input, theta_inc);
-          output_data_store->write_hough(&hough, errors);
+          hough_text_output_data_store->write_hough(&hough, errors);
+          if (errors.error_ct == 0) {
+            Image *output = Image::scale_image(input,
+                                               input->bounds.min_value,
+                                               input->bounds.min_value,
+                                               pixel_8U_MIN,
+                                               pixel_8U_MAX,
+                                               cv_enums::CV_8U);
+            hough.find_lines();
+            output->draw_line_segments(hough.line_segments, 0);
+            hough_lines_output_data_store->write_image(output, errors);
+          }
         }
       }
     }

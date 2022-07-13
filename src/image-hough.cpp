@@ -46,10 +46,15 @@ int main(int argc, char **argv) {
     case cv_enums::CV_32S:
       stat_32S(in_image, hough);
       hough.find_lines();
-      out_image = Image::scale_image(in_image, -569, 590, 0, 255, cv_enums::CV_8U);
+      out_image = Image::scale_image(in_image,
+                                     in_image->bounds.min_value,
+                                     in_image->bounds.min_value,
+                                     pixel_8U_MIN,
+                                     pixel_8U_MAX,
+                                     cv_enums::CV_8U);
       if (debug)
         std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
-     out_image->draw_line_segments(hough.line_segments, 0);
+      out_image->draw_line_segments(hough.line_segments, 0);
       hough.write(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename + ".jpg", errors);
       hist = new Histogram(100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
