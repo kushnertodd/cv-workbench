@@ -63,6 +63,24 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
           if (!wb_utils::string_to_int(rho_str, rho))
             errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
           else {
+            bool saw_min_value = false;
+            int min_value = 0;
+            if (Operator_utils::has_parameter(operator_parameters, "min_value")) {
+              std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "min_value");
+              if (!wb_utils::string_to_int(min_value_str, min_value))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'min_value' parameter");
+              else
+                saw_min_value = true;
+            }
+            bool saw_max_value = true;
+            int max_value = 0;
+            if (Operator_utils::has_parameter(operator_parameters, "max_value")) {
+              std::string max_value_str = Operator_utils::get_parameter(operator_parameters, "max_value");
+              if (!wb_utils::string_to_int(max_value_str, max_value))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'max_value' parameter");
+              else
+                saw_max_value = true;
+            }
             Data_source_descriptor *input_data_source = input_data_sources.front();
             Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
 
@@ -77,9 +95,13 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               if (line_segment == nullptr) {
                 errors.add("Operator_hough_draw_line::run", "", "failed clipping (theta_index, rho against image ");
               } else {
+                if (!saw_min_value)
+                  min_value = input->bounds.min_value;
+                if (!saw_max_value)
+                  max_value = input->bounds.max_value;
                 Image *output = Image::scale_image(input,
-                                                   input->bounds.min_value,
-                                                   input->bounds.min_value,
+                                                   min_value,
+                                                   max_value,
                                                    pixel_8U_MIN,
                                                    pixel_8U_MAX,
                                                    cv_enums::CV_8U);
