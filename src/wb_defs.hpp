@@ -32,6 +32,7 @@ enum CV_data_type {
 enum CV_image_file_format {
   BINARY, // includes header [int rows, int cols, int components]
   JPEG,
+  TEXT,
   UNDEFINED_FILE_FORMAT
 };
 

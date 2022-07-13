@@ -8,8 +8,6 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
-//
-
 class Operator_filter_edge_sobel : public Operator {
  public:
   Operator_filter_edge_sobel();

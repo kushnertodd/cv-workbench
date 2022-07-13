@@ -78,6 +78,8 @@ std::string wb_utils::file_format_to_string(cv_enums::CV_image_file_format type)
       return "binary";
     case cv_enums::JPEG:
       return "jpeg";
+    case cv_enums::TEXT:
+      return "text";
     default:
       return "invalid image format";
   }
@@ -393,6 +395,8 @@ cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(std::string 
     return cv_enums::BINARY;
   else if (type == "jpeg")
     return cv_enums::JPEG;
+  else if (type == "text")
+    return cv_enums::TEXT;
   else return cv_enums::UNDEFINED_FILE_FORMAT;
 }
 

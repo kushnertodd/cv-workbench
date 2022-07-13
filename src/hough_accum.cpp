@@ -540,8 +540,6 @@ bool Hough_accum::write_str(std::ofstream &ofs, std::string delim, Errors &error
   ofs << "nthetas " << nthetas << delim
       << " theta_inc " << theta_inc << delim
       << " max_rho " << max_rho << delim
-      << " hough_cos " << hough_cos << delim
-      << " hough_sin " << hough_sin << delim
       << bounds.to_string()
       << std::endl;
   ofs << delim;

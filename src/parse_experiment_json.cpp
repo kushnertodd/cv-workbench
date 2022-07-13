@@ -34,5 +34,6 @@ int main(int argc, char **argv) {
     Experiment *experiment = Experiment::json_parse(jobj, errors);
     errors.check_exit("parse_experiment_json: there were errors.");
     experiment->run(errors);
+    errors.check_exit("parse_experiment_json: there were errors.");
   }
 }

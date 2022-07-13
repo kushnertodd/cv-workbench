@@ -9,6 +9,7 @@
 #include <cmath>
 #include "errors.hpp"
 #include "file_utils.hpp"
+#include "image.hpp"
 #include "wb_utils.hpp"
 #include "bounds.hpp"
 #include "point.hpp"

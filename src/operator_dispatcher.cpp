@@ -7,6 +7,7 @@
 #include "operator_filter_edge_roberts.hpp"
 #include "operator_filter_edge_sobel.hpp"
 #include "operator_transform_intensity_map.hpp"
+#include "operator_hough_accumulator_create.hpp"
 #include "operator_dispatcher.hpp"
 
 //
@@ -24,6 +25,8 @@ Operator *Operator_dispatcher::create_operator(std::string operator_name) {
     pOperator = new Operator_filter_edge_roberts();
   else if (operator_name == "filter-edge-sobel")
     pOperator = new Operator_filter_edge_sobel();
+  else if (operator_name == "hough-accumulator-create")
+    pOperator = new Operator_hough_accumulator_create();
   else if (operator_name == "transform-intensity-map")
     pOperator = new Operator_transform_intensity_map();
   else

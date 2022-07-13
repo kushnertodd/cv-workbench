@@ -44,6 +44,7 @@ SRCOBJS :=  \
   operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
   operator_dispatcher.o \
+  operator_hough_accumulator_create.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
   point.o \

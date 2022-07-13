@@ -51,7 +51,18 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
 }
 
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
-void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+
+void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
+  std::string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
+  switch (file_format) {
+    case cv_enums::TEXT:
+      hough->write(path, "\t", errors);
+      break;
+    default:
+      break;
+  }
+}
+
 Filesystem_data_source_descriptor *Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                                  int id,
                                                                                  cv_enums::CV_data_type data_type,

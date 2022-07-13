@@ -16,14 +16,14 @@ Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                                                                        cv_enums::CV_data_type m_cv_data_type) :
     Data_source_descriptor(m_id, cv_enums::BERKELEY_DB, m_cv_data_type) {}
 
-std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
-Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
 Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                                                    int id,
