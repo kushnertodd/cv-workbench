@@ -2,13 +2,13 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cassert>
 #include <cmath>
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 #include <iomanip>
-#include <sstream>
 #include "jpeglib.h"
 #include "image.hpp"
 #include "image_header.hpp"
@@ -73,12 +73,12 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
 Image *Image::to_rgb(int component) {
   if (debug)
     std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
-  Image_header *image_header = new Image_header(image_header->rows,
-                                                image_header->cols,
+  Image_header *image_header = new Image_header(get_rows(),
+                                                get_cols(),
                                                 3,
-                                                image_header->depth);
+                                                get_depth());
   Image *new_image = new Image(image_header);
-  for (int i = 0; i < image_header->npixels; i++) {
+  for (int i = 0; i < new_image->get_npixels(); i++) {
     switch (image_header->depth) {
       case cv_enums::CV_8U:
         new_image->buf_8U[i * 3 + component] = buf_8U[i];
@@ -97,8 +97,8 @@ Image *Image::to_rgb(int component) {
 }
 
 void Image::init() {
-  int size = image_header->npixels * image_header->components;
-  switch (image_header->depth) {
+  int size = get_npixels();
+  switch (get_depth()) {
     case cv_enums::CV_8U:
       buf_8U = new pixel_8U[size];
       for (int i = 0; i < size; i++)
@@ -130,12 +130,13 @@ int Image::get_npixels() { return image_header->npixels; }
 cv_enums::CV_image_depth Image::get_depth() { return image_header->depth; }
 
 int Image::row_col_to_index(int row, int col) {
-  return row * image_header->row_stride + col;
+  assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
+  return row * get_row_stride() + col;
 }
 
 pixel_32F Image::get(int row, int col) {
   int index;
-  switch (image_header->depth) {
+  switch (get_depth()) {
     case cv_enums::CV_8U:
       index = row_col_to_index(row, col);
       return buf_8U[index];
@@ -174,7 +175,7 @@ pixel_32S Image::get_32F(int row, int col) {
 
 void Image::set(int row, int col, float value) {
   bounds.update(value);
-  switch (image_header->depth) {
+  switch (get_depth()) {
     case cv_enums::CV_8U:
       buf_8U[row_col_to_index(row, col)] = round(value);
       break;
@@ -212,15 +213,15 @@ void Image::set_32F(int row, int col, pixel_32F value) {
 }
 
 void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
-  if (next_pixel + count > image_header->npixels)
+  if (next_pixel + count > get_npixels())
     errors.add("Image::add_8U", "", "adding "
         + wb_utils::int_to_string(count) + " pixels at position " +
         wb_utils::int_to_string(next_pixel)
         + " too large for buffer length "
-        + wb_utils::int_to_string(image_header->npixels));
+        + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
-    switch (image_header->depth) {
+    switch (get_depth()) {
       case cv_enums::CV_8U:
         buf_8U[next_pixel++] = src[i];
         break;
@@ -242,15 +243,15 @@ void Image::add_8U(pixel_8U *src, int count, Errors &errors) {
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (debug)
     std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
-  if (next_pixel + count > image_header->npixels)
+  if (next_pixel + count > get_npixels())
     errors.add("Image::add_32S", "", "adding "
         + wb_utils::int_to_string(count) + " pixels at position " +
         wb_utils::int_to_string(next_pixel)
         + " too large for buffer length "
-        + wb_utils::int_to_string(image_header->npixels));
+        + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
-    switch (image_header->depth) {
+    switch (get_depth()) {
       case cv_enums::CV_8U:
         errors.add("Image::add_32S", "", "cannot update to 8U buffer");
         break;
@@ -270,15 +271,15 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 }
 
 void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
-  if (next_pixel + count > image_header->npixels)
+  if (next_pixel + count > get_npixels())
     errors.add("Image::add_32F", "", "adding "
         + wb_utils::int_to_string(count) + " pixels at position " +
         wb_utils::int_to_string(next_pixel)
         + " too large for buffer length "
-        + wb_utils::int_to_string(image_header->npixels));
+        + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     bounds.update(src[i]);
-    switch (image_header->depth) {
+    switch (get_depth()) {
       case cv_enums::CV_8U:
         errors.add("Image::add_32F", "", "cannot update to 8U buffer");
         break;
@@ -298,7 +299,7 @@ void Image::add_32F(pixel_32F *src, int count, Errors &errors) {
 }
 
 bool Image::check_grayscale(Errors &errors) {
-  if (image_header->components != 1) {
+  if (get_components() != 1) {
     errors.add("Image::check_graysacle", "", "image not grayscale");
     return false;
   }
@@ -335,32 +336,32 @@ Image *Image::read_binary(std::string path, Errors &errors) {
 
   switch (image_header->depth) {
     case cv_enums::CV_8U:
-      newLen = fread(image->buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fread(image->buf_8U, sizeof(pixel_8U), image->get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != image->get_npixels()) {
         errors.add("Image::read_binary", "", "cannot read 8U image data in '" + path + "'");
         return nullptr;
       }
-      for (int i = 0; i < image_header->npixels; i++)
+      for (int i = 0; i < image->get_npixels(); i++)
         image->bounds.update(image->buf_8U[i]);
       break;
 
     case cv_enums::CV_32S:
-      newLen = fread(image->buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fread(image->buf_32S, sizeof(pixel_32S), image->get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != image->get_npixels()) {
         errors.add("Image::read_binary", "", "cannot read 32S image data in '" + path + "'");
         return nullptr;
       }
-      for (int i = 0; i < image_header->npixels; i++)
+      for (int i = 0; i < image->get_npixels(); i++)
         image->bounds.update(image->buf_32S[i]);
       break;
 
     case cv_enums::CV_32F:
-      newLen = fread(image->buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fread(image->buf_32F, sizeof(pixel_32F), image->get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != image->get_npixels()) {
         errors.add("Image::read_binary", "", "cannot read 32F image data in '" + path + "'");
         return nullptr;
       }
-      for (int i = 0; i < image_header->npixels; i++)
+      for (int i = 0; i < image->get_npixels(); i++)
         image->bounds.update(image->buf_32F[i]);
       break;
 
@@ -439,22 +440,22 @@ void Image::write_binary(std::string path, Errors &errors) {
   image_header->write_header(fp, path, errors);
   // Write the data from the buffer.
   int newLen;
-  switch (image_header->depth) {
+  switch (get_depth()) {
     case cv_enums::CV_8U:
-      newLen = fwrite(buf_8U, sizeof(pixel_8U), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write_binary", "", "cannot write 8U image data to '" + path + "'");
       }
       break;
     case cv_enums::CV_32S:
-      newLen = fwrite(buf_32S, sizeof(pixel_32S), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write_binary", "", "cannot write 32S image data to '" + path + "'");
       }
       break;
     case cv_enums::CV_32F:
-      newLen = fwrite(buf_32F, sizeof(pixel_32F), image_header->npixels, fp);
-      if (ferror(fp) != 0 || newLen != image_header->npixels) {
+      newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
+      if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write_binary", "", "cannot write 32F image data to '" + path + "'");
       }
       break;
@@ -579,8 +580,8 @@ Image *Image::scale_image(Image *image, float lower_in,
                                    image->get_components(),
                                    depth);
   Image_header *image_header = image->image_header;
-  for (int row = 0; row < image_header->rows; row++) {
-    for (int col = 0; col < image_header->cols; col++) {
+  for (int row = 0; row < image->get_rows(); row++) {
+    for (int col = 0; col < image->get_cols(); col++) {
       float value = image->get_scaled(row, col, lower_in,
                                       upper_in, lower_out, upper_out);
       convert_image->set(row, col, value);

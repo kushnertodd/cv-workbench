@@ -14,6 +14,7 @@ class Point {
   Point(int m_row, int m_col);
   Point(Point &point);
   Point(Point *point);
+  void check_point_valid(int rows, int cols);
   std::string to_string();
 };
 

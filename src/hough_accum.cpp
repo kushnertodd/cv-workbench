@@ -2,6 +2,7 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include <cassert>
 #include <iostream>
 #include "image.hpp"
 #include "polar_line.hpp"
@@ -16,8 +17,8 @@ Hough_accum::~Hough_accum() {
   if (hough_sin != nullptr)
     delete[] hough_sin;
   for (int theta_index = 0; theta_index < nthetas; theta_index++)
-    if (accum[theta_index] != nullptr)
-      delete accum[theta_index];
+    if (rho_theta_accum[theta_index] != nullptr)
+      delete rho_theta_accum[theta_index];
 }
 
 Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
@@ -46,16 +47,17 @@ Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
   }
 
   // accumulator
-  accum = new int *[nthetas];
+  rho_theta_accum = new int *[nthetas];
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-    accum[theta_index] = new int[max_rho];
+    rho_theta_accum[theta_index] = new int[max_rho];
     for (int rho_index = 0; rho_index < max_rho; rho_index++)
-      accum[theta_index][rho_index] = 0;
+      rho_theta_accum[theta_index][rho_index] = 0;
   }
 }
 
 void Hough_accum::add(int theta_index, int rho_index, int value) {
-  accum[theta_index][rho_index] += value;
+  assert(theta_index >= 0 && theta_index < nthetas && rho_index >= 0 && rho_index < max_rho);
+  rho_theta_accum[theta_index][rho_index] += value;
 }
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) {
@@ -252,7 +254,11 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
                   << std::endl;
       return nullptr;
     }
+    top_point->check_point_valid(get_rows(), get_cols());
+    bottom_point->check_point_valid(get_rows(), get_cols());
     line_segment = new Line_segment(top_point, bottom_point);
+    delete top_point;
+    delete bottom_point;
     return line_segment;
   } else {
     // case 2:pi/4 < theta < 3*pi/4
@@ -341,7 +347,11 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
                   << std::endl;
       return nullptr;
     }
+    left_point->check_point_valid(get_rows(), get_cols());
+    right_point->check_point_valid(get_rows(), get_cols());
     line_segment = new Line_segment(left_point, right_point);
+    delete left_point;
+    delete right_point;
     return line_segment;
   }
 }
@@ -361,7 +371,7 @@ void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
                              bool non_max_suppression) {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      int count = accum[theta_index][rho_index];
+      int count = rho_theta_accum[theta_index][rho_index];
       int rho = rho_index_to_rho(rho_index);
       if (count > peak_threshold) {
         if (!non_max_suppression) { //maximum(theta_index, rho_index)) {
@@ -398,8 +408,8 @@ bool Hough_accum::in_window(Point *point) {
  * @param image_theshold
  */
 void Hough_accum::initialize(int image_theshold) {
-  for (int row = 0; row < image->image_header->rows; row++) {
-    for (int col = 0; col < image->image_header->cols; col++) {
+  for (int row = 0; row < image->get_rows(); row++) {
+    for (int col = 0; col < image->get_cols(); col++) {
       float value = image->get(row, col);
       if (std::abs(value) > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
@@ -426,6 +436,7 @@ Polar_line *Hough_accum::make_polar_line(int rho_index, int theta_index, int cou
   return line;
 }
 
+/*
 bool Hough_accum::maximum(int theta_index, int rho_index) {
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
@@ -433,7 +444,7 @@ bool Hough_accum::maximum(int theta_index, int rho_index) {
       if (check_rho >= 0 && check_rho < max_rho) {
         int check_theta = theta_index + j;
         if (check_theta >= 0 && check_theta < nthetas) {
-          if (accum[check_theta][check_rho] > accum[theta_index][rho_index]) {
+          if (rho_theta_accum[check_theta][check_rho] > rho_theta_accum[theta_index][rho_index]) {
             return false;
           }
         }
@@ -442,6 +453,7 @@ bool Hough_accum::maximum(int theta_index, int rho_index) {
   }
   return true;
 }
+*/
 
 bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   std::string line;
@@ -519,7 +531,7 @@ int Hough_accum::theta_index_to_theta(int theta_index) {
 void Hough_accum::update_stats() {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      bounds.update(accum[theta_index][rho_index]);
+      bounds.update(rho_theta_accum[theta_index][rho_index]);
     }
   }
 }
@@ -539,7 +551,7 @@ bool Hough_accum::write_str(std::ofstream &ofs, std::string delim, Errors &error
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     ofs << theta_index_to_theta(theta_index) << delim;
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      ofs << accum[theta_index][rho_index] << delim;
+      ofs << rho_theta_accum[theta_index][rho_index] << delim;
     }
     ofs << std::endl;
   }

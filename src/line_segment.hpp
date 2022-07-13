@@ -10,8 +10,8 @@
 
 class Line_segment {
  public:
-  Point *point1;
-  Point *point2;
+  Point point1;
+  Point point2;
   std::list<Point *> line_points;
   ~Line_segment();
   Line_segment();

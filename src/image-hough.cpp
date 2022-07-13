@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
   Histogram *hist;
   Histogram *hist_image;
   Image *out_image;
-  switch (in_image->image_header->depth) {
+  switch (in_image->get_depth()) {
     case cv_enums::CV_8U:
       break;
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
       hist = new Histogram(100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
       for (int theta_index = 0; theta_index < hough.accum->nthetas; theta_index++) {
         for (int rho_index = 0; rho_index < hough.accum->max_rho; rho_index++) {
-          hist->update(hough.accum->accum[theta_index][rho_index]);
+          hist->update(hough.accum->rho_theta_accum[theta_index][rho_index]);
         }
       }
       hist->finalize();

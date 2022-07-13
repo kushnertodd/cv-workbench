@@ -29,7 +29,7 @@ class Hough_accum {
   float *hough_cos;
   float *hough_sin;
 
-  int **accum;
+  int **rho_theta_accum;
   Bounds bounds;
 
   ~Hough_accum();
@@ -49,7 +49,7 @@ class Hough_accum {
   bool in_window(Point *point);
   void initialize(int image_theshold);
   Polar_line *make_polar_line(int rho_index, int theta_index, int count = 0);
-  bool maximum(int theta, int rho_index);
+//  bool maximum(int theta, int rho_index);
   bool read(std::ifstream &ifs, Errors &errors);
   float rho_index_to_rho(int rho_index);
   int rho_theta_col_to_row(int rho_index, int theta_index, int col);

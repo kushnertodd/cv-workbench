@@ -10,10 +10,6 @@ extern bool debug;
 
 Line_segment::~Line_segment() {
   return;
-  if (point1 != nullptr)
-    delete point1;
-  if (point2 != nullptr)
-    delete point2;
   for (Point *point: line_points)
     if (point != nullptr)
       delete point;
@@ -21,8 +17,8 @@ Line_segment::~Line_segment() {
 Line_segment::Line_segment() {}
 
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
-    point1(new Point(min_row, min_col)),
-    point2(new Point(max_row, max_col)) {
+    point1(min_row, min_col),
+    point2(max_row, max_col) {
   if (debug)
     std::cout << "Line_segment::Line_segment min_row " << min_row
               << " min_col " << min_col << " max_row " << max_row
@@ -31,8 +27,8 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
 }
 
 Line_segment::Line_segment(Point *point1, Point *point2) :
-    point1(new Point(point1)),
-    point2(new Point(point2)) {
+    point1(point1),
+    point2(point2) {
   if (debug)
     std::cout << "Line_segment::Line_segment point1 (" <<
               point1->to_string()
@@ -101,10 +97,10 @@ void Line_segment::plotLineHigh(int x0, int y0, int x1, int y1) {
 }
 
 void Line_segment::plotLine() {
-  int x0 = point1->col;
-  int y0 = point1->row;
-  int x1 = point2->col;
-  int y1 = point2->row;
+  int x0 = point1.col;
+  int y0 = point1.row;
+  int x1 = point2.col;
+  int y1 = point2.row;
   if (abs(y1 - y0) < abs(x1 - x0)) {
     if (x0 > x1) {
       plotLineLow(x1, y1, x0, y0);
@@ -122,8 +118,8 @@ void Line_segment::plotLine() {
 
 std::string Line_segment::to_string() {
   std::ostringstream os;
-  os << "point 1 " << point1->to_string()
-     << " point 2 " << point2->to_string();
+  os << "point 1 " << point1.to_string()
+     << " point 2 " << point2.to_string();
   return os.str();
 }
 

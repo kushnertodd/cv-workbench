@@ -13,6 +13,16 @@
 extern bool debug;
 
 Hough::~Hough() {
+  for (Polar_line* line : lines) {
+    if (line != nullptr)
+      delete line;
+  }
+  for (Line_segment* line_segment : line_segments) {
+    if (line_segment != nullptr)
+      delete line_segment;
+  }
+  if (accum != nullptr)
+    delete accum;
 }
 
 Hough::Hough(Image *m_image, int m_theta_inc) :
