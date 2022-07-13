@@ -20,7 +20,7 @@ Point::Point(Point *point) :
     Point::Point(point->row, point->col) {}
 
 void Point::check_point_valid(int rows, int cols) {
-  assert (row >= 0 && row < rows && col >= 0 && cols < cols);
+  assert (row >= 0 && row < rows && col >= 0 && col < cols);
 }
 
 std::string Point::to_string() {
