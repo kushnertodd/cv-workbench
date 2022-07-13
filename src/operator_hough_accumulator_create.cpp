@@ -16,10 +16,6 @@ Operator_hough_accumulator_create::Operator_hough_accumulator_create() {}
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
- * references:
- * https://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm
- * https://en.wikipedia.org/wiki/Sobel_operator
- *
  * @param input_data_source
  * @param output_data_store
  * @param operator_parameters
