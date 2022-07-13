@@ -33,6 +33,40 @@
 					"theta_index": "0",
 					"rho": "-162"
 				}
+			},
+
+			{
+				"id": 2,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": ".",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "jpeg",
+						"directory": ".",
+						"filename": "square45-90_sobel_gray_line_0_3",
+						"ext": "jpg"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "0",
+					"rho": "3"
+				}
 			}
 		]
 	}
