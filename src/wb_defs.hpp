@@ -38,11 +38,11 @@ enum CV_image_file_format {
 
 enum CV_image_depth {
   CV_8U,
+  CV_32S,
+  CV_32F,
   CV_8S,
   CV_16U,
   CV_16S,
-  CV_32S,
-  CV_32F,
   CV_64F,
   CV_16F,
   UNDEFINED_IMAGE_DEPTH
