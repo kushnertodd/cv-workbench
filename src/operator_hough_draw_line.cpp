@@ -95,10 +95,12 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               if (line_segment == nullptr) {
                 errors.add("Operator_hough_draw_line::run", "", "failed clipping (theta_index, rho against image ");
               } else {
+                Variance_stats stats;
+                input->get_stats(stats);
                 if (!saw_min_value)
-                  min_value = input->bounds.min_value;
+                  min_value = stats.bounds.min_value;
                 if (!saw_max_value)
-                  max_value = input->bounds.max_value;
+                  max_value = stats.bounds.max_value;
                 Image *output = Image::scale_image(input,
                                                    min_value,
                                                    max_value,

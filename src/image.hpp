@@ -15,13 +15,6 @@
 #include "point.hpp"
 #include "wb_defs.hpp"
 
-// for read_jpeg()
-struct my_error_mgr {
-  struct jpeg_error_mgr pub;    /* "public" fields */
-  jmp_buf setjmp_buffer;    /* for return to caller */
-};
-typedef struct my_error_mgr *my_error_ptr;
-
 /**
  * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
  * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
@@ -72,6 +65,7 @@ class Image {
   float get_scaled(int row, int col, float lower_in,
                    float upper_in, float lower_out,
                    float upper_out) const;
+  void get_stats(Variance_stats &stats) const;
   void init();
 
   static Image *read(std::string &path, Errors &errors);
@@ -87,7 +81,7 @@ class Image {
 
   // TODO: add component
   void set(int row, int col, float value) const;
-  void set(Point *point, float value) const;
+  void set(Point &point, float value) const;
   void set_8U(int row, int col, pixel_8U value) const;
   void set_32F(int row, int col, pixel_32F value) const;
   void set_32S(int row, int col, pixel_32S value) const;

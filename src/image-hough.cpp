@@ -39,6 +39,8 @@ int main(int argc, char **argv) {
   Histogram *hist;
   Histogram *hist_image;
   Image *out_image;
+  Variance_stats stats;
+  in_image->get_stats(stats);
   switch (in_image->get_depth()) {
     case cv_enums::CV_8U:
       break;
@@ -47,8 +49,8 @@ int main(int argc, char **argv) {
       stat_32S(in_image, hough);
       hough.find_lines();
       out_image = Image::scale_image(in_image,
-                                     in_image->bounds.min_value,
-                                     in_image->bounds.min_value,
+                                     stats.bounds.min_value,
+                                     stats.bounds.min_value,
                                      pixel_8U_MIN,
                                      pixel_8U_MAX,
                                      cv_enums::CV_8U);
@@ -63,15 +65,12 @@ int main(int argc, char **argv) {
           hist->update(hough.accum->rho_theta_accum[theta_index][rho_index]);
         }
       }
-      hist->finalize();
-      hist->write_string(hist_filename, "\t", errors);
+      hist->write_text(hist_filename, "\t", errors);
       delete hist;
-      hist_image = new Histogram(100,
-                                 in_image->bounds.min_value, in_image->bounds.max_value);
+      hist_image = new Histogram(100, stats.bounds.min_value, stats.bounds.max_value);
       for (int i = 0; i < in_image->get_npixels(); i++)
         hist_image->update(in_image->buf_32S[i]);
-      hist_image->finalize();
-      hist_image->write_string(hist_filename + "image.txt", "\t", errors);
+      hist_image->write_text(hist_filename + "image.txt", "\t", errors);
       break;
 
     case cv_enums::CV_32F:

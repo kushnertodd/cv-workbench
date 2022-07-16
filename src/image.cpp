@@ -159,7 +159,7 @@ void Image::draw_line_segment(Line_segment *line_segment, float value) const {
   if (debug)
     std::cout << "Hough::draw_lines; line_segment (" << line_segment->to_string()
               << ") value " << value << std::endl;
-  for (Point *point: line_segment->line_points) {
+  for (Point point: line_segment->line_points) {
     set(point, value);
   }
 }
@@ -228,6 +228,15 @@ float Image::get_scaled(int row, int col, float lower_in,
   float pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
   return pixel_out;
+}
+
+void Image::get_stats(Variance_stats &stats) const {
+  for (int row = 0; row < get_rows(); row++) {
+    for (int col = 0; col < get_cols(); col++) {
+      float value = get(row, col);
+      stats.update(value);
+    }
+  }
 }
 
 void Image::init() {
@@ -300,6 +309,13 @@ Image *Image::read(std::string &path, Errors &errors) {
   fclose(fp);
   return image;
 }
+
+// for read_jpeg()
+struct my_error_mgr {
+  struct jpeg_error_mgr pub;    /* "public" fields */
+  jmp_buf setjmp_buffer;    /* for return to caller */
+};
+typedef struct my_error_mgr *my_error_ptr;
 
 // for read_jpeg()
 void my_error_exit(j_common_ptr cinfo) {
@@ -424,8 +440,8 @@ void Image::set(int row, int col, float value) const {
   }
 }
 
-void Image::set(Point *point, float value) const {
-  set(point->row, point->col, value);
+void Image::set(Point &point, float value) const {
+  set(point.row, point.col, value);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) const {

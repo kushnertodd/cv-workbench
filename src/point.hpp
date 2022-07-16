@@ -12,10 +12,10 @@ class Point {
   int col;
   Point();
   Point(int m_row, int m_col);
-  Point(Point &point);
-  Point(Point *point);
+  Point(const Point &point);
   void check_point_valid(int rows, int cols);
-  std::string to_string();
+  void set(int m_row, int m_col);
+  std::string to_string() const;
 };
 
 #endif //SRC__POINT_HPP_

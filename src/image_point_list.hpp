@@ -10,7 +10,7 @@
 
 class Image_point_list {
  public:
-  std::list<Point *> points;
+  std::list<Point> points;
   ~Image_point_list();
   Image_point_list();
   void add(Point* point);

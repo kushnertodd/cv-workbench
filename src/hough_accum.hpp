@@ -36,34 +36,34 @@ class Hough_accum {
   ~Hough_accum();
   Hough_accum(int m_theta_inc, Image *m_image);
 
-  void add(int theta_index, int rho_index, int value);
-  int choose_threshold(cv_enums::CV_threshold_type threshold_type);
+  void add(int theta_index, int rho_index, int value) const;
+  int choose_threshold(cv_enums::CV_threshold_type threshold_type) const;
   Line_segment *clip_window(Polar_line *line);
-  float col_to_x(int col);
-  float deg_to_rad(float deg);
+  float col_to_x(int col) const;
+  float deg_to_rad(int deg) const;
   void find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
-                  bool non_max_suppression = false);
-  int get_cols();
-  float get_cos(int theta_index);
-  int get_rows();
-  float get_sin(int theta_index);
-  bool in_window(Point *point);
+                  bool non_max_suppression = false) const;
+  int get_cols() const;
+  float get_cos(int theta_index) const;
+  int get_rows() const;
+  float get_sin(int theta_index) const;
+  bool in_window(Point &point) const;
   void initialize(int image_theshold);
-  Polar_line *make_polar_line(int rho_index, int theta_index, int count = 0);
+  Polar_line *make_polar_line(int rho_index, int theta_index, int count = 0) const;
 //  bool maximum(int theta, int rho_index);
-  bool read(std::ifstream &ifs, Errors &errors);
-  float rho_index_to_rho(int rho_index);
-  int rho_theta_col_to_row(int rho_index, int theta_index, int col);
-  int rho_theta_row_to_col(int rho_index, int theta_index, int row);
-  int rho_to_index(float rho);
-  float row_col_theta_to_rho(int row, int col, int theta_index);
-  int row_col_theta_to_rho_index(int row, int col, int theta_index);
-  float row_to_y(int row);
-  int theta_index_to_theta(int index);
+  static bool read(std::ifstream &ifs, Errors &errors);
+  float rho_index_to_rho(int rho_index) const;
+  int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
+  int rho_theta_row_to_col(int rho_index, int theta_index, int row) const;
+  int rho_to_index(float rho) const;
+  float row_col_theta_to_rho(int row, int col, int theta_index) const;
+  int row_col_theta_to_rho_index(int row, int col, int theta_index) const;
+  float row_to_y(int row) const;
+  int theta_index_to_theta(int index) const;
   void update_stats();
-  bool write_str(std::ofstream &ofs, std::string delim, Errors &errors);
-  int x_to_col(float x);
-  int y_to_row(float y);
+  bool write_str(std::ofstream &ofs, const std::string& delim, Errors &errors) const;
+  int x_to_col(float x) const;
+  int y_to_row(float y) const;
 };
 
 #endif //SRC__HOUGH_ACCUM_HPP_

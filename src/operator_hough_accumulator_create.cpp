@@ -59,9 +59,11 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
           Hough hough(input, theta_inc);
           hough_text_output_data_store->write_hough(&hough, errors);
           if (errors.error_ct == 0) {
+            Variance_stats stats;
+            input->get_stats(stats);
             Image *output = Image::scale_image(input,
-                                               input->bounds.min_value,
-                                               input->bounds.min_value,
+                                               stats.bounds.min_value,
+                                               stats.bounds.min_value,
                                                pixel_8U_MIN,
                                                pixel_8U_MAX,
                                                cv_enums::CV_8U);

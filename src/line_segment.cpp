@@ -8,14 +8,6 @@
 
 extern bool debug;
 
-Line_segment::~Line_segment() {
-  return;
-  for (Point *point: line_points)
-    if (point != nullptr)
-      delete point;
-}
-Line_segment::Line_segment() {}
-
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     point1(min_row, min_col),
     point2(max_row, max_col) {
@@ -26,14 +18,14 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
   plotLine();
 }
 
-Line_segment::Line_segment(Point *point1, Point *point2) :
-    point1(point1),
-    point2(point2) {
+Line_segment::Line_segment(Point m_point1, Point m_point2) :
+    point1(m_point1),
+    point2(m_point2) {
   if (debug)
     std::cout << "Line_segment::Line_segment point1 (" <<
-              point1->to_string()
+              point1.to_string()
               << ") point2 ("
-              << point2->to_string() << ")" << std::endl;
+              << point2.to_string() << ")" << std::endl;
   plotLine();
 }
 
@@ -42,14 +34,11 @@ Line_segment::Line_segment(Point *point1, Point *point2) :
  * This fills in line segment points with Bresenham's line algorithm
  */
 void Line_segment::add(int x, int y) {
-  if (debug && false)
-    std::cout << "Line_segment::add x " << x << " y " << y << std::endl;
-  add(new Point(y, x));
+  Point point(x,y);
+  add(point);
 }
 
-void Line_segment::add(Point *point) {
-  if (debug && false)
-    std::cout << "Line_segment::add point (" << point->to_string() << ")" << std::endl;
+void Line_segment::add(const Point& point) {
   line_points.push_back(point);
 }
 

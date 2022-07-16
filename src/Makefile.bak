@@ -44,6 +44,8 @@ SRCOBJS :=  \
   operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
   operator_dispatcher.o \
+  operator_hough_accumulator_create.o \
+  operator_hough_draw_line.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
   point.o \
@@ -54,16 +56,15 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   djpeginfo \
-  gen-trig \
   image-create \
   image-dump \
   image-hist \
   image-hough \
   image-info \
+  image-polar \
   image-stats \
   image-test \
-  parse_experiment_json \
-  tokens 
+  parse_experiment_json 
   # json_parser_example \
 
 %.o: %.cpp %.hpp
@@ -77,9 +78,6 @@ all: $(PROGRAMS)
 
 djpeginfo: djpeginfo.o
 	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
-
-gen-trig: gen-trig.o 
-	$(CXX) $< -o $@ 
 
 image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
@@ -96,6 +94,9 @@ image-hough: image-hough.o $(SRCOBJS)
 image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
+image-polar: image-polar.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
 image-stats: image-stats.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
@@ -107,9 +108,6 @@ image-test: image-test.o $(SRCOBJS)
 
 parse_experiment_json: parse_experiment_json.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-tokens: tokens.o file_utils.o
-	$(CXX) tokens.cpp -o tokens file_utils.o
 
 objs:
 	@echo $(OBJS)
@@ -285,7 +283,6 @@ polar_line.o: hough_accum.hpp errors.hpp file_utils.hpp wb_utils.hpp
 polar_line.o: data_source_descriptor.hpp wb_defs.hpp image.hpp bounds.hpp
 polar_line.o: image_header.hpp point.hpp line_segment.hpp polar_line.hpp
 polar_line.o: variance_stats.hpp
-tokens.o: file_utils.hpp
 variance_stats.o: wb_utils.hpp data_source_descriptor.hpp wb_defs.hpp
 variance_stats.o: image.hpp bounds.hpp errors.hpp image_header.hpp point.hpp
 variance_stats.o: line_segment.hpp variance_stats.hpp
