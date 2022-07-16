@@ -23,6 +23,7 @@ class Variance_stats {
   double M2;
   double variance;
   double sample_variance;
+  double standard_deviation;
   Bounds bounds;
 
   Variance_stats();

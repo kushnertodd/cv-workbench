@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 //    for (int i = 0; i < size; i++)
 //      cout << i << ": " << buf_8U[i] << std::endl;
     image_8U->add_8U(buf_8U, size, errors);
-    image_8U->write_binary(image_file, errors);
+    image_8U->write(image_file, errors);
   } else if (depth == cv_enums::CV_32S) {
     Image *image_32S = new Image(rows, cols, 1, depth);
     std::vector<int> values;
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
       buf_32S[pos++] = value;
     }
     image_32S->add_32S(buf_32S, size, errors);
-    image_32S->write_binary(image_file, errors);
+    image_32S->write(image_file, errors);
   } else if (depth == cv_enums::CV_32F) {
     Image *image_32F = new Image(rows, cols, 1, depth);
     std::vector<float> values;
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
       buf_32F[pos++] = value;
     }
     image_32F->add_32F(buf_32F, size, errors);
-    image_32F->write_binary(image_file, errors);
+    image_32F->write(image_file, errors);
   }
   errors.check_exit("image_test.test_write(): there were errors.");
 }

@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
       buf_8U = new pixel_8U[npixels];
       newLen = fread(buf_8U, sizeof(pixel_8U), npixels, fp);
       if (ferror(fp) != 0 || newLen != npixels) {
-        error_exit("Image::read_binary: cannot read 8U image data in '" + filename + "'");
+        error_exit("Image::read: cannot read 8U image data in '" + filename + "'");
       }
       dump_8U(buf_8U, rows, cols);
       break;
@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
              sizeof(pixel_32S),
              npixels);
       if (ferror(fp) != 0 || newLen != npixels) {
-        error_exit("Image::read_binary: cannot read 32S image data in '" + filename + "'");
+        error_exit("Image::read: cannot read 32S image data in '" + filename + "'");
       }
       dump_32S(buf_32S, rows, cols);
       break;
@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
              sizeof(pixel_32F),
              npixels);
       if (ferror(fp) != 0 || newLen != npixels) {
-        error_exit("Image::read_binary: cannot read 32F image data in '" + filename + "'");
+        error_exit("Image::read: cannot read 32F image data in '" + filename + "'");
       }
       dump_32F(buf_32F, rows, cols);
       break;

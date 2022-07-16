@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
   std::string hough_filename = argv[2];
   std::string hist_filename = argv[3];
   Errors errors;
-  Image *in_image = Image::read_binary(image_filename, errors);
+  Image *in_image = Image::read(image_filename, errors);
 
   Hough hough(in_image, 3);
   Histogram *hist;

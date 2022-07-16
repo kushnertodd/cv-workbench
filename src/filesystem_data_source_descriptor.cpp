@@ -22,7 +22,7 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   std::string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case cv_enums::BINARY:
-      return Image::read_binary(path, errors);
+      return Image::read(path, errors);
       break;
     case cv_enums::JPEG:
       return Image::read_jpeg(path, errors);
@@ -40,7 +40,7 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   std::string path = (directory == "" ? "" : directory + "/") + filename + "." + ext;
   switch (file_format) {
     case cv_enums::BINARY:
-      image->write_binary(path, errors);
+      image->write(path, errors);
       break;
     case cv_enums::JPEG:
       image->write_jpeg(path, errors);

@@ -65,6 +65,7 @@ void Variance_stats::finalize() {
   }
   variance = M2 / count;
   sample_variance = M2 / (count - 1);
+  standard_deviation = sqrt(sample_variance);
 }
 
 double Variance_stats::get_mean() {
@@ -84,7 +85,7 @@ double Variance_stats::get_sample_variance() {
 
 double Variance_stats::get_standard_deviation() {
   finalize();
-  return sqrt(sample_variance);
+  return standard_deviation;
 }
 
 std::string Variance_stats::to_string() {
