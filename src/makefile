@@ -1,5 +1,4 @@
 CXX=g++
-CC=gcc
 CCFLAGS=-g -Wall -I/usr/local/include
 CXXFLAGS=-g
 LDFLAGS_OPENCV = \
@@ -55,7 +54,6 @@ SRCOBJS :=  \
   wb_utils.o 
 
 PROGRAMS = \
-  djpeginfo \
   image-create \
   image-dump \
   image-hist \
@@ -65,19 +63,11 @@ PROGRAMS = \
   image-stats \
   image-test \
   cv-workbench \ 
-  # json_parser_example \
 
 %.o: %.cpp %.hpp
 	$(CXX) -c $< -o $@ $(CXXFLAGS)
 
-# for C files, cannot compile here like this
-#%.o: %.c %.h
-#	$(CC) $< -o $@ $(CCFLAGS)
-
 all: $(PROGRAMS)
-
-djpeginfo: djpeginfo.o
-	$(CC) $< -o $@ $(CCFLAGS)  $(LDFLAGS_JPEG)
 
 image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
@@ -102,9 +92,6 @@ image-stats: image-stats.o $(SRCOBJS)
 
 image-test: image-test.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-#json_parser_example: json_parser_example.o
-#	$(CC) $< -o $@ file_utils_C.o $(CCFLAGS) $(LDFLAGS_JSON)
 
 cv-workbench : cv-workbench .o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)

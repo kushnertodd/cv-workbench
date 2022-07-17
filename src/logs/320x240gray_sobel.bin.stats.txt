@@ -1,0 +1,15 @@
+stats for 320x240gray_sobel.bin
+ 
+values:
+rows 240 cols 320 components 1 depth CV_8U npixels 76800
+ 
+stats:
+rows 240 cols 320 components 1 depth CV_8U npixels 76800
+ferror(fp) 0 newLen 76800 sizeof(pixel_32S) 4 npixels 76800
+count 76800
+mean -0.448294
+variance 663.362
+sample variance 663.37
+standard deviation 25.756
+min value -456
+max value 216

@@ -1,0 +1,90 @@
+<data-descriptor> ::=
+
+      "berkeley_db": {
+        "database": <string>,
+        "id": <int> 
+      }
+-------------------
+      "output-data": {
+        "experiment": <int>,
+        "index": <int> 
+      }
+-------------------
+      "file": {
+        "directory": <string>, 
+        "filename": <string>
+      }
+-------------------
+      "internet": {
+        "url": <string>,
+        "rows": <int>,
+        "columns": <int>
+      }
+-------------------
+
+
+
+{
+  "_comment": [
+    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
+  ],
+  "id": 1,
+  "domain": "filters",
+  "class": "edge detection",
+  "instance": "Sobel",
+  "input-data": [
+    {
+      "name": "string",
+      "mat-type": "string",
+      "berkeley_db": {
+        "database": "string",
+        "id": "int"
+      },
+      "file": {
+        "directory": "string"
+      },
+      "internet": {
+        "url": "string",
+        "rows": "int",
+        "columns": "int"
+      }
+    }
+  ],
+  "output-data": [
+    {
+      "name": "string",
+      "mat-type": "string",
+      "berkeley_db": {
+        "database": "string",
+        "id": "string"
+      },
+      "file": {
+        "directory": "string",
+        "filename": "string"
+      },
+      "internet": {
+        "url": "string",
+        "rows": "int",
+        "columns": "int"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "__comment": [
+        " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+        "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
+      ],
+      "orientation": {
+        "required": "int",
+        "data-type": "int",
+        "default": "0",
+        "valid-values": [
+          "0",
+          "90"
+        ]
+      }
+    }
+  ]
+}
+

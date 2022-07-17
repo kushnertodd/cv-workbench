@@ -1,0 +1,11 @@
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 4 cv_enums::CV_32S row_stride 1416 npixels 951552 next_pixel 0
+Hough::Hough image 0x55d6a2099a70 theta_inc 3
+Hough_accum::Hough_accum theta_inc 3 max_theta 180 nthetas 60 rows 672 cols 1416 max_rho 1577
+Image *Image::scale_image: lower_in -569 upper_in 590 lower_out 0 upper_out 255 depth cv_enums::CV_8U
+Image_header::Image_header: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552
+Image::Image: rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+image-hough: out_image rows 672 cols 1416 components 1 depth 0 cv_enums::CV_8U row_stride 1416 npixels 951552 next_pixel 0
+Histogram::write_string path 'square45-90_sobel_exp.bin.hist.txt' nbins 100 min_value 0 max_value 80299 stats count 100 mean 946.2 variance 6.4039e+07 sample variance 6.46859e+07 standard deviation 8042.75 min value 0 max value 80368
+Histogram::write_string path 'square45-90_sobel_exp.bin.hist.txtimage.txt' nbins 100 min_value -1020 max_value 1020 stats count 100 mean 9515.52 variance 8.89927e+09 sample variance 8.98916e+09 standard deviation 94811.2 min value 0 max value 948146

@@ -1,0 +1,6 @@
+rows 4 cols 4 components 1 depth CV_8U npixels 16
+ferror(fp) 0 newLen 16 sizeof(pixel_32S) 4 npixels 16
+0	0	0	0	
+0	-1	5	0	
+0	0	9	0	
+0	0	0	0	
