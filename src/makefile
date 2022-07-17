@@ -62,7 +62,7 @@ PROGRAMS = \
   image-polar \
   image-stats \
   image-test \
-  cv-workbench \ 
+  cv-workbench 
 
 %.o: %.cpp %.hpp
 	$(CXX) -c $< -o $@ $(CXXFLAGS)
@@ -93,7 +93,7 @@ image-stats: image-stats.o $(SRCOBJS)
 image-test: image-test.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-cv-workbench : cv-workbench .o $(SRCOBJS)
+cv-workbench : cv-workbench.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 objs:
