@@ -6,13 +6,9 @@
 #include <list>
 #include <iostream>
 #include <sstream>
-#include "hough_accum.hpp"
 #include "polar_line.hpp"
 
 extern bool debug;
-
-Polar_line::Polar_line() {
-}
 
 /**
  * initialize (rho, theta) line
@@ -31,7 +27,17 @@ Polar_line::Polar_line(int m_rho_index, int m_rho, int m_theta_index,
     count(m_count) {
 }
 
-std::string Polar_line::to_string() {
+void Polar_line::set(int m_rho_index, int m_rho, int m_theta_index,
+                     float m_cos_theta, float m_sin_theta, int m_count) {
+  rho_index = m_rho_index;
+  rho = m_rho;
+  theta_index = m_theta_index;
+  cos_theta = m_cos_theta;
+  sin_theta = m_sin_theta;
+  count = m_count;
+}
+
+std::string Polar_line::to_string() const {
   std::ostringstream os;
   os << " rho_index " << rho_index
      << " rho " << rho

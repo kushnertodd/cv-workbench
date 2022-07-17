@@ -19,7 +19,7 @@ class Experiment_step {
  public:
   int id;
   std::string operator_name;
-  std:: list<Data_source_descriptor *> input_data_sources;
+  std::list<Data_source_descriptor *> input_data_sources;
   std::list<Data_source_descriptor *> output_data_stores;
   String_map operator_parameters;
   ~Experiment_step();

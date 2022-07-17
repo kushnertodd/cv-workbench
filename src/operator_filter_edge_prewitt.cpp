@@ -12,8 +12,6 @@
 
 extern bool debug;
 
-Operator_filter_edge_prewitt::Operator_filter_edge_prewitt() {}
-
 /**
  * orientation:
  *      0 = [-1, 0, 1], [-1, 0, 1], [-1, 0, 1]
@@ -36,11 +34,11 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     std::cout << "Operator_filter_edge_prewitt::run parameters: "
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  if (input_data_sources.size() == 0)
+  if (input_data_sources.empty())
     errors.add("Operator_filter_edge_prewitt::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_filter_edge_prewitt::run", "", "too many input data sources");
-  else if (output_data_stores.size() == 0)
+  else if (output_data_stores.empty())
     errors.add("Operator_filter_edge_prewitt::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_prewitt::run", "", "too many output data sources");

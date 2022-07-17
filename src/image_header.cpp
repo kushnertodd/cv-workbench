@@ -34,7 +34,7 @@ Image_header::Image_header(Image_header &image_header) :
                  image_header.components,
                  image_header.depth) {
 }
-Image_header *Image_header::read_header(FILE *fp, std::string path, Errors &errors) {
+Image_header *Image_header::read_header(FILE *fp, const std::string& path, Errors &errors) {
   int rows;
   if (!file_utils::read_int(fp, rows)) {
     errors.add("Image_header::read_header", "", "missing image rows in '" + path + "'");
@@ -62,7 +62,7 @@ Image_header *Image_header::read_header(FILE *fp, std::string path, Errors &erro
 
 }
 
-void Image_header::write_header(FILE *fp, std::string path, Errors &errors) {
+void Image_header::write_header(FILE *fp, const std::string& path, Errors &errors) {
   if (debug)
     std::cout << "Image_header::write_header  path '" << path << "' " << to_string() << std::endl;
   fwrite(&rows, sizeof(int), 1, fp);
@@ -83,7 +83,7 @@ void Image_header::write_header(FILE *fp, std::string path, Errors &errors) {
   }
 }
 
-std::string Image_header::to_string() {
+std::string Image_header::to_string() const {
   std::ostringstream os;
   os << "rows " << rows
      << " cols " << cols

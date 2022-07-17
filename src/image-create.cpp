@@ -16,8 +16,6 @@ void error_exit(std::string message) {
   exit(0);
 }
 
-
-
 int main(int argc, char **argv) {
 
   if (argc < 5)

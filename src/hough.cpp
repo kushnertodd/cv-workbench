@@ -13,16 +13,7 @@
 extern bool debug;
 
 Hough::~Hough() {
-  for (Polar_line* line : lines) {
-    if (line != nullptr)
-      delete line;
-  }
-  for (Line_segment* line_segment : line_segments) {
-    if (line_segment != nullptr)
-      delete line_segment;
-  }
-  if (accum != nullptr)
-    delete accum;
+  delete accum;
 }
 
 Hough::Hough(Image *m_image, int m_theta_inc) :
@@ -61,35 +52,35 @@ void Hough::find_peaks() {
   int peak_threshold = accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
   accum->find_peaks(lines, peak_threshold);
   if (debug) {
-    for (Polar_line *line: lines) {
-      std::cout << "Hough::find_peaks: lines " << line->to_string() << std::endl;
+    for (Polar_line line: lines) {
+      std::cout << "Hough::find_peaks: lines " << line.to_string() << std::endl;
     }
   }
 }
 
 void Hough::lines_to_line_segments() {
-  for (Polar_line *line: lines) {
-    Line_segment *line_segment = accum->clip_window(line);
-    if (line_segment != nullptr)
+  for (Polar_line line: lines) {
+    Line_segment line_segment;
+    if (accum->clip_window(line_segment, line))
       line_segments.push_back(line_segment);
   }
 }
 
-bool Hough::read(std::string filename, Errors &errors) {
+bool Hough::read(const std::string &filename, Errors &errors) {
   std::ifstream ifs(filename, std::ofstream::in);
   if (!ifs) {
     errors.add("Hough:read", "", "invalid filename '" + filename + "'");
     return false;
   }
   bool return_value = true;
-  if (!accum->read(ifs, errors)) {
+  if (!Hough_accum::read(ifs, errors)) {
     return_value = false;
   }
   ifs.close();
   return return_value;
 }
 
-bool Hough::write(std::string filename, std::string delim, Errors &errors) {
+bool Hough::write(const std::string &filename, const std::string &delim, Errors &errors) const {
   std::ofstream ofs(filename, std::ofstream::out);
   if (!ofs) {
     errors.add("Hough:write", "", "invalid filename '" + filename + "'");

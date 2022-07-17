@@ -12,8 +12,6 @@
 
 extern bool debug;
 
-Operator_filter_edge_kirsch::Operator_filter_edge_kirsch() {}
-
 /**
  * orientation:
  *     N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]
@@ -42,11 +40,11 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     std::cout << "Operator_filter_edge_kirsch::run parameters: "
          << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  if (input_data_sources.size() == 0)
+  if (input_data_sources.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_filter_edge_kirsch::run", "", "too many input data sources");
-  else if (output_data_stores.size() == 0)
+  else if (output_data_stores.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_kirsch::run", "", "too many output data sources");

@@ -2,7 +2,6 @@
 // Created by kushn on 6/24/2022.
 //
 
-#include <cfloat>
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -16,7 +15,8 @@ Variance_stats::Variance_stats() :
     mean(0.0),
     M2(0.0),
     variance(0.0),
-    sample_variance(0.0) {}
+    sample_variance(0.0),
+    standard_deviation(0.0) {}
 
 /**
  *  For a new value newValue, compute the new count, new mean, the new M2.
@@ -45,7 +45,7 @@ void Variance_stats::update(double new_value) {
 /**
  * test if the result is valid
  */
-bool Variance_stats::is_valid() {
+bool Variance_stats::is_valid() const {
   return (count >= 2);
 }
 
@@ -100,12 +100,14 @@ std::string Variance_stats::to_string() {
   return os.str();
 }
 
-void Variance_stats::write(FILE *fp, std::string path, Errors &errors){
-  int count;
+void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) const {
   wb_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
   wb_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);
   wb_utils::write_double(fp, variance, "Histogram::write: cannot write variance to '" + path + "'", errors);
-  wb_utils::write_double(fp, sample_variance, "Histogram::write: cannot write sample_variance to '" + path + "'", errors);
+  wb_utils::write_double(fp,
+                         sample_variance,
+                         "Histogram::write: cannot write sample_variance to '" + path + "'",
+                         errors);
   wb_utils::write_float(fp, bounds.min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
   wb_utils::write_float(fp, bounds.max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
 }

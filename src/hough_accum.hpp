@@ -38,10 +38,10 @@ class Hough_accum {
 
   void add(int theta_index, int rho_index, int value) const;
   int choose_threshold(cv_enums::CV_threshold_type threshold_type) const;
-  Line_segment *clip_window(Polar_line *line);
+  bool clip_window(Line_segment &line_segment, Polar_line &line) const;
   float col_to_x(int col) const;
   float deg_to_rad(int deg) const;
-  void find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
+  void find_peaks(std::list<Polar_line> &lines, int peak_threshold,
                   bool non_max_suppression = false) const;
   int get_cols() const;
   float get_cos(int theta_index) const;
@@ -49,8 +49,6 @@ class Hough_accum {
   float get_sin(int theta_index) const;
   bool in_window(Point &point) const;
   void initialize(int image_theshold);
-  Polar_line *make_polar_line(int rho_index, int theta_index, int count = 0) const;
-//  bool maximum(int theta, int rho_index);
   static bool read(std::ifstream &ifs, Errors &errors);
   float rho_index_to_rho(int rho_index) const;
   int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
@@ -61,7 +59,7 @@ class Hough_accum {
   float row_to_y(int row) const;
   int theta_index_to_theta(int index) const;
   void update_stats();
-  bool write_str(std::ofstream &ofs, const std::string& delim, Errors &errors) const;
+  bool write_str(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   int x_to_col(float x) const;
   int y_to_row(float y) const;
 };

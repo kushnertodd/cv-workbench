@@ -11,8 +11,6 @@
 
 extern bool debug;
 
-Operator_hough_accumulator_create::Operator_hough_accumulator_create() {}
-
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
@@ -29,7 +27,7 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
     std::cout << "Operator_hough_accumulator_create::run parameters: "
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  if (input_data_sources.size() < 1)
+  if (input_data_sources.empty())
     errors.add("Operator_hough_accumulator_create::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_accumulator_create::run", "", "too many input data sources");
@@ -47,7 +45,7 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
         errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'theta_inc' parameter");
       else {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        std::list<Data_source_descriptor *>::iterator it = output_data_stores.begin();
+        auto it = output_data_stores.begin();
         Data_source_descriptor *hough_text_output_data_store = *it;
         std::advance(it, 1);
         Data_source_descriptor *hough_lines_output_data_store = *it;

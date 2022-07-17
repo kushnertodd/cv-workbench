@@ -10,9 +10,9 @@
 
 //
 
-bool Operator_utils::get_int_parameter(std::string module,
+bool Operator_utils::get_int_parameter(const std::string &module,
                                        String_map &parameters,
-                                       std::string parameter,
+                                       const std::string &parameter,
                                        int &int_value,
                                        Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
@@ -31,9 +31,9 @@ bool Operator_utils::get_int_parameter(std::string module,
   return true;
 }
 
-bool Operator_utils::get_real_parameter(std::string module,
+bool Operator_utils::get_real_parameter(const std::string &module,
                                         String_map &parameters,
-                                        std::string parameter,
+                                        const std::string &parameter,
                                         double &real_value,
                                         Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
@@ -58,11 +58,11 @@ bool Operator_utils::get_real_parameter(std::string module,
  * @param parameter
  * @return empty string '' if parameter not present
  */
-std::string Operator_utils::get_parameter(String_map &parameters, std::string parameter) {
+std::string Operator_utils::get_parameter(String_map &parameters, const std::string &parameter) {
   return parameters[parameter];
 }
 
-bool Operator_utils::has_parameter(String_map &parameters, std::string parameter) {
+bool Operator_utils::has_parameter(String_map &parameters, const std::string &parameter) {
   return parameters.find(parameter) != parameters.end();
 }
 

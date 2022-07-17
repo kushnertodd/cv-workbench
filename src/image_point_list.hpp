@@ -13,7 +13,7 @@ class Image_point_list {
   std::list<Point> points;
   ~Image_point_list();
   Image_point_list();
-  void add(Point* point);
+  void add(Point &point);
 };
 
 #endif //SRC__POINT_LIST_HPP_

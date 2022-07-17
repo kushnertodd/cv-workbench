@@ -139,10 +139,10 @@ bool Image::check_grayscale(Errors &errors) const {
 Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   if (debug)
     std::cout << "Image::clone: depth " << depth << " " << image->to_string() << std::endl;
-  Image *new_image = new Image(image->get_rows(),
-                               image->get_cols(),
-                               image->get_components(),
-                               depth);
+  auto *new_image = new Image(image->get_rows(),
+                              image->get_cols(),
+                              image->get_components(),
+                              depth);
   return new_image;
 }
 
@@ -155,17 +155,17 @@ void Image::create_histogram(Histogram &histogram) const {
   }
 }
 
-void Image::draw_line_segment(Line_segment *line_segment, float value) const {
+void Image::draw_line_segment(Line_segment line_segment, float value) const {
   if (debug)
-    std::cout << "Hough::draw_lines; line_segment (" << line_segment->to_string()
+    std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
               << ") value " << value << std::endl;
-  for (Point point: line_segment->line_points) {
+  for (Point point: line_segment.line_points) {
     set(point, value);
   }
 }
 
-void Image::draw_line_segments(std::list<Line_segment *> &line_segments, float value) const {
-  for (Line_segment *line_segment: line_segments) {
+void Image::draw_line_segments(std::list<Line_segment> &line_segments, float value) const {
+  for (Line_segment line_segment: line_segments) {
     draw_line_segment(line_segment, value);
   }
 }

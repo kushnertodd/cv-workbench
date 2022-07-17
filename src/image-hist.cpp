@@ -22,7 +22,7 @@ enum CV_image_depth {
 std::string hist_filename;
 std::string hist_diff_filename;
 
-std::string depth_to_string( CV_image_depth depth) {
+std::string depth_to_string(CV_image_depth depth) {
   if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
@@ -48,15 +48,15 @@ void read_int(FILE *fp, std::string name, int &var) {
 
 void write_gp_script(std::string filename) {
   std::string script_filename = filename + ".hist.gp";
-  std::ofstream ofs (script_filename, std::ofstream::out);
+  std::ofstream ofs(script_filename, std::ofstream::out);
   ofs << "set style data histograms" << std::endl;
-  ofs << "plot './"<<hist_filename<<"' using 2:xtic(1)" << std::endl;
+  ofs << "plot './" << hist_filename << "' using 2:xtic(1)" << std::endl;
   ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs.close();
   std::string script_diff_filename = filename + ".hist-diff.gp";
-  std::ofstream ofs_diff (script_diff_filename, std::ofstream::out);
+  std::ofstream ofs_diff(script_diff_filename, std::ofstream::out);
   ofs_diff << "set style data histograms" << std::endl;
-  ofs_diff << "plot './"<<hist_diff_filename<<"' using 2:xtic(1)" << std::endl;
+  ofs_diff << "plot './" << hist_diff_filename << "' using 2:xtic(1)" << std::endl;
   ofs_diff << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs_diff.close();
 }
@@ -71,7 +71,7 @@ void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
   int min_value = variance_stats.bounds.min_value;
   int max_value = variance_stats.bounds.max_value;
   int hist_len = max_value + 1 - min_value;
-  int* histogram = new int[hist_len];
+  int *histogram = new int[hist_len];
   for (int i = 0; i < hist_len; i++) histogram[i] = 0;
   pos = 0;
   //cout << "data: " << std::endl;
@@ -83,8 +83,8 @@ void stat_8U(pixel_8U *buf_8U, int rows, int cols) {
   }
   //cout << "end data: " << std::endl;
   //cout << "histogram: " << std::endl;
-  std::ofstream ofs (hist_filename, std::ofstream::out);
-  for (int i = 0; i < hist_len; i++)  {
+  std::ofstream ofs(hist_filename, std::ofstream::out);
+  for (int i = 0; i < hist_len; i++) {
     ofs << i + min_value << " " << histogram[i] << std::endl;
   }
   ofs.close();
@@ -104,7 +104,7 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols) {
   int max_value = 30; // variance_stats.get_max_value();
   //int hist_len = max_value + 1 - min_value;
   int hist_len = nbins;
-  int* histogram = new int[hist_len];
+  int *histogram = new int[hist_len];
   for (int i = 0; i < hist_len; i++) histogram[i] = 0;
   pos = 0;
   for (int row = 0; row < rows; row++) {
@@ -115,17 +115,17 @@ void stat_32S(pixel_32S *buf_32S, int rows, int cols) {
       histogram[bin]++;
     }
   }
-  std::ofstream ofs (hist_filename, std::ofstream::out);
-  for (int i = 0; i < hist_len; i++)  {
+  std::ofstream ofs(hist_filename, std::ofstream::out);
+  for (int i = 0; i < hist_len; i++) {
     int val = min_value + i * (max_value - min_value) / nbins;
     ofs << val << " " << histogram[i] << std::endl;
   }
   ofs.close();
-  int* histogram_diff = new int[hist_len];
+  int *histogram_diff = new int[hist_len];
   for (int i = 0; i < hist_len - 1; i++) histogram_diff[i] = histogram[i + 1] - histogram[i];
   histogram_diff[hist_len - 1] = 0;
-  std::ofstream ofs_diff (hist_diff_filename, std::ofstream::out);
-  for (int i = 0; i < hist_len; i++)  {
+  std::ofstream ofs_diff(hist_diff_filename, std::ofstream::out);
+  for (int i = 0; i < hist_len; i++) {
     int val = min_value + i * (max_value - min_value) / nbins;
     ofs_diff << val << " " << histogram_diff[i] << std::endl;
   }
@@ -177,45 +177,45 @@ int main(int argc, char **argv) {
   pixel_32F *buf_32F;
   int newLen;
   switch (depth) {
-  case CV_8U:
-    buf_8U = new pixel_8U[npixels];
-    newLen = fread(buf_8U, sizeof(pixel_8U), npixels, fp);
-    if (ferror(fp) != 0 || newLen != npixels) {
-      error_exit("Image::read: cannot read 8U image data in '" + filename + "'");
-    }
-    stat_8U(buf_8U, rows, cols);
-    break;
+    case CV_8U:
+      buf_8U = new pixel_8U[npixels];
+      newLen = fread(buf_8U, sizeof(pixel_8U), npixels, fp);
+      if (ferror(fp) != 0 || newLen != npixels) {
+        error_exit("Image::read: cannot read 8U image data in '" + filename + "'");
+      }
+      stat_8U(buf_8U, rows, cols);
+      break;
 
-  case CV_32S:
-    buf_32S = new pixel_32S[npixels];
-    newLen = fread(buf_32S, sizeof(pixel_32S), npixels, fp);
-    //printf("ferror(fp) %d newLen %d sizeof(pixel_32S) %d npixels %d\n",
-    //       ferror(fp),
-    //       newLen,
-    //       sizeof(pixel_32S),
-    //       npixels);
-    if (ferror(fp) != 0 || newLen != npixels) {
-      error_exit("Image::read: cannot read 32S image data in '" + filename + "'");
-    }
-    stat_32S(buf_32S, rows, cols);
-    break;
+    case CV_32S:
+      buf_32S = new pixel_32S[npixels];
+      newLen = fread(buf_32S, sizeof(pixel_32S), npixels, fp);
+      //printf("ferror(fp) %d newLen %d sizeof(pixel_32S) %d npixels %d\n",
+      //       ferror(fp),
+      //       newLen,
+      //       sizeof(pixel_32S),
+      //       npixels);
+      if (ferror(fp) != 0 || newLen != npixels) {
+        error_exit("Image::read: cannot read 32S image data in '" + filename + "'");
+      }
+      stat_32S(buf_32S, rows, cols);
+      break;
 
-  case CV_32F:
-    buf_32F = new pixel_32F[npixels];
-    newLen = fread(buf_32F, sizeof(pixel_32F), npixels, fp);
-    //printf("ferror(fp) %d newLen %d sizeof(pixel_32F) %d npixels %d\n",
-    //       ferror(fp),
-    //       newLen,
-    //       sizeof(pixel_32F),
-    //       npixels);
-    if (ferror(fp) != 0 || newLen != npixels) {
-      error_exit("Image::read: cannot read 32F image data in '" + filename + "'");
-    }
-    stat_32F(buf_32F, rows, cols);
-    break;
+    case CV_32F:
+      buf_32F = new pixel_32F[npixels];
+      newLen = fread(buf_32F, sizeof(pixel_32F), npixels, fp);
+      //printf("ferror(fp) %d newLen %d sizeof(pixel_32F) %d npixels %d\n",
+      //       ferror(fp),
+      //       newLen,
+      //       sizeof(pixel_32F),
+      //       npixels);
+      if (ferror(fp) != 0 || newLen != npixels) {
+        error_exit("Image::read: cannot read 32F image data in '" + filename + "'");
+      }
+      stat_32F(buf_32F, rows, cols);
+      break;
 
-  default:
-    break;
+    default:
+      break;
   }
   fclose(fp);
   write_gp_script(filename);

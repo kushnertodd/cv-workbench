@@ -13,7 +13,7 @@ class Point {
   Point();
   Point(int m_row, int m_col);
   Point(const Point &point);
-  void check_point_valid(int rows, int cols);
+  void check_point_valid(int rows, int cols) const;
   void set(int m_row, int m_col);
   std::string to_string() const;
 };

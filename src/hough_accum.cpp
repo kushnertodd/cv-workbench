@@ -12,8 +12,8 @@
 extern bool debug;
 
 Hough_accum::~Hough_accum() {
-    delete[] hough_cos;
-    delete[] hough_sin;
+  delete[] hough_cos;
+  delete[] hough_sin;
   for (int theta_index = 0; theta_index < nthetas; theta_index++)
     if (rho_theta_accum[theta_index] != nullptr)
       delete rho_theta_accum[theta_index];
@@ -147,10 +147,9 @@ int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) co
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-Line_segment *Hough_accum::clip_window(Polar_line *line) {
+bool Hough_accum::clip_window(Line_segment &line_segment, Polar_line &line) const {
   if (debug)
-    std::cout << "Hough_accum::clip_window line (" << line->to_string() << ")" << std::endl;
-  Line_segment *line_segment = nullptr;
+    std::cout << "Hough_accum::clip_window line (" << line.to_string() << ")" << std::endl;
   int theta_lower = nthetas / 4;
   int theta_upper = nthetas * 3 / 4;
   // window is in (row, col) coordinates
@@ -165,11 +164,11 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
               << " window_top " << window_top
               << " window_bottom " << window_bottom
               << std::endl;
-  if (line->theta_index <= theta_lower || line->theta_index > theta_upper) {
+  if (line.theta_index <= theta_lower || line.theta_index > theta_upper) {
     // case 1: 0 < theta < pi/4 or 3*pi/4 < theta < pi
     // must clip against the window top and bottom first
-    int col_at_window_top = rho_theta_row_to_col(line->rho_index, line->theta_index, window_top);
-    int col_at_window_bottom = rho_theta_row_to_col(line->rho_index, line->theta_index, window_bottom);
+    int col_at_window_top = rho_theta_row_to_col(line.rho_index, line.theta_index, window_top);
+    int col_at_window_bottom = rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom);
     // get the top or right point
     Point top_point;
     Point bottom_point;
@@ -185,12 +184,12 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.1"
                   << std::endl;
-      return nullptr;
+      return false;
     } else if (col_at_window_top < window_left
         && col_at_window_bottom >= window_left
         && col_at_window_bottom <= window_right) {
       // case 1.2: window top column to the left of the window and bottom column inside window
-      int row_at_window_left = rho_theta_col_to_row(line->rho_index, line->theta_index, window_left);
+      int row_at_window_left = rho_theta_col_to_row(line.rho_index, line.theta_index, window_left);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.2"
                   << " row_at_window_left " << row_at_window_left
@@ -201,7 +200,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
         && col_at_window_top <= window_right
         && col_at_window_bottom < window_left) {
       // case 1.3: window top column inside of the window and bottom column to the left of the window
-      int row_at_window_left = rho_theta_col_to_row(line->rho_index, line->theta_index, window_left);
+      int row_at_window_left = rho_theta_col_to_row(line.rho_index, line.theta_index, window_left);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.3"
                   << " row_at_window_left " << row_at_window_left
@@ -220,7 +219,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
         && col_at_window_top <= window_right
         && col_at_window_bottom > window_right) {
       // case 1.5: window top column inside of the window and bottom column to the right of the window
-      int row_at_window_right = rho_theta_col_to_row(line->rho_index, line->theta_index, window_right);
+      int row_at_window_right = rho_theta_col_to_row(line.rho_index, line.theta_index, window_right);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.5"
                   << " row_at_window_right " << row_at_window_right
@@ -231,7 +230,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
         && col_at_window_bottom >= window_left
         && col_at_window_bottom <= window_right) {
       // case 1.6: window top column to the right of the window and bottom column inside of the window
-      int row_at_window_right = rho_theta_col_to_row(line->rho_index, line->theta_index, window_right);
+      int row_at_window_right = rho_theta_col_to_row(line.rho_index, line.theta_index, window_right);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.7"
                   << " row_at_window_right " << row_at_window_right
@@ -245,22 +244,22 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.7"
                   << std::endl;
-      return nullptr;
+      return false;
     } else {
       if (debug)
         std::cout << "Hough_accum::clip_window case 1 shouldn't get here"
                   << std::endl;
-      return nullptr;
+      return false;
     }
     top_point.check_point_valid(get_rows(), get_cols());
     bottom_point.check_point_valid(get_rows(), get_cols());
-    line_segment = new Line_segment(top_point, bottom_point);
-    return line_segment;
+    line_segment.set(top_point, bottom_point);
+    return true;
   } else {
     // case 2:pi/4 < theta < 3*pi/4
     // must clip against the window left and right first
-    int row_at_window_left = rho_theta_col_to_row(line->rho_index, line->theta_index, window_left);
-    int row_at_window_right = rho_theta_col_to_row(line->rho_index, line->theta_index, window_right);
+    int row_at_window_left = rho_theta_col_to_row(line.rho_index, line.theta_index, window_left);
+    int row_at_window_right = rho_theta_col_to_row(line.rho_index, line.theta_index, window_right);
     // get the top or right point
     Point left_point;
     Point right_point;
@@ -276,12 +275,12 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.1"
                   << std::endl;
-      return nullptr;
+      return false;
     } else if (row_at_window_left < window_top
         && row_at_window_right >= window_top
         && row_at_window_right <= window_bottom) {
       // case 2.2: window left row above the window and right row inside window
-      int col_at_window_top = rho_theta_row_to_col(line->rho_index, line->theta_index, window_top);
+      int col_at_window_top = rho_theta_row_to_col(line.rho_index, line.theta_index, window_top);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.2"
                   << " col_at_window_top " << col_at_window_top
@@ -292,7 +291,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
         && row_at_window_left <= window_bottom
         && row_at_window_right < window_top) {
       // case 2.3: window left row inside of the window and right row above the window
-      int col_at_window_top = rho_theta_row_to_col(line->rho_index, line->theta_index, window_top);
+      int col_at_window_top = rho_theta_row_to_col(line.rho_index, line.theta_index, window_top);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.3"
                   << " col_at_window_top " << col_at_window_top
@@ -310,7 +309,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
     } else if (row_at_window_left >= window_top && row_at_window_left <= window_bottom
         && row_at_window_right > window_bottom) {
       // case 2.5: window left row inside of the window and right row above the window
-      int col_at_window_bottom = rho_theta_row_to_col(line->rho_index, line->theta_index, window_bottom);
+      int col_at_window_bottom = rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.5"
                   << " col_at_window_bottom " << col_at_window_bottom
@@ -321,7 +320,7 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
         && row_at_window_right >= window_top
         && row_at_window_right <= window_bottom) {
       // case 2.6: window left row below the window and right row inside of the window
-      int col_at_window_bottom = rho_theta_row_to_col(line->rho_index, line->theta_index, window_bottom);
+      int col_at_window_bottom = rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.6"
                   << " col_at_window_bottom " << col_at_window_bottom
@@ -335,19 +334,20 @@ Line_segment *Hough_accum::clip_window(Polar_line *line) {
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.7"
                   << std::endl;
-      return nullptr;
+      return false;
     } else {
       if (debug)
         std::cout << "Hough_accum::clip_window case 2"
                   << " shouldn't get here "
                   << std::endl;
-      return nullptr;
+      return false;
     }
     left_point.check_point_valid(get_rows(), get_cols());
     right_point.check_point_valid(get_rows(), get_cols());
-    line_segment = new Line_segment(left_point, right_point);
-    return line_segment;
+    line_segment.set(left_point, right_point);
+    return true;
   }
+  return true;
 }
 
 float Hough_accum::col_to_x(int col) const {
@@ -361,14 +361,15 @@ float Hough_accum::deg_to_rad(int deg) const {
   return rad;
 }
 
-void Hough_accum::find_peaks(std::list<Polar_line *> &lines, int peak_threshold,
+void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
                              bool non_max_suppression) const {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < max_rho; rho_index++) {
       int count = rho_theta_accum[theta_index][rho_index];
       if (count > peak_threshold) {
         if (!non_max_suppression) {
-          Polar_line *line = make_polar_line(rho_index, theta_index, count);
+          Polar_line line(rho_index, rho_index_to_rho(rho_index), theta_index, get_cos(theta_index),
+                          get_sin(theta_index), count);
           lines.push_back(line);
         }
       }
@@ -411,13 +412,6 @@ void Hough_accum::initialize(int image_theshold) {
   update_stats();
 }
 
-Polar_line *Hough_accum::make_polar_line(int rho_index, int theta_index, int count) const {
-  int rho = rho_index_to_rho(rho_index);
-  auto *line = new Polar_line(rho_index, rho, theta_index, get_cos(theta_index),
-                                    get_sin(theta_index), count);
-  return line;
-}
-
 /*
 bool Hough_accum::maximum(int theta_index, int rho_index) {
   for (int i = -1; i <= 1; i++) {
@@ -441,7 +435,7 @@ bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   std::string line;
   while (getline(ifs, line)) {
     std::vector<std::string> values = file_utils::string_split(line);
-    for (const std::string& value_str: values) {
+    for (const std::string &value_str: values) {
       int value;
       if (!wb_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
@@ -518,7 +512,7 @@ void Hough_accum::update_stats() {
   }
 }
 
-bool Hough_accum::write_str(std::ofstream &ofs, const std::string& delim, Errors &errors) const {
+bool Hough_accum::write_str(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   ofs << "nthetas " << nthetas << delim
       << " theta_inc " << theta_inc << delim
       << " max_rho " << max_rho << delim

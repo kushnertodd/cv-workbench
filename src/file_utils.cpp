@@ -27,7 +27,7 @@ long file_utils::file_size(std::ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-std::string file_utils::read_file(std::string filename) {
+std::string file_utils::read_file(const std::string& filename) {
   std::ifstream in(filename, std::ios::in | std::ios::binary);
   if (in) {
     std::string contents;
@@ -42,7 +42,7 @@ std::string file_utils::read_file(std::string filename) {
 }
 
 bool file_utils::read_int(FILE *fp, int &var) {
-  int newLen = fread(&var, sizeof(int), 1, fp);
+  size_t newLen = fread(&var, sizeof(int), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);
 }
 

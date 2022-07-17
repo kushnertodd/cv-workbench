@@ -12,8 +12,6 @@
 
 extern bool debug;
 
-Operator_transform_intensity_map::Operator_transform_intensity_map() {}
-
 /**
    create new image from an existing image
    parameters:
@@ -47,11 +45,11 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     std::cout << "Operator_transform_intensity_map::run:parameters: "
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  if (input_data_sources.size() == 0)
+  if (input_data_sources.empty())
     errors.add("Operator_transform_intensity_map::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
-  if (output_data_stores.size() == 0)
+  if (output_data_stores.empty())
     errors.add("Operator_transform_intensity_map::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");

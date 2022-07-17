@@ -46,8 +46,8 @@ class Image {
   bool check_grayscale(Errors &errors) const;
   static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
   void create_histogram(Histogram &histogram) const;
-  void draw_line_segment(Line_segment *line_segment, float value) const;
-  void draw_line_segments(std::list<Line_segment *> &line_segments, float value) const;
+  void draw_line_segment(Line_segment line_segment, float value) const;
+  void draw_line_segments(std::list<Line_segment> &line_segments, float value) const;
 
   // TODO: add component
   pixel_32F get(int row, int col) const;

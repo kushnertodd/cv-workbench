@@ -6,9 +6,9 @@
 #include <sstream>
 #include "point.hpp"
 
-Point::Point():
-row(0),
-col(0) {
+Point::Point() :
+    row(0),
+    col(0) {
 
 }
 
@@ -20,7 +20,7 @@ Point::Point(int m_row,
 Point::Point(const Point &point) :
     Point::Point(point.row, point.col) {}
 
-void Point::check_point_valid(int rows, int cols) {
+void Point::check_point_valid(int rows, int cols) const {
   assert (row >= 0 && row < rows && col >= 0 && col < cols);
 }
 

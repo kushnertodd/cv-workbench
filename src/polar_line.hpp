@@ -9,16 +9,17 @@
 
 class Polar_line {
  public:
-  int rho_index;
-  int rho;
-  int theta_index;
-  int count;
-  float cos_theta;
-  float sin_theta;
-  Polar_line();
+  int rho_index{};
+  int rho{};
+  int theta_index{};
+  int count{};
+  float cos_theta{};
+  float sin_theta{};
   Polar_line(int m_rho_index, int m_rho, int m_theta_index,
-             float m_cos_theta, float m_sin_theta,int m_count);
-  std::string to_string();
+             float m_cos_theta, float m_sin_theta, int m_count);
+  void set(int m_rho_index, int m_rho, int m_theta_index,
+           float m_cos_theta, float m_sin_theta, int m_count);
+  std::string to_string() const;
 };
 
 #endif //SRC__POLAR_LINE_HPP_

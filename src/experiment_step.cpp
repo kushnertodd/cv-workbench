@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <utility>
 #include "wb_json_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "experiment_step.hpp"
@@ -15,8 +16,6 @@
 #include "operator_dispatcher.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
-
-extern bool debug;
 
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
@@ -68,16 +67,17 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
 
 Experiment_step::~Experiment_step() {
   for (Data_source_descriptor *descriptor: input_data_sources) {
-    if (descriptor != nullptr)
-      delete descriptor;
+    delete descriptor;
   }
   for (Data_source_descriptor *descriptor: output_data_stores) {
-    if (descriptor != nullptr)
-      delete descriptor;
+    delete descriptor;
   }
 }
-Experiment_step::Experiment_step() {}
-Experiment_step::Experiment_step(int m_id, std::string m_operator_name) : id(m_id), operator_name(m_operator_name) {}
+
+Experiment_step::Experiment_step() : id(0) {}
+
+Experiment_step::Experiment_step(int m_id, std::string m_operator_name)
+    : id(m_id), operator_name(std::move(m_operator_name)) {}
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json
@@ -94,14 +94,14 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
                                                   json_type_array, errors);
   json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "parameters",
                                                  json_type_object, errors);
-  Experiment_step *experiment_step = new Experiment_step();
+  auto *experiment_step = new Experiment_step();
   if (json_id != nullptr)
     experiment_step->id = json_object_get_int(json_id);
   if (json_operator != nullptr)
     experiment_step->operator_name = json_object_get_string(json_operator);
   // parse input data array
   if (json_input_data != nullptr) {
-    int nsteps = json_object_array_length(json_input_data);
+    size_t nsteps = json_object_array_length(json_input_data);
     for (int i = 0; i < nsteps; i++) {
       json_object *json_input_data_descriptor =
           json_object_array_get_idx(json_input_data, i);
@@ -117,7 +117,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
   }
   // parse output data array
   if (json_output_data != nullptr) {
-    int nsteps = json_object_array_length(json_output_data);
+    size_t nsteps = json_object_array_length(json_output_data);
     for (int i = 0; i < nsteps; i++) {
       json_object *json_output_data_descriptor =
           json_object_array_get_idx(json_output_data, i);

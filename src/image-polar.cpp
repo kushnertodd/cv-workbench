@@ -51,9 +51,9 @@ int main(int argc, char **argv) {
     in_image->check_grayscale(errors);
   Hough hough(in_image, 3);
   int rho_index = hough.accum->rho_to_index(rho);
-  Polar_line *polar_line = hough.accum->make_polar_line(rho_index, theta_index);
-  Line_segment *line_segment = hough.accum->clip_window(polar_line);
-  if (line_segment == nullptr) {
+  Polar_line polar_line(rho_index, rho, theta_index,
+                        hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index),0);
+  Line_segment line_segment; if (!hough.accum->clip_window(line_segment,polar_line)) {
     std::cout << "failed clipping (" << theta_index << ", " << rho
               << " against image " << in_image->to_string() << std::endl;
     exit(0);

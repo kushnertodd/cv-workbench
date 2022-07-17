@@ -11,9 +11,8 @@
 #include "operator_hough_draw_line.hpp"
 #include "operator_dispatcher.hpp"
 
-//
 extern bool debug;
-Operator *Operator_dispatcher::create_operator(std::string operator_name) {
+Operator *Operator_dispatcher::create_operator(const std::string& operator_name) {
   Operator *pOperator;
   if (debug)
     std::cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << std::endl;

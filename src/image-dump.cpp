@@ -17,7 +17,7 @@ enum CV_image_depth {
   CV_16F,
   UNDEFINED_IMAGE_DEPTH
 };
-std::string depth_to_string( CV_image_depth depth) {
+std::string depth_to_string(CV_image_depth depth) {
   if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
@@ -95,8 +95,8 @@ int main(int argc, char **argv) {
 
   int npixels = rows * cols * components;
   std::cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
-       << depth_to_string(( CV_image_depth) depth)
-       << " npixels " << npixels << std::endl;
+            << depth_to_string((CV_image_depth) depth)
+            << " npixels " << npixels << std::endl;
 
   pixel_8U *buf_8U;
   pixel_32S *buf_32S;

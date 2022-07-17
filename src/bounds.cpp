@@ -4,7 +4,6 @@
 
 #include <cassert>
 #include <cfloat>
-#include <climits>
 #include <algorithm>
 #include <string>
 #include <sstream>
@@ -17,23 +16,23 @@ Bounds::Bounds() :
 Bounds::Bounds(float m_min_value, float m_max_value) :
     min_value(m_min_value),
     max_value(m_max_value),
-    changed(false){
+    changed(false) {
 }
 
 void Bounds::update(float value) {
   min_value = std::min(min_value, value);
   max_value = std::max(max_value, value);
-  changed=true;
+  changed = true;
 }
 
-float Bounds::get_min_value() const{
+float Bounds::get_min_value() const {
   assert(changed);
   return min_value;
 }
 
 float Bounds::get_max_value() const {
   assert(changed);
-return max_value;
+  return max_value;
 }
 
 float Bounds::map_input_to_output_bounds(float value, Bounds &input_bounds, Bounds &output_bounds) {

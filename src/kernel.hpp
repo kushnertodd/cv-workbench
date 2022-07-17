@@ -31,22 +31,22 @@ class Kernel {
   static Kernel *create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S);
   static Kernel *create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F);
 
-  int row_col_to_index(int row, int col);
+  int row_col_to_index(int row, int col) const;
 
-  pixel_32F get(int row, int col);
-  pixel_32S get_32S(int row, int col);
-  pixel_32S get_32F(int row, int col);
+  pixel_32F get(int row, int col) const;
+  pixel_32S get_32S(int row, int col) const;
+  pixel_32S get_32F(int row, int col) const;
 
-  void set(int row, int col, pixel_32F value);
-  void set_32S(int row, int col, pixel_32S value);
-  void set_32F(int row, int col, pixel_32F value);
+  void set(int row, int col, pixel_32F value) const;
+  void set_32S(int row, int col, pixel_32S value) const;
+  void set_32F(int row, int col, pixel_32F value) const;
 
-  void add_32S(pixel_32S *src, int count);
-  void add_32F(pixel_32F *src, int count);
+  void add_32S(const pixel_32S *src, int count) const;
+  void add_32F(const pixel_32F *src, int count) const;
 
-  Image *convolve(Image *src);
+  Image *convolve(Image *src) const;
 
-  std::string to_string();
+  std::string to_string() const;
 };
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

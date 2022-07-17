@@ -28,14 +28,14 @@ class Variance_stats {
 
   Variance_stats();
   void update(double new_value);
-  bool is_valid();
+  bool is_valid() const;
   void finalize();
   double get_mean();
   double get_variance();
   double get_sample_variance();
   double get_standard_deviation();
   std::string to_string();
-  void write(FILE *fp, std::string path, Errors &errors);
+  void write(FILE *fp, const std::string &path, Errors &errors) const;
 };
 
 #endif //SRC__VARIANCE_STATS_HPP_

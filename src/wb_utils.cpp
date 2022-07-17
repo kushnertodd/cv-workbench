@@ -67,7 +67,7 @@ std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
   }
 }
 
-void wb_utils::error_exit(std::string message) {
+void wb_utils::error_exit(const std::string &message) {
   std::cout << message << std::endl;
   exit(0);
 }
@@ -91,7 +91,7 @@ std::string wb_utils::file_format_to_string(cv_enums::CV_image_file_format type)
  * @param value
  * @return
  */
-bool wb_utils::hex_string_to_int(std::string arg, unsigned long long &value) {
+bool wb_utils::hex_string_to_int(const std::string &arg, unsigned long long &value) {
   std::stringstream ss;
   ss << std::hex << arg;
   if (ss >> value) {
@@ -104,20 +104,20 @@ std::string wb_utils::image_depth_enum_to_string(cv_enums::CV_image_depth depth)
   switch (depth) {
     case cv_enums::CV_8U:
       return "cv_enums::CV_8U";
-    case cv_enums::CV_8S:
-      return "CV_8S";
-    case cv_enums::CV_16U:
-      return "CV_16U";
-    case cv_enums::CV_16S:
-      return "CV_16S";
-    case cv_enums::CV_32S:
-      return "cv_enums::CV_32S";
+//    case cv_enums::CV_8S:
+//      return "CV_8S";
+//    case cv_enums::CV_16U:
+//      return "CV_16U";
+//    case cv_enums::CV_16S:
+//      return "CV_16S";
+//    case cv_enums::CV_32S:
+//      return "cv_enums::CV_32S";
     case cv_enums::CV_32F:
       return "cv_enums::CV_32F";
-    case cv_enums::CV_64F:
-      return "CV_64F";
-    case cv_enums::CV_16F:
-      return "CV_16F";
+//    case cv_enums::CV_64F:
+//      return "CV_64F";
+//    case cv_enums::CV_16F:
+//      return "CV_16F";
     default:
       return "unknown image depth";
   }
@@ -254,7 +254,7 @@ void wb_utils::json_parse_array(json_object *jobj, char *key) {
     jarray = json_object_object_get(jobj, key); /*Getting the array if it is a key value pair*/
   }
 
-  int arraylen = json_object_array_length(jarray); /*Getting the length of the array*/
+  size_t arraylen = json_object_array_length(jarray); /*Getting the length of the array*/
   //printf("Array Length: %d\n",arraylen);
   std::cout << "Array Length: " << arraylen << std::endl;
   json_object *jvalue;
@@ -263,7 +263,7 @@ void wb_utils::json_parse_array(json_object *jobj, char *key) {
     jvalue = json_object_array_get_idx(jarray, i); /*Getting the array element at position i*/
     type = json_object_get_type(jvalue);
     if (type == json_type_array) {
-      json_parse_array(jvalue, NULL);
+      json_parse_array(jvalue, nullptr);
     } else if (type != json_type_object) {
       //printf("value[%d]: ",i);
       std::cout << "value[" << i << "]: " << std::endl;
@@ -345,7 +345,7 @@ std::string wb_utils::repository_type_enum_to_string(cv_enums::CV_repository_typ
   }
 }
 
-bool wb_utils::string_to_bool(std::string str, bool &bvalue) {
+bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
     return true;
@@ -357,7 +357,7 @@ bool wb_utils::string_to_bool(std::string str, bool &bvalue) {
   }
 }
 
-cv_enums::CV_data_type wb_utils::string_to_data_type_enum(std::string type) {
+cv_enums::CV_data_type wb_utils::string_to_data_type_enum(const std::string &type) {
   if (type == "contour")
     return cv_enums::CONTOUR;
   else if (type == "convolution kernel")
@@ -390,7 +390,7 @@ cv_enums::CV_data_type wb_utils::string_to_data_type_enum(std::string type) {
     return cv_enums::UNDEFINED_DATA_TYPE;
 }
 
-cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(std::string type) {
+cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(const std::string &type) {
   if (type == "binary")
     return cv_enums::BINARY;
   else if (type == "jpeg")
@@ -400,26 +400,26 @@ cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(std::string 
   else return cv_enums::UNDEFINED_FILE_FORMAT;
 }
 
-cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(std::string depth) {
+cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(const std::string &depth) {
   if (depth == "CV_8U") return cv_enums::CV_8U;
-  else if (depth == "CV_8S") return cv_enums::CV_8S;
-  else if (depth == "CV_16U") return cv_enums::CV_16U;
-  else if (depth == "CV_16S") return cv_enums::CV_16S;
+//  else if (depth == "CV_8S") return cv_enums::CV_8S;
+//  else if (depth == "CV_16U") return cv_enums::CV_16U;
+//  else if (depth == "CV_16S") return cv_enums::CV_16S;
   else if (depth == "CV_32S") return cv_enums::CV_32S;
   else if (depth == "CV_32F") return cv_enums::CV_32F;
-  else if (depth == "CV_64F") return cv_enums::CV_64F;
-  else if (depth == "CV_16F") return cv_enums::CV_16F;
+//  else if (depth == "CV_64F") return cv_enums::CV_64F;
+//  else if (depth == "CV_16F") return cv_enums::CV_16F;
   else return cv_enums::UNDEFINED_IMAGE_DEPTH;
 }
 
-bool wb_utils::string_to_int(std::string str, int &value) {
+bool wb_utils::string_to_int(const std::string &str, int &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
   if (ss >> value) return true;
   else return false;
 }
 
-cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(std::string type) {
+cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(const std::string &type) {
   if (type == "berkeley_db") return cv_enums::BERKELEY_DB;
   else if (type == "filesystem") return cv_enums::FILESYSTEM;
   else if (type == "internet") return cv_enums::INTERNET;
@@ -427,14 +427,14 @@ cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(std::strin
   else return cv_enums::UNDEFINED_REPOSITORY_TYPE;
 }
 
-bool wb_utils::string_to_real(std::string str, double &value) {
+bool wb_utils::string_to_real(const std::string &str, double &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
   if (ss >> value) return true;
   else return false;
 }
 
-bool wb_utils::write_double(FILE *fp, double value, std::string message, Errors &errors) {
+bool wb_utils::write_double(FILE *fp, double value, const std::string &message, Errors &errors) {
   fwrite(&value, sizeof(double), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -443,7 +443,7 @@ bool wb_utils::write_double(FILE *fp, double value, std::string message, Errors 
   return true;
 }
 
-bool wb_utils::write_double_buffer(FILE *fp, double *buf, double count, std::string message, Errors &errors) {
+bool wb_utils::write_double_buffer(FILE *fp, double *buf, int count, const std::string &message, Errors &errors) {
   fwrite(buf, sizeof(double), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -452,7 +452,7 @@ bool wb_utils::write_double_buffer(FILE *fp, double *buf, double count, std::str
   return true;
 }
 
-bool wb_utils::write_float(FILE *fp, float value, std::string message, Errors &errors) {
+bool wb_utils::write_float(FILE *fp, float value, const std::string &message, Errors &errors) {
   fwrite(&value, sizeof(float), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -461,7 +461,7 @@ bool wb_utils::write_float(FILE *fp, float value, std::string message, Errors &e
   return true;
 }
 
-bool wb_utils::write_float_buffer(FILE *fp, float *buf, float count, std::string message, Errors &errors) {
+bool wb_utils::write_float_buffer(FILE *fp, float *buf, int count, const std::string &message, Errors &errors) {
   fwrite(buf, sizeof(float), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -470,7 +470,7 @@ bool wb_utils::write_float_buffer(FILE *fp, float *buf, float count, std::string
   return true;
 }
 
-bool wb_utils::write_int(FILE *fp, int value, std::string message, Errors &errors) {
+bool wb_utils::write_int(FILE *fp, int value, const std::string &message, Errors &errors) {
   fwrite(&value, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add(message);
@@ -479,7 +479,7 @@ bool wb_utils::write_int(FILE *fp, int value, std::string message, Errors &error
   return true;
 }
 
-bool wb_utils::write_int_buffer(FILE *fp, int *buf, int count, std::string message, Errors &errors) {
+bool wb_utils::write_int_buffer(FILE *fp, int *buf, int count, const std::string &message, Errors &errors) {
   fwrite(buf, sizeof(int), count, fp);
   if (ferror(fp) != 0) {
     errors.add(message);

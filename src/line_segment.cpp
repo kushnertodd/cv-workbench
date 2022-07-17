@@ -8,6 +8,9 @@
 
 extern bool debug;
 
+Line_segment::Line_segment() : Line_segment(0, 0, 0, 0) {
+}
+
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     point1(min_row, min_col),
     point2(max_row, max_col) {
@@ -18,7 +21,7 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
   plotLine();
 }
 
-Line_segment::Line_segment(Point m_point1, Point m_point2) :
+Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
     point1(m_point1),
     point2(m_point2) {
   if (debug)
@@ -34,11 +37,11 @@ Line_segment::Line_segment(Point m_point1, Point m_point2) :
  * This fills in line segment points with Bresenham's line algorithm
  */
 void Line_segment::add(int x, int y) {
-  Point point(x,y);
+  Point point(x, y);
   add(point);
 }
 
-void Line_segment::add(const Point& point) {
+void Line_segment::add(const Point &point) {
   line_points.push_back(point);
 }
 
@@ -105,7 +108,12 @@ void Line_segment::plotLine() {
   }
 }
 
-std::string Line_segment::to_string() {
+void Line_segment::set(const Point &m_point1, const Point &m_point2) {
+  point1 = m_point1;
+  point2 = m_point2;
+}
+
+std::string Line_segment::to_string() const {
   std::ostringstream os;
   os << "point 1 " << point1.to_string()
      << " point 2 " << point2.to_string();

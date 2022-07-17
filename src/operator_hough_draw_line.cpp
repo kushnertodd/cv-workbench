@@ -11,8 +11,6 @@
 
 extern bool debug;
 
-Operator_hough_draw_line::Operator_hough_draw_line() {}
-
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
@@ -29,11 +27,11 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     std::cout << "Operator_hough_draw_line::run parameters: "
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  if (input_data_sources.size() < 1)
+  if (input_data_sources.empty())
     errors.add("Operator_hough_draw_line::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_draw_line::run", "", "too many input data sources");
-  else if (output_data_stores.size() < 1)
+  else if (output_data_stores.empty())
     errors.add("Operator_hough_draw_line::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
@@ -72,7 +70,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               else
                 saw_min_value = true;
             }
-            bool saw_max_value = true;
+            bool saw_max_value = false;
             int max_value = 0;
             if (Operator_utils::has_parameter(operator_parameters, "max_value")) {
               std::string max_value_str = Operator_utils::get_parameter(operator_parameters, "max_value");
@@ -90,9 +88,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
             if (errors.error_ct == 0) {
               Hough hough(input, theta_inc);
               int rho_index = hough.accum->rho_to_index(rho);
-              Polar_line *polar_line = hough.accum->make_polar_line(rho_index, theta_index);
-              Line_segment *line_segment = hough.accum->clip_window(polar_line);
-              if (line_segment == nullptr) {
+              Polar_line polar_line(rho_index, rho, theta_index,
+                  hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index),0);
+              Line_segment line_segment; if (!hough.accum->clip_window(line_segment, polar_line)) {
                 errors.add("Operator_hough_draw_line::run", "", "failed clipping (theta_index, rho against image ");
               } else {
                 Variance_stats stats;

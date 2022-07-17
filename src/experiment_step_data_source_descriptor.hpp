@@ -19,18 +19,18 @@ class Experiment_step_data_source_descriptor : public Data_source_descriptor {
   int ref_id; // output data source id
   Experiment_step_data_source_descriptor(int m_id,
                                          cv_enums::CV_data_type m_cv_data_type);
-  std::string read_json(Errors &errors);
-  Image *read_image(Errors &errors);
-  Histogram *read_histogram(Errors &errors);
-  Hough *read_hough(Errors &errors);
-  void write_json(std::string &json, Errors &errors);
-  void write_image(Image *image, Errors &errors);
-  void write_histogram(Histogram *histogram, Errors &errors);
-  void write_hough(Hough *hough, Errors &errors);
+  std::string read_json(Errors &errors) override;
+  Image *read_image(Errors &errors) override;
+  Histogram *read_histogram(Errors &errors) override;
+  Hough *read_hough(Errors &errors) override;
+  void write_json(std::string &json, Errors &errors) override;
+  void write_image(Image *image, Errors &errors) override;
+  void write_histogram(Histogram *histogram, Errors &errors) override;
+  void write_hough(Hough *hough, Errors &errors) override;
   static Experiment_step_data_source_descriptor *json_parse(json_object *json_data_descriptor,
                                                             int id,
                                                             cv_enums::CV_data_type data_type, Errors &errors);
-  std::string to_string();
+  std::string to_string() override;
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_STEP_DATA_SOURCE_DESCRIPTOR_HPP_

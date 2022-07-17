@@ -14,8 +14,10 @@ extern bool debug;
 
 Experiment_step_data_source_descriptor::Experiment_step_data_source_descriptor(int m_id,
                                                                                cv_enums::CV_data_type m_cv_data_type) :
-    Data_source_descriptor(m_id, cv_enums::EXPERIMENT_STEP, m_cv_data_type) {}
-std::string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return nullptr; }
+    Data_source_descriptor(m_id, cv_enums::EXPERIMENT_STEP, m_cv_data_type),
+    step_id(0),
+    ref_id(0){}
+std::string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return ""; }
 Image *Experiment_step_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Histogram *Experiment_step_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Experiment_step_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
@@ -30,7 +32,7 @@ Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::
   if (debug)
     std::cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
          << data_type << std::endl;
-  Experiment_step_data_source_descriptor *experiment_step_data_source_descriptor =
+  auto *experiment_step_data_source_descriptor =
       new Experiment_step_data_source_descriptor(id, data_type);
   json_object *json_step_id =
       get_json_object("Experiment_step_data_source_descriptor::json_parse",

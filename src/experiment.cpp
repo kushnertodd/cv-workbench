@@ -5,13 +5,11 @@
 #include "experiment.hpp"
 
 Experiment::~Experiment() {
-  std::list<Experiment_step *> experiment_steps;
   for (Experiment_step *step: experiment_steps) {
-    if (step != nullptr)
-      delete step;
+    delete step;
   }
 }
-Experiment::Experiment() {}
+Experiment::Experiment() = default;
 /**
 * Parse experiment json
 * @param jobj  json-cR parsed json
@@ -19,7 +17,7 @@ Experiment::Experiment() {}
 */
 Experiment *Experiment::json_parse(json_object *jobj, Errors &errors) {
   // parse: ' "experiment": { ... `
-  Experiment *experiment = new Experiment();
+  auto *experiment = new Experiment();
   json_object *json_experiment =
       get_json_object("Experiment::json_parse", jobj, "experiment", json_type_object, errors);
   if (json_experiment != nullptr) {
@@ -27,7 +25,7 @@ Experiment *Experiment::json_parse(json_object *jobj, Errors &errors) {
     json_object
         *json_steps = get_json_object("Experiment::json_parse", json_experiment, "steps", json_type_array, errors);
     if (json_steps != nullptr) {
-      int nsteps = json_object_array_length(json_steps);
+      size_t nsteps = json_object_array_length(json_steps);
       for (int i = 0; i < nsteps; i++) {
         json_object *json_step = json_object_array_get_idx(json_steps, i);
         if (error_check_type("Experiment::json_parse", "step", json_step, json_type_object, errors)) {
