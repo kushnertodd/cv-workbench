@@ -1,1 +1,1 @@
-./parse_experiment_json  ../config/experiment3-definition.json
+./cv-workbench  ../config/experiment3-definition.json

@@ -31,8 +31,8 @@ int main(int argc, char **argv) {
   else {
     Errors errors;
     Experiment *experiment = Experiment::json_parse(jobj, errors);
-    errors.check_exit("parse_experiment_json: there were errors.");
+    errors.check_exit("cv-workbench: there were errors.");
     experiment->run(errors);
-    errors.check_exit("parse_experiment_json: there were errors.");
+    errors.check_exit("cv-workbench: there were errors.");
   }
 }

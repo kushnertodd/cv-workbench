@@ -179,6 +179,7 @@ void Experiment_step::run(Errors &errors) {
     }
 
     step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
+    delete step_operator;
   }
 }
 
