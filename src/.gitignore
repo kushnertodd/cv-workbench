@@ -4,6 +4,7 @@ hough/
 image-polar-run/
 images/
 logs/
+scripts/
 cv-workbench
 image-create
 image-dump
