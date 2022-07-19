@@ -25,7 +25,8 @@ class Hough {
   void find_peaks();
   void lines_to_line_segments();
   static bool read(const std::string &filename, Errors &errors);
-  bool write(const std::string &filename, const std::string &delim, Errors &errors) const;
+  bool write(const std::string &filename, Errors &errors) const;
+  bool write_text(const std::string &filename, const std::string &delim, Errors &errors) const;
 };
 
 #endif //CV_WORKBENCH_SRC_HOUGH_HPP_

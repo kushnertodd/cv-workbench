@@ -13,28 +13,35 @@ extern bool debug;
 //
 
 Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
-                                                                 cv_enums::CV_data_type m_cv_data_type) :
-    Data_source_descriptor(m_id, cv_enums::INTERNET, m_cv_data_type),
+                                                                 cv_enums::CV_data_type m_data_type,
+                                                                 cv_enums::CV_data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::INTERNET),
     rows(0),
     cols(0) {}
-std::string Internet_data_source_descriptor::read_json(Errors &errors) { return ""; }
-Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-void Internet_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
-void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+Image *Internet_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
+std::string Internet_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Internet_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Internet_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Internet_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
+void Internet_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
-Internet_data_source_descriptor *Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
-                                                                             int id,
-                                                                             cv_enums::CV_data_type data_type,
-                                                                             Errors &errors) {
+Internet_data_source_descriptor
+*Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
+                                             int id,
+                                             cv_enums::CV_data_type data_type,
+                                             cv_enums::CV_data_format data_format,
+                                             Errors &errors) {
   if (debug)
     std::cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
               << data_type << std::endl;
   auto *internet_data_source_descriptor =
-      new Internet_data_source_descriptor(id, data_type);
+      new Internet_data_source_descriptor(id, data_type, data_format);
   json_object *json_url =
       get_json_object("Internet_data_source_descriptor::json_parse",
                       json_data_descriptor,

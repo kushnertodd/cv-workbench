@@ -29,11 +29,11 @@ enum CV_data_type {
   UNDEFINED_DATA_TYPE
 };
 
-enum CV_image_file_format {
-  BINARY, // includes header [int rows, int cols, int components]
-  JPEG,
+enum CV_data_format {
+  BINARY,
+  JPEG, // CV_data_type::IMAGE only
   TEXT,
-  UNDEFINED_FILE_FORMAT
+  UNDEFINED_DATA_FORMAT
 };
 
 enum CV_image_depth {

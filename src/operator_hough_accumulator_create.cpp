@@ -3,7 +3,10 @@
 //
 
 #include <iostream>
+#include "berkeley_db_data_source_descriptor.hpp"
+#include "filesystem_data_source_descriptor.hpp"
 #include "hough.hpp"
+#include "internet_data_source_descriptor.hpp"
 #include "operator_utils.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -45,33 +48,26 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
         errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'theta_inc' parameter");
       else {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        auto it = output_data_stores.begin();
-        Data_source_descriptor *hough_text_output_data_store = *it;
-        std::advance(it, 1);
-        Data_source_descriptor *hough_lines_output_data_store = *it;
-
         Image *input = input_data_source->read_image(errors);
         if (errors.error_ct == 0 && input != nullptr)
           input->check_grayscale(errors);
         if (errors.error_ct == 0) {
           Hough hough(input, theta_inc);
-          hough_text_output_data_store->write_hough(&hough, errors);
-          if (errors.error_ct == 0) {
-            Variance_stats stats;
-            input->get_stats(stats);
-            Image *output = Image::scale_image(input,
-                                               stats.bounds.min_value,
-                                               stats.bounds.min_value,
-                                               pixel_8U_MIN,
-                                               pixel_8U_MAX,
-                                               cv_enums::CV_8U);
-            hough.find_lines();
-            output->draw_line_segments(hough.line_segments, 0);
-            hough_lines_output_data_store->write_image(output, errors);
+          for (auto it = output_data_stores.begin();
+               it != output_data_stores.end();
+               it++) {
+            Data_source_descriptor *hough_output_data_store = *it;
+            if (hough_output_data_store->data_format == cv_enums::BINARY) {
+              hough_output_data_store->write_hough(&hough, errors);
+            } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
+              hough_output_data_store->write_hough_text(&hough, errors);
+            } else {
+              errors.add("Operator_hough_accumulator_create::run", "", "invalid data format "
+                  + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+            }
           }
         }
       }
     }
   }
-
 }

@@ -8,29 +8,38 @@
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
 
+extern bool debug;
+
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
-                                                                       cv_enums::CV_data_type m_cv_data_type) :
-    Data_source_descriptor(m_id, cv_enums::BERKELEY_DB, m_cv_data_type),
+                                                                       cv_enums::CV_data_type m_data_type,
+                                                                       cv_enums::CV_data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::BERKELEY_DB),
     ref_id(0) {}
 
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+Image *Berkeley_db_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
 std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
-Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
-                                                                                   int id,
-                                                                                   cv_enums::CV_data_type data_type,
-                                                                                   Errors &errors) {
+Berkeley_db_data_source_descriptor
+*Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
+                                                int id,
+                                                cv_enums::CV_data_type data_type,
+                                                cv_enums::CV_data_format data_format,
+                                                Errors &errors) {
   if (debug)
     std::cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
-         << data_type << std::endl;
+              << data_type << std::endl;
   auto *berkeley_db_data_source_descriptor =
-      new Berkeley_db_data_source_descriptor(id, data_type);
+      new Berkeley_db_data_source_descriptor(id, data_type, data_format);
   json_object *json_ref_id =
       get_json_object("Berkeley_db_data_source_descriptor::json_parse",
                       json_data_descriptor,

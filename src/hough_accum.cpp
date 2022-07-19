@@ -105,33 +105,23 @@ int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) co
  *   or below the window:
  *
  *      .     .
- *      .     .
  * 2.1 -+-----+-
- *      .     .
  * 2.2 \.     ./
  *      +     +
  *      .\   /.
- *      . \ / .
  *      +==+==+
- *      I / \ I
  *      I/   \I
  *      +     +
  * 2.3 /I     I\
- *      I     I
  * 2.4 -+-----+-
- *      I     I
  * 2.5 \I     I/
  *      +     +
  *      I\   /I
- *      I \ / I
  *      +==+==+
- *      . / \ .
  *      ./   \.
- *     -+-----+-
+ *      +     + 
  * 2.6 /.     .\
- *      .     .
  * 2.7 -+-----+-
- *      .     .
  *      .     .
  *
  *   This shows the position of the clip point in each subcase:
@@ -511,7 +501,7 @@ void Hough_accum::update_stats() {
   }
 }
 
-bool Hough_accum::write_str(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+bool Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   ofs << "nthetas " << nthetas << delim
       << " theta_inc " << theta_inc << delim
       << " max_rho " << max_rho << delim

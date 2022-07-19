@@ -28,23 +28,26 @@ class Kernel {
 
   ~Kernel();
   Kernel(int m_kernel_rows, int m_kernel_cols, cv_enums::CV_image_depth m_depth);
-  static Kernel *create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S);
-  static Kernel *create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F);
-
-  int row_col_to_index(int row, int col) const;
-
-  pixel_32F get(int row, int col) const;
-  pixel_32S get_32S(int row, int col) const;
-  pixel_32S get_32F(int row, int col) const;
-
-  void set(int row, int col, pixel_32F value) const;
-  void set_32S(int row, int col, pixel_32S value) const;
-  void set_32F(int row, int col, pixel_32F value) const;
 
   void add_32S(const pixel_32S *src, int count) const;
   void add_32F(const pixel_32F *src, int count) const;
 
   Image *convolve(Image *src) const;
+
+  static Kernel *create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S);
+  static Kernel *create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F);
+
+  double get(int row, int col) const;
+  pixel_32F get_32F(int row, int col) const;
+  pixel_32S get_32S(int row, int col) const;
+  int get_kernel_rows();
+  int get_kernel_cols();
+
+  int row_col_to_index(int row, int col) const;
+
+  void set(int row, int col, double value) const;
+  void set_32F(int row, int col, pixel_32F value) const;
+  void set_32S(int row, int col, pixel_32S value) const;
 
   std::string to_string() const;
 };

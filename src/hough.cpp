@@ -80,14 +80,28 @@ bool Hough::read(const std::string &filename, Errors &errors) {
   return return_value;
 }
 
-bool Hough::write(const std::string &filename, const std::string &delim, Errors &errors) const {
+bool Hough::write(const std::string &filename, Errors &errors) const {
   std::ofstream ofs(filename, std::ofstream::out);
   if (!ofs) {
     errors.add("Hough:write", "", "invalid filename '" + filename + "'");
     return false;
   }
   bool return_value = true;
-  if (!accum->write_str(ofs, "\t", errors)) {
+  if (!accum->write_text(ofs, "\t", errors)) {
+    return_value = false;
+  }
+  ofs.close();
+  return return_value;
+}
+
+bool Hough::write_text(const std::string &filename, const std::string &delim, Errors &errors) const {
+  std::ofstream ofs(filename, std::ofstream::out);
+  if (!ofs) {
+    errors.add("Hough:write", "", "invalid filename '" + filename + "'");
+    return false;
+  }
+  bool return_value = true;
+  if (!accum->write_text(ofs, "\t", errors)) {
     return_value = false;
   }
   ofs.close();

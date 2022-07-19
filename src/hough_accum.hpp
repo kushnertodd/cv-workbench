@@ -59,7 +59,7 @@ class Hough_accum {
   double row_to_y(int row) const;
   int theta_index_to_theta(int index) const;
   void update_stats();
-  bool write_str(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+  bool write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   int x_to_col(double x) const;
   int y_to_row(double y) const;
 };

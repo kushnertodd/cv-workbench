@@ -100,10 +100,10 @@ void Histogram::write(const std::string &path, Errors &errors) {
 
 void Histogram::write_text(const std::string &path, const std::string &delim, Errors &errors) {
   if (debug)
-    std::cout << "Histogram::write_string path '" << path << "' " << to_string() << std::endl;
+    std::cout << "Histogram::write_text path '" << path << "' " << to_string() << std::endl;
   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
-    errors.add("Histogram::write_string", "", "invalid file '" + path + "'");
+    errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;
   }
   ofs << "nbins " << nbins

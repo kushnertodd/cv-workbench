@@ -77,7 +77,7 @@ void wb_utils::error_exit(const std::string &message) {
   exit(0);
 }
 
-std::string wb_utils::file_format_to_string(cv_enums::CV_image_file_format type) {
+std::string wb_utils::data_format_to_string(cv_enums::CV_data_format type) {
   switch (type) {
     case cv_enums::BINARY:
       return "binary";
@@ -407,14 +407,14 @@ cv_enums::CV_data_type wb_utils::string_to_data_type_enum(const std::string &typ
     return cv_enums::UNDEFINED_DATA_TYPE;
 }
 
-cv_enums::CV_image_file_format wb_utils::string_to_file_format_enum(const std::string &type) {
+cv_enums::CV_data_format wb_utils::string_to_data_format_enum(const std::string &type) {
   if (type == "binary")
     return cv_enums::BINARY;
   else if (type == "jpeg")
     return cv_enums::JPEG;
   else if (type == "text")
     return cv_enums::TEXT;
-  else return cv_enums::UNDEFINED_FILE_FORMAT;
+  else return cv_enums::UNDEFINED_DATA_FORMAT;
 }
 
 cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(const std::string &depth) {

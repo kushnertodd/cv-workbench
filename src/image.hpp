@@ -50,8 +50,8 @@ class Image {
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
 
   // TODO: add component
-  pixel_32F get(int row, int col) const;
-  pixel_32F get(Point &point) const;
+  double get(int row, int col) const;
+  double get(Point &point) const;
   pixel_8U get_8U(int row, int col) const;
   pixel_32F get_32F(int row, int col) const;
   pixel_32S get_32S(int row, int col) const;

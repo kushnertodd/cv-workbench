@@ -29,7 +29,7 @@
           }
         ],
         "parameters": {
-            "depth": "CV_8U",
+            "depth": "CV_8U"
         }
       }
     ]

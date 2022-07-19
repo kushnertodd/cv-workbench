@@ -169,7 +169,7 @@ void Image::draw_line_segments(std::list<Line_segment> &line_segments, double va
   }
 }
 
-pixel_32F Image::get(int row, int col) const {
+double Image::get(int row, int col) const {
   int index;
   switch (get_depth()) {
     case cv_enums::CV_8U:
@@ -189,7 +189,7 @@ pixel_32F Image::get(int row, int col) const {
   }
 }
 
-pixel_32F Image::get(Point &point) const {
+double Image::get(Point &point) const {
   return get(point.row, point.col);
 }
 

@@ -13,27 +13,36 @@ extern bool debug;
 //
 
 Experiment_step_data_source_descriptor::Experiment_step_data_source_descriptor(int m_id,
-                                                                               cv_enums::CV_data_type m_cv_data_type) :
-    Data_source_descriptor(m_id, cv_enums::EXPERIMENT_STEP, m_cv_data_type),
+                                                                               cv_enums::CV_data_type m_data_type,
+                                                                               cv_enums::CV_data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::EXPERIMENT_STEP),
     step_id(0),
-    ref_id(0){}
-std::string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return ""; }
-Image *Experiment_step_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+    ref_id(0) {}
+
 Histogram *Experiment_step_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Experiment_step_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-void Experiment_step_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
-void Experiment_step_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+Image *Experiment_step_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+Image *Experiment_step_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
+std::string Experiment_step_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Experiment_step_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Experiment_step_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Experiment_step_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
-Experiment_step_data_source_descriptor *Experiment_step_data_source_descriptor::json_parse(json_object *json_data_descriptor,
-                                                                                           int id,
-                                                                                           cv_enums::CV_data_type data_type,
-                                                                                           Errors &errors) {
+void Experiment_step_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Experiment_step_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Experiment_step_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
+void Experiment_step_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
+
+Experiment_step_data_source_descriptor
+*Experiment_step_data_source_descriptor::json_parse(json_object *json_data_descriptor,
+                                                    int id,
+                                                    cv_enums::CV_data_type data_type,
+                                                    cv_enums::CV_data_format data_format,
+                                                    Errors &errors) {
   if (debug)
     std::cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
-         << data_type << std::endl;
+              << data_type << std::endl;
   auto *experiment_step_data_source_descriptor =
-      new Experiment_step_data_source_descriptor(id, data_type);
+      new Experiment_step_data_source_descriptor(id, data_type, data_format);
   json_object *json_step_id =
       get_json_object("Experiment_step_data_source_descriptor::json_parse",
                       json_data_descriptor,

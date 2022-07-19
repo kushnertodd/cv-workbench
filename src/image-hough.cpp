@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
       if (debug)
         std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
       out_image->draw_line_segments(hough.line_segments, 0);
-      hough.write(hough_filename, "\t", errors);
+      hough.write_text(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename + ".jpg", errors);
       hist = new Histogram(100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
       for (int theta_index = 0; theta_index < hough.accum->nthetas; theta_index++) {

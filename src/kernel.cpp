@@ -37,67 +37,6 @@ Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, cv_enums::CV_image_depth m_
   }
 }
 
-Kernel *Kernel::create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S) {
-  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32S);
-  kernel->add_32S(buf_32S, kernel->size);
-  return kernel;
-}
-
-Kernel *Kernel::create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F) {
-  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32F);
-  kernel->add_32F(buf_32F, kernel->size);
-  return kernel;
-}
-
-int Kernel::row_col_to_index(int row, int col) const {
-  return row * kernel_rows + col;
-}
-
-pixel_32F Kernel::get(int row, int col) const {
-  switch (depth) {
-    case cv_enums::CV_32S:
-      return wb_utils::int_to_float(buf_32S[row_col_to_index(row, col)]);
-
-    case cv_enums::CV_32F:
-      return buf_32F[row_col_to_index(row, col)];
-
-    default:
-      return 0.0;
-  }
-}
-
-pixel_32S Kernel::get_32S(int row, int col) const {
-  return wb_utils::round_float_to_int(buf_32F[row_col_to_index(row, col)]);
-}
-
-pixel_32S Kernel::get_32F(int row, int col) const {
-  return wb_utils::round_float_to_int(buf_32F[row_col_to_index(row, col)]);
-}
-
-void Kernel::set(int row, int col, pixel_32F value) const {
-  switch (depth) {
-
-    case cv_enums::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = wb_utils::round_float_to_int(value);
-      break;
-
-    case cv_enums::CV_32F:
-      buf_32F[row_col_to_index(row, col)] = value;
-      break;
-
-    default:
-      break;
-  }
-}
-
-void Kernel::set_32S(int row, int col, pixel_32S value) const {
-  buf_32F[row_col_to_index(row, col)] = wb_utils::int_to_float(value);
-}
-
-void Kernel::set_32F(int row, int col, pixel_32F value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
-}
-
 void Kernel::add_32S(const pixel_32S *src, int count) const {
   for (int i = 0; i < count; i++) {
     buf_32S[i] = src[i];
@@ -126,7 +65,6 @@ Image *Kernel::convolve(Image *src) const {
   int row_upper = src_rows - kernel_rows;
   int col_lower = 0;
   int col_upper = src_cols - kernel_cols;
-  //printf("row_lower %d, row_upper %d, col_lower %d, col_upper %d\n", row_lower, row_upper, col_lower, col_upper);
   if (debug)
     std::cout << "rows_half " << rows_half
               << " cols_half " << cols_half
@@ -145,31 +83,21 @@ Image *Kernel::convolve(Image *src) const {
               << " kernel_col_upper " << kernel_col_upper << std::endl;
   for (int row = row_lower; row <= row_upper; row++) {
     int row_center = row + rows_half - 1;
-    //printf("row %d row_center %d\n", row, row_center);
     if (debug)
       std::cout << "row " << row
                 << " row_center " << row_center << std::endl;
     for (int col = col_lower; col <= col_upper; col++) {
       int col_center = col + cols_half - 1;
-      //printf("  col %d, col_center %d\n", col, col_center);
-//      int kernel_row_lower = row;
-//      int kernel_row_upper = row + kernel_rows - 1;
       if (debug)
         std::cout << "col " << col
                   << " col_center " << col_center
-                  //             << " kernel_row_lower " << kernel_row_lower
-                  //             << " kernel_row_upper " << kernel_row_upper
                   << std::endl;
       double sum = 0.0;
       for (int i = kernel_row_lower; i <= kernel_row_upper; i++) {
-//        int kernel_col_lower = col;
-//        int kernel_col_upper = col + kernel_cols - 1;
-        //printf("     ");
         for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
           double kernel_val = get(i, j);
           double image_val = src->get(row + i, col + j);
           sum += kernel_val * image_val;
-          //printf("sum += kernel[%d,%d] %7.2f * image[%d,%d] %7.2f = %7.2f\n", i, j, kernel_val, row+i, col+j, image_val, sum);
           if (debug)
             std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
                       << " * image[" << row + i << "," << col + j
@@ -178,13 +106,81 @@ Image *Kernel::convolve(Image *src) const {
         if (debug)
           std::cout << std::endl;
       }
-      //printf("buf[%d,%d] = %7.2f\n", row_center, col_center, sum);
       if (debug)
         std::cout << "buf[" << row_center << "," << col_center << "] = " << sum << std::endl;
       out->set(row_center, col_center, sum);
     }
   }
   return out;
+}
+
+Kernel *Kernel::create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S) {
+  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32S);
+  kernel->add_32S(buf_32S, kernel->size);
+  return kernel;
+}
+
+Kernel *Kernel::create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F) {
+  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32F);
+  kernel->add_32F(buf_32F, kernel->size);
+  return kernel;
+}
+
+double Kernel::get(int row, int col) const {
+  switch (depth) {
+    case cv_enums::CV_32S:
+      return buf_32S[row_col_to_index(row, col)];
+
+    case cv_enums::CV_32F:
+      return buf_32F[row_col_to_index(row, col)];
+
+    default:
+      return 0.0;
+  }
+}
+
+pixel_32S Kernel::get_32S(int row, int col) const {
+  return wb_utils::round_float_to_int(buf_32F[row_col_to_index(row, col)]);
+}
+
+pixel_32F Kernel::get_32F(int row, int col) const {
+  return buf_32F[row_col_to_index(row, col)];
+}
+
+int Kernel::get_kernel_rows() {
+  return kernel_rows;
+}
+
+int Kernel::get_kernel_cols() {
+  return kernel_cols;
+}
+
+int Kernel::row_col_to_index(int row, int col) const {
+  return row * kernel_rows + col;
+}
+
+void Kernel::set(int row, int col, double value) const {
+  switch (depth) {
+
+    case cv_enums::CV_32S:
+      buf_32S[row_col_to_index(row, col)] = wb_utils::round_float_to_int(value);
+      break;
+
+    case cv_enums::CV_32F:
+      buf_32F[row_col_to_index(row, col)] = value;
+      break;
+
+    default:
+      break;
+  }
+}
+
+void Kernel::set_32S(int row, int col, pixel_32S value) const {
+  buf_32F[row_col_to_index(row, col)] = wb_utils::int_to_float(value);
+}
+
+void Kernel::set_32F(int row, int col, pixel_32F value) const {
+  buf_32F[row_col_to_index(row, col)] = value;
 }
 
 std::string Kernel::to_string() const {
