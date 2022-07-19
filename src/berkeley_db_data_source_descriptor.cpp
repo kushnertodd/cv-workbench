@@ -8,13 +8,10 @@
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
 
-//
-
-extern bool debug;
-
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                                                                        cv_enums::CV_data_type m_cv_data_type) :
-    Data_source_descriptor(m_id, cv_enums::BERKELEY_DB, m_cv_data_type) {}
+    Data_source_descriptor(m_id, cv_enums::BERKELEY_DB, m_cv_data_type),
+    ref_id(0) {}
 
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
@@ -32,7 +29,7 @@ Berkeley_db_data_source_descriptor *Berkeley_db_data_source_descriptor::json_par
   if (debug)
     std::cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
          << data_type << std::endl;
-  Berkeley_db_data_source_descriptor *berkeley_db_data_source_descriptor =
+  auto *berkeley_db_data_source_descriptor =
       new Berkeley_db_data_source_descriptor(id, data_type);
   json_object *json_ref_id =
       get_json_object("Berkeley_db_data_source_descriptor::json_parse",

@@ -57,24 +57,24 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
           errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_index' parameter");
         else {
           std::string rho_str = Operator_utils::get_parameter(operator_parameters, "rho");
-          int rho = 0;
-          if (!wb_utils::string_to_int(rho_str, rho))
+          double rho = 0;
+          if (!wb_utils::string_to_double(rho_str, rho))
             errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
           else {
             bool saw_min_value = false;
-            int min_value = 0;
+            double min_value = 0;
             if (Operator_utils::has_parameter(operator_parameters, "min_value")) {
               std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "min_value");
-              if (!wb_utils::string_to_int(min_value_str, min_value))
+              if (!wb_utils::string_to_double(min_value_str, min_value))
                 errors.add("Operator_hough_draw_line::run", "", "non-numeric 'min_value' parameter");
               else
                 saw_min_value = true;
             }
             bool saw_max_value = false;
-            int max_value = 0;
+            double max_value = 0;
             if (Operator_utils::has_parameter(operator_parameters, "max_value")) {
               std::string max_value_str = Operator_utils::get_parameter(operator_parameters, "max_value");
-              if (!wb_utils::string_to_int(max_value_str, max_value))
+              if (!wb_utils::string_to_double(max_value_str, max_value))
                 errors.add("Operator_hough_draw_line::run", "", "non-numeric 'max_value' parameter");
               else
                 saw_max_value = true;

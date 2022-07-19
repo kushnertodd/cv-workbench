@@ -23,9 +23,9 @@ Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
     theta_inc(m_theta_inc),
     image(m_image) {
   nthetas = max_theta / theta_inc;
-  max_rho = std::round(sqrt(get_rows() * get_rows() + get_cols() * get_cols())) + rho_buffer;
-  hough_cos = new float[nthetas];
-  hough_sin = new float[nthetas];
+  max_rho = wb_utils::round_double_to_int(sqrt(get_rows() * get_rows() + get_cols() * get_cols())) + rho_buffer;
+  hough_cos = new double[nthetas];
+  hough_sin = new double[nthetas];
   if (debug)
     std::cout << "Hough_accum::Hough_accum theta_inc " << theta_inc
               << " max_theta " << max_theta
@@ -62,7 +62,7 @@ int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) co
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
     return 40000; //bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
-    return bounds.max_value * 0.85;
+    return wb_utils::round_double_to_int(bounds.max_value * 0.85);
   } else return -1;
 }
 
@@ -347,17 +347,16 @@ bool Hough_accum::clip_window(Line_segment &line_segment, Polar_line &line) cons
     line_segment.set(left_point, right_point);
     return true;
   }
-  return true;
 }
 
-float Hough_accum::col_to_x(int col) const {
-  float col_offset = get_cols() / 2.0;
-  float x = col - col_offset;
+double Hough_accum::col_to_x(int col) const {
+  double col_offset = get_cols() / 2.0;
+  double x = col - col_offset;
   return x;
 }
 
-float Hough_accum::deg_to_rad(int deg) const {
-  float rad = deg * pi / max_theta;
+double Hough_accum::deg_to_rad(int deg) const {
+  double rad = deg * pi / max_theta;
   return rad;
 }
 
@@ -379,11 +378,11 @@ void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
 
 int Hough_accum::get_cols() const { return image->image_header->cols; }
 
-float Hough_accum::get_cos(int theta_index) const { return hough_cos[theta_index]; }
+double Hough_accum::get_cos(int theta_index) const { return hough_cos[theta_index]; }
 
 int Hough_accum::get_rows() const { return image->image_header->rows; }
 
-float Hough_accum::get_sin(int theta_index) const { return hough_sin[theta_index]; }
+double Hough_accum::get_sin(int theta_index) const { return hough_sin[theta_index]; }
 
 bool Hough_accum::in_window(Point &point) const {
   bool row_valid = point.row >= 0 && point.row < get_rows();
@@ -400,11 +399,11 @@ bool Hough_accum::in_window(Point &point) const {
 void Hough_accum::initialize(int image_theshold) {
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
-      float value = image->get(row, col);
+      double value = image->get(row, col);
       if (std::abs(value) > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
           int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
-          add(theta_index, rho_index, abs(value));
+          add(theta_index, rho_index, wb_utils::round_double_to_int(abs(value)));
         }
       }
     }
@@ -445,57 +444,57 @@ bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   return true;
 }
 
-float Hough_accum::rho_index_to_rho(int rho_index) const {
-  float rho_offset = max_rho / 2.0;
-  float rho = rho_index - rho_offset;
+double Hough_accum::rho_index_to_rho(int rho_index) const {
+  double rho_offset = max_rho / 2.0;
+  double rho = rho_index - rho_offset;
   return rho;
 }
 // can have a singularity if theta ~= , 180, sin ~= 0
 int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) const {
-  float x = col_to_x(col);
-  float cos_t = get_cos(theta_index);
-  float rho = rho_index_to_rho(rho_index);
-  float sin_t = get_sin(theta_index);
-  float row_offset = get_rows() / 2.0;
-  float row = (x * cos_t - rho) / sin_t + row_offset;
-  return round(row);
+  double x = col_to_x(col);
+  double cos_t = get_cos(theta_index);
+  double rho = rho_index_to_rho(rho_index);
+  double sin_t = get_sin(theta_index);
+  double row_offset = get_rows() / 2.0;
+  double row = (x * cos_t - rho) / sin_t + row_offset;
+  return wb_utils::round_double_to_int(row);
 }
 
 // can have a singularity if theta ~= 90, cos ~= 0
 int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) const {
-  float rho = rho_index_to_rho(rho_index);
-  float cos_t = get_cos(theta_index);
-  float y = row_to_y(row);
-  float sin_t = get_sin(theta_index);
-  float col_offset = get_cols() / 2.0;
-  float col = (rho - y * sin_t) / cos_t + col_offset;
-  return round(col);
+  double rho = rho_index_to_rho(rho_index);
+  double cos_t = get_cos(theta_index);
+  double y = row_to_y(row);
+  double sin_t = get_sin(theta_index);
+  double col_offset = get_cols() / 2.0;
+  double col = (rho - y * sin_t) / cos_t + col_offset;
+  return wb_utils::round_double_to_int(col);
 }
 
-int Hough_accum::rho_to_index(float rho) const {
-  float rho_offset = max_rho / 2.0;
-  int rho_index = round(rho) + rho_offset;
+int Hough_accum::rho_to_index(double rho) const {
+  double rho_offset = max_rho / 2.0;
+  int rho_index = wb_utils::round_double_to_int(rho + rho_offset);
   return rho_index;
 }
 
-float Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) const {
-  float x = col_to_x(col);
-  float cos_t = get_cos(theta_index);
-  float y = row_to_y(row);
-  float sin_t = get_sin(theta_index);
-  float rho = x * cos_t + y * sin_t;
+double Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) const {
+  double x = col_to_x(col);
+  double cos_t = get_cos(theta_index);
+  double y = row_to_y(row);
+  double sin_t = get_sin(theta_index);
+  double rho = x * cos_t + y * sin_t;
   return rho;
 }
 
 int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) const {
-  float rho = row_col_theta_to_rho(row, col, theta_index);
+  double rho = row_col_theta_to_rho(row, col, theta_index);
   int rho_index = rho_to_index(rho);
   return rho_index;
 }
 
-float Hough_accum::row_to_y(int row) const {
-  float row_offset = get_rows() / 2.0;
-  float y = row_offset - row;
+double Hough_accum::row_to_y(int row) const {
+  double row_offset = get_rows() / 2.0;
+  double y = row_offset - row;
   return y;
 }
 
@@ -532,15 +531,15 @@ bool Hough_accum::write_str(std::ofstream &ofs, const std::string &delim, Errors
   return true;
 }
 
-int Hough_accum::x_to_col(float x) const {
-  float col_offset = get_cols() / 2.0;
-  int col = round(x + col_offset);
+int Hough_accum::x_to_col(double x) const {
+  double col_offset = get_cols() / 2.0;
+  int col = wb_utils::round_double_to_int(x + col_offset);
   return col;
 }
 
-int Hough_accum::y_to_row(float y) const {
-  float row_offset = get_rows() / 2.0;
-  int row = round(row_offset - y);
+int Hough_accum::y_to_row(double y) const {
+  double row_offset = get_rows() / 2.0;
+  int row = wb_utils::round_double_to_int(row_offset - y);
   return row;
 }
 

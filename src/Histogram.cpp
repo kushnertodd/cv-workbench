@@ -2,7 +2,6 @@
 // Created by kushn on 6/11/2022.
 //
 
-#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -18,32 +17,39 @@ Histogram::~Histogram() {
 }
 
 Histogram::Histogram(int m_nbins,
-                     float m_min_value,
-                     float m_max_value) :
+                     double m_lower_value,
+                     double m_upper_value) :
     nbins(m_nbins),
-    min_value(m_min_value),
-    max_value(m_max_value),
-    bounds(min_value, max_value) {
+    lower_value(m_lower_value),
+    upper_value(m_upper_value) {
   bins = new int[nbins];
   for (int i = 0; i < nbins; i++)
     bins[i] = 0;
 }
 
-int Histogram::get_bin(float value) const {
-  if (value < min_value)
+int Histogram::get_bin(double value) const {
+  if (value < lower_value)
     return 0;
-  else if (value > max_value)
+  else if (value > upper_value)
     return nbins - 1;
   else
-    return std::round((nbins - 1) * (value - min_value) / (max_value - min_value));
+    return wb_utils::round_double_to_int((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
 }
 
-float Histogram::get_max_value() const {
-  return bounds.get_max_value();
+double Histogram::get_lower_value() const {
+  return lower_value;
 }
 
-float Histogram::get_min_value() const {
-  return bounds.get_min_value();
+double Histogram::get_max_value() const {
+  return stats.get_max_value();
+}
+
+double Histogram::get_min_value() const {
+  return stats.get_min_value();
+}
+
+double Histogram::get_upper_value() const {
+  return upper_value;
 }
 
 bool Histogram::read(std::ifstream &ifs, Errors &errors) {
@@ -65,13 +71,13 @@ bool Histogram::read(std::ifstream &ifs, Errors &errors) {
 std::string Histogram::to_string() {
   std::ostringstream os;
   os << "nbins " << nbins
-     << " min_value " << min_value
-     << " max_value " << max_value
+     << " lower_value " << lower_value
+     << " upper_value " << upper_value
      << " stats " << stats.to_string();
   return os.str();
 }
 
-void Histogram::update(float new_value) {
+void Histogram::update(double new_value) {
   int bin = get_bin(new_value);
   bins[bin]++;
   stats.update(new_value);
@@ -85,8 +91,8 @@ void Histogram::write(const std::string &path, Errors &errors) {
     errors.add("Image::write", "", "invalid file '" + path + "'");
   }
   wb_utils::write_int(fp, nbins, "Histogram::write: cannot write nbins to '" + path + "'", errors);
-  wb_utils::write_float(fp, min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
-  wb_utils::write_float(fp, max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, wb_utils::double_to_float(lower_value), "Histogram::write: cannot write lower_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, wb_utils::double_to_float(upper_value), "Histogram::write: cannot write upper_value to '" + path + "'", errors);
   stats.write(fp, path, errors);
   wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write: cannot write bins to '" + path + "'", errors);
   fclose(fp);
@@ -101,8 +107,8 @@ void Histogram::write_text(const std::string &path, const std::string &delim, Er
     return;
   }
   ofs << "nbins " << nbins
-      << " min_value " << min_value
-      << " max_value " << max_value
+      << " lower_value " << lower_value
+      << " upper_value " << upper_value
       << stats.to_string()
       << std::endl;
   for (int i = 0; i < nbins; i++)

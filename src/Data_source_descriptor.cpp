@@ -6,7 +6,7 @@
 #include "wb_utils.hpp"
 #include "data_source_descriptor.hpp"
 
-Data_source_descriptor::~Data_source_descriptor() {}
+Data_source_descriptor::~Data_source_descriptor() = default;
 Data_source_descriptor::Data_source_descriptor(int m_id, cv_enums::CV_repository_type m_repository_type,
                                                cv_enums::CV_data_type m_cv_data_type) :
     id(m_id),

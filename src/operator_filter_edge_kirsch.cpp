@@ -12,6 +12,8 @@
 
 extern bool debug;
 
+Operator_filter_edge_kirsch::~Operator_filter_edge_kirsch() = default;
+
 /**
  * orientation:
  *     N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]

@@ -10,6 +10,7 @@
 
 class Operator_filter_edge_sobel : public Operator {
  public:
+  ~Operator_filter_edge_sobel() override;
   void run(std::list<Data_source_descriptor *> &input_data_sources,
            std::list<Data_source_descriptor *> &output_data_stores,
            String_map &operator_parameters,

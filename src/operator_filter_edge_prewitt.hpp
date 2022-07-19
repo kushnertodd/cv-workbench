@@ -12,6 +12,7 @@
 
 class Operator_filter_edge_prewitt : public Operator {
  public:
+  ~Operator_filter_edge_prewitt() override;
   void run(std::list<Data_source_descriptor *> &input_data_sources,
            std::list<Data_source_descriptor *> &output_data_stores,
            String_map &operator_parameters,

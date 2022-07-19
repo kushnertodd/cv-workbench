@@ -9,16 +9,16 @@
 
 class Bounds {
  public:
-  float min_value;
-  float max_value;
   bool changed;
+  double max_value;
+  double min_value;
   Bounds();
-  Bounds(float m_min_value, float m_max_value);
-  float get_min_value() const;
-  float get_max_value() const;
-  static float map_input_to_output_bounds(float value, Bounds &input_bounds, Bounds &output_bounds);
+  Bounds(double m_min_value, double m_max_value);
+  double get_max_value() const;
+  double get_min_value() const;
+  static double map_input_to_output_bounds(double value, Bounds &input_bounds, Bounds &output_bounds);
   std::string to_string() const;
-  void update(float value);
+  void update(double value);
 };
 
 #endif //SRC__BOUNDS_HPP_

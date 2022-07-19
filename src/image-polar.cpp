@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     exit(0);
   }
   double rho;
-  if (!wb_utils::string_to_real(rho_str, rho)) {
+  if (!wb_utils::string_to_double(rho_str, rho)) {
     std::cout << "image-polar invalid rho_index value '" + rho_str + "'" << std::endl;
     exit(0);
   }

@@ -12,6 +12,8 @@
 
 extern bool debug;
 
+Operator_filter_edge_prewitt::~Operator_filter_edge_prewitt() = default;
+
 /**
  * orientation:
  *      0 = [-1, 0, 1], [-1, 0, 1], [-1, 0, 1]

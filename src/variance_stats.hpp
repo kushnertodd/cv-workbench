@@ -27,14 +27,16 @@ class Variance_stats {
   Bounds bounds;
 
   Variance_stats();
-  void update(double new_value);
-  bool is_valid() const;
   void finalize();
+  double get_max_value() const;
   double get_mean();
-  double get_variance();
+  double get_min_value() const;
   double get_sample_variance();
   double get_standard_deviation();
+  double get_variance();
+  bool is_valid() const;
   std::string to_string();
+  void update(double new_value);
   void write(FILE *fp, const std::string &path, Errors &errors) const;
 };
 

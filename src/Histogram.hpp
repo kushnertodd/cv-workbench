@@ -12,23 +12,24 @@ class Histogram {
  public:
   int *bins;
   int nbins;
-  float min_value;
-  float max_value;
-  Bounds bounds;
+  double lower_value;
+  double upper_value;
   Variance_stats stats;
 
   ~Histogram();
   Histogram(int m_nbins,
-            float m_min_value,
-            float m_max_value);
-  int get_bin(float value) const;
-  float get_max_value() const;
-  float get_min_value() const;
+            double m_lower_value,
+            double m_upper_value);
+  int get_bin(double value) const;
+  double get_lower_value() const;
+  double get_max_value() const;
+  double get_min_value() const;
+  double get_upper_value() const;
   static bool read(std::ifstream &ifs, Errors &errors);
   std::string to_string();
-  void update(float new_value);
-  void write(const std::string& path, Errors &errors);
-  void write_text(const std::string& path, const std::string& delim, Errors &errors);
+  void update(double new_value);
+  void write(const std::string &path, Errors &errors);
+  void write_text(const std::string &path, const std::string &delim, Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_HISTOGRAM_HPP_

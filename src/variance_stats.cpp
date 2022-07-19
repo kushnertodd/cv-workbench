@@ -2,6 +2,7 @@
 // Created by kushn on 6/24/2022.
 //
 
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -17,6 +18,66 @@ Variance_stats::Variance_stats() :
     variance(0.0),
     sample_variance(0.0),
     standard_deviation(0.0) {}
+
+/**
+ * # Retrieve the mean, variance and sample variance from an aggregate
+ * def finalize(existingAggregate):
+ *     (count, mean, M2) = existingAggregate
+ *     if count < 2:
+ *         return double("nan")
+ *     else:
+ *         (mean, variance, sampleVariance) = (mean, M2 / count, M2 / (count - 1))
+ *         return (mean, variance, sampleVariance)
+ */
+void Variance_stats::finalize() {
+  assert(is_valid());
+  variance = M2 / count;
+  sample_variance = M2 / (count - 1);
+  standard_deviation = sqrt(sample_variance);
+}
+
+double Variance_stats::get_max_value() const { return bounds.get_max_value(); }
+
+double Variance_stats::get_mean() {
+  finalize();
+  return mean;
+}
+
+double Variance_stats::get_min_value() const { return bounds.get_min_value(); }
+
+double Variance_stats::get_sample_variance() {
+  finalize();
+  return sample_variance;
+}
+
+double Variance_stats::get_standard_deviation() {
+  finalize();
+  return standard_deviation;
+}
+
+double Variance_stats::get_variance() {
+  finalize();
+  return variance;
+}
+
+/**
+ * test if the result is valid
+ */
+bool Variance_stats::is_valid() const {
+  return (count >= 2);
+}
+
+std::string Variance_stats::to_string() {
+  std::ostringstream os;
+  os << "count " << count
+     << " mean " << get_mean()
+     << " variance " << get_variance()
+     << " sample variance " << get_sample_variance()
+     << " standard deviation " << get_standard_deviation()
+     << " min value " << bounds.min_value
+     << " max value " << bounds.max_value;
+  return os.str();
+}
 
 /**
  *  For a new value newValue, compute the new count, new mean, the new M2.
@@ -42,64 +103,6 @@ void Variance_stats::update(double new_value) {
   bounds.update(new_value);
 }
 
-/**
- * test if the result is valid
- */
-bool Variance_stats::is_valid() const {
-  return (count >= 2);
-}
-
-/**
- * # Retrieve the mean, variance and sample variance from an aggregate
- * def finalize(existingAggregate):
- *     (count, mean, M2) = existingAggregate
- *     if count < 2:
- *         return float("nan")
- *     else:
- *         (mean, variance, sampleVariance) = (mean, M2 / count, M2 / (count - 1))
- *         return (mean, variance, sampleVariance)
- */
-void Variance_stats::finalize() {
-  if (!is_valid()) {
-    throw "Variance_stats::finalize: count < 2";
-  }
-  variance = M2 / count;
-  sample_variance = M2 / (count - 1);
-  standard_deviation = sqrt(sample_variance);
-}
-
-double Variance_stats::get_mean() {
-  finalize();
-  return mean;
-}
-
-double Variance_stats::get_variance() {
-  finalize();
-  return variance;
-}
-
-double Variance_stats::get_sample_variance() {
-  finalize();
-  return sample_variance;
-}
-
-double Variance_stats::get_standard_deviation() {
-  finalize();
-  return standard_deviation;
-}
-
-std::string Variance_stats::to_string() {
-  std::ostringstream os;
-  os << "count " << count
-     << " mean " << get_mean()
-     << " variance " << get_variance()
-     << " sample variance " << get_sample_variance()
-     << " standard deviation " << get_standard_deviation()
-     << " min value " << bounds.min_value
-     << " max value " << bounds.max_value;
-  return os.str();
-}
-
 void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) const {
   wb_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
   wb_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);
@@ -108,6 +111,6 @@ void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) co
                          sample_variance,
                          "Histogram::write: cannot write sample_variance to '" + path + "'",
                          errors);
-  wb_utils::write_float(fp, bounds.min_value, "Histogram::write: cannot write min_value to '" + path + "'", errors);
-  wb_utils::write_float(fp, bounds.max_value, "Histogram::write: cannot write max_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, wb_utils::double_to_float(bounds.min_value), "Histogram::write: cannot write min_value to '" + path + "'", errors);
+  wb_utils::write_float(fp, wb_utils::double_to_float(bounds.max_value), "Histogram::write: cannot write max_value to '" + path + "'", errors);
 }

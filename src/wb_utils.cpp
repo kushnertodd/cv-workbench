@@ -2,6 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cmath>
 #include <cstdio>
 #include <iostream>
 #include <iomanip>
@@ -67,6 +68,10 @@ std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
   }
 }
 
+float wb_utils::double_to_float(double value) {
+  return static_cast<float>(value);
+}
+
 void wb_utils::error_exit(const std::string &message) {
   std::cout << message << std::endl;
   exit(0);
@@ -129,6 +134,10 @@ std::string wb_utils::indent(int n) {
     s += " ";
   }
   return s;
+}
+
+float wb_utils::int_to_float(int value) {
+  return static_cast<float>(value);
 }
 
 /**
@@ -345,6 +354,14 @@ std::string wb_utils::repository_type_enum_to_string(cv_enums::CV_repository_typ
   }
 }
 
+int wb_utils::round_double_to_int(double value) {
+  return static_cast<int>(round(value));
+}
+
+int wb_utils::round_float_to_int(float value) {
+  return static_cast<int>(round((double) value));
+}
+
 bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
@@ -427,7 +444,7 @@ cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(const std:
   else return cv_enums::UNDEFINED_REPOSITORY_TYPE;
 }
 
-bool wb_utils::string_to_real(const std::string &str, double &value) {
+bool wb_utils::string_to_double(const std::string &str, double &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
   if (ss >> value) return true;

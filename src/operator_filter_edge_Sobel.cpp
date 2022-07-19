@@ -12,6 +12,8 @@
 
 extern bool debug;
 
+Operator_filter_edge_sobel::~Operator_filter_edge_sobel() = default;
+
 /**
  * orientation:
  *      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]

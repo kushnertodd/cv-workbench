@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     std::vector<float> values;
     for (std::string token: tokens) {
       double value;
-      if (wb_utils::string_to_real(token, value))
+      if (wb_utils::string_to_double(token, value))
         values.push_back(value);
       else
         error_exit("invalid data value: '" + token + "'");

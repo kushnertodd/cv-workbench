@@ -16,8 +16,8 @@ extern bool debug;
  * @param m_theta_index
  */
 
-Polar_line::Polar_line(int m_rho_index, int m_rho, int m_theta_index,
-                       float m_cos_theta, float m_sin_theta, int m_count)
+Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
+                       double m_cos_theta, double m_sin_theta, int m_count)
     :
     rho_index(m_rho_index),
     rho(m_rho),
@@ -27,8 +27,8 @@ Polar_line::Polar_line(int m_rho_index, int m_rho, int m_theta_index,
     count(m_count) {
 }
 
-void Polar_line::set(int m_rho_index, int m_rho, int m_theta_index,
-                     float m_cos_theta, float m_sin_theta, int m_count) {
+void Polar_line::set(int m_rho_index, double m_rho, int m_theta_index,
+                     double m_cos_theta, double m_sin_theta, int m_count) {
   rho_index = m_rho_index;
   rho = m_rho;
   theta_index = m_theta_index;

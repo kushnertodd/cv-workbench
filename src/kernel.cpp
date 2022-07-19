@@ -56,7 +56,7 @@ int Kernel::row_col_to_index(int row, int col) const {
 pixel_32F Kernel::get(int row, int col) const {
   switch (depth) {
     case cv_enums::CV_32S:
-      return buf_32S[row_col_to_index(row, col)];
+      return wb_utils::int_to_float(buf_32S[row_col_to_index(row, col)]);
 
     case cv_enums::CV_32F:
       return buf_32F[row_col_to_index(row, col)];
@@ -67,18 +67,18 @@ pixel_32F Kernel::get(int row, int col) const {
 }
 
 pixel_32S Kernel::get_32S(int row, int col) const {
-  return buf_32F[row_col_to_index(row, col)];
+  return wb_utils::round_float_to_int(buf_32F[row_col_to_index(row, col)]);
 }
 
 pixel_32S Kernel::get_32F(int row, int col) const {
-  return buf_32F[row_col_to_index(row, col)];
+  return wb_utils::round_float_to_int(buf_32F[row_col_to_index(row, col)]);
 }
 
 void Kernel::set(int row, int col, pixel_32F value) const {
   switch (depth) {
 
     case cv_enums::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = value;
+      buf_32S[row_col_to_index(row, col)] = wb_utils::round_float_to_int(value);
       break;
 
     case cv_enums::CV_32F:
@@ -91,7 +91,7 @@ void Kernel::set(int row, int col, pixel_32F value) const {
 }
 
 void Kernel::set_32S(int row, int col, pixel_32S value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
+  buf_32F[row_col_to_index(row, col)] = wb_utils::int_to_float(value);
 }
 
 void Kernel::set_32F(int row, int col, pixel_32F value) const {
@@ -111,21 +111,21 @@ void Kernel::add_32F(const pixel_32F *src, int count) const {
 }
 
 Image *Kernel::convolve(Image *src) const {
-  Image_header *header = src->image_header;
-  int rows = header->rows;
-  int cols = header->cols;
+  int src_rows = src->get_rows();
+  int src_cols = src->get_cols();
+  cv_enums::CV_image_depth src_depth = src->get_depth();
+  int src_components = src->get_components();
 
   // output image is cv_enums::CV_32F if either the image and kernel are cv_enums::CV_32F, else it is cv_enums::CV_32S
   cv_enums::CV_image_depth out_depth =
-      (header->depth == cv_enums::CV_32F || depth == cv_enums::CV_32F ? cv_enums::CV_32F : cv_enums::CV_32S);
-  auto *out = new Image(header->rows, header->cols,
-                        header->components, out_depth);
+      (src_depth == cv_enums::CV_32F || this->depth == cv_enums::CV_32F ? cv_enums::CV_32F : cv_enums::CV_32S);
+  auto *out = new Image(src_rows, src_cols, src_components, out_depth);
   int rows_half = (kernel_rows + 1) / 2;
   int cols_half = (kernel_cols + 1) / 2;
   int row_lower = 0;
-  int row_upper = rows - kernel_rows;
+  int row_upper = src_rows - kernel_rows;
   int col_lower = 0;
-  int col_upper = cols - kernel_cols;
+  int col_upper = src_cols - kernel_cols;
   //printf("row_lower %d, row_upper %d, col_lower %d, col_upper %d\n", row_lower, row_upper, col_lower, col_upper);
   if (debug)
     std::cout << "rows_half " << rows_half
@@ -160,14 +160,14 @@ Image *Kernel::convolve(Image *src) const {
                   //             << " kernel_row_lower " << kernel_row_lower
                   //             << " kernel_row_upper " << kernel_row_upper
                   << std::endl;
-      float sum = 0.0;
+      double sum = 0.0;
       for (int i = kernel_row_lower; i <= kernel_row_upper; i++) {
 //        int kernel_col_lower = col;
 //        int kernel_col_upper = col + kernel_cols - 1;
         //printf("     ");
         for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
-          float kernel_val = get(i, j);
-          float image_val = src->get(row + i, col + j);
+          double kernel_val = get(i, j);
+          double image_val = src->get(row + i, col + j);
           sum += kernel_val * image_val;
           //printf("sum += kernel[%d,%d] %7.2f * image[%d,%d] %7.2f = %7.2f\n", i, j, kernel_val, row+i, col+j, image_val, sum);
           if (debug)

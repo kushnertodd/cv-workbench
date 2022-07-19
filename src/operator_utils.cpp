@@ -44,7 +44,7 @@ bool Operator_utils::get_real_parameter(const std::string &module,
     if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
       return false;
-    } else if (!wb_utils::string_to_real(parameter_str, real_value)) {
+    } else if (!wb_utils::string_to_double(parameter_str, real_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
       return false;
     }

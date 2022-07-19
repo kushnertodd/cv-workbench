@@ -37,8 +37,7 @@ std::string file_utils::read_file(const std::string& filename) {
     in.close();
     return (contents);
   }
-  std::cout << filename << ": " << strerror(errno) << std::endl;
-  throw (errno);
+  throw (filename + ": " + strerror(errno));
 }
 
 bool file_utils::read_int(FILE *fp, int &var) {

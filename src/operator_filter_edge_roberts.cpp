@@ -12,6 +12,8 @@
 
 extern bool debug;
 
+Operator_filter_edge_roberts::~Operator_filter_edge_roberts() = default;
+
 /**
  * orientation:
  *      0 = [0, 1], [-1, 0]

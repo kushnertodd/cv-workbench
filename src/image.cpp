@@ -3,7 +3,6 @@
 //
 
 #include <cassert>
-#include <cmath>
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
@@ -86,7 +85,7 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
         break;
 
       case cv_enums::CV_32S:
-        buf_32S[next_pixel++] = std::round(src[i]);
+        buf_32S[next_pixel++] = wb_utils::round_float_to_int(src[i]);
         break;
 
       case cv_enums::CV_32F:
@@ -119,7 +118,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
         break;
 
       case cv_enums::CV_32F:
-        buf_32F[next_pixel++] = (float) src[i];
+        buf_32F[next_pixel++] = wb_utils::int_to_float(src[i]);
         break;
 
       default:
@@ -149,13 +148,13 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
 void Image::create_histogram(Histogram &histogram) const {
   for (int row = 0; row < get_rows(); row++) {
     for (int col = 0; col < get_cols(); col++) {
-      float value = get(row, col);
+      double value = get(row, col);
       histogram.update(value);
     }
   }
 }
 
-void Image::draw_line_segment(Line_segment line_segment, float value) const {
+void Image::draw_line_segment(const Line_segment& line_segment, double value) const {
   if (debug)
     std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
               << ") value " << value << std::endl;
@@ -164,8 +163,8 @@ void Image::draw_line_segment(Line_segment line_segment, float value) const {
   }
 }
 
-void Image::draw_line_segments(std::list<Line_segment> &line_segments, float value) const {
-  for (Line_segment line_segment: line_segments) {
+void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value) const {
+  for (const Line_segment& line_segment: line_segments) {
     draw_line_segment(line_segment, value);
   }
 }
@@ -221,11 +220,11 @@ int Image::get_row_stride() const { return image_header->row_stride; }
 
 int Image::get_rows() const { return image_header->rows; }
 
-float Image::get_scaled(int row, int col, float lower_in,
-                        float upper_in, float lower_out,
-                        float upper_out) const {
-  float pixel_in = get(row, col);
-  float pixel_out = scale_pixel(pixel_in, lower_in,
+double Image::get_scaled(int row, int col, double lower_in,
+                        double upper_in, double lower_out,
+                        double upper_out) const {
+  double pixel_in = get(row, col);
+  double pixel_out = scale_pixel(pixel_in, lower_in,
                                 upper_in, lower_out, upper_out);
   return pixel_out;
 }
@@ -233,7 +232,7 @@ float Image::get_scaled(int row, int col, float lower_in,
 void Image::get_stats(Variance_stats &stats) const {
   for (int row = 0; row < get_rows(); row++) {
     for (int col = 0; col < get_cols(); col++) {
-      float value = get(row, col);
+      double value = get(row, col);
       stats.update(value);
     }
   }
@@ -387,9 +386,9 @@ int Image::row_col_to_index(int row, int col) const {
  * @param upper_out
  * @return
  */
-Image *Image::scale_image(Image *image, float lower_in,
-                          float upper_in, float lower_out,
-                          float upper_out, cv_enums::CV_image_depth depth) {
+Image *Image::scale_image(Image *image, double lower_in,
+                          double upper_in, double lower_out,
+                          double upper_out, cv_enums::CV_image_depth depth) {
   if (debug)
     std::cout << "Image *Image::scale_image: lower_in " << lower_in
               << " upper_in " << upper_in
@@ -399,10 +398,9 @@ Image *Image::scale_image(Image *image, float lower_in,
                                   image->get_cols(),
                                   image->get_components(),
                                   depth);
-  Image_header *image_header = image->image_header;
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
-      float value = image->get_scaled(row, col, lower_in,
+      double value = image->get_scaled(row, col, lower_in,
                                       upper_in, lower_out, upper_out);
       convert_image->set(row, col, value);
     }
@@ -410,29 +408,29 @@ Image *Image::scale_image(Image *image, float lower_in,
   return convert_image;
 }
 
-float Image::scale_pixel(float pixel_in,
-                         float in_lower,
-                         float in_upper,
-                         float out_lower,
-                         float out_upper) {
+double Image::scale_pixel(double pixel_in,
+                         double in_lower,
+                         double in_upper,
+                         double out_lower,
+                         double out_upper) {
   Bounds in_bounds(in_lower, in_upper);
   Bounds out_bounds(out_lower, out_upper);
-  float pixel_out = Bounds::map_input_to_output_bounds(pixel_in, in_bounds, out_bounds);
+  double pixel_out = Bounds::map_input_to_output_bounds(pixel_in, in_bounds, out_bounds);
   return pixel_out;
 }
 
-void Image::set(int row, int col, float value) const {
+void Image::set(int row, int col, double value) const {
   switch (get_depth()) {
     case cv_enums::CV_8U:
-      buf_8U[row_col_to_index(row, col)] = std::round(value);
+      buf_8U[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
       break;
 
     case cv_enums::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = std::round(value);
+      buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
       break;
 
     case cv_enums::CV_32F:
-      buf_32F[row_col_to_index(row, col)] = value;
+      buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
       break;
 
     default:
@@ -440,7 +438,7 @@ void Image::set(int row, int col, float value) const {
   }
 }
 
-void Image::set(Point &point, float value) const {
+void Image::set(Point &point, double value) const {
   set(point.row, point.col, value);
 }
 
