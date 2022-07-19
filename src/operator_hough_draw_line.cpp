@@ -39,11 +39,14 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     if (!Operator_utils::has_parameter(operator_parameters, "theta_inc")) {
       errors.add("Operator_hough_draw_line::run", "", "missing 'theta_inc' parameter");
     }
+    if (!Operator_utils::has_parameter(operator_parameters, "rho")) {
+      errors.add("Operator_hough_draw_line::run", "", "missing 'rho' parameter");
+    }
     if (!Operator_utils::has_parameter(operator_parameters, "theta_index")) {
       errors.add("Operator_hough_draw_line::run", "", "missing 'theta_index' parameter");
     }
-    if (!Operator_utils::has_parameter(operator_parameters, "rho")) {
-      errors.add("Operator_hough_draw_line::run", "", "missing 'rho' parameter");
+    if (!Operator_utils::has_parameter(operator_parameters, "pixel_value")) {
+      errors.add("Operator_hough_draw_line::run", "", "missing 'pixel_value' parameter");
     }
     if (errors.error_ct == 0) {
       std::string theta_inc_str = Operator_utils::get_parameter(operator_parameters, "theta_inc");
@@ -51,33 +54,27 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       if (!wb_utils::string_to_int(theta_inc_str, theta_inc))
         errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_inc' parameter");
       else {
-        std::string theta_index_str = Operator_utils::get_parameter(operator_parameters, "theta_index");
-        int theta_index = 0;
-        if (!wb_utils::string_to_int(theta_index_str, theta_index))
-          errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_index' parameter");
+        std::string rho_str = Operator_utils::get_parameter(operator_parameters, "rho");
+        double rho = 0;
+        if (!wb_utils::string_to_double(rho_str, rho))
+          errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
         else {
-          std::string rho_str = Operator_utils::get_parameter(operator_parameters, "rho");
-          double rho = 0;
-          if (!wb_utils::string_to_double(rho_str, rho))
-            errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
+          std::string theta_index_str = Operator_utils::get_parameter(operator_parameters, "theta_index");
+          int theta_index = 0;
+          if (!wb_utils::string_to_int(theta_index_str, theta_index))
+            errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_index' parameter");
           else {
-            bool saw_min_value = false;
-            double min_value = 0;
-            if (Operator_utils::has_parameter(operator_parameters, "min_value")) {
-              std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "min_value");
-              if (!wb_utils::string_to_double(min_value_str, min_value))
-                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'min_value' parameter");
-              else
-                saw_min_value = true;
+            double pixel_value = 0;
+            if (Operator_utils::has_parameter(operator_parameters, "pixel_value")) {
+              std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "pixel_value");
+              if (!wb_utils::string_to_double(min_value_str, pixel_value))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'pixel_value' parameter");
             }
-            bool saw_max_value = false;
-            double max_value = 0;
-            if (Operator_utils::has_parameter(operator_parameters, "max_value")) {
-              std::string max_value_str = Operator_utils::get_parameter(operator_parameters, "max_value");
-              if (!wb_utils::string_to_double(max_value_str, max_value))
-                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'max_value' parameter");
-              else
-                saw_max_value = true;
+            int out_component = 1;
+            if (Operator_utils::has_parameter(operator_parameters, "out_component")) {
+              std::string out_component_str = Operator_utils::get_parameter(operator_parameters, "out_component");
+              if (!wb_utils::string_to_int(out_component_str, out_component))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'out_component' parameter");
             }
             Data_source_descriptor *input_data_source = input_data_sources.front();
             Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
@@ -89,24 +86,25 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               Hough hough(input, theta_inc);
               int rho_index = hough.accum->rho_to_index(rho);
               Polar_line polar_line(rho_index, rho, theta_index,
-                  hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index),0);
-              Line_segment line_segment; if (!hough.accum->clip_window(line_segment, polar_line)) {
-                errors.add("Operator_hough_draw_line::run", "", "failed clipping (theta_index, rho against image ");
+                                    hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index), 0);
+              Line_segment line_segment;
+              if (!hough.accum->clip_window(line_segment, polar_line)) {
+                errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
               } else {
                 Variance_stats stats;
                 input->get_stats(stats);
-                if (!saw_min_value)
-                  min_value = stats.bounds.min_value;
-                if (!saw_max_value)
-                  max_value = stats.bounds.max_value;
-                Image *output = Image::scale_image(input,
-                                                   min_value,
-                                                   max_value,
-                                                   pixel_8U_MIN,
-                                                   pixel_8U_MAX,
-                                                   cv_enums::CV_8U);
-                output->draw_line_segment(line_segment, 0);
-                hough_line_output_data_store->write_image(output, errors);
+                Image *output = Image::clone_image(input, input->get_depth());
+                output->draw_line_segment(line_segment, pixel_value);
+                if (hough_line_output_data_store->data_format == cv_enums::JPEG) {
+                  hough_line_output_data_store->write_image_jpeg(output, errors);
+                } else if (hough_line_output_data_store->data_format == cv_enums::BINARY) {
+                  hough_line_output_data_store->write_image(output, errors);
+                } else {
+                  errors.add("Operator_hough_draw_line::run",
+                             "",
+                             "invalid data format '"
+                                 + wb_utils::data_format_to_string(hough_line_output_data_store->data_format) + "'");
+                }
               }
             }
           }
