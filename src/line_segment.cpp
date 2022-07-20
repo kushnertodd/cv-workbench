@@ -18,7 +18,7 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     std::cout << "Line_segment::Line_segment min_row " << min_row
               << " min_col " << min_col << " max_row " << max_row
               << " max_col " << max_col << std::endl;
-  plotLine();
+  //plotLine();
 }
 
 Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
@@ -37,7 +37,7 @@ Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
  * This fills in line segment points with Bresenham's line algorithm
  */
 void Line_segment::add(int x, int y) {
-  Point point(x, y);
+  Point point(y, x);
   add(point);
 }
 
