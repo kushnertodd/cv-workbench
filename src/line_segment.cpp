@@ -111,6 +111,7 @@ void Line_segment::plotLine() {
 void Line_segment::set(const Point &m_point1, const Point &m_point2) {
   point1 = m_point1;
   point2 = m_point2;
+  plotLine();
 }
 
 std::string Line_segment::to_string() const {
