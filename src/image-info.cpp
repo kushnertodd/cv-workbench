@@ -1,73 +1,73 @@
 #include <cstdio>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
-//#include <sstream>
-#include "hough_accum.hpp"
+#include "errors.hpp"
+#include "file_utils.hpp"
+#include "image.hpp"
+#include "wb_defs.hpp"
+#include "wb_utils.hpp"
 
 //
 
-enum CV_image_depth {
-  CV_8U,
-  CV_8S,
-  CV_16U,
-  CV_16S,
-  CV_32S,
-  CV_32F,
-  CV_64F,
-  CV_16F,
-  UNDEFINED_IMAGE_DEPTH
-};
-std::string depth_to_string( CV_image_depth depth) {
-  if (depth == CV_8U) return "CV_8U";
-  else if (depth == CV_32S) return "CV_32S";
-  else if (depth == CV_32F) return "CV_32F";
-  else return "invalid depth";
-}
-
-typedef unsigned char pixel_8U;
-typedef int pixel_32S;
-typedef float pixel_32F;
-
-void error_exit(std::string message) {
-  printf("%s\n", message.c_str());
-  exit(0);
-}
-
-void read_int(FILE *fp, std::string name, int &var) {
-  int cols;
-  int newLen = fread(&var, sizeof(int), 1, fp);
-  if (ferror(fp) != 0 || newLen != 1) {
-    error_exit("Image_header::read_header: missing value " + name);
-  }
-}
-
-bool debug = true;
+bool debug = false;
 
 int main(int argc, char **argv) {
 
   if (argc < 2)
-    error_exit("usage: image-dump filename");
+    wb_utils::error_exit("usage: " + std::string(argv[0]) + " filename");
   std::string filename = argv[1];
 
-  FILE *fp = fopen(filename.c_str(), "r");
-  if (fp == NULL) {
-    error_exit("cannot open file '" + filename + "'");
-  }
+  std::string prefix;
+  std::string suffix;
+  bool found;
+  bool at_beginning;
+  bool at_end;
+  wb_utils::string_find(filename, prefix, suffix, ".jpg", found, at_beginning, at_end);
+  bool is_jpeg = at_end;
 
   int rows;
-  read_int(fp, "rows", rows);
   int cols;
-  read_int(fp, "cols", cols);
   int components;
-  read_int(fp, "components", components);
-  int depth;
-  read_int(fp, "depth", depth);
+  int depth_int;
+  cv_enums::CV_image_depth depth;
+  int npixels;
+  if (is_jpeg) {
+    Errors errors;
+    Image *in_image = Image::read_jpeg(filename, errors);
+    errors.check_exit("reading " + filename);
+    rows = in_image->get_rows();
+    cols = in_image->get_cols();
+    components = in_image->get_components();
+    depth = in_image->get_depth();
+  } else {
+    FILE *fp = fopen(filename.c_str(), "r");
+    if (fp == NULL) {
+      wb_utils::error_exit(filename + ": cannot open");
+    }
 
-  int npixels = rows * cols * components;
-  std::cout << "rows " << rows << " cols " << cols << " components " << components << " depth "
-       << depth_to_string(( CV_image_depth) depth)
-       << " npixels " << npixels << std::endl;
-  fclose(fp);
+    if (!file_utils::read_int(fp, rows))
+      wb_utils::error_exit(filename + ": cannot read rows");
+    if (!file_utils::read_int(fp, cols))
+      wb_utils::error_exit(filename + ": cannot read cols");
+    if (!file_utils::read_int(fp, components))
+      wb_utils::error_exit(filename + ": cannot read components");
+    if (!file_utils::read_int(fp, depth_int))
+      wb_utils::error_exit(filename + ": cannot read depth");
+    fclose(fp);
+    depth = static_cast<cv_enums::CV_image_depth>(depth_int);
+  }
+  std::string depth_str = wb_utils::image_depth_enum_to_string(depth);
+
+  npixels = rows * cols * components;
+  std::cout << "image " << filename <<  ":" << std::endl;
+  std::cout << "    rows       " << std::setw(20) << std::right << rows << std::endl;
+  std::cout << "    cols       " << std::setw(20) << std::right << cols << std::endl;
+  std::cout << "    components " << std::setw(20) << std::right << components << std::endl;
+  std::cout << "    depth int  " << std::setw(20) << std::right << depth_int << std::endl;
+  std::cout << "    depth      " << std::setw(20) << std::right << depth_str << std::endl;
+  std::cout << "    npixels    " << std::setw(20) << std::right << npixels << std::endl;
+  return 0;
 }
 
 

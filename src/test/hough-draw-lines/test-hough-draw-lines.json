@@ -11,7 +11,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}
@@ -46,7 +46,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}
@@ -80,7 +80,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}
@@ -114,7 +114,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}
@@ -148,7 +148,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}
@@ -182,7 +182,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "square45-90_sobel_gray",
 						"ext": "jpg"
 					}

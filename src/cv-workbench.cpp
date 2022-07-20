@@ -15,7 +15,6 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "image.hpp"
 #include "experiment.hpp"
 
-//bool debug = true;
 bool debug = false;
 
 int main(int argc, char **argv) {
@@ -25,11 +24,13 @@ int main(int argc, char **argv) {
   }
   try {
     char *filename = argv[1];
+    debug = (argc > 2);
     std::string string_val = file_utils::read_file(filename);
-    std::cout << "JSON string: " << string_val << std::endl;
+    if (debug)
+      std::cout << "JSON string: " << string_val << std::endl;
     json_object *jobj = json_tokener_parse(string_val.c_str());
     if (jobj == nullptr)
-      printf("json_tokener_parse() failed\n");
+      wb_utils::error_exit("json_tokener_parse() failed");
     else {
       Errors errors;
       Experiment *experiment = Experiment::json_parse(jobj, errors);

@@ -362,6 +362,25 @@ int wb_utils::round_float_to_int(float value) {
   return static_cast<int>(round((double) value));
 }
 
+void wb_utils::string_find(std::string text, std::string& prefix, std::string& suffix, std::string pat, bool &found, bool &at_beginning, bool &at_end) {
+  size_t text_len = text.length();
+  size_t pat_len = pat.length();
+  size_t pos = text.find(pat);
+  at_beginning = false;
+  at_end = false;
+  found = false;
+  if (pos != std::string::npos) {
+    at_beginning = (pos == 0);
+    at_end = (text_len - pat_len == pos);
+    prefix = text.substr(0, pos);
+    suffix = text.substr(pos+pat_len);
+  } else {
+    prefix = "";
+    suffix = text;
+    found = true;
+  }
+}
+
 bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;

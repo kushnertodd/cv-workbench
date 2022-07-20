@@ -12,6 +12,7 @@
 #include "wb_defs.hpp"
 
 namespace wb_utils {
+
 char ascii_to_char(int n);
 std::string char_to_string(char c);
 std::string data_type_enum_to_string(cv_enums::CV_data_type type);
@@ -32,6 +33,7 @@ std::string real_to_string(double i, int width = -1);
 std::string repository_type_enum_to_string(cv_enums::CV_repository_type type);
 int round_double_to_int(double value);
 int round_float_to_int(float value);
+void string_find(std::string text, std::string& prefix, std::string& suffix, std::string pat, bool &found, bool &at_beginning, bool &at_end);
 bool string_to_bool(const std::string &str, bool &bvalue);
 cv_enums::CV_data_type string_to_data_type_enum(const std::string &type);
 cv_enums::CV_data_format string_to_data_format_enum(const std::string &type);
