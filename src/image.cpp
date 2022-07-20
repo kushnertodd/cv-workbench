@@ -129,7 +129,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
 
 bool Image::check_grayscale(Errors &errors) const {
   if (get_components() != 1) {
-    errors.add("Image::check_graysacle", "", "image not grayscale");
+    errors.add("Image::check_grayscale", "", "image not grayscale");
     return false;
   }
   return true;
