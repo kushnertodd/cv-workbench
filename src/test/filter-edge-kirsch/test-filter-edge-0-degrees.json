@@ -1,0 +1,35 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-kirsch",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "square45-90_gray_kirsch_0_degrees",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      }
+    }
+  }
+}

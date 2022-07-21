@@ -84,10 +84,6 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
             errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
                            + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
           }
-          // run a transform intensity map operator instead
-//          Image *out_image = Image::scale_image(output, -1020, 1020, 0, 255, cv_enums::CV_8U);
-//          out_image->write_jpeg("sobel45-90-out.jpg", errors);
-
         }
       }
     }
