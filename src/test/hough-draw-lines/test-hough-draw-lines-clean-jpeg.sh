@@ -7,6 +7,6 @@ for f in \
   square45-90_sobel_gray_line_45_295.jpg \
   square45-90_sobel_gray_line_45_458.jpg 
 do
-  ls $image_dir/$f
-  rm $image_dir/$f
+  echo $image_dir/$f
+  rm -f $image_dir/$f
 done

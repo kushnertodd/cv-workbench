@@ -1,2 +1,2 @@
 cd hough-draw-lines
-sh test-hough-draw-lines.sh
+sh test-hough-draw-lines-jpeg.sh
