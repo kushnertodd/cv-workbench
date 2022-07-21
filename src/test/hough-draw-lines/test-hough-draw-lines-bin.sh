@@ -1,6 +1,6 @@
 for script in  \
-  test-hough-draw-lines-0-degrees-jpeg.json \
-  test-hough-draw-lines-90-degrees-jpeg.json
+  test-hough-draw-lines-0-degrees-bin.json \
+  test-hough-draw-lines-90-degrees-bin.json
 do
   echo "script '$script'"
   echo "$ cd ../.."

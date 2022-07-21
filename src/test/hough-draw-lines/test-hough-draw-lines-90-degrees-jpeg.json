@@ -1,0 +1,199 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_0_-162",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "-162",
+          "pixel_value": "255"
+        }
+      },
+
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_0_3",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "3.5",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_15_-156",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "15",
+          "rho": "-156.5",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 4,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_15_-76",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "15",
+          "rho": "-76.5",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 5,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_45_458",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "45",
+          "rho": "458.5",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 6,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "square45-90_gray_sobel_90_degrees",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees_line_45_295",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "45",
+          "rho": "295.5",
+          "pixel_value": "255"
+        }
+      }
+    ]
+  }
+}
