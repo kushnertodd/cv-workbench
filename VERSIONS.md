@@ -6,7 +6,7 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.15
 ```
-commit 120147163f34ed4de64d4eb3f930a711cd8b4cb9 (HEAD -> master, origin/master, origin/HEAD)
+commit 49b0fc7d2667eeddd8725e9c3de8a755aecc33e8 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Jul 21 12:21:49 2022 -0600
 ```
