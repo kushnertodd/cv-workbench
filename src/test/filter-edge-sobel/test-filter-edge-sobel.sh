@@ -6,7 +6,7 @@ do
   echo "$ cd ../.."
   cd ../..
   #$echo "PWD $PWD"
-  echo "$ ./cv-workbench test/$script"
+  echo "$ ./cv-workbench test/filter-edge-sobel/$script"
   ./cv-workbench test/filter-edge-sobel/$script
   echo "$ cd test/filter-edge-sobel"
   cd test/filter-edge-sobel

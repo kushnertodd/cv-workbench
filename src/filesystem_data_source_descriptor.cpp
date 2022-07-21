@@ -41,10 +41,13 @@ void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogra
 
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  hough->write_text(path, "\t", errors);
+  hough->write(path, errors);
 }
 
-void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
+    std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
+    hough->write_text(path, "\t", errors);
+  }
 
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;

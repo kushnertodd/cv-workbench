@@ -12,7 +12,7 @@ do
   echo "$ cd ../.."
   cd ../..
   #$echo "PWD $PWD"
-  echo "$ ./cv-workbench test/$script"
+  echo "$ ./cv-workbench test/filter-edge-kirsch/$script"
   ./cv-workbench test/filter-edge-kirsch/$script
   echo "$ cd test/filter-edge-kirsch"
   cd test/filter-edge-kirsch

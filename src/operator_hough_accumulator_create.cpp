@@ -34,7 +34,7 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
     errors.add("Operator_hough_accumulator_create::run", "", "missing input data source");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_accumulator_create::run", "", "too many input data sources");
-  else if (output_data_stores.size() < 2)
+  else if (output_data_stores.size() < 1)
     errors.add("Operator_hough_accumulator_create::run", "", "missing output data source");
   else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_accumulator_create::run", "", "too many output data sources");
@@ -48,7 +48,14 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
         errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'theta_inc' parameter");
       else {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        Image *input = input_data_source->read_image(errors);
+            Image *input = nullptr;
+            if (input_data_source->data_format == cv_enums::JPEG)
+              input = input_data_source->read_image_jpeg(errors);
+            else if (input_data_source->data_format == cv_enums::BINARY)
+              input = input_data_source->read_image(errors);
+            else
+              errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
+                  wb_utils::data_format_to_string(input_data_source->data_format));
         if (errors.error_ct == 0 && input != nullptr)
           input->check_grayscale(errors);
         if (errors.error_ct == 0) {
