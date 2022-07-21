@@ -17,12 +17,12 @@ class Image_header {
   int row_stride; // for jpeg
   int npixels;
   cv_enums::CV_image_depth depth;
+  Image_header();
   Image_header(int m_rows, int m_cols, int m_components,
                cv_enums::CV_image_depth m_depth);
-  explicit Image_header(Image_header *image_header);
   Image_header(Image_header &image_header);
-  static Image_header *read_header(FILE *fp, const std::string& path, Errors &errors);
-  void write_header(FILE *fp, const std::string& path, Errors &errors);
+  void read_header(FILE *fp, const std::string& path, Errors &errors);
+  void write_header(FILE *fp, const std::string& path, Errors &errors) const;
   std::string to_string() const;
 };
 

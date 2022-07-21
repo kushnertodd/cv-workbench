@@ -8,7 +8,7 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
-class Operator_hough_accumulator_create : public Operator {
+class Operator_histogram_image_create : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,
            std::list<Data_source_descriptor *> &output_data_stores,

@@ -3,7 +3,7 @@
 		"steps": [
 			{
 				"id": 1,
-				"operator": "hough-accumulator-create",
+				"operator": "hough-image-create",
 				"input-data": [
 					{
 						"id": 1,

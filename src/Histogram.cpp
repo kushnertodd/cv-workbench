@@ -2,6 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -16,15 +17,18 @@ Histogram::~Histogram() {
   delete bins;
 }
 
-Histogram::Histogram(int m_nbins,
+Histogram::Histogram(Image *m_image,
+                     int m_nbins,
                      double m_lower_value,
                      double m_upper_value) :
+    image(m_image),
     nbins(m_nbins),
     lower_value(m_lower_value),
     upper_value(m_upper_value) {
   bins = new int[nbins];
   for (int i = 0; i < nbins; i++)
     bins[i] = 0;
+  initialize();
 }
 
 int Histogram::get_bin(double value) const {
@@ -52,20 +56,51 @@ double Histogram::get_upper_value() const {
   return upper_value;
 }
 
-bool Histogram::read(std::ifstream &ifs, Errors &errors) {
-/*
-  string line;
-  while (getline(ifs, line)) {
-    vector<string> values = file_utils::string_split(line);
-    for (std::string value_str: values) {
-      int value;
-      if (!wb_utils::string_to_int(value_str, value))
-        errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
-      return false;
+void Histogram::initialize() {
+  for (int row = 0; row < image->get_rows(); row++) {
+    for (int col = 0; col < image->get_cols(); col++) {
+      double value = image->get(row, col);
+      update(value);
     }
   }
-*/
-  return true;
+  update_stats();
+}
+
+void Histogram::update_stats() {
+  for (int i = 0; i < nbins; i++) {
+    stats.update(bins[i]);
+  }
+}
+
+void Histogram::read(const std::string &path, Errors &errors) {
+  FILE *fp = fopen(path.c_str(), "r");
+  if (fp == nullptr) {
+    errors.add("Histogram::read", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
+  } else {
+    wb_utils::read_int(fp, nbins, "Histogram::read", "", "missing histogram nbins in '" + path + "'", errors);
+    if (errors.error_ct == 0)
+      wb_utils::read_double(fp,
+                            lower_value,
+                            "Histogram::read",
+                            "",
+                            "missing histogram read_double in '" + path + "'",
+                            errors);
+    if (errors.error_ct == 0)
+      wb_utils::read_double(fp,
+                            upper_value,
+                            "Histogram::read",
+                            "",
+                            "missing histogram upper_value in '" + path + "'",
+                            errors);
+    if (errors.error_ct == 0)
+      wb_utils::read_int_buffer(fp,
+                                bins,
+                                nbins,
+                                "Histogram::read",
+                                "",
+                                "cannot read histogram data in '" + path + "'",
+                                errors);
+  }
 }
 
 std::string Histogram::to_string() {
@@ -77,10 +112,9 @@ std::string Histogram::to_string() {
   return os.str();
 }
 
-void Histogram::update(double new_value) {
+void Histogram::update(double new_value) const {
   int bin = get_bin(new_value);
   bins[bin]++;
-  stats.update(new_value);
 }
 
 void Histogram::write(const std::string &path, Errors &errors) {
@@ -90,11 +124,21 @@ void Histogram::write(const std::string &path, Errors &errors) {
   if (fp == nullptr) {
     errors.add("Image::write", "", "invalid file '" + path + "'");
   }
-  wb_utils::write_int(fp, nbins, "Histogram::write: cannot write nbins to '" + path + "'", errors);
-  wb_utils::write_float(fp, wb_utils::double_to_float(lower_value), "Histogram::write: cannot write lower_value to '" + path + "'", errors);
-  wb_utils::write_float(fp, wb_utils::double_to_float(upper_value), "Histogram::write: cannot write upper_value to '" + path + "'", errors);
-  stats.write(fp, path, errors);
-  wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write: cannot write bins to '" + path + "'", errors);
+  wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins to '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(lower_value),
+                          "Histogram::write", "", "cannot write lower_value to '" + path + "'",
+                          errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(upper_value),
+                          "Histogram::write", "", "cannot write upper_value to '" + path + "'",
+                          errors);
+  if (errors.error_ct == 0)
+    stats.write(fp, path, errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins to '" + path + "'", errors);
   fclose(fp);
 }
 

@@ -29,6 +29,12 @@ bool is_numeric(std::string number);
 void json_parse(json_object *jobj);
 void json_parse_array(json_object *jobj, char *key);
 void json_print_value(json_object *jobj);
+void read_double(FILE *fp, double &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_float(FILE *fp, float &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_float_buffer(FILE *fp, float *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_int(FILE *fp, int &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_int_buffer(FILE *fp, int *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 std::string real_to_string(double i, int width = -1);
 std::string repository_type_enum_to_string(cv_enums::CV_repository_type type);
 int round_double_to_int(double value);
@@ -41,12 +47,12 @@ cv_enums::CV_image_depth string_to_image_depth_enum(const std::string &depth);
 bool string_to_int(const std::string &str, int &value);
 cv_enums::CV_repository_type string_to_repository_type_enum(const std::string &type);
 bool string_to_double(const std::string &text, double &value);
-bool write_double(FILE *fp, double value, const std::string &message, Errors &errors);
-bool write_double_buffer(FILE *fp, double *buf, int count, const std::string &message, Errors &errors);
-bool write_float(FILE *fp, float value, const std::string &message, Errors &errors);
-bool write_float_buffer(FILE *fp, float *buf, int count, const std::string &message, Errors &errors);
-bool write_int(FILE *fp, int value, const std::string &message, Errors &errors);
-bool write_int_buffer(FILE *fp, int *buf, int count, const std::string &message, Errors &errors);
+void write_double(FILE *fp, double value, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void write_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void write_float(FILE *fp, float value, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void write_float_buffer(FILE *fp, float *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void write_int(FILE *fp, int value, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void write_int_buffer(FILE *fp, int *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 
 }
 

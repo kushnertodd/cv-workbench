@@ -9,10 +9,10 @@
 #include <string>
 #include "bounds.hpp"
 #include "errors.hpp"
-#include "histogram.hpp"
 #include "image_header.hpp"
 #include "line_segment.hpp"
 #include "point.hpp"
+#include "variance_stats.hpp"
 #include "wb_defs.hpp"
 
 /**
@@ -22,7 +22,7 @@
  */
 class Image {
  public:
-  Image_header *image_header;
+  Image_header image_header;
   int next_pixel;
   // image stores one buffer per image_header->depth
   pixel_8U *buf_8U;
@@ -36,7 +36,7 @@ class Image {
 
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
-  explicit Image(Image_header *image_header);
+   Image(Image_header &image_header);
 
   // TODO: add component
   void add_8U(const pixel_8U *src, int count, Errors &errors);
@@ -45,7 +45,7 @@ class Image {
 
   bool check_grayscale(Errors &errors) const;
   static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
-  void create_histogram(Histogram &histogram) const;
+  //void create_histogram(Histogram &histogram) const;
   void draw_line_segment(const Line_segment& line_segment, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
 

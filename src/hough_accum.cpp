@@ -366,11 +366,11 @@ void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
   }
 }
 
-int Hough_accum::get_cols() const { return image->image_header->cols; }
+int Hough_accum::get_cols() const { return image->image_header.cols; }
 
 double Hough_accum::get_cos(int theta_index) const { return hough_cos[theta_index]; }
 
-int Hough_accum::get_rows() const { return image->image_header->rows; }
+int Hough_accum::get_rows() const { return image->image_header.rows; }
 
 double Hough_accum::get_sin(int theta_index) const { return hough_sin[theta_index]; }
 

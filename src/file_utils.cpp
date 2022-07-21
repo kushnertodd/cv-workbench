@@ -40,6 +40,16 @@ std::string file_utils::read_file(const std::string& filename) {
   throw (filename + ": " + strerror(errno));
 }
 
+bool file_utils::read_double(FILE *fp, double &var) {
+  size_t newLen = fread(&var, sizeof(double), 1, fp);
+  return (ferror(fp) == 0 && newLen == 1);
+}
+
+bool file_utils::read_float(FILE *fp, float &var) {
+  size_t newLen = fread(&var, sizeof(float), 1, fp);
+  return (ferror(fp) == 0 && newLen == 1);
+}
+
 bool file_utils::read_int(FILE *fp, int &var) {
   size_t newLen = fread(&var, sizeof(int), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);

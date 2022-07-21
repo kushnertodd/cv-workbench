@@ -11,7 +11,7 @@
 
 Variance_stats variance_stats;
 
-void error_exit(std::string message) {
+void error_exit(const std::string& message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
       out_image->draw_line_segments(hough.line_segments, 0);
       hough.write_text(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename + ".jpg", errors);
-      hist = new Histogram(100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
+      hist = new Histogram(in_image, 100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
       for (int theta_index = 0; theta_index < hough.accum->nthetas; theta_index++) {
         for (int rho_index = 0; rho_index < hough.accum->max_rho; rho_index++) {
           hist->update(hough.accum->rho_theta_accum[theta_index][rho_index]);
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
       }
       hist->write_text(hist_filename, "\t", errors);
       delete hist;
-      hist_image = new Histogram(100, stats.bounds.min_value, stats.bounds.max_value);
+      hist_image = new Histogram(in_image, 100, stats.bounds.min_value, stats.bounds.max_value);
       for (int i = 0; i < in_image->get_npixels(); i++)
         hist_image->update(in_image->buf_32S[i]);
       hist_image->write_text(hist_filename + "image.txt", "\t", errors);

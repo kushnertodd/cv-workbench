@@ -16,25 +16,24 @@
 extern bool debug;
 
 Image::~Image() {
-  delete image_header;
   delete[] buf_8U;
   delete[] buf_32S;
   delete[] buf_32F;
 }
 
 Image::Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth) :
+    image_header(m_rows, m_cols, m_components, m_depth),
     buf_8U(nullptr),
     buf_32F(nullptr),
     buf_32S(nullptr),
     next_pixel(0) {
-  image_header = new Image_header(m_rows, m_cols, m_components, m_depth);
   if (debug)
     std::cout << "Image::Image: " << to_string() << std::endl;
   init();
 }
 
-Image::Image(Image_header *m_image_header) :
-    image_header(new Image_header(m_image_header)),
+Image::Image(Image_header &m_image_header) :
+    image_header(m_image_header),
     buf_8U(nullptr),
     buf_32F(nullptr),
     buf_32S(nullptr),
@@ -145,15 +144,6 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   return new_image;
 }
 
-void Image::create_histogram(Histogram &histogram) const {
-  for (int row = 0; row < get_rows(); row++) {
-    for (int col = 0; col < get_cols(); col++) {
-      double value = get(row, col);
-      histogram.update(value);
-    }
-  }
-}
-
 void Image::draw_line_segment(const Line_segment& line_segment, double value) const {
   if (debug)
     std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
@@ -208,17 +198,17 @@ pixel_32S Image::get_32S(int row, int col) const {
   return buf_32S[index];
 }
 
-int Image::get_cols() const { return image_header->cols; }
+int Image::get_cols() const { return image_header.cols; }
 
-int Image::get_components() const { return image_header->components; }
+int Image::get_components() const { return image_header.components; }
 
-cv_enums::CV_image_depth Image::get_depth() const { return image_header->depth; }
+cv_enums::CV_image_depth Image::get_depth() const { return image_header.depth; }
 
-int Image::get_npixels() const { return image_header->npixels; }
+int Image::get_npixels() const { return image_header.npixels; }
 
-int Image::get_row_stride() const { return image_header->row_stride; }
+int Image::get_row_stride() const { return image_header.row_stride; }
 
-int Image::get_rows() const { return image_header->rows; }
+int Image::get_rows() const { return image_header.rows; }
 
 double Image::get_scaled(int row, int col, double lower_in,
                         double upper_in, double lower_out,
@@ -271,13 +261,13 @@ Image *Image::read(std::string &path, Errors &errors) {
     return nullptr;
   }
 
-  Image_header *image_header = Image_header::read_header(fp, path, errors);
+  Image_header image_header; image_header.read_header(fp, path, errors);
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
   size_t newLen;
 
-  switch (image_header->depth) {
+  switch (image_header.depth) {
     case cv_enums::CV_8U:
       newLen = fread(image->buf_8U, sizeof(pixel_8U), image->get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != image->get_npixels()) {
@@ -464,13 +454,13 @@ void Image::set_32S(int row, int col, pixel_32S value) const {
 Image *Image::to_rgb(int component) const {
   if (debug)
     std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
-  auto *new_image_header = new Image_header(get_rows(),
+  Image_header new_image_header(get_rows(),
                                             get_cols(),
                                             3,
                                             get_depth());
   auto *new_image = new Image(new_image_header);
   for (int i = 0; i < new_image->get_npixels(); i++) {
-    switch (image_header->depth) {
+    switch (image_header.depth) {
       case cv_enums::CV_8U:
         new_image->buf_8U[i * 3 + component] = buf_8U[i];
         break;
@@ -489,7 +479,7 @@ Image *Image::to_rgb(int component) const {
 
 std::string Image::to_string() const {
   std::ostringstream os;
-  os << image_header->to_string()
+  os << image_header.to_string()
      << " next_pixel " << next_pixel;
   return os.str();
 }
@@ -501,7 +491,7 @@ void Image::write(const std::string &path, Errors &errors) const {
   if (fp == nullptr) {
     errors.add("Image::write", "", "invalid file '" + path + "'");
   }
-  image_header->write_header(fp, path, errors);
+  image_header.write_header(fp, path, errors);
   // Write the data from the buffer.
   size_t newLen;
   switch (get_depth()) {

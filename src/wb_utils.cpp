@@ -323,6 +323,48 @@ void wb_utils::json_print_value(json_object *jobj) {
   }
 }
 
+void wb_utils::read_double(FILE *fp, double &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(&var, sizeof(double), 1, fp);
+  if (ferror(fp) != 0 || newLen != 1){
+    errors.add(module, id, error);
+  }
+}
+
+void wb_utils::read_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(buf, sizeof(double), count, fp);
+  if (ferror(fp) != 0 || newLen != count) {
+    errors.add(module, id, error);
+  }
+}
+
+void wb_utils::read_float(FILE *fp, float &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(&var, sizeof(float), 1, fp);
+  if (ferror(fp) != 0 || newLen != 1){
+    errors.add(module, id, error);
+  }
+}
+
+void wb_utils::read_float_buffer(FILE *fp, float *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(buf, sizeof(float), count, fp);
+  if (ferror(fp) != 0 || newLen != count) {
+    errors.add(module, id, error);
+  }
+}
+
+void wb_utils::read_int(FILE *fp, int &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(&var, sizeof(int), 1, fp);
+  if (ferror(fp) != 0 || newLen != 1){
+    errors.add(module, id, error);
+  }
+}
+
+void wb_utils::read_int_buffer(FILE *fp, int *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
+  size_t newLen = fread(buf, sizeof(int), count, fp);
+  if (ferror(fp) != 0 || newLen != count) {
+    errors.add(module, id, error);
+  }
+}
+
 /**
  * convert int to string
  * @param i integer toconvert
@@ -470,58 +512,46 @@ bool wb_utils::string_to_double(const std::string &str, double &value) {
   else return false;
 }
 
-bool wb_utils::write_double(FILE *fp, double value, const std::string &message, Errors &errors) {
+void wb_utils::write_double(FILE *fp, double value, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(&value, sizeof(double), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
-bool wb_utils::write_double_buffer(FILE *fp, double *buf, int count, const std::string &message, Errors &errors) {
+void wb_utils::write_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(buf, sizeof(double), count, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
-bool wb_utils::write_float(FILE *fp, float value, const std::string &message, Errors &errors) {
+void wb_utils::write_float(FILE *fp, float value, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(&value, sizeof(float), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
-bool wb_utils::write_float_buffer(FILE *fp, float *buf, int count, const std::string &message, Errors &errors) {
+void wb_utils::write_float_buffer(FILE *fp, float *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(buf, sizeof(float), count, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
-bool wb_utils::write_int(FILE *fp, int value, const std::string &message, Errors &errors) {
+void wb_utils::write_int(FILE *fp, int value, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(&value, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
-bool wb_utils::write_int_buffer(FILE *fp, int *buf, int count, const std::string &message, Errors &errors) {
+void wb_utils::write_int_buffer(FILE *fp, int *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors) {
   fwrite(buf, sizeof(int), count, fp);
   if (ferror(fp) != 0) {
-    errors.add(message);
-    return false;
+    errors.add(module, id, error);
   }
-  return true;
 }
 
 

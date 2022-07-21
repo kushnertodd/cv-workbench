@@ -104,13 +104,32 @@ void Variance_stats::update(double new_value) {
 }
 
 void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) const {
-  wb_utils::write_int(fp, count, "Histogram::write: cannot write count to '" + path + "'", errors);
-  wb_utils::write_double(fp, mean, "Histogram::write: cannot write mean to '" + path + "'", errors);
-  wb_utils::write_double(fp, variance, "Histogram::write: cannot write variance to '" + path + "'", errors);
-  wb_utils::write_double(fp,
-                         sample_variance,
-                         "Histogram::write: cannot write sample_variance to '" + path + "'",
-                         errors);
-  wb_utils::write_float(fp, wb_utils::double_to_float(bounds.min_value), "Histogram::write: cannot write min_value to '" + path + "'", errors);
-  wb_utils::write_float(fp, wb_utils::double_to_float(bounds.max_value), "Histogram::write: cannot write max_value to '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count to '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_double(fp, mean, "Variance_stats::write", "", "cannot write mean to '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_double(fp,
+                           variance,
+                           "Variance_stats::write",
+                           "",
+                           "cannot write variance to '" + path + "'",
+                           errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_double(fp,
+                           sample_variance,
+                           "Variance_stats::write",
+                           "",
+                           "cannot write sample_variance to '" + path + "'",
+                           errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(bounds.min_value),
+                          "Histogram::write", "", "cannot write min_value to '" + path + "'",
+                          errors);
+  if (errors.error_ct == 0)
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(bounds.max_value),
+                          "Histogram::write", "", "cannot write max_value to '" + path + "'",
+                          errors);
 }

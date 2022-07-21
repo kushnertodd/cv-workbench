@@ -13,6 +13,6 @@ sh test-filter-edge-kirsch-clean.sh
 cd ../hough-draw-lines
 sh test-hough-draw-lines-clean.sh
 
-cd ../hough-accumulator-create
-sh test-hough-accumulator-create-clean.sh
+cd ../hough-image-create
+sh test-hough-image-create-clean.sh
 

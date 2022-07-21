@@ -5,11 +5,13 @@
 #ifndef CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 #define CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 
-#include "variance_stats.hpp"
 #include "errors.hpp"
+#include "image.hpp"
+#include "variance_stats.hpp"
 
 class Histogram {
  public:
+  Image *image;
   int *bins;
   int nbins;
   double lower_value;
@@ -17,7 +19,8 @@ class Histogram {
   Variance_stats stats;
 
   ~Histogram();
-  Histogram(int m_nbins,
+  Histogram(Image *image,
+            int m_nbins,
             double m_lower_value,
             double m_upper_value);
   int get_bin(double value) const;
@@ -25,9 +28,11 @@ class Histogram {
   double get_max_value() const;
   double get_min_value() const;
   double get_upper_value() const;
-  static bool read(std::ifstream &ifs, Errors &errors);
+  void initialize();
+  void read(const std::string &path, Errors &errors);
   std::string to_string();
-  void update(double new_value);
+  void update(double new_value) const;
+  void update_stats();
   void write(const std::string &path, Errors &errors);
   void write_text(const std::string &path, const std::string &delim, Errors &errors);
 };
