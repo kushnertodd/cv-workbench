@@ -64,13 +64,26 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
         }
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
-        Image *input = input_data_source->read_image(errors);
-        if (input != nullptr)
+        Image *input = nullptr;
+        if (input_data_source->data_format == cv_enums::JPEG)
+          input = input_data_source->read_image_jpeg(errors);
+        else if (input_data_source->data_format == cv_enums::BINARY)
+          input = input_data_source->read_image(errors);
+        else
+          errors.add("Operator_filter_edge_sobel::run", "", "invalid data format: " +
+              wb_utils::data_format_to_string(input_data_source->data_format));
+        if (errors.error_ct == 0 && input != nullptr)
           input->check_grayscale(errors);
         if (errors.error_ct == 0) {
           Image *output = sobel_kernel->convolve(input);
-          output_data_store->write_image(output, errors);
-
+          if (output_data_store->data_format == cv_enums::JPEG) {
+            output_data_store->write_image_jpeg(input, errors);
+          } else if (output_data_store->data_format == cv_enums::BINARY) {
+            output_data_store->write_image(input, errors);
+          } else {
+            errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
+                           + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
+          }
           // run a transform intensity map operator instead
 //          Image *out_image = Image::scale_image(output, -1020, 1020, 0, 255, cv_enums::CV_8U);
 //          out_image->write_jpeg("sobel45-90-out.jpg", errors);
