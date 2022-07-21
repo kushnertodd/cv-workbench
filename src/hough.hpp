@@ -20,7 +20,7 @@ class Hough {
   std::list<Line_segment> line_segments;
 
   ~Hough();
-  Hough(Image *m_image, int m_theta_inc);
+  Hough(Image *m_image, int m_theta_inc, int threshold);
   void find_lines();
   void find_peaks();
   void lines_to_line_segments();

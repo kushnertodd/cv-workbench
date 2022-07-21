@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
   errors.check_exit("image-polar: reading " + image_in_filename);
   if (in_image != nullptr)
     in_image->check_grayscale(errors);
-  Hough hough(in_image, 3);
+  Hough hough(in_image, 3, 200);
   int rho_index = hough.accum->rho_to_index(rho);
   Polar_line polar_line(rho_index, rho, theta_index,
                         hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index),0);

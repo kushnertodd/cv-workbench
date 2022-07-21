@@ -401,25 +401,6 @@ void Hough_accum::initialize(int image_theshold) {
   update_stats();
 }
 
-/*
-bool Hough_accum::maximum(int theta_index, int rho_index) {
-  for (int i = -1; i <= 1; i++) {
-    for (int j = -1; j <= 1; j++) {
-      int check_rho = rho_index + i;
-      if (check_rho >= 0 && check_rho < max_rho) {
-        int check_theta = theta_index + j;
-        if (check_theta >= 0 && check_theta < nthetas) {
-          if (rho_theta_accum[check_theta][check_rho] > rho_theta_accum[theta_index][rho_index]) {
-            return false;
-          }
-        }
-      }
-    }
-  }
-  return true;
-}
-*/
-
 bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
   std::string line;
   while (getline(ifs, line)) {

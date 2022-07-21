@@ -39,6 +39,7 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
   else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_accumulator_create::run", "", "too many output data sources");
   else {
+
     if (!Operator_utils::has_parameter(operator_parameters, "theta_inc")) {
       errors.add("Operator_hough_accumulator_create::run", "", "missing 'theta_inc' parameter");
     } else {
@@ -47,7 +48,15 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
       if (!wb_utils::string_to_int(theta_inc_str, theta_inc))
         errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'theta_inc' parameter");
       else {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        if (!Operator_utils::has_parameter(operator_parameters, "threshold")) {
+          errors.add("Operator_hough_accumulator_create::run", "", "missing 'threshold' parameter");
+        } else {
+          std::string threshold_str = Operator_utils::get_parameter(operator_parameters, "threshold");
+          int threshold = 0;
+          if (!wb_utils::string_to_int(threshold_str, threshold))
+            errors.add("Operator_hough_accumulator_create::run", "", "non-numeric 'threshold' parameter");
+          else {
+            Data_source_descriptor *input_data_source = input_data_sources.front();
             Image *input = nullptr;
             if (input_data_source->data_format == cv_enums::JPEG)
               input = input_data_source->read_image_jpeg(errors);
@@ -56,21 +65,23 @@ void Operator_hough_accumulator_create::run(std::list<Data_source_descriptor *> 
             else
               errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
                   wb_utils::data_format_to_string(input_data_source->data_format));
-        if (errors.error_ct == 0 && input != nullptr)
-          input->check_grayscale(errors);
-        if (errors.error_ct == 0) {
-          Hough hough(input, theta_inc);
-          for (auto it = output_data_stores.begin();
-               it != output_data_stores.end();
-               it++) {
-            Data_source_descriptor *hough_output_data_store = *it;
-            if (hough_output_data_store->data_format == cv_enums::BINARY) {
-              hough_output_data_store->write_hough(&hough, errors);
-            } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
-              hough_output_data_store->write_hough_text(&hough, errors);
-            } else {
-              errors.add("Operator_hough_accumulator_create::run", "", "invalid data format "
-                  + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+            if (errors.error_ct == 0 && input != nullptr)
+              input->check_grayscale(errors);
+            if (errors.error_ct == 0) {
+              Hough hough(input, theta_inc, threshold);
+              for (auto it = output_data_stores.begin();
+                   it != output_data_stores.end();
+                   it++) {
+                Data_source_descriptor *hough_output_data_store = *it;
+                if (hough_output_data_store->data_format == cv_enums::BINARY) {
+                  hough_output_data_store->write_hough(&hough, errors);
+                } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
+                  hough_output_data_store->write_hough_text(&hough, errors);
+                } else {
+                  errors.add("Operator_hough_accumulator_create::run", "", "invalid data format "
+                      + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+                }
+              }
             }
           }
         }

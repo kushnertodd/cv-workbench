@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   Errors errors;
   Image *in_image = Image::read(image_filename, errors);
 
-  Hough hough(in_image, 3);
+  Hough hough(in_image, 3, 200);
   Histogram *hist;
   Histogram *hist_image;
   Image *out_image;
