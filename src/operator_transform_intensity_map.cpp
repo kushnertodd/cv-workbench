@@ -125,6 +125,13 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
       depth = input->get_depth();
     }
     Image *output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, cv_enums::CV_8U);
-    output_data_store->write_image(output_image, errors);
+     if (output_data_store->data_format == cv_enums::JPEG) {
+      output_data_store->write_image_jpeg(output_image, errors);
+    } else if (output_data_store->data_format == cv_enums::BINARY) {
+      output_data_store->write_image(output_image, errors);
+    } else {
+      errors.add("Operator_transform_intensity_map::run", "", "invalid data format '"
+          + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
+    }
   }
 }

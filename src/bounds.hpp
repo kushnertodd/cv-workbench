@@ -9,7 +9,7 @@
 
 class Bounds {
  public:
-  bool changed;
+
   double max_value;
   double min_value;
   Bounds();

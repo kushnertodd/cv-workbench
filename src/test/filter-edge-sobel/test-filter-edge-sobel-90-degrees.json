@@ -7,24 +7,22 @@
         "input-data": [
           {
             "id": 1,
-            "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
             "format": "jpeg",
-            "directory": ".",
-            "filename": "320x240gray",
+            "directory": "test/reference",
+            "filename": "square45-90_gray",
             "ext": "jpg"
           }
         ],
         "output-data": [
           {
             "id": 1,
-            "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": ".",
-            "filename": "320x240gray_sobel_orientation_90",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees",
             "ext": "bin"
           }
         ],
@@ -39,24 +37,22 @@
         "input-data": [
           {
             "id": 1,
-            "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": ".",
-            "filename": "320x240gray_sobel_orientation_90",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees",
             "ext": "bin"
           }
         ],
         "output-data": [
           {
             "id": 1,
-            "__comment": "depth = 8UC1 320x240",
             "type": "image",
             "repository": "filesystem",
             "format": "jpeg",
-            "directory": ".",
-            "filename": "320x240gray_sobel_orientation_90",
+            "directory": "images",
+            "filename": "square45-90_gray_sobel_90_degrees",
             "ext": "jpg"
           }
         ],

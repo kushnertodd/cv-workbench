@@ -15,17 +15,16 @@ Bounds::Bounds() :
 
 Bounds::Bounds(double m_min_value, double m_max_value) :
     min_value(m_min_value),
-    max_value(m_max_value),
-    changed(false) {
+    max_value(m_max_value) {
 }
 
 double Bounds::get_max_value() const {
-  assert(changed);
+
   return max_value;
 }
 
 double Bounds::get_min_value() const {
-  assert(changed);
+
   return min_value;
 }
 
@@ -50,6 +49,6 @@ std::string Bounds::to_string() const {
 void Bounds::update(double value) {
   min_value = std::min(min_value, value);
   max_value = std::max(max_value, value);
-  changed = true;
+
 }
 

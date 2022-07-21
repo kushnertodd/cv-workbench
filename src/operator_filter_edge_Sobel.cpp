@@ -77,9 +77,9 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
         if (errors.error_ct == 0) {
           Image *output = sobel_kernel->convolve(input);
           if (output_data_store->data_format == cv_enums::JPEG) {
-            output_data_store->write_image_jpeg(input, errors);
+            output_data_store->write_image_jpeg(output, errors);
           } else if (output_data_store->data_format == cv_enums::BINARY) {
-            output_data_store->write_image(input, errors);
+            output_data_store->write_image(output, errors);
           } else {
             errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
                            + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
