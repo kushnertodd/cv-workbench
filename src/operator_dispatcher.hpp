@@ -10,7 +10,7 @@
 
 //
 
-class Operator_dispatcher {
+class Operator_dispatcher : public Operator {
  public:
   static Operator *create_operator(const std::string& operator_name);
 };

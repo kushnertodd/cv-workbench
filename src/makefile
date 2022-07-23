@@ -38,14 +38,24 @@ SRCOBJS :=  \
   kernel.o \
   line_segment.o \
   operator.o \
+  operator_dispatcher.o \
+  operator_filter_edge_gaussian.o \
   operator_filter_edge_kirsch.o \
+  operator_filter_edge_laplacian.o \
   operator_filter_edge_prewitt.o \
   operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
-  operator_dispatcher.o \
+  operator_filter_smooth_average.o \
+  operator_filter_smooth_gaussian.o \
+  operator_filter_smooth_median.o \
+  operator_histogram_hough_create.o \
   operator_histogram_image_create.o \
-  operator_hough_image_create.o \
+  operator_histogram_peak_detect.o \
   operator_hough_draw_line.o \
+  operator_hough_image_create.o \
+  operator_hough_peak_detect.o \
+  operator_transform_image_copy.o \
+  operator_transform_image_morphology.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
   point.o \
