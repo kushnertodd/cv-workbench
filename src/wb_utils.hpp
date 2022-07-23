@@ -29,6 +29,8 @@ bool is_numeric(std::string number);
 void json_parse(json_object *jobj);
 void json_parse_array(json_object *jobj, char *key);
 void json_print_value(json_object *jobj);
+void read_byte(FILE *fp, pixel_8U &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
+void read_byte_buffer(FILE *fp, pixel_8U *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 void read_double(FILE *fp, double &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 void read_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 void read_float(FILE *fp, float &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);

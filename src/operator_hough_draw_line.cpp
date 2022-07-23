@@ -99,12 +99,16 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               if (errors.error_ct == 0 && input != nullptr)
                 input->check_grayscale(errors);
               if (errors.error_ct == 0) {
-                Hough hough(input, theta_inc, threshold);
-                int rho_index = hough.accum->rho_to_index(rho);
-                Polar_line polar_line(rho_index, rho, theta_index,
-                                      hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index), 0);
+                Hough* hough = Hough::create_image(input, theta_inc, threshold);
+                int rho_index = hough->hough_accum->rho_to_index(rho);
+                Polar_line polar_line(rho_index,
+                                      rho,
+                                      theta_index,
+                                      hough->hough_accum->get_cos(theta_index),
+                                      hough->hough_accum->get_sin(theta_index),
+                                      0);
                 Line_segment line_segment;
-                if (!hough.accum->clip_window(line_segment, polar_line)) {
+                if (!hough->hough_accum->clip_window(line_segment, polar_line)) {
                   errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
                 } else {
                   Variance_stats stats;

@@ -133,7 +133,13 @@ bool Image::check_grayscale(Errors &errors) const {
   }
   return true;
 }
-
+/***
+ * Not really what want. Doesn't copy contents.
+ * @param image
+ * @param depth
+ * @return
+ */
+/*
 Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
   if (debug)
     std::cout << "Image::clone: depth " << depth << " " << image->to_string() << std::endl;
@@ -143,8 +149,9 @@ Image *Image::clone_image(Image *image, cv_enums::CV_image_depth depth) {
                               depth);
   return new_image;
 }
+*/
 
-void Image::draw_line_segment(const Line_segment& line_segment, double value) const {
+void Image::draw_line_segment(const Line_segment &line_segment, double value) const {
   if (debug)
     std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
               << ") value " << value << std::endl;
@@ -154,7 +161,7 @@ void Image::draw_line_segment(const Line_segment& line_segment, double value) co
 }
 
 void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value) const {
-  for (const Line_segment& line_segment: line_segments) {
+  for (const Line_segment &line_segment: line_segments) {
     draw_line_segment(line_segment, value);
   }
 }
@@ -211,11 +218,11 @@ int Image::get_row_stride() const { return image_header.row_stride; }
 int Image::get_rows() const { return image_header.rows; }
 
 double Image::get_scaled(int row, int col, double lower_in,
-                        double upper_in, double lower_out,
-                        double upper_out) const {
+                         double upper_in, double lower_out,
+                         double upper_out) const {
   double pixel_in = get(row, col);
   double pixel_out = scale_pixel(pixel_in, lower_in,
-                                upper_in, lower_out, upper_out);
+                                 upper_in, lower_out, upper_out);
   return pixel_out;
 }
 
@@ -261,7 +268,10 @@ Image *Image::read(std::string &path, Errors &errors) {
     return nullptr;
   }
 
-  Image_header image_header; image_header.read_header(fp, path, errors);
+  Image_header image_header;
+  image_header.read_header(fp, path, errors);
+  if (errors.error_ct != 0)
+    return nullptr;
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
@@ -277,91 +287,100 @@ Image *Image::read(std::string &path, Errors &errors) {
       break;
 
     case cv_enums::CV_32S:
-      newLen = fread(image->buf_32S, sizeof(pixel_32S), image->get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != image->get_npixels()) {
-        errors.add("Image::read", "", "cannot read 32S image data in '" + path + "'");
+      wb_utils::read_int_buffer(fp,
+                                image->buf_32S,
+                                image->get_npixels(),
+                                "Image::read",
+                                "",
+                                "cannot read 32S image data in '" + path + "'",
+                                errors);
+      if (errors.error_ct != 0)
         return nullptr;
-      }
       break;
 
     case cv_enums::CV_32F:
       newLen = fread(image->buf_32F, sizeof(pixel_32F), image->get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != image->get_npixels()) {
-        errors.add("Image::read", "", "cannot read 32F image data in '" + path + "'");
-        return nullptr;
+      wb_utils::read_float_buffer(fp,
+                                  image->buf_32F,
+                                  image->get_npixels(),
+                                  "Image::read",
+                                  "",
+                                  "cannot read 32F image data in '" + path + "'",
+                                  errors);
+        if (errors.error_ct != 0)
+          return nullptr;
+        break;
+
+        default:
+          break;
       }
-      break;
-
-    default:
-      break;
+      fclose(fp);
+      return image;
   }
-  fclose(fp);
-  return image;
-}
 
 // for read_jpeg()
-struct my_error_mgr {
-  struct jpeg_error_mgr pub;    /* "public" fields */
-  jmp_buf setjmp_buffer;    /* for return to caller */
-};
-typedef struct my_error_mgr *my_error_ptr;
+  struct my_error_mgr {
+    struct jpeg_error_mgr pub;    /* "public" fields */
+    jmp_buf setjmp_buffer;    /* for return to caller */
+  };
+  typedef struct my_error_mgr *my_error_ptr;
 
 // for read_jpeg()
-void my_error_exit(j_common_ptr cinfo) {
-  my_error_ptr myerr = (my_error_ptr) cinfo->err;
-  (*cinfo->err->output_message)(cinfo);
-  longjmp(myerr->setjmp_buffer, 1);
-}
-
-Image *Image::read_jpeg(const std::string &path, Errors &errors) {
-  struct jpeg_decompress_struct cinfo;
-  struct my_error_mgr jerr;
-  JSAMPARRAY buffer;
-  FILE *fp = fopen(path.c_str(), "r");
-  if (fp == nullptr) {
-    errors.add("Image::read_jpeg", "", "invalid file '" + path + "'");
-    return nullptr;
+  void my_error_exit(j_common_ptr cinfo) {
+    my_error_ptr myerr = (my_error_ptr) cinfo->err;
+    (*cinfo->err->output_message)(cinfo);
+    longjmp(myerr->setjmp_buffer, 1);
   }
-  cinfo.err = jpeg_std_error(&jerr.pub);
-  jerr.pub.error_exit = my_error_exit;
-  if (setjmp(jerr.setjmp_buffer)) {
+
+  Image *Image::read_jpeg(const std::string &path, Errors &errors) {
+    struct jpeg_decompress_struct cinfo;
+    struct my_error_mgr jerr;
+    JSAMPARRAY buffer;
+    FILE *fp = fopen(path.c_str(), "r");
+    if (fp == nullptr) {
+      errors.add("Image::read_jpeg", "", "invalid file '" + path + "'");
+      return nullptr;
+    }
+    cinfo.err = jpeg_std_error(&jerr.pub);
+    jerr.pub.error_exit = my_error_exit;
+    if (setjmp(jerr.setjmp_buffer)) {
+      jpeg_destroy_decompress(&cinfo);
+      fclose(fp);
+      errors.add("Image::read_jpeg", "", "jpeg read error in '" + path + "'");
+      return nullptr;
+    }
+    /* Step 1: allocate and initialize JPEG decompression object */
+    jpeg_create_decompress(&cinfo);
+    /* Step 2: specify data source (eg, a file) */
+    jpeg_stdio_src(&cinfo, fp);
+    /* Step 3: read file parameters with jpeg_read_header() */
+    (void) jpeg_read_header(&cinfo, TRUE);
+    /* Step 4: set parameters for decompression */
+    /* Step 5: Start decompressor */
+    (void) jpeg_start_decompress(&cinfo);
+    /* JSAMPLEs per row in output buffer */
+    auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, cv_enums::CV_8U);
+    /* Make a one-row-high sample array that will go away when done with image */
+    buffer = (*cinfo.mem->alloc_sarray)
+        ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
+    /* Step 6: while (scan lines remain to be read) */
+    while (cinfo.output_scanline < cinfo.output_height) {
+      (void) jpeg_read_scanlines(&cinfo, buffer, 1);
+      /* Assume put_scanline_someplace wants a pointer and sample count. */
+      image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
+    }
+    /* Step 7: Finish decompression */
+    (void) jpeg_finish_decompress(&cinfo);
+    /* Step 8: Release JPEG decompression object */
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    errors.add("Image::read_jpeg", "", "jpeg read error in '" + path + "'");
-    return nullptr;
+    return image;
   }
-  /* Step 1: allocate and initialize JPEG decompression object */
-  jpeg_create_decompress(&cinfo);
-  /* Step 2: specify data source (eg, a file) */
-  jpeg_stdio_src(&cinfo, fp);
-  /* Step 3: read file parameters with jpeg_read_header() */
-  (void) jpeg_read_header(&cinfo, TRUE);
-  /* Step 4: set parameters for decompression */
-  /* Step 5: Start decompressor */
-  (void) jpeg_start_decompress(&cinfo);
-  /* JSAMPLEs per row in output buffer */
-  auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, cv_enums::CV_8U);
-  /* Make a one-row-high sample array that will go away when done with image */
-  buffer = (*cinfo.mem->alloc_sarray)
-      ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
-  /* Step 6: while (scan lines remain to be read) */
-  while (cinfo.output_scanline < cinfo.output_height) {
-    (void) jpeg_read_scanlines(&cinfo, buffer, 1);
-    /* Assume put_scanline_someplace wants a pointer and sample count. */
-    image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
-  }
-  /* Step 7: Finish decompression */
-  (void) jpeg_finish_decompress(&cinfo);
-  /* Step 8: Release JPEG decompression object */
-  jpeg_destroy_decompress(&cinfo);
-  fclose(fp);
-  return image;
-}
 
-int Image::row_col_to_index(int row, int col) const {
-  assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
-  return row * get_row_stride() + col;
-}
+  int Image::row_col_to_index(int row, int col) const {
+    assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
+    return row * get_row_stride() + col;
+  }
 
 /***
  * preconditions not checked:
@@ -376,73 +395,73 @@ int Image::row_col_to_index(int row, int col) const {
  * @param upper_out
  * @return
  */
-Image *Image::scale_image(Image *image, double lower_in,
-                          double upper_in, double lower_out,
-                          double upper_out, cv_enums::CV_image_depth depth) {
-  if (debug)
-    std::cout << "Image *Image::scale_image: lower_in " << lower_in
-              << " upper_in " << upper_in
-              << " lower_out " << lower_out
-              << " upper_out " << upper_out << " depth " << wb_utils::image_depth_enum_to_string(depth) << std::endl;
-  auto *convert_image = new Image(image->get_rows(),
-                                  image->get_cols(),
-                                  image->get_components(),
-                                  depth);
-  for (int row = 0; row < image->get_rows(); row++) {
-    for (int col = 0; col < image->get_cols(); col++) {
-      double value = image->get_scaled(row, col, lower_in,
-                                      upper_in, lower_out, upper_out);
-      convert_image->set(row, col, value);
+  Image *Image::scale_image(Image *image, double lower_in,
+                            double upper_in, double lower_out,
+                            double upper_out, cv_enums::CV_image_depth depth) {
+    if (debug)
+      std::cout << "Image *Image::scale_image: lower_in " << lower_in
+                << " upper_in " << upper_in
+                << " lower_out " << lower_out
+                << " upper_out " << upper_out << " depth " << wb_utils::image_depth_enum_to_string(depth) << std::endl;
+    auto *convert_image = new Image(image->get_rows(),
+                                    image->get_cols(),
+                                    image->get_components(),
+                                    depth);
+    for (int row = 0; row < image->get_rows(); row++) {
+      for (int col = 0; col < image->get_cols(); col++) {
+        double value = image->get_scaled(row, col, lower_in,
+                                         upper_in, lower_out, upper_out);
+        convert_image->set(row, col, value);
+      }
+    }
+    return convert_image;
+  }
+
+  double Image::scale_pixel(double pixel_in,
+                            double in_lower,
+                            double in_upper,
+                            double out_lower,
+                            double out_upper) {
+    Bounds in_bounds(in_lower, in_upper);
+    Bounds out_bounds(out_lower, out_upper);
+    double pixel_out = Bounds::map_input_to_output_bounds(pixel_in, in_bounds, out_bounds);
+    return pixel_out;
+  }
+
+  void Image::set(int row, int col, double value) const {
+    switch (get_depth()) {
+      case cv_enums::CV_8U:
+        buf_8U[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
+        break;
+
+      case cv_enums::CV_32S:
+        buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
+        break;
+
+      case cv_enums::CV_32F:
+        buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
+        break;
+
+      default:
+        break;
     }
   }
-  return convert_image;
-}
 
-double Image::scale_pixel(double pixel_in,
-                         double in_lower,
-                         double in_upper,
-                         double out_lower,
-                         double out_upper) {
-  Bounds in_bounds(in_lower, in_upper);
-  Bounds out_bounds(out_lower, out_upper);
-  double pixel_out = Bounds::map_input_to_output_bounds(pixel_in, in_bounds, out_bounds);
-  return pixel_out;
-}
-
-void Image::set(int row, int col, double value) const {
-  switch (get_depth()) {
-    case cv_enums::CV_8U:
-      buf_8U[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
-      break;
-
-    case cv_enums::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
-      break;
-
-    case cv_enums::CV_32F:
-      buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
-      break;
-
-    default:
-      break;
+  void Image::set(Point &point, double value) const {
+    set(point.row, point.col, value);
   }
-}
 
-void Image::set(Point &point, double value) const {
-  set(point.row, point.col, value);
-}
+  void Image::set_8U(int row, int col, pixel_8U value) const {
+    buf_32F[row_col_to_index(row, col)] = value;
+  }
 
-void Image::set_8U(int row, int col, pixel_8U value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
-}
+  void Image::set_32F(int row, int col, pixel_32F value) const {
+    buf_32F[row_col_to_index(row, col)] = value;
+  }
 
-void Image::set_32F(int row, int col, pixel_32F value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
-}
-
-void Image::set_32S(int row, int col, pixel_32S value) const {
-  buf_32S[row_col_to_index(row, col)] = value;
-}
+  void Image::set_32S(int row, int col, pixel_32S value) const {
+    buf_32S[row_col_to_index(row, col)] = value;
+  }
 
 /**
  * convert grayscale image to rgb
@@ -451,121 +470,121 @@ void Image::set_32S(int row, int col, pixel_32S value) const {
  * @param component
  * @return
  */
-Image *Image::to_rgb(int component) const {
-  if (debug)
-    std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
-  Image_header new_image_header(get_rows(),
-                                            get_cols(),
-                                            3,
-                                            get_depth());
-  auto *new_image = new Image(new_image_header);
-  for (int i = 0; i < new_image->get_npixels(); i++) {
-    switch (image_header.depth) {
+  Image *Image::to_rgb(int component) const {
+    if (debug)
+      std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
+    Image_header new_image_header(get_rows(),
+                                  get_cols(),
+                                  3,
+                                  get_depth());
+    auto *new_image = new Image(new_image_header);
+    for (int i = 0; i < new_image->get_npixels(); i++) {
+      switch (image_header.depth) {
+        case cv_enums::CV_8U:
+          new_image->buf_8U[i * 3 + component] = buf_8U[i];
+          break;
+        case cv_enums::CV_32S:
+          new_image->buf_32S[i * 3 + component] = buf_32S[i];
+          break;
+        case cv_enums::CV_32F:
+          new_image->buf_32F[i * 3 + component] = buf_32F[i];
+          break;
+        default:
+          break;
+      }
+    }
+    return new_image;
+  }
+
+  std::string Image::to_string() const {
+    std::ostringstream os;
+    os << image_header.to_string()
+       << " next_pixel " << next_pixel;
+    return os.str();
+  }
+
+  void Image::write(const std::string &path, Errors &errors) const {
+    if (debug)
+      std::cout << "Image::write path '" << path << "' " << to_string() << std::endl;
+    FILE *fp = fopen(path.c_str(), "w");
+    if (fp == nullptr) {
+      errors.add("Image::write", "", "invalid file '" + path + "'");
+    }
+    image_header.write_header(fp, path, errors);
+    // Write the data from the buffer.
+    size_t newLen;
+    switch (get_depth()) {
       case cv_enums::CV_8U:
-        new_image->buf_8U[i * 3 + component] = buf_8U[i];
+        newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
+        if (ferror(fp) != 0 || newLen != get_npixels()) {
+          errors.add("Image::write", "", "cannot write 8U image data to '" + path + "'");
+        }
         break;
       case cv_enums::CV_32S:
-        new_image->buf_32S[i * 3 + component] = buf_32S[i];
+        newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
+        if (ferror(fp) != 0 || newLen != get_npixels()) {
+          errors.add("Image::write", "", "cannot write 32S image data to '" + path + "'");
+        }
         break;
       case cv_enums::CV_32F:
-        new_image->buf_32F[i * 3 + component] = buf_32F[i];
+        newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
+        if (ferror(fp) != 0 || newLen != get_npixels()) {
+          errors.add("Image::write", "", "cannot write 32F image data to '" + path + "'");
+        }
         break;
       default:
         break;
     }
+    fclose(fp);
   }
-  return new_image;
-}
 
-std::string Image::to_string() const {
-  std::ostringstream os;
-  os << image_header.to_string()
-     << " next_pixel " << next_pixel;
-  return os.str();
-}
+  void Image::write_jpeg(const std::string &path, Errors &errors) const {
+    if (get_depth() != cv_enums::CV_8U) {
+      errors.add("Image::write_jpeg", "", "cannot write "
+          + wb_utils::image_depth_enum_to_string(get_depth())
+          + " image");
+    }
+    int quality = 100; // best
+    struct jpeg_compress_struct cinfo;
+    struct jpeg_error_mgr jerr;
+    /* More stuff */
+    FILE *outfile;        /* target file */
+    JSAMPROW row_pointer[1];    /* pointer to JSAMPLE row[s] */
+    // int row_stride;		/* physical row width in image buffer */
 
-void Image::write(const std::string &path, Errors &errors) const {
-  if (debug)
-    std::cout << "Image::write path '" << path << "' " << to_string() << std::endl;
-  FILE *fp = fopen(path.c_str(), "w");
-  if (fp == nullptr) {
-    errors.add("Image::write", "", "invalid file '" + path + "'");
-  }
-  image_header.write_header(fp, path, errors);
-  // Write the data from the buffer.
-  size_t newLen;
-  switch (get_depth()) {
-    case cv_enums::CV_8U:
-      newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 8U image data to '" + path + "'");
-      }
-      break;
-    case cv_enums::CV_32S:
-      newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 32S image data to '" + path + "'");
-      }
-      break;
-    case cv_enums::CV_32F:
-      newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 32F image data to '" + path + "'");
-      }
-      break;
-    default:
-      break;
-  }
-  fclose(fp);
-}
+    /* Step 1: allocate and initialize JPEG compression object */
+    cinfo.err = jpeg_std_error(&jerr);
+    /* Now we can initialize the JPEG compression object. */
+    jpeg_create_compress(&cinfo);
+    /* Step 2: specify data destination (eg, a file) */
+    if ((outfile = fopen(path.c_str(), "wb")) == nullptr) {
+      errors.add("Image::write_jpeg", "", "invalid file '" + path + "'");
+    }
+    jpeg_stdio_dest(&cinfo, outfile);
+    /* Step 3: set parameters for compression */
+    cinfo.image_width = get_cols();
+    cinfo.image_height = get_rows();
+    cinfo.input_components = 1; // hardcode grayscale for now
+    cinfo.in_color_space = JCS_GRAYSCALE;    /* colorspace of input image */
+    jpeg_set_defaults(&cinfo);
+    jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+    /* Step 4: Start compressor */
+    jpeg_start_compress(&cinfo, TRUE);
+    /* Step 5: while (scan lines remain to be written) */
+    /*           jpeg_write_scanlines(...); */
 
-void Image::write_jpeg(const std::string &path, Errors &errors) const {
-  if (get_depth() != cv_enums::CV_8U) {
-    errors.add("Image::write_jpeg", "", "cannot write "
-        + wb_utils::image_depth_enum_to_string(get_depth())
-        + " image");
+    while (cinfo.next_scanline < cinfo.image_height) {
+      /* jpeg_write_scanlines expects an array of pointers to scanlines.
+       * Here the array is only one element long, but you could pass
+       * more than one scanline at a time if that's more convenient.
+       */
+      row_pointer[0] = (JSAMPROW) &buf_8U[cinfo.next_scanline * get_row_stride()];
+      (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+    }
+    /* Step 6: Finish compression */
+    jpeg_finish_compress(&cinfo);
+    /* After finish_compress, we can close the output file. */
+    fclose(outfile);
+    /* Step 7: release JPEG compression object */
+    jpeg_destroy_compress(&cinfo);
   }
-  int quality = 100; // best
-  struct jpeg_compress_struct cinfo;
-  struct jpeg_error_mgr jerr;
-  /* More stuff */
-  FILE *outfile;        /* target file */
-  JSAMPROW row_pointer[1];    /* pointer to JSAMPLE row[s] */
-  // int row_stride;		/* physical row width in image buffer */
-
-  /* Step 1: allocate and initialize JPEG compression object */
-  cinfo.err = jpeg_std_error(&jerr);
-  /* Now we can initialize the JPEG compression object. */
-  jpeg_create_compress(&cinfo);
-  /* Step 2: specify data destination (eg, a file) */
-  if ((outfile = fopen(path.c_str(), "wb")) == nullptr) {
-    errors.add("Image::write_jpeg", "", "invalid file '" + path + "'");
-  }
-  jpeg_stdio_dest(&cinfo, outfile);
-  /* Step 3: set parameters for compression */
-  cinfo.image_width = get_cols();
-  cinfo.image_height = get_rows();
-  cinfo.input_components = 1; // hardcode grayscale for now
-  cinfo.in_color_space = JCS_GRAYSCALE;    /* colorspace of input image */
-  jpeg_set_defaults(&cinfo);
-  jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
-  /* Step 4: Start compressor */
-  jpeg_start_compress(&cinfo, TRUE);
-  /* Step 5: while (scan lines remain to be written) */
-  /*           jpeg_write_scanlines(...); */
-
-  while (cinfo.next_scanline < cinfo.image_height) {
-    /* jpeg_write_scanlines expects an array of pointers to scanlines.
-     * Here the array is only one element long, but you could pass
-     * more than one scanline at a time if that's more convenient.
-     */
-    row_pointer[0] = (JSAMPROW) &buf_8U[cinfo.next_scanline * get_row_stride()];
-    (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-  }
-  /* Step 6: Finish compression */
-  jpeg_finish_compress(&cinfo);
-  /* After finish_compress, we can close the output file. */
-  fclose(outfile);
-  /* Step 7: release JPEG compression object */
-  jpeg_destroy_compress(&cinfo);
-}

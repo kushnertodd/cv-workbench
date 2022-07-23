@@ -14,55 +14,44 @@ extern bool debug;
 Hough_accum::~Hough_accum() {
   delete[] hough_cos;
   delete[] hough_sin;
-  for (int theta_index = 0; theta_index < nthetas; theta_index++)
-    if (rho_theta_accum[theta_index] != nullptr)
-      delete rho_theta_accum[theta_index];
+  delete rho_theta_counts;
 }
 
-Hough_accum::Hough_accum(int m_theta_inc, Image *m_image) :
+Hough_accum::Hough_accum() = default;
+
+Hough_accum::Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols) :
     theta_inc(m_theta_inc),
-    image(m_image) {
-  nthetas = max_theta / theta_inc;
-  max_rho = wb_utils::round_double_to_int(sqrt(get_rows() * get_rows() + get_cols() * get_cols())) + rho_buffer;
-  hough_cos = new double[nthetas];
-  hough_sin = new double[nthetas];
-  if (debug)
-    std::cout << "Hough_accum::Hough_accum theta_inc " << theta_inc
-              << " max_theta " << max_theta
-              << " nthetas " << nthetas
-              << " rows " << get_rows()
-              << " cols " << get_cols()
-              << " max_rho " << max_rho
-              << std::endl;
+    nrhos(m_nrhos),
+    nthetas(max_theta / theta_inc),
+    nbins(nrhos * nthetas),
+    rows(m_rows),
+    cols(m_cols) {
+
   // allocate cosine table
+  hough_cos = new double[nthetas];
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     hough_cos[theta_index] = std::cos(deg_to_rad(theta_index_to_theta(theta_index)));
   }
 
   // allocate sine table
+  hough_sin = new double[nthetas];
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     hough_sin[theta_index] = std::sin(deg_to_rad(theta_index_to_theta(theta_index)));
   }
 
   // accumulator
-  rho_theta_accum = new int *[nthetas];
+  rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-    rho_theta_accum[theta_index] = new int[max_rho];
-    for (int rho_index = 0; rho_index < max_rho; rho_index++)
-      rho_theta_accum[theta_index][rho_index] = 0;
+    for (int rho_index = 0; rho_index < nrhos; rho_index++)
+      set(rho_index, theta_index, 0);
   }
-}
-
-void Hough_accum::add(int theta_index, int rho_index, int value) const {
-  assert(theta_index >= 0 && theta_index < nthetas && rho_index >= 0 && rho_index < max_rho);
-  rho_theta_accum[theta_index][rho_index] += value;
 }
 
 int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) const {
   if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
     return 40000; //bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
-    return wb_utils::round_double_to_int(bounds.max_value * 0.85);
+    return wb_utils::round_double_to_int(stats.bounds.max_value * 0.85);
   } else return -1;
 }
 
@@ -345,16 +334,26 @@ double Hough_accum::col_to_x(int col) const {
   return x;
 }
 
-double Hough_accum::deg_to_rad(int deg) const {
-  double rad = deg * pi / max_theta;
+Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_threshold) {
+  int rows = image->get_rows();
+  int cols = image->get_cols();
+  int nrhos = wb_utils::round_double_to_int(sqrt(rows * rows
+                                                     + image->get_cols() * image->get_cols())) + rho_pad;
+  auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
+  hough_accum->initialize(image, pixel_threshold);
+  return hough_accum;
+}
+
+double Hough_accum::deg_to_rad(int deg) {
+  double rad = deg * M_PI / max_theta;
   return rad;
 }
 
 void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
                              bool non_max_suppression) const {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      int count = rho_theta_accum[theta_index][rho_index];
+    for (int rho_index = 0; rho_index < nrhos; rho_index++) {
+      int count = get(rho_index, theta_index);
       if (count > peak_threshold) {
         if (!non_max_suppression) {
           Polar_line line(rho_index, rho_index_to_rho(rho_index), theta_index, get_cos(theta_index),
@@ -366,11 +365,16 @@ void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
   }
 }
 
-int Hough_accum::get_cols() const { return image->image_header.cols; }
+int Hough_accum::get(int rho_index, int theta_index) const {
+  int index = rho_theta_to_index(rho_index, theta_index);
+  return rho_theta_counts[index];
+}
+
+int Hough_accum::get_cols() const { return cols; }
 
 double Hough_accum::get_cos(int theta_index) const { return hough_cos[theta_index]; }
 
-int Hough_accum::get_rows() const { return image->image_header.rows; }
+int Hough_accum::get_rows() const { return rows; }
 
 double Hough_accum::get_sin(int theta_index) const { return hough_sin[theta_index]; }
 
@@ -386,14 +390,14 @@ bool Hough_accum::in_window(Point &point) const {
  *
  * @param image_theshold
  */
-void Hough_accum::initialize(int image_theshold) {
-  for (int row = 0; row < image->get_rows(); row++) {
-    for (int col = 0; col < image->get_cols(); col++) {
-      double value = image->get(row, col);
-      if (std::abs(value) > image_theshold) {
+void Hough_accum::initialize(Image *image, int image_theshold) {
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      double value = std::abs(image->get(row, col));
+      if (value > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
           int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
-          add(theta_index, rho_index, wb_utils::round_double_to_int(abs(value)));
+          update(rho_index, theta_index, wb_utils::round_double_to_int(value));
         }
       }
     }
@@ -401,7 +405,47 @@ void Hough_accum::initialize(int image_theshold) {
   update_stats();
 }
 
-bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
+Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors) {
+  int theta_inc;
+  int nrhos;
+  int rows;
+  int cols;
+  int nbins;
+  wb_utils::read_int(fp,
+                     theta_inc,
+                     "Hough_accum::read",
+                     "",
+                     "missing hough accumulator theta_inc in '" + path + "'",
+                     errors);
+  if (errors.error_ct == 0)
+    wb_utils::read_int(fp, nrhos, "Hough_accum::read", "", "missing hough accumulator nrhos in '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator rows in '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    wb_utils::read_int(fp, cols, "Hough_accum::read", "", "missing hough accumulator cols in '" + path + "'", errors);
+  if (errors.error_ct != 0)
+    return nullptr;
+  else {
+    Hough_accum *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
+    wb_utils::read_int_buffer(fp,
+                              hough_accum->rho_theta_counts,
+                              hough_accum->nbins,
+                              "Hough_accum::read",
+                              "",
+                              "cannot read hough accumulator data in '" + path + "'",
+                              errors);
+    if (errors.error_ct != 0) {
+      delete hough_accum;
+      return nullptr;
+    }
+    hough_accum->update_stats();
+    return hough_accum;
+  }
+}
+
+// NRFPT
+Hough_accum *Hough_accum::read_text(std::ifstream &ifs, Errors &errors) {
+  auto *hough_accum = new Hough_accum();
   std::string line;
   while (getline(ifs, line)) {
     std::vector<std::string> values = file_utils::string_split(line);
@@ -409,14 +453,14 @@ bool Hough_accum::read(std::ifstream &ifs, Errors &errors) {
       int value;
       if (!wb_utils::string_to_int(value_str, value))
         errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
-      return false;
+      return nullptr;
     }
   }
-  return true;
+  return hough_accum;
 }
 
 double Hough_accum::rho_index_to_rho(int rho_index) const {
-  double rho_offset = max_rho / 2.0;
+  double rho_offset = nrhos / 2.0;
   double rho = rho_index - rho_offset;
   return rho;
 }
@@ -442,8 +486,13 @@ int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) c
   return wb_utils::round_double_to_int(col);
 }
 
+int Hough_accum::rho_theta_to_index(int rho_index, int theta_index) const {
+  assert(rho_index >= 0 && rho_index < nrhos && theta_index >= 0 && theta_index < nthetas);
+  return theta_index * nrhos + rho_index;
+}
+
 int Hough_accum::rho_to_index(double rho) const {
-  double rho_offset = max_rho / 2.0;
+  double rho_offset = nrhos / 2.0;
   int rho_index = wb_utils::round_double_to_int(rho + rho_offset);
   return rho_index;
 }
@@ -469,33 +518,37 @@ double Hough_accum::row_to_y(int row) const {
   return y;
 }
 
+void Hough_accum::set(int rho_index, int theta_index, int value) const {
+  int index = rho_theta_to_index(rho_index, theta_index);
+  rho_theta_counts[index] = value;
+}
+
 int Hough_accum::theta_index_to_theta(int theta_index) const {
   int theta = theta_index * theta_inc;
   return theta;
 }
 
+void Hough_accum::update(int rho_index, int theta_index, int value) const {
+  int index = rho_theta_to_index(rho_index, theta_index);
+  rho_theta_counts[index] += value;
+}
+
 void Hough_accum::update_stats() {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
-    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      bounds.update(rho_theta_accum[theta_index][rho_index]);
+    for (int rho_index = 0; rho_index < nrhos; rho_index++) {
+      stats.update(get(rho_index, theta_index));
     }
   }
 }
 
 bool Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  ofs << "nthetas " << nthetas << delim
-      << " theta_inc " << theta_inc << delim
-      << " max_rho " << max_rho << delim
-      << bounds.to_string()
-      << std::endl;
-  ofs << delim;
-  for (int rho_index = 0; rho_index < max_rho; rho_index++)
+  for (int rho_index = 0; rho_index < nrhos; rho_index++)
     ofs << rho_index_to_rho(rho_index) << delim;
   ofs << std::endl;
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     ofs << theta_index_to_theta(theta_index) << delim;
-    for (int rho_index = 0; rho_index < max_rho; rho_index++) {
-      ofs << rho_theta_accum[theta_index][rho_index] << delim;
+    for (int rho_index = 0; rho_index < nrhos; rho_index++) {
+      ofs << get(rho_index, theta_index) << delim;
     }
     ofs << std::endl;
   }

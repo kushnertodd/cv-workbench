@@ -123,6 +123,13 @@ void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) co
                            "cannot write sample_variance to '" + path + "'",
                            errors);
   if (errors.error_ct == 0)
+    wb_utils::write_double(fp,
+                           standard_deviation,
+                           "Variance_stats::write",
+                           "",
+                           "cannot write standard_deviation to '" + path + "'",
+                           errors);
+  if (errors.error_ct == 0)
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.min_value),
                           "Histogram::write", "", "cannot write min_value to '" + path + "'",

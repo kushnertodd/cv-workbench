@@ -46,7 +46,7 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     errors.add("Operator_filter_edge_prewitt::run", "", "too many output data sources");
   else {
     if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-      errors.add("Operator_filter_edge_prewitt::run: missing 'orientation' parameter");
+      errors.add("Operator_filter_edge_prewitt::run", "", "missing 'orientation' parameter");
     } else {
       std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
       if (orientation_str != "0" && orientation_str != "90") {

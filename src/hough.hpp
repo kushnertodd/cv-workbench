@@ -12,19 +12,18 @@
 
 class Hough {
  public:
-  const int max_theta = 180;
-  int theta_inc;
-  Image *image;
-  Hough_accum *accum;
+  Hough_accum *hough_accum;
   std::list<Polar_line> lines;
   std::list<Line_segment> line_segments;
 
   ~Hough();
-  Hough(Image *m_image, int m_theta_inc, int threshold);
+  Hough(Hough_accum *m_hough_accum);
+  static Hough *create_image(Image *input, int theta_inc, int pixel_threshold);
   void find_lines();
   void find_peaks();
   void lines_to_line_segments();
-  static bool read(const std::string &filename, Errors &errors);
+  static Hough *read(const std::string &path, Errors &errors);
+  static Hough *read_text(const std::string &path, Errors &errors);
   bool write(const std::string &filename, Errors &errors) const;
   bool write_text(const std::string &filename, const std::string &delim, Errors &errors) const;
 };

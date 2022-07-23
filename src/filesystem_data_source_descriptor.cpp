@@ -35,7 +35,7 @@ std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { retur
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
 
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
+  std::string path = (directory.empty() ? "" : directory + "/") + filename; // ignore ext + "." + ext;
   histogram->write_text(path, "\t", errors);
 }
 
@@ -45,9 +45,9 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
 }
 
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
-    std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-    hough->write_text(path, "\t", errors);
-  }
+  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
+  hough->write_text(path, "\t", errors);
+}
 
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;

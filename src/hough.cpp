@@ -2,6 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include "errors.hpp"
@@ -13,16 +14,26 @@
 extern bool debug;
 
 Hough::~Hough() {
-  delete accum;
+  delete hough_accum;
 }
 
-Hough::Hough(Image *m_image, int m_theta_inc, int threshold) :
-    image(m_image),
-    theta_inc(m_theta_inc) {
+/**
+ * For reading a Hough
+ * @param m_hough_accum
+ * @param m_hough_accum
+ * @param m_theta_inc
+ * @param m_threshold
+ */
+Hough::Hough(Hough_accum *m_hough_accum) :
+    hough_accum(m_hough_accum) {
+}
+
+Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
   if (debug)
     std::cout << "Hough::Hough image " << image->to_string() << " theta_inc " << theta_inc << std::endl;
-  accum = new Hough_accum(theta_inc, image);
-  accum->initialize(threshold);
+  auto *hough_accum = Hough_accum::create_image(image, theta_inc, pixel_threshold);
+  auto *hough = new Hough(hough_accum);
+  return hough;
 }
 
 void Hough::find_lines() {
@@ -31,8 +42,8 @@ void Hough::find_lines() {
 }
 
 void Hough::find_peaks() {
-  int peak_threshold = accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
-  accum->find_peaks(lines, peak_threshold);
+  int peak_threshold = hough_accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
+  hough_accum->find_peaks(lines, peak_threshold);
   if (debug) {
     for (Polar_line line: lines) {
       std::cout << "Hough::find_peaks: lines " << line.to_string() << std::endl;
@@ -43,23 +54,36 @@ void Hough::find_peaks() {
 void Hough::lines_to_line_segments() {
   for (Polar_line line: lines) {
     Line_segment line_segment;
-    if (accum->clip_window(line_segment, line))
+    if (hough_accum->clip_window(line_segment, line))
       line_segments.push_back(line_segment);
   }
 }
 
-bool Hough::read(const std::string &filename, Errors &errors) {
-  std::ifstream ifs(filename, std::ofstream::in);
+Hough *Hough::read(const std::string &path, Errors &errors) {
+  FILE *fp = fopen(path.c_str(), "r");
+  if (fp == nullptr) {
+    errors.add("Image::read", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
+    return nullptr;
+  }
+  Hough_accum *hough_accum = Hough_accum::read(fp, path, errors);
+  if (hough_accum == nullptr || errors.error_ct != 0)
+    return nullptr;
+  fclose(fp);
+  return new Hough(hough_accum);
+}
+
+// NRFPT
+Hough *Hough::read_text(const std::string &path, Errors &errors) {
+  std::ifstream ifs(path, std::ofstream::in);
   if (!ifs) {
-    errors.add("Hough:read", "", "invalid filename '" + filename + "'");
-    return false;
+    errors.add("read_text:read", "", "invalid filename '" + path + "'");
+    return nullptr;
   }
-  bool return_value = true;
-  if (!Hough_accum::read(ifs, errors)) {
-    return_value = false;
-  }
+  Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
+  if (hough_accum == nullptr || errors.error_ct != 0)
+    return nullptr;
   ifs.close();
-  return return_value;
+  return new Hough(hough_accum);
 }
 
 bool Hough::write(const std::string &filename, Errors &errors) const {
@@ -69,7 +93,7 @@ bool Hough::write(const std::string &filename, Errors &errors) const {
     return false;
   }
   bool return_value = true;
-  if (!accum->write_text(ofs, "\t", errors)) {
+  if (!hough_accum->write_text(ofs, "\t", errors)) {
     return_value = false;
   }
   ofs.close();
@@ -83,7 +107,7 @@ bool Hough::write_text(const std::string &filename, const std::string &delim, Er
     return false;
   }
   bool return_value = true;
-  if (!accum->write_text(ofs, "\t", errors)) {
+  if (!hough_accum->write_text(ofs, "\t", errors)) {
     return_value = false;
   }
   ofs.close();

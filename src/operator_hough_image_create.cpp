@@ -21,9 +21,9 @@ extern bool debug;
  * @param errors
  */
 void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                            std::list<Data_source_descriptor *> &output_data_stores,
-                                            String_map &operator_parameters,
-                                            Errors &errors) {
+                                      std::list<Data_source_descriptor *> &output_data_stores,
+                                      String_map &operator_parameters,
+                                      Errors &errors) {
   if (debug) {
     std::cout << "Operator_hough_image_create::run parameters: "
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
@@ -66,16 +66,19 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
             if (errors.error_ct == 0 && input != nullptr)
               input->check_grayscale(errors);
             if (errors.error_ct == 0) {
-              Hough hough(input, theta_inc, threshold);
-              for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-                if (hough_output_data_store->data_format == cv_enums::BINARY) {
-                  hough_output_data_store->write_hough(&hough, errors);
-                } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
-                  hough_output_data_store->write_hough_text(&hough, errors);
-                } else {
-                  errors.add("Operator_hough_image_create::run", "", "invalid data format "
-                      + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+              Hough *hough = Hough::create_image(input, theta_inc, threshold);
+              if (hough != nullptr) {
+                for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
+                  if (hough_output_data_store->data_format == cv_enums::BINARY) {
+                    hough_output_data_store->write_hough(hough, errors);
+                  } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
+                    hough_output_data_store->write_hough_text(hough, errors);
+                  } else {
+                    errors.add("Operator_hough_image_create::run", "", "invalid data format "
+                        + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+                  }
                 }
+                delete hough;
               }
             }
           }

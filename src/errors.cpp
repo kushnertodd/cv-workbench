@@ -6,10 +6,12 @@
 #include <sstream>
 #include "errors.hpp"
 
+/*
 void Errors::add(const std::string &error) {
   error_ct++;
   error_list.push_back(error);
 }
+*/
 
 void Errors::add(const std::string &module, const std::string &id, const std::string &error) {
   error_ct++;

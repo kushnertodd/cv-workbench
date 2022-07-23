@@ -77,17 +77,18 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
                 if (errors.error_ct == 0 && input != nullptr)
                   input->check_grayscale(errors);
                 if (errors.error_ct == 0 && input != nullptr) {
-                  Histogram histogram(input, nbins, lower_value, upper_value);
+                  Histogram* histogram = Histogram::create_image(input, nbins, lower_value, upper_value);
                   for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
                     if (histogram_output_data_store->data_format == cv_enums::BINARY) {
-                      histogram_output_data_store->write_histogram(&histogram, errors);
+                      histogram_output_data_store->write_histogram(histogram, errors);
                     } else if (histogram_output_data_store->data_format == cv_enums::TEXT) {
-                      histogram_output_data_store->write_histogram_text(&histogram, errors);
+                      histogram_output_data_store->write_histogram_text(histogram, errors);
                     } else {
                       errors.add("Operator_histogram_image_create::run", "", "invalid data format "
                           + wb_utils::data_format_to_string(histogram_output_data_store->data_format));
                     }
                   }
+                  delete histogram;
                 }
               }
             }

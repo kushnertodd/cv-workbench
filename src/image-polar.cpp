@@ -49,11 +49,12 @@ int main(int argc, char **argv) {
   errors.check_exit("image-polar: reading " + image_in_filename);
   if (in_image != nullptr)
     in_image->check_grayscale(errors);
-  Hough hough(in_image, 3, 200);
-  int rho_index = hough.accum->rho_to_index(rho);
+  Hough* hough= Hough::create_image(in_image, 3, 200);
+  int rho_index = hough->hough_accum->rho_to_index(rho);
   Polar_line polar_line(rho_index, rho, theta_index,
-                        hough.accum->get_cos(theta_index), hough.accum->get_sin(theta_index),0);
-  Line_segment line_segment; if (!hough.accum->clip_window(line_segment,polar_line)) {
+                        hough->hough_accum->get_cos(theta_index), hough->hough_accum->get_sin(theta_index), 0);
+  Line_segment line_segment;
+  if (!hough->hough_accum->clip_window(line_segment, polar_line)) {
     std::cout << "failed clipping (" << theta_index << ", " << rho
               << " against image " << in_image->to_string() << std::endl;
     exit(0);

@@ -45,7 +45,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
       std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
     data_type = wb_utils::string_to_data_type_enum(data_type_str);
     if (data_type == cv_enums::UNDEFINED_DATA_TYPE)
-      errors.add("invalid data type: " + data_type_str);
+      errors.add("", "", "invalid data type: " + data_type_str);
   }
 
   // parse: ' "format": ... `
@@ -63,7 +63,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     data_format =
         wb_utils::string_to_data_format_enum(data_format_str);
     if (data_format == cv_enums::UNDEFINED_DATA_FORMAT)
-      errors.add("invalid data format: " + data_format_str);
+      errors.add("", "", "invalid data format: " + data_format_str);
   }
 
   // parse: ' "repository": ... `
@@ -89,7 +89,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
           Experiment_step_data_source_descriptor::json_parse(
               json_data_descriptor, id, data_type, data_format, errors);
     } else {
-      errors.add("invalid data repository type: " + repository_str);
+      errors.add("", "", "invalid data repository type: " + repository_str);
     }
   }
   return data_source_descriptor;

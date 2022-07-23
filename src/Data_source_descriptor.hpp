@@ -23,7 +23,9 @@ class Data_source_descriptor {
                          cv_enums::CV_data_format m_data_format,
                          cv_enums::CV_repository_type m_repository_type);
   virtual Histogram *read_histogram(Errors &errors) = 0;
+  //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
   virtual Hough *read_hough(Errors &errors) = 0;
+  //  virtual Hough *read_hough_text(Errors &errors) = 0;
   virtual Image *read_image(Errors &errors) = 0;
   virtual Image *read_image_jpeg(Errors &errors) = 0;
   virtual std::string read_json(Errors &errors) = 0;

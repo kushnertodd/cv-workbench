@@ -36,7 +36,7 @@ class Image {
 
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
-   Image(Image_header &image_header);
+  Image(Image_header &image_header);
 
   // TODO: add component
   void add_8U(const pixel_8U *src, int count, Errors &errors);
@@ -44,9 +44,9 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
 
   bool check_grayscale(Errors &errors) const;
-  static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
+  //static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
   //void create_histogram(Histogram &histogram) const;
-  void draw_line_segment(const Line_segment& line_segment, double value) const;
+  void draw_line_segment(const Line_segment &line_segment, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
 
   // TODO: add component

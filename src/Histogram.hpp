@@ -11,29 +11,34 @@
 
 class Histogram {
  public:
-  Image *image;
+  Histogram();
   int *bins;
   int nbins;
+  int total_count=0;
   double lower_value;
   double upper_value;
+  Bounds bounds;
   Variance_stats stats;
 
   ~Histogram();
-  Histogram(Image *image,
-            int m_nbins,
+  Histogram(int m_nbins,
             double m_lower_value,
             double m_upper_value);
+ static Histogram *create_image(Image *input, int nbins,
+                          double lower_value,
+                          double upper_value);
   int get_bin(double value) const;
   double get_lower_value() const;
   double get_max_value() const;
   double get_min_value() const;
   double get_upper_value() const;
-  void initialize();
-  void read(const std::string &path, Errors &errors);
+  void initialize(Image *image);
+  static Histogram* read(const std::string &path, Errors &errors);
   std::string to_string();
-  void update(double new_value) const;
+  void update(double new_value) ;
   void update_stats();
   void write(const std::string &path, Errors &errors);
+  void write_gp_script(std::string filename);
   void write_text(const std::string &path, const std::string &delim, Errors &errors);
 };
 

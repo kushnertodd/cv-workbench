@@ -11,7 +11,7 @@
 
 Variance_stats variance_stats;
 
-void error_exit(const std::string& message) {
+void error_exit(const std::string &message) {
   printf("%s\n", message.c_str());
   exit(0);
 }
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   Errors errors;
   Image *in_image = Image::read(image_filename, errors);
 
-  Hough hough(in_image, 3, 200);
+  Hough* hough = Hough::create_image(in_image, 3, 200);
   Histogram *hist;
   Histogram *hist_image;
   Image *out_image;
@@ -46,8 +46,8 @@ int main(int argc, char **argv) {
       break;
 
     case cv_enums::CV_32S:
-      stat_32S(in_image, hough);
-      hough.find_lines();
+      //stat_32S(in_image, hough);
+      hough->find_lines();
       out_image = Image::scale_image(in_image,
                                      stats.bounds.min_value,
                                      stats.bounds.min_value,
@@ -56,13 +56,14 @@ int main(int argc, char **argv) {
                                      cv_enums::CV_8U);
       if (debug)
         std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
-      out_image->draw_line_segments(hough.line_segments, 0);
-      hough.write_text(hough_filename, "\t", errors);
+      out_image->draw_line_segments(hough->line_segments, 0);
+      hough->write_text(hough_filename, "\t", errors);
       out_image->write_jpeg(image_filename + ".jpg", errors);
-      hist = new Histogram(in_image, 100, hough.accum->bounds.min_value, hough.accum->bounds.max_value);
-      for (int theta_index = 0; theta_index < hough.accum->nthetas; theta_index++) {
-        for (int rho_index = 0; rho_index < hough.accum->max_rho; rho_index++) {
-          hist->update(hough.accum->rho_theta_accum[theta_index][rho_index]);
+/*
+      hist = new Histogram(in_image, 100, hough->hough_accum->bounds.min_value, hough.hough_accum->bounds.max_value);
+      for (int theta_index = 0; theta_index < hough.hough_accum->nthetas; theta_index++) {
+        for (int rho_index = 0; rho_index < hough.hough_accum->nrhos; rho_index++) {
+          hist->update(hough.hough_accum->rho_theta_counts[theta_index][rho_index]);
         }
       }
       hist->write_text(hist_filename, "\t", errors);
@@ -71,6 +72,7 @@ int main(int argc, char **argv) {
       for (int i = 0; i < in_image->get_npixels(); i++)
         hist_image->update(in_image->buf_32S[i]);
       hist_image->write_text(hist_filename + "image.txt", "\t", errors);
+*/
       break;
 
     case cv_enums::CV_32F:
