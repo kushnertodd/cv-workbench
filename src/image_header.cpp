@@ -4,13 +4,12 @@
 
 #include <iostream>
 #include <sstream>
-#include "file_utils.hpp"
 #include "wb_utils.hpp"
 #include "image_header.hpp"
 
 extern bool debug;
 
-Image_header::Image_header(){}
+Image_header::Image_header() = default;
 
 Image_header::Image_header(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth) :
     rows(m_rows),
@@ -30,7 +29,7 @@ Image_header::Image_header(Image_header &image_header) :
                  image_header.depth) {
 }
 
-void Image_header::read_header(FILE *fp, const std::string &path, Errors &errors) {
+void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
   wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows in '" + path + "'", errors);
   if (errors.error_ct == 0)
     wb_utils::read_int(fp, cols, "Image_header::read_header", "", "missing image cols in '" + path + "'", errors);
@@ -54,7 +53,7 @@ void Image_header::read_header(FILE *fp, const std::string &path, Errors &errors
   }
 }
 
-void Image_header::write_header(FILE *fp, const std::string &path, Errors &errors) const {
+void Image_header::write(FILE *fp, const std::string &path, Errors &errors) const {
   if (debug)
     std::cout << "Image_header::write_header  path '" << path << "' " << to_string() << std::endl;
   fwrite(&rows, sizeof(int), 1, fp);

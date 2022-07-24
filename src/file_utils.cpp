@@ -27,7 +27,7 @@ long file_utils::file_size(std::ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-std::string file_utils::read_file(const std::string& filename) {
+std::string file_utils::read_file(const std::string &filename) {
   std::ifstream in(filename, std::ios::in | std::ios::binary);
   if (in) {
     std::string contents;
@@ -55,10 +55,10 @@ bool file_utils::read_int(FILE *fp, int &var) {
   return (ferror(fp) == 0 && newLen == 1);
 }
 
-std::vector<std::string> file_utils::string_split(const std::string& str) {
+std::vector<std::string> file_utils::string_split(const std::string &str) {
   std::vector<std::string> result;
   std::istringstream iss(str);
-  for (std::string s; iss >> s; )
+  for (std::string s; iss >> s;)
     result.push_back(s);
   return result;
 }

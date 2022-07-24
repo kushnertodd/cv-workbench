@@ -17,7 +17,7 @@ class Hough {
   std::list<Line_segment> line_segments;
 
   ~Hough();
-  Hough(Hough_accum *m_hough_accum);
+  explicit Hough(Hough_accum *m_hough_accum);
   static Hough *create_image(Image *input, int theta_inc, int pixel_threshold);
   void find_lines();
   void find_peaks();

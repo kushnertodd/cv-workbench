@@ -426,7 +426,7 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
   if (errors.error_ct != 0)
     return nullptr;
   else {
-    Hough_accum *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
+    auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
     wb_utils::read_int_buffer(fp,
                               hough_accum->rho_theta_counts,
                               hough_accum->nbins,

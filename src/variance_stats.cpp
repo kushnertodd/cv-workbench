@@ -67,6 +67,71 @@ bool Variance_stats::is_valid() const {
   return (count >= 2);
 }
 
+void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
+  wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing image count in '" + path + "'", errors);
+
+ float mean_float = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp, mean_float, "Image_header::read_header", "", "missing image mean in '" + path + "'", errors);
+  if (errors.error_ct == 0)
+    mean = mean_float;
+
+  float variance_float = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp,
+                         variance_float,
+                         "Image_header::read_header",
+                         "",
+                         "missing image variance in '" + path + "'",
+                         errors);
+  if (errors.error_ct == 0)
+    variance = variance_float;
+
+  float sample_variance_float = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp,
+                         sample_variance_float,
+                         "Image_header::read_header",
+                         "",
+                         "missing image sample_variance in '" + path + "'",
+                         errors);
+  if (errors.error_ct == 0)
+    sample_variance = sample_variance_float;
+
+  float standard_deviation_float = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp,
+                         standard_deviation_float,
+                         "Image_header::read_header",
+                         "",
+                         "missing image standard_deviation in '" + path + "'",
+                         errors);
+  if (errors.error_ct == 0)
+    standard_deviation = standard_deviation_float;
+
+  float min_value = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp,
+                         min_value,
+                         "Image_header::read_header",
+                         "",
+                         "missing image min_value in '" + path + "'",
+                         errors);
+  if (errors.error_ct == 0)
+    bounds.min_value = min_value;
+
+  float max_value = 0.0;
+  if (errors.error_ct == 0)
+    wb_utils::read_float(fp,
+                         max_value,
+                         "Image_header::read_header",
+                         "",
+                         "missing image max_value in '" + path + "'",
+                         errors);
+  if (errors.error_ct == 0)
+    bounds.max_value = max_value;
+}
+
 std::string Variance_stats::to_string() {
   std::ostringstream os;
   os << "count " << count
@@ -107,24 +172,24 @@ void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) co
   if (errors.error_ct == 0)
     wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count to '" + path + "'", errors);
   if (errors.error_ct == 0)
-    wb_utils::write_double(fp, mean, "Variance_stats::write", "", "cannot write mean to '" + path + "'", errors);
+    wb_utils::write_float(fp, wb_utils::double_to_float(mean), "Variance_stats::write", "", "cannot write mean to '" + path + "'", errors);
   if (errors.error_ct == 0)
-    wb_utils::write_double(fp,
-                           variance,
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(variance),
                            "Variance_stats::write",
                            "",
                            "cannot write variance to '" + path + "'",
                            errors);
   if (errors.error_ct == 0)
-    wb_utils::write_double(fp,
-                           sample_variance,
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(sample_variance),
                            "Variance_stats::write",
                            "",
                            "cannot write sample_variance to '" + path + "'",
                            errors);
   if (errors.error_ct == 0)
-    wb_utils::write_double(fp,
-                           standard_deviation,
+    wb_utils::write_float(fp,
+                          wb_utils::double_to_float(standard_deviation),
                            "Variance_stats::write",
                            "",
                            "cannot write standard_deviation to '" + path + "'",
