@@ -11,8 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "square45-90_gray",
-            "ext": "jpg"
+            "filename": "square45-90_gray"
           }
         ],
         "output-data": [
@@ -22,8 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees",
-            "ext": "bin"
+            "filename": "square45-90_gray_sobel_0_degrees"
           }
         ],
         "parameters": {
@@ -41,8 +39,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees",
-            "ext": "bin"
+            "filename": "square45-90_gray_sobel_0_degrees"
           }
         ],
         "output-data": [
@@ -52,8 +49,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees",
-            "ext": "jpg"
+            "filename": "square45-90_gray_sobel_0_degrees"
           }
         ],
         "parameters": {

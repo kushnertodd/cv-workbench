@@ -8,18 +8,14 @@ for script in  \
   test-filter-edge-kirsch-e.json \
   test-filter-edge-kirsch-ne.json 
 do
-  echo "script '$script'"
-  echo "$ cd ../.."
   cd ../..
-  #$echo "PWD $PWD"
-  echo "$ ./cv-workbench test/filter-edge-kirsch/$script"
-  ./cv-workbench test/filter-edge-kirsch/$script
-  echo "$ cd test/filter-edge-kirsch"
+  if ! ./cv-workbench test/filter-edge-kirsch/$script ; then
+    echo error running $script
+  fi
   cd test/filter-edge-kirsch
-  #echo "PWD $PWD"
 done
 for f in *.jpg; do
-  echo $f
-  echo "$ cmp $f ../../images/$f"
-  cmp $f ../../images/$f
+  if ! cmp -s $f ../../images/$f ; then
+    echo no match: $f
+  fi
 done

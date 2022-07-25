@@ -69,6 +69,7 @@ PROGRAMS = \
   image-dump \
   image-hist \
   image-hough \
+  image-hough-draw \
   image-info \
   image-polar \
   image-stats \
@@ -90,6 +91,9 @@ image-hist: image-hist.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-hough: image-hough.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-hough-draw: image-hough-draw.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-info: image-info.o $(SRCOBJS)

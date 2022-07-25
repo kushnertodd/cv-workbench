@@ -103,9 +103,15 @@ Filesystem_data_source_descriptor
                       json_data_descriptor,
                       "ext",
                       json_type_string,
-                      errors);
+                      errors, true);
   if (json_ext != nullptr)
     filesystem_data_source_descriptor->ext = json_object_get_string(json_ext);
+  else if (filesystem_data_source_descriptor->data_format == cv_enums::JPEG)
+    filesystem_data_source_descriptor->ext = "jpg";
+  else if (filesystem_data_source_descriptor->data_format == cv_enums::BINARY)
+    filesystem_data_source_descriptor->ext = "bin";
+  else if (filesystem_data_source_descriptor->data_format == cv_enums::TEXT)
+    filesystem_data_source_descriptor->ext = "txt";
   else
     errors.add("Filesystem_data_source_descriptor::json_parse", "", "missing required extension");
 

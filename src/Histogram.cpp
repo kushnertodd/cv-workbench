@@ -17,6 +17,8 @@ Histogram::~Histogram() {
   delete bins;
 }
 
+Histogram::Histogram() = default;
+
 Histogram::Histogram(int m_nbins,
                      double m_lower_value,
                      double m_upper_value) :
@@ -31,9 +33,11 @@ Histogram::Histogram(int m_nbins,
 Histogram *Histogram::create_image(Image *image,
                                    int nbins,
                                    double lower_value,
-                                   double upper_value) {
+                                   double upper_value,
+                                   bool saw_lower_value,
+                                   bool saw_upper_value) {
   auto *histogram = new Histogram(nbins, lower_value, upper_value);
-  histogram->initialize(image);
+  histogram->initialize(image, saw_lower_value, saw_upper_value);
   return histogram;
 }
 
@@ -44,6 +48,10 @@ int Histogram::get_bin(double value) const {
     return nbins - 1;
   else
     return wb_utils::round_double_to_int((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
+}
+
+float Histogram::get_value(int bin) const {
+    return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
 }
 
 double Histogram::get_lower_value() const {
@@ -62,7 +70,18 @@ double Histogram::get_upper_value() const {
   return upper_value;
 }
 
-void Histogram::initialize(Image *image) {
+void Histogram::initialize(Image *image, bool saw_lower_value, bool saw_upper_value) {
+  for (int row = 0; row < image->get_rows(); row++) {
+    for (int col = 0; col < image->get_cols(); col++) {
+      double value = image->get(row, col);
+      stats.update(value);
+    }
+  }
+  stats.finalize();
+  if (!saw_lower_value)
+    lower_value = stats.get_min_value();
+  if (!saw_upper_value)
+    upper_value = stats.get_max_value();
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
       double value = image->get(row, col);
@@ -173,7 +192,6 @@ std::string Histogram::to_string() {
 void Histogram::update(double value) {
   int bin = get_bin(value);
   bins[bin]++;
-  stats.update(value);
 }
 
 void Histogram::write(const std::string &path, Errors &errors) const {
@@ -214,7 +232,7 @@ void Histogram::write_gp_script(const std::string &filename) {
   std::string script_filename = filename + ".hist.gp";
   std::ofstream ofs(script_filename, std::ofstream::out);
   ofs << "set style data histograms" << std::endl;
-  ofs << "plot './" << script_filename << "' using 2:xtic(1)" << std::endl;
+  ofs << "plot './" << filename << "' using 2:xtic(10)" << std::endl;
   ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs.close();
 }
@@ -229,18 +247,18 @@ void Histogram::write_text(const std::string &path, const std::string &delim, Er
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;
   }
+/*
   ofs << "nbins " << nbins
       << " lower_value " << lower_value
       << " upper_value " << upper_value
       << stats.to_string()
       << std::endl;
+*/
+ofs << "bin" << delim << "count" << std::endl;
   for (int i = 0; i < nbins; i++)
-    ofs << i << delim;
-  ofs << std::endl;
-  for (int i = 0; i < nbins; i++)
-    ofs << bins[i] << delim;
+    ofs << get_value(i) << delim << bins[i] << std::endl;
   ofs << std::endl;
   ofs.close();
 }
-Histogram::Histogram() = default;
+
 

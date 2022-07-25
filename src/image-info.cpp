@@ -4,6 +4,7 @@
 #include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
+#include "histogram.hpp"
 #include "image.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -32,42 +33,41 @@ int main(int argc, char **argv) {
   int depth_int;
   cv_enums::CV_image_depth depth;
   int npixels;
+  Errors errors;
+  Image *image;
   if (is_jpeg) {
-    Errors errors;
-    Image *in_image = Image::read_jpeg(filename, errors);
+    image = Image::read_jpeg(filename, errors);
     errors.check_exit("reading " + filename);
-    rows = in_image->get_rows();
-    cols = in_image->get_cols();
-    components = in_image->get_components();
-    depth = in_image->get_depth();
   } else {
-    FILE *fp = fopen(filename.c_str(), "r");
-    if (fp == NULL) {
-      wb_utils::error_exit(filename + ": cannot open");
-    }
-
-    if (!file_utils::read_int(fp, rows))
-      wb_utils::error_exit(filename + ": cannot read rows");
-    if (!file_utils::read_int(fp, cols))
-      wb_utils::error_exit(filename + ": cannot read cols");
-    if (!file_utils::read_int(fp, components))
-      wb_utils::error_exit(filename + ": cannot read components");
-    if (!file_utils::read_int(fp, depth_int))
-      wb_utils::error_exit(filename + ": cannot read depth");
-    fclose(fp);
-    depth = static_cast<cv_enums::CV_image_depth>(depth_int);
+    Image *image = Image::read(filename, errors);
   }
-  std::string depth_str = wb_utils::image_depth_enum_to_string(depth);
-
-  npixels = rows * cols * components;
-  std::cout << "image " << filename <<  ":" << std::endl;
-  std::cout << "    rows       " << std::setw(20) << std::right << rows << std::endl;
-  std::cout << "    cols       " << std::setw(20) << std::right << cols << std::endl;
-  std::cout << "    components " << std::setw(20) << std::right << components << std::endl;
-  std::cout << "    depth int  " << std::setw(20) << std::right << depth_int << std::endl;
-  std::cout << "    depth      " << std::setw(20) << std::right << depth_str << std::endl;
-  std::cout << "    npixels    " << std::setw(20) << std::right << npixels << std::endl;
-  return 0;
+  Histogram *histogram;
+  if (errors.error_ct == 0) {
+    rows = image->get_rows();
+    cols = image->get_cols();
+    components = image->get_components();
+    depth = image->get_depth();
+    std::string depth_str = wb_utils::image_depth_enum_to_string(depth);
+    npixels = image->get_npixels();
+    std::cout << "image " << filename << ":" << std::endl;
+    std::cout << "    rows       " << std::setw(20) << std::right << rows << std::endl;
+    std::cout << "    cols       " << std::setw(20) << std::right << cols << std::endl;
+    std::cout << "    components " << std::setw(20) << std::right << components << std::endl;
+    std::cout << "    depth      " << std::setw(20) << std::right << depth_str << std::endl;
+    std::cout << "    npixels    " << std::setw(20) << std::right << npixels << std::endl;
+    histogram = Histogram::create_image(image,
+                                        100,
+                                        0.0,
+                                        0.0,
+                                        false,
+                                        false);
+    histogram->write_text("hist.txt", "\t", errors);
+  }
+  if (errors.error_ct == 0) {
+    Histogram::write_gp_script("hist.txt");
+  }
+  if (errors.error_ct != 0)
+    std::cout << errors.to_string() << std::endl;
 }
 
 

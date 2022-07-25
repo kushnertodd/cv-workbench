@@ -40,7 +40,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
 
   if (debug) {
     std::cout << "Operator_filter_edge_kirsch::run parameters: "
-         << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
+              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "missing input data source");
@@ -55,14 +55,17 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
       errors.add("Operator_filter_edge_kirsch::run", "", "missing 'orientation' parameter");
     } else {
       std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
-      if (orientation_str != "NW"
+      if (orientation_str != "N"
+          && orientation_str != "NW"
           && orientation_str != "W"
           && orientation_str != "SW"
           && orientation_str != "S"
           && orientation_str != "SE"
           && orientation_str != "E"
           && orientation_str != "NE") {
-        errors.add("Operator_filter_edge_kirsch", "", "invalid 'orientation' parameter not E, N, NE, NW, S, SE, SW, or W");
+        errors.add("Operator_filter_edge_kirsch",
+                   "",
+                   "invalid 'orientation' parameter not E, N, NE, NW, S, SE, SW, or W");
       } else {
         Kernel *kirsch_kernel = nullptr;
         if (orientation_str == "N") {
@@ -119,7 +122,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
             output_data_store->write_image(output, errors);
           } else {
             errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format '"
-                           + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
+                + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
           }
         }
       }

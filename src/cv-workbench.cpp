@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
       errors.check_exit("cv-workbench: there were errors.");
       experiment->run(errors);
       errors.check_exit("cv-workbench: there were errors.");
+      exit(0);
     }
   }
   catch (std::exception &ex) {

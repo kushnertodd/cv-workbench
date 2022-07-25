@@ -9,6 +9,19 @@
 #include "image.hpp"
 #include "variance_stats.hpp"
 
+/**
+ * The histogram for the input image pixel values or Hough accumulator bin counts
+ *
+ * min_count           bounds.min_value          The lowest count for any histogram bin
+ * max_count           bounds.max_value          The largest count for any histogram bin
+ * total_count         stats.count               The total input value count
+ * mean                stats.mean                The input value mean
+ * variance            stats.variance            The input value variance
+ * sample variance     stats.sample_variance     The input value sample variance
+ * standard deviation  stats.standard_deviation  The input value standard deviation
+ * min_value           stats.bounds.min_value    The overall minimum input value
+ * max_value           stats.bounds.max_value    The overall maximum input value
+ */
 class Histogram {
  public:
   Histogram();
@@ -25,13 +38,16 @@ class Histogram {
             double m_upper_value);
   static Histogram *create_image(Image *input, int nbins,
                                  double lower_value,
-                                 double upper_value);
+                                 double upper_value,
+                                 bool saw_lower_value,
+                                 bool saw_upper_value);
   int get_bin(double value) const;
-  double get_lower_value() const;
+  float get_value(int bin) const;
+    double get_lower_value() const;
   double get_max_value() const;
   double get_min_value() const;
   double get_upper_value() const;
-  void initialize(Image *image);
+  void initialize(Image *image, bool saw_lower_value, bool saw_upper_value);
   static Histogram *read(const std::string &path, Errors &errors);
   std::string to_string();
   void update(double new_value);

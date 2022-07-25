@@ -11,3 +11,5 @@
 - operator_hough_peak_detect
 - operator_transform_image_copy
 - operator_transform_image_morphology
+##data descriptors
+- filesystem descriptor Friday default extension
