@@ -36,7 +36,7 @@ class Image {
 
   virtual ~Image();
   Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
-  Image(Image_header &image_header);
+  explicit Image(Image_header &image_header);
 
   // TODO: add component
   void add_8U(const pixel_8U *src, int count, Errors &errors);
@@ -87,8 +87,9 @@ class Image {
   void set_32S(int row, int col, pixel_32S value) const;
 
   Image *to_rgb(int components) const;
-  std::string to_string() const;
+  std::string to_string(std::string prefix = "") const;
   void write(const std::string &path, Errors &errors) const;
+  void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
   void write_jpeg(const std::string &path, Errors &errors) const;
 };
 

@@ -1,0 +1,23 @@
+filename ../../images/google-map-slc-2022-07-25_sobel_gray.bin
+image:
+    rows                854
+    cols                938
+    components          1
+    depth               unknown image depth
+    row_stride          938
+    npixels             801052
+histogram:
+    nbins               100
+    lower_value         -894
+    upper_value         923
+    bounds: 
+        min_value           0
+        max_value           59721
+    stats: 
+        count               801052
+        mean                0.112907
+        variance            15636.2
+        sample variance     15636.3
+        standard deviation  125.045
+        min value           -894
+        max value           923

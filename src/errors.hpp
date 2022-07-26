@@ -14,9 +14,8 @@ class Errors {
  public:
   int error_ct = 0;
   std::list<std::string> error_list;
-  //void add(const std::string &error);
   void add(const std::string &module, const std::string &id, const std::string &error);
-  void check_exit(const std::string &message);
+  void check_exit(const std::string &message = "");
   void merge(Errors &errors);
   std::string to_string();
 };

@@ -4,8 +4,8 @@
 
 #include <cassert>
 #include <cmath>
+#include <iomanip>
 #include <iostream>
-#include <sstream>
 #include "wb_utils.hpp"
 #include "variance_stats.hpp"
 
@@ -132,15 +132,16 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
     bounds.max_value = max_value;
 }
 
-std::string Variance_stats::to_string() {
+std::string Variance_stats::to_string(std::string prefix) {
   std::ostringstream os;
-  os << "count " << count
-     << " mean " << get_mean()
-     << " variance " << get_variance()
-     << " sample variance " << get_sample_variance()
-     << " standard deviation " << get_standard_deviation()
-     << " min value " << bounds.min_value
-     << " max value " << bounds.max_value;
+  os << "stats: " << std::endl
+   << prefix  << "    "<< std::setw(20) << std::left << "count " << count << std::endl
+      << prefix << "    " << std::setw(20) << std::left <<"mean " << get_mean() << std::endl
+      << prefix << "    "<< std::setw(20) << std::left  << "variance " << get_variance() << std::endl
+      << prefix << "    " << std::setw(20) << std::left << "sample variance " << get_sample_variance() << std::endl
+      << prefix  << "    "<< std::setw(20) << std::left << "standard deviation " << get_standard_deviation() << std::endl
+      << prefix  << "    "<< std::setw(20) << std::left << "min value " << bounds.min_value << std::endl
+      << prefix  << "    "<< std::setw(20) << std::left  << "max value " << bounds.max_value << std::endl;
   return os.str();
 }
 

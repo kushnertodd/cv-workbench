@@ -14,7 +14,7 @@ LDFLAGS_OPENCV = \
     -lopencv_stitching \
     -lopencv_video \
     -lopencv_videoio 
-LDFLAGS_JSON = -ljson-c
+LDFLAGS_JSON = -static -ljson-c
 LDFLAGS_JPEG = -ljpeg
 
 SRCFILES := $(wildcard *.cpp) 
@@ -71,8 +71,8 @@ PROGRAMS = \
   image-hough \
   image-hough-draw \
   image-info \
+  image-jpg-to-bin \
   image-polar \
-  image-stats \
   image-test \
   cv-workbench 
 
@@ -99,10 +99,10 @@ image-hough-draw: image-hough-draw.o $(SRCOBJS)
 image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-image-polar: image-polar.o $(SRCOBJS)
+image-jpg-to-bin: image-jpg-to-bin.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-image-stats: image-stats.o $(SRCOBJS)
+image-polar: image-polar.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-test: image-test.o $(SRCOBJS)
@@ -189,17 +189,14 @@ hough_accum.o: hough_accum.hpp file_utils.hpp wb_utils.hpp
 hough.o: errors.hpp file_utils.hpp wb_utils.hpp wb_defs.hpp hough_accum.hpp
 hough.o: image.hpp bounds.hpp image_header.hpp line_segment.hpp point.hpp
 hough.o: variance_stats.hpp polar_line.hpp hough.hpp
-image.o: /usr/include/jpeglib.h /usr/include/jmorecfg.h image.hpp bounds.hpp
-image.o: errors.hpp image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
-image.o: variance_stats.hpp wb_utils.hpp
+image.o: image.hpp bounds.hpp errors.hpp image_header.hpp wb_defs.hpp
+image.o: line_segment.hpp point.hpp variance_stats.hpp wb_utils.hpp
 image-create.o: errors.hpp image.hpp bounds.hpp image_header.hpp wb_defs.hpp
 image-create.o: line_segment.hpp point.hpp variance_stats.hpp wb_utils.hpp
 image-create.o: file_utils.hpp hough_accum.hpp polar_line.hpp
-image-dump.o: hough_accum.hpp errors.hpp file_utils.hpp image.hpp bounds.hpp
-image-dump.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
-image-dump.o: variance_stats.hpp wb_utils.hpp polar_line.hpp
-image_header.o: file_utils.hpp wb_utils.hpp errors.hpp wb_defs.hpp
-image_header.o: image_header.hpp
+image-dump.o: image.hpp bounds.hpp errors.hpp image_header.hpp wb_defs.hpp
+image-dump.o: line_segment.hpp point.hpp variance_stats.hpp wb_utils.hpp
+image_header.o: wb_utils.hpp errors.hpp wb_defs.hpp image_header.hpp
 image-hist.o: variance_stats.hpp errors.hpp bounds.hpp hough_accum.hpp
 image-hist.o: file_utils.hpp image.hpp image_header.hpp wb_defs.hpp
 image-hist.o: line_segment.hpp point.hpp wb_utils.hpp polar_line.hpp
@@ -207,17 +204,21 @@ image-hough.o: errors.hpp histogram.hpp image.hpp bounds.hpp image_header.hpp
 image-hough.o: wb_defs.hpp line_segment.hpp point.hpp variance_stats.hpp
 image-hough.o: hough.hpp hough_accum.hpp file_utils.hpp wb_utils.hpp
 image-hough.o: polar_line.hpp
-image-info.o: errors.hpp file_utils.hpp image.hpp bounds.hpp image_header.hpp
-image-info.o: wb_defs.hpp line_segment.hpp point.hpp variance_stats.hpp
-image-info.o: wb_utils.hpp
+image-hough-draw.o: errors.hpp file_utils.hpp histogram.hpp image.hpp
+image-hough-draw.o: bounds.hpp image_header.hpp wb_defs.hpp line_segment.hpp
+image-hough-draw.o: point.hpp variance_stats.hpp hough.hpp hough_accum.hpp
+image-hough-draw.o: wb_utils.hpp polar_line.hpp
+image-info.o: errors.hpp file_utils.hpp histogram.hpp image.hpp bounds.hpp
+image-info.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-info.o: variance_stats.hpp wb_utils.hpp
+image-jpg-to-bin.o: image.hpp bounds.hpp errors.hpp image_header.hpp
+image-jpg-to-bin.o: wb_defs.hpp line_segment.hpp point.hpp variance_stats.hpp
+image-jpg-to-bin.o: wb_utils.hpp
 image_point_list.o: image_point_list.hpp point.hpp
 image-polar.o: errors.hpp histogram.hpp image.hpp bounds.hpp image_header.hpp
 image-polar.o: wb_defs.hpp line_segment.hpp point.hpp variance_stats.hpp
 image-polar.o: hough.hpp hough_accum.hpp file_utils.hpp wb_utils.hpp
 image-polar.o: polar_line.hpp
-image-stats.o: variance_stats.hpp errors.hpp bounds.hpp hough_accum.hpp
-image-stats.o: file_utils.hpp image.hpp image_header.hpp wb_defs.hpp
-image-stats.o: line_segment.hpp point.hpp wb_utils.hpp polar_line.hpp
 image-test.o: errors.hpp image.hpp bounds.hpp image_header.hpp wb_defs.hpp
 image-test.o: line_segment.hpp point.hpp variance_stats.hpp hough_accum.hpp
 image-test.o: file_utils.hpp wb_utils.hpp polar_line.hpp
@@ -236,17 +237,37 @@ operator.o: operator.hpp wb_defs.hpp data_source_descriptor.hpp hough.hpp
 operator.o: errors.hpp hough_accum.hpp file_utils.hpp image.hpp bounds.hpp
 operator.o: image_header.hpp line_segment.hpp point.hpp variance_stats.hpp
 operator.o: wb_utils.hpp polar_line.hpp histogram.hpp
-operator_dispatcher.o: operator_filter_edge_kirsch.hpp wb_defs.hpp
-operator_dispatcher.o: operator.hpp data_source_descriptor.hpp hough.hpp
+operator_dispatcher.o: operator_filter_edge_gaussian.hpp operator.hpp
+operator_dispatcher.o: wb_defs.hpp data_source_descriptor.hpp hough.hpp
 operator_dispatcher.o: errors.hpp hough_accum.hpp file_utils.hpp image.hpp
 operator_dispatcher.o: bounds.hpp image_header.hpp line_segment.hpp point.hpp
 operator_dispatcher.o: variance_stats.hpp wb_utils.hpp polar_line.hpp
-operator_dispatcher.o: histogram.hpp operator_filter_edge_prewitt.hpp
+operator_dispatcher.o: histogram.hpp operator_filter_edge_kirsch.hpp
+operator_dispatcher.o: operator_filter_edge_laplacian.hpp
+operator_dispatcher.o: operator_filter_edge_prewitt.hpp
 operator_dispatcher.o: operator_filter_edge_roberts.hpp
 operator_dispatcher.o: operator_filter_edge_sobel.hpp
-operator_dispatcher.o: operator_transform_intensity_map.hpp
+operator_dispatcher.o: operator_filter_smooth_average.hpp
+operator_dispatcher.o: operator_filter_smooth_gaussian.hpp
+operator_dispatcher.o: operator_filter_smooth_median.hpp
+operator_dispatcher.o: operator_histogram_hough_create.hpp
+operator_dispatcher.o: operator_histogram_image_create.hpp
+operator_dispatcher.o: operator_histogram_peak_detect.hpp
+operator_dispatcher.o: operator_hough_draw_line.hpp
 operator_dispatcher.o: operator_hough_image_create.hpp
-operator_dispatcher.o: operator_hough_draw_line.hpp operator_dispatcher.hpp
+operator_dispatcher.o: operator_hough_peak_detect.hpp
+operator_dispatcher.o: operator_transform_image_copy.hpp
+operator_dispatcher.o: operator_transform_image_morphology.hpp
+operator_dispatcher.o: operator_transform_intensity_map.hpp
+operator_dispatcher.o: operator_dispatcher.hpp
+operator_filter_edge_gaussian.o: operator_filter_edge_gaussian.hpp
+operator_filter_edge_gaussian.o: operator.hpp wb_defs.hpp
+operator_filter_edge_gaussian.o: data_source_descriptor.hpp hough.hpp
+operator_filter_edge_gaussian.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_filter_edge_gaussian.o: image.hpp bounds.hpp image_header.hpp
+operator_filter_edge_gaussian.o: line_segment.hpp point.hpp
+operator_filter_edge_gaussian.o: variance_stats.hpp wb_utils.hpp
+operator_filter_edge_gaussian.o: polar_line.hpp histogram.hpp
 operator_filter_edge_kirsch.o: kernel.hpp image.hpp bounds.hpp errors.hpp
 operator_filter_edge_kirsch.o: image_header.hpp wb_defs.hpp line_segment.hpp
 operator_filter_edge_kirsch.o: point.hpp variance_stats.hpp
@@ -255,6 +276,14 @@ operator_filter_edge_kirsch.o: operator_filter_edge_kirsch.hpp operator.hpp
 operator_filter_edge_kirsch.o: data_source_descriptor.hpp hough.hpp
 operator_filter_edge_kirsch.o: hough_accum.hpp file_utils.hpp wb_utils.hpp
 operator_filter_edge_kirsch.o: polar_line.hpp histogram.hpp
+operator_filter_edge_laplacian.o: operator_filter_edge_laplacian.hpp
+operator_filter_edge_laplacian.o: operator.hpp wb_defs.hpp
+operator_filter_edge_laplacian.o: data_source_descriptor.hpp hough.hpp
+operator_filter_edge_laplacian.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_filter_edge_laplacian.o: image.hpp bounds.hpp image_header.hpp
+operator_filter_edge_laplacian.o: line_segment.hpp point.hpp
+operator_filter_edge_laplacian.o: variance_stats.hpp wb_utils.hpp
+operator_filter_edge_laplacian.o: polar_line.hpp histogram.hpp
 operator_filter_edge_prewitt.o: kernel.hpp image.hpp bounds.hpp errors.hpp
 operator_filter_edge_prewitt.o: image_header.hpp wb_defs.hpp line_segment.hpp
 operator_filter_edge_prewitt.o: point.hpp variance_stats.hpp
@@ -278,6 +307,38 @@ operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp operator.hpp
 operator_filter_edge_sobel.o: data_source_descriptor.hpp hough.hpp
 operator_filter_edge_sobel.o: hough_accum.hpp file_utils.hpp wb_utils.hpp
 operator_filter_edge_sobel.o: polar_line.hpp histogram.hpp
+operator_filter_smooth_average.o: operator_filter_smooth_average.hpp
+operator_filter_smooth_average.o: operator.hpp wb_defs.hpp
+operator_filter_smooth_average.o: data_source_descriptor.hpp hough.hpp
+operator_filter_smooth_average.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_filter_smooth_average.o: image.hpp bounds.hpp image_header.hpp
+operator_filter_smooth_average.o: line_segment.hpp point.hpp
+operator_filter_smooth_average.o: variance_stats.hpp wb_utils.hpp
+operator_filter_smooth_average.o: polar_line.hpp histogram.hpp
+operator_filter_smooth_gaussian.o: operator_filter_smooth_gaussian.hpp
+operator_filter_smooth_gaussian.o: operator.hpp wb_defs.hpp
+operator_filter_smooth_gaussian.o: data_source_descriptor.hpp hough.hpp
+operator_filter_smooth_gaussian.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_filter_smooth_gaussian.o: image.hpp bounds.hpp image_header.hpp
+operator_filter_smooth_gaussian.o: line_segment.hpp point.hpp
+operator_filter_smooth_gaussian.o: variance_stats.hpp wb_utils.hpp
+operator_filter_smooth_gaussian.o: polar_line.hpp histogram.hpp
+operator_filter_smooth_median.o: operator_filter_smooth_median.hpp
+operator_filter_smooth_median.o: operator.hpp wb_defs.hpp
+operator_filter_smooth_median.o: data_source_descriptor.hpp hough.hpp
+operator_filter_smooth_median.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_filter_smooth_median.o: image.hpp bounds.hpp image_header.hpp
+operator_filter_smooth_median.o: line_segment.hpp point.hpp
+operator_filter_smooth_median.o: variance_stats.hpp wb_utils.hpp
+operator_filter_smooth_median.o: polar_line.hpp histogram.hpp
+operator_histogram_hough_create.o: operator_histogram_hough_create.hpp
+operator_histogram_hough_create.o: operator.hpp wb_defs.hpp
+operator_histogram_hough_create.o: data_source_descriptor.hpp hough.hpp
+operator_histogram_hough_create.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_histogram_hough_create.o: image.hpp bounds.hpp image_header.hpp
+operator_histogram_hough_create.o: line_segment.hpp point.hpp
+operator_histogram_hough_create.o: variance_stats.hpp wb_utils.hpp
+operator_histogram_hough_create.o: polar_line.hpp histogram.hpp
 operator_histogram_image_create.o: berkeley_db_data_source_descriptor.hpp
 operator_histogram_image_create.o: data_source_descriptor.hpp hough.hpp
 operator_histogram_image_create.o: errors.hpp hough_accum.hpp file_utils.hpp
@@ -288,6 +349,14 @@ operator_histogram_image_create.o: polar_line.hpp histogram.hpp
 operator_histogram_image_create.o: operator_utils.hpp
 operator_histogram_image_create.o: operator_histogram_image_create.hpp
 operator_histogram_image_create.o: operator.hpp
+operator_histogram_peak_detect.o: operator_histogram_peak_detect.hpp
+operator_histogram_peak_detect.o: operator.hpp wb_defs.hpp
+operator_histogram_peak_detect.o: data_source_descriptor.hpp hough.hpp
+operator_histogram_peak_detect.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_histogram_peak_detect.o: image.hpp bounds.hpp image_header.hpp
+operator_histogram_peak_detect.o: line_segment.hpp point.hpp
+operator_histogram_peak_detect.o: variance_stats.hpp wb_utils.hpp
+operator_histogram_peak_detect.o: polar_line.hpp histogram.hpp
 operator_hough_draw_line.o: hough.hpp errors.hpp hough_accum.hpp
 operator_hough_draw_line.o: file_utils.hpp image.hpp bounds.hpp
 operator_hough_draw_line.o: image_header.hpp wb_defs.hpp line_segment.hpp
@@ -303,6 +372,30 @@ operator_hough_image_create.o: wb_defs.hpp line_segment.hpp point.hpp
 operator_hough_image_create.o: variance_stats.hpp wb_utils.hpp polar_line.hpp
 operator_hough_image_create.o: histogram.hpp operator_utils.hpp
 operator_hough_image_create.o: operator_hough_image_create.hpp operator.hpp
+operator_hough_peak_detect.o: operator_hough_peak_detect.hpp operator.hpp
+operator_hough_peak_detect.o: wb_defs.hpp data_source_descriptor.hpp
+operator_hough_peak_detect.o: hough.hpp errors.hpp hough_accum.hpp
+operator_hough_peak_detect.o: file_utils.hpp image.hpp bounds.hpp
+operator_hough_peak_detect.o: image_header.hpp line_segment.hpp point.hpp
+operator_hough_peak_detect.o: variance_stats.hpp wb_utils.hpp polar_line.hpp
+operator_hough_peak_detect.o: histogram.hpp
+operator_transform_image_copy.o: operator_transform_image_copy.hpp
+operator_transform_image_copy.o: operator.hpp wb_defs.hpp
+operator_transform_image_copy.o: data_source_descriptor.hpp hough.hpp
+operator_transform_image_copy.o: errors.hpp hough_accum.hpp file_utils.hpp
+operator_transform_image_copy.o: image.hpp bounds.hpp image_header.hpp
+operator_transform_image_copy.o: line_segment.hpp point.hpp
+operator_transform_image_copy.o: variance_stats.hpp wb_utils.hpp
+operator_transform_image_copy.o: polar_line.hpp histogram.hpp
+operator_transform_image_morphology.o: operator_transform_image_morphology.hpp
+operator_transform_image_morphology.o: operator.hpp wb_defs.hpp
+operator_transform_image_morphology.o: data_source_descriptor.hpp hough.hpp
+operator_transform_image_morphology.o: errors.hpp hough_accum.hpp
+operator_transform_image_morphology.o: file_utils.hpp image.hpp bounds.hpp
+operator_transform_image_morphology.o: image_header.hpp line_segment.hpp
+operator_transform_image_morphology.o: point.hpp variance_stats.hpp
+operator_transform_image_morphology.o: wb_utils.hpp polar_line.hpp
+operator_transform_image_morphology.o: histogram.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp
 operator_transform_intensity_map.o: data_source_descriptor.hpp hough.hpp

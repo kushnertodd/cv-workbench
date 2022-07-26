@@ -4,8 +4,8 @@
 
 #include <cstring>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <sstream>
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_utils.hpp"
@@ -51,7 +51,7 @@ int Histogram::get_bin(double value) const {
 }
 
 float Histogram::get_value(int bin) const {
-    return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
+  return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
 }
 
 double Histogram::get_lower_value() const {
@@ -180,12 +180,14 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
   return histogram;
 }
 
-std::string Histogram::to_string() {
+std::string Histogram::to_string(std::string prefix) {
   std::ostringstream os;
-  os << "nbins " << nbins
-     << " lower_value " << lower_value
-     << " upper_value " << upper_value
-     << " stats " << stats.to_string();
+  os << "histogram:" << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "nbins " << nbins << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "lower_value " << lower_value << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "upper_value " << upper_value << std::endl
+     << prefix << "    " << bounds.to_string(prefix + "    ")
+     << prefix << "    " << stats.to_string(prefix + "    ");
   return os.str();
 }
 
@@ -241,7 +243,6 @@ void Histogram::write_gp_script(const std::string &filename) {
 void Histogram::write_text(const std::string &path, const std::string &delim, Errors &errors) {
   if (debug)
     std::cout << "Histogram::write_text path '" << path << "' " << to_string() << std::endl;
-  std::string text_pat;
   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
@@ -254,7 +255,7 @@ void Histogram::write_text(const std::string &path, const std::string &delim, Er
       << stats.to_string()
       << std::endl;
 */
-ofs << "bin" << delim << "count" << std::endl;
+  ofs << "bin" << delim << "count" << std::endl;
   for (int i = 0; i < nbins; i++)
     ofs << get_value(i) << delim << bins[i] << std::endl;
   ofs << std::endl;

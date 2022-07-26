@@ -54,6 +54,11 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   image->write(path, errors);
 }
 
+void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) const {
+  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
+  image->write_text(path, "\t", errors);
+}
+
 void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
   image->write_jpeg(path, errors);

@@ -49,7 +49,7 @@ class Histogram {
   double get_upper_value() const;
   void initialize(Image *image, bool saw_lower_value, bool saw_upper_value);
   static Histogram *read(const std::string &path, Errors &errors);
-  std::string to_string();
+  std::string to_string(std::string prefix = "");
   void update(double new_value);
   void write(const std::string &path, Errors &errors) const;
   static void write_gp_script(const std::string &filename);

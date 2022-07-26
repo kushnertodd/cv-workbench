@@ -6,6 +6,7 @@
 #include <csetjmp>
 #include <cstdio>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include "jpeglib.h"
@@ -499,10 +500,10 @@ Image *Image::to_rgb(int component) const {
   return new_image;
 }
 
-std::string Image::to_string() const {
+std::string Image::to_string(std::string prefix) const {
   std::ostringstream os;
-  os << image_header.to_string()
-     << " next_pixel " << next_pixel;
+  os << prefix << "image:" << std::endl
+   << image_header.to_string(prefix+"    ");
   return os.str();
 }
 
@@ -591,3 +592,21 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
   /* Step 7: release JPEG compression object */
   jpeg_destroy_compress(&cinfo);
 }
+
+void Image::write_text(const std::string &path,  const std::string &delim, Errors &errors) const {
+  if (debug)
+    std::cout << "Image::write_text path '" << path << "' " << to_string() << std::endl;
+  std::ofstream ofs(path, std::ofstream::out);
+  if (!ofs) {
+    errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
+    return;
+  }
+      for (int row = 0; row < get_rows(); row++){
+        for (int col = 0; col < get_cols(); col++) {
+          ofs << get(row, col) << delim << std::endl;
+        }
+      ofs << std::endl;
+      }
+  ofs.close();
+}
+

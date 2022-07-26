@@ -27,9 +27,9 @@ void Errors::add(const std::string &module, const std::string &id, const std::st
 
 void Errors::check_exit(const std::string &message) {
   if (error_ct > 0) {
-    std::cerr
-    //<< message << std::endl
-    << to_string() << std::endl;
+//    if (!message.empty())
+//      std::cerr << message << std::endl;
+    std::cerr<< to_string() << std::endl;
     exit(1);
   }
 }

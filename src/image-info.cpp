@@ -39,35 +39,22 @@ int main(int argc, char **argv) {
     image = Image::read_jpeg(filename, errors);
     errors.check_exit("reading " + filename);
   } else {
-    Image *image = Image::read(filename, errors);
+    image = Image::read(filename, errors);
   }
-  Histogram *histogram;
   if (errors.error_ct == 0) {
-    rows = image->get_rows();
-    cols = image->get_cols();
-    components = image->get_components();
     depth = image->get_depth();
     std::string depth_str = wb_utils::image_depth_enum_to_string(depth);
-    npixels = image->get_npixels();
-    std::cout << "image " << filename << ":" << std::endl;
-    std::cout << "    rows       " << std::setw(20) << std::right << rows << std::endl;
-    std::cout << "    cols       " << std::setw(20) << std::right << cols << std::endl;
-    std::cout << "    components " << std::setw(20) << std::right << components << std::endl;
-    std::cout << "    depth      " << std::setw(20) << std::right << depth_str << std::endl;
-    std::cout << "    npixels    " << std::setw(20) << std::right << npixels << std::endl;
-    histogram = Histogram::create_image(image,
-                                        100,
-                                        0.0,
-                                        0.0,
-                                        false,
-                                        false);
-    histogram->write_text("hist.txt", "\t", errors);
+    Histogram *histogram = Histogram::create_image(image,
+                                                   100,
+                                                   0.0,
+                                                   0.0,
+                                                   false,
+                                                   false);
+    std::cout << "filename " << std::setw(20) << std::left << filename <<std::endl;
+    std::cout << image->to_string();
+    std::cout << histogram->to_string();
+    if (errors.error_ct != 0)
+      std::cout << errors.to_string() << std::endl;
   }
-  if (errors.error_ct == 0) {
-    Histogram::write_gp_script("hist.txt");
-  }
-  if (errors.error_ct != 0)
-    std::cout << errors.to_string() << std::endl;
 }
-
 

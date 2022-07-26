@@ -1,0 +1,65 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "google-map-slc-2022-07-25_gray"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+          }
+        ],
+        "parameters": {
+          "__comment": " 90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]",
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-1000",
+            "upper_in": "1000",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}

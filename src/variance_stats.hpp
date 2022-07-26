@@ -36,7 +36,7 @@ class Variance_stats {
   double get_variance();
   bool is_valid() const;
   void read(FILE *fp, const std::string &path, Errors &errors);
-  std::string to_string();
+  std::string to_string(std::string prefix = "");
   void update(double new_value);
   void write(FILE *fp, const std::string &path, Errors &errors) const;
 };

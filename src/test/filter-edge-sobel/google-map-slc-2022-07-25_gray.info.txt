@@ -1,0 +1,23 @@
+filename ../reference/google-map-slc-2022-07-25_gray.jpg
+image:
+    rows                854
+    cols                938
+    components          1
+    depth               cv_enums::CV_8U
+    row_stride          938
+    npixels             801052
+histogram:
+    nbins               100
+    lower_value         0
+    upper_value         255
+    bounds: 
+        min_value           1
+        max_value           29220
+    stats: 
+        count               801052
+        mean                113.835
+        variance            1254
+        sample variance     1254
+        standard deviation  35.4118
+        min value           0
+        max value           255

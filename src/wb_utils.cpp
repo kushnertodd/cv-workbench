@@ -462,10 +462,10 @@ int wb_utils::round_float_to_int(float value) {
   return static_cast<int>(round((double) value));
 }
 
-void wb_utils::string_find(std::string text,
+void wb_utils::string_find(const std::string& text,
                            std::string &prefix,
                            std::string &suffix,
-                           std::string pat,
+                           const std::string& pat,
                            bool &found,
                            bool &at_beginning,
                            bool &at_end) {
@@ -474,7 +474,7 @@ void wb_utils::string_find(std::string text,
   size_t pos = text.find(pat);
   at_beginning = false;
   at_end = false;
-  found = false;
+  found = true;
   if (pos != std::string::npos) {
     at_beginning = (pos == 0);
     at_end = (text_len - pat_len == pos);
@@ -483,7 +483,7 @@ void wb_utils::string_find(std::string text,
   } else {
     prefix = "";
     suffix = text;
-    found = true;
+    found = false;
   }
 }
 

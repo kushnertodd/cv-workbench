@@ -2,6 +2,7 @@
 // Created by kushn on 6/14/2022.
 //
 
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include "wb_utils.hpp"
@@ -74,13 +75,13 @@ void Image_header::write(FILE *fp, const std::string &path, Errors &errors) cons
   }
 }
 
-std::string Image_header::to_string() const {
+std::string Image_header::to_string(std::string prefix) const {
   std::ostringstream os;
-  os << "rows " << rows
-     << " cols " << cols
-     << " components " << components
-     << " depth " << depth << " " << wb_utils::image_depth_enum_to_string(depth)
-     << " row_stride " << row_stride
-     << " npixels " << npixels;
+  os << prefix <<std::setw(20) << std::left << "rows " << rows << std::endl
+      << prefix  <<std::setw(20) << std::left << "cols " << cols << std::endl
+      << prefix <<std::setw(20) << std::left << "components " << components << std::endl
+      << prefix <<std::setw(20) << std::left << "depth "  << wb_utils::image_depth_enum_to_string(depth) << std::endl
+      << prefix  <<std::setw(20) << std::left  << "row_stride " << row_stride << std::endl
+      << prefix  <<std::setw(20) << std::left  << "npixels " << npixels << std::endl;
   return os.str();
 }

@@ -33,6 +33,7 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   void write_hough_text(Hough *hough, Errors &errors) override;
   void write_image(Image *image, Errors &errors) override;
   void write_image_jpeg(Image *image, Errors &errors) override;
+  void write_image_text(Image *image, Errors &errors) const ;
   void write_json(std::string &json, Errors &errors) override;
   static Filesystem_data_source_descriptor
   *json_parse(json_object *json_data_descriptor,
