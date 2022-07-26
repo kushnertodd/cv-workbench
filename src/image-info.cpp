@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
   Image *image;
   if (is_jpeg) {
     image = Image::read_jpeg(filename, errors);
-    errors.check_exit("reading " + filename);
+    errors.check_exit();
   } else {
     image = Image::read(filename, errors);
   }

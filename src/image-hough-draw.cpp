@@ -70,5 +70,5 @@ int main(int argc, char **argv) {
     }
   }
   in_image->write_jpeg(image_filename+"output.jpg", errors);
-  errors.check_exit("image-hough");
+  errors.check_exit();
 }

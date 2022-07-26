@@ -15,16 +15,6 @@ int main(int argc, char **argv) {
   std::cout << "    " << (found ? "  " : "no") << " .jpg found" << std::endl;
   wb_utils::string_find(in_filename, prefix, suffix, ".bin", found, at_beginning, at_end);
   std::cout << "    " << (found ? "  " : "no") << " .bin found" << std::endl;
-
-/*
-  std::string in_filename_jpg = in_filename_root + ".jpg";
-  std::string in_filename_txt = in_filename_root + ".txt";
-  Errors errors;
-  Image *image = Image::read_jpeg(in_filename_jpg, errors);
-  errors.check_exit("image-jpg-to-txt: cannot read jpg file");
-  image->write_text(in_filename_txt, errors);
-  errors.check_exit("image-jpg-to-txt: cannot write txt file");
-*/
 }
 
 

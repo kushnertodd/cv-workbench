@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   image_32F->add_32F(buf_32F, 6, errors);
   image_32F->write("image-test-32F.bin", errors);
 
-  errors.check_exit("image_test.test_write(): there were errors.");
+  errors.check_exit();
 
   printf("od -xa image-test-8U.bin\n");
   system("od -xa image-test-8U.bin");

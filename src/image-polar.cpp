@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
   }
   Errors errors;
   Image *in_image = Image::read_jpeg(image_in_filename, errors);
-  errors.check_exit("image-polar: reading " + image_in_filename);
+  errors.check_exit();
   if (in_image != nullptr)
     in_image->check_grayscale(errors);
   Hough* hough= Hough::create_image(in_image, 3, 200);
@@ -61,5 +61,5 @@ int main(int argc, char **argv) {
   }
   in_image->draw_line_segment(line_segment, 0);
   in_image->write_jpeg(image_out_filename, errors);
-  errors.check_exit("image-polar: writing " + image_out_filename);
+  errors.check_exit();
 }

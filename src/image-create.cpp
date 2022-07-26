@@ -100,6 +100,6 @@ int main(int argc, char **argv) {
     image_32F->add_32F(buf_32F, size, errors);
     image_32F->write(image_file, errors);
   }
-  errors.check_exit("image_test.test_write(): there were errors.");
+  errors.check_exit();
 }
 

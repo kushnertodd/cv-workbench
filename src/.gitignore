@@ -10,9 +10,10 @@ image-create
 image-dump
 image-hist
 image-hough
+image-hough-draw 
 image-info
+image-jpg-to-bin
 image-polar
-image-stats
 image-test
 *.bak
 *.o

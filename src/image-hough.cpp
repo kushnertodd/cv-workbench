@@ -78,5 +78,5 @@ int main(int argc, char **argv) {
     case cv_enums::CV_32F:
       break;
   }
-  errors.check_exit("image-hough");
+  errors.check_exit();
 }
