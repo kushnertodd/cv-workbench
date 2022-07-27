@@ -95,7 +95,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                 input = input_data_source->read_image(errors);
               else
                 errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
-                    wb_utils::data_format_to_string(input_data_source->data_format));
+                    wb_utils::data_format_enum_to_string(input_data_source->data_format));
               if (errors.error_ct == 0 && input != nullptr)
                 input->check_grayscale(errors);
               if (errors.error_ct == 0) {
@@ -122,7 +122,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                     errors.add("Operator_hough_draw_line::run",
                                "",
                                "invalid data format '"
-                                   + wb_utils::data_format_to_string(hough_line_output_data_store->data_format) + "'");
+                                   + wb_utils::data_format_enum_to_string(hough_line_output_data_store->data_format) + "'");
                   }
                 }
               }

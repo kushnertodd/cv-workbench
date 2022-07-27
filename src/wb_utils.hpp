@@ -15,10 +15,12 @@ namespace wb_utils {
 
 char ascii_to_char(int n);
 std::string char_to_string(char c);
+std::string data_format_enum_to_ext(cv_enums::CV_data_format type);
+std::string data_format_enum_to_string(cv_enums::CV_data_format type);
 std::string data_type_enum_to_string(cv_enums::CV_data_type type);
 float double_to_float(double value);
 void error_exit(const std::string &message);
-std::string data_format_to_string(cv_enums::CV_data_format type);
+cv_enums::CV_data_format ext_to_data_format_enum(const std::string &type);
 bool hex_string_to_int(const std::string &text, unsigned long long &value);
 std::string image_depth_enum_to_string(cv_enums::CV_image_depth depth);
 std::string indent(int n);
@@ -41,10 +43,10 @@ std::string real_to_string(double i, int width = -1);
 std::string repository_type_enum_to_string(cv_enums::CV_repository_type type);
 int round_double_to_int(double value);
 int round_float_to_int(float value);
-void string_find(const std::string& text, std::string& prefix, std::string& suffix, const std::string& pat, bool &found, bool &at_beginning, bool &at_end);
+bool string_find(const std::string& text, std::string& prefix, std::string& suffix, const std::string& pat, bool &at_beginning, bool &at_end);
 bool string_to_bool(const std::string &str, bool &bvalue);
-cv_enums::CV_data_type string_to_data_type_enum(const std::string &type);
 cv_enums::CV_data_format string_to_data_format_enum(const std::string &type);
+cv_enums::CV_data_type string_to_data_type_enum(const std::string &type);
 cv_enums::CV_image_depth string_to_image_depth_enum(const std::string &depth);
 bool string_to_int(const std::string &str, int &value);
 cv_enums::CV_repository_type string_to_repository_type_enum(const std::string &type);

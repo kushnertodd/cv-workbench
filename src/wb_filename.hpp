@@ -1,0 +1,32 @@
+//
+// Created by kushn on 7/26/2022.
+//
+
+#ifndef SRC__WB_FILENAME_HPP_
+#define SRC__WB_FILENAME_HPP_
+
+#include <string>
+#include "errors.hpp"
+#include "wb_defs.hpp"
+
+class Wb_filename {
+std::string filename;
+std::string root;
+std::string ext;
+  cv_enums::CV_data_format format;
+  void parse_filename(std::string filename, Errors& errors);
+  static Wb_filename* parse_image(std::string &filename, Errors& errors);
+  static Wb_filename* parse_hist(std::string &filename, Errors &errors);
+  static Wb_filename* parse_hough(std::string &filename, Errors &errors);
+  static Wb_filename* parse_json(std::string &filename, Errors &errors);
+  std::string to_jpeg(Errors &errors);
+  std::string to_bin(Errors &errors);
+  std::string to_text(Errors &errors);
+  std::string to_log(Errors &errors);
+  std::string to_hist(Errors &errors);
+  std::string to_hist_text(Errors &errors);
+  std::string to_hough(Errors &errors);
+  std::string to_hough_text(Errors &errors);
+};
+
+#endif //SRC__WB_FILENAME_HPP_

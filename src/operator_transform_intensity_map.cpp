@@ -131,7 +131,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
       output_data_store->write_image(output_image, errors);
     } else {
       errors.add("Operator_transform_intensity_map::run", "", "invalid data format '"
-          + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
+          + wb_utils::data_format_enum_to_string(output_data_store->data_format) + "'");
     }
   }
 }

@@ -111,7 +111,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
           input = input_data_source->read_image(errors);
         else
           errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format: " +
-              wb_utils::data_format_to_string(input_data_source->data_format));
+              wb_utils::data_format_enum_to_string(input_data_source->data_format));
         if (errors.error_ct == 0 && input != nullptr)
           input->check_grayscale(errors);
         if (errors.error_ct == 0) {
@@ -122,7 +122,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
             output_data_store->write_image(output, errors);
           } else {
             errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format '"
-                + wb_utils::data_format_to_string(output_data_store->data_format) + "'");
+                + wb_utils::data_format_enum_to_string(output_data_store->data_format) + "'");
           }
         }
       }

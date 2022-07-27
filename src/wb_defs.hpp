@@ -32,6 +32,8 @@ enum CV_data_type {
 enum CV_data_format {
   BINARY,
   JPEG, // CV_data_type::IMAGE only
+  JSON,
+  LOG,
   TEXT,
   UNDEFINED_DATA_FORMAT
 };

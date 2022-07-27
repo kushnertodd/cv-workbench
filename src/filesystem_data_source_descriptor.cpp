@@ -126,7 +126,7 @@ Filesystem_data_source_descriptor
 std::string Filesystem_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()
-     << " file format '" << wb_utils::data_format_to_string(data_format)
+     << " file format '" << wb_utils::data_format_enum_to_string(data_format)
      << "' directory '" << directory
      << "' filename '" << filename
      << "' ext '" << ext << "'";

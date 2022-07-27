@@ -33,6 +33,40 @@ std::string wb_utils::char_to_string(char c) {
   return s;
 }
 
+std::string wb_utils::data_format_enum_to_ext(cv_enums::CV_data_format type) {
+  switch (type) {
+    case cv_enums::BINARY:
+      return "bin";
+    case cv_enums::JPEG:
+      return "jpg";
+    case cv_enums::JSON:
+      return "json";
+    case cv_enums::LOG:
+      return "log";
+    case cv_enums::TEXT:
+      return "txt";
+    default:
+      return "invalid image format";
+  }
+}
+
+std::string wb_utils::data_format_enum_to_string(cv_enums::CV_data_format type) {
+  switch (type) {
+    case cv_enums::BINARY:
+      return "binary";
+    case cv_enums::JPEG:
+      return "jpeg";
+    case cv_enums::JSON:
+      return "json";
+    case cv_enums::LOG:
+      return "log";
+    case cv_enums::TEXT:
+      return "text";
+    default:
+      return "invalid image format";
+  }
+}
+
 std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
   switch (type) {
     case cv_enums::CONTOUR:
@@ -77,17 +111,18 @@ void wb_utils::error_exit(const std::string &message) {
   exit(0);
 }
 
-std::string wb_utils::data_format_to_string(cv_enums::CV_data_format type) {
-  switch (type) {
-    case cv_enums::BINARY:
-      return "binary";
-    case cv_enums::JPEG:
-      return "jpeg";
-    case cv_enums::TEXT:
-      return "text";
-    default:
-      return "invalid image format";
-  }
+cv_enums::CV_data_format wb_utils::ext_to_data_format_enum(const std::string &ext) {
+  if (ext == "bin")
+    return cv_enums::BINARY;
+  else if (ext == "jpg")
+    return cv_enums::JPEG;
+  else if (ext == "json")
+    return cv_enums::JSON;
+  else if (ext == "log")
+    return cv_enums::LOG;
+  else if (ext == "txt")
+    return cv_enums::TEXT;
+  else return cv_enums::UNDEFINED_DATA_FORMAT;
 }
 
 /**
@@ -195,7 +230,7 @@ std::string wb_utils::int_to_string(int i, int width) {
  * @return
  */
 bool wb_utils::is_numeric(std::string number) {
-  int len = number.size();
+  int len = static_cast<int>(number.size());
   int pos = 0;
   // look for [+-]
   if (pos < len && (number[pos] == '+' || number[pos] == '-'))
@@ -462,11 +497,10 @@ int wb_utils::round_float_to_int(float value) {
   return static_cast<int>(round((double) value));
 }
 
-void wb_utils::string_find(const std::string& text,
+bool wb_utils::string_find(const std::string& text,
                            std::string &prefix,
                            std::string &suffix,
                            const std::string& pat,
-                           bool &found,
                            bool &at_beginning,
                            bool &at_end) {
   size_t text_len = text.length();
@@ -474,7 +508,7 @@ void wb_utils::string_find(const std::string& text,
   size_t pos = text.find(pat);
   at_beginning = false;
   at_end = false;
-  found = true;
+  bool found = true;
   if (pos != std::string::npos) {
     at_beginning = (pos == 0);
     at_end = (text_len - pat_len == pos);
@@ -485,6 +519,7 @@ void wb_utils::string_find(const std::string& text,
     suffix = text;
     found = false;
   }
+  return found;
 }
 
 bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
@@ -497,6 +532,16 @@ bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   } else {
     return false;
   }
+}
+
+cv_enums::CV_data_format wb_utils::string_to_data_format_enum(const std::string &type) {
+  if (type == "binary")
+    return cv_enums::BINARY;
+  else if (type == "jpeg")
+    return cv_enums::JPEG;
+  else if (type == "text")
+    return cv_enums::TEXT;
+  else return cv_enums::UNDEFINED_DATA_FORMAT;
 }
 
 cv_enums::CV_data_type wb_utils::string_to_data_type_enum(const std::string &type) {
@@ -530,16 +575,6 @@ cv_enums::CV_data_type wb_utils::string_to_data_type_enum(const std::string &typ
     return cv_enums::REGION;
   else
     return cv_enums::UNDEFINED_DATA_TYPE;
-}
-
-cv_enums::CV_data_format wb_utils::string_to_data_format_enum(const std::string &type) {
-  if (type == "binary")
-    return cv_enums::BINARY;
-  else if (type == "jpeg")
-    return cv_enums::JPEG;
-  else if (type == "text")
-    return cv_enums::TEXT;
-  else return cv_enums::UNDEFINED_DATA_FORMAT;
 }
 
 cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(const std::string &depth) {
