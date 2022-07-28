@@ -6,6 +6,9 @@
 #include <cstdio>
 #include <iostream>
 #include <iomanip>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_repository_type.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -33,74 +36,80 @@ std::string wb_utils::char_to_string(char c) {
   return s;
 }
 
-std::string wb_utils::data_format_enum_to_ext(cv_enums::CV_data_format type) {
+/*
+std::string wb_utils::data_format_enum_to_ext(CV_data_format::format type) {
   switch (type) {
-    case cv_enums::BINARY:
+    case CV_data_format::format::BINARY:
       return "bin";
-    case cv_enums::JPEG:
+    case CV_data_format::format::JPEG:
       return "jpg";
-    case cv_enums::JSON:
+    case CV_data_format::format::JSON:
       return "json";
-    case cv_enums::LOG:
+    case CV_data_format::format::LOG:
       return "log";
-    case cv_enums::TEXT:
+    case CV_data_format::format::TEXT:
       return "txt";
     default:
       return "invalid image format";
   }
 }
+*/
 
-std::string wb_utils::data_format_enum_to_string(cv_enums::CV_data_format type) {
+/*
+std::string wb_utils::data_format_enum_to_string(CV_data_format::format type) {
   switch (type) {
-    case cv_enums::BINARY:
+    case CV_data_format::format::BINARY:
       return "binary";
-    case cv_enums::JPEG:
+    case CV_data_format::format::JPEG:
       return "jpeg";
-    case cv_enums::JSON:
+    case CV_data_format::format::JSON:
       return "json";
-    case cv_enums::LOG:
+    case CV_data_format::format::LOG:
       return "log";
-    case cv_enums::TEXT:
+    case CV_data_format::format::TEXT:
       return "text";
     default:
       return "invalid image format";
   }
 }
+*/
 
-std::string wb_utils::data_type_enum_to_string(cv_enums::CV_data_type type) {
+/*
+std::string wb_utils::data_type_enum_to_string(CV_data_type::type type) {
   switch (type) {
-    case cv_enums::CONTOUR:
+    case CV_data_type::type::CONTOUR:
       return "contour";
-    case cv_enums::CONVOLUTION_KERNEL:
+    case CV_data_type::type::CONVOLUTION_KERNEL:
       return "convolution kernel";
-    case cv_enums::CONVOLVED_IMAGE:
+    case CV_data_type::type::CONVOLVED_IMAGE:
       return "convolved image";
-    case cv_enums::CORRELATED_IMAGE:
+    case CV_data_type::type::CORRELATED_IMAGE:
       return "correlated image";
-    case cv_enums::IMAGE:
+    case CV_data_type::type::IMAGE:
       return "image";
-    case cv_enums::JSON_EXPERIMENT:
+    case CV_data_type::type::JSON_EXPERIMENT:
       return "json experiment";
-    case cv_enums::JSON_EXPERIMENT_RESULTS:
+    case CV_data_type::type::JSON_EXPERIMENT_RESULTS:
       return "json experiment results";
-    case cv_enums::HISTOGRAM:
+    case CV_data_type::type::HISTOGRAM:
       return "histogram";
-    case cv_enums::HOUGH:
+    case CV_data_type::type::HOUGH:
       return "hough";
-    case cv_enums::PATTERN_FEATURE:
+    case CV_data_type::type::PATTERN_FEATURE:
       return "pattern feature";
-    case cv_enums::PATTERN_IMAGE:
+    case CV_data_type::type::PATTERN_IMAGE:
       return "pattern image";
-    case cv_enums::PYRAMID:
+    case CV_data_type::type::PYRAMID:
       return "pyramid";
-    case cv_enums::QUADTREE:
+    case CV_data_type::type::QUADTREE:
       return "quadtree";
-    case cv_enums::REGION:
+    case CV_data_type::type::REGION:
       return "region";
     default:
       return "unknown data type";
   }
 }
+*/
 
 float wb_utils::double_to_float(double value) {
   return static_cast<float>(value);
@@ -111,19 +120,21 @@ void wb_utils::error_exit(const std::string &message) {
   exit(0);
 }
 
-cv_enums::CV_data_format wb_utils::ext_to_data_format_enum(const std::string &ext) {
+/*
+CV_data_format::format wb_utils::ext_to_data_format_enum(const std::string &ext) {
   if (ext == "bin")
-    return cv_enums::BINARY;
+    return CV_data_format::format::BINARY;
   else if (ext == "jpg")
-    return cv_enums::JPEG;
+    return CV_data_format::format::JPEG;
   else if (ext == "json")
-    return cv_enums::JSON;
+    return CV_data_format::format::JSON;
   else if (ext == "log")
-    return cv_enums::LOG;
+    return CV_data_format::format::LOG;
   else if (ext == "txt")
-    return cv_enums::TEXT;
-  else return cv_enums::UNDEFINED_DATA_FORMAT;
+    return CV_data_format::format::TEXT;
+  else return CV_data_format::format::UNDEFINED_DATA_FORMAT;
 }
+*/
 
 /**
  * decode hex string to integer
@@ -140,28 +151,30 @@ bool wb_utils::hex_string_to_int(const std::string &arg, unsigned long long &val
     return false;
 }
 
-std::string wb_utils::image_depth_enum_to_string(cv_enums::CV_image_depth depth) {
+/*
+std::string wb_utils::image_depth_enum_to_string(CV_image_depth::depth depth) {
   switch (depth) {
-    case cv_enums::CV_8U:
-      return "cv_enums::CV_8U";
-//    case cv_enums::CV_8S:
+    case CV_image_depth::depth::CV_8U:
+      return "CV_image_depth::depth::CV_8U";
+//    case CV_image_depth::depth::CV_8S:
 //      return "CV_8S";
-//    case cv_enums::CV_16U:
+//    case CV_image_depth::depth::CV_16U:
 //      return "CV_16U";
-//    case cv_enums::CV_16S:
+//    case CV_image_depth::depth::CV_16S:
 //      return "CV_16S";
-//    case cv_enums::CV_32S:
-//      return "cv_enums::CV_32S";
-    case cv_enums::CV_32F:
-      return "cv_enums::CV_32F";
-//    case cv_enums::CV_64F:
+//    case CV_image_depth::depth::CV_32S:
+//      return "CV_image_depth::depth::CV_32S";
+    case CV_image_depth::depth::CV_32F:
+      return "CV_image_depth::depth::CV_32F";
+//    case CV_image_depth::depth::CV_64F:
 //      return "CV_64F";
-//    case cv_enums::CV_16F:
+//    case CV_image_depth::depth::CV_16F:
 //      return "CV_16F";
     default:
       return "unknown image depth";
   }
 }
+*/
 
 std::string wb_utils::indent(int n) {
   std::string s;
@@ -474,20 +487,22 @@ std::string wb_utils::real_to_string(double i, int width) {
   return os.str();
 }
 
-std::string wb_utils::repository_type_enum_to_string(cv_enums::CV_repository_type type) {
+/*
+std::string wb_utils::repository_type_enum_to_string(CV_repository_type::type type) {
   switch (type) {
-    case cv_enums::BERKELEY_DB:
+    case CV_repository_type::type::BERKELEY_DB:
       return "Berkeley DB";
-    case cv_enums::FILESYSTEM:
+    case CV_repository_type::type::FILESYSTEM:
       return "Filesystem";
-    case cv_enums::INTERNET:
+    case CV_repository_type::type::INTERNET:
       return "Internet";
-    case cv_enums::EXPERIMENT_STEP:
+    case CV_repository_type::type::EXPERIMENT_STEP:
       return "Experiment step";
     default:
       return "unknown repository type";
   }
 }
+*/
 
 int wb_utils::round_double_to_int(double value) {
   return static_cast<int>(round(value));
@@ -534,60 +549,66 @@ bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   }
 }
 
-cv_enums::CV_data_format wb_utils::string_to_data_format_enum(const std::string &type) {
+/*
+CV_data_format::format wb_utils::string_to_data_format_enum(const std::string &type) {
   if (type == "binary")
-    return cv_enums::BINARY;
+    return CV_data_format::format::BINARY;
   else if (type == "jpeg")
-    return cv_enums::JPEG;
+    return CV_data_format::format::JPEG;
   else if (type == "text")
-    return cv_enums::TEXT;
-  else return cv_enums::UNDEFINED_DATA_FORMAT;
+    return CV_data_format::format::TEXT;
+  else return CV_data_format::format::UNDEFINED_DATA_FORMAT;
 }
+*/
 
-cv_enums::CV_data_type wb_utils::string_to_data_type_enum(const std::string &type) {
+/*
+CV_data_type::type wb_utils::string_to_data_type_enum(const std::string &type) {
   if (type == "contour")
-    return cv_enums::CONTOUR;
+    return CV_data_type::type::CONTOUR;
   else if (type == "convolution kernel")
-    return cv_enums::CONVOLUTION_KERNEL;
+    return CV_data_type::type::CONVOLUTION_KERNEL;
   else if (type == "convolved image")
-    return cv_enums::CONVOLVED_IMAGE;
+    return CV_data_type::type::CONVOLVED_IMAGE;
   else if (type == "correlated image")
-    return cv_enums::CORRELATED_IMAGE;
+    return CV_data_type::type::CORRELATED_IMAGE;
   else if (type == "image")
-    return cv_enums::IMAGE;
+    return CV_data_type::type::IMAGE;
   else if (type == "json experiment")
-    return cv_enums::JSON_EXPERIMENT;
+    return CV_data_type::type::JSON_EXPERIMENT;
   else if (type == "json experiment results")
-    return cv_enums::JSON_EXPERIMENT_RESULTS;
+    return CV_data_type::type::JSON_EXPERIMENT_RESULTS;
   else if (type == "histogram")
-    return cv_enums::HISTOGRAM;
+    return CV_data_type::type::HISTOGRAM;
   else if (type == "hough")
-    return cv_enums::HOUGH;
+    return CV_data_type::type::HOUGH;
   else if (type == "pattern feature")
-    return cv_enums::PATTERN_FEATURE;
+    return CV_data_type::type::PATTERN_FEATURE;
   else if (type == "pattern image")
-    return cv_enums::PATTERN_IMAGE;
+    return CV_data_type::type::PATTERN_IMAGE;
   else if (type == "pyramid")
-    return cv_enums::PYRAMID;
+    return CV_data_type::type::PYRAMID;
   else if (type == "quadtree")
-    return cv_enums::QUADTREE;
+    return CV_data_type::type::QUADTREE;
   else if (type == "region")
-    return cv_enums::REGION;
+    return CV_data_type::type::REGION;
   else
-    return cv_enums::UNDEFINED_DATA_TYPE;
+    return CV_data_type::type::UNDEFINED_DATA_TYPE;
 }
+*/
 
-cv_enums::CV_image_depth wb_utils::string_to_image_depth_enum(const std::string &depth) {
-  if (depth == "CV_8U") return cv_enums::CV_8U;
+/*
+CV_image_depth::depth wb_utils::string_to_image_depth_enum(const std::string &depth) {
+  if (depth == "CV_8U") return CV_image_depth::depth::CV_8U;
 //  else if (depth == "CV_8S") return cv_enums::CV_8S;
 //  else if (depth == "CV_16U") return cv_enums::CV_16U;
 //  else if (depth == "CV_16S") return cv_enums::CV_16S;
-  else if (depth == "CV_32S") return cv_enums::CV_32S;
-  else if (depth == "CV_32F") return cv_enums::CV_32F;
+  else if (depth == "CV_32S") return CV_image_depth::depth::CV_32S;
+  else if (depth == "CV_32F") return CV_image_depth::depth::CV_32F;
 //  else if (depth == "CV_64F") return cv_enums::CV_64F;
 //  else if (depth == "CV_16F") return cv_enums::CV_16F;
-  else return cv_enums::UNDEFINED_IMAGE_DEPTH;
+  else return CV_image_depth::depth::UNDEFINED_IMAGE_DEPTH;
 }
+*/
 
 bool wb_utils::string_to_int(const std::string &str, int &value) {
   if (!is_numeric(str)) return false;
@@ -596,13 +617,15 @@ bool wb_utils::string_to_int(const std::string &str, int &value) {
   else return false;
 }
 
-cv_enums::CV_repository_type wb_utils::string_to_repository_type_enum(const std::string &type) {
-  if (type == "berkeley_db") return cv_enums::BERKELEY_DB;
-  else if (type == "filesystem") return cv_enums::FILESYSTEM;
-  else if (type == "internet") return cv_enums::INTERNET;
-  else if (type == "step-output") return cv_enums::EXPERIMENT_STEP;
-  else return cv_enums::UNDEFINED_REPOSITORY_TYPE;
+/*
+CV_repository_type::type wb_utils::string_to_repository_type_enum(const std::string &type) {
+  if (type == "berkeley_db") return CV_repository_type::type::BERKELEY_DB;
+  else if (type == "filesystem") return CV_repository_type::type::FILESYSTEM;
+  else if (type == "internet") return CV_repository_type::type::INTERNET;
+  else if (type == "step-output") return CV_repository_type::type::EXPERIMENT_STEP;
+  else return CV_repository_type::type::UNDEFINED_REPOSITORY_TYPE;
 }
+*/
 
 bool wb_utils::string_to_double(const std::string &str, double &value) {
   if (!is_numeric(str)) return false;

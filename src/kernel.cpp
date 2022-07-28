@@ -14,19 +14,19 @@ Kernel::~Kernel() {
   delete[] buf_32F;
 }
 
-Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, cv_enums::CV_image_depth m_depth) :
+Kernel::Kernel(int m_kernel_rows, int m_kernel_cols, CV_image_depth::depth m_depth) :
     kernel_rows(m_kernel_rows),
     kernel_cols(m_kernel_cols),
     depth(m_depth),
     size(kernel_rows * kernel_cols) {
   switch (depth) {
-    case cv_enums::CV_32S:
+    case CV_image_depth::depth::CV_32S:
       buf_32S = new pixel_32S[size];
       for (int i = 0; i < size; i++)
         buf_32S[i] = 0;
       break;
 
-    case cv_enums::CV_32F:
+    case CV_image_depth::depth::CV_32F:
       buf_32F = new pixel_32F[size];
       for (int i = 0; i < size; i++)
         buf_32F[i] = 0.0;
@@ -52,12 +52,12 @@ void Kernel::add_32F(const pixel_32F *src, int count) const {
 Image *Kernel::convolve(Image *src) const {
   int src_rows = src->get_rows();
   int src_cols = src->get_cols();
-  cv_enums::CV_image_depth src_depth = src->get_depth();
+  CV_image_depth::depth src_depth = src->get_depth();
   int src_components = src->get_components();
 
-  // output image is cv_enums::CV_32F if either the image and kernel are cv_enums::CV_32F, else it is cv_enums::CV_32S
-  cv_enums::CV_image_depth out_depth =
-      (src_depth == cv_enums::CV_32F || this->depth == cv_enums::CV_32F ? cv_enums::CV_32F : cv_enums::CV_32S);
+  // output image is CV_image_depth::depth::CV_32F if either the image and kernel are CV_image_depth::depth::CV_32F, else it is CV_image_depth::depth::CV_32S
+  CV_image_depth::depth out_depth =
+      (src_depth == CV_image_depth::depth::CV_32F || this->depth == CV_image_depth::depth::CV_32F ? CV_image_depth::depth::CV_32F : CV_image_depth::depth::CV_32S);
   auto *out = new Image(src_rows, src_cols, src_components, out_depth);
   int rows_half = (kernel_rows + 1) / 2;
   int cols_half = (kernel_cols + 1) / 2;
@@ -115,23 +115,23 @@ Image *Kernel::convolve(Image *src) const {
 }
 
 Kernel *Kernel::create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S) {
-  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32S);
+  auto *kernel = new Kernel(kernel_rows, kernel_cols, CV_image_depth::depth::CV_32S);
   kernel->add_32S(buf_32S, kernel->size);
   return kernel;
 }
 
 Kernel *Kernel::create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F) {
-  auto *kernel = new Kernel(kernel_rows, kernel_cols, cv_enums::CV_32F);
+  auto *kernel = new Kernel(kernel_rows, kernel_cols, CV_image_depth::depth::CV_32F);
   kernel->add_32F(buf_32F, kernel->size);
   return kernel;
 }
 
 double Kernel::get(int row, int col) const {
   switch (depth) {
-    case cv_enums::CV_32S:
+    case CV_image_depth::depth::CV_32S:
       return buf_32S[row_col_to_index(row, col)];
 
-    case cv_enums::CV_32F:
+    case CV_image_depth::depth::CV_32F:
       return buf_32F[row_col_to_index(row, col)];
 
     default:
@@ -162,11 +162,11 @@ int Kernel::row_col_to_index(int row, int col) const {
 void Kernel::set(int row, int col, double value) const {
   switch (depth) {
 
-    case cv_enums::CV_32S:
+    case CV_image_depth::depth::CV_32S:
       buf_32S[row_col_to_index(row, col)] = wb_utils::round_float_to_int(value);
       break;
 
-    case cv_enums::CV_32F:
+    case CV_image_depth::depth::CV_32F:
       buf_32F[row_col_to_index(row, col)] = value;
       break;
 
@@ -187,7 +187,7 @@ std::string Kernel::to_string() const {
   std::ostringstream os;
   os << "kernel_rows " << kernel_rows
      << " kernel_cols " << kernel_cols
-     << " depth " << depth << " " << wb_utils::image_depth_enum_to_string(depth)
+     << " depth "  << " " << CV_image_depth::image_depth_enum_to_string(depth)
      << " size " << size;
   return os.str();
 }

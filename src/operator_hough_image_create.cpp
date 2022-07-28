@@ -56,26 +56,26 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
           else {
             Data_source_descriptor *input_data_source = input_data_sources.front();
             Image *input = nullptr;
-            if (input_data_source->data_format == cv_enums::JPEG)
+            if (input_data_source->data_format == CV_data_format::format::JPEG)
               input = input_data_source->read_image_jpeg(errors);
-            else if (input_data_source->data_format == cv_enums::BINARY)
+            else if (input_data_source->data_format == CV_data_format::format::BINARY)
               input = input_data_source->read_image(errors);
             else
               errors.add("Operator_hough_image_create::run", "", "invalid data format: " +
-                  wb_utils::data_format_to_string(input_data_source->data_format));
+                  CV_data_format::data_format_enum_to_string(input_data_source->data_format));
             if (errors.error_ct == 0 && input != nullptr)
               input->check_grayscale(errors);
             if (errors.error_ct == 0) {
               Hough *hough = Hough::create_image(input, theta_inc, threshold);
               if (hough != nullptr) {
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-                  if (hough_output_data_store->data_format == cv_enums::BINARY) {
+                  if (hough_output_data_store->data_format == CV_data_format::format::BINARY) {
                     hough_output_data_store->write_hough(hough, errors);
-                  } else if (hough_output_data_store->data_format == cv_enums::TEXT) {
+                  } else if (hough_output_data_store->data_format == CV_data_format::format::TEXT) {
                     hough_output_data_store->write_hough_text(hough, errors);
                   } else {
                     errors.add("Operator_hough_image_create::run", "", "invalid data format "
-                        + wb_utils::data_format_to_string(hough_output_data_store->data_format));
+                        + CV_data_format::data_format_enum_to_string(hough_output_data_store->data_format));
                   }
                 }
                 delete hough;

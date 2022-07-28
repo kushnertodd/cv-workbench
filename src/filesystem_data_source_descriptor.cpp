@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <sstream>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_repository_type.hpp"
 #include "wb_json_utils.hpp"
 #include "wb_utils.hpp"
 #include "data_source_descriptor.hpp"
@@ -12,9 +15,9 @@
 extern bool debug;
 
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
-                                                                     cv_enums::CV_data_type m_data_type,
-                                                                     cv_enums::CV_data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::FILESYSTEM) {}
+                                                                     CV_data_type::type m_data_type,
+                                                                     CV_data_format::format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::type::FILESYSTEM) {}
 
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 
@@ -69,12 +72,12 @@ void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &er
 Filesystem_data_source_descriptor
 *Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                int id,
-                                               cv_enums::CV_data_type data_type,
-                                               cv_enums::CV_data_format data_format,
+                                               CV_data_type::type data_type,
+                                               CV_data_format::format data_format,
                                                Errors &errors) {
   if (debug)
     std::cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
-              << data_type << std::endl;
+              << std::endl;
   auto *filesystem_data_source_descriptor =
       new Filesystem_data_source_descriptor(id, data_type, data_format);
 
@@ -111,22 +114,16 @@ Filesystem_data_source_descriptor
                       errors, true);
   if (json_ext != nullptr)
     filesystem_data_source_descriptor->ext = json_object_get_string(json_ext);
-  else if (filesystem_data_source_descriptor->data_format == cv_enums::JPEG)
-    filesystem_data_source_descriptor->ext = "jpg";
-  else if (filesystem_data_source_descriptor->data_format == cv_enums::BINARY)
-    filesystem_data_source_descriptor->ext = "bin";
-  else if (filesystem_data_source_descriptor->data_format == cv_enums::TEXT)
-    filesystem_data_source_descriptor->ext = "txt";
   else
-    errors.add("Filesystem_data_source_descriptor::json_parse", "", "missing required extension");
-
+    filesystem_data_source_descriptor->ext =
+        CV_data_format::data_format_enum_to_ext(filesystem_data_source_descriptor->data_format);
   return filesystem_data_source_descriptor;
 }
 
 std::string Filesystem_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()
-     << " file format '" << wb_utils::data_format_enum_to_string(data_format)
+     << " file format '" << CV_data_format::data_format_enum_to_string(data_format)
      << "' directory '" << directory
      << "' filename '" << filename
      << "' ext '" << ext << "'";

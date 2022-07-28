@@ -13,9 +13,9 @@ extern bool debug;
 //
 
 Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
-                                                                 cv_enums::CV_data_type m_data_type,
-                                                                 cv_enums::CV_data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::INTERNET),
+                                                                 CV_data_type::type m_data_type,
+                                                                 CV_data_format::format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::type::INTERNET),
     rows(0),
     cols(0) {}
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
@@ -34,12 +34,12 @@ void Internet_data_source_descriptor::write_json(std::string &json, Errors &erro
 Internet_data_source_descriptor
 *Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                              int id,
-                                             cv_enums::CV_data_type data_type,
-                                             cv_enums::CV_data_format data_format,
+                                             CV_data_type::type data_type,
+                                             CV_data_format::format data_format,
                                              Errors &errors) {
   if (debug)
     std::cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
-              << data_type << std::endl;
+              << std::endl;
   auto *internet_data_source_descriptor =
       new Internet_data_source_descriptor(id, data_type, data_format);
   json_object *json_url =

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <json-c/json.h>
+#include "cv_image_depth.hpp"
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"
@@ -18,8 +19,8 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
  public:
   int ref_id; // database key
   Berkeley_db_data_source_descriptor(int m_id,
-                                     cv_enums::CV_data_type m_data_type,
-                                     cv_enums::CV_data_format m_data_format);
+                                     CV_data_type::type m_data_type,
+                                     CV_data_format::format m_data_format);
   Histogram *read_histogram(Errors &errors) override;
   Hough *read_hough(Errors &errors) override;
   Image *read_image(Errors &errors) override;
@@ -35,8 +36,8 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   static Berkeley_db_data_source_descriptor
   *json_parse(json_object *json_data_descriptor,
               int id,
-              cv_enums::CV_data_type data_type,
-              cv_enums::CV_data_format data_format,
+              CV_data_type::type data_type,
+              CV_data_format::format data_format,
               Errors &errors);
   std::string to_string() override;
 };

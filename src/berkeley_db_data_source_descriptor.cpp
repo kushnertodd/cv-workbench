@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <sstream>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_repository_type.hpp"
 #include "wb_json_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
@@ -11,9 +14,9 @@
 extern bool debug;
 
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
-                                                                       cv_enums::CV_data_type m_data_type,
-                                                                       cv_enums::CV_data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, cv_enums::BERKELEY_DB),
+                                                                       CV_data_type::type m_data_type,
+                                                                       CV_data_format::format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::type::BERKELEY_DB),
     ref_id(0) {}
 
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
@@ -32,12 +35,12 @@ void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &e
 Berkeley_db_data_source_descriptor
 *Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                 int id,
-                                                cv_enums::CV_data_type data_type,
-                                                cv_enums::CV_data_format data_format,
+                                                CV_data_type::type data_type,
+                                                CV_data_format::format data_format,
                                                 Errors &errors) {
   if (debug)
     std::cout << "Berkeley_db_data_source_descriptor::json_parse: id '" << id << "' type "
-              << data_type << std::endl;
+              << std::endl;
   auto *berkeley_db_data_source_descriptor =
       new Berkeley_db_data_source_descriptor(id, data_type, data_format);
   json_object *json_ref_id =

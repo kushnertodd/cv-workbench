@@ -10,55 +10,7 @@
 
 namespace cv_enums {
 
-enum CV_data_type {
-  // maybe BINARY_IMAGE for morphological operations
-  CONTOUR, // boundary polygon
-  CONVOLUTION_KERNEL,
-  CONVOLVED_IMAGE, // CV_32F, maybe e.g. FLOAT_IMAGE instead
-  CORRELATED_IMAGE, // probably CV_32S/F, image correlated with patter
-  IMAGE, // pixels, size, depth is CV_8U, CV_32S, or CV_32F images initially
-  JSON_EXPERIMENT, // experiment definition
-  JSON_EXPERIMENT_RESULTS, // result of experiment run
-  HISTOGRAM, // CV_8U images initially
-  HOUGH, // accumulation space + found features
-  PATTERN_FEATURE, // e.g. lines, circles for matching
-  PATTERN_IMAGE, // for exact sub-image matching
-  PYRAMID, // Burt structure
-  QUADTREE, // Samet structure
-  REGION, // complex area, shape properties
-  UNDEFINED_DATA_TYPE
-};
-
-enum CV_data_format {
-  BINARY,
-  JPEG, // CV_data_type::IMAGE only
-  JSON,
-  LOG,
-  TEXT,
-  UNDEFINED_DATA_FORMAT
-};
-
-enum CV_image_depth {
-  CV_8U,
-  CV_32S,
-  CV_32F,
-  //CV_8S,
-  //CV_16U,
-  //CV_16S,
-  //CV_64F,
-  //CV_16F,
-  UNDEFINED_IMAGE_DEPTH
-};
-
-enum CV_repository_type {
-  BERKELEY_DB, // separate file for each CV_data_type
-  FILESYSTEM, // directory, filename
-  INTERNET, // endpoint that produced binary data
-  EXPERIMENT_STEP, // output of experiment step
-  UNDEFINED_REPOSITORY_TYPE
-};
-
-enum CV_threshold_type {
+enum class CV_threshold_type {
   FIXED,
   PERCENTAGE
 };

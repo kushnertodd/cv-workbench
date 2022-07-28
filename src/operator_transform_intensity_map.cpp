@@ -5,10 +5,10 @@
 #include <iostream>
 #include "operator_transform_intensity_map.hpp"
 #include "operator_utils.hpp"
+#include "cv_data_format.hpp"
+#include "cv_image_depth.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
-
-//
 
 extern bool debug;
 
@@ -18,9 +18,9 @@ extern bool debug;
      depth_enum depth
        depth of output image
        optional: defaults to input image depth
-         cv_enums::CV_8U   unsigned byte
-         cv_enums::CV_32S  int
-         cv_enums::CV_32F  float
+         CV_image_depth::depth::CV_8U   unsigned byte
+         CV_image_depth::depth::CV_32S  int
+         CV_image_depth::depth::CV_32F  float
      real lower_in
      real upper_in
      real lower_out
@@ -53,7 +53,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     errors.add("Operator_transform_intensity_map::run", "", "missing output data source");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
-  cv_enums::CV_image_depth depth;
+  CV_image_depth::depth depth;
   double lower_in;
   double upper_in;
   double lower_out;
@@ -66,8 +66,8 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
   if (Operator_utils::has_parameter(operator_parameters, "depth")) {
     saw_depth = true;
     std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
-    depth = wb_utils::string_to_image_depth_enum(depth_str);
-    if (depth == cv_enums::UNDEFINED_IMAGE_DEPTH) {
+    depth = CV_image_depth::string_to_image_depth_enum(depth_str);
+    if (depth == CV_image_depth::depth::UNDEFINED_IMAGE_DEPTH) {
       errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
     }
   }
@@ -124,14 +124,14 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     if (!saw_depth) {
       depth = input->get_depth();
     }
-    Image *output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, cv_enums::CV_8U);
-     if (output_data_store->data_format == cv_enums::JPEG) {
+    Image *output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, CV_image_depth::depth::CV_8U);
+     if (output_data_store->data_format == CV_data_format::format::JPEG) {
       output_data_store->write_image_jpeg(output_image, errors);
-    } else if (output_data_store->data_format == cv_enums::BINARY) {
+    } else if (output_data_store->data_format == CV_data_format::format::BINARY) {
       output_data_store->write_image(output_image, errors);
     } else {
       errors.add("Operator_transform_intensity_map::run", "", "invalid data format '"
-          + wb_utils::data_format_enum_to_string(output_data_store->data_format) + "'");
+          + CV_data_format::data_format_enum_to_string(output_data_store->data_format) + "'");
     }
   }
 }

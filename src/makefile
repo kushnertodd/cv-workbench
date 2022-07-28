@@ -22,6 +22,10 @@ OBJS := $(patsubst %.cpp,%.o,$(SRCFILES))
 SRCOBJS :=  \
   berkeley_db_data_source_descriptor.o \
   bounds.o \
+  cv_data_format.o \
+  cv_data_type.o \
+  cv_image_depth.o \
+  cv_repository_type.o \
   data_source_descriptor.o \
   errors.o \
   experiment.o \

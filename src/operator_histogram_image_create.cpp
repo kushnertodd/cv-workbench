@@ -67,26 +67,26 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
                 saw_upper_value = false;
                 Data_source_descriptor *input_data_source = input_data_sources.front();
                 Image *input = nullptr;
-                if (input_data_source->data_format == cv_enums::JPEG)
+                if (input_data_source->data_format == CV_data_format::format::JPEG)
                   input = input_data_source->read_image_jpeg(errors);
-                else if (input_data_source->data_format == cv_enums::BINARY)
+                else if (input_data_source->data_format == CV_data_format::format::BINARY)
                   input = input_data_source->read_image(errors);
                 else
                   errors.add("Operator_histogram_image_create::run", "", "invalid data format: " +
-                      wb_utils::data_format_to_string(input_data_source->data_format));
+                      CV_data_format::data_format_enum_to_string(input_data_source->data_format));
                 if (errors.error_ct == 0 && input != nullptr)
                   input->check_grayscale(errors);
                 if (errors.error_ct == 0 && input != nullptr) {
                   Histogram* histogram = Histogram::create_image(input, nbins, lower_value, upper_value,
                                                                  saw_lower_value,                  saw_upper_value);
                   for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
-                    if (histogram_output_data_store->data_format == cv_enums::BINARY) {
+                    if (histogram_output_data_store->data_format == CV_data_format::format::BINARY) {
                       histogram_output_data_store->write_histogram(histogram, errors);
-                    } else if (histogram_output_data_store->data_format == cv_enums::TEXT) {
+                    } else if (histogram_output_data_store->data_format == CV_data_format::format::TEXT) {
                       histogram_output_data_store->write_histogram_text(histogram, errors);
                     } else {
                       errors.add("Operator_histogram_image_create::run", "", "invalid data format "
-                          + wb_utils::data_format_to_string(histogram_output_data_store->data_format));
+                          + CV_data_format::data_format_enum_to_string(histogram_output_data_store->data_format));
                     }
                   }
                   delete histogram;

@@ -7,7 +7,7 @@
 
 //
 
-enum CV_image_depth {
+enum CV_image_depth1 {
   CV_8U,
   CV_8S,
   CV_16U,
@@ -19,14 +19,15 @@ enum CV_image_depth {
   UNDEFINED_IMAGE_DEPTH
 };
 
+
 std::string hist_filename;
 std::string hist_diff_filename;
 
 std::string depth_to_string(CV_image_depth depth) {
-  if (depth == CV_8U) return "CV_8U";
+/*  if (depth == CV_8U) return "CV_8U";
   else if (depth == CV_32S) return "CV_32S";
   else if (depth == CV_32F) return "CV_32F";
-  else return "invalid depth";
+  else*/ return "invalid depth";
 }
 
 typedef unsigned char pixel_8U;

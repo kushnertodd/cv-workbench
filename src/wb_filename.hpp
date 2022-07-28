@@ -10,10 +10,19 @@
 #include "wb_defs.hpp"
 
 class Wb_filename {
+ public:
 std::string filename;
 std::string root;
 std::string ext;
-  cv_enums::CV_data_format format;
+  CV_data_format::format format;
+
+  Wb_filename();
+  Wb_filename(std::string m_filename,
+  std::string m_root,
+  std::string m_ext,
+  CV_data_format::format m_format);
+  Wb_filename(std::string m_filename, std::string pat);
+
   void parse_filename(std::string filename, Errors& errors);
   static Wb_filename* parse_image(std::string &filename, Errors& errors);
   static Wb_filename* parse_hist(std::string &filename, Errors &errors);

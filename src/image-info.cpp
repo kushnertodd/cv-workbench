@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_image_depth.hpp"
+#include "cv_repository_type.hpp"
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "histogram.hpp"
@@ -24,14 +28,14 @@ int main(int argc, char **argv) {
   bool found;
   bool at_beginning;
   bool at_end;
-  wb_utils::string_find(filename, prefix, suffix, ".jpg", found, at_beginning, at_end);
+  wb_utils::string_find(filename, prefix, suffix, ".jpg",  at_beginning, at_end);
   bool is_jpeg = at_end;
 
   int rows;
   int cols;
   int components;
   int depth_int;
-  cv_enums::CV_image_depth depth;
+  CV_image_depth::depth depth;
   int npixels;
   Errors errors;
   Image *image;
@@ -43,7 +47,7 @@ int main(int argc, char **argv) {
   }
   if (errors.error_ct == 0) {
     depth = image->get_depth();
-    std::string depth_str = wb_utils::image_depth_enum_to_string(depth);
+    std::string depth_str = CV_image_depth::image_depth_enum_to_string(depth);
     Histogram *histogram = Histogram::create_image(image,
                                                    100,
                                                    0.0,

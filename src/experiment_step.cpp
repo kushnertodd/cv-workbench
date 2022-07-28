@@ -5,16 +5,19 @@
 #include <iostream>
 #include <sstream>
 #include <utility>
-#include "wb_json_utils.hpp"
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_repository_type.hpp"
 #include "data_source_descriptor.hpp"
-#include "experiment_step.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
+#include "experiment_step.hpp"
 #include "experiment_step_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
 #include "operator.hpp"
 #include "operator_dispatcher.hpp"
 #include "wb_defs.hpp"
+#include "wb_json_utils.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -32,7 +35,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   }
 
   // parse: ' "type": ... `
-  cv_enums::CV_data_type data_type;
+  CV_data_type::type data_type;
   json_object *json_data_type =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -43,13 +46,13 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     std::string data_type_str = json_object_get_string(json_data_type);
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
-    data_type = wb_utils::string_to_data_type_enum(data_type_str);
-    if (data_type == cv_enums::UNDEFINED_DATA_TYPE)
+    data_type = CV_data_type::string_to_data_type_enum(data_type_str);
+    if (data_type == CV_data_type::type::UNDEFINED_DATA_TYPE)
       errors.add("", "", "invalid data type: " + data_type_str);
   }
 
   // parse: ' "format": ... `
-  cv_enums::CV_data_format data_format;
+  CV_data_format::format data_format;
   json_object *json_data_format =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -61,8 +64,8 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_format_str << "'" << std::endl;
     data_format =
-        wb_utils::string_to_data_format_enum(data_format_str);
-    if (data_format == cv_enums::UNDEFINED_DATA_FORMAT)
+        CV_data_format::string_to_data_format_enum(data_format_str);
+    if (data_format == CV_data_format::format::UNDEFINED_DATA_FORMAT)
       errors.add("", "", "invalid data format: " + data_format_str);
   }
 

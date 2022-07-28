@@ -8,6 +8,10 @@
 #include <map>
 #include <string>
 #include <json-c/json.h>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_image_depth.hpp"
+#include "cv_repository_type.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
@@ -15,14 +19,14 @@ namespace wb_utils {
 
 char ascii_to_char(int n);
 std::string char_to_string(char c);
-std::string data_format_enum_to_ext(cv_enums::CV_data_format type);
-std::string data_format_enum_to_string(cv_enums::CV_data_format type);
-std::string data_type_enum_to_string(cv_enums::CV_data_type type);
+//std::string data_format_enum_to_ext(CV_data_format::format type);
+//std::string data_format_enum_to_string(CV_data_format::format type);
+//std::string data_type_enum_to_string(CV_data_type::type type);
 float double_to_float(double value);
 void error_exit(const std::string &message);
-cv_enums::CV_data_format ext_to_data_format_enum(const std::string &type);
+//CV_data_format::format ext_to_data_format_enum(const std::string &type);
 bool hex_string_to_int(const std::string &text, unsigned long long &value);
-std::string image_depth_enum_to_string(cv_enums::CV_image_depth depth);
+//std::string image_depth_enum_to_string(CV_image_depth::depth depth);
 std::string indent(int n);
 float int_to_float(int value);
 std::string int_to_hex_string(unsigned long long i, int width = -1);
@@ -40,16 +44,16 @@ void read_float_buffer(FILE *fp, float *buf, int count, const std::string &modul
 void read_int(FILE *fp, int &var, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 void read_int_buffer(FILE *fp, int *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 std::string real_to_string(double i, int width = -1);
-std::string repository_type_enum_to_string(cv_enums::CV_repository_type type);
+//std::string repository_type_enum_to_string(CV_repository_type::type type);
 int round_double_to_int(double value);
 int round_float_to_int(float value);
 bool string_find(const std::string& text, std::string& prefix, std::string& suffix, const std::string& pat, bool &at_beginning, bool &at_end);
 bool string_to_bool(const std::string &str, bool &bvalue);
-cv_enums::CV_data_format string_to_data_format_enum(const std::string &type);
-cv_enums::CV_data_type string_to_data_type_enum(const std::string &type);
-cv_enums::CV_image_depth string_to_image_depth_enum(const std::string &depth);
+//CV_data_format::format string_to_data_format_enum(const std::string &type);
+//CV_data_type::type string_to_data_type_enum(const std::string &type);
+//CV_image_depth::depth string_to_image_depth_enum(const std::string &depth);
 bool string_to_int(const std::string &str, int &value);
-cv_enums::CV_repository_type string_to_repository_type_enum(const std::string &type);
+//CV_repository_type::type string_to_repository_type_enum(const std::string &type);
 bool string_to_double(const std::string &text, double &value);
 void write_double(FILE *fp, double value, const std::string &module, const std::string &id, const std::string &error, Errors &errors);
 void write_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id, const std::string &error, Errors &errors);

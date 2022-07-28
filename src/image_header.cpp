@@ -12,7 +12,7 @@ extern bool debug;
 
 Image_header::Image_header() = default;
 
-Image_header::Image_header(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth) :
+Image_header::Image_header(int m_rows, int m_cols, int m_components, CV_image_depth::depth m_depth) :
     rows(m_rows),
     cols(m_cols),
     components(m_components),
@@ -50,7 +50,7 @@ void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
                        "missing image depth in '" + path + "'",
                        errors);
     if (errors.error_ct == 0)
-      depth = static_cast<cv_enums::CV_image_depth>(depth_int);
+      depth = static_cast<CV_image_depth::depth>(depth_int);
   }
 }
 
@@ -80,7 +80,7 @@ std::string Image_header::to_string(std::string prefix) const {
   os << prefix <<std::setw(20) << std::left << "rows " << rows << std::endl
       << prefix  <<std::setw(20) << std::left << "cols " << cols << std::endl
       << prefix <<std::setw(20) << std::left << "components " << components << std::endl
-      << prefix <<std::setw(20) << std::left << "depth "  << wb_utils::image_depth_enum_to_string(depth) << std::endl
+      << prefix <<std::setw(20) << std::left << "depth "  << CV_image_depth::image_depth_enum_to_string(depth) << std::endl
       << prefix  <<std::setw(20) << std::left  << "row_stride " << row_stride << std::endl
       << prefix  <<std::setw(20) << std::left  << "npixels " << npixels << std::endl;
   return os.str();

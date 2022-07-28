@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include "cv_data_format.hpp"
+#include "cv_data_type.hpp"
+#include "cv_image_depth.hpp"
+#include "cv_repository_type.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
@@ -42,10 +46,10 @@ int main(int argc, char **argv) {
   Variance_stats stats;
   in_image->get_stats(stats);
   switch (in_image->get_depth()) {
-    case cv_enums::CV_8U:
+    case CV_image_depth::depth::CV_8U:
       break;
 
-    case cv_enums::CV_32S:
+    case CV_image_depth::depth::CV_32S:
       //stat_32S(in_image, hough);
       hough->find_lines();
       out_image = Image::scale_image(in_image,
@@ -53,7 +57,7 @@ int main(int argc, char **argv) {
                                      stats.bounds.min_value,
                                      pixel_8U_MIN,
                                      pixel_8U_MAX,
-                                     cv_enums::CV_8U);
+                                     CV_image_depth::depth::CV_8U);
       if (debug)
         std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
       out_image->draw_line_segments(hough->line_segments, 0);
@@ -75,7 +79,7 @@ int main(int argc, char **argv) {
 */
       break;
 
-    case cv_enums::CV_32F:
+    case CV_image_depth::depth::CV_32F:
       break;
   }
   errors.check_exit();

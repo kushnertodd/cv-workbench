@@ -35,7 +35,7 @@ class Image {
   // pixel_16F *buf_16F; // unsupported
 
   virtual ~Image();
-  Image(int m_rows, int m_cols, int m_components, cv_enums::CV_image_depth m_depth);
+  Image(int m_rows, int m_cols, int m_components, CV_image_depth::depth m_depth);
   explicit Image(Image_header &image_header);
 
   // TODO: add component
@@ -44,7 +44,7 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
 
   bool check_grayscale(Errors &errors) const;
-  //static Image *clone_image(Image *image, cv_enums::CV_image_depth depth);
+  //static Image *clone_image(Image *image, CV_image_depth::depth depth);
   //void create_histogram(Histogram &histogram) const;
   void draw_line_segment(const Line_segment &line_segment, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
@@ -58,7 +58,7 @@ class Image {
 
   int get_cols() const;
   int get_components() const;
-  cv_enums::CV_image_depth get_depth() const;
+  CV_image_depth::depth get_depth() const;
   int get_npixels() const;
   int get_row_stride() const;
   int get_rows() const;
@@ -74,7 +74,7 @@ class Image {
   int row_col_to_index(int row, int col) const;
   static Image *scale_image(Image *image, double lower_in,
                             double upper_in, double lower_out,
-                            double upper_out, cv_enums::CV_image_depth depth);
+                            double upper_out, CV_image_depth::depth depth);
   static double scale_pixel(double in_value, double lower_in,
                             double upper_in, double lower_out,
                             double upper_out);
