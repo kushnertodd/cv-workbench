@@ -2,6 +2,7 @@
 // Created by kushn on 7/26/2022.
 //
 
+#include "wb_utils.hpp"
 #include "wb_filename.hpp"
 
 Wb_filename::Wb_filename(){}
@@ -20,7 +21,18 @@ bool  at_beginning;
  bool at_end;
 
   //bool string_find(const std::string& text, std::string& prefix, std::string& suffix, const std::string& pat, bool &at_beginning, bool &at_end);
+}
 
+bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &root) {
+std::string prefix,suffix;
+bool at_beginning, at_end;
+  if (wb_utils::string_find(filename, prefix, suffix, "."+ext, at_beginning, at_end)) {
+    if (at_end) {
+      root = prefix;
+      return true;
+    }
+  }
+  return false;
 }
 
  Wb_filename* Wb_filename::parse_image(std::string &filename, Errors& errors){

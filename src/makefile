@@ -65,6 +65,7 @@ SRCOBJS :=  \
   point.o \
   polar_line.o \
   variance_stats.o \
+  wb_filename.o \
   wb_json_utils.o \
   wb_utils.o 
 

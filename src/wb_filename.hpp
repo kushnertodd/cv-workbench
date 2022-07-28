@@ -6,6 +6,7 @@
 #define SRC__WB_FILENAME_HPP_
 
 #include <string>
+#include "cv_data_format.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
@@ -36,6 +37,8 @@ std::string ext;
   std::string to_hist_text(Errors &errors);
   std::string to_hough(Errors &errors);
   std::string to_hough_text(Errors &errors);
+  bool match_ext(std::string filename, std::string ext, std::string &root);
+
 };
 
 #endif //SRC__WB_FILENAME_HPP_
