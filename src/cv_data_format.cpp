@@ -4,60 +4,57 @@
 
 #include "cv_data_format.hpp"
 
-std::string CV_data_format::data_format_enum_to_ext(CV_data_format::format type) {
-  switch (type) {
-    case CV_data_format::format::BINARY:
-      return "bin";
-    case CV_data_format::format::JPEG:
-      return "jpg";
-    case CV_data_format::format::JSON:
-      return "json";
-    case CV_data_format::format::LOG:
-      return "log";
-    case CV_data_format::format::TEXT:
-      return "txt";
-    default:
-      return "invalid image format";
-  }
+const std::map<CV_data_format::Data_format, std::string> CV_data_format::to_exts =
+    {
+        {CV_data_format::Data_format::BINARY, "bin"},
+        {CV_data_format::Data_format::JPEG, "jpg"},
+        {CV_data_format::Data_format::JSON, "json"},
+        {CV_data_format::Data_format::LOG, "log"},
+        {CV_data_format::Data_format::TEXT, "txt"}
+    };
+const std::map<CV_data_format::Data_format, std::string> CV_data_format::to_strings =
+    {
+        {CV_data_format::Data_format::BINARY, "bin"},
+        {CV_data_format::Data_format::JPEG, "jpeg"},
+        {CV_data_format::Data_format::JSON, "json"},
+        {CV_data_format::Data_format::LOG, "log"},
+        {CV_data_format::Data_format::TEXT, "text"}
+    };
+const std::map<std::string, CV_data_format::Data_format> CV_data_format::from_exts =
+    {
+        {"bin", CV_data_format::Data_format::BINARY},
+        {"jpg", CV_data_format::Data_format::JPEG},
+        {"json", CV_data_format::Data_format::JSON},
+        {"log", CV_data_format::Data_format::LOG},
+        {"txt", CV_data_format::Data_format::TEXT}
+    };
+const std::map<std::string, CV_data_format::Data_format> CV_data_format::from_strings =
+    {
+        {"bin", CV_data_format::Data_format::BINARY},
+        {"jpg", CV_data_format::Data_format::JPEG},
+        {"json", CV_data_format::Data_format::JSON},
+        {"log", CV_data_format::Data_format::LOG},
+        {"txt", CV_data_format::Data_format::TEXT}
+    };
+
+std::string CV_data_format::to_ext(CV_data_format::Data_format data_format) {
+  return CV_data_format::to_exts.at(data_format);
 }
 
-std::string CV_data_format::data_format_enum_to_string(CV_data_format::format type) {
-  switch (type) {
-    case CV_data_format::format::BINARY:
-      return "binary";
-    case CV_data_format::format::JPEG:
-      return "jpeg";
-    case CV_data_format::format::JSON:
-      return "json";
-    case CV_data_format::format::LOG:
-      return "log";
-    case CV_data_format::format::TEXT:
-      return "text";
-    default:
-      return "invalid image format";
-  }
+std::string CV_data_format::to_string(CV_data_format::Data_format data_format) {
+  return CV_data_format::to_strings.at(data_format);
 }
 
-CV_data_format::format CV_data_format::ext_to_data_format_enum(const std::string &ext) {
-  if (ext == "bin")
-    return CV_data_format::format::BINARY;
-  else if (ext == "jpg")
-    return CV_data_format::format::JPEG;
-  else if (ext == "json")
-    return CV_data_format::format::JSON;
-  else if (ext == "log")
-    return CV_data_format::format::LOG;
-  else if (ext == "txt")
-    return CV_data_format::format::TEXT;
-  else return CV_data_format::format::UNDEFINED_DATA_FORMAT;
+CV_data_format::Data_format CV_data_format::from_ext(const std::string &ext) {
+  if (CV_data_format::from_exts.count(ext))
+    return CV_data_format::from_exts.at(ext);
+  else
+    return CV_data_format::Data_format::UNDEFINED;
 }
 
-CV_data_format::format CV_data_format::string_to_data_format_enum(const std::string &type) {
-  if (type == "binary")
-    return CV_data_format::format::BINARY;
-  else if (type == "jpeg")
-    return CV_data_format::format::JPEG;
-  else if (type == "text")
-    return CV_data_format::format::TEXT;
-  else return CV_data_format::format::UNDEFINED_DATA_FORMAT;
+CV_data_format::Data_format CV_data_format::from_string(const std::string &text) {
+  if (CV_data_format::from_strings.count(text))
+    return CV_data_format::from_strings.at(text);
+  else
+    return CV_data_format::Data_format::UNDEFINED;
 }

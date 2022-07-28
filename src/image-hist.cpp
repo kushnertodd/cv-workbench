@@ -16,7 +16,7 @@ enum CV_image_depth1 {
   CV_32F,
   CV_64F,
   CV_16F,
-  UNDEFINED_IMAGE_DEPTH
+  UNDEFINED
 };
 
 

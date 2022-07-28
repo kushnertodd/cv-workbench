@@ -15,9 +15,9 @@
 extern bool debug;
 
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
-                                                                     CV_data_type::type m_data_type,
-                                                                     CV_data_format::format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::type::FILESYSTEM) {}
+                                                                     CV_data_type::Data_type m_data_type,
+                                                                     CV_data_format::Data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::Repository_type::FILESYSTEM) {}
 
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 
@@ -72,8 +72,8 @@ void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &er
 Filesystem_data_source_descriptor
 *Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                int id,
-                                               CV_data_type::type data_type,
-                                               CV_data_format::format data_format,
+                                               CV_data_type::Data_type data_type,
+                                               CV_data_format::Data_format data_format,
                                                Errors &errors) {
   if (debug)
     std::cout << "Filesystem_data_source_descriptor::json_parse: id '" << id << "' type "
@@ -116,14 +116,14 @@ Filesystem_data_source_descriptor
     filesystem_data_source_descriptor->ext = json_object_get_string(json_ext);
   else
     filesystem_data_source_descriptor->ext =
-        CV_data_format::data_format_enum_to_ext(filesystem_data_source_descriptor->data_format);
+        CV_data_format::to_ext(filesystem_data_source_descriptor->data_format);
   return filesystem_data_source_descriptor;
 }
 
 std::string Filesystem_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()
-     << " file format '" << CV_data_format::data_format_enum_to_string(data_format)
+     << " file format '" << CV_data_format::to_string(data_format)
      << "' directory '" << directory
      << "' filename '" << filename
      << "' ext '" << ext << "'";

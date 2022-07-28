@@ -6,22 +6,22 @@
 #define CV_WORKBENCH_SRC_DATA_SOURCE_DESCRIPTOR_HPP_
 
 #include <string>
-#include "hough.hpp"
 #include "wb_defs.hpp"
 #include "histogram.hpp"
+#include "hough.hpp"
 #include "image.hpp"
 
 class Data_source_descriptor {
  public:
   int id;
-  CV_data_type::type data_type;
-  CV_data_format::format data_format;
-  CV_repository_type::type repository_type;
+  CV_data_type::Data_type data_type;
+  CV_data_format::Data_format data_format;
+  CV_repository_type::Repository_type repository_type;
   virtual ~Data_source_descriptor();
   Data_source_descriptor(int m_id,
-                         CV_data_type::type m_data_type,
-                         CV_data_format::format m_data_format,
-                         CV_repository_type::type m_repository_type);
+                         CV_data_type::Data_type m_data_type,
+                         CV_data_format::Data_format m_data_format,
+                         CV_repository_type::Repository_type m_repository_type);
   virtual Histogram *read_histogram(Errors &errors) = 0;
   //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
   virtual Hough *read_hough(Errors &errors) = 0;

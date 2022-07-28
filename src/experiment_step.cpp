@@ -35,7 +35,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   }
 
   // parse: ' "type": ... `
-  CV_data_type::type data_type;
+  CV_data_type::Data_type data_type;
   json_object *json_data_type =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -46,13 +46,13 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     std::string data_type_str = json_object_get_string(json_data_type);
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
-    data_type = CV_data_type::string_to_data_type_enum(data_type_str);
-    if (data_type == CV_data_type::type::UNDEFINED_DATA_TYPE)
+    data_type = CV_data_type::from_string(data_type_str);
+    if (data_type == CV_data_type::Data_type::UNDEFINED)
       errors.add("", "", "invalid data type: " + data_type_str);
   }
 
   // parse: ' "format": ... `
-  CV_data_format::format data_format;
+  CV_data_format::Data_format data_format;
   json_object *json_data_format =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -64,8 +64,8 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_format_str << "'" << std::endl;
     data_format =
-        CV_data_format::string_to_data_format_enum(data_format_str);
-    if (data_format == CV_data_format::format::UNDEFINED_DATA_FORMAT)
+        CV_data_format::from_string(data_format_str);
+    if (data_format == CV_data_format::Data_format::UNDEFINED)
       errors.add("", "", "invalid data format: " + data_format_str);
   }
 

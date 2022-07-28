@@ -32,8 +32,8 @@ int main(int argc, char **argv) {
   if (!wb_utils::string_to_int(std::string(argv[3]), cols))
     error_exit("invalid cols value: '" + std::string(argv[3]) + "'");
   std::string depth_str = argv[4];
-  CV_image_depth::depth depth = CV_image_depth::string_to_image_depth_enum(depth_str);
-  if (depth == CV_image_depth::depth::UNDEFINED_IMAGE_DEPTH)
+  CV_image_depth::Image_depth depth = CV_image_depth::from_string(depth_str);
+  if (depth == CV_image_depth::Image_depth::UNDEFINED)
     error_exit("invalid depth value: '" + depth_str + "'");
   std::string image_file = argv[5];
 
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
   std::vector<std::string> tokens = file_utils::string_split(data);
   Errors errors;
 
-  if (depth == CV_image_depth::depth::CV_8U) {
+  if (depth == CV_image_depth::Image_depth::CV_8U) {
     Image *image_8U = new Image(rows, cols, 1, depth);
     std::vector<int> values;
     for (std::string token: tokens) {
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
 //      cout << i << ": " << buf_8U[i] << std::endl;
     image_8U->add_8U(buf_8U, size, errors);
     image_8U->write(image_file, errors);
-  } else if (depth == CV_image_depth::depth::CV_32S) {
+  } else if (depth == CV_image_depth::Image_depth::CV_32S) {
     Image *image_32S = new Image(rows, cols, 1, depth);
     std::vector<int> values;
     for (std::string token: tokens) {
@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
     }
     image_32S->add_32S(buf_32S, size, errors);
     image_32S->write(image_file, errors);
-  } else if (depth == CV_image_depth::depth::CV_32F) {
+  } else if (depth == CV_image_depth::Image_depth::CV_32F) {
     Image *image_32F = new Image(rows, cols, 1, depth);
     std::vector<float> values;
     for (std::string token: tokens) {

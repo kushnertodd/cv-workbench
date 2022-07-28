@@ -46,10 +46,10 @@ int main(int argc, char **argv) {
   Variance_stats stats;
   in_image->get_stats(stats);
   switch (in_image->get_depth()) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       break;
 
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       //stat_32S(in_image, hough);
       hough->find_lines();
       out_image = Image::scale_image(in_image,
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
                                      stats.bounds.min_value,
                                      pixel_8U_MIN,
                                      pixel_8U_MAX,
-                                     CV_image_depth::depth::CV_8U);
+                                     CV_image_depth::Image_depth::CV_8U);
       if (debug)
         std::cout << "image-hough: out_image " << out_image->to_string() << std::endl;
       out_image->draw_line_segments(hough->line_segments, 0);
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 */
       break;
 
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       break;
   }
   errors.check_exit();

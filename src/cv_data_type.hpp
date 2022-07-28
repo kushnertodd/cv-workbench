@@ -5,9 +5,11 @@
 #ifndef SRC__CV_DATA_TYPE_HPP_
 #define SRC__CV_DATA_TYPE_HPP_
 
+#include <map>
+
 class CV_data_type {
  public:
-  enum class type {
+  enum class Data_type {
     // maybe BINARY_IMAGE for morphological operations
     CONTOUR, // boundary polygon
     CONVOLUTION_KERNEL,
@@ -23,10 +25,12 @@ class CV_data_type {
     PYRAMID, // Burt structure
     QUADTREE, // Samet structure
     REGION, // complex area, shape properties
-    UNDEFINED_DATA_TYPE
+    UNDEFINED
   };
-  static std::string data_type_enum_to_string(CV_data_type::type type);
-  static CV_data_type::type string_to_data_type_enum(const std::string &type);
-  };
+  static const std::map<CV_data_type::Data_type, std::string> to_strings;
+  static const std::map<std::string, CV_data_type::Data_type> from_strings;
+  static std::string to_string(CV_data_type::Data_type repository_type);
+  static CV_data_type::Data_type from_string(const std::string &text);
+};
 
 #endif //SRC__CV_DATA_TYPE_HPP_

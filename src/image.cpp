@@ -26,7 +26,7 @@ Image::~Image() {
   delete[] buf_32F;
 }
 
-Image::Image(int m_rows, int m_cols, int m_components, CV_image_depth::depth m_depth) :
+Image::Image(int m_rows, int m_cols, int m_components, CV_image_depth::Image_depth m_depth) :
     image_header(m_rows, m_cols, m_components, m_depth),
     buf_8U(nullptr),
     buf_32F(nullptr),
@@ -57,15 +57,15 @@ void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
         + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
-      case CV_image_depth::depth::CV_8U:
+      case CV_image_depth::Image_depth::CV_8U:
         buf_8U[next_pixel++] = src[i];
         break;
 
-      case CV_image_depth::depth::CV_32S:
+      case CV_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
 
-      case CV_image_depth::depth::CV_32F:
+      case CV_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
 
@@ -84,15 +84,15 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
         + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
-      case CV_image_depth::depth::CV_8U:
+      case CV_image_depth::Image_depth::CV_8U:
         errors.add("Image::add_32F", "", "cannot update to 8U buffer");
         break;
 
-      case CV_image_depth::depth::CV_32S:
+      case CV_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = wb_utils::round_float_to_int(src[i]);
         break;
 
-      case CV_image_depth::depth::CV_32F:
+      case CV_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
 
@@ -113,15 +113,15 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
         + wb_utils::int_to_string(get_npixels()));
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
-      case CV_image_depth::depth::CV_8U:
+      case CV_image_depth::Image_depth::CV_8U:
         errors.add("Image::add_32S", "", "cannot update to 8U buffer");
         break;
 
-      case CV_image_depth::depth::CV_32S:
+      case CV_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
 
-      case CV_image_depth::depth::CV_32F:
+      case CV_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = wb_utils::int_to_float(src[i]);
         break;
 
@@ -145,7 +145,7 @@ bool Image::check_grayscale(Errors &errors) const {
  * @return
  */
 /*
-Image *Image::clone_image(Image *image, CV_image_depth::depth depth) {
+Image *Image::clone_image(Image *image, CV_image_depth::Image_depth depth) {
   if (debug)
     std::cout << "Image::clone: depth " << depth << " " << image->to_string() << std::endl;
   auto *new_image = new Image(image->get_rows(),
@@ -174,15 +174,15 @@ void Image::draw_line_segments(std::list<Line_segment> &line_segments, double va
 double Image::get(int row, int col) const {
   int index;
   switch (get_depth()) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       index = row_col_to_index(row, col);
       return buf_8U[index];
 
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       index = row_col_to_index(row, col);
       return (pixel_32F) buf_32S[index];
 
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       index = row_col_to_index(row, col);
       return buf_32F[index];
 
@@ -214,7 +214,7 @@ int Image::get_cols() const { return image_header.cols; }
 
 int Image::get_components() const { return image_header.components; }
 
-CV_image_depth::depth Image::get_depth() const { return image_header.depth; }
+CV_image_depth::Image_depth Image::get_depth() const { return image_header.depth; }
 
 int Image::get_npixels() const { return image_header.npixels; }
 
@@ -243,19 +243,19 @@ void Image::get_stats(Variance_stats &stats) const {
 void Image::init() {
   int size = get_npixels();
   switch (get_depth()) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       buf_8U = new pixel_8U[size];
       for (int i = 0; i < size; i++)
         buf_8U[i] = 0;
       break;
 
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       buf_32S = new pixel_32S[size];
       for (int i = 0; i < size; i++)
         buf_32S[i] = 0;
       break;
 
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       buf_32F = new pixel_32F[size];
       for (int i = 0; i < size; i++)
         buf_32F[i] = 0.0;
@@ -283,7 +283,7 @@ Image *Image::read(std::string &path, Errors &errors) {
   size_t newLen;
 
   switch (image_header.depth) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       wb_utils::read_byte_buffer(fp,
                                  image->buf_8U,
                                  image->get_npixels(),
@@ -295,7 +295,7 @@ Image *Image::read(std::string &path, Errors &errors) {
         return nullptr;
       break;
 
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       wb_utils::read_int_buffer(fp,
                                 image->buf_32S,
                                 image->get_npixels(),
@@ -307,7 +307,7 @@ Image *Image::read(std::string &path, Errors &errors) {
         return nullptr;
       break;
 
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       wb_utils::read_float_buffer(fp,
                                   image->buf_32F,
                                   image->get_npixels(),
@@ -367,7 +367,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   /* Step 5: Start decompressor */
   (void) jpeg_start_decompress(&cinfo);
   /* JSAMPLEs per row in output buffer */
-  auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_image_depth::depth::CV_8U);
+  auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_image_depth::Image_depth::CV_8U);
   /* Make a one-row-high sample array that will go away when done with image */
   buffer = (*cinfo.mem->alloc_sarray)
       ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
@@ -405,12 +405,12 @@ int Image::row_col_to_index(int row, int col) const {
  */
 Image *Image::scale_image(Image *image, double lower_in,
                           double upper_in, double lower_out,
-                          double upper_out, CV_image_depth::depth depth) {
+                          double upper_out, CV_image_depth::Image_depth depth) {
   if (debug)
     std::cout << "Image *Image::scale_image: lower_in " << lower_in
               << " upper_in " << upper_in
               << " lower_out " << lower_out
-              << " upper_out " << upper_out << " depth " << CV_image_depth::image_depth_enum_to_string(depth) << std::endl;
+              << " upper_out " << upper_out << " depth " << CV_image_depth::to_string(depth) << std::endl;
   auto *convert_image = new Image(image->get_rows(),
                                   image->get_cols(),
                                   image->get_components(),
@@ -438,15 +438,15 @@ double Image::scale_pixel(double pixel_in,
 
 void Image::set(int row, int col, double value) const {
   switch (get_depth()) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       buf_8U[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
       break;
 
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
       break;
 
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
       break;
 
@@ -488,13 +488,13 @@ Image *Image::to_rgb(int component) const {
   auto *new_image = new Image(new_image_header);
   for (int i = 0; i < new_image->get_npixels(); i++) {
     switch (image_header.depth) {
-      case CV_image_depth::depth::CV_8U:
+      case CV_image_depth::Image_depth::CV_8U:
         new_image->buf_8U[i * 3 + component] = buf_8U[i];
         break;
-      case CV_image_depth::depth::CV_32S:
+      case CV_image_depth::Image_depth::CV_32S:
         new_image->buf_32S[i * 3 + component] = buf_32S[i];
         break;
-      case CV_image_depth::depth::CV_32F:
+      case CV_image_depth::Image_depth::CV_32F:
         new_image->buf_32F[i * 3 + component] = buf_32F[i];
         break;
       default:
@@ -507,7 +507,7 @@ Image *Image::to_rgb(int component) const {
 std::string Image::to_string(std::string prefix) const {
   std::ostringstream os;
   os << prefix << "image:" << std::endl
-   << image_header.to_string(prefix+"    ");
+     << image_header.to_string(prefix + "    ");
   return os.str();
 }
 
@@ -522,19 +522,19 @@ void Image::write(const std::string &path, Errors &errors) const {
   // Write the data from the buffer.
   size_t newLen;
   switch (get_depth()) {
-    case CV_image_depth::depth::CV_8U:
+    case CV_image_depth::Image_depth::CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write", "", "cannot write 8U image data to '" + path + "'");
       }
       break;
-    case CV_image_depth::depth::CV_32S:
+    case CV_image_depth::Image_depth::CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write", "", "cannot write 32S image data to '" + path + "'");
       }
       break;
-    case CV_image_depth::depth::CV_32F:
+    case CV_image_depth::Image_depth::CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
         errors.add("Image::write", "", "cannot write 32F image data to '" + path + "'");
@@ -547,9 +547,9 @@ void Image::write(const std::string &path, Errors &errors) const {
 }
 
 void Image::write_jpeg(const std::string &path, Errors &errors) const {
-  if (get_depth() != CV_image_depth::depth::CV_8U) {
+  if (get_depth() != CV_image_depth::Image_depth::CV_8U) {
     errors.add("Image::write_jpeg", "", "cannot write "
-        + CV_image_depth::image_depth_enum_to_string(get_depth())
+        + CV_image_depth::to_string(get_depth())
         + " image");
   }
   int quality = 100; // best
@@ -597,7 +597,7 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
   jpeg_destroy_compress(&cinfo);
 }
 
-void Image::write_text(const std::string &path,  const std::string &delim, Errors &errors) const {
+void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
   if (debug)
     std::cout << "Image::write_text path '" << path << "' " << to_string() << std::endl;
   std::ofstream ofs(path, std::ofstream::out);
@@ -605,12 +605,12 @@ void Image::write_text(const std::string &path,  const std::string &delim, Error
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;
   }
-      for (int row = 0; row < get_rows(); row++){
-        for (int col = 0; col < get_cols(); col++) {
-          ofs << get(row, col) << delim << std::endl;
-        }
-      ofs << std::endl;
-      }
+  for (int row = 0; row < get_rows(); row++) {
+    for (int col = 0; col < get_cols(); col++) {
+      ofs << get(row, col) << delim << std::endl;
+    }
+    ofs << std::endl;
+  }
   ofs.close();
 }
 

@@ -5,11 +5,12 @@
 #ifndef SRC__CV_IMAGE_DEPTH_HPP_
 #define SRC__CV_IMAGE_DEPTH_HPP_
 
+#include <map>
 #include <string>
 
 class CV_image_depth {
  public:
-  enum class depth {
+  enum class Image_depth {
     CV_8U,
     CV_32S,
     CV_32F,
@@ -18,11 +19,13 @@ class CV_image_depth {
     //CV_16S,
     //CV_64F,
     //CV_16F,
-    UNDEFINED_IMAGE_DEPTH
+    UNDEFINED
   };
 
-  static  std::string image_depth_enum_to_string(CV_image_depth::depth depth);
-  static depth string_to_image_depth_enum(const std::string &depth);
+  static const std::map<CV_image_depth::Image_depth, std::string> to_strings;
+  static const std::map<std::string, CV_image_depth::Image_depth> from_strings;
+  static std::string to_string(CV_image_depth::Image_depth depth);
+  static CV_image_depth::Image_depth from_string(const std::string &text);
 };
 
 #endif //SRC__CV_IMAGE_DEPTH_HPP_

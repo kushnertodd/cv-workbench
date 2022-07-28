@@ -89,17 +89,17 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
 
               Image *input = nullptr;
-              if (input_data_source->data_format == CV_data_format::format::JPEG)
+              if (input_data_source->data_format == CV_data_format::Data_format::JPEG)
                 input = input_data_source->read_image_jpeg(errors);
-              else if (input_data_source->data_format == CV_data_format::format::BINARY)
+              else if (input_data_source->data_format == CV_data_format::Data_format::BINARY)
                 input = input_data_source->read_image(errors);
               else
                 errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
-                    CV_data_format::data_format_enum_to_string(input_data_source->data_format));
+                    CV_data_format::to_string(input_data_source->data_format));
               if (errors.error_ct == 0 && input != nullptr)
                 input->check_grayscale(errors);
               if (errors.error_ct == 0) {
-                Hough* hough = Hough::create_image(input, theta_inc, threshold);
+                Hough *hough = Hough::create_image(input, theta_inc, threshold);
                 int rho_index = hough->hough_accum->rho_to_index(rho);
                 Polar_line polar_line(rho_index,
                                       rho,
@@ -114,15 +114,15 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                   Variance_stats stats;
                   input->get_stats(stats);
                   input->draw_line_segment(line_segment, pixel_value);
-                  if (hough_line_output_data_store->data_format == CV_data_format::format::JPEG) {
+                  if (hough_line_output_data_store->data_format == CV_data_format::Data_format::JPEG) {
                     hough_line_output_data_store->write_image_jpeg(input, errors);
-                  } else if (hough_line_output_data_store->data_format == CV_data_format::format::BINARY) {
+                  } else if (hough_line_output_data_store->data_format == CV_data_format::Data_format::BINARY) {
                     hough_line_output_data_store->write_image(input, errors);
                   } else {
                     errors.add("Operator_hough_draw_line::run",
                                "",
                                "invalid data format '"
-                                   + CV_data_format::data_format_enum_to_string(hough_line_output_data_store->data_format) + "'");
+                                   + CV_data_format::to_string(hough_line_output_data_store->data_format) + "'");
                   }
                 }
               }

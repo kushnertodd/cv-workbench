@@ -16,9 +16,9 @@ extern bool debug;
 //
 
 Experiment_step_data_source_descriptor::Experiment_step_data_source_descriptor(int m_id,
-                                                                               CV_data_type::type m_data_type,
-                                                                               CV_data_format::format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::type::EXPERIMENT_STEP),
+                                                                               CV_data_type::Data_type m_data_type,
+                                                                               CV_data_format::Data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::Repository_type::EXPERIMENT_STEP),
     step_id(0),
     ref_id(0) {}
 
@@ -38,8 +38,8 @@ void Experiment_step_data_source_descriptor::write_json(std::string &json, Error
 Experiment_step_data_source_descriptor
 *Experiment_step_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                                     int id,
-                                                    CV_data_type::type data_type,
-                                                    CV_data_format::format data_format,
+                                                    CV_data_type::Data_type data_type,
+                                                    CV_data_format::Data_format data_format,
                                                     Errors &errors) {
   if (debug)
     std::cout << "Experiment_step_data_source_descriptor::json_parse: id '" << id << "' type "
