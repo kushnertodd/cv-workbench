@@ -22,7 +22,7 @@ std::string ext;
   std::string m_root,
   std::string m_ext,
   CV_data_format::format m_format);
-  Wb_filename(std::string m_filename, std::string pat);
+  Wb_filename(std::string m_filename, Errors &errors);
 
   void parse_filename(std::string filename, Errors& errors);
   static Wb_filename* parse_image(std::string &filename, Errors& errors);
