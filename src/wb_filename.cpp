@@ -60,6 +60,7 @@ bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &
 
 std::string Wb_filename::to_bin() { return filename + ".bin"; }
 std::string Wb_filename::to_hist() { return filename + ".hist.bin"; }
+std::string Wb_filename::to_hist_script() { return filename + ".hist.gp"; }
 std::string Wb_filename::to_hist_text() { return filename + ".hist.txt"; }
 std::string Wb_filename::to_hough() { return filename + ".hough.bin"; }
 std::string Wb_filename::to_hough_text() { return filename + ".hough.txt"; }

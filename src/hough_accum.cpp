@@ -386,7 +386,7 @@ bool Hough_accum::in_window(Point &point) const {
 }
 
 /**
- * initialize accumulator
+ * initialize_image accumulator
  *
  * @param image_theshold
  */

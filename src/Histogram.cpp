@@ -37,7 +37,18 @@ Histogram *Histogram::create_image(Image *image,
                                    bool saw_lower_value,
                                    bool saw_upper_value) {
   auto *histogram = new Histogram(nbins, lower_value, upper_value);
-  histogram->initialize(image, saw_lower_value, saw_upper_value);
+  histogram->initialize_image(image, saw_lower_value, saw_upper_value);
+  return histogram;
+}
+
+Histogram *Histogram::create_hough(Hough *hough,
+                                   int nbins,
+                                   double lower_value,
+                                   double upper_value,
+                                   bool saw_lower_value,
+                                   bool saw_upper_value) {
+  auto *histogram = new Histogram(nbins, lower_value, upper_value);
+  histogram->initialize_hough(hough, saw_lower_value, saw_upper_value);
   return histogram;
 }
 
@@ -70,7 +81,22 @@ double Histogram::get_upper_value() const {
   return upper_value;
 }
 
-void Histogram::initialize(Image *image, bool saw_lower_value, bool saw_upper_value) {
+void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
+  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+      stats.update(hough->hough_accum->get(rho_index, theta_index));
+    }
+  }
+  stats.finalize();
+  if (!saw_lower_value)
+    lower_value = stats.get_min_value();
+  if (!saw_upper_value)
+    upper_value = stats.get_max_value();
+  for (int i = 0; i < nbins; i++)
+    bounds.update(bins[i]);
+}
+
+void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
       double value = image->get(row, col);
@@ -180,7 +206,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
   return histogram;
 }
 
-std::string Histogram::to_string(std::string prefix) {
+std::string Histogram::to_string(const std::string &prefix) {
   std::ostringstream os;
   os << "histogram:" << std::endl
      << prefix << "    " << std::setw(20) << std::left << "nbins " << nbins << std::endl
@@ -191,13 +217,15 @@ std::string Histogram::to_string(std::string prefix) {
   return os.str();
 }
 
-void Histogram::update(double value) {
+void Histogram::update(double value) const {
   int bin = get_bin(value);
   bins[bin]++;
 }
 
 void Histogram::write(const std::string &path, Errors &errors) const {
-  FILE *fp = fopen(path.c_str(), "w");
+  Wb_filename wb_filename(path, path, "", CV_data_format::Data_format::BINARY);
+  std::string data_filename = wb_filename.to_hist();
+  FILE *fp = fopen(data_filename.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Image::write", "", "invalid file '" + path + "'");
     return;
@@ -230,11 +258,12 @@ void Histogram::write(const std::string &path, Errors &errors) const {
   fclose(fp);
 }
 
-void Histogram::write_gp_script(const std::string &filename) {
-  std::string script_filename = filename + ".hist.gp";
+void Histogram::write_gp_script(Wb_filename wb_filename) {
+  std::string script_filename = wb_filename.to_hist_script();
+  std::string data_filename = wb_filename.to_hist_text();
   std::ofstream ofs(script_filename, std::ofstream::out);
   ofs << "set style data histograms" << std::endl;
-  ofs << "plot './" << filename << "' using 2:xtic(10)" << std::endl;
+  ofs << "plot './" << data_filename << "' using 2:xtic(10)" << std::endl;
   ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
   ofs.close();
 }
@@ -243,23 +272,18 @@ void Histogram::write_gp_script(const std::string &filename) {
 void Histogram::write_text(const std::string &path, const std::string &delim, Errors &errors) {
   if (debug)
     std::cout << "Histogram::write_text path '" << path << "' " << to_string() << std::endl;
-  std::ofstream ofs(path, std::ofstream::out);
+  Wb_filename wb_filename(path, path, "", CV_data_format::Data_format::TEXT);
+  std::ofstream ofs(wb_filename.to_hist_text(), std::ofstream::out);
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;
   }
-/*
-  ofs << "nbins " << nbins
-      << " lower_value " << lower_value
-      << " upper_value " << upper_value
-      << stats.to_string()
-      << std::endl;
-*/
   ofs << "bin" << delim << "count" << std::endl;
   for (int i = 0; i < nbins; i++)
     ofs << get_value(i) << delim << bins[i] << std::endl;
   ofs << std::endl;
   ofs.close();
+  write_gp_script(wb_filename);
 }
 
 

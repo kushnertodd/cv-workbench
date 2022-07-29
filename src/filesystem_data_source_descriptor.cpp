@@ -35,7 +35,10 @@ Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
 
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
-void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
+  std::string path = (directory.empty() ? "" : directory + "/") + filename; // ignore ext + "." + ext;
+  histogram->write(path, errors);
+}
 
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename; // ignore ext + "." + ext;

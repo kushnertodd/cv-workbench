@@ -34,6 +34,7 @@ class Wb_filename {
   static bool match_ext(std::string filename, std::string ext, std::string &root);
   std::string to_bin();
   std::string to_hist();
+  std::string to_hist_script();
   std::string to_hist_text();
   std::string to_hough();
   std::string to_hough_text();

@@ -7,7 +7,6 @@
 #include "histogram.hpp"
 #include "operator_utils.hpp"
 #include "wb_defs.hpp"
-#include "wb_utils.hpp"
 #include "operator_histogram_image_create.hpp"
 
 extern bool debug;
@@ -36,66 +35,64 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
     errors.add("Operator_histogram_image_create::run", "", "missing output data source");
   else if (output_data_stores.size() > 2)
     errors.add("Operator_histogram_image_create::run", "", "too many output data sources");
-  else {
-
-    if (!Operator_utils::has_parameter(operator_parameters, "nbins")) {
-      errors.add("Operator_histogram_image_create::run", "", "missing 'nbins' parameter");
-    } else {
-      std::string nbins_str = Operator_utils::get_parameter(operator_parameters, "nbins");
-      int nbins = 0;
-      if (!wb_utils::string_to_int(nbins_str, nbins))
-        errors.add("Operator_histogram_image_create::run", "", "non-numeric 'nbins' parameter");
-      else {
-        bool saw_lower_value = true;
-        if (!Operator_utils::has_parameter(operator_parameters, "lower_value")) {
-          saw_lower_value = false;
+  int nbins;
+  double lower_value;
+  double upper_value;
+  bool saw_nbins = false;
+  bool saw_lower_value = false;
+  bool saw_upper_value = false;
+  if (Operator_utils::has_parameter(operator_parameters, "nbins")) {
+    saw_nbins = true;
+    Operator_utils::get_int_parameter("Operator_histogram_image_create::run",
+                                      operator_parameters, "nbins", nbins, errors);
+  }
+  if (Operator_utils::has_parameter(operator_parameters, "lower_value")) {
+    saw_lower_value = true;
+    Operator_utils::get_real_parameter("Operator_histogram_image_create::run",
+                                       operator_parameters, "lower_value", lower_value, errors);
+  }
+  if (Operator_utils::has_parameter(operator_parameters, "upper_value")) {
+    saw_upper_value = true;
+    Operator_utils::get_real_parameter("Operator_histogram_image_create::run",
+                                       operator_parameters, "upper_value", upper_value, errors);
+  }
+  if (!saw_nbins) {
+    errors.add("Operator_histogram_image_create::run", "", "missing 'nbins' parameter");
+  }
+/* optional right now
+  if (!saw_lower_value) {
+    errors.add("Operator_histogram_image_create::run", "", "missing 'lower_value' parameter");
+  }
+  if (!saw_upper_value) {
+    errors.add("Operator_histogram_image_create::run", "", "missing 'upper_value' parameter");
+  }
+*/
+  if (errors.error_ct == 0) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    Image *input = nullptr;
+    if (input_data_source->data_format == CV_data_format::Data_format::JPEG)
+      input = input_data_source->read_image_jpeg(errors);
+    else if (input_data_source->data_format == CV_data_format::Data_format::BINARY)
+      input = input_data_source->read_image(errors);
+    else
+      errors.add("Operator_histogram_image_create::run", "", "invalid data format: " +
+          CV_data_format::to_string(input_data_source->data_format));
+    if (errors.error_ct == 0 && input != nullptr)
+      input->check_grayscale(errors);
+    if (errors.error_ct == 0) {
+      Histogram *histogram = Histogram::create_image(input, nbins, lower_value, upper_value,
+                                                     saw_lower_value, saw_upper_value);
+      for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
+        if (histogram_output_data_store->data_format == CV_data_format::Data_format::BINARY) {
+          histogram_output_data_store->write_histogram(histogram, errors);
+        } else if (histogram_output_data_store->data_format == CV_data_format::Data_format::TEXT) {
+          histogram_output_data_store->write_histogram_text(histogram, errors);
         } else {
-          std::string lower_value_str = Operator_utils::get_parameter(operator_parameters, "lower_value");
-          double lower_value = 0;
-          if (!wb_utils::string_to_double(lower_value_str, lower_value))
-            errors.add("Operator_histogram_image_create::run", "", "non-numeric 'lower_value' parameter");
-          else {
-            bool saw_upper_value = true;
-            if (!Operator_utils::has_parameter(operator_parameters, "upper_value")) {
-              saw_upper_value = false;
-            } else {
-              std::string upper_value_str = Operator_utils::get_parameter(operator_parameters, "upper_value");
-              double upper_value = 0;
-              if (!wb_utils::string_to_double(upper_value_str, upper_value))
-                errors.add("Operator_histogram_image_create::run", "", "non-numeric 'upper_value' parameter");
-              else {
-                saw_upper_value = false;
-                Data_source_descriptor *input_data_source = input_data_sources.front();
-                Image *input = nullptr;
-                if (input_data_source->data_format == CV_data_format::Data_format::JPEG)
-                  input = input_data_source->read_image_jpeg(errors);
-                else if (input_data_source->data_format == CV_data_format::Data_format::BINARY)
-                  input = input_data_source->read_image(errors);
-                else
-                  errors.add("Operator_histogram_image_create::run", "", "invalid data format: " +
-                      CV_data_format::to_string(input_data_source->data_format));
-                if (errors.error_ct == 0 && input != nullptr)
-                  input->check_grayscale(errors);
-                if (errors.error_ct == 0 && input != nullptr) {
-                  Histogram *histogram = Histogram::create_image(input, nbins, lower_value, upper_value,
-                                                                 saw_lower_value, saw_upper_value);
-                  for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
-                    if (histogram_output_data_store->data_format == CV_data_format::Data_format::BINARY) {
-                      histogram_output_data_store->write_histogram(histogram, errors);
-                    } else if (histogram_output_data_store->data_format == CV_data_format::Data_format::TEXT) {
-                      histogram_output_data_store->write_histogram_text(histogram, errors);
-                    } else {
-                      errors.add("Operator_histogram_image_create::run", "", "invalid data format "
-                          + CV_data_format::to_string(histogram_output_data_store->data_format));
-                    }
-                  }
-                  delete histogram;
-                }
-              }
-            }
-          }
+          errors.add("Operator_histogram_image_create::run", "", "invalid data format "
+              + CV_data_format::to_string(histogram_output_data_store->data_format));
         }
       }
+      delete histogram;
     }
   }
 }

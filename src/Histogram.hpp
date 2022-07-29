@@ -6,8 +6,10 @@
 #define CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 
 #include "errors.hpp"
+#include "hough.hpp"
 #include "image.hpp"
 #include "variance_stats.hpp"
+#include "wb_filename.hpp"
 
 /**
  * The histogram for the input image pixel values or Hough accumulator bin counts
@@ -36,6 +38,11 @@ class Histogram {
   Histogram(int m_nbins,
             double m_lower_value,
             double m_upper_value);
+  static Histogram *create_hough(Hough *input, int nbins,
+                                 double lower_value,
+                                 double upper_value,
+                                 bool saw_lower_value,
+                                 bool saw_upper_value);
   static Histogram *create_image(Image *input, int nbins,
                                  double lower_value,
                                  double upper_value,
@@ -47,12 +54,13 @@ class Histogram {
   double get_max_value() const;
   double get_min_value() const;
   double get_upper_value() const;
-  void initialize(Image *image, bool saw_lower_value, bool saw_upper_value);
+  void initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value);
+  void initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value);
   static Histogram *read(const std::string &path, Errors &errors);
-  std::string to_string(std::string prefix = "");
-  void update(double new_value);
+  std::string to_string(const std::string& prefix = "");
+  void update(double new_value) const;
   void write(const std::string &path, Errors &errors) const;
-  static void write_gp_script(const std::string &filename);
+  static void write_gp_script(Wb_filename wb_filename);
   void write_text(const std::string &path, const std::string &delim, Errors &errors);
 };
 

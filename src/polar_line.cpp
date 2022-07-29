@@ -11,7 +11,7 @@
 extern bool debug;
 
 /**
- * initialize (rho, theta) line
+ * initialize_image (rho, theta) line
  * @param m_rho
  * @param m_theta_index
  */
