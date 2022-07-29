@@ -11,6 +11,7 @@
 #include "histogram.hpp"
 #include "image.hpp"
 #include "wb_defs.hpp"
+#include "wb_filename.hpp"
 #include "wb_utils.hpp"
 
 //
@@ -20,41 +21,29 @@ bool debug = false;
 int main(int argc, char **argv) {
 
   if (argc < 2)
-    wb_utils::error_exit("usage: " + std::string(argv[0]) + " filename");
-  std::string filename = argv[1];
+    wb_utils::error_exit("usage: image-info filename");
 
-  std::string prefix;
-  std::string suffix;
-  bool found;
-  bool at_beginning;
-  bool at_end;
-  wb_utils::string_find(filename, prefix, suffix, ".jpg", at_beginning, at_end);
-  bool is_jpeg = at_end;
-
-  int rows;
-  int cols;
-  int components;
-  int depth_int;
-  CV_image_depth::Image_depth depth;
-  int npixels;
+  std::string in_filename = argv[1];
   Errors errors;
-  Image *image;
-  if (is_jpeg) {
-    image = Image::read_jpeg(filename, errors);
-    errors.check_exit();
+  std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  errors.check_exit("invalid in-filename "+in_filename);
+  Image *image = nullptr;
+  if (wb_filename->is_jpeg()) {
+    image = Image::read_jpeg(in_filename, errors);
+  } else if (wb_filename->is_bin()) {
+    image = Image::read(in_filename, errors);
   } else {
-    image = Image::read(filename, errors);
+    errors.add("", "", "invalid filename ext "+in_filename);
   }
-  if (errors.error_ct == 0) {
-    depth = image->get_depth();
-    std::string depth_str = CV_image_depth::to_string(depth);
+  errors.check_exit("read error filename "+in_filename);
+  if (image != nullptr) {
     Histogram *histogram = Histogram::create_image(image,
                                                    100,
                                                    0.0,
                                                    0.0,
                                                    false,
                                                    false);
-    std::cout << "filename " << std::setw(20) << std::left << filename << std::endl;
+    std::cout << "filename " << std::setw(20) << std::left << in_filename << std::endl;
     std::cout << image->to_string();
     std::cout << histogram->to_string();
     if (errors.has_error())
