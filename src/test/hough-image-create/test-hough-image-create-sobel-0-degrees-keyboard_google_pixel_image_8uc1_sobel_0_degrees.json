@@ -10,7 +10,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
 					}
 				],

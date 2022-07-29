@@ -10,7 +10,7 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "jpeg",
-						"directory": "images",
+						"directory": "test/reference",
 						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
 						"ext": "jpg"
 					}

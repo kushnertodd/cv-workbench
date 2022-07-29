@@ -3,11 +3,11 @@
 ## To do next
 | item |done|date|
 |------|----|----|
-|filename class
-|fix image-... files
+|filename class|x
+|fix image-... files|x
 |add image-... files to doc
 |operator_transform_image_morphology
-|filesystem descriptor  default extension
+|filesystem descriptor  default extension|x
 
 ## operators
 | operator                        |done|date|
