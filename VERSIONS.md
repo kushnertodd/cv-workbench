@@ -4,6 +4,14 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 - directory  
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.17
+```
+commit 983df2a9146fa2c23409cf709485af76a7be87d6 (HEAD -> master, origin/master, origin/HEAD)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Jul 29 17:08:40 2022 -0600
+```
+-  implemented histogram-image and histogram-hough
+
 #### v0.1.16
 ```
 commit aa4268a80f401621b37e3177ff7e8b48fcb5636b 
