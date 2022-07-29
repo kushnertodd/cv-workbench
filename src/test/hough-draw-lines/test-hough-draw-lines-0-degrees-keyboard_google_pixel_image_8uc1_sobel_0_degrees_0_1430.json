@@ -1,0 +1,162 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees_0_289"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "289",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees_0_318"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "318",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees_0_344"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "344",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 4,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees_0_570"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "570",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 5,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_google_pixel_image_8uc1_sobel_0_degrees_0_1430"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "1430",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      }
+    ]
+  }
+}
