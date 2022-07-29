@@ -1,0 +1,43 @@
+{
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "histogram-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "jpeg",
+						"directory": "test/reference",
+						"filename": "small"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "small"
+					},
+					{
+						"id": 2,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "small"
+					}
+				],
+				"parameters": {
+					"nbins": "256",
+					"lower_value": "0",
+					"upper_value": "255"
+				}
+			}
+		]
+	}
+}
