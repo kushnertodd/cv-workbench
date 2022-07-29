@@ -14,7 +14,7 @@ const std::map<CV_data_format::Data_format, std::string> CV_data_format::to_exts
     };
 const std::map<CV_data_format::Data_format, std::string> CV_data_format::to_strings =
     {
-        {CV_data_format::Data_format::BINARY, "bin"},
+        {CV_data_format::Data_format::BINARY, "binary"},
         {CV_data_format::Data_format::JPEG, "jpeg"},
         {CV_data_format::Data_format::JSON, "json"},
         {CV_data_format::Data_format::LOG, "log"},
@@ -30,11 +30,11 @@ const std::map<std::string, CV_data_format::Data_format> CV_data_format::from_ex
     };
 const std::map<std::string, CV_data_format::Data_format> CV_data_format::from_strings =
     {
-        {"bin", CV_data_format::Data_format::BINARY},
-        {"jpg", CV_data_format::Data_format::JPEG},
+        {"binary", CV_data_format::Data_format::BINARY},
+        {"jpeg", CV_data_format::Data_format::JPEG},
         {"json", CV_data_format::Data_format::JSON},
         {"log", CV_data_format::Data_format::LOG},
-        {"txt", CV_data_format::Data_format::TEXT}
+        {"text", CV_data_format::Data_format::TEXT}
     };
 
 std::string CV_data_format::to_ext(CV_data_format::Data_format data_format) {

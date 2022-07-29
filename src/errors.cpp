@@ -34,6 +34,10 @@ void Errors::check_exit(const std::string &message) {
   }
 }
 
+bool Errors::has_error() {
+  return error_ct != 0;
+}
+
 void Errors::merge(Errors &errors) {
   error_ct += errors.error_ct;
   error_list.insert(error_list.end(), errors.error_list.begin(), errors.error_list.end());

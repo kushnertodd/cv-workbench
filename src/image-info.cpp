@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
     std::cout << "filename " << std::setw(20) << std::left << filename << std::endl;
     std::cout << image->to_string();
     std::cout << histogram->to_string();
-    if (errors.error_ct != 0)
+    if (errors.has_error())
       std::cout << errors.to_string() << std::endl;
   }
 }

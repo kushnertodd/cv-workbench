@@ -423,7 +423,7 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
     wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator rows in '" + path + "'", errors);
   if (errors.error_ct == 0)
     wb_utils::read_int(fp, cols, "Hough_accum::read", "", "missing hough accumulator cols in '" + path + "'", errors);
-  if (errors.error_ct != 0)
+  if (errors.has_error())
     return nullptr;
   else {
     auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
@@ -434,7 +434,7 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
                               "",
                               "cannot read hough accumulator data in '" + path + "'",
                               errors);
-    if (errors.error_ct != 0) {
+    if (errors.has_error()) {
       delete hough_accum;
       return nullptr;
     }

@@ -11,7 +11,11 @@ Wb_filename::Wb_filename() {}
 Wb_filename::Wb_filename(std::string m_filename,
                          std::string m_root,
                          std::string m_ext,
-                         CV_data_format::Data_format m_format) {}
+                         CV_data_format::Data_format m_format) :
+    filename(m_filename),
+    root(m_root),
+    ext(m_ext),
+    format(m_format) {}
 
 Wb_filename *Wb_filename::create_wb_filename(std::string filename, Errors &errors) {
   for (const auto data_format: CV_data_format::from_exts) {
@@ -22,7 +26,24 @@ Wb_filename *Wb_filename::create_wb_filename(std::string filename, Errors &error
       return wb_filename;
     }
   }
+  errors.add("", "", "unrecognized filename extension: " + filename);
   return nullptr;
+}
+
+bool Wb_filename::is_bin() {
+  return ext == "bin";
+}
+bool Wb_filename::is_jpeg() {
+  return ext == "jpg";
+}
+bool Wb_filename::is_json() {
+  return ext == "json";
+}
+bool Wb_filename::is_log() {
+  return ext == "log";
+}
+bool Wb_filename::is_text() {
+  return ext == "txt";
 }
 
 bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &root) {
@@ -37,11 +58,12 @@ bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &
   return false;
 }
 
-std::string Wb_filename::to_jpeg(Errors &errors) { return filename + ".jpg"; }
-std::string Wb_filename::to_bin(Errors &errors) { return filename + ".bin"; }
-std::string Wb_filename::to_text(Errors &errors) { return filename + ".txt"; }
-std::string Wb_filename::to_log(Errors &errors) { return filename + ".log"; }
-std::string Wb_filename::to_hist(Errors &errors) { return filename + ".hist.bin"; }
-std::string Wb_filename::to_hist_text(Errors &errors) { return filename + ".hist.txt"; }
-std::string Wb_filename::to_hough(Errors &errors) { return filename + ".hough.bin"; }
-std::string Wb_filename::to_hough_text(Errors &errors) { return filename + ".hough.txt"; }
+std::string Wb_filename::to_bin() { return filename + ".bin"; }
+std::string Wb_filename::to_hist() { return filename + ".hist.bin"; }
+std::string Wb_filename::to_hist_text() { return filename + ".hist.txt"; }
+std::string Wb_filename::to_hough() { return filename + ".hough.bin"; }
+std::string Wb_filename::to_hough_text() { return filename + ".hough.txt"; }
+std::string Wb_filename::to_jpeg() { return filename + ".jpg"; }
+std::string Wb_filename::to_json() { return filename + ".jpg"; }
+std::string Wb_filename::to_log() { return filename + ".log"; }
+std::string Wb_filename::to_text() { return filename + ".txt"; }

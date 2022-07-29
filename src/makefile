@@ -77,6 +77,7 @@ PROGRAMS = \
   image-hough-draw \
   image-info \
   image-jpg-to-bin \
+  image-map \
   image-polar \
   image-test \
   cv-workbench 
@@ -105,6 +106,9 @@ image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-jpg-to-bin: image-jpg-to-bin.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-map: image-map.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-polar: image-polar.o $(SRCOBJS)

@@ -275,7 +275,7 @@ Image *Image::read(std::string &path, Errors &errors) {
 
   Image_header image_header;
   image_header.read(fp, path, errors);
-  if (errors.error_ct != 0)
+  if (errors.has_error())
     return nullptr;
   auto *image = new Image(image_header);
 
@@ -291,7 +291,7 @@ Image *Image::read(std::string &path, Errors &errors) {
                                  "",
                                  "cannot read 8U image data in '" + path + "'",
                                  errors);
-      if (errors.error_ct != 0)
+      if (errors.has_error())
         return nullptr;
       break;
 
@@ -303,7 +303,7 @@ Image *Image::read(std::string &path, Errors &errors) {
                                 "",
                                 "cannot read 32S image data in '" + path + "'",
                                 errors);
-      if (errors.error_ct != 0)
+      if (errors.has_error())
         return nullptr;
       break;
 
@@ -315,7 +315,7 @@ Image *Image::read(std::string &path, Errors &errors) {
                                   "",
                                   "cannot read 32F image data in '" + path + "'",
                                   errors);
-      if (errors.error_ct != 0)
+      if (errors.has_error())
         return nullptr;
       break;
 
@@ -367,7 +367,8 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   /* Step 5: Start decompressor */
   (void) jpeg_start_decompress(&cinfo);
   /* JSAMPLEs per row in output buffer */
-  auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_image_depth::Image_depth::CV_8U);
+  auto *image =
+      new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, CV_image_depth::Image_depth::CV_8U);
   /* Make a one-row-high sample array that will go away when done with image */
   buffer = (*cinfo.mem->alloc_sarray)
       ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
@@ -602,12 +603,13 @@ void Image::write_text(const std::string &path, const std::string &delim, Errors
     std::cout << "Image::write_text path '" << path << "' " << to_string() << std::endl;
   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
-    errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
+    errors.add("Image::write_text", "", "invalid file '" + path + "'");
     return;
   }
   for (int row = 0; row < get_rows(); row++) {
     for (int col = 0; col < get_cols(); col++) {
-      ofs << get(row, col) << delim << std::endl;
+      double value = get(row, col);
+      ofs << value << delim;
     }
     ofs << std::endl;
   }

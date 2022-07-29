@@ -24,15 +24,23 @@ class Wb_filename {
               CV_data_format::Data_format m_format);
   static Wb_filename *create_wb_filename(std::string m_filename, Errors &errors);
 
+  bool is_bin();
+  bool is_jpeg();
+  bool is_json();
+  bool is_log();
+  bool is_text();
+
+
   static bool match_ext(std::string filename, std::string ext, std::string &root);
-  std::string to_jpeg(Errors &errors);
-  std::string to_bin(Errors &errors);
-  std::string to_text(Errors &errors);
-  std::string to_log(Errors &errors);
-  std::string to_hist(Errors &errors);
-  std::string to_hist_text(Errors &errors);
-  std::string to_hough(Errors &errors);
-  std::string to_hough_text(Errors &errors);
+  std::string to_bin();
+  std::string to_hist();
+  std::string to_hist_text();
+  std::string to_hough();
+  std::string to_hough_text();
+  std::string to_jpeg();
+  std::string to_json();
+  std::string to_log();
+  std::string to_text();
 };
 
 #endif //SRC__WB_FILENAME_HPP_

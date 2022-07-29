@@ -66,7 +66,7 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
     return nullptr;
   }
   Hough_accum *hough_accum = Hough_accum::read(fp, path, errors);
-  if (hough_accum == nullptr || errors.error_ct != 0)
+  if (hough_accum == nullptr || errors.has_error())
     return nullptr;
   fclose(fp);
   return new Hough(hough_accum);
@@ -80,7 +80,7 @@ Hough *Hough::read_text(const std::string &path, Errors &errors) {
     return nullptr;
   }
   Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
-  if (hough_accum == nullptr || errors.error_ct != 0)
+  if (hough_accum == nullptr || errors.has_error())
     return nullptr;
   ifs.close();
   return new Hough(hough_accum);

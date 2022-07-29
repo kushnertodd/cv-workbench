@@ -102,7 +102,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
   }
 
   wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing histogram nbins in '" + path + "'", errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
@@ -114,7 +114,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                        "",
                        "missing histogram lower_value in '" + path + "'",
                        errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
@@ -127,7 +127,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                        "",
                        "missing histogram upper_value in '" + path + "'",
                        errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
@@ -140,7 +140,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                      "",
                      "missing histogram min_count in '" + path + "'",
                      errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
@@ -153,14 +153,14 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                      "",
                      "missing histogram max_count in '" + path + "'",
                      errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
   histogram->bounds.max_value = max_count;
 
   histogram->stats.read(fp, path, errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
@@ -173,7 +173,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                             "",
                             "cannot read histogram data in '" + path + "'",
                             errors);
-  if (errors.error_ct != 0) {
+  if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
