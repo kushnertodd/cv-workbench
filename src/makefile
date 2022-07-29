@@ -71,7 +71,6 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   image-copy \
-  image-create \
   image-dump \
   image-info \
   image-map \
@@ -83,9 +82,6 @@ PROGRAMS = \
 all: $(PROGRAMS)
 
 image-copy: image-copy.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-dump: image-dump.o $(SRCOBJS)
@@ -209,11 +205,6 @@ image.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image.o: cv_repository_type.hpp image.hpp bounds.hpp errors.hpp
 image.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
 image.o: variance_stats.hpp wb_utils.hpp
-image-create.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
-image-create.o: cv_repository_type.hpp errors.hpp image.hpp bounds.hpp
-image-create.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
-image-create.o: variance_stats.hpp wb_utils.hpp file_utils.hpp
-image-create.o: hough_accum.hpp polar_line.hpp
 image-dump.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-dump.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image-dump.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
@@ -224,7 +215,8 @@ image_header.o: wb_defs.hpp image_header.hpp
 image-info.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image-info.o: cv_repository_type.hpp errors.hpp file_utils.hpp histogram.hpp
 image-info.o: image.hpp bounds.hpp image_header.hpp wb_defs.hpp
-image-info.o: line_segment.hpp point.hpp variance_stats.hpp wb_utils.hpp
+image-info.o: line_segment.hpp point.hpp variance_stats.hpp wb_filename.hpp
+image-info.o: wb_utils.hpp
 image-map.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-map.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image-map.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
