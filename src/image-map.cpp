@@ -9,7 +9,7 @@ bool debug = false;
 
 int main(int argc, char **argv) {
   if (argc < 6)
-    wb_utils::error_exit("usage: image-map in_filename out-filename ");
+    wb_utils::error_exit("usage: image-map in_filename out-filename lower-in upper-in lower-out upper-out");
   std::string in_filename = argv[1];
   std::string out_filename = argv[2];
   std::string lower_in_str = argv[3];
@@ -45,10 +45,9 @@ int main(int argc, char **argv) {
                                           upper_in, lower_out,
                                           upper_out, in_image->get_depth());
     errors.check_exit("image scale failed");
-    out_image->write(out_filename, errors);
-    if (wb_in_filename->is_jpeg()) {
+    if (wb_out_filename->is_jpeg()) {
       out_image->write_jpeg(out_filename, errors);
-    } else if (wb_in_filename->is_bin()) {
+    } else if (wb_out_filename->is_bin()) {
       out_image->write(out_filename, errors);
     } else {
       errors.add("", "", "invalid out-filename");

@@ -70,16 +70,11 @@ SRCOBJS :=  \
   wb_utils.o 
 
 PROGRAMS = \
+  image-copy \
   image-create \
   image-dump \
-  image-hist \
-  image-hough \
-  image-hough-draw \
   image-info \
-  image-jpg-to-bin \
   image-map \
-  image-polar \
-  image-test \
   cv-workbench 
 
 %.o: %.cpp %.hpp
@@ -87,34 +82,19 @@ PROGRAMS = \
 
 all: $(PROGRAMS)
 
+image-copy: image-copy.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
 image-create: image-create.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-dump: image-dump.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-image-hist: image-hist.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-image-hough: image-hough.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-image-hough-draw: image-hough-draw.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
 image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-image-jpg-to-bin: image-jpg-to-bin.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
 image-map: image-map.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-image-polar: image-polar.o $(SRCOBJS)
-	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
-
-image-test: image-test.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 cv-workbench : cv-workbench.o $(SRCOBJS)
@@ -221,6 +201,10 @@ hough.o: cv_data_type.hpp cv_image_depth.hpp cv_repository_type.hpp
 hough.o: wb_defs.hpp hough_accum.hpp image.hpp bounds.hpp image_header.hpp
 hough.o: line_segment.hpp point.hpp variance_stats.hpp polar_line.hpp
 hough.o: hough.hpp
+image-copy.o: errors.hpp image.hpp bounds.hpp image_header.hpp
+image-copy.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
+image-copy.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-copy.o: variance_stats.hpp wb_filename.hpp wb_utils.hpp
 image.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image.o: cv_repository_type.hpp image.hpp bounds.hpp errors.hpp
 image.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
@@ -230,48 +214,22 @@ image-create.o: cv_repository_type.hpp errors.hpp image.hpp bounds.hpp
 image-create.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
 image-create.o: variance_stats.hpp wb_utils.hpp file_utils.hpp
 image-create.o: hough_accum.hpp polar_line.hpp
-image-dump.o: image.hpp bounds.hpp errors.hpp image_header.hpp
+image-dump.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-dump.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image-dump.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
-image-dump.o: variance_stats.hpp wb_utils.hpp
+image-dump.o: variance_stats.hpp wb_filename.hpp wb_utils.hpp
 image_header.o: wb_utils.hpp cv_data_format.hpp cv_data_type.hpp
 image_header.o: cv_image_depth.hpp cv_repository_type.hpp errors.hpp
 image_header.o: wb_defs.hpp image_header.hpp
-image-hist.o: variance_stats.hpp errors.hpp bounds.hpp hough_accum.hpp
-image-hist.o: file_utils.hpp image.hpp image_header.hpp cv_data_format.hpp
-image-hist.o: cv_data_type.hpp cv_image_depth.hpp cv_repository_type.hpp
-image-hist.o: wb_defs.hpp line_segment.hpp point.hpp wb_utils.hpp
-image-hist.o: polar_line.hpp
-image-hough.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
-image-hough.o: cv_repository_type.hpp errors.hpp histogram.hpp image.hpp
-image-hough.o: bounds.hpp image_header.hpp wb_defs.hpp line_segment.hpp
-image-hough.o: point.hpp variance_stats.hpp hough.hpp hough_accum.hpp
-image-hough.o: file_utils.hpp wb_utils.hpp polar_line.hpp
-image-hough-draw.o: errors.hpp file_utils.hpp histogram.hpp image.hpp
-image-hough-draw.o: bounds.hpp image_header.hpp cv_data_format.hpp
-image-hough-draw.o: cv_data_type.hpp cv_image_depth.hpp
-image-hough-draw.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp
-image-hough-draw.o: point.hpp variance_stats.hpp hough.hpp hough_accum.hpp
-image-hough-draw.o: wb_utils.hpp polar_line.hpp
 image-info.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
 image-info.o: cv_repository_type.hpp errors.hpp file_utils.hpp histogram.hpp
 image-info.o: image.hpp bounds.hpp image_header.hpp wb_defs.hpp
 image-info.o: line_segment.hpp point.hpp variance_stats.hpp wb_utils.hpp
-image-jpg-to-bin.o: image.hpp bounds.hpp errors.hpp image_header.hpp
-image-jpg-to-bin.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
-image-jpg-to-bin.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp
-image-jpg-to-bin.o: point.hpp variance_stats.hpp wb_utils.hpp
+image-map.o: errors.hpp image.hpp bounds.hpp image_header.hpp
+image-map.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
+image-map.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-map.o: variance_stats.hpp wb_filename.hpp wb_utils.hpp
 image_point_list.o: image_point_list.hpp point.hpp
-image-polar.o: errors.hpp histogram.hpp image.hpp bounds.hpp image_header.hpp
-image-polar.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
-image-polar.o: cv_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
-image-polar.o: variance_stats.hpp hough.hpp hough_accum.hpp file_utils.hpp
-image-polar.o: wb_utils.hpp polar_line.hpp
-image-test.o: cv_data_format.hpp cv_data_type.hpp cv_image_depth.hpp
-image-test.o: cv_repository_type.hpp errors.hpp image.hpp bounds.hpp
-image-test.o: image_header.hpp wb_defs.hpp line_segment.hpp point.hpp
-image-test.o: variance_stats.hpp hough_accum.hpp file_utils.hpp wb_utils.hpp
-image-test.o: polar_line.hpp
 internet_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 internet_data_source_descriptor.o: data_source_descriptor.hpp wb_defs.hpp
 internet_data_source_descriptor.o: histogram.hpp image.hpp bounds.hpp

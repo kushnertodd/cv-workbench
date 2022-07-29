@@ -9,15 +9,15 @@ bool debug = false;
 
 int main(int argc, char **argv) {
   if (argc < 2)
-    wb_utils::error_exit("usage: image-dump in_filename");
+    wb_utils::error_exit("usage: image-dump in-filename");
   std::string in_filename = argv[1];
   Errors errors;
   std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(in_filename, errors));
-  errors.check_exit("invalid filename");
+  errors.check_exit("invalid in-filename");
   Image *image = nullptr;
-  if (wb_filename->ext == "jpg") {
+  if (wb_filename->is_jpeg()) {
     image = Image::read_jpeg(in_filename, errors);
-  } else if (wb_filename->ext == "bin") {
+  } else if (wb_filename->is_bin()) {
     image = Image::read(in_filename, errors);
   } else {
     errors.add("", "", "invalid filename");
