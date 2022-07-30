@@ -100,6 +100,8 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
       double value = image->get(row, col);
+//      std::cout << "initialize_image: rows " << image->get_rows() << " cols " << image->get_cols()
+//      << " row " << row << " col " << col << " value " << value << " bin " << get_bin(value) << std::endl;
       stats.update(value);
     }
   }
@@ -287,3 +289,4 @@ void Histogram::write_text(const std::string &path, const std::string &delim, Er
 }
 
 
+ 
