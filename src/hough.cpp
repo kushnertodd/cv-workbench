@@ -42,7 +42,7 @@ void Hough::find_lines() {
 }
 
 void Hough::find_peaks() {
-  int peak_threshold = hough_accum->choose_threshold(cv_enums::CV_threshold_type::FIXED);
+  int peak_threshold = hough_accum->choose_threshold(cv_enums::WB_threshold_type::FIXED);
   hough_accum->find_peaks(lines, peak_threshold);
   if (debug) {
     for (Polar_line line: lines) {
@@ -86,32 +86,24 @@ Hough *Hough::read_text(const std::string &path, Errors &errors) {
   return new Hough(hough_accum);
 }
 
-bool Hough::write(const std::string &filename, Errors &errors) const {
-  std::ofstream ofs(filename, std::ofstream::out);
-  if (!ofs) {
-    errors.add("Hough:write", "", "invalid filename '" + filename + "'");
-    return false;
+void Hough::write(const std::string &path, Errors &errors) const {
+  if (debug)
+    std::cout << "Image::write path '" << path  << std::endl;
+  FILE *fp = fopen(path.c_str(), "w");
+  if (fp == nullptr) {
+    errors.add("Hough::write", "", "invalid file '" + path + "'");
   }
-  bool return_value = true;
-  if (!hough_accum->write_text(ofs, "\t", errors)) {
-    return_value = false;
-  }
-  ofs.close();
-  return return_value;
+  hough_accum->write(fp, path, errors);
+  fclose(fp);
 }
 
-bool Hough::write_text(const std::string &filename, const std::string &delim, Errors &errors) const {
+void Hough::write_text(const std::string &filename, const std::string &delim, Errors &errors) const {
   std::ofstream ofs(filename, std::ofstream::out);
   if (!ofs) {
     errors.add("Hough:write", "", "invalid filename '" + filename + "'");
-    return false;
   }
-  bool return_value = true;
-  if (!hough_accum->write_text(ofs, "\t", errors)) {
-    return_value = false;
-  }
+  hough_accum->write_text(ofs, "\t", errors);
   ofs.close();
-  return return_value;
 }
 
 

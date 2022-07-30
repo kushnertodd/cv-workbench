@@ -54,6 +54,12 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
   if (!saw_nbins) {
     errors.add("Operator_histogram_image_create::run", "", "missing 'nbins' parameter");
   }
+  if (!saw_lower_value) {
+    errors.add("Operator_histogram_image_create::run", "", "missing 'lower_value' parameter");
+  }
+  if (!saw_upper_value) {
+    errors.add("Operator_histogram_image_create::run", "", "missing 'upper_value' parameter");
+  }
   if (errors.error_ct == 0) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Hough *input = nullptr;
@@ -62,13 +68,13 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
       Histogram *histogram = Histogram::create_hough(input, nbins, lower_value, upper_value,
                                                      saw_lower_value, saw_upper_value);
       for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
-        if (histogram_output_data_store->data_format == CV_data_format::Data_format::BINARY) {
+        if (histogram_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
           histogram_output_data_store->write_histogram(histogram, errors);
-        } else if (histogram_output_data_store->data_format == CV_data_format::Data_format::TEXT) {
+        } else if (histogram_output_data_store->data_format == WB_data_format::Data_format::TEXT) {
           histogram_output_data_store->write_histogram_text(histogram, errors);
         } else {
           errors.add("Operator_histogram_hough_create::run", "", "invalid data format "
-              + CV_data_format::to_string(histogram_output_data_store->data_format));
+              + WB_data_format::to_string(histogram_output_data_store->data_format));
         }
       }
       delete histogram;

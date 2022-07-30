@@ -13,9 +13,9 @@ extern bool debug;
 //
 
 Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
-                                                                 CV_data_type::Data_type m_data_type,
-                                                                 CV_data_format::Data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, CV_repository_type::Repository_type::INTERNET),
+                                                                 WB_data_type::Data_type m_data_type,
+                                                                 WB_data_format::Data_format m_data_format) :
+    Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_type::Repository_type::INTERNET),
     rows(0),
     cols(0) {}
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
@@ -34,16 +34,16 @@ void Internet_data_source_descriptor::write_json(std::string &json, Errors &erro
 Internet_data_source_descriptor
 *Internet_data_source_descriptor::json_parse(json_object *json_data_descriptor,
                                              int id,
-                                             CV_data_type::Data_type data_type,
-                                             CV_data_format::Data_format data_format,
+                                             WB_data_type::Data_type data_type,
+                                             WB_data_format::Data_format data_format,
                                              Errors &errors) {
   if (debug)
-    std::cout << "Internet_data_source_descriptor::json_parse: id '" << id << "' type "
+    std::cout << "Internet_data_source_descriptor::from_json: id '" << id << "' type "
               << std::endl;
   auto *internet_data_source_descriptor =
       new Internet_data_source_descriptor(id, data_type, data_format);
   json_object *json_url =
-      get_json_object("Internet_data_source_descriptor::json_parse",
+      get_json_object("Internet_data_source_descriptor::from_json",
                       json_data_descriptor,
                       "url",
                       json_type_string,
@@ -51,7 +51,7 @@ Internet_data_source_descriptor
   if (json_url != nullptr)
     internet_data_source_descriptor->url = json_object_get_string(json_url);
   json_object *json_depth =
-      get_json_object("Internet_data_source_descriptor::json_parse",
+      get_json_object("Internet_data_source_descriptor::from_json",
                       json_data_descriptor,
                       "depth",
                       json_type_string,
@@ -59,7 +59,7 @@ Internet_data_source_descriptor
   if (json_depth != nullptr)
     internet_data_source_descriptor->depth = json_object_get_string(json_depth);
   json_object *json_rows =
-      get_json_object("Internet_data_source_descriptor::json_parse",
+      get_json_object("Internet_data_source_descriptor::from_json",
                       json_data_descriptor,
                       "rows",
                       json_type_int,
@@ -67,7 +67,7 @@ Internet_data_source_descriptor
   if (json_rows != nullptr)
     internet_data_source_descriptor->rows = json_object_get_int(json_rows);
   json_object *json_columns =
-      get_json_object("Internet_data_source_descriptor::json_parse",
+      get_json_object("Internet_data_source_descriptor::from_json",
                       json_data_descriptor,
                       "columns",
                       json_type_int,

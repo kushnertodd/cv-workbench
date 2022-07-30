@@ -14,14 +14,14 @@
 class Data_source_descriptor {
  public:
   int id;
-  CV_data_type::Data_type data_type;
-  CV_data_format::Data_format data_format;
-  CV_repository_type::Repository_type repository_type;
+  WB_data_type::Data_type data_type;
+  WB_data_format::Data_format data_format;
+  WB_repository_type::Repository_type repository_type;
   virtual ~Data_source_descriptor();
   Data_source_descriptor(int m_id,
-                         CV_data_type::Data_type m_data_type,
-                         CV_data_format::Data_format m_data_format,
-                         CV_repository_type::Repository_type m_repository_type);
+                         WB_data_type::Data_type m_data_type,
+                         WB_data_format::Data_format m_data_format,
+                         WB_repository_type::Repository_type m_repository_type);
   virtual Histogram *read_histogram(Errors &errors) = 0;
   //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
   virtual Hough *read_hough(Errors &errors) = 0;

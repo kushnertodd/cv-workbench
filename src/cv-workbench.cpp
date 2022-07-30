@@ -9,11 +9,16 @@ This parser makes use of all the functions which reads the value of a json objec
 
 #include <exception>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <json-c/json.h>
-#include "file_utils.hpp"
-#include "image.hpp"
+#include <json-c/json_object.h>
+#include "wb_log.hpp"
+#include "errors.hpp"
 #include "experiment.hpp"
+#include "file_utils.hpp"
+#include "wb_filename.hpp"
+#include "wb_log.hpp"
 
 bool debug = false;
 
@@ -28,12 +33,18 @@ int main(int argc, char **argv) {
     std::string string_val = file_utils::read_file(filename);
     if (debug)
       std::cout << "JSON string: " << string_val << std::endl;
+    Errors errors;
+    std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(filename, errors));
+    errors.check_exit("invalid in-filename");
+
     json_object *jobj = json_tokener_parse(string_val.c_str());
     if (jobj == nullptr)
       wb_utils::error_exit("json_tokener_parse() failed");
     else {
-      Errors errors;
-      Experiment *experiment = Experiment::json_parse(jobj, errors);
+      std::string log_filename = wb_in_filename->to_log();
+      WB_log::log_to_file(log_filename, json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_PRETTY), errors);
+      errors.check_exit();
+      Experiment *experiment = Experiment::from_json(jobj, errors);
       errors.check_exit();
       experiment->run(errors);
       errors.check_exit();

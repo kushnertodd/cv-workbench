@@ -38,7 +38,7 @@ class Hough_accum {
   Hough_accum();
   Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols);
 
-  int choose_threshold(cv_enums::CV_threshold_type threshold_type) const;
+  int choose_threshold(cv_enums::WB_threshold_type threshold_type) const;
   bool clip_window(Line_segment &line_segment, Polar_line &line) const;
   double col_to_x(int col) const;
   static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
@@ -66,7 +66,8 @@ class Hough_accum {
   int theta_index_to_theta(int index) const;
   void update(int rho_index, int theta_index, int value) const;
   void update_stats();
-  bool write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+  void write(FILE *fp, const std::string &path, Errors &errors) const;
+  void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   int x_to_col(double x) const;
   int y_to_row(double y) const;
 };

@@ -22,8 +22,10 @@ class Experiment_step {
   std::list<Data_source_descriptor *> input_data_sources;
   std::list<Data_source_descriptor *> output_data_stores;
   String_map operator_parameters;
+  json_object *json_step;
   ~Experiment_step();
   Experiment_step();
+  explicit Experiment_step(json_object *m_json_step);
   Experiment_step(int m_id, std::string m_operator_name);
   void run(Errors &errors);
   std::string to_string();
@@ -32,7 +34,7 @@ class Experiment_step {
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-  static Experiment_step *json_parse(json_object *json_step, Errors &errors);
+  static Experiment_step *from_json(json_object *json_step, Errors &errors);
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_STEP_HPP_

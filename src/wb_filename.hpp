@@ -6,7 +6,7 @@
 #define SRC__WB_FILENAME_HPP_
 
 #include <string>
-#include "cv_data_format.hpp"
+#include "wb_data_format.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
@@ -15,13 +15,13 @@ class Wb_filename {
   std::string filename;
   std::string root;
   std::string ext;
-  CV_data_format::Data_format format;
+  WB_data_format::Data_format format;
 
   Wb_filename();
   Wb_filename(std::string m_filename,
               std::string m_root,
               std::string m_ext,
-              CV_data_format::Data_format m_format);
+              WB_data_format::Data_format m_format);
   static Wb_filename *create_wb_filename(std::string m_filename, Errors &errors);
 
   bool is_bin();

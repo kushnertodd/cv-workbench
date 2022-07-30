@@ -20,8 +20,8 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   std::string filename;
   std::string ext;
   Filesystem_data_source_descriptor(int m_id,
-                                    CV_data_type::Data_type m_data_type,
-                                    CV_data_format::Data_format m_data_format);
+                                    WB_data_type::Data_type m_data_type,
+                                    WB_data_format::Data_format m_data_format);
   Histogram *read_histogram(Errors &errors) override;
   Hough *read_hough(Errors &errors) override;
   Image *read_image(Errors &errors) override;
@@ -38,8 +38,8 @@ class Filesystem_data_source_descriptor : public Data_source_descriptor {
   static Filesystem_data_source_descriptor
   *json_parse(json_object *json_data_descriptor,
               int id,
-              CV_data_type::Data_type data_type,
-              CV_data_format::Data_format data_format,
+              WB_data_type::Data_type data_type,
+              WB_data_format::Data_format data_format,
               Errors &errors);
   std::string to_string() override;
 };

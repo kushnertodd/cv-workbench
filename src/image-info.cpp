@@ -2,10 +2,10 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include "cv_data_format.hpp"
-#include "cv_data_type.hpp"
-#include "cv_image_depth.hpp"
-#include "cv_repository_type.hpp"
+#include "wb_data_format.hpp"
+#include "wb_data_type.hpp"
+#include "wb_image_depth.hpp"
+#include "wb_repository_type.hpp"
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "histogram.hpp"

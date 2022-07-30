@@ -47,10 +47,10 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols) :
   }
 }
 
-int Hough_accum::choose_threshold(cv_enums::CV_threshold_type threshold_type) const {
-  if (threshold_type == cv_enums::CV_threshold_type::FIXED) {
+int Hough_accum::choose_threshold(cv_enums::WB_threshold_type threshold_type) const {
+  if (threshold_type == cv_enums::WB_threshold_type::FIXED) {
     return 40000; //bounds.max_value * 0.55; //0.90;
-  } else if (threshold_type == cv_enums::CV_threshold_type::PERCENTAGE) {
+  } else if (threshold_type == cv_enums::WB_threshold_type::PERCENTAGE) {
     return wb_utils::round_double_to_int(stats.bounds.max_value * 0.85);
   } else return -1;
 }
@@ -410,7 +410,6 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
   int nrhos;
   int rows;
   int cols;
-  int nbins;
   wb_utils::read_int(fp,
                      theta_inc,
                      "Hough_accum::read",
@@ -541,7 +540,33 @@ void Hough_accum::update_stats() {
   }
 }
 
-bool Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+void Hough_accum::write(FILE *fp, const std::string &path, Errors &errors) const {
+  if (debug)
+    std::cout << "Hough_accum::write path '" << path << "' " << std::endl;
+  fwrite(&theta_inc, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc to '" + path + "'");
+  }
+  fwrite(&nrhos, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough accumulator nrhos to '" + path + "'");
+  }
+  fwrite(&rows, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough accumulator rows to '" + path + "'");
+  }
+  fwrite(&cols, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough accumulator cols to '" + path + "'");
+  }
+  size_t newLen;
+  newLen = fwrite(rho_theta_counts, sizeof(int), nbins, fp);
+  if (ferror(fp) != 0 || newLen != nbins) {
+    errors.add("Image::write", "", "cannot write Hough accumulator data to '" + path + "'");
+  }
+}
+
+void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   for (int rho_index = 0; rho_index < nrhos; rho_index++)
     ofs << rho_index_to_rho(rho_index) << delim;
   ofs << std::endl;
@@ -552,7 +577,6 @@ bool Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Error
     }
     ofs << std::endl;
   }
-  return true;
 }
 
 int Hough_accum::x_to_col(double x) const {

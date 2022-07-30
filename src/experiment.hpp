@@ -19,14 +19,16 @@
 class Experiment {
  public:
   std::list<Experiment_step *> experiment_steps;
+  json_object *jobj;
   virtual ~Experiment();
   Experiment();
+  Experiment(json_object *m_jobj);
   /**
   * Parse experiment json
   * @param jobj  json-c parsed json
   * @param errors experiment parse errors
   */
-  static Experiment *json_parse(json_object *jobj, Errors &errors);
+  static Experiment *from_json(json_object *jobj, Errors &errors);
   void run(Errors &errors);
 };
 

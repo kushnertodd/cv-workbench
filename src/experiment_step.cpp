@@ -5,9 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include <utility>
-#include "cv_data_format.hpp"
-#include "cv_data_type.hpp"
-#include "cv_repository_type.hpp"
+#include "wb_data_format.hpp"
+#include "wb_data_type.hpp"
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
 #include "experiment_step.hpp"
@@ -18,7 +17,6 @@
 #include "operator_dispatcher.hpp"
 #include "wb_defs.hpp"
 #include "wb_json_utils.hpp"
-#include "wb_utils.hpp"
 
 extern bool debug;
 
@@ -35,7 +33,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   }
 
   // parse: ' "type": ... `
-  CV_data_type::Data_type data_type;
+  WB_data_type::Data_type data_type;
   json_object *json_data_type =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -46,13 +44,13 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     std::string data_type_str = json_object_get_string(json_data_type);
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
-    data_type = CV_data_type::from_string(data_type_str);
-    if (data_type == CV_data_type::Data_type::UNDEFINED)
+    data_type = WB_data_type::from_string(data_type_str);
+    if (data_type == WB_data_type::Data_type::UNDEFINED)
       errors.add("", "", "invalid data type: " + data_type_str);
   }
 
   // parse: ' "format": ... `
-  CV_data_format::Data_format data_format;
+  WB_data_format::Data_format data_format;
   json_object *json_data_format =
       get_json_object("json_parse_data_descriptor",
                       json_data_descriptor,
@@ -64,8 +62,8 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
     if (debug)
       std::cout << "json_parse_data_descriptor: type '" << data_format_str << "'" << std::endl;
     data_format =
-        CV_data_format::from_string(data_format_str);
-    if (data_format == CV_data_format::Data_format::UNDEFINED)
+        WB_data_format::from_string(data_format_str);
+    if (data_format == WB_data_format::Data_format::UNDEFINED)
       errors.add("", "", "invalid data format: " + data_format_str);
   }
 
@@ -107,27 +105,29 @@ Experiment_step::~Experiment_step() {
   }
 }
 
-Experiment_step::Experiment_step() : id(0) {}
+Experiment_step::Experiment_step() : id(0), json_step(nullptr) {}
+
+Experiment_step::Experiment_step(json_object *m_json_step): id(0), json_step(m_json_step){}
 
 Experiment_step::Experiment_step(int m_id, std::string m_operator_name)
-    : id(m_id), operator_name(std::move(m_operator_name)) {}
+    : id(m_id), operator_name(std::move(m_operator_name)), json_step(nullptr) {}
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &errors) {
+Experiment_step *Experiment_step::from_json(json_object *json_step, Errors &errors) {
   // parse: ' { "id": ... `
-  json_object *json_id = get_json_object("Experiment_step::json_parse", json_step, "id", json_type_int, errors);
-  json_object *json_operator = get_json_object("Experiment_step::json_parse", json_step, "operator",
+  json_object *json_id = get_json_object("Experiment_step::from_json", json_step, "id", json_type_int, errors);
+  json_object *json_operator = get_json_object("Experiment_step::from_json", json_step, "operator",
                                                json_type_string, errors);
-  json_object *json_input_data = get_json_object("Experiment_step::json_parse", json_step, "input-data",
+  json_object *json_input_data = get_json_object("Experiment_step::from_json", json_step, "input-data",
                                                  json_type_array, errors);
-  json_object *json_output_data = get_json_object("Experiment_step::json_parse", json_step, "output-data",
+  json_object *json_output_data = get_json_object("Experiment_step::from_json", json_step, "output-data",
                                                   json_type_array, errors);
-  json_object *json_parameters = get_json_object("Experiment_step::json_parse", json_step, "parameters",
+  json_object *json_parameters = get_json_object("Experiment_step::from_json", json_step, "parameters",
                                                  json_type_object, errors);
-  auto *experiment_step = new Experiment_step();
+  auto *experiment_step = new Experiment_step(json_step);
   if (json_id != nullptr)
     experiment_step->id = json_object_get_int(json_id);
   if (json_operator != nullptr)
@@ -138,7 +138,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
     for (int i = 0; i < nsteps; i++) {
       json_object *json_input_data_descriptor =
           json_object_array_get_idx(json_input_data, i);
-      if (error_check_type("Experiment_step::json_parse", "input-data descriptor",
+      if (error_check_type("Experiment_step::from_json", "input-data descriptor",
                            json_input_data_descriptor,
                            json_type_object, errors)) {
         Data_source_descriptor *input_data_store_descriptor =
@@ -154,7 +154,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
     for (int i = 0; i < nsteps; i++) {
       json_object *json_output_data_descriptor =
           json_object_array_get_idx(json_output_data, i);
-      if (error_check_type("Experiment_step::json_parse", "output-data descriptor",
+      if (error_check_type("Experiment_step::from_json", "output-data descriptor",
                            json_output_data_descriptor, json_type_object, errors)) {
         Data_source_descriptor *output_data_store_descriptor =
             json_parse_data_descriptor(json_output_data_descriptor, errors);
@@ -168,7 +168,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
     if (debug)
       std::cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'"
                 << std::endl;
-    if (error_check_type("Experiment_step::json_parse", "parameters",
+    if (error_check_type("Experiment_step::from_json", "parameters",
                          json_parameters, json_type_object, errors)) {
       json_object_object_foreach(json_parameters, key, val) {
         json_type type = json_object_get_type(val);
@@ -176,7 +176,7 @@ Experiment_step *Experiment_step::json_parse(json_object *json_step, Errors &err
           std::string val_str = json_object_get_string(val);
           experiment_step->operator_parameters[key] = val_str;
         } else {
-          errors.add("Experiment_step::json_parse", "", "invalid parameter type '"
+          errors.add("Experiment_step::from_json", "", "invalid parameter type '"
               + std::string(json_type_to_name(type))
               + "' for key '"
               + std::string(key) + "'");

@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <iostream>
 #include <iomanip>
-#include "cv_repository_type.hpp"
+#include "wb_repository_type.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"

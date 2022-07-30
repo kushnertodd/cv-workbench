@@ -6,10 +6,10 @@
 #define CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 
 #include <cstdio>
-#include "cv_data_format.hpp"
-#include "cv_data_type.hpp"
-#include "cv_image_depth.hpp"
-#include "cv_repository_type.hpp"
+#include "wb_data_format.hpp"
+#include "wb_data_type.hpp"
+#include "wb_image_depth.hpp"
+#include "wb_repository_type.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
@@ -20,10 +20,10 @@ class Image_header {
   int components{}; // we're only supported 1 grayscale component now
   int row_stride{}; // for jpeg
   int npixels{};
-  CV_image_depth::Image_depth depth;
+  WB_image_depth::Image_depth depth;
   Image_header();
   Image_header(int m_rows, int m_cols, int m_components,
-               CV_image_depth::Image_depth m_depth);
+               WB_image_depth::Image_depth m_depth);
   Image_header(Image_header &image_header);
   void read(FILE *fp, const std::string &path, Errors &errors);
   void write(FILE *fp, const std::string &path, Errors &errors) const;

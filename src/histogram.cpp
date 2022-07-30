@@ -84,7 +84,9 @@ double Histogram::get_upper_value() const {
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
   for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
-      stats.update(hough->hough_accum->get(rho_index, theta_index));
+      double value = hough->hough_accum->get(rho_index, theta_index);
+      stats.update(value);
+      update(value);
     }
   }
   stats.finalize();
@@ -100,9 +102,8 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
       double value = image->get(row, col);
-//      std::cout << "initialize_image: rows " << image->get_rows() << " cols " << image->get_cols()
-//      << " row " << row << " col " << col << " value " << value << " bin " << get_bin(value) << std::endl;
       stats.update(value);
+      update(value);
     }
   }
   stats.finalize();
@@ -110,12 +111,6 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
     lower_value = stats.get_min_value();
   if (!saw_upper_value)
     upper_value = stats.get_max_value();
-  for (int row = 0; row < image->get_rows(); row++) {
-    for (int col = 0; col < image->get_cols(); col++) {
-      double value = image->get(row, col);
-      update(value);
-    }
-  }
   for (int i = 0; i < nbins; i++)
     bounds.update(bins[i]);
 }
@@ -225,7 +220,7 @@ void Histogram::update(double value) const {
 }
 
 void Histogram::write(const std::string &path, Errors &errors) const {
-  Wb_filename wb_filename(path, path, "", CV_data_format::Data_format::BINARY);
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_hist();
   FILE *fp = fopen(data_filename.c_str(), "w");
   if (fp == nullptr) {
@@ -274,7 +269,7 @@ void Histogram::write_gp_script(Wb_filename wb_filename) {
 void Histogram::write_text(const std::string &path, const std::string &delim, Errors &errors) {
   if (debug)
     std::cout << "Histogram::write_text path '" << path << "' " << to_string() << std::endl;
-  Wb_filename wb_filename(path, path, "", CV_data_format::Data_format::TEXT);
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::ofstream ofs(wb_filename.to_hist_text(), std::ofstream::out);
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");

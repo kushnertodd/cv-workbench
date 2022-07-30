@@ -11,14 +11,14 @@ Wb_filename::Wb_filename() {}
 Wb_filename::Wb_filename(std::string m_filename,
                          std::string m_root,
                          std::string m_ext,
-                         CV_data_format::Data_format m_format) :
+                         WB_data_format::Data_format m_format) :
     filename(m_filename),
     root(m_root),
     ext(m_ext),
     format(m_format) {}
 
 Wb_filename *Wb_filename::create_wb_filename(std::string filename, Errors &errors) {
-  for (const auto data_format: CV_data_format::from_exts) {
+  for (const auto data_format: WB_data_format::from_exts) {
     std::string ext = data_format.first;
     std::string root;
     if (match_ext(filename, ext, root)) {
@@ -58,13 +58,15 @@ bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &
   return false;
 }
 
-std::string Wb_filename::to_bin() { return filename + ".bin"; }
-std::string Wb_filename::to_hist() { return filename + ".hist.bin"; }
-std::string Wb_filename::to_hist_script() { return filename + ".hist.gp"; }
-std::string Wb_filename::to_hist_text() { return filename + ".hist.txt"; }
-std::string Wb_filename::to_hough() { return filename + ".hough.bin"; }
-std::string Wb_filename::to_hough_text() { return filename + ".hough.txt"; }
-std::string Wb_filename::to_jpeg() { return filename + ".jpg"; }
-std::string Wb_filename::to_json() { return filename + ".jpg"; }
-std::string Wb_filename::to_log() { return filename + ".log"; }
-std::string Wb_filename::to_text() { return filename + ".txt"; }
+std::string Wb_filename::to_bin() { return root + ".bin"; }
+std::string Wb_filename::to_hist() { return root + ".hist.bin"; }
+std::string Wb_filename::to_hist_script() { return root + ".hist.gp"; }
+std::string Wb_filename::to_hist_text() { return root + ".hist.txt"; }
+std::string Wb_filename::to_hough() { return root + ".hough.bin"; }
+std::string Wb_filename::to_hough_text() { return root + ".hough.txt"; }
+std::string Wb_filename::to_jpeg() { return root + ".jpg"; }
+std::string Wb_filename::to_json() { return root + ".jpg"; }
+std::string Wb_filename::to_log() {
+  return root + ".log";
+}
+std::string Wb_filename::to_text() { return root + ".txt"; }

@@ -10,7 +10,7 @@
 
 namespace cv_enums {
 
-enum class CV_threshold_type {
+enum class WB_threshold_type {
   FIXED,
   PERCENTAGE
 };

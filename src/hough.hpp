@@ -24,8 +24,8 @@ class Hough {
   void lines_to_line_segments();
   static Hough *read(const std::string &path, Errors &errors);
   static Hough *read_text(const std::string &path, Errors &errors);
-  bool write(const std::string &filename, Errors &errors) const;
-  bool write_text(const std::string &filename, const std::string &delim, Errors &errors) const;
+  void write(const std::string &filename, Errors &errors) const;
+  void write_text(const std::string &filename, const std::string &delim, Errors &errors) const;
 };
 
 #endif //CV_WORKBENCH_SRC_HOUGH_HPP_
