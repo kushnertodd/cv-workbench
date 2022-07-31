@@ -86,3 +86,25 @@ This converts color JPEG images to grayscale. It's usage is:
 
 where *in-filename*`.jpg` is the input color JPEG image file and
 *out-filename*`.jpg` is the output grayscale JPEG image file.
+
+## Tests
+
+There are system tests in the `src/test` to run unit testing on cv-workbench.
+The directories involved are:
+```
+src/tests           directories with unit tests for various image processing operators
+src/test/reference  sample input images for tests
+src/images          directory for test output images and data
+```
+
+There are two scripts that can be run in `src/test`:
+```
+$ sh test-run-dirs.sh         runs unit tests for all image processing operations
+$ sh test-clean-dirs.sh       cleans all test images and data from src/images
+```
+There are scripts in each image processing operations directory, such as `src/test/filter-edge-kirsch`,
+to run unit tests just for that operation. They are run with:
+```
+$ sh test-run-dir.sh         runs unit tests for the image processing operation
+$ sh test-clean-dir.sh       cleans all unit test data out of src/images
+```
