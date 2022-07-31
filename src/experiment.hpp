@@ -19,7 +19,6 @@
 class Experiment {
  public:
   std::list<Experiment_step *> experiment_steps;
-  json_object *jobj{};
   std::string path{};
   virtual ~Experiment();
   Experiment();
@@ -30,8 +29,9 @@ class Experiment {
   * @param errors experiment parse errors
   */
   static Experiment *from_json(json_object *jobj, std::string path, Errors &errors);
-  void log_experiment(json_object *json_experiment) const;
+  static void log_experiment(json_object *json_experiment);
   void run(Errors &errors);
+  json_object *jobj;
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_HPP_

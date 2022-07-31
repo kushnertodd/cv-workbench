@@ -9,10 +9,9 @@
 
 class WB_log_entry {
  public:
-  std::string item;
-  std::string value;
-  WB_log_entry(std::string m_item,
-               std::string m_value);
+  std::string item{};
+  std::string value{};
+  WB_log_entry(std::string m_item, std::string m_value);
 };
 
 class WB_log {

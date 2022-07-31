@@ -57,7 +57,8 @@ Image *Kernel::convolve(Image *src) const {
 
   // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
   WB_image_depth::Image_depth out_depth =
-      (src_depth == WB_image_depth::Image_depth::CV_32F || this->depth == WB_image_depth::Image_depth::CV_32F ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
+      (src_depth == WB_image_depth::Image_depth::CV_32F || this->depth == WB_image_depth::Image_depth::CV_32F
+       ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
   auto *out = new Image(src_rows, src_cols, src_components, out_depth);
   int rows_half = (kernel_rows + 1) / 2;
   int cols_half = (kernel_cols + 1) / 2;
@@ -147,11 +148,11 @@ pixel_32F Kernel::get_32F(int row, int col) const {
   return buf_32F[row_col_to_index(row, col)];
 }
 
-int Kernel::get_kernel_rows() {
+int Kernel::get_kernel_rows() const {
   return kernel_rows;
 }
 
-int Kernel::get_kernel_cols() {
+int Kernel::get_kernel_cols() const {
   return kernel_cols;
 }
 
@@ -163,11 +164,11 @@ void Kernel::set(int row, int col, double value) const {
   switch (depth) {
 
     case WB_image_depth::Image_depth::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = wb_utils::round_float_to_int(value);
+      buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
       break;
 
     case WB_image_depth::Image_depth::CV_32F:
-      buf_32F[row_col_to_index(row, col)] = value;
+      buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
       break;
 
     default:
@@ -187,7 +188,7 @@ std::string Kernel::to_string() const {
   std::ostringstream os;
   os << "kernel_rows " << kernel_rows
      << " kernel_cols " << kernel_cols
-     << " depth "  << " " << WB_image_depth::to_string(depth)
+     << " depth " << " " << WB_image_depth::to_string(depth)
      << " size " << size;
   return os.str();
 }

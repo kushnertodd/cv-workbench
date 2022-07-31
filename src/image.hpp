@@ -11,6 +11,7 @@
 #include "errors.hpp"
 #include "image_header.hpp"
 #include "line_segment.hpp"
+#include "wb_log.hpp"
 #include "point.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
@@ -23,7 +24,7 @@
 class Image {
  public:
   Image_header image_header;
-  int next_pixel;
+  int next_pixel{};
   // image stores one buffer per image_header->depth
   pixel_8U *buf_8U;
   // pixel_8S *buf_8S; // unsupported
@@ -67,6 +68,7 @@ class Image {
                     double upper_out) const;
   void get_stats(Variance_stats &stats) const;
   void init();
+  void log(std::list<WB_log_entry> &log_entries) const;
 
   static Image *read(std::string &path, Errors &errors);
 
@@ -87,7 +89,7 @@ class Image {
   void set_32S(int row, int col, pixel_32S value) const;
 
   Image *to_rgb(int components) const;
-  std::string to_string(std::string prefix = "") const;
+  std::string to_string(const std::string &prefix = "") const;
   void write(const std::string &path, Errors &errors) const;
   void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
   void write_jpeg(const std::string &path, Errors &errors) const;

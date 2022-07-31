@@ -19,6 +19,7 @@ namespace wb_utils {
 
 char ascii_to_char(int n);
 std::string char_to_string(char c);
+std::string double_to_string(double x, int width = -1);
 float double_to_float(double value);
 void error_exit(const std::string &message);
 bool hex_string_to_int(const std::string &text, unsigned long long &value);

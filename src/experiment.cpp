@@ -4,7 +4,8 @@
 
 #include <cstdlib>
 #include <utility>
-#include "wb_version.hpp"
+#include "runtime.hpp"
+#include "wb_defs.hpp"
 #include "experiment.hpp"
 
 Experiment::~Experiment() {
@@ -15,7 +16,6 @@ Experiment::~Experiment() {
 Experiment::Experiment() = default;
 
 Experiment::Experiment(json_object *m_jobj, std::string m_path) :
-    jobj(m_jobj),
     path(std::move(m_path)) {}
 
 /**
@@ -29,7 +29,7 @@ Experiment *Experiment::from_json(json_object *jobj, std::string path, Errors &e
   json_object *json_experiment =
       get_json_object("Experiment::from_json", jobj, "experiment", json_type_object, errors);
   if (json_experiment != nullptr) {
-    experiment->log_experiment(json_experiment);
+    log_experiment(json_experiment);
     // parse: ' "steps": [ ... '
     json_object
         *json_experiment_steps =
@@ -50,12 +50,8 @@ Experiment *Experiment::from_json(json_object *jobj, std::string path, Errors &e
   return experiment;
 }
 
-void Experiment::log_experiment(json_object *json_experiment) const {
-  json_object *run = json_object_new_object();
-  json_object_object_add(run, "script-path", json_object_new_string(path.c_str()));
-  json_object_object_add(run, "run-time", json_object_new_string(wb_utils::timestamp().c_str()));
-  json_object_object_add(run, "username", json_object_new_string(std::getenv("USER")));
-  json_object_object_add(run, "version", json_object_new_string(WB_version::version()));
+void Experiment::log_experiment(json_object *json_experiment) {
+  json_object *run = Runtime::to_log();
   json_object_object_add(json_experiment, "run", run);
 }
 

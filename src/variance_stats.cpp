@@ -36,6 +36,10 @@ void Variance_stats::finalize() {
   standard_deviation = sqrt(sample_variance);
 }
 
+int Variance_stats::get_count() const {
+  return count;
+}
+
 double Variance_stats::get_max_value() const { return bounds.get_max_value(); }
 
 double Variance_stats::get_mean() {
@@ -70,33 +74,16 @@ bool Variance_stats::is_valid() const {
 void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
   wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing image count in '" + path + "'", errors);
 
- float mean_float = 0.0;
+  float mean_float = 0.0;
   if (errors.error_ct == 0)
-    wb_utils::read_float(fp, mean_float, "Image_header::read_header", "", "missing image mean in '" + path + "'", errors);
+    wb_utils::read_float(fp,
+                         mean_float,
+                         "Image_header::read_header",
+                         "",
+                         "missing image mean in '" + path + "'",
+                         errors);
   if (errors.error_ct == 0)
     mean = mean_float;
-
-  float variance_float = 0.0;
-  if (errors.error_ct == 0)
-    wb_utils::read_float(fp,
-                         variance_float,
-                         "Image_header::read_header",
-                         "",
-                         "missing image variance in '" + path + "'",
-                         errors);
-  if (errors.error_ct == 0)
-    variance = variance_float;
-
-  float sample_variance_float = 0.0;
-  if (errors.error_ct == 0)
-    wb_utils::read_float(fp,
-                         sample_variance_float,
-                         "Image_header::read_header",
-                         "",
-                         "missing image sample_variance in '" + path + "'",
-                         errors);
-  if (errors.error_ct == 0)
-    sample_variance = sample_variance_float;
 
   float standard_deviation_float = 0.0;
   if (errors.error_ct == 0)
@@ -132,16 +119,16 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
     bounds.max_value = max_value;
 }
 
-std::string Variance_stats::to_string(std::string prefix) {
+std::string Variance_stats::to_string(const std::string &prefix) {
   std::ostringstream os;
   os << "stats: " << std::endl
-   << prefix  << "    "<< std::setw(20) << std::left << "count " << count << std::endl
-      << prefix << "    " << std::setw(20) << std::left <<"mean " << get_mean() << std::endl
-      << prefix << "    "<< std::setw(20) << std::left  << "variance " << get_variance() << std::endl
-      << prefix << "    " << std::setw(20) << std::left << "sample variance " << get_sample_variance() << std::endl
-      << prefix  << "    "<< std::setw(20) << std::left << "standard deviation " << get_standard_deviation() << std::endl
-      << prefix  << "    "<< std::setw(20) << std::left << "min value " << bounds.min_value << std::endl
-      << prefix  << "    "<< std::setw(20) << std::left  << "max value " << bounds.max_value << std::endl;
+     << prefix << "    " << std::setw(20) << std::left << "count " << count << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "mean " << get_mean() << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "variance " << get_variance() << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "sample variance " << get_sample_variance() << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "standard deviation " << get_standard_deviation() << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "min value " << bounds.min_value << std::endl
+     << prefix << "    " << std::setw(20) << std::left << "max value " << bounds.max_value << std::endl;
   return os.str();
 }
 
@@ -150,7 +137,7 @@ std::string Variance_stats::to_string(std::string prefix) {
  *  mean accumulates the mean of the entire dataset
  *  M2 aggregates the squared distance from the mean
  *  count aggregates the number of samples seen so far
- * def update(existingAggregate, newValue):
+ * def update_input_value(existingAggregate, newValue):
  *     (count, mean, M2) = existingAggregate
  *     count += 1
  *     delta = newValue - mean
@@ -173,28 +160,19 @@ void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) co
   if (errors.error_ct == 0)
     wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count to '" + path + "'", errors);
   if (errors.error_ct == 0)
-    wb_utils::write_float(fp, wb_utils::double_to_float(mean), "Variance_stats::write", "", "cannot write mean to '" + path + "'", errors);
-  if (errors.error_ct == 0)
     wb_utils::write_float(fp,
-                          wb_utils::double_to_float(variance),
-                           "Variance_stats::write",
-                           "",
-                           "cannot write variance to '" + path + "'",
-                           errors);
-  if (errors.error_ct == 0)
-    wb_utils::write_float(fp,
-                          wb_utils::double_to_float(sample_variance),
-                           "Variance_stats::write",
-                           "",
-                           "cannot write sample_variance to '" + path + "'",
-                           errors);
+                          wb_utils::double_to_float(mean),
+                          "Variance_stats::write",
+                          "",
+                          "cannot write mean to '" + path + "'",
+                          errors);
   if (errors.error_ct == 0)
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(standard_deviation),
-                           "Variance_stats::write",
-                           "",
-                           "cannot write standard_deviation to '" + path + "'",
-                           errors);
+                          "Variance_stats::write",
+                          "",
+                          "cannot write standard_deviation to '" + path + "'",
+                          errors);
   if (errors.error_ct == 0)
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.min_value),

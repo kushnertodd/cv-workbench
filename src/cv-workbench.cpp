@@ -17,8 +17,8 @@ This parser makes use of all the functions which reads the value of a json objec
 #include "errors.hpp"
 #include "experiment.hpp"
 #include "file_utils.hpp"
+#include "runtime.hpp"
 #include "wb_filename.hpp"
-#include "wb_log.hpp"
 
 bool debug = false;
 
@@ -30,14 +30,16 @@ int main(int argc, char **argv) {
   try {
     char *path = argv[1];
     debug = (argc > 2);
-    std::string string_val = file_utils::read_file(path);
-    if (debug)
-      std::cout << "JSON string: " << string_val << std::endl;
+    Runtime::init(path);
     Errors errors;
+    std::string contents;
+    if (!file_utils::read_file(path, contents))
+      errors.add("", "", "cannot read in-filename");
+    errors.check_exit("");
     std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(path, errors));
     errors.check_exit("invalid in-filename");
 
-    json_object *jobj = json_tokener_parse(string_val.c_str());
+    json_object *jobj = json_tokener_parse(contents.c_str());
     if (jobj == nullptr)
       wb_utils::error_exit("json_tokener_parse() failed");
     else {
@@ -48,7 +50,8 @@ int main(int argc, char **argv) {
       experiment->run(errors);
       WB_log::log_to_file(log_filename,
                           json_object_to_json_string_ext(jobj,
-                          JSON_C_TO_STRING_PRETTY+JSON_C_TO_STRING_NOSLASHESCAPE), errors);
+                                                         JSON_C_TO_STRING_PRETTY + JSON_C_TO_STRING_NOSLASHESCAPE),
+                          errors);
       errors.check_exit();
       exit(0);
     }

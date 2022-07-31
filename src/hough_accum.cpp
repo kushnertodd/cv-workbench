@@ -51,7 +51,7 @@ int Hough_accum::choose_threshold(cv_enums::WB_threshold_type threshold_type) co
   if (threshold_type == cv_enums::WB_threshold_type::FIXED) {
     return 40000; //bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::WB_threshold_type::PERCENTAGE) {
-    return wb_utils::round_double_to_int(stats.bounds.max_value * 0.85);
+    return wb_utils::round_double_to_int(accumulator_stats.bounds.max_value * 0.85);
   } else return -1;
 }
 
@@ -402,7 +402,7 @@ void Hough_accum::initialize(Image *image, int image_theshold) {
       }
     }
   }
-  update_stats();
+  update_accumulator_stats();
 }
 
 Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors) {
@@ -437,7 +437,7 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
       delete hough_accum;
       return nullptr;
     }
-    hough_accum->update_stats();
+    hough_accum->update_accumulator_stats();
     return hough_accum;
   }
 }
@@ -532,10 +532,10 @@ void Hough_accum::update(int rho_index, int theta_index, int value) const {
   rho_theta_counts[index] += value;
 }
 
-void Hough_accum::update_stats() {
+void Hough_accum::update_accumulator_stats() {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < nrhos; rho_index++) {
-      stats.update(get(rho_index, theta_index));
+      accumulator_stats.update(get(rho_index, theta_index));
     }
   }
 }

@@ -4,7 +4,6 @@
 
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 #include "wb_utils.hpp"
 #include "image_header.hpp"
 
@@ -75,7 +74,7 @@ void Image_header::write(FILE *fp, const std::string &path, Errors &errors) cons
   }
 }
 
-std::string Image_header::to_string(std::string prefix) const {
+std::string Image_header::to_string(const std::string &prefix) const {
   std::ostringstream os;
   os << prefix << std::setw(20) << std::left << "rows " << rows << std::endl
      << prefix << std::setw(20) << std::left << "cols " << cols << std::endl

@@ -8,8 +8,8 @@
 
 class Point {
  public:
-  int row;
-  int col;
+  int row{};
+  int col{};
   Point();
   Point(int m_row, int m_col);
   Point(const Point &point);

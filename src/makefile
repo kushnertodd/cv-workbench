@@ -63,12 +63,12 @@ SRCOBJS :=  \
   operator_utils.o \
   point.o \
   polar_line.o \
+  runtime.o \
   variance_stats.o \
   wb_filename.o \
   wb_json_utils.o \
   wb_log.o \
-  wb_utils.o \
-  wb_version.o
+  wb_utils.o 
   
 
 PROGRAMS = \
@@ -130,7 +130,7 @@ cv-workbench.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
 cv-workbench.o: line_segment.hpp point.hpp variance_stats.hpp histogram.hpp
 cv-workbench.o: hough.hpp hough_accum.hpp file_utils.hpp wb_utils.hpp
 cv-workbench.o: polar_line.hpp wb_filename.hpp experiment_step.hpp
-cv-workbench.o: data_source_descriptor.hpp wb_json_utils.hpp
+cv-workbench.o: data_source_descriptor.hpp wb_json_utils.hpp runtime.hpp
 data_source_descriptor.o: berkeley_db_data_source_descriptor.hpp
 data_source_descriptor.o: wb_image_depth.hpp data_source_descriptor.hpp
 data_source_descriptor.o: wb_defs.hpp histogram.hpp errors.hpp hough.hpp
@@ -143,7 +143,7 @@ data_source_descriptor.o: filesystem_data_source_descriptor.hpp
 data_source_descriptor.o: internet_data_source_descriptor.hpp
 data_source_descriptor.o: wb_json_utils.hpp
 errors.o: errors.hpp
-experiment.o: wb_version.hpp experiment.hpp wb_defs.hpp errors.hpp image.hpp
+experiment.o: runtime.hpp wb_defs.hpp experiment.hpp errors.hpp image.hpp
 experiment.o: bounds.hpp image_header.hpp wb_data_format.hpp wb_data_type.hpp
 experiment.o: wb_image_depth.hpp wb_repository_type.hpp line_segment.hpp
 experiment.o: point.hpp variance_stats.hpp histogram.hpp hough.hpp
@@ -209,7 +209,6 @@ image-map.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-map.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-map.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
 image-map.o: variance_stats.hpp wb_filename.hpp wb_utils.hpp
-image_point_list.o: image_point_list.hpp point.hpp
 internet_data_source_descriptor.o: wb_json_utils.hpp errors.hpp
 internet_data_source_descriptor.o: data_source_descriptor.hpp wb_defs.hpp
 internet_data_source_descriptor.o: histogram.hpp hough.hpp hough_accum.hpp
@@ -456,6 +455,9 @@ operator_utils.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
 operator_utils.o: operator_utils.hpp
 point.o: point.hpp
 polar_line.o: polar_line.hpp point.hpp
+runtime.o: runtime.hpp wb_defs.hpp wb_utils.hpp wb_data_format.hpp
+runtime.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
+runtime.o: errors.hpp wb_version.hpp
 variance_stats.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
 variance_stats.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp
 variance_stats.o: wb_defs.hpp variance_stats.hpp bounds.hpp
@@ -470,4 +472,3 @@ wb_log.o: errors.hpp wb_log.hpp
 wb_repository_type.o: wb_repository_type.hpp
 wb_utils.o: errors.hpp wb_defs.hpp wb_utils.hpp wb_data_format.hpp
 wb_utils.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
-wb_version.o: wb_version.hpp

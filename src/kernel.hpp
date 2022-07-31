@@ -17,10 +17,10 @@
  */
 class Kernel {
  public:
-  int kernel_rows;
-  int kernel_cols;
-  WB_image_depth::Image_depth depth;
-  int size;
+  int kernel_rows{};
+  int kernel_cols{};
+  WB_image_depth::Image_depth depth{};
+  int size{};
 
   // image stores one buffer per image_header->depth
   pixel_32S *buf_32S;
@@ -40,8 +40,8 @@ class Kernel {
   double get(int row, int col) const;
   pixel_32F get_32F(int row, int col) const;
   pixel_32S get_32S(int row, int col) const;
-  int get_kernel_rows();
-  int get_kernel_cols();
+  int get_kernel_rows() const;
+  int get_kernel_cols() const;
 
   int row_col_to_index(int row, int col) const;
 

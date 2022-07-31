@@ -12,7 +12,7 @@
 namespace file_utils {
 
 long file_size(std::ifstream &in);
-std::string read_file(const std::string& filename);
+bool read_file(const std::string &filename, std::string &contents);
 bool read_double(FILE *fp, double &var);
 bool read_float(FILE *fp, float &var);
 bool read_int(FILE *fp, int &var);

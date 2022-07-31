@@ -18,16 +18,17 @@
  */
 class Variance_stats {
  public:
-  int count;
-  double mean;
-  double M2;
-  double variance;
-  double sample_variance;
-  double standard_deviation;
+  int count{};
+  double mean{};
+  double M2{};
+  double variance{};
+  double sample_variance{};
+  double standard_deviation{};
   Bounds bounds;
 
   Variance_stats();
   void finalize();
+  int get_count() const;
   double get_max_value() const;
   double get_mean();
   double get_min_value() const;
@@ -36,7 +37,7 @@ class Variance_stats {
   double get_variance();
   bool is_valid() const;
   void read(FILE *fp, const std::string &path, Errors &errors);
-  std::string to_string(std::string prefix = "");
+  std::string to_string(const std::string &prefix = "");
   void update(double new_value);
   void write(FILE *fp, const std::string &path, Errors &errors) const;
 };

@@ -32,7 +32,7 @@ class Hough_accum {
   double *hough_cos{};
   double *hough_sin{};
   int *rho_theta_counts{};
-  Variance_stats stats;
+  Variance_stats accumulator_stats;
 
   ~Hough_accum();
   Hough_accum();
@@ -65,7 +65,7 @@ class Hough_accum {
   void set(int rho_index, int theta_index, int value) const;
   int theta_index_to_theta(int index) const;
   void update(int rho_index, int theta_index, int value) const;
-  void update_stats();
+  void update_accumulator_stats();
   void write(FILE *fp, const std::string &path, Errors &errors) const;
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   int x_to_col(double x) const;

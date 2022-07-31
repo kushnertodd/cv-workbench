@@ -18,8 +18,7 @@
 class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
  public:
   int ref_id; // database key
-  Berkeley_db_data_source_descriptor(json_object *m_json_data_source_descriptor,
-                                     int m_id,
+  Berkeley_db_data_source_descriptor(int m_id,
                                      WB_data_type::Data_type m_data_type,
                                      WB_data_format::Data_format m_data_format);
   Histogram *read_histogram(Errors &errors) override;

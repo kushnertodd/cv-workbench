@@ -28,13 +28,13 @@ void Errors::add(const std::string &module, const std::string &id, const std::st
 void Errors::check_exit(const std::string &message) {
   if (error_ct > 0) {
     if (!message.empty())
-     std::cerr << message << std::endl;
-    std::cerr<< to_string() << std::endl;
+      std::cerr << message << std::endl;
+    std::cerr << to_string() << std::endl;
     exit(1);
   }
 }
 
-bool Errors::has_error() {
+bool Errors::has_error() const {
   return error_ct != 0;
 }
 

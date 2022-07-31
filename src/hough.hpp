@@ -12,7 +12,7 @@
 
 class Hough {
  public:
-  Hough_accum *hough_accum;
+  Hough_accum *hough_accum{};
   std::list<Polar_line> lines;
   std::list<Line_segment> line_segments;
 

@@ -88,7 +88,7 @@ Hough *Hough::read_text(const std::string &path, Errors &errors) {
 
 void Hough::write(const std::string &path, Errors &errors) const {
   if (debug)
-    std::cout << "Image::write path '" << path  << std::endl;
+    std::cout << "Image::write path '" << path << std::endl;
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("Hough::write", "", "invalid file '" + path + "'");

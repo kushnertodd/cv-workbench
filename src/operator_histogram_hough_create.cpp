@@ -12,7 +12,7 @@
 
 extern bool debug;
 
-Operator_histogram_hough_create::~Operator_histogram_hough_create() {}
+Operator_histogram_hough_create::~Operator_histogram_hough_create() = default;
 void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &input_data_sources,
                                           std::list<Data_source_descriptor *> &output_data_stores,
                                           String_map &operator_parameters,
@@ -55,16 +55,18 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
   if (!saw_nbins) {
     errors.add("Operator_histogram_image_create::run", "", "missing 'nbins' parameter");
   }
+  /*
+   * optional for now
   if (!saw_lower_value) {
     errors.add("Operator_histogram_image_create::run", "", "missing 'lower_value' parameter");
   }
   if (!saw_upper_value) {
     errors.add("Operator_histogram_image_create::run", "", "missing 'upper_value' parameter");
   }
+   */
   if (errors.error_ct == 0) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Hough *input = nullptr;
-    input = input_data_source->read_hough(errors);
+    Hough *input = input_data_source->read_hough(errors);
     if (errors.error_ct == 0 && input != nullptr) {
       Histogram *histogram = Histogram::create_hough(input, nbins, lower_value, upper_value,
                                                      saw_lower_value, saw_upper_value);
@@ -77,6 +79,9 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
           errors.add("Operator_histogram_hough_create::run", "", "invalid data format "
               + WB_data_format::to_string(histogram_output_data_store->data_format));
         }
+      }
+      if (!errors.has_error() && histogram != nullptr) {
+        histogram->log(log_entries);
       }
       delete histogram;
     }

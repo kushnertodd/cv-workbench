@@ -16,7 +16,7 @@ class Errors {
   std::list<std::string> error_list;
   void add(const std::string &module, const std::string &id, const std::string &error);
   void check_exit(const std::string &message = "");
-  bool has_error();
+  bool has_error() const;
   void merge(Errors &errors);
   std::string to_string();
 };

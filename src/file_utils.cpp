@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <cerrno>
 #include <cstring>
 #include <vector>
 #include <sstream>
@@ -27,17 +26,16 @@ long file_utils::file_size(std::ifstream &in) {
  * @return file contents
  * @throws errno on open error
  */
-std::string file_utils::read_file(const std::string &filename) {
+bool file_utils::read_file(const std::string &filename, std::string &contents) {
   std::ifstream in(filename, std::ios::in | std::ios::binary);
   if (in) {
-    std::string contents;
     contents.resize(file_size(in));
     in.seekg(0, std::ios::beg);
     in.read(&contents[0], contents.size());
     in.close();
-    return (contents);
+    return true;
   }
-  throw (filename + ": " + strerror(errno));
+  return false;
 }
 
 bool file_utils::read_double(FILE *fp, double &var) {

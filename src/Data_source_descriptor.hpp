@@ -18,11 +18,8 @@ class Data_source_descriptor {
   WB_data_type::Data_type data_type{};
   WB_data_format::Data_format data_format{};
   WB_repository_type::Repository_type repository_type{};
-  json_object *json_data_source_descriptor{};
   virtual ~Data_source_descriptor();
-  explicit Data_source_descriptor(json_object *m_json_data_source_descriptor);
-  Data_source_descriptor(json_object *m_json_data_source_descriptor,
-                         int m_id,
+  Data_source_descriptor(int m_id,
                          WB_data_type::Data_type m_data_type,
                          WB_data_format::Data_format m_data_format,
                          WB_repository_type::Repository_type m_repository_type);

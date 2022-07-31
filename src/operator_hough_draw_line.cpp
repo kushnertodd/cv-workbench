@@ -59,72 +59,69 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       if (!wb_utils::string_to_int(theta_inc_str, theta_inc))
         errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_inc' parameter");
       else {
-        std::string threshold_str = Operator_utils::get_parameter(operator_parameters, "threshold");
-        int threshold = 0;
-        if (!wb_utils::string_to_int(threshold_str, threshold))
-          errors.add("Operator_hough_draw_line::run", "", "non-numeric 'threshold' parameter");
+        std::string rho_str = Operator_utils::get_parameter(operator_parameters, "rho");
+        double rho = 0;
+        if (!wb_utils::string_to_double(rho_str, rho))
+          errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
         else {
-          std::string rho_str = Operator_utils::get_parameter(operator_parameters, "rho");
-          double rho = 0;
-          if (!wb_utils::string_to_double(rho_str, rho))
-            errors.add("Operator_hough_draw_line::run", "", "non-numeric 'rho' parameter");
+          std::string theta_index_str = Operator_utils::get_parameter(operator_parameters, "theta_index");
+          int theta_index = 0;
+          if (!wb_utils::string_to_int(theta_index_str, theta_index))
+            errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_index' parameter");
           else {
-            std::string theta_index_str = Operator_utils::get_parameter(operator_parameters, "theta_index");
-            int theta_index = 0;
-            if (!wb_utils::string_to_int(theta_index_str, theta_index))
-              errors.add("Operator_hough_draw_line::run", "", "non-numeric 'theta_index' parameter");
-            else {
-              double pixel_value = 0;
-              if (Operator_utils::has_parameter(operator_parameters, "pixel_value")) {
-                std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "pixel_value");
-                if (!wb_utils::string_to_double(min_value_str, pixel_value))
-                  errors.add("Operator_hough_draw_line::run", "", "non-numeric 'pixel_value' parameter");
-              }
-              int out_component = 1;
-              if (Operator_utils::has_parameter(operator_parameters, "out_component")) {
-                std::string out_component_str = Operator_utils::get_parameter(operator_parameters, "out_component");
-                if (!wb_utils::string_to_int(out_component_str, out_component))
-                  errors.add("Operator_hough_draw_line::run", "", "non-numeric 'out_component' parameter");
-              }
-              Data_source_descriptor *input_data_source = input_data_sources.front();
-              Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
+            double pixel_value = 0;
+            if (Operator_utils::has_parameter(operator_parameters, "pixel_value")) {
+              std::string min_value_str = Operator_utils::get_parameter(operator_parameters, "pixel_value");
+              if (!wb_utils::string_to_double(min_value_str, pixel_value))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'pixel_value' parameter");
+            }
+            int out_component = 1;
+            if (Operator_utils::has_parameter(operator_parameters, "out_component")) {
+              std::string out_component_str = Operator_utils::get_parameter(operator_parameters, "out_component");
+              if (!wb_utils::string_to_int(out_component_str, out_component))
+                errors.add("Operator_hough_draw_line::run", "", "non-numeric 'out_component' parameter");
+            }
+            Data_source_descriptor *input_data_source = input_data_sources.front();
+            Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
 
-              Image *input = nullptr;
-              if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-                input = input_data_source->read_image_jpeg(errors);
-              else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-                input = input_data_source->read_image(errors);
-              else
-                errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
-                    WB_data_format::to_string(input_data_source->data_format));
-              if (errors.error_ct == 0 && input != nullptr)
-                input->check_grayscale(errors);
-              if (errors.error_ct == 0) {
-                Hough *hough = Hough::create_image(input, theta_inc, threshold);
-                int rho_index = hough->hough_accum->rho_to_index(rho);
-                Polar_line polar_line(rho_index,
-                                      rho,
-                                      theta_index,
-                                      hough->hough_accum->get_cos(theta_index),
-                                      hough->hough_accum->get_sin(theta_index),
-                                      0);
-                Line_segment line_segment;
-                if (!hough->hough_accum->clip_window(line_segment, polar_line)) {
-                  errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
+            Image *input = nullptr;
+            if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
+              input = input_data_source->read_image_jpeg(errors);
+            else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
+              input = input_data_source->read_image(errors);
+            else
+              errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
+                  WB_data_format::to_string(input_data_source->data_format));
+            if (errors.error_ct == 0 && input != nullptr)
+              input->check_grayscale(errors);
+            if (errors.error_ct == 0 && input != nullptr) {
+              //Hough *hough = Hough::create_image(input, theta_inc, threshold);
+              int rows = input->get_rows();
+              int cols = input->get_cols();
+              int nrhos = wb_utils::round_double_to_int(sqrt(rows * rows
+                                                                 + input->get_cols() * input->get_cols())) + rho_pad;
+              auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
+              int rho_index = hough_accum->rho_to_index(rho);
+              Polar_line polar_line(rho_index,
+                                    rho,
+                                    theta_index,
+                                    hough_accum->get_cos(theta_index),
+                                    hough_accum->get_sin(theta_index),
+                                    0);
+              Line_segment line_segment;
+              if (!hough_accum->clip_window(line_segment, polar_line)) {
+                errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
+              } else {
+                input->draw_line_segment(line_segment, pixel_value);
+                if (hough_line_output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+                  hough_line_output_data_store->write_image_jpeg(input, errors);
+                } else if (hough_line_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+                  hough_line_output_data_store->write_image(input, errors);
                 } else {
-                  Variance_stats stats;
-                  input->get_stats(stats);
-                  input->draw_line_segment(line_segment, pixel_value);
-                  if (hough_line_output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-                    hough_line_output_data_store->write_image_jpeg(input, errors);
-                  } else if (hough_line_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-                    hough_line_output_data_store->write_image(input, errors);
-                  } else {
-                    errors.add("Operator_hough_draw_line::run",
-                               "",
-                               "invalid data format '"
-                                   + WB_data_format::to_string(hough_line_output_data_store->data_format) + "'");
-                  }
+                  errors.add("Operator_hough_draw_line::run",
+                             "",
+                             "invalid data format '"
+                                 + WB_data_format::to_string(hough_line_output_data_store->data_format) + "'");
                 }
               }
             }

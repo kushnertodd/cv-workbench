@@ -9,12 +9,12 @@
 
 class Polar_line {
  public:
-  int rho_index;
-  double rho;
-  int theta_index;
-  int count;
-  double cos_theta;
-  double sin_theta;
+  int rho_index{};
+  double rho{};
+  int theta_index{};
+  int count{};
+  double cos_theta{};
+  double sin_theta{};
   Polar_line(int m_rho_index, double m_rho, int m_theta_index,
              double m_cos_theta, double m_sin_theta, int m_count);
   void set(int m_rho_index, double m_rho, int m_theta_index,

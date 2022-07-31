@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <iostream>
+#include "wb_utils.hpp"
 #include "line_segment.hpp"
 
 extern bool debug;
@@ -32,10 +33,6 @@ Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
   plotLine();
 }
 
-/**
- * https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
- * This fills in line segment points with Bresenham's line algorithm
- */
 void Line_segment::add(int x, int y) {
   Point point(y, x);
   add(point);
@@ -44,6 +41,22 @@ void Line_segment::add(int x, int y) {
 void Line_segment::add(const Point &point) {
   line_points.push_back(point);
 }
+
+void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
+  WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(point1.row));
+  log_entries.push_back(log_entry_start_row);
+  WB_log_entry log_entry_start_col("start col", wb_utils::int_to_string(point1.col));
+  log_entries.push_back(log_entry_start_col);
+  WB_log_entry log_entry_end_row("end row", wb_utils::int_to_string(point2.row));
+  log_entries.push_back(log_entry_end_row);
+  WB_log_entry log_entry_end_col("end col", wb_utils::int_to_string(point2.col));
+  log_entries.push_back(log_entry_end_col);
+}
+
+/**
+ * https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+ * This fills in line segment points with Bresenham's line algorithm
+ */
 
 void Line_segment::plotLineLow(int x0, int y0, int x1, int y1) {
   int dx = x1 - x0;

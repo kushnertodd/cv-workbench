@@ -70,11 +70,11 @@ double Histogram::get_lower_value() const {
 }
 
 double Histogram::get_max_value() const {
-  return stats.get_max_value();
+  return input_value_stats.get_max_value();
 }
 
 double Histogram::get_min_value() const {
-  return stats.get_min_value();
+  return input_value_stats.get_min_value();
 }
 
 double Histogram::get_upper_value() const {
@@ -85,34 +85,71 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
   for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
-      stats.update(value);
-      update(value);
+      input_value_stats.update(value);
     }
   }
-  stats.finalize();
+  input_value_stats.finalize();
   if (!saw_lower_value)
-    lower_value = stats.get_min_value();
+    lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
-    upper_value = stats.get_max_value();
-  for (int i = 0; i < nbins; i++)
-    bounds.update(bins[i]);
+    upper_value = input_value_stats.get_max_value();
+  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+      double value = hough->hough_accum->get(rho_index, theta_index);
+      update_input_value(value);
+    }
+  }
+  update_bin_count_bounds();
 }
 
 void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
   for (int row = 0; row < image->get_rows(); row++) {
     for (int col = 0; col < image->get_cols(); col++) {
       double value = image->get(row, col);
-      stats.update(value);
-      update(value);
+      input_value_stats.update(value);
     }
   }
-  stats.finalize();
+  input_value_stats.finalize();
   if (!saw_lower_value)
-    lower_value = stats.get_min_value();
+    lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
-    upper_value = stats.get_max_value();
-  for (int i = 0; i < nbins; i++)
-    bounds.update(bins[i]);
+    upper_value = input_value_stats.get_max_value();
+  for (int row = 0; row < image->get_rows(); row++) {
+    for (int col = 0; col < image->get_cols(); col++) {
+      double value = image->get(row, col);
+      update_input_value(value);
+    }
+  }
+  update_bin_count_bounds();
+}
+
+void Histogram::log(std::list<WB_log_entry> &log_entries) {
+  WB_log_entry log_entry_lower_value("lower_value", wb_utils::double_to_string(lower_value));
+  log_entries.push_back(log_entry_lower_value);
+  WB_log_entry log_entry_upper_value("upper_value", wb_utils::double_to_string(upper_value));
+  log_entries.push_back(log_entry_upper_value);
+  WB_log_entry log_entry_pixel_count("pixel count", wb_utils::int_to_string(input_value_stats.get_count()));
+  log_entries.push_back(log_entry_pixel_count);
+  WB_log_entry log_entry_pixel_mean("pixel mean", wb_utils::double_to_string(input_value_stats.get_mean()));
+  log_entries.push_back(log_entry_pixel_mean);
+  WB_log_entry log_entry_pixel_standard_deviation(
+      "pixel standard deviation",
+      wb_utils::double_to_string(input_value_stats.get_standard_deviation()));
+  log_entries.push_back(log_entry_pixel_standard_deviation);
+  WB_log_entry log_entry_pixel_min_value("min pixel value",
+                                         wb_utils::double_to_string(input_value_stats.get_min_value()));
+  log_entries.push_back(log_entry_pixel_min_value);
+  WB_log_entry log_entry_pixel_max_value("max pixel value",
+                                         wb_utils::double_to_string(input_value_stats.get_max_value()));
+  log_entries.push_back(log_entry_pixel_max_value);
+  WB_log_entry log_entry_bin_min_count(
+      "min bin count",
+      wb_utils::int_to_string(wb_utils::round_double_to_int(bin_count_bounds.get_min_value())));
+  log_entries.push_back(log_entry_bin_min_count);
+  WB_log_entry log_entry_bin_max_count(
+      "max bin count",
+      wb_utils::int_to_string(wb_utils::round_double_to_int(bin_count_bounds.get_max_value())));
+  log_entries.push_back(log_entry_bin_max_count);
 }
 
 Histogram *Histogram::read(const std::string &path, Errors &errors) {
@@ -124,7 +161,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
     return nullptr;
   }
 
-  wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing histogram nbins in '" + path + "'", errors);
+  wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing nbins in '" + path + "'", errors);
   if (errors.has_error()) {
     delete histogram;
     return nullptr;
@@ -135,7 +172,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                        lower_value_float,
                        "Histogram::read",
                        "",
-                       "missing histogram lower_value in '" + path + "'",
+                       "missing lower_value in '" + path + "'",
                        errors);
   if (errors.has_error()) {
     delete histogram;
@@ -148,7 +185,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                        upper_value_float,
                        "Histogram::read",
                        "",
-                       "missing histogram upper_value in '" + path + "'",
+                       "missing upper_value in '" + path + "'",
                        errors);
   if (errors.has_error()) {
     delete histogram;
@@ -156,50 +193,19 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
   }
   histogram->upper_value = upper_value_float;
 
-  int min_count;
-  wb_utils::read_int(fp,
-                     min_count,
-                     "Histogram::read",
-                     "",
-                     "missing histogram min_count in '" + path + "'",
-                     errors);
-  if (errors.has_error()) {
-    delete histogram;
-    return nullptr;
-  }
-  histogram->bounds.min_value = min_count;
-
-  int max_count;
-  wb_utils::read_int(fp,
-                     max_count,
-                     "Histogram::read",
-                     "",
-                     "missing histogram max_count in '" + path + "'",
-                     errors);
-  if (errors.has_error()) {
-    delete histogram;
-    return nullptr;
-  }
-  histogram->bounds.max_value = max_count;
-
-  histogram->stats.read(fp, path, errors);
-  if (errors.has_error()) {
-    delete histogram;
-    return nullptr;
-  }
-
   histogram->bins = new int[histogram->nbins];
   wb_utils::read_int_buffer(fp,
                             histogram->bins,
                             histogram->nbins,
                             "Histogram::read",
                             "",
-                            "cannot read histogram data in '" + path + "'",
+                            "cannot read data in '" + path + "'",
                             errors);
   if (errors.has_error()) {
     delete histogram;
     return nullptr;
   }
+  histogram->update_bin_count_bounds();
   return histogram;
 }
 
@@ -209,14 +215,19 @@ std::string Histogram::to_string(const std::string &prefix) {
      << prefix << "    " << std::setw(20) << std::left << "nbins " << nbins << std::endl
      << prefix << "    " << std::setw(20) << std::left << "lower_value " << lower_value << std::endl
      << prefix << "    " << std::setw(20) << std::left << "upper_value " << upper_value << std::endl
-     << prefix << "    " << bounds.to_string(prefix + "    ")
-     << prefix << "    " << stats.to_string(prefix + "    ");
+     << prefix << "    " << bin_count_bounds.to_string(prefix + "    ")
+     << prefix << "    " << input_value_stats.to_string(prefix + "    ");
   return os.str();
 }
 
-void Histogram::update(double value) const {
+void Histogram::update_input_value(double value) const {
   int bin = get_bin(value);
   bins[bin]++;
+}
+
+void Histogram::update_bin_count_bounds() {
+  for (int i = 0; i < nbins; i++)
+    bin_count_bounds.update(bins[i]);
 }
 
 void Histogram::write(const std::string &path, Errors &errors) const {
@@ -239,17 +250,7 @@ void Histogram::write(const std::string &path, Errors &errors) const {
                           "Histogram::write", "", "cannot write upper_value to '" + path + "'",
                           errors);
   if (errors.error_ct == 0)
-    wb_utils::write_int(fp,
-                        wb_utils::round_double_to_int(bounds.min_value),
-                        "Histogram::write", "", "cannot write min_count to '" + path + "'",
-                        errors);
-  if (errors.error_ct == 0)
-    wb_utils::write_int(fp,
-                        wb_utils::round_double_to_int(bounds.max_value),
-                        "Histogram::write", "", "cannot write max_count to '" + path + "'",
-                        errors);
-  if (errors.error_ct == 0)
-    stats.write(fp, path, errors);
+    input_value_stats.write(fp, path, errors);
   if (errors.error_ct == 0)
     wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins to '" + path + "'", errors);
   fclose(fp);

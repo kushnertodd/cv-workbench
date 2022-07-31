@@ -31,8 +31,8 @@ class Histogram {
   int nbins{};
   double lower_value{};
   double upper_value{};
-  Bounds bounds;
-  Variance_stats stats;
+  Bounds bin_count_bounds;
+  Variance_stats input_value_stats;
 
   ~Histogram();
   Histogram(int m_nbins,
@@ -50,15 +50,17 @@ class Histogram {
                                  bool saw_upper_value);
   int get_bin(double value) const;
   float get_value(int bin) const;
-    double get_lower_value() const;
+  double get_lower_value() const;
   double get_max_value() const;
   double get_min_value() const;
   double get_upper_value() const;
   void initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value);
   void initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value);
+  void log(std::list<WB_log_entry> &log_entries);
   static Histogram *read(const std::string &path, Errors &errors);
-  std::string to_string(const std::string& prefix = "");
-  void update(double new_value) const;
+  std::string to_string(const std::string &prefix = "");
+  void update_input_value(double new_value) const;
+  void update_bin_count_bounds();
   void write(const std::string &path, Errors &errors) const;
   static void write_gp_script(Wb_filename wb_filename);
   void write_text(const std::string &path, const std::string &delim, Errors &errors);

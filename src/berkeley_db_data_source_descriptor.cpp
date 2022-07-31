@@ -13,12 +13,10 @@
 
 extern bool debug;
 
-Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(json_object *m_json_data_source_descriptor,
-                                                                       int m_id,
+Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                                                                        WB_data_type::Data_type m_data_type,
                                                                        WB_data_format::Data_format m_data_format) :
-    Data_source_descriptor(m_json_data_source_descriptor,
-                           m_id,
+    Data_source_descriptor(m_id,
                            m_data_type,
                            m_data_format,
                            WB_repository_type::Repository_type::BERKELEY_DB),
@@ -48,7 +46,7 @@ Berkeley_db_data_source_descriptor
     std::cout << "Berkeley_db_data_source_descriptor::from_json: id '" << id << "' type "
               << std::endl;
   auto *berkeley_db_data_source_descriptor =
-      new Berkeley_db_data_source_descriptor(json_data_source_descriptor, id, data_type, data_format);
+      new Berkeley_db_data_source_descriptor(id, data_type, data_format);
   json_object *json_ref_id =
       get_json_object("Berkeley_db_data_source_descriptor::from_json",
                       json_data_source_descriptor,

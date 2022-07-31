@@ -12,17 +12,13 @@ extern bool debug;
 
 //
 
-Internet_data_source_descriptor::Internet_data_source_descriptor(json_object *m_json_data_source_descriptor,
-                                                                 int m_id,
+Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
                                                                  WB_data_type::Data_type m_data_type,
                                                                  WB_data_format::Data_format m_data_format) :
-    Data_source_descriptor(m_json_data_source_descriptor,
-                           m_id,
+    Data_source_descriptor(m_id,
                            m_data_type,
                            m_data_format,
-                           WB_repository_type::Repository_type::INTERNET),
-    rows(0),
-    cols(0) {}
+                           WB_repository_type::Repository_type::INTERNET){}
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
@@ -47,7 +43,7 @@ Internet_data_source_descriptor
     std::cout << "Internet_data_source_descriptor::from_json: id '" << id << "' type "
               << std::endl;
   auto *internet_data_source_descriptor =
-      new Internet_data_source_descriptor(json_data_source_descriptor, id, data_type, data_format);
+      new Internet_data_source_descriptor(id, data_type, data_format);
   json_object *json_url =
       get_json_object("Internet_data_source_descriptor::from_json",
                       json_data_source_descriptor,

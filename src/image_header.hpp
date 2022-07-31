@@ -20,14 +20,14 @@ class Image_header {
   int components{}; // we're only supported 1 grayscale component now
   int row_stride{}; // for jpeg
   int npixels{};
-  WB_image_depth::Image_depth depth;
+  WB_image_depth::Image_depth depth{};
   Image_header();
   Image_header(int m_rows, int m_cols, int m_components,
                WB_image_depth::Image_depth m_depth);
   Image_header(Image_header &image_header);
   void read(FILE *fp, const std::string &path, Errors &errors);
   void write(FILE *fp, const std::string &path, Errors &errors) const;
-  std::string to_string(std::string prefix = "") const;
+  std::string to_string(const std::string& prefix = "") const;
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

@@ -17,7 +17,7 @@ class Bounds {
   double get_max_value() const;
   double get_min_value() const;
   static double map_input_to_output_bounds(double value, Bounds &input_bounds, Bounds &output_bounds);
-  std::string to_string(const std::string& prefix = "") const;
+  std::string to_string(const std::string &prefix = "") const;
   void update(double value);
 };
 

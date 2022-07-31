@@ -13,7 +13,6 @@
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
 #include "wb_image_depth.hpp"
-#include "wb_repository_type.hpp"
 #include "image.hpp"
 #include "image_header.hpp"
 #include "wb_utils.hpp"
@@ -85,7 +84,7 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
-        errors.add("Image::add_32F", "", "cannot update to 8U buffer");
+        errors.add("Image::add_32F", "", "cannot update_input_value to 8U buffer");
         break;
 
       case WB_image_depth::Image_depth::CV_32S:
@@ -114,7 +113,7 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
-        errors.add("Image::add_32S", "", "cannot update to 8U buffer");
+        errors.add("Image::add_32S", "", "cannot update_input_value to 8U buffer");
         break;
 
       case WB_image_depth::Image_depth::CV_32S:
@@ -138,6 +137,7 @@ bool Image::check_grayscale(Errors &errors) const {
   }
   return true;
 }
+
 /***
  * Not really what want. Doesn't copy contents.
  * @param image
@@ -264,6 +264,30 @@ void Image::init() {
     default:
       break;
   }
+}
+
+void Image::log(std::list<WB_log_entry> &log_entries) const {
+  Variance_stats stats;
+  get_stats(stats);
+  WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(get_rows()));
+  log_entries.push_back(log_entry_rows);
+  WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(get_cols()));
+  log_entries.push_back(log_entry_cols);
+  WB_log_entry log_entry_components("components", wb_utils::int_to_string(get_components()));
+  log_entries.push_back(log_entry_components);
+  WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(get_depth()));
+  log_entries.push_back(log_entry_depth);
+  WB_log_entry log_entry_count("pixel count", wb_utils::int_to_string(get_npixels()));
+  log_entries.push_back(log_entry_count);
+  WB_log_entry log_entry_mean("pixel mean", wb_utils::double_to_string(stats.mean));
+  log_entries.push_back(log_entry_count);
+  WB_log_entry
+      log_entry_standard_deviation("pixel standard deviation", wb_utils::double_to_string(stats.standard_deviation));
+  log_entries.push_back(log_entry_standard_deviation);
+  WB_log_entry log_entry_min_value("min pixel value", wb_utils::double_to_string(stats.bounds.min_value));
+  log_entries.push_back(log_entry_min_value);
+  WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.bounds.max_value));
+  log_entries.push_back(log_entry_max_value);
 }
 
 Image *Image::read(std::string &path, Errors &errors) {
@@ -505,7 +529,7 @@ Image *Image::to_rgb(int component) const {
   return new_image;
 }
 
-std::string Image::to_string(std::string prefix) const {
+std::string Image::to_string(const std::string &prefix) const {
   std::ostringstream os;
   os << prefix << "image:" << std::endl
      << image_header.to_string(prefix + "    ");

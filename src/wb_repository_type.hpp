@@ -14,7 +14,6 @@ class WB_repository_type {
     BERKELEY_DB, // separate file for each WB_data_type
     FILESYSTEM, // directory, filename
     INTERNET, // endpoint that produced binary data
-    EXPERIMENT_STEP, // output of experiment step
     UNDEFINED
   };
   static const std::map<WB_repository_type::Repository_type, std::string> to_strings;

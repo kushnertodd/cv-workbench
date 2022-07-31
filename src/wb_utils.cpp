@@ -38,6 +38,16 @@ float wb_utils::double_to_float(double value) {
   return static_cast<float>(value);
 }
 
+std::string wb_utils::double_to_string(double x, int width) {
+  std::ostringstream os;
+  if (width == -1) {
+    os << x;
+  } else {
+    os << std::setw(width) << x;
+  }
+  return os.str();
+}
+
 void wb_utils::error_exit(const std::string &message) {
   std::cout << message << std::endl;
   exit(0);

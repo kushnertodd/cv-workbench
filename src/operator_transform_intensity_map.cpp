@@ -8,7 +8,6 @@
 #include "wb_data_format.hpp"
 #include "wb_image_depth.hpp"
 #include "wb_defs.hpp"
-#include "wb_utils.hpp"
 
 extern bool debug;
 

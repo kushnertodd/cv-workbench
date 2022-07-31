@@ -6,23 +6,25 @@
 #include "wb_utils.hpp"
 #include "wb_filename.hpp"
 
-Wb_filename::Wb_filename() {}
+#include <utility>
+
+Wb_filename::Wb_filename() = default;
 
 Wb_filename::Wb_filename(std::string m_filename,
                          std::string m_root,
                          std::string m_ext,
                          WB_data_format::Data_format m_format) :
-    filename(m_filename),
-    root(m_root),
-    ext(m_ext),
+    filename(std::move(m_filename)),
+    root(std::move(m_root)),
+    ext(std::move(m_ext)),
     format(m_format) {}
 
-Wb_filename *Wb_filename::create_wb_filename(std::string filename, Errors &errors) {
-  for (const auto data_format: WB_data_format::from_exts) {
+Wb_filename *Wb_filename::create_wb_filename(const std::string &filename, Errors &errors) {
+  for (const auto &data_format: WB_data_format::from_exts) {
     std::string ext = data_format.first;
     std::string root;
     if (match_ext(filename, ext, root)) {
-      Wb_filename *wb_filename = new Wb_filename(filename, root, ext, data_format.second);
+      auto *wb_filename = new Wb_filename(filename, root, ext, data_format.second);
       return wb_filename;
     }
   }
@@ -30,23 +32,23 @@ Wb_filename *Wb_filename::create_wb_filename(std::string filename, Errors &error
   return nullptr;
 }
 
-bool Wb_filename::is_bin() {
+bool Wb_filename::is_bin() const {
   return ext == "bin";
 }
-bool Wb_filename::is_jpeg() {
+bool Wb_filename::is_jpeg() const {
   return ext == "jpg";
 }
-bool Wb_filename::is_json() {
+bool Wb_filename::is_json() const {
   return ext == "json";
 }
-bool Wb_filename::is_log() {
+bool Wb_filename::is_log() const {
   return ext == "log";
 }
-bool Wb_filename::is_text() {
+bool Wb_filename::is_text() const {
   return ext == "txt";
 }
 
-bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &root) {
+bool Wb_filename::match_ext(const std::string &filename, const std::string &ext, std::string &root) {
   std::string prefix, suffix;
   bool at_beginning, at_end;
   if (wb_utils::string_find(filename, prefix, suffix, "." + ext, at_beginning, at_end)) {
@@ -58,15 +60,13 @@ bool Wb_filename::match_ext(std::string filename, std::string ext, std::string &
   return false;
 }
 
-std::string Wb_filename::to_bin() { return root + ".bin"; }
-std::string Wb_filename::to_hist() { return root + ".hist.bin"; }
-std::string Wb_filename::to_hist_script() { return root + ".hist.gp"; }
-std::string Wb_filename::to_hist_text() { return root + ".hist.txt"; }
-std::string Wb_filename::to_hough() { return root + ".hough.bin"; }
-std::string Wb_filename::to_hough_text() { return root + ".hough.txt"; }
-std::string Wb_filename::to_jpeg() { return root + ".jpg"; }
-std::string Wb_filename::to_json() { return root + ".jpg"; }
-std::string Wb_filename::to_log() {
-  return root + ".log";
-}
-std::string Wb_filename::to_text() { return root + ".txt"; }
+std::string Wb_filename::to_bin() const { return root + ".bin"; }
+std::string Wb_filename::to_hist() const { return root + ".hist.bin"; }
+std::string Wb_filename::to_hist_script() const { return root + ".hist.gp"; }
+std::string Wb_filename::to_hist_text() const { return root + ".hist.txt"; }
+std::string Wb_filename::to_hough() const { return root + ".hough.bin"; }
+std::string Wb_filename::to_hough_text() const { return root + ".hough.txt"; }
+std::string Wb_filename::to_jpeg() const { return root + ".jpg"; }
+std::string Wb_filename::to_json() const { return root + ".jpg"; }
+std::string Wb_filename::to_log() const { return root + ".log"; }
+std::string Wb_filename::to_text() const { return root + ".txt"; }

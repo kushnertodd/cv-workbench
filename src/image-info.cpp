@@ -1,16 +1,8 @@
-#include <cstdio>
-#include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include "wb_data_format.hpp"
-#include "wb_data_type.hpp"
-#include "wb_image_depth.hpp"
-#include "wb_repository_type.hpp"
 #include "errors.hpp"
-#include "file_utils.hpp"
 #include "histogram.hpp"
 #include "image.hpp"
-#include "wb_defs.hpp"
 #include "wb_filename.hpp"
 #include "wb_utils.hpp"
 
@@ -26,16 +18,16 @@ int main(int argc, char **argv) {
   std::string in_filename = argv[1];
   Errors errors;
   std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(in_filename, errors));
-  errors.check_exit("invalid in-filename "+in_filename);
+  errors.check_exit("invalid in-filename " + in_filename);
   Image *image = nullptr;
   if (wb_filename->is_jpeg()) {
     image = Image::read_jpeg(in_filename, errors);
   } else if (wb_filename->is_bin()) {
     image = Image::read(in_filename, errors);
   } else {
-    errors.add("", "", "invalid filename ext "+in_filename);
+    errors.add("", "", "invalid filename ext " + in_filename);
   }
-  errors.check_exit("read error filename "+in_filename);
+  errors.check_exit("read error filename " + in_filename);
   if (image != nullptr) {
     Histogram *histogram = Histogram::create_image(image,
                                                    100,
