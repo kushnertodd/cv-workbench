@@ -107,6 +107,9 @@ clean:
 clobber: 
 	rm -f $(OBJS) $(PROGRAMS)
 
+install:
+	cp $(PROGRAMS) ../bin
+
 depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
 

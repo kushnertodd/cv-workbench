@@ -8,7 +8,7 @@ bool debug = false;
 
 int main(int argc, char **argv) {
   if (argc < 3)
-    wb_utils::error_exit("usage: image-map in_filename out-filename");
+    wb_utils::error_exit("usage: image-copy in_filename out-filename");
   std::string in_filename = argv[1];
   std::string out_filename = argv[2];
   Errors errors;
