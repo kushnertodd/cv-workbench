@@ -5,14 +5,9 @@
 #include <iostream>
 #include <sstream>
 #include <utility>
-#include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
 #include "data_source_descriptor.hpp"
-#include "berkeley_db_data_source_descriptor.hpp"
 #include "experiment_step.hpp"
-#include "experiment_step_data_source_descriptor.hpp"
-#include "filesystem_data_source_descriptor.hpp"
-#include "internet_data_source_descriptor.hpp"
 #include "operator.hpp"
 #include "operator_dispatcher.hpp"
 #include "wb_defs.hpp"
@@ -20,6 +15,7 @@
 
 extern bool debug;
 
+/*
 static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
 
@@ -95,6 +91,7 @@ static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data
   }
   return data_source_descriptor;
 }
+*/
 
 Experiment_step::~Experiment_step() {
   for (Data_source_descriptor *descriptor: input_data_sources) {
@@ -105,29 +102,31 @@ Experiment_step::~Experiment_step() {
   }
 }
 
-Experiment_step::Experiment_step() : id(0), json_step(nullptr) {}
+Experiment_step::Experiment_step() : id(0), json_experiment_step(nullptr) {}
 
-Experiment_step::Experiment_step(json_object *m_json_step): id(0), json_step(m_json_step){}
+Experiment_step::Experiment_step(json_object *m_json_experiment_step)
+    : id(0), json_experiment_step(m_json_experiment_step) {}
 
 Experiment_step::Experiment_step(int m_id, std::string m_operator_name)
-    : id(m_id), operator_name(std::move(m_operator_name)), json_step(nullptr) {}
+    : id(m_id), operator_name(std::move(m_operator_name)), json_experiment_step(nullptr) {}
 /**
  * Parse experiment json
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-Experiment_step *Experiment_step::from_json(json_object *json_step, Errors &errors) {
+Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, Errors &errors) {
   // parse: ' { "id": ... `
-  json_object *json_id = get_json_object("Experiment_step::from_json", json_step, "id", json_type_int, errors);
-  json_object *json_operator = get_json_object("Experiment_step::from_json", json_step, "operator",
+  json_object
+      *json_id = get_json_object("Experiment_step::from_json", json_experiment_step, "id", json_type_int, errors);
+  json_object *json_operator = get_json_object("Experiment_step::from_json", json_experiment_step, "operator",
                                                json_type_string, errors);
-  json_object *json_input_data = get_json_object("Experiment_step::from_json", json_step, "input-data",
+  json_object *json_input_data = get_json_object("Experiment_step::from_json", json_experiment_step, "input-data",
                                                  json_type_array, errors);
-  json_object *json_output_data = get_json_object("Experiment_step::from_json", json_step, "output-data",
+  json_object *json_output_data = get_json_object("Experiment_step::from_json", json_experiment_step, "output-data",
                                                   json_type_array, errors);
-  json_object *json_parameters = get_json_object("Experiment_step::from_json", json_step, "parameters",
+  json_object *json_parameters = get_json_object("Experiment_step::from_json", json_experiment_step, "parameters",
                                                  json_type_object, errors);
-  auto *experiment_step = new Experiment_step(json_step);
+  auto *experiment_step = new Experiment_step(json_experiment_step);
   if (json_id != nullptr)
     experiment_step->id = json_object_get_int(json_id);
   if (json_operator != nullptr)
@@ -142,7 +141,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_step, Errors &erro
                            json_input_data_descriptor,
                            json_type_object, errors)) {
         Data_source_descriptor *input_data_store_descriptor =
-            json_parse_data_descriptor(json_input_data_descriptor, errors);
+            Data_source_descriptor::from_json(json_input_data_descriptor, errors);
         if (input_data_store_descriptor != nullptr)
           experiment_step->input_data_sources.push_back(input_data_store_descriptor);
       }
@@ -157,7 +156,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_step, Errors &erro
       if (error_check_type("Experiment_step::from_json", "output-data descriptor",
                            json_output_data_descriptor, json_type_object, errors)) {
         Data_source_descriptor *output_data_store_descriptor =
-            json_parse_data_descriptor(json_output_data_descriptor, errors);
+            Data_source_descriptor::from_json(json_output_data_descriptor, errors);
         if (output_data_store_descriptor != nullptr)
           experiment_step->output_data_stores.push_back(output_data_store_descriptor);
       }
@@ -187,6 +186,24 @@ Experiment_step *Experiment_step::from_json(json_object *json_step, Errors &erro
   return experiment_step;
 }
 
+void Experiment_step::log_experiment_step(const std::list<WB_log_entry> &log_entries, Errors &errors) const {
+  if (errors.has_error()) {
+    json_object *json_error_list = json_object_new_array();
+    for (const std::string &error: errors.error_list) {
+      json_object_array_add(json_error_list, json_object_new_string(error.c_str()));
+    }
+    json_object_object_add(json_experiment_step, "errors", json_error_list);
+  } else if (!log_entries.empty()) {
+    json_object *json_log_entry_list = json_object_new_object();
+    for (const WB_log_entry &log_entry: log_entries) {
+      json_object_object_add(json_log_entry_list,
+                             log_entry.item.c_str(),
+                             json_object_new_string(log_entry.value.c_str()));
+    }
+    json_object_object_add(json_experiment_step, "results", json_log_entry_list);
+  }
+}
+
 void Experiment_step::run(Errors &errors) {
   Operator *step_operator = Operator_dispatcher::create_operator(operator_name);
   if (step_operator == nullptr) {
@@ -210,8 +227,9 @@ void Experiment_step::run(Errors &errors) {
                   << std::endl;
       }
     }
-
-    step_operator->run(input_data_sources, output_data_stores, operator_parameters, errors);
+    std::list<WB_log_entry> log_entries;
+    step_operator->run(input_data_sources, output_data_stores, operator_parameters, log_entries, errors);
+    log_experiment_step(log_entries, errors);
     delete step_operator;
   }
 }

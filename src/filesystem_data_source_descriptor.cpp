@@ -8,16 +8,20 @@
 #include "wb_data_type.hpp"
 #include "wb_repository_type.hpp"
 #include "wb_json_utils.hpp"
-#include "wb_utils.hpp"
 #include "data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 
 extern bool debug;
 
-Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
+Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(json_object *m_json_data_source_descriptor,
+                                                                     int m_id,
                                                                      WB_data_type::Data_type m_data_type,
                                                                      WB_data_format::Data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_type::Repository_type::FILESYSTEM) {}
+    Data_source_descriptor(m_json_data_source_descriptor,
+                           m_id,
+                           m_data_type,
+                           m_data_format,
+                           WB_repository_type::Repository_type::FILESYSTEM) {}
 
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 
@@ -63,7 +67,7 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   image->write(path, errors);
 }
 
-void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) const {
+void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
   image->write_text(path, "\t", errors);
 }
@@ -76,21 +80,21 @@ void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &e
 void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
 Filesystem_data_source_descriptor
-*Filesystem_data_source_descriptor::json_parse(json_object *json_data_descriptor,
-                                               int id,
-                                               WB_data_type::Data_type data_type,
-                                               WB_data_format::Data_format data_format,
-                                               Errors &errors) {
+*Filesystem_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
+                                              int id,
+                                              WB_data_type::Data_type data_type,
+                                              WB_data_format::Data_format data_format,
+                                              Errors &errors) {
   if (debug)
     std::cout << "Filesystem_data_source_descriptor::from_json: id '" << id << "' type "
               << std::endl;
   auto *filesystem_data_source_descriptor =
-      new Filesystem_data_source_descriptor(id, data_type, data_format);
+      new Filesystem_data_source_descriptor(json_data_source_descriptor, id, data_type, data_format);
 
   // parse: ' "directory": ... `
   json_object *json_directory =
       get_json_object("Filesystem_data_source_descriptor::from_json",
-                      json_data_descriptor,
+                      json_data_source_descriptor,
                       "directory",
                       json_type_string,
                       errors);
@@ -102,7 +106,7 @@ Filesystem_data_source_descriptor
   // parse: ' "filename": ... `
   json_object *json_filename =
       get_json_object("Filesystem_data_source_descriptor::from_json",
-                      json_data_descriptor,
+                      json_data_source_descriptor,
                       "filename",
                       json_type_string,
                       errors);
@@ -114,7 +118,7 @@ Filesystem_data_source_descriptor
   // parse: ' "ext": ... `
   json_object *json_ext =
       get_json_object("Filesystem_data_source_descriptor::from_json",
-                      json_data_descriptor,
+                      json_data_source_descriptor,
                       "ext",
                       json_type_string,
                       errors, true);

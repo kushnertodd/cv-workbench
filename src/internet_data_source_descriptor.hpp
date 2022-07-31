@@ -20,10 +20,12 @@
 class Internet_data_source_descriptor : public Data_source_descriptor {
  public:
   std::string url;
-  std::string depth; // WB_image_depth::Image_depth::CV_8U, WB_image_depth::Image_depth::CV_32S, or WB_image_depth::Image_depth::CV_32F
+  std::string
+      depth; // WB_image_depth::Image_depth::CV_8U, WB_image_depth::Image_depth::CV_32S, or WB_image_depth::Image_depth::CV_32F
   int rows;
   int cols;
-  Internet_data_source_descriptor(int m_id,
+  Internet_data_source_descriptor(json_object *m_json_data_source_descriptor,
+                                  int m_id,
                                   WB_data_type::Data_type m_data_type,
                                   WB_data_format::Data_format data_format);
   Histogram *read_histogram(Errors &errors) override;
@@ -37,13 +39,14 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
   void write_hough_text(Hough *hough, Errors &errors) override;
   void write_image(Image *image, Errors &errors) override;
   void write_image_jpeg(Image *image, Errors &errors) override;
+  void write_image_text(Image *image, Errors &errors) override;
   void write_json(std::string &json, Errors &errors) override;
   static Internet_data_source_descriptor
-  *json_parse(json_object *json_data_descriptor,
-              int id,
-              WB_data_type::Data_type data_type,
-              WB_data_format::Data_format data_format,
-              Errors &errors);
+  *from_json(json_object *json_data_source_descriptor,
+             int id,
+             WB_data_type::Data_type data_type,
+             WB_data_format::Data_format data_format,
+             Errors &errors);
 
   std::string to_string() override;
 };

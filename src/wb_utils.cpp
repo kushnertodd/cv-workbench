@@ -4,9 +4,9 @@
 
 #include <cmath>
 #include <cstdio>
+#include <ctime>
 #include <iostream>
 #include <iomanip>
-#include "wb_repository_type.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -414,6 +414,13 @@ bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   }
 }
 
+bool wb_utils::string_to_double(const std::string &str, double &value) {
+  if (!is_numeric(str)) return false;
+  std::stringstream ss(str);
+  if (ss >> value) return true;
+  else return false;
+}
+
 bool wb_utils::string_to_int(const std::string &str, int &value) {
   if (!is_numeric(str)) return false;
   std::stringstream ss(str);
@@ -421,11 +428,14 @@ bool wb_utils::string_to_int(const std::string &str, int &value) {
   else return false;
 }
 
-bool wb_utils::string_to_double(const std::string &str, double &value) {
-  if (!is_numeric(str)) return false;
-  std::stringstream ss(str);
-  if (ss >> value) return true;
-  else return false;
+std::string wb_utils::timestamp() {
+  time_t rawtime;
+  struct tm *timeinfo;
+  char buffer[80];
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  strftime(buffer, 80, "%Y-%m-%d %T", timeinfo);
+  return buffer;
 }
 
 void wb_utils::write_double(FILE *fp,

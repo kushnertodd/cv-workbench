@@ -92,8 +92,9 @@ bool string_find(const std::string &text,
                  bool &at_beginning,
                  bool &at_end);
 bool string_to_bool(const std::string &str, bool &bvalue);
-bool string_to_int(const std::string &str, int &value);
 bool string_to_double(const std::string &text, double &value);
+bool string_to_int(const std::string &str, int &value);
+std::string timestamp();
 void write_double(FILE *fp,
                   double value,
                   const std::string &module,

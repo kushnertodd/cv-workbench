@@ -30,6 +30,7 @@ Operator_filter_edge_sobel::~Operator_filter_edge_sobel() = default;
 void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_data_sources,
                                      std::list<Data_source_descriptor *> &output_data_stores,
                                      String_map &operator_parameters,
+                                     std::list<WB_log_entry> &log_entries,
                                      Errors &errors) {
 
   if (debug) {
@@ -82,8 +83,20 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
             output_data_store->write_image(output, errors);
           } else {
             errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
-                           + WB_data_format::to_string(output_data_store->data_format) + "'");
+                + WB_data_format::to_string(output_data_store->data_format) + "'");
           }
+        }
+        if (!errors.has_error() && input != nullptr) {
+          WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(input->get_rows()));
+          log_entries.push_back(log_entry_rows);
+          WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(input->get_cols()));
+          log_entries.push_back(log_entry_cols);
+          WB_log_entry log_entry_components("components", wb_utils::int_to_string(input->get_components()));
+          log_entries.push_back(log_entry_components);
+          WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(input->get_depth()));
+          log_entries.push_back(log_entry_depth);
+          WB_log_entry log_entry_count("pixel count", wb_utils::int_to_string(input->get_npixels()));
+          log_entries.push_back(log_entry_count);
         }
       }
     }

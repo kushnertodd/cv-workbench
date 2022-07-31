@@ -13,10 +13,15 @@
 
 extern bool debug;
 
-Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
+Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(json_object *m_json_data_source_descriptor,
+                                                                       int m_id,
                                                                        WB_data_type::Data_type m_data_type,
                                                                        WB_data_format::Data_format m_data_format) :
-    Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_type::Repository_type::BERKELEY_DB),
+    Data_source_descriptor(m_json_data_source_descriptor,
+                           m_id,
+                           m_data_type,
+                           m_data_format,
+                           WB_repository_type::Repository_type::BERKELEY_DB),
     ref_id(0) {}
 
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
@@ -30,22 +35,23 @@ void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &error
 void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
 Berkeley_db_data_source_descriptor
-*Berkeley_db_data_source_descriptor::json_parse(json_object *json_data_descriptor,
-                                                int id,
-                                                WB_data_type::Data_type data_type,
-                                                WB_data_format::Data_format data_format,
-                                                Errors &errors) {
+*Berkeley_db_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
+                                               int id,
+                                               WB_data_type::Data_type data_type,
+                                               WB_data_format::Data_format data_format,
+                                               Errors &errors) {
   if (debug)
     std::cout << "Berkeley_db_data_source_descriptor::from_json: id '" << id << "' type "
               << std::endl;
   auto *berkeley_db_data_source_descriptor =
-      new Berkeley_db_data_source_descriptor(id, data_type, data_format);
+      new Berkeley_db_data_source_descriptor(json_data_source_descriptor, id, data_type, data_format);
   json_object *json_ref_id =
       get_json_object("Berkeley_db_data_source_descriptor::from_json",
-                      json_data_descriptor,
+                      json_data_source_descriptor,
                       "ref-id",
                       json_type_int,
                       errors,

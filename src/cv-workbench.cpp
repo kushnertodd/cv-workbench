@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
     exit(0);
   }
   try {
-    char *filename = argv[1];
+    char *path = argv[1];
     debug = (argc > 2);
-    std::string string_val = file_utils::read_file(filename);
+    std::string string_val = file_utils::read_file(path);
     if (debug)
       std::cout << "JSON string: " << string_val << std::endl;
     Errors errors;
-    std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(filename, errors));
+    std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(path, errors));
     errors.check_exit("invalid in-filename");
 
     json_object *jobj = json_tokener_parse(string_val.c_str());
@@ -42,11 +42,13 @@ int main(int argc, char **argv) {
       wb_utils::error_exit("json_tokener_parse() failed");
     else {
       std::string log_filename = wb_in_filename->to_log();
-      WB_log::log_to_file(log_filename, json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_PRETTY), errors);
       errors.check_exit();
-      Experiment *experiment = Experiment::from_json(jobj, errors);
+      Experiment *experiment = Experiment::from_json(jobj, path, errors);
       errors.check_exit();
       experiment->run(errors);
+      WB_log::log_to_file(log_filename,
+                          json_object_to_json_string_ext(jobj,
+                          JSON_C_TO_STRING_PRETTY+JSON_C_TO_STRING_NOSLASHESCAPE), errors);
       errors.check_exit();
       exit(0);
     }
