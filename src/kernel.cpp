@@ -13,7 +13,7 @@ Kernel::~Kernel() = default;
 Kernel::Kernel() = default;
 
 Kernel::Kernel(int rows, int cols, WB_image_depth::Image_depth depth) :
-    Image(rows, cols, 1, depth) {
+  Image(rows, cols, 1, depth) {
   init();
 }
 
@@ -28,8 +28,8 @@ Image *Kernel::convolve(Image *src, WB_morphology_types::Convolution_type convol
 
   // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
   WB_image_depth::Image_depth out_depth =
-      (src_depth == WB_image_depth::Image_depth::CV_32F || depth == WB_image_depth::Image_depth::CV_32F
-       ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
+    (src_depth == WB_image_depth::Image_depth::CV_32F || depth == WB_image_depth::Image_depth::CV_32F
+     ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
   auto *out = new Image(src_rows, src_cols, src_components, out_depth);
   int rows_half = (rows + 1) / 2;
   int cols_half = (cols + 1) / 2;
@@ -70,19 +70,19 @@ Image *Kernel::convolve(Image *src, WB_morphology_types::Convolution_type convol
           double kernel_val = get(i, j);
           double image_val = src->get(row + i, col + j);
           switch (convolution_type) {
-            case WB_morphology_types::Convolution_type::NUMERIC:
-              sum += kernel_val * image_val;
-              break;
-            case WB_morphology_types::Convolution_type::ERODE:
-              if (kernel_val > 0)
-                sum = std::min(sum, image_val);
-              break;
-            case WB_morphology_types::Convolution_type::DILATE:
-              if (kernel_val > 0)
-                sum = std::max(sum, image_val);
-              break;
-            default:
-              break;
+          case WB_morphology_types::Convolution_type::NUMERIC:
+            sum += kernel_val * image_val;
+            break;
+          case WB_morphology_types::Convolution_type::ERODE:
+            if (kernel_val > 0)
+              sum = std::min(sum, image_val);
+            break;
+          case WB_morphology_types::Convolution_type::DILATE:
+            if (kernel_val > 0)
+              sum = std::max(sum, image_val);
+            break;
+          default:
+            break;
           }
           if (debug)
             std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
@@ -117,27 +117,27 @@ Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
 }
 
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
-                                           int rows, int cols, int thickness) {
+    int rows, int cols, int thickness) {
   auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_8U);
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
       switch (structuring_element_type) {
-        case WB_morphology_types::Structuring_element_type::RECTANGLE:
+      case WB_morphology_types::Structuring_element_type::RECTANGLE:
+        kernel->set_8U(row, col, 1);
+        break;
+      case WB_morphology_types::Structuring_element_type::CROSS: {
+        double x = Point::col_to_x(col, cols);
+        double y = Point::row_to_y(row, rows);
+        if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
           kernel->set_8U(row, col, 1);
-          break;
-        case WB_morphology_types::Structuring_element_type::CROSS: {
-          double x = Point::col_to_x(col, cols);
-          double y = Point::row_to_y(row, rows);
-          if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
-            kernel->set_8U(row, col, 1);
-          break;
-        }
-        case WB_morphology_types::Structuring_element_type::ELLIPSE:
-          if (Point::in_ellipse(row, col, rows, cols))
-            kernel->set_8U(row, col, 1);
-          break;
-        default:
-          break;
+        break;
+      }
+      case WB_morphology_types::Structuring_element_type::ELLIPSE:
+        if (Point::in_ellipse(row, col, rows, cols))
+          kernel->set_8U(row, col, 1);
+        break;
+      default:
+        break;
       }
     }
   }
