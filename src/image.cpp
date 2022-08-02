@@ -25,16 +25,50 @@ Image::~Image() {
   delete[] buf_32F;
 }
 
-Image::Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth) :
+Image::Image() = default;
+Image::Image(int m_rows, int m_cols, int m_components,
+             WB_image_depth::Image_depth m_depth) :
     image_header(m_rows, m_cols, m_components, m_depth),
-    buf_8U(nullptr),
-    buf_32F(nullptr),
-    buf_32S(nullptr),
+    buf_8U{},
+    buf_32F{},
+    buf_32S{},
     next_pixel(0) {
   if (debug)
     std::cout << "Image::Image: " << to_string() << std::endl;
   init();
 }
+
+Image::Image(Image &image) :
+    image_header(image.get_rows(), image.get_cols(), image.get_components(), image.get_depth()),
+    buf_8U{},
+    buf_32F{},
+    buf_32S{},
+    next_pixel(0) {
+  int size = get_npixels();
+  switch (get_depth()) {
+    case WB_image_depth::Image_depth::CV_8U:
+      buf_8U = new pixel_8U[size];
+      for (int i = 0; i < size; i++)
+        buf_8U[i] = image.buf_8U[i];
+      break;
+
+    case WB_image_depth::Image_depth::CV_32S:
+      buf_32S = new pixel_32S[size];
+      for (int i = 0; i < size; i++)
+        buf_32S[i] = image.buf_32S[i];
+      break;
+
+    case WB_image_depth::Image_depth::CV_32F:
+      buf_32F = new pixel_32F[size];
+      for (int i = 0; i < size; i++)
+        buf_32F[i] = image.buf_32F[i];
+      break;
+
+    default:
+      break;
+  }
+}
+
 
 Image::Image(Image_header &m_image_header) :
     image_header(m_image_header),
@@ -88,7 +122,7 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
         break;
 
       case WB_image_depth::Image_depth::CV_32S:
-        buf_32S[next_pixel++] = wb_utils::round_float_to_int(src[i]);
+        buf_32S[next_pixel++] = wb_utils::float_to_int_round(src[i]);
         break;
 
       case WB_image_depth::Image_depth::CV_32F:
@@ -104,16 +138,21 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   if (debug)
     std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
-  if (next_pixel + count > get_npixels())
+  if (next_pixel + count > get_npixels()) {
     errors.add("Image::add_32S", "", "adding "
         + wb_utils::int_to_string(count) + " pixels at position " +
         wb_utils::int_to_string(next_pixel)
         + " too large for buffer length "
         + wb_utils::int_to_string(get_npixels()));
+    return;
+  }
+  if (get_depth() == WB_image_depth::Image_depth::CV_8U) {
+    errors.add("Image::add_32S", "", "cannot update_input_value to 8U buffer");
+    return;
+  }
   for (int i = 0; i < count; i++) {
     switch (get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
-        errors.add("Image::add_32S", "", "cannot update_input_value to 8U buffer");
         break;
 
       case WB_image_depth::Image_depth::CV_32S:
@@ -144,17 +183,95 @@ bool Image::check_grayscale(Errors &errors) const {
  * @param depth
  * @return
  */
-/*
-Image *Image::clone_image(Image *image, WB_image_depth::Image_depth depth) {
-  if (debug)
-    std::cout << "Image::clone: depth " << depth << " " << image->to_string() << std::endl;
+Image *Image::clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors) {
   auto *new_image = new Image(image->get_rows(),
                               image->get_cols(),
                               image->get_components(),
                               depth);
+  new_image->copy(image, errors);
   return new_image;
 }
-*/
+
+// copies CV_32S and CV_32F to CV_8U with truncation to 0..255
+void Image::copy(Image *image, Errors &errors) {
+  if (get_npixels() != image->get_npixels()) {
+    errors.add("Image::copy", "", "images not the same size ");
+    return;
+  }
+  if (get_depth() != image->get_depth()) {
+    errors.add("Image::copy", "", "images not the same depth ");
+    return;
+  }
+  if (get_depth() == WB_image_depth::Image_depth::CV_8U &&
+      image->get_depth() == WB_image_depth::Image_depth::CV_32S) {
+    errors.add("Image::copy", "", "cannot copy CV_32S image to CV_8U image ");
+    return;
+  }
+  if (get_depth() == WB_image_depth::Image_depth::CV_8U &&
+      image->get_depth() == WB_image_depth::Image_depth::CV_32F) {
+    errors.add("Image::copy", "", "cannot copy CV_32F image to CV_8U image ");
+    return;
+  }
+  if (get_depth() == WB_image_depth::Image_depth::UNDEFINED
+      || image->get_depth() == WB_image_depth::Image_depth::UNDEFINED) {
+    errors.add("Image::copy", "", "cannot copy images of undefined depth ");
+    return;
+  }
+  switch (get_depth()) {
+    case WB_image_depth::Image_depth::CV_8U:
+      for (int i = 0; i < get_npixels(); i++) {
+        buf_8U[i] = image->buf_8U[i];
+      }
+      break;
+
+    case WB_image_depth::Image_depth::CV_32S:
+      switch (image->get_depth()) {
+        case WB_image_depth::Image_depth::CV_8U:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32S[i] = image->buf_8U[i];
+          }
+          break;
+        case WB_image_depth::Image_depth::CV_32S:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32S[i] = image->buf_32S[i];
+          }
+          break;
+        case WB_image_depth::Image_depth::CV_32F:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32S[i] = wb_utils::float_to_int_round(image->buf_32F[i]);
+          }
+          break;
+        default:
+          break;
+      }
+      break;
+
+    case WB_image_depth::Image_depth::CV_32F:
+      switch (image->get_depth()) {
+        case WB_image_depth::Image_depth::CV_8U:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32F[i] = image->buf_8U[i];
+          }
+          break;
+        case WB_image_depth::Image_depth::CV_32S:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32F[i] = wb_utils::int_to_float(image->buf_32S[i]);
+          }
+          break;
+        case WB_image_depth::Image_depth::CV_32F:
+          for (int i = 0; i < get_npixels(); i++) {
+            buf_32F[i] = image->buf_32F[i];
+          }
+          break;
+        default:
+          break;
+      }
+      break;
+
+    default:
+      break;
+  }
+}
 
 void Image::draw_line_segment(const Line_segment &line_segment, double value) const {
   if (debug)
@@ -461,14 +578,15 @@ double Image::scale_pixel(double pixel_in,
   return pixel_out;
 }
 
+// -> CV_8U may lose precision/overflow
 void Image::set(int row, int col, double value) const {
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
-      buf_8U[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
+      buf_8U[row_col_to_index(row, col)] = wb_utils::double_to_int_round(value);
       break;
 
     case WB_image_depth::Image_depth::CV_32S:
-      buf_32S[row_col_to_index(row, col)] = wb_utils::round_double_to_int(value);
+      buf_32S[row_col_to_index(row, col)] = wb_utils::double_to_int_round(value);
       break;
 
     case WB_image_depth::Image_depth::CV_32F:
@@ -531,8 +649,7 @@ Image *Image::to_rgb(int component) const {
 
 std::string Image::to_string(const std::string &prefix) const {
   std::ostringstream os;
-  os << prefix << "image:" << std::endl
-     << image_header.to_string(prefix + "    ");
+  os << prefix      << image_header.to_string(prefix + "    ");
   return os.str();
 }
 

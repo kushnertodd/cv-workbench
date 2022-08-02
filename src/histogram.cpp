@@ -58,7 +58,7 @@ int Histogram::get_bin(double value) const {
   else if (value > upper_value)
     return nbins - 1;
   else
-    return wb_utils::round_double_to_int((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
+    return wb_utils::double_to_int_round((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
 }
 
 float Histogram::get_value(int bin) const {
@@ -144,11 +144,11 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
   log_entries.push_back(log_entry_pixel_max_value);
   WB_log_entry log_entry_bin_min_count(
       "min bin count",
-      wb_utils::int_to_string(wb_utils::round_double_to_int(bin_count_bounds.get_min_value())));
+      wb_utils::int_to_string(wb_utils::double_to_int_round(bin_count_bounds.get_min_value())));
   log_entries.push_back(log_entry_bin_min_count);
   WB_log_entry log_entry_bin_max_count(
       "max bin count",
-      wb_utils::int_to_string(wb_utils::round_double_to_int(bin_count_bounds.get_max_value())));
+      wb_utils::int_to_string(wb_utils::double_to_int_round(bin_count_bounds.get_max_value())));
   log_entries.push_back(log_entry_bin_max_count);
 }
 
@@ -239,19 +239,19 @@ void Histogram::write(const std::string &path, Errors &errors) const {
     return;
   }
   wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins to '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(lower_value),
                           "Histogram::write", "", "cannot write lower_value to '" + path + "'",
                           errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(upper_value),
                           "Histogram::write", "", "cannot write upper_value to '" + path + "'",
                           errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     input_value_stats.write(fp, path, errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins to '" + path + "'", errors);
   fclose(fp);
 }

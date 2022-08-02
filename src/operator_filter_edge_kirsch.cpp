@@ -114,9 +114,9 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
         else
           errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format: " +
               WB_data_format::to_string(input_data_source->data_format));
-        if (errors.error_ct == 0 && input != nullptr)
+        if (!errors.has_error() && input != nullptr)
           input->check_grayscale(errors);
-        if (errors.error_ct == 0 && kirsch_kernel != nullptr) {
+        if (!errors.has_error() && kirsch_kernel != nullptr) {
           output = kirsch_kernel->convolve(input);
           if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
             output_data_store->write_image_jpeg(output, errors);

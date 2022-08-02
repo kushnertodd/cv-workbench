@@ -52,7 +52,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     if (!Operator_utils::has_parameter(operator_parameters, "pixel_value")) {
       errors.add("Operator_hough_draw_line::run", "", "missing 'pixel_value' parameter");
     }
-    if (errors.error_ct == 0) {
+    if (!errors.has_error()) {
 
       std::string theta_inc_str = Operator_utils::get_parameter(operator_parameters, "theta_inc");
       int theta_inc = 0;
@@ -92,13 +92,13 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
             else
               errors.add("Operator_hough_draw_line::run", "", "invalid data format: " +
                   WB_data_format::to_string(input_data_source->data_format));
-            if (errors.error_ct == 0 && input != nullptr)
+            if (!errors.has_error() && input != nullptr)
               input->check_grayscale(errors);
-            if (errors.error_ct == 0 && input != nullptr) {
+            if (!errors.has_error() && input != nullptr) {
               //Hough *hough = Hough::create_image(input, theta_inc, threshold);
               int rows = input->get_rows();
               int cols = input->get_cols();
-              int nrhos = wb_utils::round_double_to_int(sqrt(rows * rows
+              int nrhos = wb_utils::double_to_int_round(sqrt(rows * rows
                                                                  + input->get_cols() * input->get_cols())) + rho_pad;
               auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
               int rho_index = hough_accum->rho_to_index(rho);

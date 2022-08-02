@@ -51,7 +51,7 @@ int Hough_accum::choose_threshold(cv_enums::WB_threshold_type threshold_type) co
   if (threshold_type == cv_enums::WB_threshold_type::FIXED) {
     return 40000; //bounds.max_value * 0.55; //0.90;
   } else if (threshold_type == cv_enums::WB_threshold_type::PERCENTAGE) {
-    return wb_utils::round_double_to_int(accumulator_stats.bounds.max_value * 0.85);
+    return wb_utils::double_to_int_round(accumulator_stats.bounds.max_value * 0.85);
   } else return -1;
 }
 
@@ -337,7 +337,7 @@ double Hough_accum::col_to_x(int col) const {
 Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_threshold) {
   int rows = image->get_rows();
   int cols = image->get_cols();
-  int nrhos = wb_utils::round_double_to_int(sqrt(rows * rows
+  int nrhos = wb_utils::double_to_int_round(sqrt(rows * rows
                                                      + image->get_cols() * image->get_cols())) + rho_pad;
   auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
   hough_accum->initialize(image, pixel_threshold);
@@ -397,7 +397,7 @@ void Hough_accum::initialize(Image *image, int image_theshold) {
       if (value > image_theshold) {
         for (int theta_index = 0; theta_index < nthetas; theta_index++) {
           int rho_index = row_col_theta_to_rho_index(row, col, theta_index);
-          update(rho_index, theta_index, wb_utils::round_double_to_int(value));
+          update(rho_index, theta_index, wb_utils::double_to_int_round(value));
         }
       }
     }
@@ -416,11 +416,11 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
                      "",
                      "missing hough accumulator theta_inc in '" + path + "'",
                      errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_int(fp, nrhos, "Hough_accum::read", "", "missing hough accumulator nrhos in '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator rows in '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_int(fp, cols, "Hough_accum::read", "", "missing hough accumulator cols in '" + path + "'", errors);
   if (errors.has_error())
     return nullptr;
@@ -471,7 +471,7 @@ int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) c
   double sin_t = get_sin(theta_index);
   double row_offset = get_rows() / 2.0;
   double row = (x * cos_t - rho) / sin_t + row_offset;
-  return wb_utils::round_double_to_int(row);
+  return wb_utils::double_to_int_round(row);
 }
 
 // can have a singularity if theta ~= 90, cos ~= 0
@@ -482,7 +482,7 @@ int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) c
   double sin_t = get_sin(theta_index);
   double col_offset = get_cols() / 2.0;
   double col = (rho - y * sin_t) / cos_t + col_offset;
-  return wb_utils::round_double_to_int(col);
+  return wb_utils::double_to_int_round(col);
 }
 
 int Hough_accum::rho_theta_to_index(int rho_index, int theta_index) const {
@@ -492,7 +492,7 @@ int Hough_accum::rho_theta_to_index(int rho_index, int theta_index) const {
 
 int Hough_accum::rho_to_index(double rho) const {
   double rho_offset = nrhos / 2.0;
-  int rho_index = wb_utils::round_double_to_int(rho + rho_offset);
+  int rho_index = wb_utils::double_to_int_round(rho + rho_offset);
   return rho_index;
 }
 
@@ -581,13 +581,13 @@ void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Error
 
 int Hough_accum::x_to_col(double x) const {
   double col_offset = get_cols() / 2.0;
-  int col = wb_utils::round_double_to_int(x + col_offset);
+  int col = wb_utils::double_to_int_round(x + col_offset);
   return col;
 }
 
 int Hough_accum::y_to_row(double y) const {
   double row_offset = get_rows() / 2.0;
-  int row = wb_utils::round_double_to_int(row_offset - y);
+  int row = wb_utils::double_to_int_round(row_offset - y);
   return row;
 }
 

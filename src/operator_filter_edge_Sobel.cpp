@@ -74,9 +74,9 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
         else
           errors.add("Operator_filter_edge_sobel::run", "", "invalid data format: " +
               WB_data_format::to_string(input_data_source->data_format));
-        if (errors.error_ct == 0 && input != nullptr)
+        if (!errors.has_error() && input != nullptr)
           input->check_grayscale(errors);
-        if (errors.error_ct == 0 && sobel_kernel != nullptr) {
+        if (!errors.has_error() && sobel_kernel != nullptr) {
           output = sobel_kernel->convolve(input);
           output_data_store->write_image(output, errors);
         }

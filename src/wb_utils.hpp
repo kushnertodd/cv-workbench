@@ -19,9 +19,16 @@ namespace wb_utils {
 
 char ascii_to_char(int n);
 std::string char_to_string(char c);
-std::string double_to_string(double x, int width = -1);
+pixel_32F cv_32S_to_cv_32F(pixel_32S value);
+pixel_32S cv_32F_to_cv_32S(pixel_32F value);
+pixel_32S cv_32F_to_cv_32S_round(pixel_32F value);
 float double_to_float(double value);
+int double_to_int(double value);
+int double_to_int_round(double value);
+std::string double_to_string(double x, int width = -1);
 void error_exit(const std::string &message);
+int float_to_int(float value);
+int float_to_int_round(float value);
 bool hex_string_to_int(const std::string &text, unsigned long long &value);
 std::string indent(int n);
 float int_to_float(int value);
@@ -84,8 +91,6 @@ void read_int_buffer(FILE *fp,
                      const std::string &error,
                      Errors &errors);
 std::string real_to_string(double i, int width = -1);
-int round_double_to_int(double value);
-int round_float_to_int(float value);
 bool string_find(const std::string &text,
                  std::string &prefix,
                  std::string &suffix,

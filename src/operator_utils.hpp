@@ -13,12 +13,12 @@
 
 class Operator_utils {
  public:
-  static bool get_int_parameter(const std::string &module,
+  static void get_int_parameter(const std::string &module,
                                 String_map &parameters,
                                 const std::string &parameter,
                                 int &int_value,
                                 Errors &errors);
-  static bool get_real_parameter(const std::string &module,
+  static void get_real_parameter(const std::string &module,
                                  String_map &parameters,
                                  const std::string &parameter,
                                  double &real_value,

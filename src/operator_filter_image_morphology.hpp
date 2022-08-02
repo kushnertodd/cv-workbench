@@ -1,10 +1,11 @@
 //
-// Created by kushn on 7/23/2022.
+// Created by kushn on 6/14/2022.
 //
 
-#ifndef SRC__OPERATOR_TRANSFORM_IMAGE_MORPHOLOGY_HPP_
-#define SRC__OPERATOR_TRANSFORM_IMAGE_MORPHOLOGY_HPP_
+#ifndef CV_WORKBENCH_SRC_OPERATOR_FILTER_IMAGE_MORPHOLOGY_HPP_
+#define CV_WORKBENCH_SRC_OPERATOR_FILTER_IMAGE_MORPHOLOGY_HPP_
 
+#include "wb_defs.hpp"
 #include "operator.hpp"
 
 class Operator_filter_image_morphology : public Operator {
@@ -15,7 +16,6 @@ class Operator_filter_image_morphology : public Operator {
            String_map &operator_parameters,
            std::list<WB_log_entry> &log_entries,
            Errors &errors) override;
-
 };
 
-#endif //SRC__OPERATOR_TRANSFORM_IMAGE_MORPHOLOGY_HPP_
+#endif //CV_WORKBENCH_SRC_OPERATOR_FILTER_IMAGE_MORPHOLOGY_HPP_

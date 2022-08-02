@@ -10,46 +10,38 @@
 
 //
 
-bool Operator_utils::get_int_parameter(const std::string &module,
+void Operator_utils::get_int_parameter(const std::string &module,
                                        String_map &parameters,
                                        const std::string &parameter,
                                        int &int_value,
                                        Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module, "", "missing '" + parameter + "' parameter");
-    return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-      return false;
     } else if (!wb_utils::string_to_int(parameter_str, int_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
-      return false;
     }
   }
-  return true;
 }
 
-bool Operator_utils::get_real_parameter(const std::string &module,
+void Operator_utils::get_real_parameter(const std::string &module,
                                         String_map &parameters,
                                         const std::string &parameter,
                                         double &real_value,
                                         Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module, "", "missing '" + parameter + "' parameter");
-    return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-      return false;
     } else if (!wb_utils::string_to_double(parameter_str, real_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
-      return false;
     }
   }
-  return true;
 }
 
 /**

@@ -34,8 +34,29 @@ std::string wb_utils::char_to_string(char c) {
   return s;
 }
 
+pixel_32F wb_utils::cv_32S_to_cv_32F(pixel_32S value){
+return  int_to_float(value);
+}
+
+pixel_32S wb_utils::cv_32F_to_cv_32S(pixel_32F value){
+  return  float_to_int(value);
+}
+
+pixel_32S wb_utils::cv_32F_to_cv_32S_round(pixel_32F value){
+  return  float_to_int_round(value);
+}
+
 float wb_utils::double_to_float(double value) {
   return static_cast<float>(value);
+}
+
+// copies with truncation
+int wb_utils::double_to_int(double value) {
+  return static_cast<int>(value);
+}
+
+int wb_utils::double_to_int_round(double value) {
+  return static_cast<int>(round(value));
 }
 
 std::string wb_utils::double_to_string(double x, int width) {
@@ -51,6 +72,15 @@ std::string wb_utils::double_to_string(double x, int width) {
 void wb_utils::error_exit(const std::string &message) {
   std::cout << message << std::endl;
   exit(0);
+}
+
+// copies with truncation
+int wb_utils::float_to_int(float value) {
+  return static_cast<int>(value);
+}
+
+int wb_utils::float_to_int_round(float value) {
+  return static_cast<int>(round((double) value));
 }
 
 /**
@@ -377,14 +407,6 @@ std::string wb_utils::real_to_string(double i, int width) {
     os << std::setw(width) << i;
   }
   return os.str();
-}
-
-int wb_utils::round_double_to_int(double value) {
-  return static_cast<int>(round(value));
-}
-
-int wb_utils::round_float_to_int(float value) {
-  return static_cast<int>(round((double) value));
 }
 
 bool wb_utils::string_find(const std::string &text,

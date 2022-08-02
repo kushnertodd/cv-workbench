@@ -26,17 +26,19 @@ class Image {
   Image_header image_header;
   int next_pixel{};
   // image stores one buffer per image_header->depth
-  pixel_8U *buf_8U;
+  pixel_8U *buf_8U{};
   // pixel_8S *buf_8S; // unsupported
   // pixel_16U *buf_16U; // unsupported
   // pixel_16S *buf_16S; // unsupported
-  pixel_32F *buf_32F;
-  pixel_32S *buf_32S;
+  pixel_32F *buf_32F{};
+  pixel_32S *buf_32S{};
   // pixel_64F *buf_64F; // unsupported
   // pixel_16F *buf_16F; // unsupported
 
   virtual ~Image();
+  Image();
   Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth);
+  Image(Image &image);
   explicit Image(Image_header &image_header);
 
   // TODO: add component
@@ -45,8 +47,9 @@ class Image {
   void add_32S(pixel_32S *src, int count, Errors &errors);
 
   bool check_grayscale(Errors &errors) const;
-  //static Image *clone_image(Image *image, WB_image_depth::Image_depth depth);
-  //void create_histogram(Histogram &histogram) const;
+  static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
+  void copy(Image *image, Errors &errors);
+
   void draw_line_segment(const Line_segment &line_segment, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
 

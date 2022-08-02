@@ -34,6 +34,7 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   else if (operator_name == "filter-edge-prewitt") pOperator = new Operator_filter_edge_prewitt();
   else if (operator_name == "filter-edge-roberts") pOperator = new Operator_filter_edge_roberts();
   else if (operator_name == "filter-edge-sobel") pOperator = new Operator_filter_edge_sobel();
+  else if (operator_name == "filter-image-morphology") pOperator = new Operator_filter_image_morphology();
   else if (operator_name == "filter-smooth-average") pOperator = new Operator_filter_smooth_average();
   else if (operator_name == "filter-smooth-gaussian") pOperator = new Operator_filter_smooth_gaussian();
   else if (operator_name == "filter-smooth-median") pOperator = new Operator_filter_smooth_median();
@@ -44,7 +45,6 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   else if (operator_name == "hough-image-create") pOperator = new Operator_hough_image_create();
   else if (operator_name == "hough-peak-detect") pOperator = new Operator_hough_peak_detect();
   else if (operator_name == "transform-image-copy") pOperator = new Operator_transform_image_copy();
-  else if (operator_name == "transform-image-morphology") pOperator = new Operator_transform_image_morphology();
   else if (operator_name == "transform-intensity-map") pOperator = new Operator_transform_intensity_map();
   else
     pOperator = nullptr;
