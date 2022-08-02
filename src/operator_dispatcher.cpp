@@ -8,6 +8,7 @@
 #include "operator_filter_edge_prewitt.hpp"
 #include "operator_filter_edge_roberts.hpp"
 #include "operator_filter_edge_sobel.hpp"
+#include "operator_filter_image_morphology.hpp"
 #include "operator_filter_smooth_average.hpp"
 #include "operator_filter_smooth_gaussian.hpp"
 #include "operator_filter_smooth_median.hpp"
@@ -18,7 +19,6 @@
 #include "operator_hough_image_create.hpp"
 #include "operator_hough_peak_detect.hpp"
 #include "operator_transform_image_copy.hpp"
-#include "operator_transform_image_morphology.hpp"
 #include "operator_transform_intensity_map.hpp"
 #include "operator_dispatcher.hpp"
 

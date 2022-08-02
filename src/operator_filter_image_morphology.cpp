@@ -104,15 +104,23 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
       if (!errors.has_error() && input != nullptr)
         input->check_grayscale(errors);
       if (!errors.has_error() && morphology_kernel != nullptr) {
-        output = morphology_kernel->convolve(input, convolution_type);
-        output_data_store->write_image(output, errors);
+        output = morphology_kernel->convolve_morphological(input, convolution_type, errors);
+        if (!errors.has_error()) {
+          if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+            output_data_store->write_image_jpeg(output, errors);
+          } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+            output_data_store->write_image(output, errors);
+          } else {
+            errors.add("Operator_filter_image_morphology::run", "", "invalid data format '"
+                + WB_data_format::to_string(output_data_store->data_format) + "'");
+          }
+        }
+        if (!errors.has_error() && output != nullptr) {
+          output->log(log_entries);
+        }
+        delete input;
+        delete output;
       }
-      if (!errors.has_error() && output != nullptr) {
-        output->log(log_entries);
-      }
-      delete input;
-      delete output;
     }
   }
 }
-

@@ -14,33 +14,19 @@ class Morphology {
   static Kernel *create_structuring_element_ellipse(int rows, int cols);
 
   static Image *black_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                          int rows,
-                          int cols,
-                          int thickness, Errors &errors);
+                          int rows, int cols, int thickness, Errors &errors);
   static Image *close(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                      int rows,
-                      int cols,
-                      int thickness, Errors &errors);
+                      int rows, int cols, int thickness, Errors &errors);
   static Image *dilate(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                       int rows,
-                       int cols,
-                       int thickness, Errors &errors);
+                       int rows, int cols, int thickness, Errors &errors);
   static Image *erode(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                      int rows,
-                      int cols,
-                      int thickness, Errors &errors);
+                      int rows, int cols, int thickness, Errors &errors);
   static Image *gradient(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                         int rows,
-                         int cols,
-                         int thickness, Errors &errors);
+                         int rows, int cols, int thickness, Errors &errors);
   static Image *open(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                     int rows,
-                     int cols,
-                     int thickness, Errors &errors);
+                     int rows, int cols, int thickness, Errors &errors);
   static Image *top_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                        int rows,
-                        int cols,
-                        int thickness, Errors &errors);
+                        int rows, int cols, int thickness, Errors &errors);
 
 };
 

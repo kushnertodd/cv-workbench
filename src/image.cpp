@@ -635,6 +635,7 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
       break;
       return out_image;
   }
+  return out_image;
 }
 
 void Image::set(Point &point, double value) const {
@@ -642,7 +643,7 @@ void Image::set(Point &point, double value) const {
 }
 
 void Image::set_8U(int row, int col, pixel_8U value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
+  buf_8U[row_col_to_index(row, col)] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value) const {

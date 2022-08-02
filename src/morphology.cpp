@@ -45,7 +45,7 @@ Image *Morphology::dilate(Image *image, WB_morphology_types::Structuring_element
                           int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
       structuring_element(Kernel::create_structuring_element(structuring_element_type, rows, cols, thickness));
-  return structuring_element->convolve(image, WB_morphology_types::Convolution_type::DILATE);
+  return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::DILATE, errors);
 }
 
 // Output the minimum value under the structuring element
@@ -53,14 +53,14 @@ Image *Morphology::erode(Image *image, WB_morphology_types::Structuring_element_
                          int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
       structuring_element(Kernel::create_structuring_element(structuring_element_type, rows, cols, thickness));
-  return structuring_element->convolve(image, WB_morphology_types::Convolution_type::ERODE);
+  return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::ERODE, errors);
 }
 
 // Subtract the eroded image from the dilated image
 Image *Morphology::gradient(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                             int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Image>
-      eroded_image(Morphology::dilate(image, structuring_element_type, rows, cols, thickness, errors));
+      eroded_image(Morphology::erode(image, structuring_element_type, rows, cols, thickness, errors));
   if (errors.has_error())
     return nullptr;
   std::unique_ptr<Image>

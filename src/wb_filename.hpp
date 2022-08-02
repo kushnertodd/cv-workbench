@@ -22,6 +22,7 @@ class Wb_filename {
               std::string m_root,
               std::string m_ext,
               WB_data_format::Data_format m_format);
+  void add_suffix(const std::string &suffix);
   static Wb_filename *create_wb_filename(const std::string &m_filename, Errors &errors);
 
   bool is_bin() const;

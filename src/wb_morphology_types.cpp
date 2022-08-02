@@ -19,9 +19,9 @@ const std::map<WB_morphology_types::Structuring_element_type, std::string>
     };
 const std::map<std::string, WB_morphology_types::Convolution_type> WB_morphology_types::from_convolution_type_strings =
     {
-        {"bin", WB_morphology_types::Convolution_type::NUMERIC},
-        {"jpg", WB_morphology_types::Convolution_type::ERODE},
-        {"json", WB_morphology_types::Convolution_type::DILATE}
+        {"numeric", WB_morphology_types::Convolution_type::NUMERIC},
+        {"erode", WB_morphology_types::Convolution_type::ERODE},
+        {"dilate", WB_morphology_types::Convolution_type::DILATE}
     };
 const std::map<std::string, WB_morphology_types::Structuring_element_type>
     WB_morphology_types::from_structuring_element_type_strings =

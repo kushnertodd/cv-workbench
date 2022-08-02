@@ -19,6 +19,10 @@ Wb_filename::Wb_filename(std::string m_filename,
     ext(std::move(m_ext)),
     format(m_format) {}
 
+void Wb_filename::add_suffix(const std::string &suffix){
+  root += suffix;
+}
+
 Wb_filename *Wb_filename::create_wb_filename(const std::string &filename, Errors &errors) {
   for (const auto &data_format: WB_data_format::from_exts) {
     std::string ext = data_format.first;
