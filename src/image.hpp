@@ -71,6 +71,7 @@ class Image {
                     double upper_out) const;
   void get_stats(Variance_stats &stats) const;
   void init();
+
   void log(std::list<WB_log_entry> &log_entries) const;
 
   static Image *read(std::string &path, Errors &errors);
@@ -83,6 +84,7 @@ class Image {
   static double scale_pixel(double in_value, double lower_in,
                             double upper_in, double lower_out,
                             double upper_out);
+  static Image* subtract(Image *src_image, Image* subtract_image, Errors &errors);
 
   // TODO: add component
   void set(int row, int col, double value) const;
