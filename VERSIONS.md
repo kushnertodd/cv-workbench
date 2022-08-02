@@ -5,6 +5,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.21 dev
+```
+commit 32e123f0ef90028fb935b4e6f7cc1f5767eaba8c 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Mon Aug 1 20:02:10 2022 -0600
+```
+- added transform-image-morphology operator
+
 #### v0.1.20
 ```
 commit f7a881cd2a1590f838f31035797573991e0d481c (HEAD -> master, origin/master, origin/HEAD)
