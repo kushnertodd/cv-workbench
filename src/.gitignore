@@ -8,6 +8,7 @@ image-create
 image-dump
 image-info
 image-map
+image-morph
 *.bak
 *.o
 .*.swp
