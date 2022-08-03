@@ -6,6 +6,7 @@
 #define CV_WORKBENCH_SRC_OPERATOR_UTILS_HPP_
 
 #include <string>
+#include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
@@ -26,6 +27,7 @@ class Operator_utils {
   static std::string get_parameter(String_map &parameters, const std::string &parameter);
   static bool has_parameter(String_map &parameters, const std::string &parameter);
   static std::string parameters_to_string(String_map &parameters);
-};
+  static void write_operator_image(Data_source_descriptor *output_data_store, Image *output, Errors &errors);
+  };
 
 #endif //CV_WORKBENCH_SRC_OPERATOR_UTILS_HPP_

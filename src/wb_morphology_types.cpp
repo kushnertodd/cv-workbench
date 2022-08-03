@@ -4,7 +4,8 @@
 
 #include "wb_morphology_types.hpp"
 
-const std::map<WB_morphology_types::Convolution_type, std::string> WB_morphology_types::to_convolution_type_strings =
+const std::map<WB_morphology_types::Convolution_type,
+               std::string> WB_morphology_types::to_convolution_type_strings =
     {
         {WB_morphology_types::Convolution_type::NUMERIC, "numeric"},
         {WB_morphology_types::Convolution_type::ERODE, "erode"},
@@ -17,7 +18,8 @@ const std::map<WB_morphology_types::Structuring_element_type, std::string>
         {WB_morphology_types::Structuring_element_type::CROSS, "cross"},
         {WB_morphology_types::Structuring_element_type::ELLIPSE, "ellipse"}
     };
-const std::map<std::string, WB_morphology_types::Convolution_type> WB_morphology_types::from_convolution_type_strings =
+const std::map<std::string, WB_morphology_types::Convolution_type>
+    WB_morphology_types::from_convolution_type_strings =
     {
         {"numeric", WB_morphology_types::Convolution_type::NUMERIC},
         {"erode", WB_morphology_types::Convolution_type::ERODE},
@@ -31,7 +33,8 @@ const std::map<std::string, WB_morphology_types::Structuring_element_type>
         {"ellipse", WB_morphology_types::Structuring_element_type::ELLIPSE}
     };
 
-std::string WB_morphology_types::to_convolution_type_string(WB_morphology_types::Convolution_type convolution_type) {
+std::string WB_morphology_types::to_convolution_type_string(
+    WB_morphology_types::Convolution_type convolution_type) {
   return WB_morphology_types::to_convolution_type_strings.at(convolution_type);
 }
 
@@ -40,7 +43,8 @@ std::string WB_morphology_types::to_structuring_element_type_string(
   return WB_morphology_types::to_structuring_element_type_strings.at(structuring_element_type);
 }
 
-WB_morphology_types::Convolution_type WB_morphology_types::from_convolution_type_string(const std::string &text) {
+WB_morphology_types::Convolution_type WB_morphology_types::from_convolution_type_string(
+    const std::string &text) {
   if (WB_morphology_types::from_convolution_type_strings.count(text))
     return WB_morphology_types::from_convolution_type_strings.at(text);
   else
