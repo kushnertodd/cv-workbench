@@ -75,47 +75,47 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
   wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing image count in '" + path + "'", errors);
 
   float mean_float = 0.0;
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_float(fp,
                          mean_float,
                          "Image_header::read_header",
                          "",
                          "missing image mean in '" + path + "'",
                          errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     mean = mean_float;
 
   float standard_deviation_float = 0.0;
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_float(fp,
                          standard_deviation_float,
                          "Image_header::read_header",
                          "",
                          "missing image standard_deviation in '" + path + "'",
                          errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     standard_deviation = standard_deviation_float;
 
   float min_value = 0.0;
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_float(fp,
                          min_value,
                          "Image_header::read_header",
                          "",
                          "missing image min_value in '" + path + "'",
                          errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     bounds.min_value = min_value;
 
   float max_value = 0.0;
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_float(fp,
                          max_value,
                          "Image_header::read_header",
                          "",
                          "missing image max_value in '" + path + "'",
                          errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     bounds.max_value = max_value;
 }
 
@@ -157,28 +157,28 @@ void Variance_stats::update(double new_value) {
 }
 
 void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) const {
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count to '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(mean),
                           "Variance_stats::write",
                           "",
                           "cannot write mean to '" + path + "'",
                           errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(standard_deviation),
                           "Variance_stats::write",
                           "",
                           "cannot write standard_deviation to '" + path + "'",
                           errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.min_value),
                           "Histogram::write", "", "cannot write min_value to '" + path + "'",
                           errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.max_value),
                           "Histogram::write", "", "cannot write max_value to '" + path + "'",

@@ -7,6 +7,7 @@
 
 #include "image.hpp"
 #include "wb_defs.hpp"
+#include "wb_morphology_types.hpp"
 
 /**
  * Kernel class
@@ -15,41 +16,23 @@
  * Gaussian (http://www-edlab.cs.umass.edu/~smaji/cmpsci370/slides/hh/lec02_hh_advanced_edges.pdf),
  * but few enough that specially implementing them is not necessarily useful.
  */
-class Kernel {
+class Kernel : public Image {
  public:
-  int kernel_rows{};
-  int kernel_cols{};
-  WB_image_depth::Image_depth depth{};
-  int size{};
 
-  // image stores one buffer per image_header->depth
-  pixel_32S *buf_32S;
-  pixel_32F *buf_32F;
+  ~Kernel() override;
+  Kernel();
+  Kernel(int m_rows, int m_cols, WB_image_depth::Image_depth m_depth);
 
-  ~Kernel();
-  Kernel(int m_kernel_rows, int m_kernel_cols, WB_image_depth::Image_depth m_depth);
+  Image *convolve_numeric(Image *src, Errors &errors)const;
+  Image *convolve_morphological(Image *src, WB_morphology_types::Convolution_type convolution_type, Errors &errors) const;
+  Image *convolve(Image *src, WB_image_depth::Image_depth out_depth, WB_morphology_types::Convolution_type convolution_type, Errors &errors) const;
+  static Kernel *create_32S(int rows, int cols, const pixel_32S *buf_32S);
+  static Kernel *create_32F(int rows, int cols, const pixel_32F *buf_32F);
+  static Kernel *create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
+                                            int rows,
+                                            int cols,
+                                            int thickness = 0);
 
-  void add_32S(const pixel_32S *src, int count) const;
-  void add_32F(const pixel_32F *src, int count) const;
-
-  Image *convolve(Image *src) const;
-
-  static Kernel *create_32S(int kernel_rows, int kernel_cols, pixel_32S *buf_32S);
-  static Kernel *create_32F(int kernel_rows, int kernel_cols, pixel_32F *buf_32F);
-
-  double get(int row, int col) const;
-  pixel_32F get_32F(int row, int col) const;
-  pixel_32S get_32S(int row, int col) const;
-  int get_kernel_rows() const;
-  int get_kernel_cols() const;
-
-  int row_col_to_index(int row, int col) const;
-
-  void set(int row, int col, double value) const;
-  void set_32F(int row, int col, pixel_32F value) const;
-  void set_32S(int row, int col, pixel_32S value) const;
-
-  std::string to_string() const;
 };
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

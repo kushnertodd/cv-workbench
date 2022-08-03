@@ -31,16 +31,16 @@ Image_header::Image_header(Image_header &image_header) :
 
 void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
   wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows in '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_int(fp, cols, "Image_header::read_header", "", "missing image cols in '" + path + "'", errors);
-  if (errors.error_ct == 0)
+  if (!errors.has_error())
     wb_utils::read_int(fp,
                        components,
                        "Image_header::read_header",
                        "",
                        "missing image components in '" + path + "'",
                        errors);
-  if (errors.error_ct == 0) {
+  if (!errors.has_error()) {
     int depth_int;
     wb_utils::read_int(fp,
                        depth_int,
@@ -48,7 +48,7 @@ void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
                        "",
                        "missing image depth in '" + path + "'",
                        errors);
-    if (errors.error_ct == 0)
+    if (!errors.has_error())
       depth = static_cast<WB_image_depth::Image_depth>(depth_int);
   }
 }

@@ -69,7 +69,7 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
     errors.add("Operator_histogram_image_create::run", "", "missing 'upper_value' parameter");
   }
    */
-  if (errors.error_ct == 0) {
+  if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Image *input = nullptr;
     if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
@@ -79,9 +79,9 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
     else
       errors.add("Operator_histogram_image_create::run", "", "invalid data format: " +
           WB_data_format::to_string(input_data_source->data_format));
-    if (errors.error_ct == 0 && input != nullptr)
+    if (!errors.has_error() && input != nullptr)
       input->check_grayscale(errors);
-    if (errors.error_ct == 0) {
+    if (!errors.has_error()) {
       Histogram *histogram = Histogram::create_image(input, nbins, lower_value, upper_value,
                                                      saw_lower_value, saw_upper_value);
       for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {

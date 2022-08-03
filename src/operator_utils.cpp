@@ -3,6 +3,7 @@
 //
 
 #include <sstream>
+#include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -10,46 +11,38 @@
 
 //
 
-bool Operator_utils::get_int_parameter(const std::string &module,
+void Operator_utils::get_int_parameter(const std::string &module,
                                        String_map &parameters,
                                        const std::string &parameter,
                                        int &int_value,
                                        Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module, "", "missing '" + parameter + "' parameter");
-    return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-      return false;
     } else if (!wb_utils::string_to_int(parameter_str, int_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
-      return false;
     }
   }
-  return true;
 }
 
-bool Operator_utils::get_real_parameter(const std::string &module,
+void Operator_utils::get_real_parameter(const std::string &module,
                                         String_map &parameters,
                                         const std::string &parameter,
                                         double &real_value,
                                         Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
     errors.add(module, "", "missing '" + parameter + "' parameter");
-    return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::is_numeric(parameter_str)) {
       errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-      return false;
     } else if (!wb_utils::string_to_double(parameter_str, real_value)) {
       errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
-      return false;
     }
   }
-  return true;
 }
 
 /**
@@ -76,4 +69,15 @@ std::string Operator_utils::parameters_to_string(String_map &parameters) {
        << "'";
   }
   return os.str();
+}
+
+void Operator_utils::write_operator_image(Data_source_descriptor *output_data_store, Image *output, Errors &errors) {
+  if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+    output_data_store->write_image_jpeg(output, errors);
+  } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+    output_data_store->write_image(output, errors);
+  } else {
+    errors.add("Operator_utils::write_operator_image", "", "invalid data format '"
+        + WB_data_format::to_string(output_data_store->data_format) + "'");
+  }
 }

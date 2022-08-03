@@ -2,15 +2,37 @@
 
 Descriptions of each branch, commit, and version of CV-Workbench.
 - directory  
+
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
+
+#### v0.1.22 dev
+```
+commit c1814b63eb5ea2182d0219262ab4814232b0ce69 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Wed Aug 3 09:07:17 2022 -0600
+```
+- operator-filter-image-morphology works
+
+#### v0.1.21 dev
+```
+commit 32e123f0ef90028fb935b4e6f7cc1f5767eaba8c 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Mon Aug 1 20:02:10 2022 -0600
+```
+- added transform-image-morphology operator
 
 #### v0.1.20
 ```
-commit f7a881cd2a1590f838f31035797573991e0d481c (HEAD -> master, origin/master, origin/HEAD)
+commit f7a881cd2a1590f838f31035797573991e0d481c 
+(HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Jul 31 17:38:51 2022 -0600
 ```
 - first alpha release 0.1.20
+- sent to CU, U. of Utah, EZ3D
+- created dev branch
 
 #### v0.1.19
 ```

@@ -111,14 +111,14 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
   Image *input;
   Data_source_descriptor *input_data_source;
   Data_source_descriptor *output_data_store;
-  if (errors.error_ct == 0) {
+  if (!errors.has_error()) {
     input_data_source = input_data_sources.front();
     output_data_store = output_data_stores.front();
     input = input_data_source->read_image(errors);
     if (input != nullptr)
       input->check_grayscale(errors);
   }
-  if (errors.error_ct == 0) {
+  if (!errors.has_error()) {
     int rows = input->get_rows();
     int cols = input->get_cols();
     if (!saw_depth) {

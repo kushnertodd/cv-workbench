@@ -106,7 +106,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data_source_descriptor *output_data_store = output_data_stores.front();
         Image *input = nullptr;
-        Image *output = nullptr;
+        Image *output;
         if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
           input = input_data_source->read_image_jpeg(errors);
         else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
@@ -114,24 +114,26 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
         else
           errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format: " +
               WB_data_format::to_string(input_data_source->data_format));
-        if (errors.error_ct == 0 && input != nullptr)
+        if (!errors.has_error() && input != nullptr)
           input->check_grayscale(errors);
-        if (errors.error_ct == 0 && kirsch_kernel != nullptr) {
-          output = kirsch_kernel->convolve(input);
-          if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-            output_data_store->write_image_jpeg(output, errors);
-          } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            output_data_store->write_image(output, errors);
-          } else {
-            errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format '"
-                + WB_data_format::to_string(output_data_store->data_format) + "'");
+        if (!errors.has_error() && kirsch_kernel != nullptr) {
+          output = kirsch_kernel->convolve_numeric(input, errors);
+          if (!errors.has_error()) {
+            if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+              output_data_store->write_image_jpeg(output, errors);
+            } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+              output_data_store->write_image(output, errors);
+            } else {
+              errors.add("Operator_filter_edge_kirsch::run", "", "invalid data format '"
+                  + WB_data_format::to_string(output_data_store->data_format) + "'");
+            }
           }
+          if (!errors.has_error() && output != nullptr) {
+            output->log(log_entries);
+          }
+          delete input;
+          delete output;
         }
-        if (!errors.has_error() && output != nullptr) {
-          output->log(log_entries);
-        }
-        delete input;
-        delete output;
       }
     }
   }

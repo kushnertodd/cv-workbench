@@ -57,7 +57,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
   if (!saw_threshold) {
     errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
   }
-  if (errors.error_ct == 0) {
+  if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Image *input = nullptr;
     if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
@@ -67,9 +67,9 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     else
       errors.add("Operator_hough_image_create::run", "", "invalid data format: " +
           WB_data_format::to_string(input_data_source->data_format));
-    if (errors.error_ct == 0 && input != nullptr)
+    if (!errors.has_error() && input != nullptr)
       input->check_grayscale(errors);
-    if (errors.error_ct == 0) {
+    if (!errors.has_error()) {
       Hough *hough = Hough::create_image(input, theta_inc, threshold);
       for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
         if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
