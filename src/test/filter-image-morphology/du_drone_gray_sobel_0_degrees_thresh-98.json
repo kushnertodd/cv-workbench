@@ -1,230 +1,232 @@
 {
-  "experiment": {
-    "steps": [
+"experiment":
+  {
+"steps":
+    [
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
       {
         "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.dilate"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
-      {
-        "id": 1,
-        "operator": "filter-image-morphology",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
-          }
-        ],
-        "parameters": {
-     "structuring-element": "cross",
-     "height": "3",
-     "width": "3",
-     "thickness": "1",
-     "operation": "erode",
-     "repeat-count": ""
-        }
-      },
+"type": "image",
+"repository": "filesystem",
+"format": "jpeg",
+"directory": "test/reference",
+"filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+      }
+      ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.erode"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "erode",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.dilate"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "dilate",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.open"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "open",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.close"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "close",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.black_hat"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "black-hat",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.gradient"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "gradient",
+"repeat-count": ""
+      }
+    },
+    {
+      "id": 1,
+"operator": "filter-image-morphology",
+"input-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "test/reference",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+       }
+       ],
+"output-data": [
+       {
+         "id": 1,
+ "type": "image",
+ "repository": "filesystem",
+ "format": "jpeg",
+ "directory": "images",
+ "filename": "du_drone_gray_sobel_0_degrees_thresh-98.top_hat"
+       }
+       ],
+"parameters": {
+"structuring-element": "cross",
+"height": "3",
+"width": "3",
+"thickness": "1",
+"operation": "top-hat",
+"repeat-count": ""
+      }
+    }
     ]
   }
 }

@@ -28,7 +28,7 @@ Operator_filter_image_morphology::~Operator_filter_image_morphology() = default;
  * - close     dilate followed by erode
  * - gradient  subtract the eroded image from the dilated image
  * - top-hat   subtract the input image and the opened image
- * - back-hat  subtract the closed image from the input image
+ * - black-hat  subtract the closed image from the input image
  * references:
  * https://docs.opencv.org/4.x/d9/d61/tutorial_py_morphological_ops.html
  *
@@ -138,7 +138,7 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
             Operator_utils::write_operator_image(output_data_stores.front(), black_hat_image.get(), errors);
           if (!errors.has_error()) black_hat_image->log(log_entries);
         } else
-          errors.add("Operator_filter_image_morphology::run", "", "invalid 'operation' parameter");
+          errors.add("Operator_filter_image_morphology::run", "", "invalid 'operation' parameter: "+operator_str);
         delete input;
       }
     }
