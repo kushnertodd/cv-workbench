@@ -37,13 +37,25 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
 }
 
 void Hough::find_lines() {
-  find_peaks();
+  find_peaks(1);
   lines_to_line_segments();
 }
 
-void Hough::find_peaks() {
-  int peak_threshold = hough_accum->choose_threshold(cv_enums::WB_threshold_type::FIXED);
-  hough_accum->find_peaks(lines, peak_threshold);
+void Hough::find_peaks(int npeaks) {
+//  Histogram *histogram = Histogram::create_hough(this, 1000,
+//                                                 0,
+//                                                 0,
+//                                                 false,
+//                                                 false);
+  int peak_ct = 0;
+  double threshold = 0.0;
+  for (int i = 999; i >= 0 && peak_ct < npeaks; i++) {
+    peak_ct += histogram->bins[i];
+    if (peak_ct < npeaks) {
+      threshold = histogram->get_value(i);
+    }
+  }
+  hough_accum->find_peaks(lines, threshold);
   if (debug) {
     for (Polar_line line: lines) {
       std::cout << "Hough::find_peaks: lines " << line.to_string() << std::endl;
@@ -106,6 +118,45 @@ void Hough::write_text(const std::string &filename, const std::string &delim, Er
   ofs.close();
 }
 
+void Hough::write_peak_lines(const std::string &filename, Errors &errors) const {
+  if (debug)
+    std::cout << "Image::write path '" << path << std::endl;
+  FILE *fp = fopen(path.c_str(), "w");
+  if (fp == nullptr) {
+    errors.add("Hough::write", "", "invalid file '" + path + "'");
+    fclose(fp);
+    return;
+  }
+  int npeaks = lines.size();
+  fwrite(&npeaks, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough peak line count to '" + path + "'");
+    fclose(fp);
+    return;
+  }
+  fwrite(&hough_accum->theta_inc, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough theta_inc to '" + path + "'");
+    fclose(fp);
+    return;
+  }
+  fwrite(&hough_accum->nrhos, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Image::write_header", "", "cannot write Hough nrhos to '" + path + "'");
+    fclose(fp);
+    return;
+  }
+  for (Polar_line line: lines) {
+    line.write(fp, errors);
+    if (errors.has_error())
+    break;
+  }
+  fclose(fp);
+}
+
+void Hough::write_peak_lines_text(const std::string &filename, const std::string &delim, Errors &errors) const {
+
+}
 
 
 

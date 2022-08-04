@@ -52,6 +52,20 @@ Histogram *Histogram::create_hough(Hough *hough,
   return histogram;
 }
 
+void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
+  const int nbins = 1000;
+  Histogram *histogram = create_hough(hough, nbins, 0, 0, false, false);
+  int peak_ct = 0;
+  double threshold = 0.0;
+  for (int i = nbins-1; i >= 0 && peak_ct < npeaks; i--) {
+    peak_ct += histogram->bins[i];
+    if (peak_ct < npeaks) {
+      threshold = histogram->get_value(i);
+    }
+  }
+  hough->hough_accum->find_peaks(hough->lines, threshold);
+}
+
 int Histogram::get_bin(double value) const {
   if (value < lower_value)
     return 0;

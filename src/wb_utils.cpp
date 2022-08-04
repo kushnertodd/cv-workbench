@@ -34,16 +34,16 @@ std::string wb_utils::char_to_string(char c) {
   return s;
 }
 
-pixel_32F wb_utils::cv_32S_to_cv_32F(pixel_32S value){
-return  int_to_float(value);
+pixel_32F wb_utils::cv_32S_to_cv_32F(pixel_32S value) {
+  return int_to_float(value);
 }
 
-pixel_32S wb_utils::cv_32F_to_cv_32S(pixel_32F value){
-  return  float_to_int(value);
+pixel_32S wb_utils::cv_32F_to_cv_32S(pixel_32F value) {
+  return float_to_int(value);
 }
 
-pixel_32S wb_utils::cv_32F_to_cv_32S_round(pixel_32F value){
-  return  float_to_int_round(value);
+pixel_32S wb_utils::cv_32F_to_cv_32S_round(pixel_32F value) {
+  return float_to_int_round(value);
 }
 
 float wb_utils::double_to_float(double value) {

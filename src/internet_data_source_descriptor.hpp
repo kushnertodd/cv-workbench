@@ -36,6 +36,8 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
   void write_histogram_text(Histogram *histogram, Errors &errors) override;
   void write_hough(Hough *hough, Errors &errors) override;
   void write_hough_text(Hough *hough, Errors &errors) override;
+  void write_hough_peaks(Hough *hough, Errors &errors) override;
+  void write_hough_peaks_text(Hough *hough, Errors &errors) override;
   void write_image(Image *image, Errors &errors) override;
   void write_image_jpeg(Image *image, Errors &errors) override;
   void write_image_text(Image *image, Errors &errors) override;

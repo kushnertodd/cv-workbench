@@ -59,18 +59,22 @@ void Image_header::write(FILE *fp, const std::string &path, Errors &errors) cons
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write image rows to '" + path + "'");
+    return;
   }
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write image cols to '" + path + "'");
+    return;
   }
   fwrite(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write image components to '" + path + "'");
+    return;
   }
   fwrite(&depth, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write image depth to '" + path + "'");
+    return;
   }
 }
 

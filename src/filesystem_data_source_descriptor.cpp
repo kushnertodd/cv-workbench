@@ -60,6 +60,14 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
   hough->write_text(path, "\t", errors);
 }
 
+void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
+
+} 
+
+void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {
+
+}
+
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
   image->write(path, errors);

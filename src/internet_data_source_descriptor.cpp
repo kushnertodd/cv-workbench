@@ -28,6 +28,8 @@ void Internet_data_source_descriptor::write_histogram(Histogram *histogram, Erro
 void Internet_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {} 
+void Internet_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {}
 void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}

@@ -26,14 +26,15 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
     errors.add("Operator_hough_image_create::run", "", "missing output data source");
   else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_image_create::run", "", "too many output data sources");
-  int npeaks = 0;
+  int npeak = 0;
+  bool saw_threshold = false;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                       operator_parameters, "npeaks", npeaks, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Hough *hough = input_data_source->read_hough(errors);
+    Hough *hough = input_data_source->Hough::read_hough(errors);
     if (!errors.has_error() && hough != nullptr)
-      Histogram::find_hough_peaks(hough, npeaks);
+      Histogram::find_peaks(hough, npeaks);
       for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
         if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
           hough_output_data_store->write_hough_peaks(hough, errors);

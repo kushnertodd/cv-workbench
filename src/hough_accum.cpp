@@ -47,14 +47,6 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols) :
   }
 }
 
-int Hough_accum::choose_threshold(cv_enums::WB_threshold_type threshold_type) const {
-  if (threshold_type == cv_enums::WB_threshold_type::FIXED) {
-    return 40000; //bounds.max_value * 0.55; //0.90;
-  } else if (threshold_type == cv_enums::WB_threshold_type::PERCENTAGE) {
-    return wb_utils::double_to_int_round(accumulator_stats.bounds.max_value * 0.85);
-  } else return -1;
-}
-
 /**
  * Clips a polar line against a window and returns a line segment from the endpoints
  * There are two main cases based on the angle of the line, because there is a potential
@@ -349,17 +341,14 @@ double Hough_accum::deg_to_rad(int deg) {
   return rad;
 }
 
-void Hough_accum::find_peaks(std::list<Polar_line> &lines, int peak_threshold,
-                             bool non_max_suppression) const {
+void Hough_accum::find_peaks(std::list<Polar_line> &lines, double threshold) const {
   for (int theta_index = 0; theta_index < nthetas; theta_index++) {
     for (int rho_index = 0; rho_index < nrhos; rho_index++) {
       int count = get(rho_index, theta_index);
-      if (count > peak_threshold) {
-        if (!non_max_suppression) {
-          Polar_line line(rho_index, rho_index_to_rho(rho_index), theta_index, get_cos(theta_index),
-                          get_sin(theta_index), count);
-          lines.push_back(line);
-        }
+      if (count > threshold) {
+        Polar_line line(rho_index, rho_index_to_rho(rho_index), theta_index, get_cos(theta_index),
+                        get_sin(theta_index), count);
+        lines.push_back(line);
       }
     }
   }
@@ -546,24 +535,30 @@ void Hough_accum::write(FILE *fp, const std::string &path, Errors &errors) const
   fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc to '" + path + "'");
+    return;
   }
   fwrite(&nrhos, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough accumulator nrhos to '" + path + "'");
+    return;
   }
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough accumulator rows to '" + path + "'");
+    return;
   }
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough accumulator cols to '" + path + "'");
+    return;
   }
   size_t newLen;
   newLen = fwrite(rho_theta_counts, sizeof(int), nbins, fp);
   if (ferror(fp) != 0 || newLen != nbins) {
     errors.add("Image::write", "", "cannot write Hough accumulator data to '" + path + "'");
+    return;
   }
+}
 }
 
 void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {

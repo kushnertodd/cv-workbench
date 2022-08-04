@@ -35,6 +35,8 @@ class Data_source_descriptor {
   virtual void write_histogram_text(Histogram *histogram, Errors &errors) = 0;
   virtual void write_hough(Hough *hough, Errors &errors) = 0;
   virtual void write_hough_text(Hough *hough, Errors &errors) = 0;
+  virtual void write_hough_peaks(Hough *hough, Errors &errors) = 0;
+  virtual void write_hough_peaks_text(Hough *hough, Errors &errors) = 0;
   virtual void write_image(Image *image, Errors &errors) = 0;
   virtual void write_image_jpeg(Image *image, Errors &errors) = 0;
   virtual void write_image_text(Image *image, Errors &errors) = 0;

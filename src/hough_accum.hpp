@@ -38,13 +38,11 @@ class Hough_accum {
   Hough_accum();
   Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols);
 
-  int choose_threshold(cv_enums::WB_threshold_type threshold_type) const;
   bool clip_window(Line_segment &line_segment, Polar_line &line) const;
   double col_to_x(int col) const;
   static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
   static double deg_to_rad(int deg);
-  void find_peaks(std::list<Polar_line> &lines, int peak_threshold,
-                  bool non_max_suppression = false) const;
+  void find_peaks(std::list<Polar_line> &lines, double threshold) const;
   int get(int rho_index, int theta_index) const;
   int get_cols() const;
   double get_cos(int theta_index) const;
