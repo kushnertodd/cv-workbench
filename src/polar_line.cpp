@@ -3,7 +3,6 @@
 //
 
 #include <algorithm>
-#include <list>
 #include <iostream>
 #include <sstream>
 #include "errors.hpp"

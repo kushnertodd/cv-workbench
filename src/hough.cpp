@@ -3,11 +3,9 @@
 //
 
 #include <cstring>
-#include <fstream>
 #include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
-#include "wb_utils.hpp"
 #include "hough_accum.hpp"
 #include "hough.hpp"
 
@@ -72,17 +70,17 @@ void Hough::lines_to_line_segments() {
       line_segments.push_back(line_segment);
   }
 }
- Hough *Hough::read(const std::string& path, Errors &errors) {
+Hough *Hough::read(const std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Hough *hough = nullptr;
   if (fp) {
     hough = Hough::read(fp, errors);
     fclose(fp);
   }
-return hough;
+  return hough;
 }
 
-Hough *Hough::read(FILE* fp, Errors &errors) {
+Hough *Hough::read(FILE *fp, Errors &errors) {
   Hough_accum *hough_accum = Hough_accum::read(fp, errors);
   if (hough_accum == nullptr || errors.has_error())
     return nullptr;
@@ -90,14 +88,14 @@ Hough *Hough::read(FILE* fp, Errors &errors) {
 }
 
 // NRFPT
-Hough *Hough::read_text(std::ifstream& ifs, Errors &errors) {
+Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
   Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
   if (hough_accum == nullptr || errors.has_error())
     return nullptr;
   return new Hough(hough_accum);
 }
 
-void Hough::write(const std::string& path, Errors &errors) const {
+void Hough::write(const std::string &path, Errors &errors) const {
   FILE *fp = file_utils::open_file_write(path, errors);
   if (fp) {
     write(fp, errors);
@@ -109,12 +107,13 @@ void Hough::write(FILE *fp, Errors &errors) const {
   hough_accum->write(fp, errors);
 }
 
-void Hough::write_text(const std::string& path, const std::string &delim, Errors &errors) const {
+void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
   if (ofs) {
     hough_accum->write_text(ofs, "\t", errors);
     ofs.close();
-  } }
+  }
+}
 
 void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   hough_accum->write_text(ofs, "\t", errors);
@@ -140,7 +139,7 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
   for (Polar_line line: lines) {
     line.write(fp, errors);
     if (errors.has_error())
-    break;
+      break;
   }
 }
 

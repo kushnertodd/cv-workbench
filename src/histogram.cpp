@@ -2,7 +2,6 @@
 // Created by kushn on 6/11/2022.
 //
 
-#include <cstring>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -166,7 +165,7 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
   log_entries.push_back(log_entry_bin_max_count);
 }
 
-static Histogram *read(const std::string& path, Errors &errors) {
+static Histogram *read(const std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Histogram *histogram = nullptr;
   if (fp) {
@@ -225,7 +224,7 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
   return histogram;
 }
 
- Histogram *Histogram::read_text(std::ifstream& ifs,Errors &errors){
+Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
 
@@ -268,7 +267,7 @@ void Histogram::write(FILE *fp, Errors &errors) const {
     wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins'", errors);
 }
 
-void Histogram::write_gp_script(const Wb_filename& wb_filename) {
+void Histogram::write_gp_script(const Wb_filename &wb_filename) {
   std::string script_filename = wb_filename.to_hist_script();
   std::string data_filename = wb_filename.to_hist_text();
   std::ofstream ofs(script_filename, std::ofstream::out);

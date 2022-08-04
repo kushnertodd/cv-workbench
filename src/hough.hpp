@@ -22,12 +22,12 @@ class Hough {
   void find_lines();
   //void find_peaks(int npeaks);
   void lines_to_line_segments();
-  static Hough *read(const std::string& path, Errors &errors);
-  static Hough *read(FILE* fp, Errors &errors);
-  static Hough *read_text(std::ifstream& ifs,Errors &errors);
-  void write(const std::string& path, Errors &errors) const;
+  static Hough *read(const std::string &path, Errors &errors);
+  static Hough *read(FILE *fp, Errors &errors);
+  static Hough *read_text(std::ifstream &ifs, Errors &errors);
+  void write(const std::string &path, Errors &errors) const;
   void write(FILE *fp, Errors &errors) const;
-  void write_text(const std::string& path, const std::string &delim, Errors &errors) const;
+  void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   void write_peak_lines(FILE *fp, Errors &errors) const;
   void write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;

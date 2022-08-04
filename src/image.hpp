@@ -74,10 +74,10 @@ class Image {
 
   void log(std::list<WB_log_entry> &log_entries) const;
 
-  static Image *read(std::string& path, Errors &errors);
-  static Image *read(FILE* fp, Errors &errors);
-  static Image *read_text(std::string path,Errors &errors);
-  static Image *read_text(std::ifstream& ifs,Errors &errors);
+  static Image *read(std::string &path, Errors &errors);
+  static Image *read(FILE *fp, Errors &errors);
+  static Image *read_text(const std::string& path, Errors &errors);
+  static Image *read_text(std::ifstream &ifs, Errors &errors);
 
   static Image *read_jpeg(const std::string &path, Errors &errors);
   int row_col_to_index(int row, int col) const;
@@ -87,7 +87,7 @@ class Image {
   static double scale_pixel(double in_value, double lower_in,
                             double upper_in, double lower_out,
                             double upper_out);
-  static Image* subtract(Image *src_image, Image* subtract_image, Errors &errors);
+  static Image *subtract(Image *src_image, Image *subtract_image, Errors &errors);
 
   // TODO: add component
   void set(int row, int col, double value) const;
@@ -98,9 +98,9 @@ class Image {
 
   Image *to_rgb(int components) const;
   std::string to_string(const std::string &prefix = "") const;
-  void write(const std::string& path, Errors &errors) const;
+  void write(const std::string &path, Errors &errors) const;
   void write(FILE *fp, Errors &errors) const;
-  void write_text(const std::string& path, const std::string &delim, Errors &errors) const;
+  void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   void write_jpeg(const std::string &path, Errors &errors) const;
 };

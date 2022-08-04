@@ -27,7 +27,7 @@ class Image_header {
   Image_header(Image_header &image_header);
   void read(FILE *fp, Errors &errors);
   void write(FILE *fp, Errors &errors) const;
-  std::string to_string(const std::string& prefix = "") const;
+  std::string to_string(const std::string &prefix = "") const;
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

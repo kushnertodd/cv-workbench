@@ -90,7 +90,7 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Image *image = nullptr;
   if (fp) {
-  image = Image::read(fp, errors);
+    image = Image::read(fp, errors);
     fclose(fp);
   }
   return image;
@@ -103,7 +103,7 @@ Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
 
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
- Hough *read_text(std::ifstream& ifs, Errors &errors){
+Hough *read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
 
@@ -132,8 +132,9 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
   FILE *fp = file_utils::open_file_write(data_filename, errors);
   if (fp) {
     histogram->write(fp, errors);
-  fclose(fp);
-}}
+    fclose(fp);
+  }
+}
 
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
   std::string path = to_path_noext();
@@ -144,18 +145,18 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
   std::string path = to_path();
   FILE *fp = file_utils::open_file_write(path, errors);
   if (fp) {
- hough->write(fp, errors);
-  fclose(fp);
-}
+    hough->write(fp, errors);
+    fclose(fp);
+  }
 }
 
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
   std::string path = to_path();
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
-if (ofs) {
-  hough->write_text(ofs, "\t", errors);
-ofs.close();
-}
+  if (ofs) {
+    hough->write_text(ofs, "\t", errors);
+    ofs.close();
+  }
 }
 
 void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
@@ -170,7 +171,7 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   std::string path = to_path();
   FILE *fp = file_utils::open_file_write(path, errors);
   if (fp) {
-  image->write(fp, errors);
+    image->write(fp, errors);
     fclose(fp);
   }
 }
@@ -179,7 +180,7 @@ void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &e
   std::string path = to_path();
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
   if (ofs) {
-  image->write_text(ofs, "\t", errors);
+    image->write_text(ofs, "\t", errors);
     ofs.close();
   }
 }

@@ -406,7 +406,7 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
   log_entries.push_back(log_entry_max_value);
 }
 
- Image *Image::read(std::string& path, Errors &errors){
+Image *Image::read(std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Image *image = nullptr;
   if (fp) {
@@ -529,12 +529,12 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   return image;
 }
 
-Image *Image::read_text(std::string path,Errors &errors){
+Image *Image::read_text(const std::string &path, Errors &errors) {
   return nullptr;
 }
 
-Image *Image::read_text(std::ifstream& ifs,Errors &errors){
-return nullptr;
+Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
+  return nullptr;
 }
 
 int Image::row_col_to_index(int row, int col) const {
@@ -623,7 +623,7 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
 //    return nullptr;
 //  }
 
-  Image *out_image = new Image(src_image->image_header);
+  auto *out_image = new Image(src_image->image_header);
 
   int size = src_image->get_npixels();
   switch (src_image->get_depth()) {
@@ -644,7 +644,6 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
 
     default:
       break;
-      return out_image;
   }
   return out_image;
 }
@@ -704,10 +703,10 @@ std::string Image::to_string(const std::string &prefix) const {
   return os.str();
 }
 
-void Image::write(const std::string& path, Errors &errors) const{
+void Image::write(const std::string &path, Errors &errors) const {
   FILE *fp = file_utils::open_file_write(path, errors);
   if (fp) {
-  write(fp, errors);
+    write(fp, errors);
     fclose(fp);
   }
 }
@@ -791,7 +790,7 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
   jpeg_destroy_compress(&cinfo);
 }
 
-void Image::write_text(const std::string& path, const std::string &delim, Errors &errors) const {
+void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
   if (ofs) {
     write_text(ofs, "\t", errors);
