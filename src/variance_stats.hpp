@@ -39,7 +39,7 @@ class Variance_stats {
   void read(FILE *fp, const std::string &path, Errors &errors);
   std::string to_string(const std::string &prefix = "");
   void update(double new_value);
-  void write(FILE *fp, const std::string &path, Errors &errors) const;
+  void write(FILE *fp, Errors &errors) const;
 };
 
 #endif //SRC__VARIANCE_STATS_HPP_

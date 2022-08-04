@@ -1,9 +1,10 @@
+#include <cerrno>
+#include <cstring>
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <cstring>
-#include <vector>
 #include <sstream>
+#include <string>
+#include <vector>
 #include "file_utils.hpp"
 
 //
@@ -17,6 +18,39 @@ long file_utils::file_size(std::ifstream &in) {
   // Get the number of bytes
   in.seekg(0, std::ios::end);
   return in.tellg();
+}
+
+FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
+  FILE *fp = fopen(path.c_str(), "r");
+  if (fp == nullptr) {
+    errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+  }
+  return fp;
+}
+
+FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
+  FILE *fp = fopen(path.c_str(), "w");
+  if (fp == nullptr) {
+    errors.add("file_utils::open_file", "", "cannot open file " + path + " for writing: " + strerror(errno));
+  }
+  return fp;
+}
+
+std::ifstream open_file_text_read(const std::string &path, Errors &errors) {
+  std::ifstream ifs(path, std::ofstream::out);
+  if (!ifs) {
+    errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+  }
+  return ifs;
+}
+
+std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
+  std::ofstream ofs(path, std::ofstream::out);
+  if (!ofs) {
+    errors.add("Hough:write", "", "invalid filename '" + path + "'");
+    errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+  }
+  return ofs;
 }
 
 /**

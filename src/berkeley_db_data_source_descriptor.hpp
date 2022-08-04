@@ -21,6 +21,12 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   Berkeley_db_data_source_descriptor(int m_id,
                                      WB_data_type::Data_type m_data_type,
                                      WB_data_format::Data_format m_data_format);
+  static Berkeley_db_data_source_descriptor
+  *from_json(json_object *json_data_source_descriptor,
+             int id,
+             WB_data_type::Data_type data_type,
+             WB_data_format::Data_format data_format,
+             Errors &errors);
   Histogram *read_histogram(Errors &errors) override;
   Hough *read_hough(Errors &errors) override;
   Image *read_image(Errors &errors) override;
@@ -36,12 +42,6 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   void write_image_jpeg(Image *image, Errors &errors) override;
   void write_image_text(Image *image, Errors &errors) override;
   void write_json(std::string &json, Errors &errors) override;
-  static Berkeley_db_data_source_descriptor
-  *from_json(json_object *json_data_source_descriptor,
-             int id,
-             WB_data_type::Data_type data_type,
-             WB_data_format::Data_format data_format,
-             Errors &errors);
   std::string to_string() override;
 };
 

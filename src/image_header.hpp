@@ -25,8 +25,8 @@ class Image_header {
   Image_header(int m_rows, int m_cols, int m_components,
                WB_image_depth::Image_depth m_depth);
   Image_header(Image_header &image_header);
-  void read(FILE *fp, const std::string &path, Errors &errors);
-  void write(FILE *fp, const std::string &path, Errors &errors) const;
+  void read(FILE *fp, Errors &errors);
+  void write(FILE *fp, Errors &errors) const;
   std::string to_string(const std::string& prefix = "") const;
 };
 

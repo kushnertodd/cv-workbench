@@ -50,7 +50,7 @@ class Hough_accum {
   double get_sin(int theta_index) const;
   bool in_window(Point &point) const;
   void initialize(Image *image, int image_theshold);
-  static Hough_accum *read(FILE *fp, const std::string &path, Errors &errors);
+  static Hough_accum *read(FILE *fp, Errors &errors);
   static Hough_accum *read_text(std::ifstream &ifs, Errors &errors);
   double rho_index_to_rho(int rho_index) const;
   int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
@@ -64,7 +64,7 @@ class Hough_accum {
   int theta_index_to_theta(int index) const;
   void update(int rho_index, int theta_index, int value) const;
   void update_accumulator_stats();
-  void write(FILE *fp, const std::string &path, Errors &errors) const;
+  void write(FILE *fp, Errors &errors) const;
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   int x_to_col(double x) const;
   int y_to_row(double y) const;

@@ -27,24 +27,24 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
   else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_image_create::run", "", "too many output data sources");
   int npeaks = 0;
-    Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "npeaks", npeaks, errors);
+  Operator_utils::get_int_parameter("Operator_hough_image_create::run",
+                                    operator_parameters, "npeaks", npeaks, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Hough *hough = input_data_source->read_hough(errors);
     if (!errors.has_error() && hough != nullptr)
       Histogram::find_hough_peaks(hough, npeaks);
-      for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-        if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-          hough_output_data_store->write_hough_peaks(hough, errors);
-        } else if (hough_output_data_store->data_format == WB_data_format::Data_format::TEXT) {
-          hough_output_data_store->write_hough_peaks_text(hough, errors);
-        } else {
-          errors.add("Operator_hough_image_create::run", "", "invalid data format "
-              + WB_data_format::to_string(hough_output_data_store->data_format));
-        }
+    for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
+      if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+        hough_output_data_store->write_hough_peaks(hough, errors);
+      } else if (hough_output_data_store->data_format == WB_data_format::Data_format::TEXT) {
+        hough_output_data_store->write_hough_peaks_text(hough, errors);
+      } else {
+        errors.add("Operator_hough_image_create::run", "", "invalid data format "
+            + WB_data_format::to_string(hough_output_data_store->data_format));
       }
-      delete hough;
     }
+    delete hough;
   }
 }
+

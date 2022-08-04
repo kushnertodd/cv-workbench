@@ -29,16 +29,16 @@ Image_header::Image_header(Image_header &image_header) :
                  image_header.depth) {
 }
 
-void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
-  wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows in '" + path + "'", errors);
+void Image_header::read(FILE *fp, Errors &errors) {
+  wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows", errors);
   if (!errors.has_error())
-    wb_utils::read_int(fp, cols, "Image_header::read_header", "", "missing image cols in '" + path + "'", errors);
+    wb_utils::read_int(fp, cols, "Image_header::read_header", "", "missing image cols", errors);
   if (!errors.has_error())
     wb_utils::read_int(fp,
                        components,
                        "Image_header::read_header",
                        "",
-                       "missing image components in '" + path + "'",
+                       "missing image components",
                        errors);
   if (!errors.has_error()) {
     int depth_int;
@@ -46,34 +46,32 @@ void Image_header::read(FILE *fp, const std::string &path, Errors &errors) {
                        depth_int,
                        "Image_header::read_header",
                        "",
-                       "missing image depth in '" + path + "'",
+                       "missing image depth",
                        errors);
     if (!errors.has_error())
       depth = static_cast<WB_image_depth::Image_depth>(depth_int);
   }
 }
 
-void Image_header::write(FILE *fp, const std::string &path, Errors &errors) const {
-  if (debug)
-    std::cout << "Image_header::write_header  path '" << path << "' " << to_string() << std::endl;
+void Image_header::write(FILE *fp, Errors &errors) const {
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image rows to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write image rows");
     return;
   }
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image cols to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write image cols");
     return;
   }
   fwrite(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image components to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write image components");
     return;
   }
   fwrite(&depth, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image depth to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write image depth");
     return;
   }
 }

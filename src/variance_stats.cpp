@@ -72,7 +72,7 @@ bool Variance_stats::is_valid() const {
 }
 
 void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
-  wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing image count in '" + path + "'", errors);
+  wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing image count", errors);
 
   float mean_float = 0.0;
   if (!errors.has_error())
@@ -80,7 +80,7 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
                          mean_float,
                          "Image_header::read_header",
                          "",
-                         "missing image mean in '" + path + "'",
+                         "missing image mean",
                          errors);
   if (!errors.has_error())
     mean = mean_float;
@@ -91,7 +91,7 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
                          standard_deviation_float,
                          "Image_header::read_header",
                          "",
-                         "missing image standard_deviation in '" + path + "'",
+                         "missing image standard_deviation",
                          errors);
   if (!errors.has_error())
     standard_deviation = standard_deviation_float;
@@ -102,7 +102,7 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
                          min_value,
                          "Image_header::read_header",
                          "",
-                         "missing image min_value in '" + path + "'",
+                         "missing image min_value",
                          errors);
   if (!errors.has_error())
     bounds.min_value = min_value;
@@ -113,7 +113,7 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
                          max_value,
                          "Image_header::read_header",
                          "",
-                         "missing image max_value in '" + path + "'",
+                         "missing image max_value",
                          errors);
   if (!errors.has_error())
     bounds.max_value = max_value;
@@ -156,31 +156,31 @@ void Variance_stats::update(double new_value) {
   bounds.update(new_value);
 }
 
-void Variance_stats::write(FILE *fp, const std::string &path, Errors &errors) const {
+void Variance_stats::write(FILE *fp, Errors &errors) const {
   if (!errors.has_error())
-    wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count to '" + path + "'", errors);
+    wb_utils::write_int(fp, count, "Variance_stats::write", "", "cannot write count", errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(mean),
                           "Variance_stats::write",
                           "",
-                          "cannot write mean to '" + path + "'",
+                          "cannot write mean",
                           errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(standard_deviation),
                           "Variance_stats::write",
                           "",
-                          "cannot write standard_deviation to '" + path + "'",
+                          "cannot write standard_deviation",
                           errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.min_value),
-                          "Histogram::write", "", "cannot write min_value to '" + path + "'",
+                          "Histogram::write", "", "cannot write min_value",
                           errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(bounds.max_value),
-                          "Histogram::write", "", "cannot write max_value to '" + path + "'",
+                          "Histogram::write", "", "cannot write max_value",
                           errors);
 }

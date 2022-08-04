@@ -394,7 +394,7 @@ void Hough_accum::initialize(Image *image, int image_theshold) {
   update_accumulator_stats();
 }
 
-Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors) {
+Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
   int theta_inc;
   int nrhos;
   int rows;
@@ -403,14 +403,14 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
                      theta_inc,
                      "Hough_accum::read",
                      "",
-                     "missing hough accumulator theta_inc in '" + path + "'",
+                     "missing hough accumulator theta_inc",
                      errors);
   if (!errors.has_error())
-    wb_utils::read_int(fp, nrhos, "Hough_accum::read", "", "missing hough accumulator nrhos in '" + path + "'", errors);
+    wb_utils::read_int(fp, nrhos, "Hough_accum::read", "", "missing hough accumulator nrhos", errors);
   if (!errors.has_error())
-    wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator rows in '" + path + "'", errors);
+    wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator rows", errors);
   if (!errors.has_error())
-    wb_utils::read_int(fp, cols, "Hough_accum::read", "", "missing hough accumulator cols in '" + path + "'", errors);
+    wb_utils::read_int(fp, cols, "Hough_accum::read", "", "missing hough accumulator cols", errors);
   if (errors.has_error())
     return nullptr;
   else {
@@ -420,7 +420,7 @@ Hough_accum *Hough_accum::read(FILE *fp, const std::string &path, Errors &errors
                               hough_accum->nbins,
                               "Hough_accum::read",
                               "",
-                              "cannot read hough accumulator data in '" + path + "'",
+                              "cannot read hough accumulator data",
                               errors);
     if (errors.has_error()) {
       delete hough_accum;
@@ -440,7 +440,7 @@ Hough_accum *Hough_accum::read_text(std::ifstream &ifs, Errors &errors) {
     for (const std::string &value_str: values) {
       int value;
       if (!wb_utils::string_to_int(value_str, value))
-        errors.add("Hough_accum::read", "", "invalid value '" + value_str + "'");
+        errors.add("Hough_accum::read_text", "", "invalid value '" + value_str + "'");
       return nullptr;
     }
   }
@@ -529,36 +529,33 @@ void Hough_accum::update_accumulator_stats() {
   }
 }
 
-void Hough_accum::write(FILE *fp, const std::string &path, Errors &errors) const {
-  if (debug)
-    std::cout << "Hough_accum::write path '" << path << "' " << std::endl;
+void Hough_accum::write(FILE *fp, Errors &errors) const {
   fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc");
     return;
   }
   fwrite(&nrhos, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator nrhos to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough accumulator nrhos");
     return;
   }
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator rows to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough accumulator rows");
     return;
   }
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator cols to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough accumulator cols");
     return;
   }
   size_t newLen;
   newLen = fwrite(rho_theta_counts, sizeof(int), nbins, fp);
   if (ferror(fp) != 0 || newLen != nbins) {
-    errors.add("Image::write", "", "cannot write Hough accumulator data to '" + path + "'");
+    errors.add("Image::write", "", "cannot write Hough accumulator data ");
     return;
   }
-}
 }
 
 void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {

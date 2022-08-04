@@ -74,7 +74,10 @@ class Image {
 
   void log(std::list<WB_log_entry> &log_entries) const;
 
-  static Image *read(std::string &path, Errors &errors);
+  static Image *read(std::string& path, Errors &errors);
+  static Image *read(FILE* fp, Errors &errors);
+  static Image *read_text(std::string path,Errors &errors);
+  static Image *read_text(std::ifstream& ifs,Errors &errors);
 
   static Image *read_jpeg(const std::string &path, Errors &errors);
   int row_col_to_index(int row, int col) const;
@@ -95,8 +98,10 @@ class Image {
 
   Image *to_rgb(int components) const;
   std::string to_string(const std::string &prefix = "") const;
-  void write(const std::string &path, Errors &errors) const;
-  void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
+  void write(const std::string& path, Errors &errors) const;
+  void write(FILE *fp, Errors &errors) const;
+  void write_text(const std::string& path, const std::string &delim, Errors &errors) const;
+  void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
   void write_jpeg(const std::string &path, Errors &errors) const;
 };
 

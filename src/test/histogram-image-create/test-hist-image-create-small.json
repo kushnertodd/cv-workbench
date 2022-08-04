@@ -17,7 +17,7 @@
         "output-data": [
           {
             "id": 1,
-            "type": "image",
+            "type": "histogram",
             "repository": "filesystem",
             "format": "text",
             "directory": "images",
@@ -25,7 +25,7 @@
           },
           {
             "id": 2,
-            "type": "image",
+            "type": "histogram",
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",

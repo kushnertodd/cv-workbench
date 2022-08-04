@@ -37,22 +37,23 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
 }
 
 void Hough::find_lines() {
-  find_peaks(1);
+  //find_peaks(1);
   lines_to_line_segments();
 }
 
+/*
 void Hough::find_peaks(int npeaks) {
-//  Histogram *histogram = Histogram::create_hough(this, 1000,
-//                                                 0,
-//                                                 0,
-//                                                 false,
-//                                                 false);
+  Histogram *histogram = Histogram::create_hough(this, 1000,
+                                                 0,
+                                                 0,
+                                                 false,
+                                                 false);
   int peak_ct = 0;
   double threshold = 0.0;
   for (int i = 999; i >= 0 && peak_ct < npeaks; i++) {
-    peak_ct += histogram->bins[i];
+    peak_ct += hough_accum->rho_theta_counts[i];
     if (peak_ct < npeaks) {
-      threshold = histogram->get_value(i);
+      threshold = hough_accum->get_value(i);
     }
   }
   hough_accum->find_peaks(lines, threshold);
@@ -62,6 +63,7 @@ void Hough::find_peaks(int npeaks) {
     }
   }
 }
+*/
 
 void Hough::lines_to_line_segments() {
   for (Polar_line line: lines) {
@@ -70,80 +72,69 @@ void Hough::lines_to_line_segments() {
       line_segments.push_back(line_segment);
   }
 }
-
-Hough *Hough::read(const std::string &path, Errors &errors) {
-  FILE *fp = fopen(path.c_str(), "r");
-  if (fp == nullptr) {
-    errors.add("Image::read", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
-    return nullptr;
+ Hough *Hough::read(const std::string& path, Errors &errors) {
+  FILE *fp = file_utils::open_file_read(path, errors);
+  Hough *hough = nullptr;
+  if (fp) {
+    hough = Hough::read(fp, errors);
+    fclose(fp);
   }
-  Hough_accum *hough_accum = Hough_accum::read(fp, path, errors);
+return hough;
+}
+
+Hough *Hough::read(FILE* fp, Errors &errors) {
+  Hough_accum *hough_accum = Hough_accum::read(fp, errors);
   if (hough_accum == nullptr || errors.has_error())
     return nullptr;
-  fclose(fp);
   return new Hough(hough_accum);
 }
 
 // NRFPT
-Hough *Hough::read_text(const std::string &path, Errors &errors) {
-  std::ifstream ifs(path, std::ofstream::in);
-  if (!ifs) {
-    errors.add("read_text:read", "", "invalid filename '" + path + "'");
-    return nullptr;
-  }
+Hough *Hough::read_text(std::ifstream& ifs, Errors &errors) {
   Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
   if (hough_accum == nullptr || errors.has_error())
     return nullptr;
-  ifs.close();
   return new Hough(hough_accum);
 }
 
-void Hough::write(const std::string &path, Errors &errors) const {
-  if (debug)
-    std::cout << "Image::write path '" << path << std::endl;
-  FILE *fp = fopen(path.c_str(), "w");
-  if (fp == nullptr) {
-    errors.add("Hough::write", "", "invalid file '" + path + "'");
-  }
-  hough_accum->write(fp, path, errors);
-  fclose(fp);
-}
-
-void Hough::write_text(const std::string &filename, const std::string &delim, Errors &errors) const {
-  std::ofstream ofs(filename, std::ofstream::out);
-  if (!ofs) {
-    errors.add("Hough:write", "", "invalid filename '" + filename + "'");
-  }
-  hough_accum->write_text(ofs, "\t", errors);
-  ofs.close();
-}
-
-void Hough::write_peak_lines(const std::string &filename, Errors &errors) const {
-  if (debug)
-    std::cout << "Image::write path '" << path << std::endl;
-  FILE *fp = fopen(path.c_str(), "w");
-  if (fp == nullptr) {
-    errors.add("Hough::write", "", "invalid file '" + path + "'");
+void Hough::write(const std::string& path, Errors &errors) const {
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    write(fp, errors);
     fclose(fp);
-    return;
   }
-  int npeaks = lines.size();
+}
+
+void Hough::write(FILE *fp, Errors &errors) const {
+  hough_accum->write(fp, errors);
+}
+
+void Hough::write_text(const std::string& path, const std::string &delim, Errors &errors) const {
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    hough_accum->write_text(ofs, "\t", errors);
+    ofs.close();
+  } }
+
+void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+  hough_accum->write_text(ofs, "\t", errors);
+}
+
+void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
+  size_t npeaks = lines.size();
   fwrite(&npeaks, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough peak line count to '" + path + "'");
-    fclose(fp);
+    errors.add("Image::write_header", "", "cannot write Hough peak line count");
     return;
   }
   fwrite(&hough_accum->theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough theta_inc to '" + path + "'");
-    fclose(fp);
+    errors.add("Image::write_header", "", "cannot write Hough theta_inc  ");
     return;
   }
   fwrite(&hough_accum->nrhos, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough nrhos to '" + path + "'");
-    fclose(fp);
+    errors.add("Image::write_header", "", "cannot write Hough nrhos ");
     return;
   }
   for (Polar_line line: lines) {
@@ -151,10 +142,9 @@ void Hough::write_peak_lines(const std::string &filename, Errors &errors) const 
     if (errors.has_error())
     break;
   }
-  fclose(fp);
 }
 
-void Hough::write_peak_lines_text(const std::string &filename, const std::string &delim, Errors &errors) const {
+void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
 
 }
 

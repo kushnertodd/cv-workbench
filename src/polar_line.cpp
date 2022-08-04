@@ -53,16 +53,16 @@ std::string Polar_line::to_string() const {
 void Polar_line::write(FILE *fp, Errors &errors) {
   fwrite(&rho_index, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough rho_index to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough rho_index");
     return;
   }
   fwrite(&theta_index, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough theta_index to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough theta_index");
     return;
   }
   fwrite(&count, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough count to '" + path + "'");
+    errors.add("Image::write_header", "", "cannot write Hough count");
   }
 }
