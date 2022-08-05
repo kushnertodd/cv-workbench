@@ -5,6 +5,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.24 dev
+```
+commit 73af8069ab918fb4d0ffe95d70057d1e24a4eb13 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Aug 5 16:36:14 2022 -0600
+```
+- operator hough-peak-detect works
+
 #### v0.1.23 dev
 ```
 commit a77745fdf88b3cf9a3c5344cb2b2e26a3b39ae3c 
