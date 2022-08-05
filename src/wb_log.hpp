@@ -16,7 +16,7 @@ class WB_log_entry {
 
 class WB_log {
  public:
-  static void log_to_file(std::string filename, std::string text, Errors &errors);
+  static void log_to_file(const std::string& filename, const std::string& text, Errors &errors);
 };
 
 #endif //SRC__WB_LOG_HPP_

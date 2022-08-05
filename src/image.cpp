@@ -192,7 +192,7 @@ Image *Image::clone(Image *image, WB_image_depth::Image_depth depth, Errors &err
 }
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255
-void Image::copy(Image *image, Errors &errors) {
+void Image::copy(Image *image, Errors &errors) const {
   if (get_npixels() != image->get_npixels()) {
     errors.add("Image::copy", "", "images not the same size ");
     return;
@@ -424,8 +424,6 @@ Image *Image::read(FILE *fp, Errors &errors) {
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
-  size_t newLen;
-
   switch (image_header.depth) {
     case WB_image_depth::Image_depth::CV_8U:
       wb_utils::read_byte_buffer(fp,
@@ -435,8 +433,10 @@ Image *Image::read(FILE *fp, Errors &errors) {
                                  "",
                                  "cannot read 8U image data",
                                  errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     case WB_image_depth::Image_depth::CV_32S:
@@ -447,8 +447,10 @@ Image *Image::read(FILE *fp, Errors &errors) {
                                 "",
                                 "cannot read 32S image data",
                                 errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     case WB_image_depth::Image_depth::CV_32F:
@@ -459,8 +461,10 @@ Image *Image::read(FILE *fp, Errors &errors) {
                                   "",
                                   "cannot read 32F image data",
                                   errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     default:
@@ -713,6 +717,8 @@ void Image::write(const std::string &path, Errors &errors) const {
 
 void Image::write(FILE *fp, Errors &errors) const {
   image_header.write(fp, errors);
+  if (errors.has_error())
+    return;
   // Write the data from the buffer.
   size_t newLen;
   switch (get_depth()) {
@@ -744,6 +750,7 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
     errors.add("Image::write_jpeg", "", "cannot write "
         + WB_image_depth::to_string(get_depth())
         + " image");
+    return;
   }
   int quality = 100; // best
   struct jpeg_compress_struct cinfo;

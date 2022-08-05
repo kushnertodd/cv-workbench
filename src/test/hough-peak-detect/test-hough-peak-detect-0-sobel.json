@@ -1,0 +1,41 @@
+{
+  "experiment":{
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"hough",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"test/reference",
+            "filename":"square45-90_gray_sobel_0_degrees_hough"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":"images",
+            "filename":"square45-90_gray_sobel_0_degrees_hough_peaks"
+          },
+          {
+            "id":2,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"images",
+            "filename":"square45-90_gray_sobel_0_degrees_hough_peaks"
+          }
+        ],
+        "parameters":{
+          "npeaks":"3"
+        }
+      }
+    ]
+  }
+}

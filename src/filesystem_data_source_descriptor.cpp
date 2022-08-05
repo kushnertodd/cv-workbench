@@ -40,6 +40,10 @@ Filesystem_data_source_descriptor
                       "directory",
                       json_type_string,
                       errors);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_directory != nullptr)
     filesystem_data_source_descriptor->directory = json_object_get_string(json_directory);
   else
@@ -52,6 +56,10 @@ Filesystem_data_source_descriptor
                       "filename",
                       json_type_string,
                       errors);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_filename != nullptr)
     filesystem_data_source_descriptor->filename = json_object_get_string(json_filename);
   else
@@ -64,6 +72,10 @@ Filesystem_data_source_descriptor
                       "ext",
                       json_type_string,
                       errors, true);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_ext != nullptr)
     filesystem_data_source_descriptor->ext = json_object_get_string(json_ext);
   else
@@ -160,11 +172,21 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
 }
 
 void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
-
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    hough->write_peak_lines(fp, errors);
+    fclose(fp);
+  }
 }
 
 void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {
-
+  std::string path = to_path();
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    hough->write_peak_lines_text(ofs, "\t", errors);
+    ofs.close();
+  }
 }
 
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {

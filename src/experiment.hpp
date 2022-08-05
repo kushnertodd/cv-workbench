@@ -31,7 +31,6 @@ class Experiment {
   static Experiment *from_json(json_object *jobj, std::string path, Errors &errors);
   static void log_experiment(json_object *json_experiment);
   void run(Errors &errors);
-  json_object *jobj;
 };
 
 #endif //CV_WORKBENCH_SRC_EXPERIMENT_HPP_

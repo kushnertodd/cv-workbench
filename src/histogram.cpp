@@ -58,7 +58,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
   double threshold = 0.0;
   for (int i = nbins - 1; i >= 0 && peak_ct < npeaks; i--) {
     peak_ct += histogram->bins[i];
-    if (peak_ct < npeaks) {
+    if (peak_ct <= npeaks) {
       threshold = histogram->get_value(i);
     }
   }
@@ -281,7 +281,6 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
 void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
-
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;

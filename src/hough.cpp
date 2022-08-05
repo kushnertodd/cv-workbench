@@ -35,33 +35,8 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
 }
 
 void Hough::find_lines() {
-  //find_peaks(1);
   lines_to_line_segments();
 }
-
-/*
-void Hough::find_peaks(int npeaks) {
-  Histogram *histogram = Histogram::create_hough(this, 1000,
-                                                 0,
-                                                 0,
-                                                 false,
-                                                 false);
-  int peak_ct = 0;
-  double threshold = 0.0;
-  for (int i = 999; i >= 0 && peak_ct < npeaks; i++) {
-    peak_ct += hough_accum->rho_theta_counts[i];
-    if (peak_ct < npeaks) {
-      threshold = hough_accum->get_value(i);
-    }
-  }
-  hough_accum->find_peaks(lines, threshold);
-  if (debug) {
-    for (Polar_line line: lines) {
-      std::cout << "Hough::find_peaks: lines " << line.to_string() << std::endl;
-    }
-  }
-}
-*/
 
 void Hough::lines_to_line_segments() {
   for (Polar_line line: lines) {
@@ -144,7 +119,11 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
 }
 
 void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-
+  for (Polar_line line: lines) {
+    line.write_text(ofs, delim, errors);
+    if (errors.has_error())
+      break;
+  }
 }
 
 

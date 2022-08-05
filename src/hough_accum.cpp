@@ -439,9 +439,11 @@ Hough_accum *Hough_accum::read_text(std::ifstream &ifs, Errors &errors) {
     std::vector<std::string> values = file_utils::string_split(line);
     for (const std::string &value_str: values) {
       int value;
-      if (!wb_utils::string_to_int(value_str, value))
+      if (!wb_utils::string_to_int(value_str, value)) {
         errors.add("Hough_accum::read_text", "", "invalid value '" + value_str + "'");
-      return nullptr;
+        delete hough_accum;
+        return nullptr;
+      }
     }
   }
   return hough_accum;

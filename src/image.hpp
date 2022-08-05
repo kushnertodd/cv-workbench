@@ -48,7 +48,7 @@ class Image {
 
   bool check_grayscale(Errors &errors) const;
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
-  void copy(Image *image, Errors &errors);
+  void copy(Image *image, Errors &errors) const;
 
   void draw_line_segment(const Line_segment &line_segment, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
