@@ -19,9 +19,9 @@ class Hough {
   ~Hough();
   explicit Hough(Hough_accum *m_hough_accum);
   static Hough *create_image(Image *input, int theta_inc, int pixel_threshold);
-  void find_lines();
+  void find_lines(int rows, int cols, int nrhos);
   //void find_peaks(int npeaks);
-  void lines_to_line_segments();
+  void lines_to_line_segments(int rows, int cols, int nrhos);
   static Hough *read(const std::string &path, Errors &errors);
   static Hough *read(FILE *fp, Errors &errors);
   static Hough *read_text(std::ifstream &ifs, Errors &errors);

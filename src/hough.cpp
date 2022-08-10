@@ -7,6 +7,7 @@
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "hough_accum.hpp"
+#include "wb_window.hpp"
 #include "hough.hpp"
 
 extern bool debug;
@@ -34,14 +35,14 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
   return hough;
 }
 
-void Hough::find_lines() {
-  lines_to_line_segments();
+void Hough::find_lines(int rows, int cols, int nrhos) {
+  lines_to_line_segments(rows, cols, nrhos);
 }
 
-void Hough::lines_to_line_segments() {
+void Hough::lines_to_line_segments(int rows, int cols, int nrhos) {
   for (Polar_line line: lines) {
     Line_segment line_segment;
-    if (hough_accum->clip_window(line_segment, line))
+    if (WB_window::clip_window(rows, cols, line_segment, line, nrhos))
       line_segments.push_back(line_segment);
   }
 }

@@ -8,6 +8,7 @@
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_utils.hpp"
+#include "polar_trig.hpp"
 #include "histogram.hpp"
 
 extern bool debug;
@@ -95,7 +96,7 @@ double Histogram::get_upper_value() const {
 }
 
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
-  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
+  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       input_value_stats.update(value);
@@ -106,7 +107,7 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
-  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
+  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       update_input_value(value);

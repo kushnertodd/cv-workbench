@@ -60,6 +60,7 @@ SRCOBJS :=  \
   operator_utils.o \
   point.o \
   polar_line.o \
+  polar_trig.o \
   runtime.o \
   variance_stats.o \
   wb_data_format.o \
@@ -70,8 +71,8 @@ SRCOBJS :=  \
   wb_log.o \
   wb_morphology_types.o \
   wb_repository_type.o \
-  wb_utils.o 
-  
+  wb_utils.o \
+  wb_window.o
 
 PROGRAMS = \
   image-copy \
@@ -115,6 +116,9 @@ clobber:
 
 install:
 	cp $(PROGRAMS) ../bin
+
+doc:
+	doxygen doxygen.config
 
 depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
