@@ -102,12 +102,14 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
     errors.add("Image::write_header", "", "cannot write Hough peak line count");
     return;
   }
-  fwrite(&hough_accum->theta_inc, sizeof(int), 1, fp);
+  int theta_inc = hough_accum->get_theta_inc();
+  fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough theta_inc  ");
     return;
   }
-  fwrite(&hough_accum->nrhos, sizeof(int), 1, fp);
+  int nrhos = hough_accum->get_nrhos();
+  fwrite(&nrhos, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough nrhos ");
     return;

@@ -10,7 +10,7 @@
 
 class WB_window {
  public:
-  static bool clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos) ;
+  static bool clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos);
 };
 
 #endif //SRC__WB_WINDOW_HPP_

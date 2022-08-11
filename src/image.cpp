@@ -538,7 +538,42 @@ Image *Image::read_text(const std::string &path, Errors &errors) {
 }
 
 Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
-  return nullptr;
+  int rows = 0;
+  int cols = 0;
+  bool first = true;
+  std::string line;
+  std::vector<std::vector<std::string>> lines;
+  while (getline(ifs, line)) {
+    std::vector<std::string> values = file_utils::string_split(line);
+    if (first) {
+      first = false;
+      cols = values.size();
+    } else if (values.size() != cols) {
+      std::ostringstream os;
+      os << "invalid image file: initial column length " << cols
+         << " row " << rows << " column length " << values.size();
+      errors.add("Image::read_text", "", os.str());
+      return nullptr;
+    } else {
+      lines.push_back(values);
+    }
+    rows++;
+  }
+  auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
+  pixel_32S *buf_ptr = image->buf_32S;
+  for (std::vector<std::string> row_values: lines) {
+    for (std::string value_str: row_values) {
+      int value;
+      if (!wb_utils::string_to_int(value_str, value)) {
+        errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
+        delete image;
+        return nullptr;
+      } else {
+        *buf_ptr++ = value;
+      }
+    }
+  }
+  return image;
 }
 
 int Image::row_col_to_index(int row, int col) const {

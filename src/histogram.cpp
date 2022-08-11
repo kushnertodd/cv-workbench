@@ -97,7 +97,7 @@ double Histogram::get_upper_value() const {
 
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       input_value_stats.update(value);
     }
@@ -108,7 +108,7 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       update_input_value(value);
     }
