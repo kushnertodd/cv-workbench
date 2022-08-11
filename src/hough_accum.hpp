@@ -18,7 +18,7 @@
 #include "wb_defs.hpp"
 #include "line_segment.hpp"
 
-const int rho_pad = 10;
+const int rho_pad = 2;
 const int max_theta = 180;
 
 class Hough_accum {
@@ -28,8 +28,8 @@ class Hough_accum {
   int nbins{};
   int rows{};
   int cols{};
-  double *hough_cos{};
-  double *hough_sin{};
+  //double *hough_cos{};
+  //double *hough_sin{};
   int *rho_theta_counts{};
   Variance_stats accumulator_stats;
 

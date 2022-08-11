@@ -10,15 +10,11 @@ int Polar_trig::get_nthetas() {
 }
 
 double Polar_trig::to_cos(int theta_index) {
-  int polar_trig_index = theta_index * theta_inc;
-  assert(polar_trig_index < max_thetas);
-  return polar_cos[polar_trig_index];
+  return polar_cos[theta_index];
 }
 
 double Polar_trig::to_sin(int theta_index) {
-  int polar_trig_index = theta_index * theta_inc;
-  assert(polar_trig_index < max_thetas);
-  return polar_sin[polar_trig_index];
+  return polar_sin[theta_index];
 }
 
 double Polar_trig::rho_index_to_rho(int rho_index, int nrhos)  {

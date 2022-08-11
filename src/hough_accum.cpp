@@ -13,8 +13,8 @@
 extern bool debug;
 
 Hough_accum::~Hough_accum() {
-  delete[] hough_cos;
-  delete[] hough_sin;
+  //delete[] hough_cos;
+  //delete[] hough_sin;
   delete rho_theta_counts;
 }
 
@@ -27,6 +27,7 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols) :
     rows(m_rows),
     cols(m_cols) {
 
+/*
   // allocate cosine table
   hough_cos = new double[Polar_trig::get_nthetas()];
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
@@ -38,6 +39,7 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_nrhos, int m_rows, int m_cols) :
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
     hough_sin[theta_index] = std::sin(deg_to_rad(Polar_trig::theta_index_to_theta(theta_index)));
   }
+*/
 
   // accumulator
   rho_theta_counts = new int[nbins];
@@ -58,8 +60,7 @@ double Hough_accum::col_to_x(int col) const {
 Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_threshold) {
   int rows = image->get_rows();
   int cols = image->get_cols();
-  int nrhos = wb_utils::double_to_int_round(sqrt(rows * rows
-                                                     + image->get_cols() * image->get_cols())) + rho_pad;
+  int nrhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
   auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
   hough_accum->initialize(image, pixel_threshold);
   return hough_accum;
@@ -292,7 +293,7 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
 }
 
 void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  for (int rho_index = 0; rho_index < nrhos; rho_index++)
+  for (int rho_index = 0; rho_index <= nrhos; rho_index++)
     ofs << Polar_trig::rho_index_to_rho(rho_index, nrhos) << delim;
   ofs << std::endl;
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
