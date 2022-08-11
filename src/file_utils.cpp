@@ -28,20 +28,20 @@ FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
   return fp;
 }
 
+std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &errors) {
+  std::ifstream ifs(path, std::ifstream::in);
+  if (!ifs) {
+    errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+  }
+  return ifs;
+}
+
 FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
     errors.add("file_utils::open_file", "", "cannot open file " + path + " for writing: " + strerror(errno));
   }
   return fp;
-}
-
-std::ifstream open_file_text_read(const std::string &path, Errors &errors) {
-  std::ifstream ifs(path, std::ofstream::out);
-  if (!ifs) {
-    errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
-  }
-  return ifs;
 }
 
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {

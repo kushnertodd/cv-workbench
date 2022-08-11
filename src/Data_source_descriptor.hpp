@@ -30,6 +30,7 @@ class Data_source_descriptor {
   //  virtual Hough *read_hough_text(Errors &errors) = 0;
   virtual Image *read_image(Errors &errors) = 0;
   virtual Image *read_image_jpeg(Errors &errors) = 0;
+  virtual Image *read_image_text(Errors &errors) = 0;
   virtual std::string read_json(Errors &errors) = 0;
   virtual void write_histogram(Histogram *histogram, Errors &errors) = 0;
   virtual void write_histogram_text(Histogram *histogram, Errors &errors) = 0;

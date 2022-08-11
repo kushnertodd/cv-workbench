@@ -11,10 +11,7 @@
 #include <iomanip>
 #include "file_utils.hpp"
 #include "image.hpp"
-#include "image_header.hpp"
 #include "jpeglib.h"
-#include "wb_data_type.hpp"
-#include "wb_image_depth.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -534,7 +531,13 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
 }
 
 Image *Image::read_text(const std::string &path, Errors &errors) {
-  return nullptr;
+  std::ifstream ifs = file_utils::open_file_read_text(path, errors);
+  Image* image;
+  if (ifs) {
+    image = read_text(ifs, errors);
+    ifs.close();
+  }
+  return image;
 }
 
 Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
@@ -548,6 +551,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     if (first) {
       first = false;
       cols = values.size();
+      lines.push_back(values);
     } else if (values.size() != cols) {
       std::ostringstream os;
       os << "invalid image file: initial column length " << cols
@@ -561,15 +565,15 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
   }
   auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
   pixel_32S *buf_ptr = image->buf_32S;
-  for (std::vector<std::string> row_values: lines) {
-    for (std::string value_str: row_values) {
+  for (const std::vector<std::string> &row_values: lines) {
+    for (const std::string &value_str: row_values) {
       int value;
-      if (!wb_utils::string_to_int(value_str, value)) {
+      if (wb_utils::string_to_int(value_str, value)) {
+        *buf_ptr++ = value;
+      } else {
         errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
         delete image;
         return nullptr;
-      } else {
-        *buf_ptr++ = value;
       }
     }
   }
@@ -839,6 +843,7 @@ void Image::write_text(const std::string &path, const std::string &delim, Errors
     ofs.close();
   }
 }
+
 void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   for (int row = 0; row < get_rows(); row++) {
     for (int col = 0; col < get_cols(); col++) {

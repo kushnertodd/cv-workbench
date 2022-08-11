@@ -113,6 +113,11 @@ Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
   return Image::read_jpeg(path, errors);
 }
 
+Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
+  std::string path = to_path();
+  return Image::read_text(path, errors);
+}
+
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
 Hough *read_text(std::ifstream &ifs, Errors &errors) {
