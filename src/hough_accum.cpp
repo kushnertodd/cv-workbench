@@ -2,7 +2,6 @@
 // Created by kushn on 6/27/2022.
 //
 
-#include <cassert>
 #include <iostream>
 #include "image.hpp"
 #include "polar_line.hpp"
@@ -13,8 +12,7 @@
 extern bool debug;
 
 Hough_accum::~Hough_accum() {
-  //delete[] hough_cos;
-  //delete[] hough_sin;
+  delete polar_trig;
   delete rho_theta_counts;
 }
 
@@ -23,7 +21,7 @@ Hough_accum::Hough_accum() = default;
 Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) {
   polar_trig = new Polar_trig(m_rows, m_cols);
   Polar_trig::set_theta_inc(m_theta_inc);
-  nbins=get_nrhos() * get_nthetas();
+  nbins = get_nrhos() * get_nthetas();
   rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++)
@@ -37,18 +35,17 @@ Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_th
   return hough_accum;
 }
 
-double Hough_accum::deg_to_rad(int deg) {
-  double rad = deg * M_PI / max_theta;
-  return rad;
-}
-
 void Hough_accum::find_peaks(std::list<Polar_line> &lines, double threshold) const {
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       int count = get(rho_index, theta_index);
       if (count > threshold) {
-        Polar_line line(rho_index, Polar_trig::rho_index_to_rho(rho_index, get_nrhos()), theta_index, Polar_trig::to_cos(theta_index),
-                        Polar_trig::to_sin(theta_index), count);
+        Polar_line line(rho_index,
+                        polar_trig->rho_index_to_rho(rho_index),
+                        theta_index,
+                        Polar_trig::to_cos(theta_index),
+                        Polar_trig::to_sin(theta_index),
+                        count);
         lines.push_back(line);
       }
     }
@@ -56,13 +53,11 @@ void Hough_accum::find_peaks(std::list<Polar_line> &lines, double threshold) con
 }
 
 int Hough_accum::get(int rho_index, int theta_index) const {
-  int index = Polar_trig::rho_theta_to_index(rho_index, theta_index, get_nrhos());
+  int index = polar_trig->rho_theta_to_index(rho_index, theta_index);
   return rho_theta_counts[index];
 }
 
 int Hough_accum::get_cols() const { return polar_trig->get_cols(); }
-
-//double Hough_accum::get_cos(int theta_index) const { return hough_cos[theta_index]; }
 
 int Hough_accum::get_nrhos() const { return polar_trig->get_nrhos(); }
 
@@ -71,13 +66,6 @@ int Hough_accum::get_nthetas() { return Polar_trig::get_nthetas(); }
 int Hough_accum::get_rows() const { return polar_trig->get_rows(); }
 
 int Hough_accum::get_theta_inc() { return Polar_trig::get_theta_inc(); }
-
-bool Hough_accum::in_window(Point &point) const {
-  bool row_valid = point.row >= 0 && point.row < get_rows();
-  bool col_valid = point.col >= 0 && point.col < get_cols();
-  bool result = row_valid && col_valid;
-  return result;
-}
 
 /**
  * initialize_image accumulator
@@ -90,7 +78,8 @@ void Hough_accum::initialize(Image *image, int image_theshold) {
       double value = std::abs(image->get(row, col));
       if (value > image_theshold) {
         for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-          int rho_index = Polar_trig::row_col_theta_to_rho_index(row, col, theta_index, get_nrhos(), get_rows(), get_cols());
+          int rho_index =
+              polar_trig->row_col_theta_to_rho_index(row, col, theta_index);
           update(rho_index, theta_index, wb_utils::double_to_int_round(value));
         }
       }
@@ -152,12 +141,12 @@ Hough_accum *Hough_accum::read_text(std::ifstream &ifs, Errors &errors) {
 }
 
 void Hough_accum::set(int rho_index, int theta_index, int value) const {
-  int index = Polar_trig::rho_theta_to_index(rho_index, theta_index, get_nrhos());
+  int index = polar_trig->rho_theta_to_index(rho_index, theta_index);
   rho_theta_counts[index] = value;
 }
 
 void Hough_accum::update(int rho_index, int theta_index, int value) const {
-  int index = Polar_trig::rho_theta_to_index(rho_index, theta_index, get_nrhos());
+  int index = polar_trig->rho_theta_to_index(rho_index, theta_index);
   rho_theta_counts[index] += value;
 }
 
@@ -174,12 +163,6 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
   fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
     errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc");
-    return;
-  }
-  int nrhos = get_nrhos();
-  fwrite(&nrhos, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator get_nrhos()");
     return;
   }
   int rows = get_rows();
@@ -215,17 +198,6 @@ void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Error
   }
 }
 
-int Hough_accum::x_to_col(double x) const {
-  double col_offset = get_cols() / 2.0;
-  int col = wb_utils::double_to_int_round(x + col_offset);
-  return col;
-}
-
-int Hough_accum::y_to_row(double y) const {
-  double row_offset = get_rows() / 2.0;
-  int row = wb_utils::double_to_int_round(row_offset - y);
-  return row;
-}
 
 
 

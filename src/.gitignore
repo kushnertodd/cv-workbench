@@ -11,6 +11,7 @@ image-dump
 image-info
 image-map
 image-morph
+image-trig
 *.bak
 *.o
 .*.swp

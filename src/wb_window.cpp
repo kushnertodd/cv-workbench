@@ -56,7 +56,7 @@ extern bool debug;
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos)  {
+bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos) {
   int theta_lower = Polar_trig::get_nthetas() / 4;
   int theta_upper = Polar_trig::get_nthetas() * 3 / 4;
   // window is in (row, col) coordinates
@@ -67,8 +67,10 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
   if (line.theta_index <= theta_lower || line.theta_index > theta_upper) {
     // case 1: 0 < theta < pi/4 or 3*pi/4 < theta < pi
     // must clip against the window top and bottom first
-    int col_at_window_top = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
-    int col_at_window_bottom = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
+    int col_at_window_top =
+        Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
+    int col_at_window_bottom =
+        Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
     // get the top or right point
     Point top_point;
     Point bottom_point;
@@ -84,7 +86,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && col_at_window_bottom >= window_left
         && col_at_window_bottom <= window_right) {
       // case 1.2: window top column to the left of the window and bottom column inside window
-      int row_at_window_left = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
+      int row_at_window_left =
+          Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.2"
                   << " row_at_window_left " << row_at_window_left
@@ -95,7 +98,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && col_at_window_top <= window_right
         && col_at_window_bottom < window_left) {
       // case 1.3: window top column inside of the window and bottom column to the left of the window
-      int row_at_window_left = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
+      int row_at_window_left =
+          Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.3"
                   << " row_at_window_left " << row_at_window_left
@@ -114,7 +118,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && col_at_window_top <= window_right
         && col_at_window_bottom > window_right) {
       // case 1.5: window top column inside of the window and bottom column to the right of the window
-      int row_at_window_right = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
+      int row_at_window_right =
+          Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.5"
                   << " row_at_window_right " << row_at_window_right
@@ -125,7 +130,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && col_at_window_bottom >= window_left
         && col_at_window_bottom <= window_right) {
       // case 1.6: window top column to the right of the window and bottom column inside of the window
-      int row_at_window_right = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
+      int row_at_window_right =
+          Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 1.7"
                   << " row_at_window_right " << row_at_window_right
@@ -153,8 +159,10 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
   } else {
     // case 2:pi/4 < theta < 3*pi/4
     // must clip against the window left and right first
-    int row_at_window_left = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
-    int row_at_window_right = Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
+    int row_at_window_left =
+        Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_left, rows, cols, nrhos);
+    int row_at_window_right =
+        Polar_trig::rho_theta_col_to_row(line.rho_index, line.theta_index, window_right, rows, cols, nrhos);
     // get the top or right point
     Point left_point;
     Point right_point;
@@ -175,7 +183,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && row_at_window_right >= window_top
         && row_at_window_right <= window_bottom) {
       // case 2.2: window left row above the window and right row inside window
-      int col_at_window_top = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
+      int col_at_window_top =
+          Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.2"
                   << " col_at_window_top " << col_at_window_top
@@ -186,7 +195,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && row_at_window_left <= window_bottom
         && row_at_window_right < window_top) {
       // case 2.3: window left row inside of the window and right row above the window
-      int col_at_window_top = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
+      int col_at_window_top =
+          Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_top, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.3"
                   << " col_at_window_top " << col_at_window_top
@@ -204,7 +214,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
     } else if (row_at_window_left >= window_top && row_at_window_left <= window_bottom
         && row_at_window_right > window_bottom) {
       // case 2.5: window left row inside of the window and right row above the window
-      int col_at_window_bottom = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
+      int col_at_window_bottom =
+          Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.5"
                   << " col_at_window_bottom " << col_at_window_bottom
@@ -215,7 +226,8 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
         && row_at_window_right >= window_top
         && row_at_window_right <= window_bottom) {
       // case 2.6: window left row below the window and right row inside of the window
-      int col_at_window_bottom = Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
+      int col_at_window_bottom =
+          Polar_trig::rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom, rows, cols, nrhos);
       if (debug)
         std::cout << "Hough_accum::clip_window case 2.6"
                   << " col_at_window_bottom " << col_at_window_bottom

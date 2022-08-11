@@ -94,7 +94,7 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
       }
       delete input;
       delete prewitt_kernel;
-      }
     }
   }
+}
 

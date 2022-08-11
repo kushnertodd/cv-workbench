@@ -21,14 +21,8 @@
 
 class Hough_accum {
  public:
-//  int theta_inc{};
-//  int nrhos{};
   int nbins{};
-//  int rows{};
-//  int cols{};
-  //double *hough_cos{};
-  //double *hough_sin{};
-  Polar_trig* polar_trig;
+  Polar_trig *polar_trig{};
   int *rho_theta_counts{};
   Variance_stats accumulator_stats;
 
@@ -40,17 +34,14 @@ class Hough_accum {
 //  bool clip_window(Line_segment &line_segment, Polar_line &line) const;
 //  double col_to_x(int col) const;
   static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
-  static double deg_to_rad(int deg);
   void find_peaks(std::list<Polar_line> &lines, double threshold) const;
   int get(int rho_index, int theta_index) const;
   int get_cols() const;
-  //double get_cos(int theta_index) const;
+
   int get_nrhos() const;
-  static int get_nthetas() ;
+  static int get_nthetas();
   int get_rows() const;
-  //double get_sin(int theta_index) const;
-  static int get_theta_inc() ;
-  bool in_window(Point &point) const;
+  static int get_theta_inc();
   void initialize(Image *image, int image_theshold);
   static Hough_accum *read(FILE *fp, Errors &errors);
   static Hough_accum *read_text(std::ifstream &ifs, Errors &errors);
@@ -59,8 +50,6 @@ class Hough_accum {
   void update_accumulator_stats();
   void write(FILE *fp, Errors &errors) const;
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
-  int x_to_col(double x) const;
-  int y_to_row(double y) const;
 };
 
 #endif //SRC__HOUGH_ACCUM_HPP_

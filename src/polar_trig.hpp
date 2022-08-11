@@ -24,7 +24,7 @@ class Polar_trig {
   Polar_trig(int n_rows, int m_cols);
   int get_cols() const;
   int get_nrhos() const;
-   int get_rows() const;
+  int get_rows() const;
   static int get_theta_inc();
   static int get_nthetas();
   static void init(int m_theta_inc);
