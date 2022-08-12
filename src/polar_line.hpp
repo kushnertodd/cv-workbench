@@ -5,6 +5,7 @@
 #ifndef SRC__POLAR_LINE_HPP_
 #define SRC__POLAR_LINE_HPP_
 
+#include <fstream>
 #include "point.hpp"
 
 class Polar_line {
@@ -20,6 +21,7 @@ class Polar_line {
   void set(int m_rho_index, double m_rho, int m_theta_index,
            double m_cos_theta, double m_sin_theta, int m_count);
   std::string to_string() const;
-};
-
+  void write(FILE *fp, Errors &errors);
+  void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+  };
 #endif //SRC__POLAR_LINE_HPP_

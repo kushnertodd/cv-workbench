@@ -2,13 +2,13 @@
 // Created by kushn on 6/11/2022.
 //
 
-#include <cstring>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_utils.hpp"
+#include "polar_trig.hpp"
 #include "histogram.hpp"
 
 extern bool debug;
@@ -52,6 +52,20 @@ Histogram *Histogram::create_hough(Hough *hough,
   return histogram;
 }
 
+void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
+  const int nbins = 1000;
+  Histogram *histogram = create_hough(hough, nbins, 0, 0, false, false);
+  int peak_ct = 0;
+  double threshold = 0.0;
+  for (int i = nbins - 1; i >= 0 && peak_ct < npeaks; i--) {
+    peak_ct += histogram->bins[i];
+    if (peak_ct <= npeaks) {
+      threshold = histogram->get_value(i);
+    }
+  }
+  hough->hough_accum->find_peaks(hough->lines, threshold);
+}
+
 int Histogram::get_bin(double value) const {
   if (value < lower_value)
     return 0;
@@ -82,8 +96,8 @@ double Histogram::get_upper_value() const {
 }
 
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
-  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       input_value_stats.update(value);
     }
@@ -93,8 +107,8 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
-  for (int theta_index = 0; theta_index < hough->hough_accum->nthetas; theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->nrhos; rho_index++) {
+  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
+    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       update_input_value(value);
     }
@@ -152,16 +166,22 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
   log_entries.push_back(log_entry_bin_max_count);
 }
 
-Histogram *Histogram::read(const std::string &path, Errors &errors) {
-  auto *histogram = new Histogram();
-  FILE *fp = fopen(path.c_str(), "r");
-  if (fp == nullptr) {
-    errors.add("Histogram::read", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
-    delete histogram;
-    return nullptr;
+static Histogram *read(const std::string &path, Errors &errors) {
+  FILE *fp = file_utils::open_file_read(path, errors);
+  Histogram *histogram = nullptr;
+  if (fp) {
+    histogram = Histogram::read(fp, errors);
+    fclose(fp);
   }
+  return histogram;
+}
 
-  wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing nbins in '" + path + "'", errors);
+Histogram *Histogram::read(FILE *fp, Errors &errors) {
+  auto *histogram = new Histogram();
+  if (fp == nullptr)
+    return nullptr;
+
+  wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing nbins", errors);
   if (errors.has_error()) {
     delete histogram;
     return nullptr;
@@ -169,11 +189,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
 
   float lower_value_float = 0.0;
   wb_utils::read_float(fp,
-                       lower_value_float,
-                       "Histogram::read",
-                       "",
-                       "missing lower_value in '" + path + "'",
-                       errors);
+                       lower_value_float, "Histogram::read", "", "missing lower_value", errors);
   if (errors.has_error()) {
     delete histogram;
     return nullptr;
@@ -185,7 +201,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                        upper_value_float,
                        "Histogram::read",
                        "",
-                       "missing upper_value in '" + path + "'",
+                       "missing upper_value",
                        errors);
   if (errors.has_error()) {
     delete histogram;
@@ -199,7 +215,7 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
                             histogram->nbins,
                             "Histogram::read",
                             "",
-                            "cannot read data in '" + path + "'",
+                            "cannot read data",
                             errors);
   if (errors.has_error()) {
     delete histogram;
@@ -207,6 +223,10 @@ Histogram *Histogram::read(const std::string &path, Errors &errors) {
   }
   histogram->update_bin_count_bounds();
   return histogram;
+}
+
+Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) {
+  return nullptr;
 }
 
 std::string Histogram::to_string(const std::string &prefix) {
@@ -230,33 +250,25 @@ void Histogram::update_bin_count_bounds() {
     bin_count_bounds.update(bins[i]);
 }
 
-void Histogram::write(const std::string &path, Errors &errors) const {
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
-  std::string data_filename = wb_filename.to_hist();
-  FILE *fp = fopen(data_filename.c_str(), "w");
-  if (fp == nullptr) {
-    errors.add("Image::write", "", "invalid file '" + path + "'");
-    return;
-  }
-  wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins to '" + path + "'", errors);
+void Histogram::write(FILE *fp, Errors &errors) const {
+  wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins", errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(lower_value),
-                          "Histogram::write", "", "cannot write lower_value to '" + path + "'",
+                          "Histogram::write", "", "cannot write lower_value",
                           errors);
   if (!errors.has_error())
     wb_utils::write_float(fp,
                           wb_utils::double_to_float(upper_value),
-                          "Histogram::write", "", "cannot write upper_value to '" + path + "'",
+                          "Histogram::write", "", "cannot write upper_value",
                           errors);
   if (!errors.has_error())
-    input_value_stats.write(fp, path, errors);
+    input_value_stats.write(fp, errors);
   if (!errors.has_error())
-    wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins to '" + path + "'", errors);
-  fclose(fp);
+    wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins'", errors);
 }
 
-void Histogram::write_gp_script(Wb_filename wb_filename) {
+void Histogram::write_gp_script(const Wb_filename &wb_filename) {
   std::string script_filename = wb_filename.to_hist_script();
   std::string data_filename = wb_filename.to_hist_text();
   std::ofstream ofs(script_filename, std::ofstream::out);
@@ -267,11 +279,9 @@ void Histogram::write_gp_script(Wb_filename wb_filename) {
 }
 
 // path excludes extension, so write_text() can add .txt for text and .gp for gnuplot script
-void Histogram::write_text(const std::string &path, const std::string &delim, Errors &errors) {
-  if (debug)
-    std::cout << "Histogram::write_text path '" << path << "' " << to_string() << std::endl;
+void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
-  std::ofstream ofs(wb_filename.to_hist_text(), std::ofstream::out);
+  std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
     return;

@@ -5,6 +5,32 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.25 dev
+```
+commit 0270ac7f697fd1b065ca58e716f56dc9bba561fe
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Aug 12 17:19:09 2022 -0600
+```
+- hough-image-create verified as correct
+
+#### v0.1.24 dev
+```
+commit 73af8069ab918fb4d0ffe95d70057d1e24a4eb13 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Fri Aug 5 16:36:14 2022 -0600
+```
+- operator hough-peak-detect works
+
+#### v0.1.23 dev
+```
+commit a77745fdf88b3cf9a3c5344cb2b2e26a3b39ae3c 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Thu Aug 4 16:07:51 2022 -0600
+```
+- interim checking refactoring filename opening
+
 #### v0.1.22 dev
 ```
 commit c1814b63eb5ea2182d0219262ab4814232b0ce69 

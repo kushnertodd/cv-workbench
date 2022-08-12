@@ -49,7 +49,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees_hough_hist"
+            "filename": "square45-90_gray_sobel_0_degrees_hough"
           },
           {
             "id": 2,
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees_hough_hist"
+            "filename": "square45-90_gray_sobel_0_degrees_hough"
           }
         ],
         "parameters": {

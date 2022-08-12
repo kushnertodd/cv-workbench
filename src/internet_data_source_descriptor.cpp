@@ -23,11 +23,14 @@ Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { ret
 Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
+Image *Internet_data_source_descriptor::read_image_text(Errors &errors) {  return nullptr; }
 std::string Internet_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Internet_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
 void Internet_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {} 
+void Internet_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {}
 void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}

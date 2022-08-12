@@ -1,5 +1,7 @@
 .idea/
+html/
 images/
+latex/
 logs/
 scripts/
 cv-workbench
@@ -9,6 +11,8 @@ image-dump
 image-info
 image-map
 image-morph
+image-read
+image-trig
 *.bak
 *.o
 .*.swp

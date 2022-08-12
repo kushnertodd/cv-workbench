@@ -21,62 +21,6 @@ Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
                            m_data_format,
                            WB_repository_type::Repository_type::FILESYSTEM) {}
 
-Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
-
-Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  return Hough::read(path, errors);
-}
-
-Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  return Image::read(path, errors);
-}
-
-Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  return Image::read_jpeg(path, errors);
-}
-
-std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
-
-void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename; // ignore ext + "." + ext;
-  histogram->write(path, errors);
-}
-
-void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename; // ignore ext + "." + ext;
-  histogram->write_text(path, "\t", errors);
-}
-
-void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  hough->write(path, errors);
-}
-
-void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  hough->write_text(path, "\t", errors);
-}
-
-void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  image->write(path, errors);
-}
-
-void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  image->write_text(path, "\t", errors);
-}
-
-void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {
-  std::string path = (directory.empty() ? "" : directory + "/") + filename + "." + ext;
-  image->write_jpeg(path, errors);
-}
-
-void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
-
 Filesystem_data_source_descriptor
 *Filesystem_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
                                               int id,
@@ -96,6 +40,10 @@ Filesystem_data_source_descriptor
                       "directory",
                       json_type_string,
                       errors);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_directory != nullptr)
     filesystem_data_source_descriptor->directory = json_object_get_string(json_directory);
   else
@@ -108,6 +56,10 @@ Filesystem_data_source_descriptor
                       "filename",
                       json_type_string,
                       errors);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_filename != nullptr)
     filesystem_data_source_descriptor->filename = json_object_get_string(json_filename);
   else
@@ -120,12 +72,64 @@ Filesystem_data_source_descriptor
                       "ext",
                       json_type_string,
                       errors, true);
+  if (errors.has_error()) {
+    delete filesystem_data_source_descriptor;
+    return nullptr;
+  }
   if (json_ext != nullptr)
     filesystem_data_source_descriptor->ext = json_object_get_string(json_ext);
   else
     filesystem_data_source_descriptor->ext =
         WB_data_format::to_ext(filesystem_data_source_descriptor->data_format);
   return filesystem_data_source_descriptor;
+}
+
+Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
+
+Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_read(path, errors);
+  Hough *hough = nullptr;
+  if (fp) {
+    hough = Hough::read(fp, errors);
+    fclose(fp);
+  }
+  return hough;
+}
+
+Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_read(path, errors);
+  Image *image = nullptr;
+  if (fp) {
+    image = Image::read(fp, errors);
+    fclose(fp);
+  }
+  return image;
+}
+
+Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
+  std::string path = to_path();
+  return Image::read_jpeg(path, errors);
+}
+
+Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
+  std::string path = to_path();
+  return Image::read_text(path, errors);
+}
+
+std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
+
+Hough *read_text(std::ifstream &ifs, Errors &errors) {
+  return nullptr;
+}
+
+std::string Filesystem_data_source_descriptor::to_path() const {
+  return to_path_noext() + "." + ext;
+}
+
+std::string Filesystem_data_source_descriptor::to_path_noext() const {
+  return (directory.empty() ? "" : directory + "/") + filename;
 }
 
 std::string Filesystem_data_source_descriptor::to_string() {
@@ -137,4 +141,81 @@ std::string Filesystem_data_source_descriptor::to_string() {
      << "' ext '" << ext << "'";
   return os.str();
 }
+
+void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  std::string data_filename = wb_filename.to_hist();
+  FILE *fp = file_utils::open_file_write(data_filename, errors);
+  if (fp) {
+    histogram->write(fp, errors);
+    fclose(fp);
+  }
+}
+
+void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
+  std::string path = to_path_noext();
+  histogram->write_text(path, "\t", errors);
+}
+
+void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    hough->write(fp, errors);
+    fclose(fp);
+  }
+}
+
+void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
+  std::string path = to_path();
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    hough->write_text(ofs, "\t", errors);
+    ofs.close();
+  }
+}
+
+void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    hough->write_peak_lines(fp, errors);
+    fclose(fp);
+  }
+}
+
+void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {
+  std::string path = to_path();
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    hough->write_peak_lines_text(ofs, "\t", errors);
+    ofs.close();
+  }
+}
+
+void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
+  std::string path = to_path();
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    image->write(fp, errors);
+    fclose(fp);
+  }
+}
+
+void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
+  std::string path = to_path();
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    image->write_text(ofs, "\t", errors);
+    ofs.close();
+  }
+}
+
+void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {
+  std::string path = to_path();
+  image->write_jpeg(path, errors);
+}
+
+void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 

@@ -31,11 +31,14 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
   Hough *read_hough(Errors &errors) override;
   Image *read_image(Errors &errors) override;
   Image *read_image_jpeg(Errors &errors) override;
+  Image *read_image_text(Errors &errors) override;
   std::string read_json(Errors &errors) override;
   void write_histogram(Histogram *histogram, Errors &errors) override;
   void write_histogram_text(Histogram *histogram, Errors &errors) override;
   void write_hough(Hough *hough, Errors &errors) override;
   void write_hough_text(Hough *hough, Errors &errors) override;
+  void write_hough_peaks(Hough *hough, Errors &errors) override;
+  void write_hough_peaks_text(Hough *hough, Errors &errors) override;
   void write_image(Image *image, Errors &errors) override;
   void write_image_jpeg(Image *image, Errors &errors) override;
   void write_image_text(Image *image, Errors &errors) override;

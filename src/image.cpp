@@ -9,12 +9,9 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include "jpeglib.h"
-#include "wb_data_format.hpp"
-#include "wb_data_type.hpp"
-#include "wb_image_depth.hpp"
+#include "file_utils.hpp"
 #include "image.hpp"
-#include "image_header.hpp"
+#include "jpeglib.h"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -192,7 +189,7 @@ Image *Image::clone(Image *image, WB_image_depth::Image_depth depth, Errors &err
 }
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255
-void Image::copy(Image *image, Errors &errors) {
+void Image::copy(Image *image, Errors &errors) const {
   if (get_npixels() != image->get_npixels()) {
     errors.add("Image::copy", "", "images not the same size ");
     return;
@@ -407,21 +404,23 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
 }
 
 Image *Image::read(std::string &path, Errors &errors) {
-  FILE *fp = fopen(path.c_str(), "r");
-  if (fp == nullptr) {
-    errors.add("Image::read", "", "invalid file '" + path + "' " + std::string(strerror(errno)) + "'");
-    return nullptr;
+  FILE *fp = file_utils::open_file_read(path, errors);
+  Image *image = nullptr;
+  if (fp) {
+    image = Image::read(fp, errors);
+    fclose(fp);
   }
+  return image;
+}
 
+Image *Image::read(FILE *fp, Errors &errors) {
   Image_header image_header;
-  image_header.read(fp, path, errors);
+  image_header.read(fp, errors);
   if (errors.has_error())
     return nullptr;
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
-  size_t newLen;
-
   switch (image_header.depth) {
     case WB_image_depth::Image_depth::CV_8U:
       wb_utils::read_byte_buffer(fp,
@@ -429,10 +428,12 @@ Image *Image::read(std::string &path, Errors &errors) {
                                  image->get_npixels(),
                                  "Image::read",
                                  "",
-                                 "cannot read 8U image data in '" + path + "'",
+                                 "cannot read 8U image data",
                                  errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     case WB_image_depth::Image_depth::CV_32S:
@@ -441,10 +442,12 @@ Image *Image::read(std::string &path, Errors &errors) {
                                 image->get_npixels(),
                                 "Image::read",
                                 "",
-                                "cannot read 32S image data in '" + path + "'",
+                                "cannot read 32S image data",
                                 errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     case WB_image_depth::Image_depth::CV_32F:
@@ -453,16 +456,17 @@ Image *Image::read(std::string &path, Errors &errors) {
                                   image->get_npixels(),
                                   "Image::read",
                                   "",
-                                  "cannot read 32F image data in '" + path + "'",
+                                  "cannot read 32F image data",
                                   errors);
-      if (errors.has_error())
+      if (errors.has_error()) {
+        delete image;
         return nullptr;
+      }
       break;
 
     default:
       break;
   }
-  fclose(fp);
   return image;
 }
 
@@ -494,7 +498,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   if (setjmp(jerr.setjmp_buffer)) {
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    errors.add("Image::read_jpeg", "", "jpeg read error in '" + path + "'");
+    errors.add("Image::read_jpeg", "", "jpeg read error");
     return nullptr;
   }
   /* Step 1: allocate and initialize JPEG decompression object */
@@ -523,6 +527,56 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   /* Step 8: Release JPEG decompression object */
   jpeg_destroy_decompress(&cinfo);
   fclose(fp);
+  return image;
+}
+
+Image *Image::read_text(const std::string &path, Errors &errors) {
+  std::ifstream ifs = file_utils::open_file_read_text(path, errors);
+  Image* image;
+  if (ifs) {
+    image = read_text(ifs, errors);
+    ifs.close();
+  }
+  return image;
+}
+
+Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
+  int rows = 0;
+  int cols = 0;
+  bool first = true;
+  std::string line;
+  std::vector<std::vector<std::string>> lines;
+  while (getline(ifs, line)) {
+    std::vector<std::string> values = file_utils::string_split(line);
+    if (first) {
+      first = false;
+      cols = values.size();
+      lines.push_back(values);
+    } else if (values.size() != cols) {
+      std::ostringstream os;
+      os << "invalid image file: initial column length " << cols
+         << " row " << rows << " column length " << values.size();
+      errors.add("Image::read_text", "", os.str());
+      return nullptr;
+    } else {
+      lines.push_back(values);
+    }
+    rows++;
+  }
+  auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
+  pixel_32S *buf_ptr = image->buf_32S;
+  for (const std::vector<std::string> &row_values: lines) {
+    for (const std::string &value_str: row_values) {
+      int value;
+      if (wb_utils::string_to_int(value_str, value)) {
+        *buf_ptr++ = value;
+      } else {
+        errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
+        delete image;
+        return nullptr;
+      }
+    }
+  }
   return image;
 }
 
@@ -612,7 +666,7 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
 //    return nullptr;
 //  }
 
-  Image *out_image = new Image(src_image->image_header);
+  auto *out_image = new Image(src_image->image_header);
 
   int size = src_image->get_npixels();
   switch (src_image->get_depth()) {
@@ -633,7 +687,6 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
 
     default:
       break;
-      return out_image;
   }
   return out_image;
 }
@@ -694,38 +747,41 @@ std::string Image::to_string(const std::string &prefix) const {
 }
 
 void Image::write(const std::string &path, Errors &errors) const {
-  if (debug)
-    std::cout << "Image::write path '" << path << "' " << to_string() << std::endl;
-  FILE *fp = fopen(path.c_str(), "w");
-  if (fp == nullptr) {
-    errors.add("Image::write", "", "invalid file '" + path + "'");
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    write(fp, errors);
+    fclose(fp);
   }
-  image_header.write(fp, path, errors);
+}
+
+void Image::write(FILE *fp, Errors &errors) const {
+  image_header.write(fp, errors);
+  if (errors.has_error())
+    return;
   // Write the data from the buffer.
   size_t newLen;
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 8U image data to '" + path + "'");
+        errors.add("Image::write", "", "cannot write 8U image data");
       }
       break;
     case WB_image_depth::Image_depth::CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 32S image data to '" + path + "'");
+        errors.add("Image::write", "", "cannot write 32S image data");
       }
       break;
     case WB_image_depth::Image_depth::CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
       if (ferror(fp) != 0 || newLen != get_npixels()) {
-        errors.add("Image::write", "", "cannot write 32F image data to '" + path + "'");
+        errors.add("Image::write", "", "cannot write 32F image data");
       }
       break;
     default:
       break;
   }
-  fclose(fp);
 }
 
 void Image::write_jpeg(const std::string &path, Errors &errors) const {
@@ -733,6 +789,7 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
     errors.add("Image::write_jpeg", "", "cannot write "
         + WB_image_depth::to_string(get_depth())
         + " image");
+    return;
   }
   int quality = 100; // best
   struct jpeg_compress_struct cinfo;
@@ -780,13 +837,14 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
 }
 
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
-  if (debug)
-    std::cout << "Image::write_text path '" << path << "' " << to_string() << std::endl;
-  std::ofstream ofs(path, std::ofstream::out);
-  if (!ofs) {
-    errors.add("Image::write_text", "", "invalid file '" + path + "'");
-    return;
+  std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+  if (ofs) {
+    write_text(ofs, "\t", errors);
+    ofs.close();
   }
+}
+
+void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   for (int row = 0; row < get_rows(); row++) {
     for (int col = 0; col < get_cols(); col++) {
       double value = get(row, col);

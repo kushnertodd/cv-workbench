@@ -3,9 +3,9 @@
 //
 
 #include <algorithm>
-#include <list>
 #include <iostream>
 #include <sstream>
+#include "errors.hpp"
 #include "polar_line.hpp"
 
 extern bool debug;
@@ -49,3 +49,23 @@ std::string Polar_line::to_string() const {
   return os.str();
 }
 
+void Polar_line::write(FILE *fp, Errors &errors) {
+  fwrite(&rho_index, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Polar_line::write", "", "cannot write Hough rho_index");
+    return;
+  }
+  fwrite(&theta_index, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Polar_line::write", "", "cannot write Hough theta_index");
+    return;
+  }
+  fwrite(&count, sizeof(int), 1, fp);
+  if (ferror(fp) != 0) {
+    errors.add("Polar_line::write", "", "cannot write Hough count");
+  }
+}
+
+void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+    ofs << rho_index << delim << theta_index << delim << count<< std::endl;
+}

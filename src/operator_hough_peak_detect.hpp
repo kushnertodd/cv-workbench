@@ -6,6 +6,7 @@
 #define SRC__OPERATOR_HOUGH_PEAK_DETECT_HPP_
 
 #include "operator.hpp"
+#include "wb_defs.hpp"
 
 class Operator_hough_peak_detect : public Operator {
  public:

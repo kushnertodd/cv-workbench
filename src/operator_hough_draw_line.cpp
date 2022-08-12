@@ -5,8 +5,11 @@
 #include <iostream>
 #include "hough.hpp"
 #include "operator_utils.hpp"
+#include "polar_line.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
+#include "wb_window.hpp"
+#include "polar_trig.hpp"
 #include "operator_hough_draw_line.hpp"
 
 extern bool debug;
@@ -98,18 +101,16 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               //Hough *hough = Hough::create_image(input, theta_inc, threshold);
               int rows = input->get_rows();
               int cols = input->get_cols();
-              int nrhos = wb_utils::double_to_int_round(sqrt(rows * rows
-                                                                 + input->get_cols() * input->get_cols())) + rho_pad;
-              auto *hough_accum = new Hough_accum(theta_inc, nrhos, rows, cols);
-              int rho_index = hough_accum->rho_to_index(rho);
+              auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
+              int rho_index = Polar_trig::rho_to_index(rho, hough_accum->get_nrhos());
               Polar_line polar_line(rho_index,
                                     rho,
                                     theta_index,
-                                    hough_accum->get_cos(theta_index),
-                                    hough_accum->get_sin(theta_index),
+                                    Polar_trig::to_cos(theta_index),
+                                    Polar_trig::to_sin(theta_index),
                                     0);
               Line_segment line_segment;
-              if (!hough_accum->clip_window(line_segment, polar_line)) {
+              if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
                 errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
               } else {
                 input->draw_line_segment(line_segment, pixel_value);

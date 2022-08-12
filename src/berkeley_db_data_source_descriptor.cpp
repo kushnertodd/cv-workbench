@@ -22,20 +22,6 @@ Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                            WB_repository_type::Repository_type::BERKELEY_DB),
     ref_id(0) {}
 
-Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
-Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
-Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
-Image *Berkeley_db_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
-std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
-void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
-
 Berkeley_db_data_source_descriptor
 *Berkeley_db_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
                                                int id,
@@ -59,6 +45,23 @@ Berkeley_db_data_source_descriptor
   }
   return berkeley_db_data_source_descriptor;
 }
+
+Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
+Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
+Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
+Image *Berkeley_db_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
+Image *Berkeley_db_data_source_descriptor::read_image_text(Errors &errors) {  return nullptr; }
+std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
+void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
 std::string Berkeley_db_data_source_descriptor::to_string() {
   std::ostringstream os;
