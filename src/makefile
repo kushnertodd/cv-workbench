@@ -490,6 +490,30 @@ operator_transform_image_copy.o: wb_repository_type.hpp line_segment.hpp
 operator_transform_image_copy.o: point.hpp variance_stats.hpp wb_utils.hpp
 operator_transform_image_copy.o: polar_line.hpp polar_trig.hpp
 operator_transform_image_copy.o: wb_filename.hpp
+operator_transform_image_create.o: operator_transform_image_create.hpp
+operator_transform_image_create.o: operator.hpp wb_defs.hpp wb_log.hpp
+operator_transform_image_create.o: errors.hpp data_source_descriptor.hpp
+operator_transform_image_create.o: histogram.hpp hough.hpp hough_accum.hpp
+operator_transform_image_create.o: file_utils.hpp image.hpp bounds.hpp
+operator_transform_image_create.o: image_header.hpp wb_data_format.hpp
+operator_transform_image_create.o: wb_data_type.hpp wb_image_depth.hpp
+operator_transform_image_create.o: wb_repository_type.hpp line_segment.hpp
+operator_transform_image_create.o: point.hpp variance_stats.hpp wb_utils.hpp
+operator_transform_image_create.o: polar_line.hpp polar_trig.hpp
+operator_transform_image_create.o: wb_filename.hpp operator_utils.hpp
+operator_transform_image_morphology.o: operator_transform_image_morphology.hpp
+operator_transform_image_morphology.o: operator.hpp wb_defs.hpp wb_log.hpp
+operator_transform_image_morphology.o: errors.hpp data_source_descriptor.hpp
+operator_transform_image_morphology.o: histogram.hpp hough.hpp
+operator_transform_image_morphology.o: hough_accum.hpp file_utils.hpp
+operator_transform_image_morphology.o: image.hpp bounds.hpp image_header.hpp
+operator_transform_image_morphology.o: wb_data_format.hpp wb_data_type.hpp
+operator_transform_image_morphology.o: wb_image_depth.hpp
+operator_transform_image_morphology.o: wb_repository_type.hpp
+operator_transform_image_morphology.o: line_segment.hpp point.hpp
+operator_transform_image_morphology.o: variance_stats.hpp wb_utils.hpp
+operator_transform_image_morphology.o: polar_line.hpp polar_trig.hpp
+operator_transform_image_morphology.o: wb_filename.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp wb_log.hpp
 operator_transform_intensity_map.o: errors.hpp data_source_descriptor.hpp
