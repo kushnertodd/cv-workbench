@@ -56,6 +56,7 @@ SRCOBJS :=  \
   operator_hough_peak_detect.o \
   operator.o \
   operator_transform_image_copy.o \
+  operator_transform_image_create.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
   point.o \

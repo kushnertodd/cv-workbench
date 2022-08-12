@@ -119,6 +119,10 @@ int Polar_trig::row_col_theta_to_rho_index(int row, int col, int theta_index, in
   return rho_index;
 }
 
+void Polar_trig::set_theta_inc(int m_theta_inc) {
+  theta_inc = m_theta_inc;
+}
+
 int Polar_trig::theta_index_to_theta(int theta_index) {
   int theta = theta_index * theta_inc;
   return theta;
@@ -130,8 +134,4 @@ double Polar_trig::to_cos(int theta_index) {
 
 double Polar_trig::to_sin(int theta_index) {
   return polar_sin[theta_index];
-}
-
-void Polar_trig::set_theta_inc(int m_theta_inc) {
-  theta_inc = m_theta_inc;
 }
