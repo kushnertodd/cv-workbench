@@ -22,7 +22,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line90_gray_hough",
+						"filename": "line90_gray",
 						"ext": "txt"
 					},
 					{
@@ -31,7 +31,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line90_gray_hough",
+						"filename": "line90_gray",
 						"ext": "bin"
 					}
 				],

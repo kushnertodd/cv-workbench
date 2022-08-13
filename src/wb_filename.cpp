@@ -71,6 +71,8 @@ std::string Wb_filename::to_hist_text() const { return root + ".hist.txt"; }
 std::string Wb_filename::to_hough() const { return root + ".hough.bin"; }
 std::string Wb_filename::to_hough_text() const { return root + ".hough.txt"; }
 std::string Wb_filename::to_jpeg() const { return root + ".jpg"; }
-std::string Wb_filename::to_json() const { return root + ".jpg"; }
+std::string Wb_filename::to_json() const { return root + ".json"; }
 std::string Wb_filename::to_log() const { return root + ".log"; }
+std::string Wb_filename::to_peaks() const { return root + ".peaks.bin"; }
+std::string Wb_filename::to_peaks_text() const { return root + ".peaks.txt"; }
 std::string Wb_filename::to_text() const { return root + ".txt"; }
