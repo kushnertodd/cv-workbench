@@ -82,6 +82,7 @@ PROGRAMS = \
   image-map \
   image-morph \
   image-read \
+  image-trig \
   cv-workbench
 
 %.o: %.cpp %.hpp
