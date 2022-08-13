@@ -353,17 +353,17 @@ operator_filter_edge_roberts.o: histogram.hpp hough.hpp hough_accum.hpp
 operator_filter_edge_roberts.o: file_utils.hpp wb_utils.hpp polar_line.hpp
 operator_filter_edge_roberts.o: polar_trig.hpp wb_filename.hpp
 operator_filter_edge_roberts.o: operator_filter_edge_roberts.hpp operator.hpp
-operator_filter_edge_sobel.o: kernel.hpp image.hpp bounds.hpp errors.hpp
-operator_filter_edge_sobel.o: image_header.hpp wb_data_format.hpp
-operator_filter_edge_sobel.o: wb_data_type.hpp wb_image_depth.hpp
-operator_filter_edge_sobel.o: wb_repository_type.hpp wb_defs.hpp
-operator_filter_edge_sobel.o: line_segment.hpp point.hpp wb_log.hpp
-operator_filter_edge_sobel.o: variance_stats.hpp wb_morphology_types.hpp
-operator_filter_edge_sobel.o: operator_utils.hpp data_source_descriptor.hpp
-operator_filter_edge_sobel.o: histogram.hpp hough.hpp hough_accum.hpp
-operator_filter_edge_sobel.o: file_utils.hpp wb_utils.hpp polar_line.hpp
-operator_filter_edge_sobel.o: polar_trig.hpp wb_filename.hpp
-operator_filter_edge_sobel.o: operator_filter_edge_sobel.hpp operator.hpp
+operator_filter_edge_Sobel.o: kernel.hpp image.hpp bounds.hpp errors.hpp
+operator_filter_edge_Sobel.o: image_header.hpp wb_data_format.hpp
+operator_filter_edge_Sobel.o: wb_data_type.hpp wb_image_depth.hpp
+operator_filter_edge_Sobel.o: wb_repository_type.hpp wb_defs.hpp
+operator_filter_edge_Sobel.o: line_segment.hpp point.hpp wb_log.hpp
+operator_filter_edge_Sobel.o: variance_stats.hpp wb_morphology_types.hpp
+operator_filter_edge_Sobel.o: operator_utils.hpp data_source_descriptor.hpp
+operator_filter_edge_Sobel.o: histogram.hpp hough.hpp hough_accum.hpp
+operator_filter_edge_Sobel.o: file_utils.hpp wb_utils.hpp polar_line.hpp
+operator_filter_edge_Sobel.o: polar_trig.hpp wb_filename.hpp
+operator_filter_edge_Sobel.o: operator_filter_edge_sobel.hpp operator.hpp
 operator_filter_image_morphology.o: kernel.hpp image.hpp bounds.hpp
 operator_filter_image_morphology.o: errors.hpp image_header.hpp
 operator_filter_image_morphology.o: wb_data_format.hpp wb_data_type.hpp
