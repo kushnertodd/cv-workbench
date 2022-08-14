@@ -127,7 +127,7 @@ Hough_accum *Hough_accum::read_text(std::ifstream &ifs, Errors &errors) {
   auto *hough_accum = new Hough_accum();
   std::string line;
   while (getline(ifs, line)) {
-    std::vector<std::string> values = file_utils::string_split(line);
+    std::vector<std::string> values = wb_utils::string_split(line);
     for (const std::string &value_str: values) {
       int value;
       if (!wb_utils::string_to_int(value_str, value)) {

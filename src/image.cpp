@@ -547,7 +547,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
   std::string line;
   std::vector<std::vector<std::string>> lines;
   while (getline(ifs, line)) {
-    std::vector<std::string> values = file_utils::string_split(line);
+    std::vector<std::string> values = wb_utils::string_split(line);
     if (first) {
       first = false;
       cols = values.size();

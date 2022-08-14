@@ -100,8 +100,10 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
 }
 
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
-  std::string path = to_path();
-  FILE *fp = file_utils::open_file_read(path, errors);
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  std::string data_filename = wb_filename.to_bin();
+  FILE *fp = file_utils::open_file_read(data_filename, errors);
   Image *image = nullptr;
   if (fp) {
     image = Image::read(fp, errors);
@@ -111,13 +113,17 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
 }
 
 Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
-  std::string path = to_path();
-  return Image::read_jpeg(path, errors);
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::JPEG);
+  std::string data_filename = wb_filename.to_jpeg();
+  return Image::read_jpeg(data_filename, errors);
 }
 
 Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
-  std::string path = to_path();
-  return Image::read_text(path, errors);
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  std::string data_filename = wb_filename.to_text();
+  return Image::read_text(data_filename, errors);
 }
 
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }

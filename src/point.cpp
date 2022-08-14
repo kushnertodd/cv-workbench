@@ -63,6 +63,10 @@ bool Point::in_ellipse(int rows, int cols) const {
   return in_ellipse(row, col, rows, cols);
 }
 
+bool Point::is_valid(int row, int col, int rows, int cols) {
+  return (row >= 0 && row < rows && col >= 0 && col < cols);
+}
+
 bool Point::in_ellipse(int row, int col, int rows, int cols) {
   double dist = ellipse_dist(row, col, rows, cols);
   return dist <= 1.0;

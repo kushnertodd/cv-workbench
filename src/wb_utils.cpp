@@ -434,6 +434,14 @@ bool wb_utils::string_find(const std::string &text,
   return found;
 }
 
+std::vector<std::string> wb_utils::string_split(const std::string &str) {
+  std::vector<std::string> result;
+  std::istringstream iss(str);
+  for (std::string s; iss >> s;)
+    result.push_back(s);
+  return result;
+}
+
 bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
@@ -468,6 +476,20 @@ std::string wb_utils::timestamp() {
   timeinfo = localtime(&rawtime);
   strftime(buffer, 80, "%Y-%m-%d %T", timeinfo);
   return buffer;
+}
+
+std::vector<std::string> wb_utils::tokenize(std::string const &str, std::string delims)
+{
+  size_t start;
+  size_t end = 0;
+  std::vector<std::string> out;
+
+  while ((start = str.find_first_not_of(delims, end)) != std::string::npos)
+  {
+    end = str.find(delims, start);
+    out.push_back(str.substr(start, end - start));
+  }
+  return out;
 }
 
 void wb_utils::write_double(FILE *fp,

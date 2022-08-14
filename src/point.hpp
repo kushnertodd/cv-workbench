@@ -20,6 +20,7 @@ class Point {
   static double ellipse_dist(int row, int col, int rows, int cols);
   bool in_ellipse(int rows, int cols) const;
   static bool in_ellipse(int row, int col, int rows, int cols);
+  static bool is_valid(int row, int col, int rows, int cols);
   static double row_to_y(int row, int rows);
   void set(int m_row, int m_col);
   std::string to_string() const;
