@@ -149,7 +149,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
           if (!wb_utils::string_to_int(col_str, col))
             errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
           if (!errors.has_error()) {
-            image->set(row, col, background);
+            image->set(row, col, foreground);
           }
         }
       }
