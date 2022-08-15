@@ -7,10 +7,10 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 #### v0.1.26 dev
 ```
-commit 838a5ef8654f4636fcd636c9916e622a4a4ce7a9 
+commit 1b127a9388b00c2eafe4c4a717e38a0061125dac 
 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
-Date:   Sun Aug 14 15:26:09 2022 -0600
+Date:   Sun Aug 14 18:52:30 2022 -0600
 ```
 - transform-image-create works for point, line, and rectangle
 
