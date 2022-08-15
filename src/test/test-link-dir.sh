@@ -1,5 +1,5 @@
 #!/bin/bash
-for f in filter* hough* hist* ; do
+for f in filter* hough* hist* transform*; do
   if [ -d $f ] ; then
     cd $f
     if [ ! -e test-clean-dir.sh ] ; then

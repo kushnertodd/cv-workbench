@@ -121,7 +121,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
   json_object *json_operator = get_json_object("Experiment_step::from_json", json_experiment_step, "operator",
                                                json_type_string, errors);
   json_object *json_input_data = get_json_object("Experiment_step::from_json", json_experiment_step, "input-data",
-                                                 json_type_array, errors);
+                                                 json_type_array, errors, true);
   json_object *json_output_data = get_json_object("Experiment_step::from_json", json_experiment_step, "output-data",
                                                   json_type_array, errors);
   json_object *json_parameters = get_json_object("Experiment_step::from_json", json_experiment_step, "parameters",
@@ -137,13 +137,15 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
     for (int i = 0; i < nsteps; i++) {
       json_object *json_input_data_descriptor =
           json_object_array_get_idx(json_input_data, i);
-      if (error_check_type("Experiment_step::from_json", "input-data descriptor",
-                           json_input_data_descriptor,
-                           json_type_object, errors)) {
-        Data_source_descriptor *input_data_store_descriptor =
-            Data_source_descriptor::from_json(json_input_data_descriptor, errors);
-        if (input_data_store_descriptor != nullptr)
-          experiment_step->input_data_sources.push_back(input_data_store_descriptor);
+      if (json_input_data_descriptor != nullptr) {
+        if (error_check_type("Experiment_step::from_json", "input-data descriptor",
+                             json_input_data_descriptor,
+                             json_type_object, errors)) {
+          Data_source_descriptor *input_data_store_descriptor =
+              Data_source_descriptor::from_json(json_input_data_descriptor, errors);
+          if (input_data_store_descriptor != nullptr)
+            experiment_step->input_data_sources.push_back(input_data_store_descriptor);
+        }
       }
     }
   }

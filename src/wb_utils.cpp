@@ -34,16 +34,16 @@ std::string wb_utils::char_to_string(char c) {
   return s;
 }
 
-pixel_32F wb_utils::cv_32S_to_cv_32F(pixel_32S value){
-return  int_to_float(value);
+pixel_32F wb_utils::cv_32S_to_cv_32F(pixel_32S value) {
+  return int_to_float(value);
 }
 
-pixel_32S wb_utils::cv_32F_to_cv_32S(pixel_32F value){
-  return  float_to_int(value);
+pixel_32S wb_utils::cv_32F_to_cv_32S(pixel_32F value) {
+  return float_to_int(value);
 }
 
-pixel_32S wb_utils::cv_32F_to_cv_32S_round(pixel_32F value){
-  return  float_to_int_round(value);
+pixel_32S wb_utils::cv_32F_to_cv_32S_round(pixel_32F value) {
+  return float_to_int_round(value);
 }
 
 float wb_utils::double_to_float(double value) {
@@ -434,6 +434,14 @@ bool wb_utils::string_find(const std::string &text,
   return found;
 }
 
+std::vector<std::string> wb_utils::string_split(const std::string &str) {
+  std::vector<std::string> result;
+  std::istringstream iss(str);
+  for (std::string s; iss >> s;)
+    result.push_back(s);
+  return result;
+}
+
 bool wb_utils::string_to_bool(const std::string &str, bool &bvalue) {
   if (str == "true") {
     bvalue = true;
@@ -468,6 +476,18 @@ std::string wb_utils::timestamp() {
   timeinfo = localtime(&rawtime);
   strftime(buffer, 80, "%Y-%m-%d %T", timeinfo);
   return buffer;
+}
+
+std::vector<std::string> wb_utils::tokenize(std::string const &str, std::string delims) {
+  size_t start;
+  size_t end = 0;
+  std::vector<std::string> out;
+
+  while ((start = str.find_first_not_of(delims, end)) != std::string::npos) {
+    end = str.find(delims, start);
+    out.push_back(str.substr(start, end - start));
+  }
+  return out;
 }
 
 void wb_utils::write_double(FILE *fp,

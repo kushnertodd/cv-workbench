@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 
     json_object *jobj = json_tokener_parse(contents.c_str());
     if (jobj == nullptr)
-      wb_utils::error_exit("json_tokener_parse() failed");
+      wb_utils::error_exit("invalid input json");
     else {
       std::string log_filename = wb_in_filename->to_log();
       errors.check_exit();

@@ -41,6 +41,8 @@ class Wb_filename {
   std::string to_jpeg() const;
   std::string to_json() const;
   std::string to_log() const;
+  std::string to_peaks() const;
+  std::string to_peaks_text() const;
   std::string to_text() const;
 };
 

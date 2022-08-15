@@ -22,7 +22,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line0_gray_hough",
+						"filename": "line0_gray",
 						"ext": "txt"
 					},
 					{
@@ -31,7 +31,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line0_gray_hough",
+						"filename": "line0_gray",
 						"ext": "bin"
 					}
 				],
@@ -61,7 +61,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line15_gray_hough",
+						"filename": "line15_gray",
 						"ext": "txt"
 					},
 					{
@@ -70,7 +70,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line15_gray_hough",
+						"filename": "line15_gray",
 						"ext": "bin"
 					}
 				],
@@ -100,7 +100,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line30_gray_hough",
+						"filename": "line30_gray",
 						"ext": "txt"
 					},
 					{
@@ -109,7 +109,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line30_gray_hough",
+						"filename": "line30_gray",
 						"ext": "bin"
 					}
 				],
@@ -139,7 +139,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line45_gray_hough",
+						"filename": "line45_gray",
 						"ext": "txt"
 					},
 					{
@@ -148,7 +148,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line45_gray_hough",
+						"filename": "line45_gray",
 						"ext": "bin"
 					}
 				],
@@ -178,7 +178,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line90_gray_hough",
+						"filename": "line90_gray",
 						"ext": "txt"
 					},
 					{
@@ -187,7 +187,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line90_gray_hough",
+						"filename": "line90_gray",
 						"ext": "bin"
 					}
 				],

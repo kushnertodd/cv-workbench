@@ -1,0 +1,27 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "square45-90_gray_create_line"
+          }
+        ],
+        "parameters": {
+          "rows": "5",
+          "cols": "5",
+          "foreground": "64",
+          "background": "192",
+          "line": "(1,1):(2,3)"
+        }
+      }
+    ]
+  }
+}

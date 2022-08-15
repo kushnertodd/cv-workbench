@@ -19,6 +19,7 @@
 #include "operator_hough_image_create.hpp"
 #include "operator_hough_peak_detect.hpp"
 #include "operator_transform_image_copy.hpp"
+#include "operator_transform_image_create.hpp"
 #include "operator_transform_intensity_map.hpp"
 #include "operator_dispatcher.hpp"
 
@@ -45,6 +46,7 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   else if (operator_name == "hough-image-create") pOperator = new Operator_hough_image_create();
   else if (operator_name == "hough-peak-detect") pOperator = new Operator_hough_peak_detect();
   else if (operator_name == "transform-image-copy") pOperator = new Operator_transform_image_copy();
+  else if (operator_name == "transform-image-create") pOperator = new Operator_transform_image_create();
   else if (operator_name == "transform-intensity-map") pOperator = new Operator_transform_intensity_map();
   else
     pOperator = nullptr;

@@ -51,7 +51,10 @@ class Image {
   void copy(Image *image, Errors &errors) const;
 
   void draw_line_segment(const Line_segment &line_segment, double value) const;
+  void draw_line_segment(int row1, int col1, int row2, int col2, double value) const;
   void draw_line_segments(std::list<Line_segment> &line_segments, double value) const;
+  void draw_rectangle(int row1, int col1, int row2, int col2, double value) const;
+  void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value) const;
 
   // TODO: add component
   double get(int row, int col) const;
@@ -76,7 +79,7 @@ class Image {
 
   static Image *read(std::string &path, Errors &errors);
   static Image *read(FILE *fp, Errors &errors);
-  static Image *read_text(const std::string& path, Errors &errors);
+  static Image *read_text(const std::string &path, Errors &errors);
   static Image *read_text(std::ifstream &ifs, Errors &errors);
 
   static Image *read_jpeg(const std::string &path, Errors &errors);

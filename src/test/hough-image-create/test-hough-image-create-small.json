@@ -21,7 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "small_line_gray_sobel_0_degrees_hough"
+						"filename": "small_line_gray_sobel_0_degrees"
 					},
 					{
 						"id": 2,
@@ -29,7 +29,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "small_line_gray_sobel_0_degrees_hough"
+						"filename": "small_line_gray_sobel_0_degrees"
 					}
 				],
 				"parameters": {

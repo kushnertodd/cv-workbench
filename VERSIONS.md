@@ -5,6 +5,24 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.27 dev
+```
+commit 5676189757e387f672960b946954de4757566cfc 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Sun Aug 14 20:34:26 2022 -0600
+```
+- filter-image-morphology works
+
+#### v0.1.26 dev
+```
+commit 1b127a9388b00c2eafe4c4a717e38a0061125dac 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Sun Aug 14 18:52:30 2022 -0600
+```
+- transform-image-create works for point, line, and rectangle
+
 #### v0.1.25 dev
 ```
 commit 0270ac7f697fd1b065ca58e716f56dc9bba561fe

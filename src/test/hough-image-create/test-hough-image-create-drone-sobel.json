@@ -21,7 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "du_drone_gray_sobel_0_100_degrees_hough"
+						"filename": "du_drone_gray_sobel_0_100_degrees"
 					},
 					{
 						"id": 2,
@@ -29,7 +29,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "du_drone_gray_sobel_0_100_degrees_hough"
+						"filename": "du_drone_gray_sobel_0_100_degrees"
 					}
 				],
 				"parameters": {

@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <json-c/json.h>
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
@@ -97,10 +98,12 @@ bool string_find(const std::string &text,
                  const std::string &pat,
                  bool &at_beginning,
                  bool &at_end);
+std::vector<std::string> string_split(const std::string &str);
 bool string_to_bool(const std::string &str, bool &bvalue);
 bool string_to_double(const std::string &text, double &value);
 bool string_to_int(const std::string &str, int &value);
 std::string timestamp();
+std::vector<std::string> tokenize(std::string const &str, std::string delims);
 void write_double(FILE *fp,
                   double value,
                   const std::string &module,
