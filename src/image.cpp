@@ -278,10 +278,38 @@ void Image::draw_line_segment(const Line_segment &line_segment, double value) co
   }
 }
 
+void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value) const {
+  Line_segment line_segment(row1, col1, row2, col2);
+  for (Point point: line_segment.line_points) {
+    set(point, value);
+  }
+}
+
 void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value) const {
   for (const Line_segment &line_segment: line_segments) {
     draw_line_segment(line_segment, value);
   }
+}
+
+void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value) const {
+  Line_segment line_segment1(row1, col1, row1, col2);
+  Line_segment line_segment2(row1, col2, row2, col2);
+  Line_segment line_segment3(row2, col2, row2, col1);
+  Line_segment line_segment4(row2, col1, row1, col1);
+  draw_line_segment(line_segment1, value);
+  draw_line_segment(line_segment2, value);
+  draw_line_segment(line_segment3, value);
+  draw_line_segment(line_segment4, value);
+}
+
+void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double value) const {
+  int row_min = std::min(row1, row2);
+  int col_min = std::min(col1, col2);
+  int row_max = std::max(row1, row2);
+  int col_max = std::max(col1, col2);
+  for (int row = row_min; row <= row_max; row++)
+    for (int col = col_min; col <= col_max; col++)
+      set(row, col, value);
 }
 
 double Image::get(int row, int col) const {
@@ -532,7 +560,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
 
 Image *Image::read_text(const std::string &path, Errors &errors) {
   std::ifstream ifs = file_utils::open_file_read_text(path, errors);
-  Image* image;
+  Image *image;
   if (ifs) {
     image = read_text(ifs, errors);
     ifs.close();

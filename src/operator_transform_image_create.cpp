@@ -186,16 +186,16 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
           if (!wb_utils::string_to_int(col2_str, col2))
             errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
           if (!errors.has_error()) {
-            Line_segment line_segment(row1, col1, row2, col2);
-            image->draw_line_segment(line_segment, foreground);
+//            Line_segment line_segment(row1, col1, row2, col2);
+//            image->draw_line_segment(line_segment, foreground);
+            image->draw_line_segment(row1, col1, row2, col2, foreground);
           }
         }
       }
     }
   }
-  std::vector<std::string> rect_lines;
   if (!errors.has_error() && saw_rectangle) {
-    rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
+    std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
     if (rect_lines.empty()) {
       errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
     }
@@ -225,20 +225,48 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
           if (!wb_utils::string_to_int(col2_str, col2))
             errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
           if (!errors.has_error()) {
-            Line_segment line_segment1(row1, col1, row2, col1);
-            Line_segment line_segment2(row2, col1, row2, col2);
-            Line_segment line_segment3(row2, col2, row1, col2);
-            Line_segment line_segment4(row1, col2, row1, col1);
-            image->draw_line_segment(line_segment1, foreground);
-            image->draw_line_segment(line_segment2, foreground);
-            image->draw_line_segment(line_segment3, foreground);
-            image->draw_line_segment(line_segment4, foreground);
+            image->draw_rectangle(row1, col1, row2, col2, foreground);
           }
         }
       }
     }
   }
   if (!errors.has_error() && saw_rectangle_filled) {
+    std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_filled_str, "|");
+    if (rect_lines.empty()) {
+      errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+    }
+    if (!errors.has_error()) {
+      std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
+      for (const std::string &rect_line_str: rect_lines) {
+        std::smatch msm;
+        if (!std::regex_match(rect_line_str, msm, line_pat)) {
+          errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+        } else if (msm.size() != 5) {
+          errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+        } else {
+          std::string row1_str = msm[1];
+          std::string col1_str = msm[2];
+          std::string row2_str = msm[3];
+          std::string col2_str = msm[4];
+          int row1;
+          int col1;
+          int row2;
+          int col2;
+          if (!wb_utils::string_to_int(row1_str, row1))
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+          if (!wb_utils::string_to_int(col1_str, col1))
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+          if (!wb_utils::string_to_int(row2_str, row2))
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+          if (!wb_utils::string_to_int(col2_str, col2))
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+          if (!errors.has_error()) {
+            image->draw_rectangle_filled(row1, col1, row2, col2, foreground);
+          }
+        }
+      }
+    }
   }
   if (!errors.has_error()) {
     if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {

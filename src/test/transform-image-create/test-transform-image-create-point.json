@@ -11,18 +11,15 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_create_rectangle"
+            "filename": "square45-90_gray_create_point"
           }
         ],
         "parameters": {
-          "rows": "9",
-          "cols": "7",
+          "rows": "5",
+          "cols": "5",
           "foreground": "64",
           "background": "192",
-          "point": "(1,1)",
-          "line": "(4,0):(0,4)",
-          "rectangle": "(5,1):(7,3)",
-          "rectangle-filled": "(2,4):(5,6)"
+          "point": "(4,2)"
         }
       }
     ]
