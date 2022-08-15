@@ -50,7 +50,7 @@ Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { 
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
-Image *Berkeley_db_data_source_descriptor::read_image_text(Errors &errors) {  return nullptr; }
+Image *Berkeley_db_data_source_descriptor::read_image_text(Errors &errors) { return nullptr; }
 std::string Berkeley_db_data_source_descriptor::read_json(Errors &errors) { return ""; }
 void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}

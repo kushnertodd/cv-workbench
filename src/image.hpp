@@ -79,7 +79,7 @@ class Image {
 
   static Image *read(std::string &path, Errors &errors);
   static Image *read(FILE *fp, Errors &errors);
-  static Image *read_text(const std::string& path, Errors &errors);
+  static Image *read_text(const std::string &path, Errors &errors);
   static Image *read_text(std::ifstream &ifs, Errors &errors);
 
   static Image *read_jpeg(const std::string &path, Errors &errors);

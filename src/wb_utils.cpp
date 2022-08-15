@@ -478,14 +478,12 @@ std::string wb_utils::timestamp() {
   return buffer;
 }
 
-std::vector<std::string> wb_utils::tokenize(std::string const &str, std::string delims)
-{
+std::vector<std::string> wb_utils::tokenize(std::string const &str, std::string delims) {
   size_t start;
   size_t end = 0;
   std::vector<std::string> out;
 
-  while ((start = str.find_first_not_of(delims, end)) != std::string::npos)
-  {
+  while ((start = str.find_first_not_of(delims, end)) != std::string::npos) {
     end = str.find(delims, start);
     out.push_back(str.substr(start, end - start));
   }
