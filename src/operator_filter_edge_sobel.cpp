@@ -83,7 +83,7 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
           } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
             output_data_store->write_image(output, errors);
           } else {
-            errors.add("Operator_filter_edge_roberts::run", "", "invalid data format '"
+            errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
                 + WB_data_format::to_string(output_data_store->data_format) + "'");
           }
         }
