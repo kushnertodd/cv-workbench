@@ -5,6 +5,15 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.28 dev
+```
+commit 157a0c4b92cf69d92b06ea5b76a635c8c304879a 
+(HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Tue Aug 16 16:42:23 2022 -0600
+```
+- filter-smooth-average works
+
 #### v0.1.27 dev
 ```
 commit 5676189757e387f672960b946954de4757566cfc 
