@@ -3,11 +3,8 @@
 //
 
 #include <iostream>
-//#include "berkeley_db_data_source_descriptor.hpp"
 #include "hough.hpp"
 #include "operator_utils.hpp"
-#include "wb_defs.hpp"
-#include "wb_utils.hpp"
 #include "operator_hough_image_create.hpp"
 
 extern bool debug;
@@ -30,11 +27,11 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_hough_image_create::run", "", "missing input data source");
+    errors.add("Operator_hough_image_create::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_image_create::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_hough_image_create::run", "", "missing output data source");
+    errors.add("Operator_hough_image_create::run", "", "output data source required");
   else if (output_data_stores.size() > 2)
     errors.add("Operator_hough_image_create::run", "", "too many output data sources");
   int theta_inc = 0;

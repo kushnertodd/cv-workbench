@@ -5,7 +5,6 @@
 #include <iostream>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
-#include "wb_defs.hpp"
 #include "operator_filter_edge_roberts.hpp"
 
 //
@@ -36,30 +35,20 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_filter_edge_roberts::run", "", "missing input data source");
+    errors.add("Operator_filter_edge_roberts::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_filter_edge_roberts::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_filter_edge_roberts::run", "", "missing output data source");
+    errors.add("Operator_filter_edge_roberts::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_roberts::run", "", "too many output data sources");
   else if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-    errors.add("Operator_filter_edge_roberts::run", "", "missing 'orientation' parameter");
+    errors.add("Operator_filter_edge_roberts::run", "", "orientation parameter required");
   } else {
     std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
     if (orientation_str != "0" && orientation_str != "90") {
-      errors.add("Operator_filter_edge_roberts::run", "", "invalid 'orientation' parameter not 0 or 90");
+      errors.add("Operator_filter_edge_roberts::run", "", "orientation parameter not 0 or 90");
     } else {
-      Kernel *roberts_kernel = nullptr;
-      if (orientation_str == "0") {
-        //     0 = [0, 1], [-1, 0]
-        int coeffs_32S[] = {0, 1, -1, 0};
-        roberts_kernel = Kernel::create_32S(2, 2, coeffs_32S);
-      } else if (orientation_str == "90") {
-        //     90 = [1, 0],  [0, -1]
-        int coeffs_32S[] = {1, 0, 0, -1};
-        roberts_kernel = Kernel::create_32S(2, 2, coeffs_32S);
-      }
       Data_source_descriptor *input_data_source = input_data_sources.front();
       Data_source_descriptor *output_data_store = output_data_stores.front();
       Image *input = nullptr;
@@ -73,25 +62,27 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
             WB_data_format::to_string(input_data_source->data_format));
       if (!errors.has_error() && input != nullptr)
         input->check_grayscale(errors);
-      if (!errors.has_error() && input != nullptr && roberts_kernel != nullptr) {
-        output = roberts_kernel->convolve_numeric(input, errors);
-        if (!errors.has_error() && output != nullptr) {
-          if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-            output_data_store->write_image_jpeg(output, errors);
-          } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            output_data_store->write_image(output, errors);
-          } else {
-            errors.add("Operator_filter_edge_roberts::run", "", "invalid data format '"
-                + WB_data_format::to_string(output_data_store->data_format) + "'");
-          }
+      if (!errors.has_error() && input != nullptr) {
+        Kernel *roberts_kernel = nullptr;
+        if (orientation_str == "0") {
+          //     0 = [0, 1], [-1, 0]
+          int coeffs_32S[] = {0, 1, -1, 0};
+          roberts_kernel = Kernel::create_32S(2, 2, coeffs_32S);
+        } else if (orientation_str == "90") {
+          //     90 = [1, 0],  [0, -1]
+          int coeffs_32S[] = {1, 0, 0, -1};
+          roberts_kernel = Kernel::create_32S(2, 2, coeffs_32S);
         }
+        output = roberts_kernel->convolve_numeric(input, errors);
+        if (!errors.has_error() && output != nullptr)
+          Operator_utils::write_operator_image(output_data_store, output, "Operator_filter_edge_roberts::run", errors);
         if (!errors.has_error() && output != nullptr) {
           output->log(log_entries);
         }
         delete output;
+        delete roberts_kernel;
       }
       delete input;
-      delete roberts_kernel;
     }
   }
 }

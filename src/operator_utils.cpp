@@ -4,9 +4,6 @@
 
 #include <sstream>
 #include "data_source_descriptor.hpp"
-#include "errors.hpp"
-#include "wb_defs.hpp"
-#include "wb_utils.hpp"
 #include "operator_utils.hpp"
 
 //
@@ -71,13 +68,19 @@ std::string Operator_utils::parameters_to_string(String_map &parameters) {
   return os.str();
 }
 
-void Operator_utils::write_operator_image(Data_source_descriptor *output_data_store, Image *output, Errors &errors) {
-  if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+void Operator_utils::write_operator_image(Data_source_descriptor *output_data_store,
+                                          Image *output,
+                                          const std::string &module,
+                                          Errors &errors,
+                                          bool jpeg_permitted) {
+  if (jpeg_permitted && output_data_store->data_format == WB_data_format::Data_format::JPEG)
     output_data_store->write_image_jpeg(output, errors);
-  } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-    output_data_store->write_image(output, errors);
-  } else {
-    errors.add("Operator_utils::write_operator_image", "", "invalid data format '"
-        + WB_data_format::to_string(output_data_store->data_format) + "'");
+  if (!errors.has_error()) {
+    if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+      output_data_store->write_image(output, errors);
+    } else {
+      errors.add(module, "", "only binary output data format supported, not '"
+          + WB_data_format::to_string(output_data_store->data_format) + "'");
+    }
   }
 }

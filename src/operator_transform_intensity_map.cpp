@@ -46,11 +46,11 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_transform_intensity_map::run", "", "missing input data source");
+    errors.add("Operator_transform_intensity_map::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
-  if (output_data_stores.empty())
-    errors.add("Operator_transform_intensity_map::run", "", "missing output data source");
+  else if (output_data_stores.empty())
+    errors.add("Operator_transform_intensity_map::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
   WB_image_depth::Image_depth depth;

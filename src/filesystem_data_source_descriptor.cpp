@@ -128,7 +128,7 @@ Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
 
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
-Hough *read_text(std::ifstream &ifs, Errors &errors) {
+Hough *Filesystem_data_source_descriptor::read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
 

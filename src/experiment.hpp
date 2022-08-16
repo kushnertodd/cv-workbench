@@ -22,7 +22,7 @@ class Experiment {
   std::string path{};
   virtual ~Experiment();
   Experiment();
-  Experiment(json_object *m_jobj, std::string m_path);
+  explicit Experiment(std::string m_path);
   /**
   * Parse experiment json
   * @param jobj  json-c parsed json

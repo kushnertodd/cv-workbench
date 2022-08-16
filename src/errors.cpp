@@ -6,13 +6,6 @@
 #include <sstream>
 #include "errors.hpp"
 
-/*
-void Errors::add(const std::string &error) {
-  error_ct++;
-  error_list.push_back(error);
-}
-*/
-
 void Errors::add(const std::string &module, const std::string &id, const std::string &error) {
   error_ct++;
   std::string message;
@@ -36,11 +29,6 @@ void Errors::check_exit(const std::string &message) {
 
 bool Errors::has_error() const {
   return error_ct != 0;
-}
-
-void Errors::merge(Errors &errors) {
-  error_ct += errors.error_ct;
-  error_list.insert(error_list.end(), errors.error_list.begin(), errors.error_list.end());
 }
 
 std::string Errors::to_string() {

@@ -5,7 +5,6 @@
 #include <iostream>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
-#include "wb_defs.hpp"
 #include "operator_filter_edge_sobel.hpp"
 
 //
@@ -38,30 +37,20 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_filter_edge_sobel::run", "", "missing input data source");
+    errors.add("Operator_filter_edge_sobel::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_filter_edge_sobel::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_filter_edge_sobel::run", "", "missing output data source");
+    errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_sobel::run", "", "too many output data sources");
   else if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-    errors.add("Operator_filter_edge_sobel::run", "", "missing 'orientation' parameter");
+    errors.add("Operator_filter_edge_sobel::run", "", "orientation parameter required");
   } else {
     std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
     if (orientation_str != "0" && orientation_str != "90") {
-      errors.add("Operator_filter_edge_sobel::run", "", "invalid 'orientation' parameter not 0 or 90");
+      errors.add("Operator_filter_edge_sobel::run", "", "orientation parameter not 0 or 90");
     } else {
-      Kernel *sobel_kernel = nullptr;
-      if (orientation_str == "0") {
-        //      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
-        int coeffs_32S[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
-        sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-      } else if (orientation_str == "90") {
-        //     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
-        int coeffs_32S[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
-        sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-      }
       Data_source_descriptor *input_data_source = input_data_sources.front();
       Data_source_descriptor *output_data_store = output_data_stores.front();
       Image *input = nullptr;
@@ -71,29 +60,31 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
       else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
         input = input_data_source->read_image(errors);
       else
-        errors.add("Operator_filter_edge_sobel::run", "", "invalid data format: " +
+        errors.add("Operator_filter_edge_sobel::run", "", "input data format must be jpeg or binary, not " +
             WB_data_format::to_string(input_data_source->data_format));
       if (!errors.has_error() && input != nullptr)
         input->check_grayscale(errors);
-      if (!errors.has_error() && input != nullptr && sobel_kernel != nullptr) {
-        output = sobel_kernel->convolve_numeric(input, errors);
-        if (!errors.has_error() && output != nullptr) {
-          if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-            output_data_store->write_image_jpeg(output, errors);
-          } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            output_data_store->write_image(output, errors);
-          } else {
-            errors.add("Operator_filter_edge_sobel::run", "", "invalid data format '"
-                + WB_data_format::to_string(output_data_store->data_format) + "'");
-          }
+      if (!errors.has_error() && input != nullptr) {
+        Kernel *sobel_kernel = nullptr;
+        if (orientation_str == "0") {
+          //      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
+          int coeffs_32S[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
+          sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
+        } else if (orientation_str == "90") {
+          //     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
+          int coeffs_32S[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
+          sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
         }
+        output = sobel_kernel->convolve_numeric(input, errors);
+        if (!errors.has_error() && output != nullptr)
+          Operator_utils::write_operator_image(output_data_store, output, "Operator_filter_edge_sobel::run", errors);
         if (!errors.has_error() && output != nullptr) {
           output->log(log_entries);
         }
         delete output;
+        delete sobel_kernel;
       }
       delete input;
-      delete sobel_kernel;
     }
   }
 }

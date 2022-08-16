@@ -478,7 +478,7 @@ std::string wb_utils::timestamp() {
   return buffer;
 }
 
-std::vector<std::string> wb_utils::tokenize(std::string const &str, std::string delims) {
+std::vector<std::string> wb_utils::tokenize(std::string const &str, const std::string& delims) {
   size_t start;
   size_t end = 0;
   std::vector<std::string> out;

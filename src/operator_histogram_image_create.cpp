@@ -4,9 +4,7 @@
 
 #include <iostream>
 #include "berkeley_db_data_source_descriptor.hpp"
-#include "histogram.hpp"
 #include "operator_utils.hpp"
-#include "wb_defs.hpp"
 #include "operator_histogram_image_create.hpp"
 
 extern bool debug;
@@ -29,11 +27,11 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_histogram_image_create::run", "", "missing input data source");
+    errors.add("Operator_histogram_image_create::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_histogram_image_create::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_histogram_image_create::run", "", "missing output data source");
+    errors.add("Operator_histogram_image_create::run", "", "output data source required");
   else if (output_data_stores.size() > 2)
     errors.add("Operator_histogram_image_create::run", "", "too many output data sources");
   int nbins;

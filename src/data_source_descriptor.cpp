@@ -6,10 +6,6 @@
 #include "berkeley_db_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
-#include "wb_data_format.hpp"
-#include "wb_data_type.hpp"
-#include "wb_repository_type.hpp"
-#include "data_source_descriptor.hpp"
 #include "wb_json_utils.hpp"
 
 Data_source_descriptor::~Data_source_descriptor() = default;

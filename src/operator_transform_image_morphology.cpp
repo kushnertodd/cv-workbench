@@ -17,16 +17,14 @@ void Operator_transform_image_morphology::run(std::list<Data_source_descriptor *
                                               std::list<WB_log_entry> &log_entries,
                                               Errors &errors) {
   if (input_data_sources.empty())
-    errors.add("Operator_transform_image_morphology::run", "", "missing input data source");
+    errors.add("Operator_transform_image_morphology::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_transform_image_morphology::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_transform_image_morphology::run", "", "missing output data source");
+    errors.add("Operator_transform_image_morphology::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_image_morphology::run", "", "too many output data sources");
-  else if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
-    errors.add("Operator_transform_image_morphology::run", "", "missing 'orientation' parameter");
-  } else {
+  else {
     int height;
     int width;
     int thickness;
@@ -34,24 +32,15 @@ void Operator_transform_image_morphology::run(std::list<Data_source_descriptor *
     std::string param_width_str;
     std::string param_thickness_str;
 
-    bool saw_height = false;
-    bool saw_width = false;
-    bool saw_thickness = false;
-    bool saw_structuring_element = false;
-    bool saw_operation = false;
-
     if (Operator_utils::has_parameter(operator_parameters, "height")) {
-      saw_height = true;
       Operator_utils::get_int_parameter("Operator_transform_image_morphology::run",
                                         operator_parameters, "height", height, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "width")) {
-      saw_width = true;
       Operator_utils::get_int_parameter("Operator_transform_image_morphology::run",
                                         operator_parameters, "width", width, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "thickness")) {
-      saw_thickness = true;
       Operator_utils::get_int_parameter("Operator_transform_image_morphology::run",
                                         operator_parameters, "thickness", thickness, errors);
     }

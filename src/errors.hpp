@@ -17,7 +17,6 @@ class Errors {
   void add(const std::string &module, const std::string &id, const std::string &error);
   void check_exit(const std::string &message = "");
   bool has_error() const;
-  void merge(Errors &errors);
   std::string to_string();
 };
 

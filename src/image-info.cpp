@@ -2,9 +2,6 @@
 #include <iostream>
 #include "errors.hpp"
 #include "histogram.hpp"
-#include "image.hpp"
-#include "wb_filename.hpp"
-#include "wb_utils.hpp"
 
 //
 

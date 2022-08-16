@@ -27,7 +27,8 @@ class Operator_utils {
   static std::string get_parameter(String_map &parameters, const std::string &parameter);
   static bool has_parameter(String_map &parameters, const std::string &parameter);
   static std::string parameters_to_string(String_map &parameters);
-  static void write_operator_image(Data_source_descriptor *output_data_store, Image *output, Errors &errors);
+  static void write_operator_image(Data_source_descriptor *output_data_store, Image *output, const std::string& module,
+                                   Errors &errors, bool jpeg_permitted = false);
   };
 
 #endif //CV_WORKBENCH_SRC_OPERATOR_UTILS_HPP_

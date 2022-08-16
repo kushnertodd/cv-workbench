@@ -19,12 +19,12 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_hough_image_create::run", "", "missing input data source");
+    errors.add("Operator_hough_image_create::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_image_create::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_hough_image_create::run", "", "missing output data source");
-  else if (output_data_stores.size() > 2)
+    errors.add("Operator_hough_image_create::run", "", "output data source required");
+  else if (output_data_stores.size() > 1)
     errors.add("Operator_hough_image_create::run", "", "too many output data sources");
   int npeaks = 0;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",

@@ -5,11 +5,7 @@
 #include <iostream>
 #include "hough.hpp"
 #include "operator_utils.hpp"
-#include "polar_line.hpp"
-#include "wb_defs.hpp"
-#include "wb_utils.hpp"
 #include "wb_window.hpp"
-#include "polar_trig.hpp"
 #include "operator_hough_draw_line.hpp"
 
 extern bool debug;
@@ -32,11 +28,11 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_hough_draw_line::run", "", "missing input data source");
+    errors.add("Operator_hough_draw_line::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_hough_draw_line::run", "", "too many input data sources");
   else if (output_data_stores.empty())
-    errors.add("Operator_hough_draw_line::run", "", "missing output data source");
+    errors.add("Operator_hough_draw_line::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
   else {
@@ -114,9 +110,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                 errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
               } else {
                 input->draw_line_segment(line_segment, pixel_value);
-                if (hough_line_output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+                if (input_data_source->data_format == WB_data_format::Data_format::JPEG) {
                   hough_line_output_data_store->write_image_jpeg(input, errors);
-                } else if (hough_line_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+                } else if (input_data_source->data_format == WB_data_format::Data_format::BINARY) {
                   hough_line_output_data_store->write_image(input, errors);
                 } else {
                   errors.add("Operator_hough_draw_line::run",

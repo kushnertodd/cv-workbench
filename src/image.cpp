@@ -560,7 +560,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
 
 Image *Image::read_text(const std::string &path, Errors &errors) {
   std::ifstream ifs = file_utils::open_file_read_text(path, errors);
-  Image *image;
+  Image *image = nullptr;
   if (ifs) {
     image = read_text(ifs, errors);
     ifs.close();

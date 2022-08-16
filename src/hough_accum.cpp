@@ -7,7 +7,6 @@
 #include "polar_line.hpp"
 #include "polar_trig.hpp"
 #include "hough_accum.hpp"
-#include "line_segment.hpp"
 
 extern bool debug;
 

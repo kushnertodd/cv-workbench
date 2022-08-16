@@ -58,14 +58,14 @@ class Histogram {
   void initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value);
   void initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value);
   void log(std::list<WB_log_entry> &log_entries);
-  static Histogram *read(std::string path, Errors &errors);
+  static Histogram *read(std::string &path, Errors &errors);
   static Histogram *read(FILE* fp, Errors &errors);
-  static Histogram *read_text(std::string path,Errors &errors);
+  static Histogram *read_text(const std::string& path,Errors &errors);
   static Histogram *read_text(std::ifstream& ifs,Errors &errors);
   std::string to_string(const std::string &prefix = "");
   void update_input_value(double new_value) const;
   void update_bin_count_bounds();
-  void write(std::string path, Errors &errors) const;
+  void write(std::string &path, Errors &errors) const;
   void write(FILE* fp, Errors &errors) const;
   static void write_gp_script(const Wb_filename& wb_filename);
   void write_text(std::string &path, const std::string &delim, Errors &errors) const;

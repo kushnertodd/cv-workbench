@@ -95,6 +95,8 @@ Image *Kernel::convolve(Image *src,
           case WB_morphology_types::Convolution_type::DILATE:
             sum = 0.0;
             break;
+          case WB_morphology_types::Convolution_type::UNDEFINED:
+            break;
           default:
             sum = 0.0;
             break;
