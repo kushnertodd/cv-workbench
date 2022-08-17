@@ -190,6 +190,9 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
     For example, if mean=0.5, the Gaussian will be centered
     in the middle point between values 'kernel->values[0]'
     and 'kernel->values[1]'.
+
+    from this, not using, just for interest.
+    https://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf
  */
 void Kernel::gaussian_kernel(ntuple_list kernel, double sigma, double mean) {
   double sum = 0.0;
@@ -215,6 +218,7 @@ void Kernel::gaussian_kernel(ntuple_list kernel, double sigma, double mean) {
 }
 
 /** Enlarge the allocated memory of an n-tuple list.
+ * for gaussian_kernel
  */
 void Kernel::enlarge_ntuple_list(ntuple_list n_tuple) {
   /* check parameters */

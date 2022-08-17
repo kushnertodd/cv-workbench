@@ -28,6 +28,8 @@
     list with the allocated memory at a given time is given by:
 
       ntl->max_size
+
+      for gaussian_kernel only
  */
  typedef struct ntuple_list_s
 {
