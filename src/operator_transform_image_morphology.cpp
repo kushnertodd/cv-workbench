@@ -10,6 +10,7 @@
 #include "wb_defs.hpp"
 #include "operator_transform_image_morphology.hpp"
 
+// 2022-08-17 not used right now
 Operator_transform_image_morphology::~Operator_transform_image_morphology() = default;
 void Operator_transform_image_morphology::run(std::list<Data_source_descriptor *> &input_data_sources,
                                               std::list<Data_source_descriptor *> &output_data_stores,

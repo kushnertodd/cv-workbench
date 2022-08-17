@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <memory>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 #include "operator_filter_edge_prewitt.hpp"
@@ -65,24 +66,38 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
       if (!errors.has_error() && input != nullptr)
         input->check_grayscale(errors);
       if (!errors.has_error() && input != nullptr) {
-        Kernel *prewitt_kernel = nullptr;
-        if (orientation_str == "0") {
+        //Kernel *prewitt_kernel = nullptr;
+        Kernel *prewitt_kernel_row_ptr = nullptr;
+        Kernel *prewitt_kernel_col_ptr = nullptr;
+        if (orientation_str == "90") {
           //      0 = [-1, 0, 1], [-1, 0, 1], [-1, 0, 1]
-          int coeffs_32S[] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
-          prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "90") {
+          //int coeffs_32S[] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
+          //prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
+          int coeffs_32S_row[] = {1, 0, -1};
+          prewitt_kernel_row_ptr = Kernel::create_32S(3, 1, coeffs_32S_row);
+          int coeffs_32S_col[] = {1, 1, 1};
+          prewitt_kernel_col_ptr = Kernel::create_32S(1, 3, coeffs_32S_col);
+        } else if (orientation_str == "0") {
           //     90 = [1, 1, 1],  [0, 0, 0],  [-1, -1, -1]
-          int coeffs_32S[] = {1, 1, 1, 0, 0, 0, -1, -1, -1};
-          prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
+          //int coeffs_32S[] = {1, 1, 1, 0, 0, 0, -1, -1, -1};
+          //prewitt_kernel = Kernel::create_32S(3, 3, coeffs_32S);
+          int coeffs_32S_row[] = {1, 1, 1};
+          prewitt_kernel_row_ptr = Kernel::create_32S(3, 1, coeffs_32S_row);
+          // this is reversed from the separable filter reference
+          int coeffs_32S_col[] = {-1, 0, 1};
+          prewitt_kernel_col_ptr = Kernel::create_32S(1, 3, coeffs_32S_col);
         }
-        output = prewitt_kernel->convolve_numeric(input, errors);
+        //output = prewitt_kernel->convolve_numeric(input, errors);
+        std::unique_ptr<Kernel> prewitt_kernel_row(prewitt_kernel_row_ptr);
+        std::unique_ptr<Kernel> prewitt_kernel_col(prewitt_kernel_col_ptr);
+        output = prewitt_kernel_row->convolve_numeric(input, errors);
+        output = prewitt_kernel_col->convolve_numeric(output, errors);
         if (!errors.has_error() && output != nullptr)
           Operator_utils::write_operator_image(output_data_store, output, "Operator_filter_edge_prewitt::run", errors);
         if (!errors.has_error() && output != nullptr) {
           output->log(log_entries);
         }
         delete output;
-        delete prewitt_kernel;
       }
       delete input;
     }

@@ -67,37 +67,36 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
       if (!errors.has_error() && input != nullptr)
         input->check_grayscale(errors);
       if (!errors.has_error() && input != nullptr) {
-        Kernel *sobel_kernel_row = nullptr;
-        Kernel *sobel_kernel_col = nullptr;
+        Kernel *sobel_kernel_row_ptr = nullptr;
+        Kernel *sobel_kernel_col_ptr = nullptr;
         if (orientation_str == "90") {
           //      0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
           //int coeffs_32S[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
           //sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
           int coeffs_32S_row[] = {1, 0, -1};
-          sobel_kernel_row = Kernel::create_32S(3, 1, coeffs_32S_row);
+          sobel_kernel_row_ptr = Kernel::create_32S(3, 1, coeffs_32S_row);
           int coeffs_32S_col[] = {1, 2, 1};
-          sobel_kernel_col = Kernel::create_32S(1, 3, coeffs_32S_col);
+          sobel_kernel_col_ptr = Kernel::create_32S(1, 3, coeffs_32S_col);
         } else if (orientation_str == "0") {
           //     90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]
           //int coeffs_32S[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
           //sobel_kernel = Kernel::create_32S(3, 3, coeffs_32S);
           int coeffs_32S_row[] = {1, 2, 1};
-          sobel_kernel_row = Kernel::create_32S(3, 1, coeffs_32S_row);
+          sobel_kernel_row_ptr = Kernel::create_32S(3, 1, coeffs_32S_row);
           // this is reversed from the separable filter reference
           int coeffs_32S_col[] = {-1, 0, 1};
-          sobel_kernel_col = Kernel::create_32S(1, 3, coeffs_32S_col);
+          sobel_kernel_col_ptr = Kernel::create_32S(1, 3, coeffs_32S_col);
         }
+        std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
+        std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
         output = sobel_kernel_row->convolve_numeric(input, errors);
         output = sobel_kernel_col->convolve_numeric(output, errors);
-        //output = sobel_kernel_col->convolve_numeric(input, errors);
         if (!errors.has_error() && output != nullptr)
           Operator_utils::write_operator_image(output_data_store, output, "Operator_filter_edge_sobel::run", errors);
         if (!errors.has_error() && output != nullptr) {
           output->log(log_entries);
         }
         delete output;
-        delete sobel_kernel_row;
-        delete sobel_kernel_col;
       }
       delete input;
     }
