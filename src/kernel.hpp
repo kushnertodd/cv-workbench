@@ -9,6 +9,34 @@
 #include "wb_defs.hpp"
 #include "wb_morphology_types.hpp"
 
+/** 'list of n-tuple' data type
+
+    The i component, of the n-tuple number j, of an n-tuple list 'ntl'
+    is accessed with:
+
+      ntl->values[ i + j * ntl->dim ]
+
+    The dimension of the n-tuple (n) is:
+
+      ntl->dim
+
+    The number of n-tuples in the list is:
+
+      ntl->size
+
+    The maximum number of n-tuples that can be stored in the
+    list with the allocated memory at a given time is given by:
+
+      ntl->max_size
+ */
+ typedef struct ntuple_list_s
+{
+  unsigned int size;
+  unsigned int max_size;
+  unsigned int dim;
+  double * values;
+} * ntuple_list;
+
 /**
  * Kernel class
  * Supports convolution of rectangular image filters
@@ -32,7 +60,9 @@ class Kernel : public Image {
                                             int rows,
                                             int cols,
                                             int thickness = 0);
-
+  static void gaussian_kernel(ntuple_list kernel, double sigma, double mean);
+  static void enlarge_ntuple_list(ntuple_list n_tuple);
 };
+
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

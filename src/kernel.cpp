@@ -2,8 +2,10 @@
 // Created by kushn on 6/16/2022.
 //
 
+#include <cmath>
 #include <iostream>
 #include "wb_morphology_types.hpp"
+#include "wb_utils.hpp"
 #include "kernel.hpp"
 
 extern bool debug;
@@ -139,9 +141,10 @@ Image *Kernel::convolve(Image *src,
 
 Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
   auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32S);
-  for (int i = 0; i < kernel->get_npixels(); i++) {
-    kernel->buf_32S[i] = buf_32S[i];
-  }
+  const pixel_32S *buf_ptr = buf_32S;
+  for (int row = 0; row < rows; row++)
+    for (int col = 0; col < cols; col++)
+      kernel->set_32S(row, col, *buf_ptr++);
   return kernel;
 }
 
@@ -180,3 +183,50 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
   }
   return kernel;
 }
+
+/** Compute a Gaussian kernel of length 'kernel->dim',
+    standard deviation 'sigma', and centered at value 'mean'.
+
+    For example, if mean=0.5, the Gaussian will be centered
+    in the middle point between values 'kernel->values[0]'
+    and 'kernel->values[1]'.
+ */
+void Kernel::gaussian_kernel(ntuple_list kernel, double sigma, double mean) {
+  double sum = 0.0;
+  double val;
+  unsigned int i;
+
+  /* check parameters */
+  if (kernel == nullptr || kernel->values == nullptr)
+    wb_utils::error_exit("gaussian_kernel: invalid n-tuple 'kernel'.");
+  if (sigma <= 0.0) wb_utils::error_exit("gaussian_kernel: 'sigma' must be positive.");
+
+  /* compute Gaussian kernel */
+  if (kernel->max_size < 1) enlarge_ntuple_list(kernel);
+  kernel->size = 1;
+  for (i = 0; i < kernel->dim; i++) {
+    val = ((double) i - mean) / sigma;
+    kernel->values[i] = exp(-0.5 * val * val);
+    sum += kernel->values[i];
+  }
+
+  /* normalization */
+  if (sum >= 0.0) for (i = 0; i < kernel->dim; i++) kernel->values[i] /= sum;
+}
+
+/** Enlarge the allocated memory of an n-tuple list.
+ */
+void Kernel::enlarge_ntuple_list(ntuple_list n_tuple) {
+  /* check parameters */
+  if (n_tuple == nullptr || n_tuple->values == nullptr || n_tuple->max_size == 0)
+    wb_utils::error_exit("enlarge_ntuple_list: invalid n-tuple.");
+
+  /* duplicate number of tuples */
+  n_tuple->max_size *= 2;
+
+  /* realloc memory */
+  n_tuple->values = (double *) realloc((void *) n_tuple->values,
+                                       n_tuple->dim * n_tuple->max_size * sizeof(double));
+  if (n_tuple->values == nullptr) wb_utils::error_exit("not enough memory.");
+}
+
