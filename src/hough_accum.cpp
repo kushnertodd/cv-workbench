@@ -161,25 +161,25 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
   int theta_inc = get_theta_inc();
   fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator theta_inc");
+    errors.add("Hough_accum::write", "", "cannot write Hough accumulator theta_inc");
     return;
   }
   int rows = get_rows();
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator get_rows()");
+    errors.add("Hough_accum::write", "", "cannot write Hough accumulator get_rows()");
     return;
   }
   int cols = get_cols();
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough accumulator get_cols()");
+    errors.add("Hough_accum::write", "", "cannot write Hough accumulator get_cols()");
     return;
   }
   size_t newLen;
   newLen = fwrite(rho_theta_counts, sizeof(int), nbins, fp);
   if (ferror(fp) != 0 || newLen != nbins) {
-    errors.add("Image::write", "", "cannot write Hough accumulator data ");
+    errors.add("Hough_accum::write", "", "cannot write Hough accumulator data ");
     return;
   }
 }

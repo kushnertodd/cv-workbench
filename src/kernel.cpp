@@ -184,6 +184,42 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
   return kernel;
 }
 
+Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
+  auto *gaussian_y = new Kernel(rows, 1, WB_image_depth::Image_depth::CV_32F);
+  double fact1 = 1.0 / (sigma_y * sqrt(2 * M_PI));
+  double denom1 = 2 * sigma_y * sigma_y;
+  double sum = 0.0;
+  for (int row = 0; row < rows; row++) {
+    double y = Point::row_to_y(row, rows);
+    double value = fact1 * exp(-((y * y) / denom1));
+    gaussian_y->set(row, 1, value);
+    sum += value;
+  }
+  for (int row = 0; row < rows; row++) {
+    double value = gaussian_y->get(row, 1);
+    gaussian_y->set(row, 1, value / sum);
+  }
+  return gaussian_y;
+}
+
+Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
+  auto *gaussian_x = new Kernel(1, cols, WB_image_depth::Image_depth::CV_32F);
+  double fact1 = 1.0 / (sigma_x * sqrt(2 * M_PI));
+  double denom1 = 2 * sigma_x * sigma_x;
+  double sum = 0.0;
+  for (int col = 0; col < cols; col++) {
+    double x = Point::col_to_x(col, cols);
+    double value = fact1 * exp(-((x * x) / denom1));
+    gaussian_x->set(1, col, value);
+    sum += value;
+  }
+  for (int col = 0; col < cols; col++) {
+    double value = gaussian_x->get(1, col);
+    gaussian_x->set(1, col, value / sum);
+  }
+  return gaussian_x;
+}
+
 /** Compute a Gaussian kernel of length 'kernel->dim',
     standard deviation 'sigma', and centered at value 'mean'.
 

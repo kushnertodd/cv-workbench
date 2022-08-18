@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <memory>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 #include "operator_filter_edge_kirsch.hpp"
@@ -37,23 +38,19 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
                                       String_map &operator_parameters,
                                       std::list<WB_log_entry> &log_entries,
                                       Errors &errors) {
-
-  if (debug) {
-    std::cout << "Operator_filter_edge_kirsch::run parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "input data source required");
-  else if (input_data_sources.size() > 1)
+  if (input_data_sources.size() > 1)
     errors.add("Operator_filter_edge_kirsch::run", "", "too many input data sources");
-  else if (output_data_stores.empty())
+  if (output_data_stores.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "output data source required");
-  else if (output_data_stores.size() > 1)
+  if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_kirsch::run", "", "too many output data sources");
-  else if (!Operator_utils::has_parameter(operator_parameters, "orientation")) {
+  if (!Operator_utils::has_parameter(operator_parameters, "orientation"))
     errors.add("Operator_filter_edge_kirsch::run", "", "missing orientation parameter");
-  } else {
-    std::string orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
+  std::string orientation_str;
+  if (!errors.has_error()) {
+    orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
     if (orientation_str != "N"
         && orientation_str != "NW"
         && orientation_str != "W"
@@ -61,76 +58,69 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
         && orientation_str != "S"
         && orientation_str != "SE"
         && orientation_str != "E"
-        && orientation_str != "NE") {
+        && orientation_str != "NE")
       errors.add("Operator_filter_edge_kirsch",
                  "",
                  "orientation parameter not E, N, NE, NW, S, SE, SW, or W");
-    } else {
-      Data_source_descriptor *input_data_source = input_data_sources.front();
-      Data_source_descriptor *output_data_store = output_data_stores.front();
-      Image *input = nullptr;
-      Image *output;
-      if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-        input = input_data_source->read_image_jpeg(errors);
-      else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-        input = input_data_source->read_image(errors);
-      else
-        errors.add("Operator_filter_edge_kirsch::run", "", "input data format must be jpeg or binary, not " +
-            WB_data_format::to_string(input_data_source->data_format));
-      if (!errors.has_error() && input != nullptr)
-        input->check_grayscale(errors);
-      if (!errors.has_error() && input != nullptr) {
-        Kernel *kirsch_kernel = nullptr;
-        if (orientation_str == "N") {
-          //      N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]
-          int coeffs_32S[] = {-3, -3, 5, -3, 0, 5, -3, -3, 5};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "NW") {
-          //      NW = [-3, 5, 5], [-3, 0, 5], [-3, -3, -3]
-          int coeffs_32S[] = {-3, 5, 5, -3, 0, 5, -3, -3, -3};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "W") {
-          //      W = [5, 5, 5], [-3, 0, -3], [-3, -3, -3]
-          int coeffs_32S[] = {5, 5, 5, -3, 0, -3, -3, -3, -3};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "SW") {
-          //      SW = [5, 5, -3], [5, 0, -3], [-3, -3, -3]
-          int coeffs_32S[] = {5, 5, -3, 5, 0, -3, -3, -3, -3};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "S") {
-          //      S = [5, -3, -3], [5, 0, -3], [5, -3, -3]
-          int coeffs_32S[] = {5, -3, -3, 5, 0, -3, 5, -3, -3};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "SE") {
-          //      SE = [-3, -3, -3], [5, 0, -3], [5, 5, -3]
-          int coeffs_32S[] = {-3, -3, -3, 5, 0, -3, 5, 5, -3};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "E") {
-          //      E = [-3, -3, -3], [-3, 0, -3], [5, 5, 5]
-          int coeffs_32S[] = {-3, -3, -3, -3, 0, -3, 5, 5, 5};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        } else if (orientation_str == "NE") {
-          //      NE = [-3, -3, -3], [-3, 0, 5], [-3, 5, 5]
-          int coeffs_32S[] = {-3, -3, -3, -3, 0, 5, -3, 5, 5};
-          kirsch_kernel = Kernel::create_32S(3, 3, coeffs_32S);
-        }
-
-        output = kirsch_kernel->convolve_numeric(input, errors);
-        if (!errors.has_error() && output != nullptr) {
-          if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            output_data_store->write_image(output, errors);
-          } else {
-            errors.add("Operator_filter_edge_kirsch::run", "", "only binary output data format supported, not '"
-                + WB_data_format::to_string(output_data_store->data_format) + "'");
-          }
-        }
-        if (!errors.has_error() && output != nullptr) {
-          output->log(log_entries);
-        }
-        delete output;
-        delete kirsch_kernel;
-      }
-      delete input;
-    }
   }
+  Data_source_descriptor *input_data_source = input_data_sources.front();
+  Data_source_descriptor *output_data_store = output_data_stores.front();
+  if (output_data_store->data_format != WB_data_format::Data_format::BINARY)
+    errors.add("Operator_filter_edge_kirsch::run", "", "only binary output data format supported");
+  Image *input = nullptr;
+  if (!errors.has_error()) {
+    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
+      input = input_data_source->read_image_jpeg(errors);
+    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
+      input = input_data_source->read_image(errors);
+    else
+      errors.add("Operator_filter_edge_kirsch::run", "", "input data format must be jpeg or binary, not " +
+          WB_data_format::to_string(input_data_source->data_format));
+  }
+  if (!errors.has_error() && input != nullptr)
+    input->check_grayscale(errors);
+  if (!errors.has_error() && input != nullptr) {
+    Kernel *kirsch_kernel_ptr = nullptr;
+    if (orientation_str == "N") {
+      //      N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]
+      int coeffs_32S[] = {-3, -3, 5, -3, 0, 5, -3, -3, 5};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "NW") {
+      //      NW = [-3, 5, 5], [-3, 0, 5], [-3, -3, -3]
+      int coeffs_32S[] = {-3, 5, 5, -3, 0, 5, -3, -3, -3};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "W") {
+      //      W = [5, 5, 5], [-3, 0, -3], [-3, -3, -3]
+      int coeffs_32S[] = {5, 5, 5, -3, 0, -3, -3, -3, -3};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "SW") {
+      //      SW = [5, 5, -3], [5, 0, -3], [-3, -3, -3]
+      int coeffs_32S[] = {5, 5, -3, 5, 0, -3, -3, -3, -3};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "S") {
+      //      S = [5, -3, -3], [5, 0, -3], [5, -3, -3]
+      int coeffs_32S[] = {5, -3, -3, 5, 0, -3, 5, -3, -3};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "SE") {
+      //      SE = [-3, -3, -3], [5, 0, -3], [5, 5, -3]
+      int coeffs_32S[] = {-3, -3, -3, 5, 0, -3, 5, 5, -3};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "E") {
+      //      E = [-3, -3, -3], [-3, 0, -3], [5, 5, 5]
+      int coeffs_32S[] = {-3, -3, -3, -3, 0, -3, 5, 5, 5};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    } else if (orientation_str == "NE") {
+      //      NE = [-3, -3, -3], [-3, 0, 5], [-3, 5, 5]
+      int coeffs_32S[] = {-3, -3, -3, -3, 0, 5, -3, 5, 5};
+      kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
+    }
+    std::unique_ptr<Kernel> kirsch_kernel(kirsch_kernel_ptr);
+    Image *output = kirsch_kernel->convolve_numeric(input, errors);
+    if (!errors.has_error() && output != nullptr)
+      output_data_store->write_image(output, errors);
+    if (!errors.has_error() && output != nullptr)
+      output->log(log_entries);
+    delete output;
+  }
+  delete input;
 }

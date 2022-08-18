@@ -31,13 +31,12 @@
 
       for gaussian_kernel only
  */
- typedef struct ntuple_list_s
-{
+typedef struct ntuple_list_s {
   unsigned int size;
   unsigned int max_size;
   unsigned int dim;
-  double * values;
-} * ntuple_list;
+  double *values;
+} *ntuple_list;
 
 /**
  * Kernel class
@@ -53,11 +52,18 @@ class Kernel : public Image {
   Kernel();
   Kernel(int m_rows, int m_cols, WB_image_depth::Image_depth m_depth);
 
-  Image *convolve_numeric(Image *src, Errors &errors)const;
-  Image *convolve_morphological(Image *src, WB_morphology_types::Convolution_type convolution_type, Errors &errors) const;
-  Image *convolve(Image *src, WB_image_depth::Image_depth out_depth, WB_morphology_types::Convolution_type convolution_type, Errors &errors) const;
+  Image *convolve_numeric(Image *src, Errors &errors) const;
+  Image *convolve_morphological(Image *src,
+                                WB_morphology_types::Convolution_type convolution_type,
+                                Errors &errors) const;
+  Image *convolve(Image *src,
+                  WB_image_depth::Image_depth out_depth,
+                  WB_morphology_types::Convolution_type convolution_type,
+                  Errors &errors) const;
   static Kernel *create_32S(int rows, int cols, const pixel_32S *buf_32S);
   static Kernel *create_32F(int rows, int cols, const pixel_32F *buf_32F);
+  static Kernel *create_gaussian_y(int rows, double sigma_y);
+  static Kernel *create_gaussian_x(int cols, double sigma_x);
   static Kernel *create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                             int rows,
                                             int cols,
@@ -65,6 +71,5 @@ class Kernel : public Image {
   static void gaussian_kernel(ntuple_list kernel, double sigma, double mean);
   static void enlarge_ntuple_list(ntuple_list n_tuple);
 };
-
 
 #endif //CV_WORKBENCH_SRC_KERNEL_HPP_

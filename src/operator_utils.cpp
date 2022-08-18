@@ -76,11 +76,11 @@ void Operator_utils::write_operator_image(Data_source_descriptor *output_data_st
   if (jpeg_permitted && output_data_store->data_format == WB_data_format::Data_format::JPEG)
     output_data_store->write_image_jpeg(output, errors);
   if (!errors.has_error()) {
-    if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+    if (output_data_store->data_format == WB_data_format::Data_format::BINARY) 
       output_data_store->write_image(output, errors);
-    } else {
-      errors.add(module, "", "only binary output data format supported, not '"
-          + WB_data_format::to_string(output_data_store->data_format) + "'");
-    }
+    else if (output_data_store->data_format == WB_data_format::Data_format::JPEG) 
+      output_data_store->write_image_jpeg(output, errors);
+    else
+      errors.add(module, "", "only binary and jpeg output data formats supported");
   }
 }

@@ -3,7 +3,6 @@
 //
 
 #include <cstring>
-#include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "hough_accum.hpp"
@@ -28,8 +27,6 @@ Hough::Hough(Hough_accum *m_hough_accum) :
 }
 
 Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
-  if (debug)
-    std::cout << "Hough::Hough image " << image->to_string() << " theta_inc " << theta_inc << std::endl;
   auto *hough_accum = Hough_accum::create_image(image, theta_inc, pixel_threshold);
   auto *hough = new Hough(hough_accum);
   return hough;
@@ -99,19 +96,19 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
   size_t npeaks = lines.size();
   fwrite(&npeaks, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough peak line count");
+    errors.add("Hough::write_peak_lines", "", "cannot write Hough peak line count");
     return;
   }
   int theta_inc = Hough_accum::get_theta_inc();
   fwrite(&theta_inc, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough theta_inc  ");
+    errors.add("Hough::write_peak_lines", "", "cannot write Hough theta_inc  ");
     return;
   }
   int nrhos = hough_accum->get_nrhos();
   fwrite(&nrhos, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write Hough nrhos ");
+    errors.add("Hough::write_peak_lines", "", "cannot write Hough nrhos ");
     return;
   }
   for (Polar_line line: lines) {

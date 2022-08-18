@@ -45,7 +45,6 @@ FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
-    errors.add("Hough:write", "", "invalid filename '" + path + "'");
     errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
   }
   return ofs;
