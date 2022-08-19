@@ -2,7 +2,6 @@
 // Created by kushn on 7/23/2022.
 //
 
-#include <iostream>
 #include <memory>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
@@ -26,36 +25,21 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
   int cols;
   double sigma_x;
   double sigma_y;
-  if (Operator_utils::has_parameter(operator_parameters, "rows")) {
-    Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
-                                      operator_parameters, "rows", rows, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "cols")) {
-    Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
-                                      operator_parameters, "cols", cols, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "sigma_x")) {
-    Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
-                                       operator_parameters, "sigma_x", sigma_x, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "sigma_y")) {
-    Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
-                                       operator_parameters, "sigma_y", sigma_y, errors);
-  }
+  Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
+                                    operator_parameters, "rows", rows, errors);
+  Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
+                                    operator_parameters, "cols", cols, errors);
+  Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
+                                     operator_parameters, "sigma_x", sigma_x, errors);
+  Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
+                                     operator_parameters, "sigma_y", sigma_y, errors);
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Data_source_descriptor *output_data_store = output_data_stores.front();
   Image *input = nullptr;
-  if (!errors.has_error()) {
-    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-      input = input_data_source->read_image_jpeg(errors);
-    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-      input = input_data_source->read_image(errors);
-    else
-      errors.add("Operator_filter_smooth_gaussian::run", "", "input data format must be jpeg or binary, not " +
-          WB_data_format::to_string(input_data_source->data_format));
-  }
+  if (!errors.has_error())
+    input = input_data_source->read_operator_image("Operator_filter_smooth_gaussian::run", errors);
   if (!errors.has_error() && input != nullptr)
-    input->check_grayscale(errors);
+    input->check_grayscale("Operator_filter_smooth_gaussian::run", errors);
   if (!errors.has_error() && input != nullptr) {
     Kernel *gaussian_kernel_y_ptr = Kernel::create_gaussian_y(rows, sigma_y);
     Kernel *gaussian_kernel_x_ptr = Kernel::create_gaussian_x(cols, sigma_x);
@@ -66,10 +50,9 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
     if (!errors.has_error() && output_pass1 != nullptr)
       output_pass2 = gaussian_kernel_x->convolve_numeric(output_pass1, errors);
     if (!errors.has_error() && output_pass2 != nullptr)
-      Operator_utils::write_operator_image(output_data_store,
-                                           output_pass2,
-                                           "Operator_filter_smooth_gaussian::run",
-                                           errors);
+      output_data_store->write_operator_image(output_pass2,
+                                              "Operator_filter_smooth_gaussian::run",
+                                              errors);
     if (!errors.has_error() && output_pass2 != nullptr) {
       output_pass2->log(log_entries);
     }

@@ -12,6 +12,7 @@
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "jpeglib.h"
+#include "wb_image_depth.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -165,9 +166,9 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
   }
 }
 
-bool Image::check_grayscale(Errors &errors) const {
+bool Image::check_grayscale(const std::string module, Errors &errors) const {
   if (get_components() != 1) {
-    errors.add("Image::check_grayscale", "", "image not grayscale");
+    errors.add(module, "", "image not grayscale");
     return false;
   }
   return true;
@@ -186,6 +187,49 @@ Image *Image::clone(Image *image, WB_image_depth::Image_depth depth, Errors &err
                               depth);
   new_image->copy(image, errors);
   return new_image;
+}
+
+/**
+ * return linear combination of input images:
+ * pixel_32F output-pixel = image1-pixel * scale1 + image2-pixel * scale2 + offset;
+ * @param image1
+ * @param image2
+ * @param scale1
+ * @param scale2
+ * @param offset
+ * @param errors
+ * @return
+ */
+Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2, double offset,
+                      Errors &errors) {
+  int rows1;
+  int rows2;
+  int cols1;
+  int cols2;
+  input1->check_grayscale("Operator_transform_image_combine::run", errors);
+
+  rows1 = input1->get_rows();
+  rows2 = input2->get_rows();
+  cols1 = input1->get_cols();
+  cols2 = input2->get_cols();
+  if (rows1 != rows2 || cols1 != cols2) {
+    std::ostringstream os;
+    os << "input1 size (" << rows1 << ", " << cols1 << ") not the same as input2 size ("
+       << rows2 << ", " << cols2 << ")";
+    errors.add("Operator_transform_image_combine::run", "", os.str());
+  }
+  Image *output = nullptr;
+  if (!errors.has_error()) {
+    output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
+    for (int row = 0; row < rows1; row++)
+      for (int col = 0; col < cols1; col++) {
+        double pixel1 = input1->get(row, col);
+        double pixel2 = input2->get(row, col);
+        double value = pixel1 * scale1 + pixel2 * scale2 + offset;
+        output->set(row, col, value);
+      }
+  }
+  return output;
 }
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255

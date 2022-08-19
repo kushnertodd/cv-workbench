@@ -46,39 +46,30 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_filter_edge_kirsch::run", "", "output data source required");
   if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_kirsch::run", "", "too many output data sources");
-  if (!Operator_utils::has_parameter(operator_parameters, "orientation"))
-    errors.add("Operator_filter_edge_kirsch::run", "", "missing orientation parameter");
-  std::string orientation_str;
-  if (!errors.has_error()) {
-    orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
-    if (orientation_str != "N"
-        && orientation_str != "NW"
-        && orientation_str != "W"
-        && orientation_str != "SW"
-        && orientation_str != "S"
-        && orientation_str != "SE"
-        && orientation_str != "E"
-        && orientation_str != "NE")
-      errors.add("Operator_filter_edge_kirsch",
-                 "",
-                 "orientation parameter not E, N, NE, NW, S, SE, SW, or W");
-  }
+  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_kirsch::run",
+                                                                     operator_parameters, "orientation", errors);
+
+  if (!errors.has_error() &&
+      orientation_str != "N"
+      && orientation_str != "NW"
+      && orientation_str != "W"
+      && orientation_str != "SW"
+      && orientation_str != "S"
+      && orientation_str != "SE"
+      && orientation_str != "E"
+      && orientation_str != "NE")
+    errors.add("Operator_filter_edge_kirsch",
+               "",
+               "orientation parameter not E, N, NE, NW, S, SE, SW, or W");
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Data_source_descriptor *output_data_store = output_data_stores.front();
   if (output_data_store->data_format != WB_data_format::Data_format::BINARY)
     errors.add("Operator_filter_edge_kirsch::run", "", "only binary output data format supported");
   Image *input = nullptr;
-  if (!errors.has_error()) {
-    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-      input = input_data_source->read_image_jpeg(errors);
-    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-      input = input_data_source->read_image(errors);
-    else
-      errors.add("Operator_filter_edge_kirsch::run", "", "input data format must be jpeg or binary, not " +
-          WB_data_format::to_string(input_data_source->data_format));
-  }
+  if (!errors.has_error())
+    input = input_data_source->read_operator_image("Operator_filter_edge_kirsch::run", errors);
   if (!errors.has_error() && input != nullptr)
-    input->check_grayscale(errors);
+    input->check_grayscale("Operator_filter_edge_kirsch::run", errors);
   if (!errors.has_error() && input != nullptr) {
     Kernel *kirsch_kernel_ptr = nullptr;
     if (orientation_str == "N") {
@@ -117,7 +108,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     std::unique_ptr<Kernel> kirsch_kernel(kirsch_kernel_ptr);
     Image *output = kirsch_kernel->convolve_numeric(input, errors);
     if (!errors.has_error() && output != nullptr)
-      output_data_store->write_image(output, errors);
+      output_data_store->write_operator_image(output, "Operator_filter_edge_kirsch::run", errors);
     if (!errors.has_error() && output != nullptr)
       output->log(log_entries);
     delete output;

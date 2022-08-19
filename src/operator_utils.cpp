@@ -25,13 +25,23 @@ void Operator_utils::get_int_parameter(const std::string &module,
   }
 }
 
+/**
+ * parameter value in map
+ * @param parameters
+ * @param parameter
+ * @return empty string '' if parameter not present
+ */
+std::string Operator_utils::get_parameter(String_map &parameters, const std::string &parameter) {
+  return parameters[parameter];
+}
+
 void Operator_utils::get_real_parameter(const std::string &module,
                                         String_map &parameters,
                                         const std::string &parameter,
                                         double &real_value,
                                         Errors &errors) {
   if (!has_parameter(parameters, parameter)) {
-    errors.add(module, "", "missing '" + parameter + "' parameter");
+    errors.add(module, "", "parameter '" + parameter + "' required");
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::is_numeric(parameter_str)) {
@@ -42,14 +52,16 @@ void Operator_utils::get_real_parameter(const std::string &module,
   }
 }
 
-/**
- * parameter value in map
- * @param parameters
- * @param parameter
- * @return empty string '' if parameter not present
- */
-std::string Operator_utils::get_parameter(String_map &parameters, const std::string &parameter) {
-  return parameters[parameter];
+std::string Operator_utils::get_string_parameter(const std::string &module,
+                                                 String_map &parameters,
+                                                 const std::string &parameter,
+                                                 Errors &errors) {
+  std::string result;
+  if (!has_parameter(parameters, parameter))
+    errors.add(module, "", "missing '" + parameter + "' parameter");
+  else
+    result = get_parameter(parameters, parameter);
+  return result;
 }
 
 bool Operator_utils::has_parameter(String_map &parameters, const std::string &parameter) {
@@ -68,19 +80,4 @@ std::string Operator_utils::parameters_to_string(String_map &parameters) {
   return os.str();
 }
 
-void Operator_utils::write_operator_image(Data_source_descriptor *output_data_store,
-                                          Image *output,
-                                          const std::string &module,
-                                          Errors &errors,
-                                          bool jpeg_permitted) {
-  if (jpeg_permitted && output_data_store->data_format == WB_data_format::Data_format::JPEG)
-    output_data_store->write_image_jpeg(output, errors);
-  if (!errors.has_error()) {
-    if (output_data_store->data_format == WB_data_format::Data_format::BINARY) 
-      output_data_store->write_image(output, errors);
-    else if (output_data_store->data_format == WB_data_format::Data_format::JPEG) 
-      output_data_store->write_image_jpeg(output, errors);
-    else
-      errors.add(module, "", "only binary and jpeg output data formats supported");
-  }
-}
+

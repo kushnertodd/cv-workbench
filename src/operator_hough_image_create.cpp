@@ -56,27 +56,13 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
   }
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Image *input = nullptr;
-    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-      input = input_data_source->read_image_jpeg(errors);
-    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-      input = input_data_source->read_image(errors);
-    else
-      errors.add("Operator_hough_image_create::run", "", "invalid data format: " +
-          WB_data_format::to_string(input_data_source->data_format));
+    Image *input = input_data_source->read_operator_image("Operator_hough_image_create::run", errors);
     if (!errors.has_error() && input != nullptr)
-      input->check_grayscale(errors);
+      input->check_grayscale("Operator_hough_image_create::run", errors);
     if (!errors.has_error()) {
       Hough *hough = Hough::create_image(input, theta_inc, threshold);
       for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-        if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-          hough_output_data_store->write_hough(hough, errors);
-        } else if (hough_output_data_store->data_format == WB_data_format::Data_format::TEXT) {
-          hough_output_data_store->write_hough_text(hough, errors);
-        } else {
-          errors.add("Operator_hough_image_create::run", "", "invalid data format "
-              + WB_data_format::to_string(hough_output_data_store->data_format));
-        }
+        hough_output_data_store->write_operator_hough(hough, "Operator_hough_image_create::run", errors);
       }
       delete hough;
     }

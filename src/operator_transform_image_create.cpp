@@ -96,17 +96,9 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
       } else {
         input_data_source = input_data_sources.front();
-        if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-          image = input_data_source->read_image_jpeg(errors);
-        else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-          image = input_data_source->read_image(errors);
-        else if (input_data_source->data_format == WB_data_format::Data_format::TEXT)
-          image = input_data_source->read_image_text(errors);
-        else
-          errors.add("Operator_transform_image_create::run", "", "invalid data format: " +
-              WB_data_format::to_string(input_data_source->data_format));
+        image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);
         if (image != nullptr && !errors.has_error())
-          image->check_grayscale(errors);
+          image->check_grayscale("Operator_transform_image_create::run", errors);
       }
     }
     if (!errors.has_error() && saw_point) {
@@ -118,14 +110,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
         for (const std::string &point_str: points) {
           std::smatch msm;
-          if (!std::regex_match(point_str, msm, point_pat))
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid point parameter value");
-          else if (msm.size() != 3)
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid point parameter value");
+          if (!std::regex_match(point_str, msm, point_pat) || msm.size() != 3)
+            errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
           else {
             std::string row_str = msm[1];
             std::string col_str = msm[2];
@@ -268,15 +254,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         }
       }
     }
-    if (!errors.has_error()) {
-      if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-        output_data_store->write_image_jpeg(image, errors);
-      } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-        output_data_store->write_image(image, errors);
-      } else {
-        errors.add("Operator_transform_image_create::run", "", "invalid data format '"
-            + WB_data_format::to_string(output_data_store->data_format) + "'");
-      }
-    }
+    if (!errors.has_error())
+      output_data_store->write_operator_image(image, "Operator_transform_image_create::run", errors);
   }
 }

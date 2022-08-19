@@ -3,7 +3,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-edge-sobel",
+        "operator": "filter-smooth-average",
         "input-data": [
           {
             "id": 1,

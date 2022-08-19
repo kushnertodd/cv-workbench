@@ -78,79 +78,65 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
     operator_str = Operator_utils::get_parameter(operator_parameters, "operation");
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Image *input = nullptr;
-    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-      input = input_data_source->read_image_jpeg(errors);
-    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-      input = input_data_source->read_image(errors);
-    else
-      errors.add("Operator_filter_image_morphology::run", "", "invalid data format: " +
-          WB_data_format::to_string(input_data_source->data_format));
+    Image *input = input_data_source->read_operator_image("Operator_filter_image_morphology::run", errors);
     if (!errors.has_error() && input != nullptr)
-      input->check_grayscale(errors);
+      input->check_grayscale("Operator_filter_image_morphology::run", errors);
     if (!errors.has_error() && input != nullptr) {
       if (operator_str == "erode") {
         std::unique_ptr<Image>
             erode_image(Morphology::erode(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               erode_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(erode_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) erode_image->log(log_entries);
       } else if (operator_str == "dilate") {
         std::unique_ptr<Image>
             dilate_image(Morphology::dilate(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               dilate_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(dilate_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) dilate_image->log(log_entries);
       } else if (operator_str == "open") {
         std::unique_ptr<Image>
             open_image(Morphology::open(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               open_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(open_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) open_image->log(log_entries);
       } else if (operator_str == "close") {
         std::unique_ptr<Image>
             close_image(Morphology::close(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               close_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(close_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) close_image->log(log_entries);
       } else if (operator_str == "gradient") {
         std::unique_ptr<Image>
             gradient_image(Morphology::gradient(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               gradient_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(gradient_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) gradient_image->log(log_entries);
       } else if (operator_str == "top-hat") {
         std::unique_ptr<Image>
             top_hat_image(Morphology::top_hat(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               top_hat_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(top_hat_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) top_hat_image->log(log_entries);
       } else if (operator_str == "black-hat") {
         std::unique_ptr<Image>
             black_hat_image(Morphology::black_hat(input, structuring_element_type, height, width, thickness, errors));
         if (!errors.has_error())
-          Operator_utils::write_operator_image(output_data_stores.front(),
-                                               black_hat_image.get(),
-                                               "Operator_filter_image_morphology::run",
-                                               errors);
+          output_data_stores.front()->write_operator_image(black_hat_image.get(),
+                                                           "Operator_filter_image_morphology::run",
+                                                           errors);
         if (!errors.has_error()) black_hat_image->log(log_entries);
       } else
         errors.add("Operator_filter_image_morphology::run", "", "invalid 'operation' parameter: " + operator_str);

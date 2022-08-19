@@ -46,8 +46,10 @@ class Image {
   void add_32F(const pixel_32F *src, int count, Errors &errors);
   void add_32S(pixel_32S *src, int count, Errors &errors);
 
-  bool check_grayscale(Errors &errors) const;
+  bool check_grayscale(std::string module, Errors &errors) const;
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
+  static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
+                        Errors &errors);
   void copy(Image *image, Errors &errors) const;
 
   void draw_line_segment(const Line_segment &line_segment, double value) const;

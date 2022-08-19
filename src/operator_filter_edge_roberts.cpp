@@ -38,30 +38,19 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     errors.add("Operator_filter_edge_roberts::run", "", "output data source required");
   if (output_data_stores.size() > 1)
     errors.add("Operator_filter_edge_roberts::run", "", "too many output data sources");
-  if (!Operator_utils::has_parameter(operator_parameters, "orientation"))
-    errors.add("Operator_filter_edge_roberts::run", "", "orientation parameter required");
-  std::string orientation_str;
-  if (!errors.has_error()) {
-    orientation_str = Operator_utils::get_parameter(operator_parameters, "orientation");
-    if (orientation_str != "0" && orientation_str != "90")
-      errors.add("Operator_filter_edge_roberts::run", "", "orientation parameter not 0 or 90");
-  }
+  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_prewitt::run",
+                                                                     operator_parameters, "orientation", errors);
+  if (!errors.has_error() && orientation_str != "0" && orientation_str != "90")
+    errors.add("Operator_filter_edge_prewitt::run", "", "orientation parameter not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Data_source_descriptor *output_data_store = output_data_stores.front();
   if (output_data_store->data_format != WB_data_format::Data_format::BINARY)
     errors.add("Operator_filter_edge_roberts::run", "", "only binary output data format supported");
   Image *input = nullptr;
-  if (!errors.has_error()) {
-    if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-      input = input_data_source->read_image_jpeg(errors);
-    else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-      input = input_data_source->read_image(errors);
-    else
-      errors.add("Operator_filter_edge_roberts::run", "", "invalid data format: " +
-          WB_data_format::to_string(input_data_source->data_format));
-  }
+  if (!errors.has_error())
+    input = input_data_source->read_operator_image("Operator_filter_edge_roberts::run", errors);
   if (!errors.has_error() && input != nullptr)
-    input->check_grayscale(errors);
+    input->check_grayscale("Operator_filter_edge_roberts::run", errors);
   if (!errors.has_error() && input != nullptr) {
     Kernel *roberts_kernel_ptr = nullptr;
     if (orientation_str == "0") {
@@ -76,7 +65,7 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     std::unique_ptr<Kernel> roberts_kernel(roberts_kernel_ptr);
     Image *output = roberts_kernel->convolve_numeric(input, errors);
     if (!errors.has_error() && output != nullptr)
-      Operator_utils::write_operator_image(output_data_store, output, "Operator_filter_edge_roberts::run", errors);
+      output_data_store->write_operator_image(output, "Operator_filter_edge_roberts::run", errors);
     if (!errors.has_error() && output != nullptr) {
       output->log(log_entries);
     }

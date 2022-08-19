@@ -18,265 +18,70 @@ extern bool debug;
  * @param errors
  */
 void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                          std::list<Data_source_descriptor *> &output_data_stores,
-                                          String_map &operator_parameters,
-                                          std::list<WB_log_entry> &log_entries,
-                                          Errors &errors) {
+                                           std::list<Data_source_descriptor *> &output_data_stores,
+                                           String_map &operator_parameters,
+                                           std::list<WB_log_entry> &log_entries,
+                                           Errors &errors) {
 
   if (debug) {
     std::cout << "Operator_transform_image_combine::run:parameters: "
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
-  bool input_data_sources_missing = input_data_sources.empty();
+  if (input_data_sources.empty())
+    errors.add("Operator_transform_image_combine::run", "", "two input data sources required");
+  if (input_data_sources.size() > 2)
+    errors.add("Operator_transform_image_combine::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_transform_image_combine::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_image_combine::run", "", "too many output data sources");
   else {
-    int rows;
-    int cols;
-    double background;
-    double foreground;
-    std::string param_point_str;
-    std::string param_line_str;
-    std::string param_rectangle_str;
-    std::string param_rectangle_filled_str;
-    bool saw_rows = false;
-    bool saw_cols = false;
-    bool saw_point = false;
-    bool saw_line = false;
-    bool saw_rectangle = false;
-    bool saw_rectangle_filled = false;
-    if (Operator_utils::has_parameter(operator_parameters, "rows")) {
-      saw_rows = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_combine::run",
-                                        operator_parameters, "rows", rows, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "cols")) {
-      saw_cols = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_combine::run",
-                                        operator_parameters, "cols", cols, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "background"))
+    double scale1;
+    double scale2;
+    double offset;
+    if (Operator_utils::has_parameter(operator_parameters, "scale1"))
       Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                         operator_parameters, "background", background, errors);
+                                         operator_parameters, "scale1", scale1, errors);
     else
-      background = 0;
-    if (Operator_utils::has_parameter(operator_parameters, "foreground"))
+      scale1 = 1.0;
+    if (Operator_utils::has_parameter(operator_parameters, "scale2"))
       Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                         operator_parameters, "foreground", foreground, errors);
+                                         operator_parameters, "scale2", scale2, errors);
     else
-      foreground = 255;
-    if (Operator_utils::has_parameter(operator_parameters, "point")) {
-      saw_point = true;
-      param_point_str = Operator_utils::get_parameter(operator_parameters, "point");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "line")) {
-      saw_line = true;
-      param_line_str = Operator_utils::get_parameter(operator_parameters, "line");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle")) {
-      saw_rectangle = true;
-      param_rectangle_str = Operator_utils::get_parameter(operator_parameters, "rectangle");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle-filled")) {
-      saw_rectangle_filled = true;
-      param_rectangle_filled_str = Operator_utils::get_parameter(operator_parameters, "rectangle-filled");
-    }
-    Image *image = nullptr;
-    Data_source_descriptor *input_data_source;
-    Data_source_descriptor *output_data_store = output_data_stores.front();
-    if (input_data_sources_missing && (!saw_rows || !saw_cols)) {
-      errors.add("Operator_transform_image_combine::run",
-                 "",
-                 "'rows' and 'cols' parameters required if no input data source");
-    }
-    if (!errors.has_error()) {
-      if (input_data_sources_missing) {
-        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
-      } else {
-        input_data_source = input_data_sources.front();
-        if (input_data_source->data_format == WB_data_format::Data_format::JPEG)
-          image = input_data_source->read_image_jpeg(errors);
-        else if (input_data_source->data_format == WB_data_format::Data_format::BINARY)
-          image = input_data_source->read_image(errors);
-        else if (input_data_source->data_format == WB_data_format::Data_format::TEXT)
-          image = input_data_source->read_image_text(errors);
-        else
-          errors.add("Operator_transform_image_combine::run", "", "invalid data format: " +
-              WB_data_format::to_string(input_data_source->data_format));
-        if (image != nullptr && !errors.has_error())
-          image->check_grayscale(errors);
+      scale2 = 1.0;
+    if (Operator_utils::has_parameter(operator_parameters, "offset"))
+      Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
+                                         operator_parameters, "offset", offset, errors);
+    else
+      offset = 0.0;
+    Image *image1 = nullptr;
+    Image *image2 = nullptr;
+    bool read_image1 = false;
+    bool read_image2 = false;
+    for (Data_source_descriptor *input_data_source: input_data_sources) {
+      if (input_data_source->id == 1) {
+        read_image1 = true;
+        image1 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
+      } else if (input_data_source->id == 2) {
+        read_image2 = true;
+        image2 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
       }
     }
-    if (!errors.has_error() && saw_point) {
-      std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
-      if (points.empty()) {
-        errors.add("Operator_transform_image_combine::run", "", "invalid point parameter value");
-      }
-      if (!errors.has_error()) {
-        std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
-        for (const std::string &point_str: points) {
-          std::smatch msm;
-          if (!std::regex_match(point_str, msm, point_pat))
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid point parameter value");
-          else if (msm.size() != 3)
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid point parameter value");
-          else {
-            std::string row_str = msm[1];
-            std::string col_str = msm[2];
-            int row;
-            int col;
-            if (!wb_utils::string_to_int(row_str, row))
-              errors.add("Operator_transform_image_combine::run", "", "invalid point parameter row value");
-            if (!wb_utils::string_to_int(col_str, col))
-              errors.add("Operator_transform_image_combine::run", "", "invalid point parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->set(row, col, foreground);
-            }
-          }
-        }
-      }
-    }
-    if (!errors.has_error() && saw_line) {
-      std::vector<std::string> lines = wb_utils::tokenize(param_line_str, "|");
-      if (lines.empty()) {
-        errors.add("Operator_transform_image_combine::run", "", "invalid line parameter value");
-      }
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &line_str: lines) {
-          std::smatch msm;
-          if (!std::regex_match(line_str, msm, line_pat))
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->draw_line_segment(row1, col1, row2, col2, foreground);
-            }
-          }
-        }
-      }
-    }
-    if (!errors.has_error() && saw_rectangle) {
-      std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
-      if (rect_lines.empty()) {
-        errors.add("Operator_transform_image_combine::run", "", "invalid line parameter value");
-      }
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &rect_line_str: rect_lines) {
-          std::smatch msm;
-          if (!std::regex_match(rect_line_str, msm, line_pat))
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->draw_rectangle(row1, col1, row2, col2, foreground);
-            }
-          }
-        }
-      }
-    }
-    if (!errors.has_error() && saw_rectangle_filled) {
-      std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_filled_str, "|");
-      if (rect_lines.empty()) {
-        errors.add("Operator_transform_image_combine::run", "", "invalid line parameter value");
-      }
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &rect_line_str: rect_lines) {
-          std::smatch msm;
-          if (!std::regex_match(rect_line_str, msm, line_pat))
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_combine::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_combine::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr)
-              image->draw_rectangle_filled(row1,
-                                           col1,
-                                           row2,
-                                           col2,
-                                           foreground);
-          }
-        }
-      }
-    }
-    if (!errors.has_error()) {
-      if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-        output_data_store->write_image_jpeg(image, errors);
-      } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-        output_data_store->write_image(image, errors);
-      } else {
-        errors.add("Operator_transform_image_combine::run", "", "invalid data format '"
-            + WB_data_format::to_string(output_data_store->data_format) + "'");
-      }
+    if (!read_image1)
+      errors.add("Operator_transform_image_combine::run", "", "missing input image id 1");
+    if (!read_image2)
+      errors.add("Operator_transform_image_combine::run", "", "missing input image id 2");
+    if (image1 != nullptr)
+      image1->check_grayscale("Operator_transform_image_combine::run image 1", errors);
+    if (image2 != nullptr)
+      image2->check_grayscale("Operator_transform_image_combine::run image 2", errors);
+    Image *output = nullptr;
+    if (!errors.has_error() && image1 != nullptr && image2 != nullptr)
+      output = Image::combine(image1, image2, scale1, scale2, offset, errors);
+    if (!errors.has_error() && output != nullptr) {
+      Data_source_descriptor *output_data_store = output_data_stores.front();
+      output_data_store->write_operator_image(output,
+                                              "Operator_transform_image_combine::run", errors);
     }
   }
 }
