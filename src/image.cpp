@@ -206,7 +206,7 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
   int rows2;
   int cols1;
   int cols2;
-  input1->check_grayscale("Operator_transform_image_combine::run", errors);
+
 
   rows1 = input1->get_rows();
   rows2 = input2->get_rows();

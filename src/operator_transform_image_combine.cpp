@@ -39,14 +39,14 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
     double scale1;
     double scale2;
     double offset;
-    if (Operator_utils::has_parameter(operator_parameters, "scale1"))
+    if (Operator_utils::has_parameter(operator_parameters, "scale-1"))
       Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                         operator_parameters, "scale1", scale1, errors);
+                                         operator_parameters, "scale-1", scale1, errors);
     else
       scale1 = 1.0;
-    if (Operator_utils::has_parameter(operator_parameters, "scale2"))
+    if (Operator_utils::has_parameter(operator_parameters, "scale-2"))
       Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                         operator_parameters, "scale2", scale2, errors);
+                                         operator_parameters, "scale-2", scale2, errors);
     else
       scale2 = 1.0;
     if (Operator_utils::has_parameter(operator_parameters, "offset"))

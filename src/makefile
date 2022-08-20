@@ -54,6 +54,7 @@ SRCOBJS :=  \
   operator_hough_image_create.o \
   operator_hough_peak_detect.o \
   operator.o \
+  operator_transform_image_combine.o \
   operator_transform_image_copy.o \
   operator_transform_image_create.o \
   operator_transform_intensity_map.o \
@@ -294,6 +295,7 @@ operator_dispatcher.o: operator_histogram_peak_detect.hpp
 operator_dispatcher.o: operator_hough_draw_line.hpp
 operator_dispatcher.o: operator_hough_image_create.hpp
 operator_dispatcher.o: operator_hough_peak_detect.hpp
+operator_dispatcher.o: operator_transform_image_combine.hpp
 operator_dispatcher.o: operator_transform_image_copy.hpp
 operator_dispatcher.o: operator_transform_image_create.hpp
 operator_dispatcher.o: operator_transform_intensity_map.hpp
@@ -380,17 +382,19 @@ operator_filter_smooth_average.o: wb_utils.hpp polar_line.hpp polar_trig.hpp
 operator_filter_smooth_average.o: wb_filename.hpp
 operator_filter_smooth_average.o: operator_filter_smooth_average.hpp
 operator_filter_smooth_average.o: operator.hpp
-operator_filter_smooth_gaussian.o: operator_filter_smooth_gaussian.hpp
-operator_filter_smooth_gaussian.o: operator.hpp wb_defs.hpp wb_log.hpp
-operator_filter_smooth_gaussian.o: errors.hpp data_source_descriptor.hpp
-operator_filter_smooth_gaussian.o: histogram.hpp hough.hpp hough_accum.hpp
-operator_filter_smooth_gaussian.o: file_utils.hpp image.hpp bounds.hpp
+operator_filter_smooth_gaussian.o: kernel.hpp image.hpp bounds.hpp errors.hpp
 operator_filter_smooth_gaussian.o: image_header.hpp wb_data_format.hpp
 operator_filter_smooth_gaussian.o: wb_data_type.hpp wb_image_depth.hpp
-operator_filter_smooth_gaussian.o: wb_repository_type.hpp line_segment.hpp
-operator_filter_smooth_gaussian.o: point.hpp variance_stats.hpp wb_utils.hpp
-operator_filter_smooth_gaussian.o: polar_line.hpp polar_trig.hpp
+operator_filter_smooth_gaussian.o: wb_repository_type.hpp wb_defs.hpp
+operator_filter_smooth_gaussian.o: line_segment.hpp point.hpp wb_log.hpp
+operator_filter_smooth_gaussian.o: variance_stats.hpp wb_morphology_types.hpp
+operator_filter_smooth_gaussian.o: operator_utils.hpp
+operator_filter_smooth_gaussian.o: data_source_descriptor.hpp histogram.hpp
+operator_filter_smooth_gaussian.o: hough.hpp hough_accum.hpp file_utils.hpp
+operator_filter_smooth_gaussian.o: wb_utils.hpp polar_line.hpp polar_trig.hpp
 operator_filter_smooth_gaussian.o: wb_filename.hpp
+operator_filter_smooth_gaussian.o: operator_filter_smooth_gaussian.hpp
+operator_filter_smooth_gaussian.o: operator.hpp
 operator_filter_smooth_median.o: operator_filter_smooth_median.hpp
 operator_filter_smooth_median.o: operator.hpp wb_defs.hpp wb_log.hpp
 operator_filter_smooth_median.o: errors.hpp data_source_descriptor.hpp
@@ -471,6 +475,17 @@ operator_hough_peak_detect.o: point.hpp wb_log.hpp variance_stats.hpp
 operator_hough_peak_detect.o: wb_utils.hpp polar_line.hpp polar_trig.hpp
 operator_hough_peak_detect.o: wb_filename.hpp operator_hough_peak_detect.hpp
 operator_hough_peak_detect.o: operator.hpp
+operator_transform_image_combine.o: operator_transform_image_combine.hpp
+operator_transform_image_combine.o: operator.hpp wb_defs.hpp wb_log.hpp
+operator_transform_image_combine.o: errors.hpp data_source_descriptor.hpp
+operator_transform_image_combine.o: histogram.hpp hough.hpp hough_accum.hpp
+operator_transform_image_combine.o: file_utils.hpp image.hpp bounds.hpp
+operator_transform_image_combine.o: image_header.hpp wb_data_format.hpp
+operator_transform_image_combine.o: wb_data_type.hpp wb_image_depth.hpp
+operator_transform_image_combine.o: wb_repository_type.hpp line_segment.hpp
+operator_transform_image_combine.o: point.hpp variance_stats.hpp wb_utils.hpp
+operator_transform_image_combine.o: polar_line.hpp polar_trig.hpp
+operator_transform_image_combine.o: wb_filename.hpp operator_utils.hpp
 operator_transform_image_copy.o: operator_transform_image_copy.hpp
 operator_transform_image_copy.o: operator.hpp wb_defs.hpp wb_log.hpp
 operator_transform_image_copy.o: errors.hpp data_source_descriptor.hpp
@@ -493,23 +508,6 @@ operator_transform_image_create.o: wb_repository_type.hpp line_segment.hpp
 operator_transform_image_create.o: point.hpp variance_stats.hpp wb_utils.hpp
 operator_transform_image_create.o: polar_line.hpp polar_trig.hpp
 operator_transform_image_create.o: wb_filename.hpp operator_utils.hpp
-operator_transform_image_morphology.o: kernel.hpp image.hpp bounds.hpp
-operator_transform_image_morphology.o: errors.hpp image_header.hpp
-operator_transform_image_morphology.o: wb_data_format.hpp wb_data_type.hpp
-operator_transform_image_morphology.o: wb_image_depth.hpp
-operator_transform_image_morphology.o: wb_repository_type.hpp wb_defs.hpp
-operator_transform_image_morphology.o: line_segment.hpp point.hpp wb_log.hpp
-operator_transform_image_morphology.o: variance_stats.hpp
-operator_transform_image_morphology.o: wb_morphology_types.hpp
-operator_transform_image_morphology.o: operator_utils.hpp
-operator_transform_image_morphology.o: data_source_descriptor.hpp
-operator_transform_image_morphology.o: histogram.hpp hough.hpp
-operator_transform_image_morphology.o: hough_accum.hpp file_utils.hpp
-operator_transform_image_morphology.o: wb_utils.hpp polar_line.hpp
-operator_transform_image_morphology.o: polar_trig.hpp wb_filename.hpp
-operator_transform_image_morphology.o: morphology.hpp
-operator_transform_image_morphology.o: operator_transform_image_morphology.hpp
-operator_transform_image_morphology.o: operator.hpp
 operator_transform_intensity_map.o: operator_transform_intensity_map.hpp
 operator_transform_intensity_map.o: operator.hpp wb_defs.hpp wb_log.hpp
 operator_transform_intensity_map.o: errors.hpp data_source_descriptor.hpp
