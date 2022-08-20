@@ -30,9 +30,9 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
   Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
                                     operator_parameters, "cols", cols, errors);
   Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
-                                     operator_parameters, "sigma_x", sigma_x, errors);
+                                     operator_parameters, "sigma-x", sigma_x, errors);
   Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
-                                     operator_parameters, "sigma_y", sigma_y, errors);
+                                     operator_parameters, "sigma-y", sigma_y, errors);
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Data_source_descriptor *output_data_store = output_data_stores.front();
   Image *input = nullptr;

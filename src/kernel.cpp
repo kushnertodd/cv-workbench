@@ -192,12 +192,12 @@ Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
   for (int row = 0; row < rows; row++) {
     double y = Point::row_to_y(row, rows);
     double value = fact1 * exp(-((y * y) / denom1));
-    gaussian_y->set(row, 1, value);
+    gaussian_y->set(row, 0, value);
     sum += value;
   }
   for (int row = 0; row < rows; row++) {
-    double value = gaussian_y->get(row, 1);
-    gaussian_y->set(row, 1, value / sum);
+    double value = gaussian_y->get(row, 0);
+    gaussian_y->set(row, 0, value / sum);
   }
   return gaussian_y;
 }
@@ -210,12 +210,12 @@ Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
   for (int col = 0; col < cols; col++) {
     double x = Point::col_to_x(col, cols);
     double value = fact1 * exp(-((x * x) / denom1));
-    gaussian_x->set(1, col, value);
+    gaussian_x->set(0, col, value);
     sum += value;
   }
   for (int col = 0; col < cols; col++) {
-    double value = gaussian_x->get(1, col);
-    gaussian_x->set(1, col, value / sum);
+    double value = gaussian_x->get(0, col);
+    gaussian_x->set(0, col, value / sum);
   }
   return gaussian_x;
 }

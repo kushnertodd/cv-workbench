@@ -1,0 +1,24 @@
+filename keyboard_esp32_cam_image_8uc1.jpg
+    components          1
+filename keyboard-gaussian-10_color.jpg
+    components          3
+filename keyboard-gaussian-10_gray.jpg
+    components          1
+filename keyboard-gaussian-15_color.jpg
+    components          3
+filename keyboard-gaussian-15_gray.jpg
+    components          1
+filename keyboard-gaussian-20_color.jpg
+    components          3
+filename keyboard-gaussian-20_gray.jpg
+    components          1
+filename keyboard-gaussian-25_color.jpg
+    components          3
+filename keyboard-gaussian-25_gray.jpg
+    components          1
+filename keyboard-gaussian-5_color.jpg
+    components          3
+filename keyboard-gaussian-5_gray.jpg
+    components          1
+filename keyboard_google_pixel_image_8uc1.jpg
+    components          3
