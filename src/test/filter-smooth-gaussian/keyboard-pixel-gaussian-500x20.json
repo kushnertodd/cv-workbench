@@ -28,8 +28,8 @@
           "orientation": "0",
           "rows": "500",
           "cols": "20",
-          "sigma-y": "50.0",
-          "sigma-x": "7.0"
+          "sigma-y": "250.0",
+          "sigma-x": "10.0"
         }
       },
       {

@@ -28,7 +28,7 @@
           "orientation": "0",
           "rows": "250",
           "cols": "5",
-          "sigma-y": "50.0",
+          "sigma-y": "125.0",
           "sigma-x": "2.5"
         }
       },

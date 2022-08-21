@@ -1,6 +1,0 @@
-keyboard-pixel-gaussian-100x15.json
-keyboard-pixel-gaussian-100x10.json
-keyboard-pixel-gaussian-100x5.json
-keyboard-combine-100x10-15-hist.json
-keyboard-combine-100x10-15.json
-keyboard-combine-100x5-10.json

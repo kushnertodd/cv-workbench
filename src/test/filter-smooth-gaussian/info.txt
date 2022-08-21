@@ -1,0 +1,44 @@
+=================
+keyboard-pixel-gaussian-100x10-15-diff.bin
+        mean                0.159373
+        standard deviation  3.82327
+=================
+keyboard-pixel-gaussian-100x15-20-diff.bin
+        mean                0.15939
+        standard deviation  3.92765
+=================
+keyboard-pixel-gaussian-100x5-10-diff.bin
+        mean                0.159244
+        standard deviation  4.05511
+=================
+keyboard-pixel-gaussian-15-25x15-25-diff.bin
+        mean                1.03203
+        standard deviation  11.1255
+=================
+keyboard-pixel-gaussian-250x10-15-diff.bin
+        mean                0.12966
+        standard deviation  3.26299
+=================
+keyboard-pixel-gaussian-250x15-20-diff.bin
+        mean                0.129711
+        standard deviation  3.41689
+=================
+keyboard-pixel-gaussian-250x5-10-diff.bin
+        mean                0.12961
+        standard deviation  3.46163
+=================
+keyboard-pixel-gaussian-500x10-15-diff.bin
+        mean                0.0838817
+        standard deviation  2.43775
+=================
+keyboard-pixel-gaussian-500x15-20-diff.bin
+        mean                0.0835442
+        standard deviation  2.62387
+=================
+keyboard-pixel-gaussian-500x5-10-diff.bin
+        mean                0.0842944
+        standard deviation  2.6472
+=================
+keyboard-pixel-gaussian-gimp-15-25x15-25-diff.bin
+        mean                -0.879279
+        standard deviation  5.3548
