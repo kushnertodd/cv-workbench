@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-15x15"
+            "filename": "du_drone-gaussian-15x15"
           },
           {
             "id": 2,
@@ -19,7 +19,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-25x25"
+            "filename": "du_drone-gaussian-25x25"
           }
         ],
         "output-data": [
@@ -29,7 +29,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-15-25x15-25-diff"
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "parameters": {
@@ -48,7 +48,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-15-25x15-25-diff"
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "output-data": [
@@ -58,7 +58,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-15-25x15-25-diff"
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "parameters": {

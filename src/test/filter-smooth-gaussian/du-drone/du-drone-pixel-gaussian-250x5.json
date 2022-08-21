@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "du-drone-pixel_gray"
+            "filename": "du_drone_gray"
           }
         ],
         "output-data": [
@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-250x5"
+            "filename": "du_drone-gaussian-250x5"
           }
         ],
         "parameters": {
@@ -42,7 +42,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-250x5"
+            "filename": "du_drone-gaussian-250x5"
           }
         ],
         "output-data": [
@@ -52,7 +52,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "du-drone-pixel-gaussian-250x5"
+            "filename": "du_drone-gaussian-250x5"
           }
         ],
         "parameters": {
