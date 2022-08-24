@@ -79,6 +79,7 @@ SRCOBJS :=  \
 
 PROGRAMS = \
   image-copy \
+  image-corr \
   image-dump \
   image-info \
   image-map \
@@ -94,6 +95,9 @@ PROGRAMS = \
 all: $(PROGRAMS)
 
 image-copy: image-copy.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-corr: image-corr.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-dump: image-dump.o $(SRCOBJS)
