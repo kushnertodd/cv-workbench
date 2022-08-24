@@ -1,0 +1,531 @@
+=================
+320x240color
+=----------------
+=================
+320x240gray
+=----------------
+=================
+cv-workbench_one_pass_mean_init
+=----------------
+=================
+du_drone_color
+filter-smooth-gaussian/cv-workbench-drive/du_drone_color.jpg
+=----------------
+=================
+du_drone_gray
+filter-smooth-gaussian/cv-workbench-drive/du_drone_gray.jpg
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray"
+filter-smooth-average/test-filter-edge-average-3x3.du-drone.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-100x10.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-100x15.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-100x20.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-100x5.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-15x15.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-250x10.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-250x15.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-250x20.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-250x5.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-25x25.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-500x10.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-500x15.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-500x20.json:            "filename": "du_drone_gray"
+filter-smooth-gaussian/du-drone/du-drone-pixel-gaussian-500x5.json:            "filename": "du_drone_gray"
+=================
+du_drone_gray_sobel_0_degrees
+filter-edge-sobel/du_drone_gray_sobel_0_degrees.jpg
+filter-edge-sobel/du_drone_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-drone-sobel.json:						"filename": "du_drone_gray_sobel_0_degrees"
+=================
+du_drone_gray_sobel_0_degrees
+filter-edge-sobel/du_drone_gray_sobel_0_degrees.jpg
+filter-edge-sobel/du_drone_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-drone-sobel.json:						"filename": "du_drone_gray_sobel_0_degrees"
+=================
+du_drone_gray_sobel_0_degrees_thresh-98
+=----------------
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+filter-smooth-gaussian/test-filter-smooth-gaussian-0-5x21-du-drone.json:            "filename": "du_drone_gray_sobel_0_degrees_thresh-98"
+=================
+du_map_color
+filter-smooth-gaussian/cv-workbench-drive/du_map_color.jpg
+=----------------
+=================
+du_map_gray
+filter-smooth-gaussian/cv-workbench-drive/du_map_gray.jpg
+=----------------
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-100x10.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-100x15.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-100x20.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-100x5.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-15x15.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-250x10.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-250x15.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-250x20.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-250x5.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-25x25.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-500x10.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-500x15.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-500x20.json:            "filename": "du_map_gray"
+filter-smooth-gaussian/du-map/du-map-pixel-gaussian-500x5.json:            "filename": "du_map_gray"
+=================
+google-map-slc-2022-07-25_color
+=----------------
+=================
+google-map-slc-2022-07-25_gray
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray"
+filter-smooth-average/test-filter-edge-average-3x3-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray"
+=================
+google-map-slc-2022-07-25_gray_sobel_0_degrees
+filter-edge-sobel/google-map-slc-2022-07-25_gray_sobel_0_degrees.jpg
+filter-edge-sobel/google-map-slc-2022-07-25_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-smooth-average/google-map-slc-2022-07-25_gray_sobel_0_degrees.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-smooth-gaussian/google-map-slc-2022-07-25_gray_sobel_0_degrees.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+=================
+google-map-slc-2022-07-25_gray_sobel_0_degrees
+filter-edge-sobel/google-map-slc-2022-07-25_gray_sobel_0_degrees.jpg
+filter-edge-sobel/google-map-slc-2022-07-25_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-google-map-2022-07-25.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-smooth-average/google-map-slc-2022-07-25_gray_sobel_0_degrees.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+filter-smooth-gaussian/google-map-slc-2022-07-25_gray_sobel_0_degrees.json:            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-sobel-0-degrees-google-map-2022-07-25.json:						"filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees",
+=================
+keyboard_esp32_cam_image_8uc1
+=----------------
+=================
+keyboard-gaussian-10_color
+=----------------
+=================
+keyboard-gaussian-10_gray
+=----------------
+transform-image-combine/keboard-combine-10-15.json:            "filename": "keyboard-gaussian-10_gray"
+transform-image-combine/keboard-combine-5-10.json:            "filename": "keyboard-gaussian-10_gray"
+=================
+keyboard-gaussian-15_color
+=----------------
+=================
+keyboard-gaussian-15_gray
+=----------------
+transform-image-combine/keboard-combine-10-15.json:            "filename": "keyboard-gaussian-15_gray"
+transform-image-combine/keboard-combine-15-20.json:            "filename": "keyboard-gaussian-15_gray"
+=================
+keyboard-gaussian-20_color
+=----------------
+=================
+keyboard-gaussian-20_gray
+=----------------
+transform-image-combine/keboard-combine-15-20.json:            "filename": "keyboard-gaussian-20_gray"
+transform-image-combine/keboard-combine-20-25.json:            "filename": "keyboard-gaussian-20_gray"
+=================
+keyboard-gaussian-25_color
+=----------------
+=================
+keyboard-gaussian-25_gray
+=----------------
+transform-image-combine/keboard-combine-20-25.json:            "filename": "keyboard-gaussian-25_gray"
+=================
+keyboard-gaussian-5_color
+=----------------
+=================
+keyboard-gaussian-5_gray
+=----------------
+transform-image-combine/keboard-combine-5-10.json:            "filename": "keyboard-gaussian-5_gray"
+=================
+keyboard_google_pixel_image_8uc1
+=----------------
+=================
+keyboard-info
+=----------------
+=================
+keyboard-pixel_gray_gimp_dog_15
+=----------------
+filter-smooth-gaussian/keyboard-combine-gimp-15-25x15-25.json:            "filename": "keyboard-pixel_gray_gimp_dog_15"
+=================
+keyboard-pixel_gray_gimp_dog_25
+=----------------
+filter-smooth-gaussian/keyboard-combine-gimp-15-25x15-25.json:            "filename": "keyboard-pixel_gray_gimp_dog_25"
+=================
+keyboard-pixel_gray
+=----------------
+filter-smooth-gaussian/keyboard-pixel-gaussian-100x10.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-100x15.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-100x20.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-100x5.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-15x15.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-250x10.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-250x15.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-250x20.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-250x5.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-25x25.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-500x10.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-500x15.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-500x20.json:            "filename": "keyboard-pixel_gray"
+filter-smooth-gaussian/keyboard-pixel-gaussian-500x5.json:            "filename": "keyboard-pixel_gray"
+=================
+line0_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+=================
+line0_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line0_gray",
+=================
+line15_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+=================
+line15_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line15_gray",
+=================
+line30_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+=================
+line30_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line30_gray",
+=================
+line45_color
+=----------------
+=================
+line45_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+=================
+line45_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+=================
+line45_gray_mapped
+=----------------
+=================
+line45_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line45_gray",
+=================
+line90_color
+=----------------
+=================
+line90_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+=================
+line90_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+=================
+line90_gray
+=----------------
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line0-90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+hough-image-create/test-hough-line90_gray.json:						"filename": "line90_gray",
+=================
+lines_gray
+=----------------
+=================
+small_color
+=----------------
+=================
+small
+=----------------
+histogram-image-create/test-hist-image-create-small.json:            "filename": "small"
+histogram-image-create/test-hist-image-create-small.json:            "filename": "small"
+histogram-image-create/test-hist-image-create-small.json:            "filename": "small"
+=================
+small_line_color
+=----------------
+=================
+small_line_gray
+=----------------
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray"
+filter-smooth-average/test-filter-edge-average-3x3-small.json:            "filename": "small_line_gray"
+=================
+small_line_gray_sobel_0_degrees
+filter-edge-sobel/small_line_gray_sobel_0_degrees.jpg
+filter-edge-sobel/small_line_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+=================
+small_line_gray_sobel_0_degrees
+filter-edge-sobel/small_line_gray_sobel_0_degrees.jpg
+filter-edge-sobel/small_line_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+=================
+small_line_gray_sobel_0_degrees
+filter-edge-sobel/small_line_gray_sobel_0_degrees.jpg
+filter-edge-sobel/small_line_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+=================
+small_line_gray_sobel_0_degrees
+filter-edge-sobel/small_line_gray_sobel_0_degrees.jpg
+filter-edge-sobel/small_line_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-small.json:						"filename": "small_line_gray_sobel_0_degrees"
+=================
+small_line_gray
+=----------------
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray"
+filter-smooth-average/test-filter-edge-average-3x3-small.json:            "filename": "small_line_gray"
+=================
+small_line_gray
+=----------------
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-prewitt/test-filter-edge-prewitt-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-90-degrees-small.json:            "filename": "small_line_gray"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees-small.json:            "filename": "small_line_gray"
+filter-smooth-average/test-filter-edge-average-3x3-small.json:            "filename": "small_line_gray"
+=================
+square45-90_gray
+=----------------
+filter-edge-kirsch/test-filter-edge-kirsch-e.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-n.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-ne.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-nw.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-s.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-se.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-sw.json:            "filename": "square45-90_gray",
+filter-edge-kirsch/test-filter-edge-kirsch-w.json:            "filename": "square45-90_gray",
+filter-edge-prewitt/test-filter-edge-prewitt-0-degrees.json:            "filename": "square45-90_gray",
+filter-edge-prewitt/test-filter-edge-prewitt-90-degrees.json:            "filename": "square45-90_gray",
+filter-edge-roberts/test-filter-edge-roberts-0-degrees.json:            "filename": "square45-90_gray",
+filter-edge-roberts/test-filter-edge-roberts-90-degrees.json:            "filename": "square45-90_gray",
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray"
+filter-smooth-average/test-filter-edge-average-3x3-square45-90.json:            "filename": "square45-90_gray"
+=================
+square45-90_gray_sobel_0_degrees
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.jpg
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+=================
+square45-90_gray_sobel_0_degrees
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.jpg
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+=================
+square45-90_gray_sobel_0_degrees
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.jpg
+filter-edge-sobel/square45-90_gray_sobel_0_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+filter-edge-sobel/test-filter-edge-sobel-0-degrees.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-hough-create/test-histogram-hough-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+histogram-image-create/test-hist-image-create-0-sobel.json:            "filename": "square45-90_gray_sobel_0_degrees"
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-bin.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-draw-lines/test-hough-draw-lines-0-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_0_degrees",
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-image-create/test-hough-image-create-0-sobel.json:						"filename": "square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+hough-peak-detect/test-hough-peak-detect-0-sobel.json:            "filename":"square45-90_gray_sobel_0_degrees"
+=================
+square45-90_gray_sobel_90_degrees
+filter-edge-sobel/square45-90_gray_sobel_90_degrees.jpg
+filter-edge-sobel/square45-90_gray_sobel_90_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+=================
+square45-90_gray_sobel_90_degrees
+filter-edge-sobel/square45-90_gray_sobel_90_degrees.jpg
+filter-edge-sobel/square45-90_gray_sobel_90_degrees.bin
+=----------------
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+filter-edge-sobel/test-filter-edge-sobel-90-degrees.json:            "filename": "square45-90_gray_sobel_90_degrees"
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-bin.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
+hough-draw-lines/test-hough-draw-lines-90-degrees-jpeg.json:            "filename": "square45-90_gray_sobel_90_degrees",
