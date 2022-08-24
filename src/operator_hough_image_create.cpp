@@ -32,12 +32,16 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_hough_image_create::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_image_create::run", "", "output data source required");
-  else if (output_data_stores.size() > 2)
-    errors.add("Operator_hough_image_create::run", "", "too many output data sources");
   int theta_inc = 0;
   int threshold = 0;
+  int ulc_row = 0;
+  int ulc_col = 0;
+  int lrc_row = 0;
+  int lrc_col = 0;
   bool saw_theta_inc = false;
   bool saw_threshold = false;
+  bool saw_lrc_row = false;
+  bool saw_lrc_col = false;
   if (Operator_utils::has_parameter(operator_parameters, "theta_inc")) {
     saw_theta_inc = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
@@ -47,6 +51,26 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     saw_threshold = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                       operator_parameters, "threshold", threshold, errors);
+  }
+  if (Operator_utils::has_parameter(operator_parameters, "ulc_row")) {
+    Operator_utils::get_int_parameter("Operator_hough_image_create::run",
+                                      operator_parameters, "ulc_row", ulc_row, errors);
+  } else
+    ulc_row = 0;
+  if (Operator_utils::has_parameter(operator_parameters, "ulc_col")) {
+    Operator_utils::get_int_parameter("Operator_hough_image_create::run",
+                                      operator_parameters, "ulc_col", ulc_col, errors);
+  } else
+    ulc_col = 0;
+  if (Operator_utils::has_parameter(operator_parameters, "lrc_row")) {
+    saw_lrc_row = true;
+    Operator_utils::get_int_parameter("Operator_hough_image_create::run",
+                                      operator_parameters, "lrc_row", lrc_row, errors);
+  }
+  if (Operator_utils::has_parameter(operator_parameters, "lrc_col")) {
+    saw_lrc_col = true;
+    Operator_utils::get_int_parameter("Operator_hough_image_create::run",
+                                      operator_parameters, "lrc_col", lrc_col, errors);
   }
   if (!saw_theta_inc) {
     errors.add("Operator_hough_image_create::run", "", "missing 'theta_inc' parameter");
@@ -60,6 +84,10 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     if (!errors.has_error() && input != nullptr)
       input->check_grayscale("Operator_hough_image_create::run", errors);
     if (!errors.has_error()) {
+      if (!saw_lrc_row)
+        lrc_row = input->get_rows() - 1;
+      if (!saw_lrc_col)
+        lrc_col = input->get_cols() - 1;
       Hough *hough = Hough::create_image(input, theta_inc, threshold);
       for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
         hough_output_data_store->write_operator_hough(hough, "Operator_hough_image_create::run", errors);
