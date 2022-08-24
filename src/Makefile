@@ -60,6 +60,7 @@ SRCOBJS :=  \
   operator_transform_image_create.o \
   operator_transform_intensity_map.o \
   operator_utils.o \
+  pearsons_correlation.o \
   point.o \
   polar_line.o \
   polar_trig.o \
@@ -539,7 +540,12 @@ operator_utils.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
 operator_utils.o: line_segment.hpp point.hpp wb_log.hpp variance_stats.hpp
 operator_utils.o: wb_utils.hpp polar_line.hpp polar_trig.hpp wb_filename.hpp
 operator_utils.o: operator_utils.hpp
-pearsons_correlation.o: pearsons_correlation.hpp
+pearsons_correlation.o: pearsons_correlation.hpp image.hpp bounds.hpp
+pearsons_correlation.o: errors.hpp image_header.hpp wb_data_format.hpp
+pearsons_correlation.o: wb_data_type.hpp wb_image_depth.hpp
+pearsons_correlation.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp
+pearsons_correlation.o: point.hpp wb_log.hpp variance_stats.hpp kernel.hpp
+pearsons_correlation.o: wb_morphology_types.hpp one_pass_mean.hpp
 point.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 point.o: wb_repository_type.hpp errors.hpp wb_defs.hpp point.hpp
 polar_line.o: errors.hpp polar_line.hpp point.hpp
