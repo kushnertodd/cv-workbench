@@ -37,9 +37,9 @@ class Image {
 
   virtual ~Image();
   Image();
-  Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth);
+  Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth, double value = 0.0);
   Image(Image &image);
-  explicit Image(Image_header &image_header);
+  explicit Image(Image_header &image_header, double value = 0.0);
 
   // TODO: add component
   void add_8U(const pixel_8U *src, int count, Errors &errors);
@@ -75,7 +75,7 @@ class Image {
                     double upper_in, double lower_out,
                     double upper_out) const;
   void get_stats(Variance_stats &stats) const;
-  void init();
+  void init(double value = 0.0);
 
   void log(std::list<WB_log_entry> &log_entries) const;
 

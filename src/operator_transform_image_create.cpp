@@ -23,15 +23,9 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                           std::list<WB_log_entry> &log_entries,
                                           Errors &errors) {
 
-  if (debug) {
-    std::cout << "Operator_transform_image_create::run:parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   bool input_data_sources_missing = input_data_sources.empty();
   if (output_data_stores.empty())
     errors.add("Operator_transform_image_create::run", "", "output data source required");
-  else if (output_data_stores.size() > 1)
-    errors.add("Operator_transform_image_create::run", "", "too many output data sources");
   else {
     int rows;
     int cols;
@@ -61,7 +55,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
       Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                          operator_parameters, "background", background, errors);
     else
-      background = 0;
+      background = 0.0;
     if (Operator_utils::has_parameter(operator_parameters, "foreground"))
       Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                          operator_parameters, "foreground", foreground, errors);
@@ -85,16 +79,14 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     Image *image = nullptr;
     Data_source_descriptor *input_data_source;
-    Data_source_descriptor *output_data_store = output_data_stores.front();
-    if (input_data_sources_missing && (!saw_rows || !saw_cols)) {
+    if (input_data_sources_missing && (!saw_rows || !saw_cols))
       errors.add("Operator_transform_image_create::run",
                  "",
                  "'rows' and 'cols' parameters required if no input data source");
-    }
     if (!errors.has_error()) {
-      if (input_data_sources_missing) {
-        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
-      } else {
+      if (input_data_sources_missing)
+        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
+      else {
         input_data_source = input_data_sources.front();
         image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);
         if (image != nullptr && !errors.has_error())
@@ -103,9 +95,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error() && saw_point) {
       std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
-      if (points.empty()) {
+      if (points.empty())
         errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
-      }
       if (!errors.has_error()) {
         std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
         for (const std::string &point_str: points) {
@@ -130,9 +121,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error() && saw_line) {
       std::vector<std::string> lines = wb_utils::tokenize(param_line_str, "|");
-      if (lines.empty()) {
+      if (lines.empty())
         errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      }
       if (!errors.has_error()) {
         std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
         for (const std::string &line_str: lines) {
@@ -171,9 +161,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error() && saw_rectangle) {
       std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
-      if (rect_lines.empty()) {
+      if (rect_lines.empty())
         errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      }
       if (!errors.has_error()) {
         std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
         for (const std::string &rect_line_str: rect_lines) {
@@ -212,9 +201,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error() && saw_rectangle_filled) {
       std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_filled_str, "|");
-      if (rect_lines.empty()) {
+      if (rect_lines.empty())
         errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      }
       if (!errors.has_error()) {
         std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
         for (const std::string &rect_line_str: rect_lines) {
@@ -255,6 +243,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
       }
     }
     if (!errors.has_error())
-      output_data_store->write_operator_image(image, "Operator_transform_image_create::run", errors);
+      for (Data_source_descriptor *output_data_store: output_data_stores)
+        output_data_store->write_operator_image(image, "Operator_hough_image_create::run", errors);
   }
 }
