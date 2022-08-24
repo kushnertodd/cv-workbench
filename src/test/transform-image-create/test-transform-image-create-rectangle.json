@@ -12,6 +12,14 @@
             "format": "binary",
             "directory": "images",
             "filename": "square45-90_gray_create_rectangle"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "square45-90_gray_create_rectangle"
           }
         ],
         "parameters": {
