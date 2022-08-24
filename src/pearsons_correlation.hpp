@@ -27,12 +27,12 @@ class Pearsons_correlation {
   void init_stats();
   int pattern_rows{};
   int pattern_cols{};
-  double sum_y;
-  double sum_y_sq;
-  One_pass_mean *opm;
+  double sum_y{};
+  double sum_y_sq{};
+  One_pass_mean *opm{};
   Pearsons_correlation(Image *m_image, Kernel *m_pattern);
-  double accumulate(int ulc_row, int ulc_col, double mean);
-  Image *correlate();
+  double accumulate(int ulc_row, int ulc_col) const;
+  Image *correlate() const;
 };
 
 #endif //SRC__PEARSONS_CORRELATION_H_
