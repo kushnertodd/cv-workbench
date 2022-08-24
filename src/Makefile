@@ -37,6 +37,7 @@ SRCOBJS :=  \
   kernel.o \
   line_segment.o \
   morphology.o \
+  one_pass_mean.o \
   operator_dispatcher.o \
   operator_filter_edge_kirsch.o \
   operator_filter_edge_laplacian.o \
@@ -80,6 +81,7 @@ PROGRAMS = \
   image-dump \
   image-info \
   image-map \
+  image-mean \
   image-morph \
   image-read \
   image-trig \
@@ -100,6 +102,9 @@ image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-map: image-map.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-mean: image-mean.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-morph: image-morph.o $(SRCOBJS)
@@ -233,6 +238,10 @@ image-map.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-map.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-map.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
 image-map.o: wb_log.hpp variance_stats.hpp wb_filename.hpp wb_utils.hpp
+image-mean.o: image.hpp bounds.hpp errors.hpp image_header.hpp
+image-mean.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
+image-mean.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-mean.o: wb_log.hpp variance_stats.hpp one_pass_mean.hpp
 image-morph.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-morph.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-morph.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
@@ -266,6 +275,10 @@ morphology.o: image_header.hpp wb_data_format.hpp wb_data_type.hpp
 morphology.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
 morphology.o: line_segment.hpp point.hpp wb_log.hpp variance_stats.hpp
 morphology.o: wb_morphology_types.hpp
+one_pass_mean.o: one_pass_mean.hpp image.hpp bounds.hpp errors.hpp
+one_pass_mean.o: image_header.hpp wb_data_format.hpp wb_data_type.hpp
+one_pass_mean.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
+one_pass_mean.o: line_segment.hpp point.hpp wb_log.hpp variance_stats.hpp
 operator.o: operator.hpp wb_defs.hpp wb_log.hpp errors.hpp
 operator.o: data_source_descriptor.hpp histogram.hpp hough.hpp
 operator.o: hough_accum.hpp file_utils.hpp image.hpp bounds.hpp
@@ -526,6 +539,7 @@ operator_utils.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
 operator_utils.o: line_segment.hpp point.hpp wb_log.hpp variance_stats.hpp
 operator_utils.o: wb_utils.hpp polar_line.hpp polar_trig.hpp wb_filename.hpp
 operator_utils.o: operator_utils.hpp
+pearsons_correlation.o: pearsons_correlation.hpp
 point.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 point.o: wb_repository_type.hpp errors.hpp wb_defs.hpp point.hpp
 polar_line.o: errors.hpp polar_line.hpp point.hpp
