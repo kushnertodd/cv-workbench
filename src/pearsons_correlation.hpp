@@ -24,10 +24,14 @@ class Pearsons_correlation {
   Kernel *pattern{};
   int image_rows{};
   int image_cols{};
+  void init_stats();
   int pattern_rows{};
   int pattern_cols{};
+  double sum_y;
+  double sum_y_sq;
   One_pass_mean *opm;
   Pearsons_correlation(Image *m_image, Kernel *m_pattern);
+  double accumulate(int ulc_row, int ulc_col, double mean);
   Image *correlate();
 };
 
