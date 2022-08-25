@@ -1,3 +1,9 @@
+du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin
+du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.jpg
+du_map-gaussian-250x10-15-diff-sobel.bin
+du_map-gaussian-250x10-15-diff-sobel.jpg
+google-map-slc_gray-sobel-0-degrees-gaussian.jpg
+google-map-slc_gray-sobel-0_gaussian.bin
 keyboard-pixel-gaussian-100x10-15-diff.bin
 keyboard-pixel-gaussian-100x10-15-diff.jpg
 keyboard-pixel-gaussian-100x10.bin
