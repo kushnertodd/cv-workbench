@@ -10,7 +10,7 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "images",
+            "directory": "test/filter-smooth-gaussian/du-map",
             "filename": "du_map-gaussian-250x10-15-diff"
           }
         ],

@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/reference",
-            "filename": "rectangle_filled_5x5-3x3_gray"
+            "filename": "rectangle-filled-5x5-3x3_gray"
           },
           {
             "id": 2,
@@ -19,7 +19,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "test/reference",
-            "filename": "rectangle_filled_5x5-3x3_gray"
+            "filename": "rectangle-filled-5x5-3x3_gray"
           }
         ],
         "parameters": {
@@ -40,7 +40,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/reference",
-            "filename": "rectangle_filled_3x3_gray"
+            "filename": "rectangle-filled-3x3_gray"
           },
           {
             "id": 2,
@@ -48,7 +48,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "test/reference",
-            "filename": "rectangle_filled_3x3_gray"
+            "filename": "rectangle-filled-3x3_gray"
           }
         ],
         "parameters": {

@@ -10,8 +10,8 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "test/reference",
-            "filename": "square45-90_gray_sobel_0_degrees"
+            "directory": "test/filter-edge-sobel",
+            "filename": "square45-90_gray-sobel-0"
           }
         ],
         "output-data": [
@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees"
+            "filename": "square45-90_gray-sobel-0"
           }
         ],
         "parameters": {
@@ -39,7 +39,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees"
+            "filename": "square45-90_gray-sobel-0"
           }
         ],
         "output-data": [
@@ -49,7 +49,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees"
+            "filename": "square45-90_gray-sobel-0"
           },
           {
             "id": 2,
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_sobel_0_degrees"
+            "filename": "square45-90_gray-sobel-0"
           }
         ],
         "parameters": {

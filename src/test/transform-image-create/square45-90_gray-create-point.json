@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_create_line"
+            "filename": "square45-90_gray-create-point"
           },
           {
             "id": 2,
@@ -19,7 +19,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "images",
-            "filename": "square45-90_gray_create_line"
+            "filename": "square45-90_gray-create-point"
           }
         ],
         "parameters": {
@@ -27,7 +27,7 @@
           "cols": "5",
           "foreground": "64",
           "background": "192",
-          "line": "(1,1):(2,3)"
+          "point": "(4,2)"
         }
       }
     ]

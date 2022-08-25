@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "google-map-slc_gray_sobel_0"
+            "filename": "google-map-slc_gray-sobel-0"
           }
         ],
         "output-data": [
@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_sobel_0-average-175x7"
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
           }
         ],
         "parameters": {
@@ -42,7 +42,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_sobel_0-average-175x7"
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
           }
         ],
         "output-data": [
@@ -52,7 +52,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "google-map-slc_gray_sobel_0-average-175x7"
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
           }
         ],
         "parameters": {

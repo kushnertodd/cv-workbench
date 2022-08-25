@@ -10,9 +10,8 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "test/reference",
+            "directory": "test/filter-edge-sobel",
             "filename": "google-map-slc_gray-sobel-0"
-google-map-slc_gray_sobel_0
           }
         ],
         "output-data": [
