@@ -3,7 +3,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-edge-kirsch",
+        "operator": "filter-edge-roberts",
         "input-data": [
           {
             "id": 1,
@@ -11,8 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "square45-90_gray",
-            "ext": "jpg"
+            "filename": "du_drone_gray"
           }
         ],
         "output-data": [
@@ -22,12 +21,11 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "bin"
+            "filename": "du_drone_gray_roberts_0"
           }
         ],
         "parameters": {
-          "orientation": "E"
+          "orientation": "0"
         }
       },
       {
@@ -40,8 +38,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "bin"
+            "filename": "du_drone_gray_roberts_0"
           }
         ],
         "output-data": [
@@ -51,8 +48,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "jpg"
+            "filename": "du_drone_gray_roberts_0"
           }
         ],
         "parameters": {

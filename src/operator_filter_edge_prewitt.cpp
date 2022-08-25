@@ -8,10 +8,6 @@
 #include "operator_utils.hpp"
 #include "operator_filter_edge_prewitt.hpp"
 
-//
-
-extern bool debug;
-
 Operator_filter_edge_prewitt::~Operator_filter_edge_prewitt() = default;
 
 /**
@@ -22,10 +18,11 @@ Operator_filter_edge_prewitt::~Operator_filter_edge_prewitt() = default;
  * https://en.wikipedia.org/wiki/Prewitt_operator
  * PREWITT, J. M. S. "Object enhancemen t and extraction." In Picture Processing and Psychopictorics,
  *     B. S. Lipkin and A. Rosenfeld (Eds.) . New York: Academic Press, 1970.
- * @param input_data_source
- * @param output_data_store
- * @param operator_parameters
- * @param errors
+ *
+ * @param input_data_sources input binary or jpeg image
+ * @param output_data_stores output binary, jpeg, or test images
+ * @param operator_parameters parameters
+ * @param errors any run errors
  */
 void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &input_data_sources,
                                        std::list<Data_source_descriptor *> &output_data_stores,
@@ -38,17 +35,21 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     errors.add("Operator_filter_edge_prewitt::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_prewitt::run", "", "output data source required");
-  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_prewitt::run",
-                                                                     operator_parameters, "orientation", errors);
-  if (!errors.has_error() && orientation_str != "0" && orientation_str != "90")
-    errors.add("Operator_filter_edge_prewitt::run", "", "orientation parameter not 0 or 90");
+  std::string orientation_str;
+  bool orientation_missing = Operator_utils::get_string_parameter("Operator_filter_edge_prewitt::run",
+                                                                  operator_parameters,
+                                                                  "orientation",
+                                                                  orientation_str, errors);
+  if (!orientation_missing && orientation_str != "0" && orientation_str != "90")
+    errors.add("Operator_filter_edge_prewitt::run", "", "orientation not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input = nullptr;
+  Image *input_ptr = nullptr;
   if (!errors.has_error())
-    input = input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors);
-  if (!errors.has_error() && input != nullptr)
+    input_ptr = input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
     input->check_grayscale("Operator_filter_edge_prewitt::run", errors);
-  if (!errors.has_error() && input != nullptr) {
+  if (!errors.has_error() && input_ptr != nullptr) {
     Kernel *prewitt_kernel_row_ptr = nullptr;
     Kernel *prewitt_kernel_col_ptr = nullptr;
     if (orientation_str == "90") {
@@ -65,15 +66,16 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     }
     std::unique_ptr<Kernel> prewitt_kernel_row(prewitt_kernel_row_ptr);
     std::unique_ptr<Kernel> prewitt_kernel_col(prewitt_kernel_col_ptr);
-    Image *output = prewitt_kernel_row->convolve_numeric(input, errors);
-    output = prewitt_kernel_col->convolve_numeric(output, errors);
-    if (!errors.has_error() && output != nullptr)
+    Image *output1_ptr = prewitt_kernel_row->convolve_numeric(input.get(), errors);
+    std::unique_ptr<Image> output1(output1_ptr);
+    Image *output2_ptr = nullptr;
+    if (!errors.has_error() && output1_ptr != nullptr)
+      output2_ptr = prewitt_kernel_col->convolve_numeric(output1.get(), errors);
+    std::unique_ptr<Image> output2(output2_ptr);
+    if (!errors.has_error() && output2_ptr != nullptr)
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output, "Operator_filter_edge_prewitt::run", errors);
-    if (!errors.has_error() && output != nullptr)
-      output->log(log_entries);
-    delete output;
+        output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_prewitt::run", errors);
+    if (!errors.has_error() && output2_ptr != nullptr)
+      output2->log(log_entries);
   }
-  delete input;
 }
-

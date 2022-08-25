@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include "wb_data_type.hpp"
 #include "data_source_descriptor.hpp"
@@ -12,84 +13,6 @@
 #include "wb_json_utils.hpp"
 
 extern bool debug;
-
-/*
-static Data_source_descriptor *json_parse_data_descriptor(json_object *json_data_descriptor, Errors &errors) {
-  Data_source_descriptor *data_source_descriptor = nullptr;
-
-  // parse: ' { "id": ... `
-  int id;
-  json_object *json_id =
-      get_json_object("json_parse_data_descriptor", json_data_descriptor, "id",
-                      json_type_int, errors);
-  if (json_id != nullptr) {
-    id = json_object_get_int(json_id);
-  }
-
-  // parse: ' "type": ... `
-  WB_data_type::Data_type data_type;
-  json_object *json_data_type =
-      get_json_object("json_parse_data_descriptor",
-                      json_data_descriptor,
-                      "type",
-                      json_type_string,
-                      errors);
-  if (json_data_type != nullptr) {
-    std::string data_type_str = json_object_get_string(json_data_type);
-    if (debug)
-      std::cout << "json_parse_data_descriptor: type '" << data_type_str << "'" << std::endl;
-    data_type = WB_data_type::from_string(data_type_str);
-    if (data_type == WB_data_type::Data_type::UNDEFINED)
-      errors.add("", "", "invalid data type: " + data_type_str);
-  }
-
-  // parse: ' "format": ... `
-  WB_data_format::Data_format data_format;
-  json_object *json_data_format =
-      get_json_object("json_parse_data_descriptor",
-                      json_data_descriptor,
-                      "format",
-                      json_type_string,
-                      errors);
-  if (json_data_format != nullptr) {
-    std::string data_format_str = json_object_get_string(json_data_format);
-    if (debug)
-      std::cout << "json_parse_data_descriptor: type '" << data_format_str << "'" << std::endl;
-    data_format =
-        WB_data_format::from_string(data_format_str);
-    if (data_format == WB_data_format::Data_format::UNDEFINED)
-      errors.add("", "", "invalid data format: " + data_format_str);
-  }
-
-  // parse: ' "repository": ... `
-  json_object *json_repository =
-      get_json_object("json_parse_data_descriptor", json_data_descriptor, "repository",
-                      json_type_string, errors);
-  if (json_repository != nullptr) {
-    std::string repository_str = json_object_get_string(json_repository);
-    if (repository_str == "berkeley_db") {
-      data_source_descriptor =
-          Berkeley_db_data_source_descriptor::json_parse(
-              json_data_descriptor, id, data_type, data_format, errors);
-    } else if (repository_str == "filesystem") {
-      data_source_descriptor =
-          Filesystem_data_source_descriptor::json_parse(
-              json_data_descriptor, id, data_type, data_format, errors);
-    } else if (repository_str == "internet") {
-      data_source_descriptor =
-          Internet_data_source_descriptor::json_parse(
-              json_data_descriptor, id, data_type, data_format, errors);
-    } else if (repository_str == "step-output") {
-      data_source_descriptor =
-          Experiment_step_data_source_descriptor::json_parse(
-              json_data_descriptor, id, data_type, data_format, errors);
-    } else {
-      errors.add("", "", "invalid data repository type: " + repository_str);
-    }
-  }
-  return data_source_descriptor;
-}
-*/
 
 Experiment_step::~Experiment_step() {
   for (Data_source_descriptor *descriptor: input_data_sources) {

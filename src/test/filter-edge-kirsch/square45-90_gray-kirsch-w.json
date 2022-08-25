@@ -22,12 +22,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
+            "filename": "square45-90_gray-kirsch-w",
             "ext": "bin"
           }
         ],
         "parameters": {
-          "orientation": "E"
+          "orientation": "W"
         }
       },
       {
@@ -40,7 +40,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
+            "filename": "square45-90_gray-kirsch-w",
             "ext": "bin"
           }
         ],
@@ -51,7 +51,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
+            "filename": "square45-90_gray-kirsch-w",
             "ext": "jpg"
           }
         ],

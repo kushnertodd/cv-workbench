@@ -10,8 +10,6 @@
 
 //
 
-extern bool debug;
-
 Operator_filter_edge_roberts::~Operator_filter_edge_roberts() = default;
 
 /**
@@ -36,17 +34,22 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     errors.add("Operator_filter_edge_roberts::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_roberts::run", "", "output data source required");
-  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_prewitt::run",
-                                                                     operator_parameters, "orientation", errors);
-  if (!errors.has_error() && orientation_str != "0" && orientation_str != "90")
-    errors.add("Operator_filter_edge_prewitt::run", "", "orientation parameter not 0 or 90");
+  std::string orientation_str;
+  bool orientation_missing = Operator_utils::get_string_parameter("Operator_filter_edge_roberts::run",
+                                                                  operator_parameters,
+                                                                  "orientation",
+                                                                  orientation_str, errors);
+  if (!orientation_missing && orientation_str != "0" && orientation_str != "90")
+
+    errors.add("Operator_filter_edge_roberts::run", "", "orientation not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input = nullptr;
+  Image *input_ptr = nullptr;
   if (!errors.has_error())
-    input = input_data_source->read_operator_image("Operator_filter_edge_roberts::run", errors);
-  if (!errors.has_error() && input != nullptr)
+    input_ptr = input_data_source->read_operator_image("Operator_filter_edge_roberts::run", errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
     input->check_grayscale("Operator_filter_edge_roberts::run", errors);
-  if (!errors.has_error() && input != nullptr) {
+  if (!errors.has_error() && input_ptr != nullptr) {
     Kernel *roberts_kernel_ptr = nullptr;
     if (orientation_str == "0") {
       //     0 = [0, 1], [-1, 0]
@@ -58,13 +61,12 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
       roberts_kernel_ptr = Kernel::create_32S(2, 2, coeffs_32S);
     }
     std::unique_ptr<Kernel> roberts_kernel(roberts_kernel_ptr);
-    Image *output = roberts_kernel->convolve_numeric(input, errors);
-    if (!errors.has_error() && output != nullptr)
+    Image *output_ptr = roberts_kernel->convolve_numeric(input.get(), errors);
+    std::unique_ptr<Image> output(output_ptr);
+    if (!errors.has_error() && output_ptr != nullptr)
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output, "Operator_filter_edge_roberts::run", errors);
-    if (!errors.has_error() && output != nullptr)
+        output_data_store->write_operator_image(output.get(), "Operator_filter_edge_roberts::run", errors);
+    if (!errors.has_error() && output_ptr != nullptr)
       output->log(log_entries);
-    delete output;
   }
-  delete input;
 }

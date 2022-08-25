@@ -8,10 +8,6 @@
 #include "operator_utils.hpp"
 #include "operator_filter_edge_kirsch.hpp"
 
-//
-
-extern bool debug;
-
 Operator_filter_edge_kirsch::~Operator_filter_edge_kirsch() = default;
 
 /**
@@ -28,10 +24,10 @@ Operator_filter_edge_kirsch::~Operator_filter_edge_kirsch() = default;
  * https://en.wikipedia.org/wiki/Kirsch_operator
  * https://www.tutorialspoint.com/dip/krisch_compass_mask.htm
  *
- * @param input_data_source
- * @param output_data_store
- * @param operator_parameters
- * @param errors
+ * @param input_data_sources input binary or jpeg image
+ * @param output_data_stores output binary, jpeg, or test images
+ * @param operator_parameters parameters
+ * @param errors any run errors
  */
 void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input_data_sources,
                                       std::list<Data_source_descriptor *> &output_data_stores,
@@ -44,10 +40,13 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_filter_edge_kirsch::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "output data source required");
-  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_kirsch::run",
-                                                                     operator_parameters, "orientation", errors);
+  std::string orientation_str;
+  bool orientation_missing = Operator_utils::get_string_parameter("Operator_filter_edge_kirsch::run",
+                                                                  operator_parameters,
+                                                                  "orientation",
+                                                                  orientation_str, errors);
 
-  if (!errors.has_error() &&
+  if (!orientation_missing &&
       orientation_str != "N"
       && orientation_str != "NW"
       && orientation_str != "W"
@@ -58,14 +57,15 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
       && orientation_str != "NE")
     errors.add("Operator_filter_edge_kirsch",
                "",
-               "orientation parameter not E, N, NE, NW, S, SE, SW, or W");
+               "orientation not E, N, NE, NW, S, SE, SW, or W");
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input = nullptr;
+  Image *input_ptr = nullptr;
   if (!errors.has_error())
-    input = input_data_source->read_operator_image("Operator_filter_edge_kirsch::run", errors);
-  if (!errors.has_error() && input != nullptr)
+    input_ptr = input_data_source->read_operator_image("Operator_filter_edge_kirsch::run", errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
     input->check_grayscale("Operator_filter_edge_kirsch::run", errors);
-  if (!errors.has_error() && input != nullptr) {
+  if (!errors.has_error() && input_ptr != nullptr) {
     Kernel *kirsch_kernel_ptr = nullptr;
     if (orientation_str == "N") {
       //      N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]
@@ -101,13 +101,12 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
       kirsch_kernel_ptr = Kernel::create_32S(3, 3, coeffs_32S);
     }
     std::unique_ptr<Kernel> kirsch_kernel(kirsch_kernel_ptr);
-    Image *output = kirsch_kernel->convolve_numeric(input, errors);
-    if (!errors.has_error() && output != nullptr)
+    Image *output_ptr = kirsch_kernel->convolve_numeric(input.get(), errors);
+    std::unique_ptr<Image> output(output_ptr);
+    if (!errors.has_error() && output_ptr != nullptr)
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output, "Operator_filter_edge_kirsch::run", errors);
-    if (!errors.has_error() && output != nullptr)
+        output_data_store->write_operator_image(output.get(), "Operator_filter_edge_kirsch::run", errors);
+    if (!errors.has_error() && output_ptr != nullptr)
       output->log(log_entries);
-    delete output;
   }
-  delete input;
 }

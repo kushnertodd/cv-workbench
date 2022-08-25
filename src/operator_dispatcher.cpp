@@ -25,7 +25,7 @@
 
 extern bool debug;
 Operator *Operator_dispatcher::create_operator(const std::string &operator_name) {
-  Operator *pOperator;
+  Operator *pOperator = nullptr;
   if (debug)
     std::cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << std::endl;
   // Creator explicitly creates classes according to type
@@ -48,7 +48,5 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   else if (operator_name == "transform-image-copy") pOperator = new Operator_transform_image_copy();
   else if (operator_name == "transform-image-create") pOperator = new Operator_transform_image_create();
   else if (operator_name == "transform-intensity-map") pOperator = new Operator_transform_intensity_map();
-  else
-    pOperator = nullptr;
   return pOperator;
 }

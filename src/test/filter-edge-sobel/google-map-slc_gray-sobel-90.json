@@ -3,7 +3,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-edge-kirsch",
+        "operator": "filter-edge-sobel",
         "input-data": [
           {
             "id": 1,
@@ -11,8 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "square45-90_gray",
-            "ext": "jpg"
+            "filename": "google-map-slc_gray"
           }
         ],
         "output-data": [
@@ -22,12 +21,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "bin"
+            "filename": "google-map-slc_gray_sobel_90"
+
           }
         ],
         "parameters": {
-          "orientation": "E"
+          "orientation": "90"
         }
       },
       {
@@ -40,8 +39,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "bin"
+            "filename": "google-map-slc_gray_sobel_90"
           }
         ],
         "output-data": [
@@ -51,13 +49,12 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-kirsch-e",
-            "ext": "jpg"
+            "filename": "google-map-slc_gray_sobel_90"
           }
         ],
         "parameters": {
             "depth": "CV_8U",
-            "lower_in": "-500",
+            "lower_in": "-1000",
             "upper_in": "1000",
             "lower_out": "0",
             "upper_out": "255"

@@ -10,7 +10,6 @@
 
 //
 
-extern bool debug;
 
 Operator_filter_edge_sobel::~Operator_filter_edge_sobel() = default;
 
@@ -39,17 +38,21 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
     errors.add("Operator_filter_edge_sobel::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
-  std::string orientation_str = Operator_utils::get_string_parameter("Operator_filter_edge_sobel::run",
-                                                                     operator_parameters, "orientation", errors);
-  if (!errors.has_error() && orientation_str != "0" && orientation_str != "90")
-    errors.add("Operator_filter_edge_sobel::run", "", "orientation parameter not 0 or 90");
+  std::string orientation_str;
+  bool orientation_missing = Operator_utils::get_string_parameter("Operator_filter_edge_sobel::run",
+                                                                  operator_parameters,
+                                                                  "orientation",
+                                                                  orientation_str, errors);
+  if (!orientation_missing && orientation_str != "0" && orientation_str != "90")
+    errors.add("Operator_filter_edge_sobel::run", "", "orientation not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input = nullptr;
+  Image *input_ptr = nullptr;
   if (!errors.has_error())
-    input = input_data_source->read_operator_image("Operator_filter_edge_sobel::run", errors);
-  if (!errors.has_error() && input != nullptr)
+    input_ptr = input_data_source->read_operator_image("Operator_filter_edge_sobel::run", errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
     input->check_grayscale("Operator_filter_edge_sobel::run", errors);
-  if (!errors.has_error() && input != nullptr) {
+  if (!errors.has_error() && input_ptr != nullptr) {
     Kernel *sobel_kernel_row_ptr = nullptr;
     Kernel *sobel_kernel_col_ptr = nullptr;
     if (orientation_str == "90") {
@@ -66,14 +69,17 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
     }
     std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
     std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
-    Image *output = sobel_kernel_row->convolve_numeric(input, errors);
-    output = sobel_kernel_col->convolve_numeric(output, errors);
-    if (!errors.has_error() && output != nullptr)
+    Image *output1_ptr = sobel_kernel_row->convolve_numeric(input.get(), errors);
+    std::unique_ptr<Image> output1(output1_ptr);
+    Image *output2_ptr = nullptr;
+    if (!errors.has_error() && output1_ptr != nullptr)
+      output2_ptr = sobel_kernel_col->convolve_numeric(output1.get(), errors);
+    std::unique_ptr<Image> output2(output2_ptr);
+    if (!errors.has_error() && output2_ptr != nullptr)
+
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output, "Operator_filter_edge_sobel::run", errors);
-    if (!errors.has_error() && output != nullptr)
-      output->log(log_entries);
-    delete output;
-  }
-  delete input;
+        output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_sobel::run", errors);
+    if (!errors.has_error() && output2_ptr != nullptr)
+      output2->log(log_entries);
+	}
 }
