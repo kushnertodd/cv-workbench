@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_prewitt_0"
+            "filename": "google-map-slc_gray-prewitt-0"
           }
         ],
         "parameters": {
@@ -38,7 +38,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_prewitt_0"
+            "filename": "google-map-slc_gray-prewitt-0"
           }
         ],
         "output-data": [
@@ -48,7 +48,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "google-map-slc_gray_prewitt_0"
+            "filename": "google-map-slc_gray-prewitt-0"
           }
         ],
         "parameters": {

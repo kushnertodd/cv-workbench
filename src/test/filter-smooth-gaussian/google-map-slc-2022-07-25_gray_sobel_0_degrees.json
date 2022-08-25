@@ -11,7 +11,8 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/reference",
-            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees"
+            "filename": "google-map-slc_gray-sobel-0"
+google-map-slc_gray_sobel_0
           }
         ],
         "output-data": [
@@ -21,7 +22,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees_gaussian"
+            "filename": "google-map-slc_gray-sobel-0_gaussian"
           }
         ],
         "parameters": {
@@ -42,7 +43,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees_gaussian"
+            "filename": "google-map-slc_gray-sobel-0_gaussian"
           }
         ],
         "output-data": [
@@ -52,7 +53,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "google-map-slc-2022-07-25_gray_sobel_0_degrees_gaussian"
+            "filename": "google-map-slc_gray-sobel-0-degrees-gaussian"
           }
         ],
         "parameters": {

@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_roberts_90"
+            "filename": "google-map-slc_gray-roberts-90"
 
           }
         ],
@@ -39,7 +39,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "google-map-slc_gray_roberts_90"
+            "filename": "google-map-slc_gray-roberts-90"
           }
         ],
         "output-data": [
@@ -49,7 +49,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "google-map-slc_gray_roberts_90"
+            "filename": "google-map-slc_gray-roberts-90"
           }
         ],
         "parameters": {

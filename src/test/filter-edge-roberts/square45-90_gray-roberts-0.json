@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_roberts_0"
+            "filename": "square45-90_gray-roberts-0"
           }
         ],
         "parameters": {
@@ -38,7 +38,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray_roberts_0"
+            "filename": "square45-90_gray-roberts-0"
           }
         ],
         "output-data": [
@@ -48,7 +48,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray_roberts_0"
+            "filename": "square45-90_gray-roberts-0"
           }
         ],
         "parameters": {
