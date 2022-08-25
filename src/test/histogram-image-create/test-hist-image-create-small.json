@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "small"
+            "filename": "small_gray"
           }
         ],
         "output-data": [
@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": "images",
-            "filename": "small"
+            "filename": "small_gray"
           },
           {
             "id": 2,
@@ -29,7 +29,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "small"
+            "filename": "small_gray"
           }
         ],
         "parameters": {

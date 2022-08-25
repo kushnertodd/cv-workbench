@@ -24,8 +24,6 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
     errors.add("Operator_hough_peak_detect::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_peak_detect::run", "", "output data source required");
-  else if (output_data_stores.size() > 1)
-    errors.add("Operator_hough_peak_detect::run", "", "too many output data sources");
   int npeaks = 0;
   Operator_utils::get_int_parameter("Operator_hough_peak_detect::run",
                                     operator_parameters, "npeaks", npeaks, errors);
