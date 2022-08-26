@@ -1,0 +1,68 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-smooth-average",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/filter-edge-sobel",
+            "filename": "google-map-slc_gray-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
+          }
+        ],
+        "parameters": {
+          "orientation": "0",
+          "rows": "175",
+          "cols": "7",
+          "sigma-y": "120",
+          "sigma-x": "5.0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0-average-175x7"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-1800",
+            "upper_in": "1800",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}

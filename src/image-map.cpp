@@ -39,7 +39,6 @@ int main(int argc, char **argv) {
   }
   errors.check_exit("invalid filename");
   if (in_image != nullptr) {
-    //std::cout << in_image->to_string() << std::endl;
     Image *out_image = Image::scale_image(in_image, lower_in,
                                           upper_in, lower_out,
                                           upper_out, in_image->get_depth());

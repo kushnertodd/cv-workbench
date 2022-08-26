@@ -6,10 +6,6 @@
 #include "berkeley_db_data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
-#include "wb_data_format.hpp"
-#include "wb_data_type.hpp"
-#include "wb_repository_type.hpp"
-#include "data_source_descriptor.hpp"
 #include "wb_json_utils.hpp"
 
 Data_source_descriptor::~Data_source_descriptor() = default;
@@ -99,4 +95,73 @@ std::string Data_source_descriptor::to_string() {
      << " repository '" << WB_repository_type::to_string(repository_type)
      << "'";
   return os.str();
+}
+
+Histogram *Data_source_descriptor::read_operator_histogram(const std::string &module,
+                                                           Errors &errors) {
+  Histogram *input = nullptr;
+  if (data_format == WB_data_format::Data_format::BINARY)
+    input = read_histogram(errors);
+  else
+    errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
+  return input;
+}
+
+Hough *Data_source_descriptor::read_operator_hough(const std::string &module,
+                                                   Errors &errors) {
+  Hough *input = nullptr;
+  if (data_format == WB_data_format::Data_format::BINARY)
+    input = read_hough(errors);
+  else
+    errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
+  return input;
+}
+
+Image *Data_source_descriptor::read_operator_image(const std::string &module,
+                                                   Errors &errors) {
+  Image *input = nullptr;
+  if (data_format == WB_data_format::Data_format::BINARY)
+    input = read_image(errors);
+  else if (data_format == WB_data_format::Data_format::JPEG)
+    input = read_image_jpeg(errors);
+  else if (data_format == WB_data_format::Data_format::TEXT)
+    read_image_text(errors);
+  else
+    errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
+  return input;
+}
+
+void Data_source_descriptor::write_operator_histogram(Histogram *output,
+                                                      const std::string &module,
+                                                      Errors &errors) {
+  if (data_format == WB_data_format::Data_format::BINARY)
+    write_histogram(output, errors);
+  else if (data_format == WB_data_format::Data_format::TEXT)
+    write_histogram_text(output, errors);
+  else
+    errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
+}
+
+void Data_source_descriptor::write_operator_hough(Hough *output,
+                                                  const std::string &module,
+                                                  Errors &errors) {
+  if (data_format == WB_data_format::Data_format::BINARY)
+    write_hough(output, errors);
+  else if (data_format == WB_data_format::Data_format::TEXT)
+    write_hough_text(output, errors);
+  else
+    errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
+}
+
+void Data_source_descriptor::write_operator_image(Image *output,
+                                                  const std::string &module,
+                                                  Errors &errors) {
+  if (data_format == WB_data_format::Data_format::BINARY)
+    write_image(output, errors);
+  else if (data_format == WB_data_format::Data_format::JPEG)
+    write_image_jpeg(output, errors);
+  else if (data_format == WB_data_format::Data_format::TEXT)
+    write_image_text(output, errors);
+  else
+    errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }

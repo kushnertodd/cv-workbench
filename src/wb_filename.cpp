@@ -6,8 +6,6 @@
 #include "wb_utils.hpp"
 #include "wb_filename.hpp"
 
-#include <utility>
-
 Wb_filename::Wb_filename() = default;
 
 Wb_filename::Wb_filename(std::string m_filename,

@@ -4,44 +4,26 @@
 
 #include <sstream>
 #include "data_source_descriptor.hpp"
-#include "errors.hpp"
-#include "wb_defs.hpp"
-#include "wb_utils.hpp"
 #include "operator_utils.hpp"
 
 //
 
-void Operator_utils::get_int_parameter(const std::string &module,
+bool Operator_utils::get_int_parameter(const std::string &module,
                                        String_map &parameters,
                                        const std::string &parameter,
                                        int &int_value,
-                                       Errors &errors) {
+                                       Errors &errors,
+                                       bool optional) {
   if (!has_parameter(parameters, parameter)) {
-    errors.add(module, "", "missing '" + parameter + "' parameter");
+    if (!optional)
+      errors.add(module, "", parameter+ " required " + parameter);
+    return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
-    if (!wb_utils::is_numeric(parameter_str)) {
-      errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-    } else if (!wb_utils::string_to_int(parameter_str, int_value)) {
-      errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
+    if (!wb_utils::string_to_int(parameter_str, int_value)) {
+      errors.add(module, "", "non-integer  " + parameter + ": " + parameter_str);
     }
-  }
-}
-
-void Operator_utils::get_real_parameter(const std::string &module,
-                                        String_map &parameters,
-                                        const std::string &parameter,
-                                        double &real_value,
-                                        Errors &errors) {
-  if (!has_parameter(parameters, parameter)) {
-    errors.add(module, "", "missing '" + parameter + "' parameter");
-  } else {
-    std::string parameter_str = get_parameter(parameters, parameter);
-    if (!wb_utils::is_numeric(parameter_str)) {
-      errors.add(module, "", "not a numeric parameter: '" + parameter_str + "'");
-    } else if (!wb_utils::string_to_double(parameter_str, real_value)) {
-      errors.add(module, "", "invalid integer parameter: '" + parameter_str + "'");
-    }
+    return true;
   }
 }
 
@@ -55,6 +37,40 @@ std::string Operator_utils::get_parameter(String_map &parameters, const std::str
   return parameters[parameter];
 }
 
+bool Operator_utils::get_real_parameter(const std::string &module,
+                                        String_map &parameters,
+                                        const std::string &parameter,
+                                        double &real_value,
+                                        Errors &errors,
+                                        bool optional) {
+  if (!has_parameter(parameters, parameter)) {
+    if (!optional)
+      errors.add(module, "", parameter+ " required " + parameter);
+    return false;
+  } else {
+    std::string parameter_str = get_parameter(parameters, parameter);
+    if (!wb_utils::string_to_double(parameter_str, real_value)) {
+      errors.add(module, "", "non-real  " + parameter + ": " + parameter_str);
+    }
+    return true;
+  }
+}
+
+bool Operator_utils::get_string_parameter(const std::string &module,
+                                          String_map &parameters,
+                                          const std::string &parameter,
+                                          std::string &string_value,
+                                          Errors &errors,
+                                          bool optional) {
+  if (!has_parameter(parameters, parameter)) {
+    if (!optional)
+      errors.add(module, "", parameter+ " required " + parameter);
+    return false;
+  } else
+    string_value = get_parameter(parameters, parameter);
+  return true;
+}
+
 bool Operator_utils::has_parameter(String_map &parameters, const std::string &parameter) {
   return parameters.find(parameter) != parameters.end();
 }
@@ -63,21 +79,12 @@ std::string Operator_utils::parameters_to_string(String_map &parameters) {
   std::ostringstream os;
   String_map::iterator it;
   for (it = parameters.begin(); it != parameters.end(); it++) {
-    os << "'" << it->first    // string (key)
-       << "': '"
-       << it->second   // string's value
-       << "'";
+    os << it->first    // string (key)
+       << ": "
+       << it->second
+       << std::endl;
   }
   return os.str();
 }
 
-void Operator_utils::write_operator_image(Data_source_descriptor *output_data_store, Image *output, Errors &errors) {
-  if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-    output_data_store->write_image_jpeg(output, errors);
-  } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-    output_data_store->write_image(output, errors);
-  } else {
-    errors.add("Operator_utils::write_operator_image", "", "invalid data format '"
-        + WB_data_format::to_string(output_data_store->data_format) + "'");
-  }
-}
+

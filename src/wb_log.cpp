@@ -3,7 +3,6 @@
 //
 
 #include <fstream>
-#include <utility>
 #include "errors.hpp"
 #include "wb_log.hpp"
 

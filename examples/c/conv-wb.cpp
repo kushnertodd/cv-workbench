@@ -6,9 +6,6 @@ int main(int argc, char** argv) {
     printf("usage: %s H W h w\n", argv[0]);
     exit(0);
   }
-//printf("argc %d\n", argc);
-//for (int i = 0; i < argc; i++)
-//  printf("argv[%d] '%s'\n", i, argv[i]);
   int rows = atoi(argv[1]);
   int cols = atoi(argv[2]);
   int kernel_rows = atoi(argv[3]);

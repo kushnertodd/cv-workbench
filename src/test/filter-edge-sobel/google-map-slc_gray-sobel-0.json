@@ -1,0 +1,64 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "google-map-slc_gray"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "google-map-slc_gray-sobel-0"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-1000",
+            "upper_in": "1000",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}

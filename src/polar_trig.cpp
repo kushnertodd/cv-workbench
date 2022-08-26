@@ -6,7 +6,7 @@
 
 int Polar_trig::theta_inc = 3;
 
-Polar_trig::Polar_trig() {}
+Polar_trig::Polar_trig() = default;
 
 Polar_trig::Polar_trig(int m_rows, int m_cols) :
     rows(m_rows),
@@ -37,7 +37,7 @@ void Polar_trig::init(int m_theta_inc) {
   theta_inc = m_theta_inc;
 }
 
-double Polar_trig::rho_index_to_rho(int rho_index) {
+double Polar_trig::rho_index_to_rho(int rho_index) const {
   return rho_index_to_rho(rho_index, nrhos);
 }
 
@@ -48,7 +48,7 @@ double Polar_trig::rho_index_to_rho(int rho_index, int nrhos) {
 }
 
 // can have a singularity if theta ~= , 180, sin ~= 0
-int Polar_trig::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
+int Polar_trig::rho_theta_col_to_row(int rho_index, int theta_index, int col) const {
   return rho_theta_col_to_row(rho_index, theta_index, col, rows, cols, nrhos);
 }
 
@@ -63,7 +63,7 @@ int Polar_trig::rho_theta_col_to_row(int rho_index, int theta_index, int col, in
 }
 
 // can have a singularity if theta ~= 90, cos ~= 0
-int Polar_trig::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
+int Polar_trig::rho_theta_row_to_col(int rho_index, int theta_index, int row) const {
   return rho_theta_row_to_col(rho_index, theta_index, row, rows, cols, nrhos);
 }
 
@@ -77,7 +77,7 @@ int Polar_trig::rho_theta_row_to_col(int rho_index, int theta_index, int row, in
   return wb_utils::double_to_int_round(col);
 }
 
-int Polar_trig::rho_theta_to_index(int rho_index, int theta_index) {
+int Polar_trig::rho_theta_to_index(int rho_index, int theta_index) const {
   return rho_theta_to_index(rho_index, theta_index, nrhos);
 }
 
@@ -86,7 +86,7 @@ int Polar_trig::rho_theta_to_index(int rho_index, int theta_index, int nrhos) {
   return theta_index * nrhos + rho_index;
 }
 
-int Polar_trig::rho_to_index(double rho) {
+int Polar_trig::rho_to_index(double rho) const {
   return rho_to_index(rho, nrhos);
 }
 
@@ -96,7 +96,7 @@ int Polar_trig::rho_to_index(double rho, int nrhos) {
   return rho_index;
 }
 
-double Polar_trig::row_col_theta_to_rho(int row, int col, int theta_index) {
+double Polar_trig::row_col_theta_to_rho(int row, int col, int theta_index) const {
   return row_col_theta_to_rho(row, col, theta_index, rows, cols);
 }
 
@@ -109,7 +109,7 @@ double Polar_trig::row_col_theta_to_rho(int row, int col, int theta_index, int r
   return rho;
 }
 
-int Polar_trig::row_col_theta_to_rho_index(int row, int col, int theta_index) {
+int Polar_trig::row_col_theta_to_rho_index(int row, int col, int theta_index) const {
   return row_col_theta_to_rho_index(row, col, theta_index, nrhos, rows, cols);
 }
 

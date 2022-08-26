@@ -56,22 +56,22 @@ void Image_header::read(FILE *fp, Errors &errors) {
 void Image_header::write(FILE *fp, Errors &errors) const {
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image rows");
+    errors.add("Image_header::write_header", "", "cannot write image rows");
     return;
   }
   fwrite(&cols, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image cols");
+    errors.add("Image_header::write_header", "", "cannot write image cols");
     return;
   }
   fwrite(&components, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image components");
+    errors.add("Image_header::write_header", "", "cannot write image components");
     return;
   }
   fwrite(&depth, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
-    errors.add("Image::write_header", "", "cannot write image depth");
+    errors.add("Image_headerZZ::write_header", "", "cannot write image depth");
     return;
   }
 }

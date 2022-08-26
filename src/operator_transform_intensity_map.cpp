@@ -46,11 +46,11 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
               << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
   }
   if (input_data_sources.empty())
-    errors.add("Operator_transform_intensity_map::run", "", "missing input data source");
+    errors.add("Operator_transform_intensity_map::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
-  if (output_data_stores.empty())
-    errors.add("Operator_transform_intensity_map::run", "", "missing output data source");
+  else if (output_data_stores.empty())
+    errors.add("Operator_transform_intensity_map::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
   WB_image_depth::Image_depth depth;
@@ -91,11 +91,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
                                        operator_parameters, "upper_out", upper_out, errors);
   }
-  bool no_parameters = false;
-  if (!saw_lower_in && !saw_upper_in && !saw_lower_out && !saw_upper_out) {
-    no_parameters = true;
-  } else {
-    if (!saw_lower_in) {
+  if (!saw_lower_in) {
       errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_in' parameters");
     }
     if (!saw_upper_in) {
@@ -107,7 +103,6 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     if (!saw_upper_out) {
       errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_out' parameters");
     }
-  }
   Image *input;
   Data_source_descriptor *input_data_source;
   Data_source_descriptor *output_data_store;
@@ -116,19 +111,19 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     output_data_store = output_data_stores.front();
     input = input_data_source->read_image(errors);
     if (input != nullptr)
-      input->check_grayscale(errors);
+      input->check_grayscale("Operator_transform_intensity_map::run", errors);
   }
   if (!errors.has_error()) {
-    int rows = input->get_rows();
-    int cols = input->get_cols();
     if (!saw_depth) {
       depth = input->get_depth();
     }
-    Image *output_image =
-        Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, WB_image_depth::Image_depth::CV_8U);
     if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+      Image *output_image =
+          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, WB_image_depth::Image_depth::CV_8U);
       output_data_store->write_image_jpeg(output_image, errors);
     } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+      Image *output_image =
+          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, depth);
       output_data_store->write_image(output_image, errors);
     } else {
       errors.add("Operator_transform_intensity_map::run", "", "invalid data format '"

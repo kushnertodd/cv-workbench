@@ -166,7 +166,7 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
   log_entries.push_back(log_entry_bin_max_count);
 }
 
-static Histogram *read(const std::string &path, Errors &errors) {
+Histogram *Histogram::read(std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Histogram *histogram = nullptr;
   if (fp) {
@@ -225,6 +225,10 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
   return histogram;
 }
 
+Histogram *Histogram::read_text(const std::string& path, Errors &errors) {
+  return nullptr;
+}
+
 Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
@@ -249,6 +253,8 @@ void Histogram::update_bin_count_bounds() {
   for (int i = 0; i < nbins; i++)
     bin_count_bounds.update(bins[i]);
 }
+
+void Histogram::write(std::string &path, Errors &errors) const {  }
 
 void Histogram::write(FILE *fp, Errors &errors) const {
   wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins", errors);

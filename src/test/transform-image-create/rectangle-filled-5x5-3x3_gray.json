@@ -1,0 +1,64 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/reference",
+            "filename": "rectangle-filled-5x5-3x3_gray"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/reference",
+            "filename": "rectangle-filled-5x5-3x3_gray"
+          }
+        ],
+        "parameters": {
+          "rows": "5",
+          "cols": "5",
+          "foreground": "255",
+          "background": "0",
+          "rectangle-filled": "(1,1):(3,3)"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/reference",
+            "filename": "rectangle-filled-3x3_gray"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/reference",
+            "filename": "rectangle-filled-3x3_gray"
+          }
+        ],
+        "parameters": {
+          "rows": "3",
+          "cols": "3",
+          "foreground": "255",
+          "background": "0",
+          "rectangle-filled": "(0,0):(2,2)"
+        }
+      }
+    ]
+  }
+}

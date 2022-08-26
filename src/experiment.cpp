@@ -15,7 +15,7 @@ Experiment::~Experiment() {
 }
 Experiment::Experiment() = default;
 
-Experiment::Experiment(json_object *m_jobj, std::string m_path) :
+Experiment::Experiment(std::string m_path) :
     path(std::move(m_path)) {}
 
 /**
@@ -25,7 +25,7 @@ Experiment::Experiment(json_object *m_jobj, std::string m_path) :
 */
 Experiment *Experiment::from_json(json_object *jobj, std::string path, Errors &errors) {
   // parse: ' "experiment": { ... `
-  auto *experiment = new Experiment(jobj, std::move(path));
+  auto *experiment = new Experiment(std::move(path));
   json_object *json_experiment =
       get_json_object("Experiment::from_json", jobj, "experiment", json_type_object, errors);
   if (json_experiment != nullptr) {

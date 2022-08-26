@@ -1,0 +1,45 @@
+{
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "hough-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "jpeg",
+						"directory": "test/filter-edge-sobel",
+						"filename": "google-map-slc_gray-sobel-0",
+						"ext": "jpg"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "google-map-slc_gray-sobel-0",
+						"ext": "txt"
+					},
+					{
+						"id": 2,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "google-map-slc_gray-sobel-0",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"threshold": "137"
+				}
+			}
+		]
+	}
+}

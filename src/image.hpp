@@ -37,17 +37,19 @@ class Image {
 
   virtual ~Image();
   Image();
-  Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth);
+  Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth, double value = 0.0);
   Image(Image &image);
-  explicit Image(Image_header &image_header);
+  explicit Image(Image_header &image_header, double value = 0.0);
 
   // TODO: add component
   void add_8U(const pixel_8U *src, int count, Errors &errors);
   void add_32F(const pixel_32F *src, int count, Errors &errors);
   void add_32S(pixel_32S *src, int count, Errors &errors);
 
-  bool check_grayscale(Errors &errors) const;
+  bool check_grayscale(std::string module, Errors &errors) const;
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
+  static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
+                        Errors &errors);
   void copy(Image *image, Errors &errors) const;
 
   void draw_line_segment(const Line_segment &line_segment, double value) const;
@@ -73,7 +75,7 @@ class Image {
                     double upper_in, double lower_out,
                     double upper_out) const;
   void get_stats(Variance_stats &stats) const;
-  void init();
+  void init(double value = 0.0);
 
   void log(std::list<WB_log_entry> &log_entries) const;
 

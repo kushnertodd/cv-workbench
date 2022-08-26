@@ -10,5 +10,5 @@ void Operator_filter_edge_laplacian::run(std::list<Data_source_descriptor *> &in
                                          String_map &operator_parameters,
                                          std::list<WB_log_entry> &log_entries,
                                          Errors &errors) {
-  errors.add("", "", "Operator filter_edge_gaussian not yet implemented");
+  errors.add("", "", "Operator filter_edge_laplacian not yet implemented");
 }
