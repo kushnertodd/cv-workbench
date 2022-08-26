@@ -222,6 +222,12 @@ image-copy.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-copy.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-copy.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
 image-copy.o: wb_log.hpp variance_stats.hpp wb_filename.hpp wb_utils.hpp
+image-corr.o: errors.hpp image.hpp bounds.hpp image_header.hpp
+image-corr.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
+image-corr.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-corr.o: wb_log.hpp variance_stats.hpp wb_filename.hpp wb_utils.hpp
+image-corr.o: pearsons_correlation.hpp kernel.hpp wb_morphology_types.hpp
+image-corr.o: one_pass_mean.hpp
 image.o: file_utils.hpp errors.hpp image.hpp bounds.hpp image_header.hpp
 image.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
