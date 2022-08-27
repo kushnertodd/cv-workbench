@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <memory>
 #include "hough.hpp"
 #include "operator_utils.hpp"
 #include "wb_window.hpp"
@@ -33,33 +34,29 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     errors.add("Operator_hough_draw_line::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_draw_line::run", "", "output data source required");
-  else if (output_data_stores.size() > 1)
-    errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
   int theta_inc;
-  Operator_utils::get_int_parameter("Operator_transform_image_create::run",
+  Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "theta_inc", theta_inc, errors);
   double rho;
-  Operator_utils::get_real_parameter("Operator_transform_image_create::run",
+  Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "rho", rho, errors);
   int theta_index;
-  Operator_utils::get_int_parameter("Operator_transform_image_create::run",
+  Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "theta_index", theta_index, errors);
   double pixel_value;
-  Operator_utils::get_real_parameter("Operator_transform_image_create::run",
+  Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "pixel_value", pixel_value, errors);
   int out_component;
-  if (Operator_utils::has_parameter(operator_parameters, "out_component")) {
-    Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                      operator_parameters, "out_component", out_component, errors);
-  } else
+  if (!Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
+                                         operator_parameters, "out_component", out_component, errors))
     out_component = 1;
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Data_source_descriptor *hough_line_output_data_store = output_data_stores.front();
 
-  Image *input = input_data_source->read_operator_image("Operator_hough_draw_line::run", errors);
-  if (!errors.has_error() && input != nullptr)
+  Image *input_ptr = input_data_source->read_operator_image("Operator_hough_draw_line::run", errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
     input->check_grayscale("Operator_hough_draw_line::run", errors);
-  if (!errors.has_error() && input != nullptr) {
+  if (!errors.has_error() && input_ptr != nullptr) {
     int rows = input->get_rows();
     int cols = input->get_cols();
     auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
@@ -75,15 +72,12 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
     } else {
       input->draw_line_segment(line_segment, pixel_value);
-      if (input_data_source->data_format == WB_data_format::Data_format::JPEG) {
-        hough_line_output_data_store->write_image_jpeg(input, errors);
-      } else if (input_data_source->data_format == WB_data_format::Data_format::BINARY) {
-        hough_line_output_data_store->write_image(input, errors);
-      } else {
-        errors.add("Operator_hough_draw_line::run",
-                   "",
-                   "invalid data format '"
-                       + WB_data_format::to_string(hough_line_output_data_store->data_format) + "'");
+      for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
+        histogram_output_data_store->write_operator_image(input.get(),
+                                                          "Operator_hough_draw_line::run",
+                                                          errors);
+      if (!errors.has_error()) {
+        input->log(log_entries);
       }
     }
   }

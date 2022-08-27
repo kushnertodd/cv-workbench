@@ -48,6 +48,7 @@ class Data_source_descriptor {
   virtual void write_json(std::string &json, Errors &errors) = 0;
   void write_operator_histogram(Histogram *output, const std::string &module, Errors &errors);
   void write_operator_hough(Hough *output, const std::string &module, Errors &errors);
+  void write_operator_hough_peaks(Hough *output, const std::string &module, Errors &errors);
   void write_operator_image(Image *output, const std::string &module, Errors &errors);
 };
 

@@ -41,7 +41,6 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
                                            String_map &operator_parameters,
                                            std::list<WB_log_entry> &log_entries,
                                            Errors &errors) {
-
   if (input_data_sources.empty())
     errors.add("Operator_filter_image_morphology::run", "", "input data source required");
   if (input_data_sources.size() > 1)
@@ -55,17 +54,19 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
   Operator_utils::get_int_parameter("Operator_filter_image_morphology::run",
                                     operator_parameters, "width", width, errors);
   std::string structuring_element_type_str;
-  bool structuring_element_type_missing = Operator_utils::get_string_parameter("Operator_filter_image_morphology::run",
-                                                                               operator_parameters,
-                                                                               "structuring-element",
-                                                                               structuring_element_type_str, errors);
+  bool structuring_element_type_missing =
+      Operator_utils::get_string_parameter("Operator_filter_image_morphology::run",
+                                           operator_parameters,
+                                           "structuring-element",
+                                           structuring_element_type_str, errors);
   WB_morphology_types::Structuring_element_type structuring_element_type;
   int thickness;
-  if (!errors.has_error()) {
+  if (!structuring_element_type_missing && !errors.has_error()) {
     structuring_element_type =
         WB_morphology_types::from_structuring_element_type_string(structuring_element_type_str);
     if (structuring_element_type == WB_morphology_types::Structuring_element_type::UNDEFINED)
-      errors.add("Operator_filter_image_morphology::run", "", "invalid 'structuring-element' parameter");
+      errors.add("Operator_filter_image_morphology::run", "",
+                 "unknown structuring-element: " + structuring_element_type_str);
     else if (structuring_element_type == WB_morphology_types::Structuring_element_type::CROSS)
       Operator_utils::get_int_parameter("Operator_filter_image_morphology::run",
                                         operator_parameters, "thickness", thickness, errors);
@@ -75,10 +76,9 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
                                                                operator_parameters,
                                                                "operator",
                                                                operator_str, errors);
-  Image *input_ptr = nullptr;
+  Image *input_ptr;
   if (!operator_missing && !errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Data_source_descriptor *output_data_store = output_data_stores.front();
     input_ptr = input_data_source->read_operator_image("Operator_filter_image_morphology::run", errors);
     std::unique_ptr<Image> input(input_ptr);
     if (!errors.has_error() && input_ptr != nullptr)
@@ -89,54 +89,57 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
             erode_image(Morphology::erode(input.get(), structuring_element_type,
                                           height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(erode_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(erode_image.get(),
+                                                    "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) erode_image->log(log_entries);
       } else if (operator_str == "dilate") {
         std::unique_ptr<Image>
             dilate_image(Morphology::dilate(input.get(), structuring_element_type,
                                             height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(dilate_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(dilate_image.get(),
+                                                    "Operator_filter_image_morphology::run",
+                                                    errors);
         if (!errors.has_error()) dilate_image->log(log_entries);
       } else if (operator_str == "open") {
         std::unique_ptr<Image>
             open_image(Morphology::open(input.get(), structuring_element_type,
                                         height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(open_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(open_image.get(),
+                                                    "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) open_image->log(log_entries);
       } else if (operator_str == "close") {
         std::unique_ptr<Image>
             close_image(Morphology::close(input.get(), structuring_element_type,
                                           height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(close_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(close_image.get(),
+                                                    "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) close_image->log(log_entries);
       } else if (operator_str == "gradient") {
         std::unique_ptr<Image>
             gradient_image(Morphology::gradient(input.get(), structuring_element_type,
                                                 height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(gradient_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(gradient_image.get(),
+                                                    "Operator_filter_image_morphology::run",
+                                                    errors);
         if (!errors.has_error()) gradient_image->log(log_entries);
       } else if (operator_str == "top-hat") {
         std::unique_ptr<Image>
             top_hat_image(Morphology::top_hat(input.get(), structuring_element_type,
                                               height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(top_hat_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(top_hat_image.get(),
+                                                    "Operator_filter_image_morphology::run",
+                                                    errors);
         if (!errors.has_error()) top_hat_image->log(log_entries);
       } else if (operator_str == "black-hat") {
         std::unique_ptr<Image>
@@ -144,13 +147,14 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
             (Morphology::black_hat(input.get(), structuring_element_type,
                                    height, width, thickness, errors));
         if (!errors.has_error())
-          output_data_store->write_operator_image(black_hat_image.get(),
-                                                  "Operator_filter_image_morphology::run",
-                                                  errors);
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(black_hat_image.get(),
+                                                    "Operator_filter_image_morphology::run",
+                                                    errors);
         if (!errors.has_error()) black_hat_image->log(log_entries);
       } else
         errors.add("Operator_filter_image_morphology::run", "",
-                   "invalid 'operation' parameter: " + operator_str);
+                   "unknown operation " + operator_str);
     }
   }
 }

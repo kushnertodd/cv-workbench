@@ -28,71 +28,53 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     errors.add("Operator_transform_image_create::run", "", "output data source required");
   else {
     int rows;
-    int cols;
-    double background;
-    double foreground;
-    std::string param_point_str;
-    std::string param_line_str;
-    std::string param_rectangle_str;
-    std::string param_rectangle_filled_str;
-    bool saw_rows = false;
-    bool saw_cols = false;
-    bool saw_point = false;
-    bool saw_line = false;
-    bool saw_rectangle = false;
-    bool saw_rectangle_filled = false;
-    if (Operator_utils::has_parameter(operator_parameters, "rows")) {
-      saw_rows = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_create::run",
+    bool saw_rows = Operator_utils::get_int_parameter("Operator_transform_image_create::run",
                                         operator_parameters, "rows", rows, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "cols")) {
-      saw_cols = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_create::run",
+    int cols;
+    bool saw_cols = Operator_utils::get_int_parameter("Operator_transform_image_create::run",
                                         operator_parameters, "cols", cols, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "background"))
-      Operator_utils::get_real_parameter("Operator_transform_image_create::run",
+    double background = 0.0;
+    Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                          operator_parameters, "background", background, errors);
-    else
-      background = 0.0;
-    if (Operator_utils::has_parameter(operator_parameters, "foreground"))
+    double foreground = 255.0;
       Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                          operator_parameters, "foreground", foreground, errors);
-    else
-      foreground = 255;
-    if (Operator_utils::has_parameter(operator_parameters, "point")) {
-      saw_point = true;
-      param_point_str = Operator_utils::get_parameter(operator_parameters, "point");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "line")) {
-      saw_line = true;
-      param_line_str = Operator_utils::get_parameter(operator_parameters, "line");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle")) {
-      saw_rectangle = true;
-      param_rectangle_str = Operator_utils::get_parameter(operator_parameters, "rectangle");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle-filled")) {
-      saw_rectangle_filled = true;
-      param_rectangle_filled_str = Operator_utils::get_parameter(operator_parameters, "rectangle-filled");
-    }
-    Image *image = nullptr;
-    Data_source_descriptor *input_data_source;
+    std::string param_point_str;
+    bool saw_point = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
+                                                                    operator_parameters,
+                                                                    "point",
+                                                          param_point_str, errors);
+    std::string param_line_str;
+    bool saw_line = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
+                                                          operator_parameters,
+                                                          "line",
+                                                         param_line_str, errors);
+    std::string param_rectangle_str;
+    bool saw_rectangle = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
+                                                         operator_parameters,
+                                                         "rectangle",
+                                                              param_rectangle_str, errors);
+    std::string param_rectangle_filled_str;
+    bool saw_rectangle_filled = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
+                                                              operator_parameters,
+                                                              "rectangle-filled",
+                                                                     param_rectangle_filled_str, errors);
     if (input_data_sources_missing && (!saw_rows || !saw_cols))
       errors.add("Operator_transform_image_create::run",
                  "",
                  "'rows' and 'cols' parameters required if no input data source");
+    Image *image_ptr = nullptr;
     if (!errors.has_error()) {
       if (input_data_sources_missing)
-        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
+        image_ptr = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
       else {
-        input_data_source = input_data_sources.front();
-        image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);
-        if (image != nullptr && !errors.has_error())
-          image->check_grayscale("Operator_transform_image_create::run", errors);
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        image_ptr = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);
+        if (image_ptr != nullptr && !errors.has_error())
+          image_ptr->check_grayscale("Operator_transform_image_create::run", errors);
       }
     }
+    std::unique_ptr<Image> image(image_ptr);
     if (!errors.has_error() && saw_point) {
       std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
       if (points.empty())
@@ -112,7 +94,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
               errors.add("Operator_transform_image_create::run", "", "invalid point parameter row value");
             if (!wb_utils::string_to_int(col_str, col))
               errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
-            if (!errors.has_error() && image != nullptr) {
+            if (!errors.has_error() && image_ptr != nullptr) {
               image->set(row, col, foreground);
             }
           }
@@ -244,6 +226,6 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error())
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(image, "Operator_hough_image_create::run", errors);
+        output_data_store->write_operator_image(image.get(), "Operator_transform_image_create::run", errors);
   }
 }

@@ -3,13 +3,12 @@
 //
 
 #include <iostream>
+#include <memory>
 #include "operator_transform_intensity_map.hpp"
 #include "operator_utils.hpp"
 #include "wb_data_format.hpp"
 #include "wb_image_depth.hpp"
 #include "wb_defs.hpp"
-
-extern bool debug;
 
 /**
    create new image from an existing image
@@ -41,93 +40,71 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
                                            std::list<WB_log_entry> &log_entries,
                                            Errors &errors) {
 
-  if (debug) {
-    std::cout << "Operator_transform_intensity_map::run:parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_transform_intensity_map::run", "", "input data source required");
   else if (input_data_sources.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_transform_intensity_map::run", "", "output data source required");
-  else if (output_data_stores.size() > 1)
-    errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
+  std::string depth_str;
+  bool saw_depth = Operator_utils::get_string_parameter("Operator_transform_intensity_map::run",
+                                                        operator_parameters,
+                                                        "depth",
+                                                        depth_str, errors);
+
   WB_image_depth::Image_depth depth;
-  double lower_in;
-  double upper_in;
-  double lower_out;
-  double upper_out;
-  bool saw_depth = false;
-  bool saw_lower_in = false;
-  bool saw_upper_in = false;
-  bool saw_lower_out = false;
-  bool saw_upper_out = false;
-  if (Operator_utils::has_parameter(operator_parameters, "depth")) {
-    saw_depth = true;
-    std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
+  if (!errors.has_error()) {
     depth = WB_image_depth::from_string(depth_str);
     if (depth == WB_image_depth::Image_depth::UNDEFINED) {
       errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
     }
   }
-  if (Operator_utils::has_parameter(operator_parameters, "lower_in")) {
-    saw_lower_in = true;
-    Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                       operator_parameters, "lower_in", lower_in, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "upper_in")) {
-    saw_upper_in = true;
-    Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                       operator_parameters, "upper_in", upper_in, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "lower_out")) {
-    saw_lower_out = true;
-    Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                       operator_parameters, "lower_out", lower_out, errors);
-  }
-  if (Operator_utils::has_parameter(operator_parameters, "upper_out")) {
-    saw_upper_out = true;
-    Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                       operator_parameters, "upper_out", upper_out, errors);
-  }
-  if (!saw_lower_in) {
-      errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_in' parameters");
-    }
-    if (!saw_upper_in) {
-      errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_in' parameters");
-    }
-    if (!saw_lower_out) {
-      errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_out' parameters");
-    }
-    if (!saw_upper_out) {
-      errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_out' parameters");
-    }
-  Image *input;
-  Data_source_descriptor *input_data_source;
-  Data_source_descriptor *output_data_store;
-  if (!errors.has_error()) {
-    input_data_source = input_data_sources.front();
-    output_data_store = output_data_stores.front();
-    input = input_data_source->read_image(errors);
-    if (input != nullptr)
-      input->check_grayscale("Operator_transform_intensity_map::run", errors);
-  }
-  if (!errors.has_error()) {
+  double lower_in;
+  Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
+                                     operator_parameters, "lower_in", lower_in, errors);
+  double upper_in;
+  Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
+                                     operator_parameters, "upper_in", upper_in, errors);
+  double lower_out;
+  Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
+                                     operator_parameters, "lower_out", lower_out, errors);
+  double upper_out;
+  Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
+                                     operator_parameters, "upper_out", upper_out, errors);
+  Data_source_descriptor *input_data_source = input_data_sources.front();
+  Image *input_ptr = nullptr;
+  if (!errors.has_error())
+    input_ptr = input_data_source->read_image(errors);
+  std::unique_ptr<Image> input(input_ptr);
+  if (!errors.has_error() && input_ptr != nullptr)
+    input->check_grayscale("Operator_transform_intensity_map::run", errors);
+  if (!errors.has_error() && input_ptr != nullptr) {
     if (!saw_depth) {
       depth = input->get_depth();
     }
-    if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-      Image *output_image =
-          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, WB_image_depth::Image_depth::CV_8U);
-      output_data_store->write_image_jpeg(output_image, errors);
-    } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-      Image *output_image =
-          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, depth);
-      output_data_store->write_image(output_image, errors);
-    } else {
-      errors.add("Operator_transform_intensity_map::run", "", "invalid data format '"
-          + WB_data_format::to_string(output_data_store->data_format) + "'");
-    }
+    Image *output_image_ptr = nullptr;
+    if (!errors.has_error())
+      for (Data_source_descriptor *output_data_store: output_data_stores) {
+        if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+          output_image_ptr =
+              Image::scale_image(input.get(),
+                                 lower_in,
+                                 upper_in,
+                                 lower_out,
+                                 upper_out,
+                                 WB_image_depth::Image_depth::CV_8U);
+          std::unique_ptr<Image> output_image(output_image_ptr);
+          output_data_store->write_image_jpeg(output_image.get(), errors);
+          if (!errors.has_error() && output_image_ptr != nullptr)
+            output_image->log(log_entries);
+        } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+          output_image_ptr =
+              Image::scale_image(input.get(), lower_in, upper_in, lower_out, upper_out, depth);
+          std::unique_ptr<Image> output_image(output_image_ptr);
+          output_data_store->write_image(output_image.get(), errors);
+          if (!errors.has_error() && output_image_ptr != nullptr)
+            output_image->log(log_entries);
+        }
+      }
   }
 }
