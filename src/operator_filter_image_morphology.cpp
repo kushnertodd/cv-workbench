@@ -73,9 +73,9 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
   }
   std::string operation_str;
   bool operation_found = Operator_utils::get_string_parameter("Operator_filter_image_morphology::run",
-                                                               operator_parameters,
-                                                               "operation",
-                                                               operation_str, errors);
+                                                              operator_parameters,
+                                                              "operation",
+                                                              operation_str, errors);
   Image *input_ptr;
   if (operation_found && !errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();

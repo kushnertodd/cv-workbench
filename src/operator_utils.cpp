@@ -16,7 +16,7 @@ bool Operator_utils::get_int_parameter(const std::string &module,
                                        bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required");
+      errors.add(module, "", parameter + " required");
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
@@ -45,7 +45,7 @@ bool Operator_utils::get_real_parameter(const std::string &module,
                                         bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required");
+      errors.add(module, "", parameter + " required");
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
@@ -64,7 +64,7 @@ bool Operator_utils::get_string_parameter(const std::string &module,
                                           bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required");
+      errors.add(module, "", parameter + " required");
     return false;
   } else
     string_value = get_parameter(parameters, parameter);

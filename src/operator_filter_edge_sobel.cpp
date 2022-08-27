@@ -40,9 +40,9 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
     errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
   std::string orientation_str;
   bool orientation_found = Operator_utils::get_string_parameter("Operator_filter_edge_sobel::run",
-                                                                  operator_parameters,
-                                                                  "orientation",
-                                                                  orientation_str, errors);
+                                                                operator_parameters,
+                                                                "orientation",
+                                                                orientation_str, errors);
   if (!orientation_found && orientation_str != "0" && orientation_str != "90")
     errors.add("Operator_filter_edge_sobel::run", "", "orientation not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();

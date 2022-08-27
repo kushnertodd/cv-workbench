@@ -198,7 +198,7 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
     errors.add("Operator_transform_image_combine::run", "", os.str());
   }
   if (!errors.has_error()) {
-    Image *output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
+    auto *output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
     for (int row = 0; row < rows1; row++)
       for (int col = 0; col < cols1; col++) {
         double pixel1 = input1->get(row, col);

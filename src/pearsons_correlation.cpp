@@ -31,7 +31,7 @@ void Pearsons_correlation::init_stats() {
  * r = (n * sum(x * y) - sum(x) * sum(y)) /
  *       sqrt([n * sum(x^2) - sum(x)^2] * [n * sum(y^2) - sum(y)^2])
  */
-double Pearsons_correlation::r(double n, double sum_x, double sum_xy, double sum_x_sq) {
+double Pearsons_correlation::r(double n, double sum_x, double sum_xy, double sum_x_sq) const {
   double coeff1 = n * sum_x_sq - sum_x * sum_x;
   double coeff2 = n * sum_y_sq - sum_y * sum_y;
   //if (std::abs(coeff1 * coeff2) < 0.0001) return 0.0;
@@ -41,7 +41,7 @@ double Pearsons_correlation::r(double n, double sum_x, double sum_xy, double sum
   return r;
 }
 
-double Pearsons_correlation::accumulate(int ulc_row, int ulc_col) {
+double Pearsons_correlation::accumulate(int ulc_row, int ulc_col) const {
   double sum_x = 0.0;
   double sum_xy = 0.0;
   double sum_x_sq = 0.0;

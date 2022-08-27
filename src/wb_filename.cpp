@@ -17,7 +17,7 @@ Wb_filename::Wb_filename(std::string m_filename,
     ext(std::move(m_ext)),
     format(m_format) {}
 
-void Wb_filename::add_suffix(const std::string &suffix){
+void Wb_filename::add_suffix(const std::string &suffix) {
   root += suffix;
 }
 

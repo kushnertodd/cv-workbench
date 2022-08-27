@@ -20,7 +20,8 @@
 class Internet_data_source_descriptor : public Data_source_descriptor {
  public:
   std::string url{};
-  std::string depth{}; // WB_image_depth::Image_depth::CV_8U, WB_image_depth::Image_depth::CV_32S, or WB_image_depth::Image_depth::CV_32F
+  std::string depth
+      {}; // WB_image_depth::Image_depth::CV_8U, WB_image_depth::Image_depth::CV_32S, or WB_image_depth::Image_depth::CV_32F
   int rows{};
   int cols{};
   Internet_data_source_descriptor(int m_id,

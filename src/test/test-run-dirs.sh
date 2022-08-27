@@ -1,6 +1,7 @@
 #!/bin/bash
 for f in filter* hough* hist* ; do
   if [ -d $f ] ; then
+    echo ==============================================
     echo cd $f
     cd $f 
     if [ -e test-run-dir.sh ] ; then

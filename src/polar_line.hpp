@@ -23,5 +23,5 @@ class Polar_line {
   std::string to_string() const;
   void write(FILE *fp, Errors &errors);
   void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
-  };
+};
 #endif //SRC__POLAR_LINE_HPP_

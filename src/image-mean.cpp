@@ -1,10 +1,6 @@
 #include <iostream>
-//#include <memory>
-//#include "errors.hpp"
 #include "image.hpp"
 #include "one_pass_mean.hpp"
-//#include "wb_filename.hpp"
-//#include "wb_utils.hpp"
 
 bool debug = false;
 
@@ -30,8 +26,8 @@ int main(int argc, char **argv) {
   int cols = 4;
   int window_rows = 3;
   int window_cols = 3;
-  Image *test = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32F);
-  Image *out = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32F);
+  auto *test = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32F);
+  auto *out = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32F);
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
       test->set(row, col, row * cols + col);
