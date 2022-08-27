@@ -48,7 +48,8 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                                      operator_parameters, "pixel_value", pixel_value, errors);
   int out_component;
   if (!Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                         operator_parameters, "out_component", out_component, errors))
+                                         operator_parameters, "out_component",
+                                         out_component, errors, true))
     out_component = 1;
   Data_source_descriptor *input_data_source = input_data_sources.front();
 

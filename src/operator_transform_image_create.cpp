@@ -43,22 +43,22 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     bool saw_point = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                                     operator_parameters,
                                                                     "point",
-                                                          param_point_str, errors);
+                                                          param_point_str, errors, true);
     std::string param_line_str;
     bool saw_line = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                           operator_parameters,
                                                           "line",
-                                                         param_line_str, errors);
+                                                         param_line_str, errors, true);
     std::string param_rectangle_str;
     bool saw_rectangle = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                          operator_parameters,
                                                          "rectangle",
-                                                              param_rectangle_str, errors);
+                                                              param_rectangle_str, errors, true);
     std::string param_rectangle_filled_str;
     bool saw_rectangle_filled = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                               operator_parameters,
                                                               "rectangle-filled",
-                                                                     param_rectangle_filled_str, errors);
+                                                                     param_rectangle_filled_str, errors, true);
     if (input_data_sources_missing && (!saw_rows || !saw_cols))
       errors.add("Operator_transform_image_create::run",
                  "",
