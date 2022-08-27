@@ -22,7 +22,8 @@
  * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
  */
 class Image {
- public:
+  friend class Kernel;
+ private:
   Image_header image_header;
   int next_pixel{};
   // image stores one buffer per image_header->depth
@@ -35,6 +36,7 @@ class Image {
   // pixel_64F *buf_64F; // unsupported
   // pixel_16F *buf_16F; // unsupported
 
+ public:
   virtual ~Image();
   Image();
   Image(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth, double value = 0.0);
@@ -65,12 +67,21 @@ class Image {
   pixel_32F get_32F(int row, int col) const;
   pixel_32S get_32S(int row, int col) const;
 
+/*
   int get_cols() const;
   int get_components() const;
   WB_image_depth::Image_depth get_depth() const;
   int get_npixels() const;
   int get_row_stride() const;
   int get_rows() const;
+*/
+  inline int get_cols() const { return image_header.get_cols(); }
+  inline int get_components() const { return image_header.get_components(); }
+  inline WB_image_depth::Image_depth get_depth() const { return image_header.get_depth(); }
+  inline  int get_npixels() const { return image_header.get_npixels(); }
+  inline int get_row_stride() const { return image_header.get_row_stride(); }
+  inline int get_rows() const { return image_header.get_rows(); }
+
   double get_scaled(int row, int col, double lower_in,
                     double upper_in, double lower_out,
                     double upper_out) const;

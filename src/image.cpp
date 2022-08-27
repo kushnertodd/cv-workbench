@@ -392,17 +392,17 @@ pixel_32S Image::get_32S(int row, int col) const {
   return buf_32S[index];
 }
 
-int Image::get_cols() const { return image_header.cols; }
+/*int Image::get_cols() const { return image_header.get_cols(); }
 
-int Image::get_components() const { return image_header.components; }
+int Image::get_components() const { return image_header.get_components(); }
 
-WB_image_depth::Image_depth Image::get_depth() const { return image_header.depth; }
+WB_image_depth::Image_depth Image::get_depth() const { return image_header.get_depth(); }
 
-int Image::get_npixels() const { return image_header.npixels; }
+int Image::get_npixels() const { return image_header.get_npixels(); }
 
-int Image::get_row_stride() const { return image_header.row_stride; }
+int Image::get_row_stride() const { return image_header.get_row_stride(); }
 
-int Image::get_rows() const { return image_header.rows; }
+int Image::get_rows() const { return image_header.get_rows(); }*/
 
 double Image::get_scaled(int row, int col, double lower_in,
                          double upper_in, double lower_out,
@@ -493,7 +493,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
-  switch (image_header.depth) {
+  switch (image_header.get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
       wb_utils::read_byte_buffer(fp,
                                  image->buf_8U,
@@ -795,7 +795,7 @@ Image *Image::to_rgb(int component) const {
                                 get_depth());
   auto *new_image = new Image(new_image_header);
   for (int i = 0; i < new_image->get_npixels(); i++) {
-    switch (image_header.depth) {
+    switch (image_header.get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
         new_image->buf_8U[i * 3 + component] = buf_8U[i];
         break;
