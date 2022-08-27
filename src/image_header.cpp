@@ -7,19 +7,40 @@
 #include "wb_utils.hpp"
 #include "image_header.hpp"
 
-extern bool debug;
-
 Image_header::Image_header() = default;
 
-Image_header::Image_header(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth) :
+Image_header::Image_header(int m_rows,
+                           int m_cols,
+                           int m_components,
+                           WB_image_depth::Image_depth m_depth) :
     rows(m_rows),
     cols(m_cols),
     components(m_components),
     depth(m_depth),
+    row_origin(0),
+    col_origin(0),
+    rows_offset(0),
+    cols_offset(0),
     row_stride(cols * components),
     npixels(rows * row_stride) {
-  if (debug)
-    std::cout << "Image_header::Image_header: " << to_string() << std::endl;
+}
+
+Image_header::Image_header(int m_rows, int m_cols, int m_components,
+                           WB_image_depth::Image_depth m_depth,
+                           int m_row_origin,
+                           int m_col_origin,
+                           int m_rows_offset,
+                           int m_cols_offset) :
+    rows(m_rows),
+    cols(m_cols),
+    components(m_components),
+    depth(m_depth),
+    row_origin(m_row_origin),
+    col_origin(m_col_origin),
+    rows_offset(m_rows_offset),
+    cols_offset(m_cols_offset),
+    row_stride(cols * components),
+    npixels(rows * row_stride) {
 }
 
 Image_header::Image_header(Image_header &image_header) :
