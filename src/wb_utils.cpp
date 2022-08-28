@@ -7,6 +7,7 @@
 #include <ctime>
 #include <iostream>
 #include <iomanip>
+#include <regex>
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
@@ -144,50 +145,16 @@ std::string wb_utils::int_to_string(int i, int width) {
 
 /**
  * verify string is numeric
- * a [+-]\d+
- * b [+-]\d+.
- * c [+-].\d+
- * d [+-]\d+.\d+
- * possibilites:
- *  1 [+-]                 false
- *  2 [+-]\D               false
- *  3 [+-]\d+              a      intdigits
- *  4   [+-]\d+\D          false
- *  5   [+-]\d+.           b      intdigits
- *  6     [+-]\d+.\D       false
- *  7     [+-]\d+.\d+      d      intdigits, fracdigits
- *  8       [+-]\d+.\d+\D  false
- *  9 [+-].                false
- * 10  [+-].\D             false
- * 11  [+-].\d+            c      fracdigits
- * 12    [+-].\d+\D        false
+ * [+-]?\d+       +1, -1, 1
+ * [+-]?\d+\.\d*  +1.1?, -1.1?, 1.1?
+ * [+-]?\d*.\d+   +1?.1, -1?.1, 1?.1
  * @param number
  * @return
  */
-bool wb_utils::is_numeric(std::string number) {
-  int len = static_cast<int>(number.size());
-  int pos = 0;
-  // look for [+-]
-  if (pos < len && (number[pos] == '+' || number[pos] == '-'))
-    pos++;
-  bool sawIntDigits = false;
-  bool sawFracDigits = false;
-  bool sawPeriod = false;
-  for (; pos < len && isdigit(number[pos]); pos++) {
-    sawIntDigits = true; // a, b
-  }
-  if (pos >= len)
-    return sawIntDigits; // a, b, d
-  if (number[pos] == '.') {
-    sawPeriod = true; // 5-12
-    pos++;
-    for (; pos < len && isdigit(number[pos]); pos++) {
-      sawFracDigits = true; // 7, 8, 11, 12
-    }
-  }
-  if (pos >= len)
-    return sawIntDigits || (sawPeriod && sawFracDigits); // 3, 5, 7, 11
-  return false; // 1-2, 4, 6, 8-10, 12
+bool wb_utils::is_numeric(const std::string& number) {
+  std::string pat_numeric_str = R"(([+-])?(\d+)\.(\d*)|([+-])?(\d*)\.(\d+)|([+-])?(\d+))";
+  std::regex pat_numeric (pat_numeric_str,  std::regex_constants::ECMAScript | std::regex_constants::icase);
+  return std::regex_match(number, pat_numeric);
 }
 
 /**

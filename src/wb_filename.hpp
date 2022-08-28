@@ -15,13 +15,17 @@ class Wb_filename {
   std::string filename{};
   std::string root{};
   std::string ext{};
+  //WB_data_type::Data_type type{};
   WB_data_format::Data_format format{};
+  bool from_filename{};
 
   Wb_filename();
   Wb_filename(std::string m_filename,
               std::string m_root,
               std::string m_ext,
-              WB_data_format::Data_format m_format);
+              //WB_data_type::Data_type m_type,
+              WB_data_format::Data_format m_format,
+              bool m_from_filename = false);
   void add_suffix(const std::string &suffix);
   static Wb_filename *create_wb_filename(const std::string &m_filename, Errors &errors);
 

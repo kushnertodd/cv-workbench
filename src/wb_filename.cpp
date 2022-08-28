@@ -11,11 +11,15 @@ Wb_filename::Wb_filename() = default;
 Wb_filename::Wb_filename(std::string m_filename,
                          std::string m_root,
                          std::string m_ext,
-                         WB_data_format::Data_format m_format) :
+                         //WB_data_type::Data_type m_type,
+                         WB_data_format::Data_format m_format,
+                         bool m_from_filename) :
     filename(std::move(m_filename)),
     root(std::move(m_root)),
     ext(std::move(m_ext)),
-    format(m_format) {}
+    //type(m_type),
+    format(m_format),
+    from_filename(m_from_filename) {}
 
 void Wb_filename::add_suffix(const std::string &suffix) {
   root += suffix;
@@ -26,7 +30,9 @@ Wb_filename *Wb_filename::create_wb_filename(const std::string &filename, Errors
     std::string ext = data_format.first;
     std::string root;
     if (match_ext(filename, ext, root)) {
-      auto *wb_filename = new Wb_filename(filename, root, ext, data_format.second);
+      auto *wb_filename =
+          new Wb_filename(filename, root, ext, data_format.second, true);
+          //new Wb_filename(filename, root, ext, WB_data_type::Data_type::UNDEFINED, data_format.second, true);
       return wb_filename;
     }
   }

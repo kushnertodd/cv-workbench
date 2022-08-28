@@ -35,7 +35,7 @@ std::string indent(int n);
 float int_to_float(int value);
 std::string int_to_hex_string(unsigned long long i, int width = -1);
 std::string int_to_string(int i, int width = -1);
-bool is_numeric(std::string number);
+bool is_numeric(const std::string& number);
 void json_parse(json_object *jobj);
 void json_parse_array(json_object *jobj, char *key);
 void json_print_value(json_object *jobj);

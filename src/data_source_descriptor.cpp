@@ -53,14 +53,16 @@ Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data
                       json_data_source_descriptor,
                       "format",
                       json_type_string,
-                      errors);
+                      errors,
+                      true);
   if (json_data_format != nullptr) {
     std::string data_format_str = json_object_get_string(json_data_format);
     data_format =
         WB_data_format::from_string(data_format_str);
     if (data_format == WB_data_format::Data_format::UNDEFINED)
       errors.add("", "", "invalid data format: " + data_format_str);
-  }
+  } else
+    data_format = WB_data_format::Data_format::BINARY;
 
   // parse: ' "repository": ... `
   json_object *json_repository =
