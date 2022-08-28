@@ -46,39 +46,42 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
   if (!orientation_found && orientation_str != "0" && orientation_str != "90")
     errors.add("Operator_filter_edge_sobel::run", "", "orientation not 0 or 90");
   Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input_ptr = nullptr;
-  if (!errors.has_error())
-    input_ptr = input_data_source->read_operator_image("Operator_filter_edge_sobel::run", errors);
-  std::unique_ptr<Image> input(input_ptr);
-  if (!errors.has_error() && input_ptr != nullptr)
+  std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_edge_sobel::run", errors));
+  if (!errors.has_error()) {
     input->check_grayscale("Operator_filter_edge_sobel::run", errors);
-  if (!errors.has_error() && input_ptr != nullptr) {
-    Kernel *sobel_kernel_row_ptr = nullptr;
-    Kernel *sobel_kernel_col_ptr = nullptr;
-    if (orientation_str == "90") {
-      pixel_32F coeffs_32F_row[] = {1, 0, -1};
-      sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
-      pixel_32F coeffs_32F_col[] = {0.25, 0.5, 0.25};
-      sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
-    } else if (orientation_str == "0") {
-      pixel_32F coeffs_32F_row[] = {0.25, 0.5, 0.25};
-      sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
-      // this is reversed from the separable filter reference
-      pixel_32F coeffs_32F_col[] = {-1, 0, 1};
-      sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_filter_edge_sobel::run",
+                                              operator_parameters,
+                                              errors);
+    if (!errors.has_error()) {
+      Kernel *sobel_kernel_row_ptr = nullptr;
+      Kernel *sobel_kernel_col_ptr = nullptr;
+      if (orientation_str == "90") {
+        pixel_32F coeffs_32F_row[] = {1, 0, -1};
+        sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
+        pixel_32F coeffs_32F_col[] = {0.25, 0.5, 0.25};
+        sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
+      } else if (orientation_str == "0") {
+        pixel_32F coeffs_32F_row[] = {0.25, 0.5, 0.25};
+        sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
+        // this is reversed from the separable filter reference
+        pixel_32F coeffs_32F_col[] = {-1, 0, 1};
+        sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
+      }
+      std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
+      std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
+      Image *output1_ptr = sobel_kernel_row->convolve_numeric(input.get(), errors);
+      std::unique_ptr<Image> output1(output1_ptr);
+      Image *output2_ptr = nullptr;
+      if (!errors.has_error() && output1_ptr != nullptr)
+        output2_ptr = sobel_kernel_col->convolve_numeric(output1.get(), errors);
+      std::unique_ptr<Image> output2(output2_ptr);
+      if (!errors.has_error() && output2_ptr != nullptr)
+        for (Data_source_descriptor *output_data_store: output_data_stores)
+          output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_sobel::run", errors);
+      if (!errors.has_error() && output2_ptr != nullptr)
+        output2->log(log_entries);
     }
-    std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
-    std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
-    Image *output1_ptr = sobel_kernel_row->convolve_numeric(input.get(), errors);
-    std::unique_ptr<Image> output1(output1_ptr);
-    Image *output2_ptr = nullptr;
-    if (!errors.has_error() && output1_ptr != nullptr)
-      output2_ptr = sobel_kernel_col->convolve_numeric(output1.get(), errors);
-    std::unique_ptr<Image> output2(output2_ptr);
-    if (!errors.has_error() && output2_ptr != nullptr)
-      for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_sobel::run", errors);
-    if (!errors.has_error() && output2_ptr != nullptr)
-      output2->log(log_entries);
   }
 }

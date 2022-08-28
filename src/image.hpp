@@ -47,7 +47,7 @@ class Image {
   void add_8U(const pixel_8U *src, int count, Errors &errors);
   void add_32F(const pixel_32F *src, int count, Errors &errors);
   void add_32S(pixel_32S *src, int count, Errors &errors);
-  bool check_grayscale(const std::string& module, Errors &errors) const;
+  bool check_grayscale(const std::string &module, Errors &errors) const;
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
   static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
                         Errors &errors);
@@ -66,8 +66,8 @@ class Image {
   inline int get_cols() const { return image_header.get_cols() - image_header.get_cols_offset(); }
   inline int get_components() const { return image_header.get_components(); }
   inline WB_image_depth::Image_depth get_depth() const { return image_header.get_depth(); }
-  inline int get_min_col() const { return image_header.get_col_origin(); }
-  inline int get_min_row() const { return image_header.get_row_origin(); }
+  inline int get_min_col() const { return image_header.get_min_col(); }
+  inline int get_min_row() const { return image_header.get_min_row(); }
   inline int get_npixels() const { return image_header.get_npixels(); }
   inline int get_row_stride() const { return image_header.get_row_stride(); }
   inline int get_rows() const { return image_header.get_rows() - image_header.get_rows_offset(); }
@@ -82,11 +82,12 @@ class Image {
   static Image *read_jpeg(const std::string &path, Errors &errors);
   static Image *read_text(const std::string &path, Errors &errors);
   static Image *read_text(std::ifstream &ifs, Errors &errors);
-void reset_subimage();
-  void set_subimage(int row_origin,
-                    int col_origin,
-                    int row_offset,
-                    int col_offset);
+  void reset_subimage();
+  void set_subimage(int min_row,
+                    int min_col,
+                    int max_row,
+                    int max_col,
+                    Errors &errors);
   int row_col_to_index(int row, int col) const;
   static Image *scale_image(Image *image, double lower_in,
                             double upper_in, double lower_out,

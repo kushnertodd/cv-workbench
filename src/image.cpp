@@ -689,20 +689,29 @@ void Image::set_32S(int row, int col, pixel_32S value) const {
 }
 
 void Image::reset_subimage() {
-  image_header.set_row_origin(0);
-  image_header.set_col_origin(0);
+  image_header.set_min_row(0);
+  image_header.set_min_col(0);
   image_header.set_rows_offset(0);
   image_header.set_cols_offset(0);
 }
 
-void Image::set_subimage(int row_origin,
-                         int col_origin,
-                         int rows_offset,
-                         int cols_offset) {
-  image_header.set_row_origin(row_origin);
-  image_header.set_col_origin(col_origin);
-  image_header.set_rows_offset(rows_offset);
-  image_header.set_cols_offset(cols_offset);
+void Image::set_subimage(int min_row,
+                         int min_col,
+                         int max_row,
+                         int max_col,
+                         Errors &errors) {
+  if (min_row < 0) errors.add("Image::set_subimage", "", "min_row outside image");
+  if (min_col < 0) errors.add("Image::set_subimage", "", "min_col outside image");
+  int rows_offset = image_header.get_rows() - max_row - 1;
+  int cols_offset = image_header.get_cols() - max_col - 1;
+  if (rows_offset < 0) errors.add("Image::set_subimage", "", "max_row outside image");
+  if (cols_offset < 0) errors.add("Image::set_subimage", "", "max_col outside image");
+  if (!errors.has_error()) {
+    image_header.set_min_row(min_row);
+    image_header.set_min_col(min_col);
+    image_header.set_rows_offset(rows_offset);
+    image_header.set_cols_offset(cols_offset);
+  }
 }
 
 // subtracts image without underflow checking for CV_8U images

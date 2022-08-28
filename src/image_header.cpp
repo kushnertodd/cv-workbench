@@ -17,8 +17,8 @@ Image_header::Image_header(int m_rows,
     cols(m_cols),
     components(m_components),
     depth(m_depth),
-    row_origin(0),
-    col_origin(0),
+    min_row(0),
+    min_col(0),
     rows_offset(0),
     cols_offset(0),
     row_stride(cols * components),
@@ -27,16 +27,16 @@ Image_header::Image_header(int m_rows,
 
 Image_header::Image_header(int m_rows, int m_cols, int m_components,
                            WB_image_depth::Image_depth m_depth,
-                           int m_row_origin,
-                           int m_col_origin,
+                           int m_min_row,
+                           int m_min_col,
                            int m_rows_offset,
                            int m_cols_offset) :
     rows(m_rows),
     cols(m_cols),
     components(m_components),
     depth(m_depth),
-    row_origin(m_row_origin),
-    col_origin(m_col_origin),
+    min_row(m_min_row),
+    min_col(m_min_col),
     rows_offset(m_rows_offset),
     cols_offset(m_cols_offset),
     row_stride(cols * components),
@@ -72,6 +72,22 @@ void Image_header::read(FILE *fp, Errors &errors) {
     if (!errors.has_error())
       depth = static_cast<WB_image_depth::Image_depth>(depth_int);
   }
+}
+
+ void Image_header::set_min_row(int m_min_row) {
+  min_row = m_min_row;
+}
+
+ void Image_header::set_min_col(int m_min_col) {
+  min_col = m_min_col;
+}
+
+ void Image_header::set_rows_offset(int m_rows_offset) {
+  rows_offset = m_rows_offset;
+}
+
+ void Image_header::set_cols_offset(int m_cols_offset) {
+  cols_offset = m_cols_offset;
 }
 
 void Image_header::write(FILE *fp, Errors &errors) const {
