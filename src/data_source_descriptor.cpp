@@ -154,8 +154,8 @@ void Data_source_descriptor::write_operator_hough(Hough *output,
 }
 
 void Data_source_descriptor::write_operator_hough_peaks(Hough *output,
-                                                  const std::string &module,
-                                                  Errors &errors) {
+                                                        const std::string &module,
+                                                        Errors &errors) {
   if (data_format == WB_data_format::Data_format::BINARY)
     write_hough_peaks(output, errors);
   else if (data_format == WB_data_format::Data_format::TEXT)

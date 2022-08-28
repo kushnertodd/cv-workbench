@@ -35,22 +35,24 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_hough_image_create::run", "", "output data source required");
   int theta_inc = 0;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "theta_inc", theta_inc, errors);
+                                    operator_parameters, "theta_inc", theta_inc, errors, true);
   int threshold = 0;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "threshold", threshold, errors);
+                                    operator_parameters, "threshold", threshold, errors, true);
   int ulc_row = 0;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "ulc_row", ulc_row, errors);
+                                    operator_parameters, "ulc_row", ulc_row, errors, true);
   int ulc_col = 0;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "ulc_col", ulc_col, errors);
+                                    operator_parameters, "ulc_col", ulc_col, errors, true);
   int lrc_row = 0;
   bool saw_lrc_row = Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                                       operator_parameters, "lrc_row", lrc_row, errors);
+                                                       operator_parameters, "lrc_row",
+                                                       lrc_row, errors, true);
   int lrc_col = 0;
   bool saw_lrc_col = Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                                       operator_parameters, "lrc_col", lrc_col, errors);
+                                                       operator_parameters, "lrc_col",
+                                                       lrc_col, errors, true);
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Image *input_ptr = nullptr;
   if (!errors.has_error()) {

@@ -1,0 +1,38 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/reference",
+            "filename": "sample_gray"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/reference",
+            "filename": "sample_gray"
+          }
+        ],
+        "parameters": {
+          "rows": "14",
+          "cols": "11",
+          "foreground": "255",
+          "background": "0",
+          "rectangle-filled": "(2,2):(5,4)",
+          "rectangle": "(8,2):(11,4)",
+          "line": "(2,8):(7,8)",
+          "point": "(10,8)"
+        }
+      }
+    ]
+  }
+}

@@ -11,11 +11,10 @@ for f in *.json ; do
   #echo cd $here
   cd $here
 done
-for f in *.jpg *.bin *.txt; do
+for f in *.jpg *.bin *.txt *.gp; do
   #echo $f
   if [ -f $f ] ; then
     echo "$ cmp $f ../../images/$f"
-    #ls ../../images/$f
     cmp $f ../../images/$f
   fi
 done

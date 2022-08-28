@@ -225,7 +225,7 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
   return histogram;
 }
 
-Histogram *Histogram::read_text(const std::string& path, Errors &errors) {
+Histogram *Histogram::read_text(const std::string &path, Errors &errors) {
   return nullptr;
 }
 
@@ -254,7 +254,7 @@ void Histogram::update_bin_count_bounds() {
     bin_count_bounds.update(bins[i]);
 }
 
-void Histogram::write(std::string &path, Errors &errors) const {  }
+void Histogram::write(std::string &path, Errors &errors) const {}
 
 void Histogram::write(FILE *fp, Errors &errors) const {
   wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins", errors);

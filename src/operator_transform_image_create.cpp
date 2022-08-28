@@ -29,36 +29,36 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
   else {
     int rows;
     bool saw_rows = Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                        operator_parameters, "rows", rows, errors);
+                                                      operator_parameters, "rows", rows, errors);
     int cols;
     bool saw_cols = Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                        operator_parameters, "cols", cols, errors);
+                                                      operator_parameters, "cols", cols, errors);
     double background = 0.0;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                         operator_parameters, "background", background, errors);
+                                       operator_parameters, "background", background, errors);
     double foreground = 255.0;
-      Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                         operator_parameters, "foreground", foreground, errors);
+    Operator_utils::get_real_parameter("Operator_transform_image_create::run",
+                                       operator_parameters, "foreground", foreground, errors);
     std::string param_point_str;
     bool saw_point = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
-                                                                    operator_parameters,
-                                                                    "point",
-                                                          param_point_str, errors);
+                                                          operator_parameters,
+                                                          "point",
+                                                          param_point_str, errors, true);
     std::string param_line_str;
     bool saw_line = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
-                                                          operator_parameters,
-                                                          "line",
-                                                         param_line_str, errors);
+                                                         operator_parameters,
+                                                         "line",
+                                                         param_line_str, errors, true);
     std::string param_rectangle_str;
     bool saw_rectangle = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
-                                                         operator_parameters,
-                                                         "rectangle",
-                                                              param_rectangle_str, errors);
+                                                              operator_parameters,
+                                                              "rectangle",
+                                                              param_rectangle_str, errors, true);
     std::string param_rectangle_filled_str;
     bool saw_rectangle_filled = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
-                                                              operator_parameters,
-                                                              "rectangle-filled",
-                                                                     param_rectangle_filled_str, errors);
+                                                                     operator_parameters,
+                                                                     "rectangle-filled",
+                                                                     param_rectangle_filled_str, errors, true);
     if (input_data_sources_missing && (!saw_rows || !saw_cols))
       errors.add("Operator_transform_image_create::run",
                  "",

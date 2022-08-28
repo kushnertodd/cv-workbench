@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <cmath>
+#include "wb_utils.hpp"
 #include "one_pass_mean.hpp"
 
 One_pass_mean::One_pass_mean(Image *m_image, int m_window_rows, int m_window_cols) :
@@ -14,8 +15,8 @@ One_pass_mean::One_pass_mean(Image *m_image, int m_window_rows, int m_window_col
     image_cols(image->get_cols()),
     n_image_pixels(image->get_npixels()),
     n_window_pixels(window_rows * window_cols),
-    row_delta(std::round((window_rows - 1) / 2.0)),
-    col_delta(std::round((window_cols - 1) / 2.0)) {
+    row_delta(wb_utils::double_to_int_round((window_rows - 1) / 2.0)),
+    col_delta(wb_utils::double_to_int_round((window_cols - 1) / 2.0)) {
   init();
 }
 
@@ -29,7 +30,7 @@ void One_pass_mean::col_right() {
   }
 }
 
-double One_pass_mean::get_mean() {
+double One_pass_mean::get_mean() const {
   return window_sum / n_window_pixels;
 }
 
@@ -63,21 +64,21 @@ void One_pass_mean::row_down() {
   }
 }
 
-double One_pass_mean::sum_col(int row, int col) {
+double One_pass_mean::sum_col(int row, int col) const {
   double sum = 0.0;
   for (int i = 0; i < window_rows; i++)
     sum += image->get(row + i, col);
   return sum;
 }
 
-double One_pass_mean::sum_row(int row, int col) {
+double One_pass_mean::sum_row(int row, int col) const {
   double sum = 0.0;
   for (int j = 0; j < window_cols; j++)
     sum += image->get(row, col + j);
   return sum;
 }
 
-double One_pass_mean::sum_window(int row, int col) {
+double One_pass_mean::sum_window(int row, int col) const {
   double sum = 0.0;
   for (int i = 0; i < window_rows; i++)
     for (int j = 0; j < window_cols; j++)

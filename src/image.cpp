@@ -12,10 +12,7 @@
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "jpeglib.h"
-#include "wb_image_depth.hpp"
 #include "wb_utils.hpp"
-
-extern bool debug;
 
 Image::~Image() {
   delete[] buf_8U;
@@ -24,6 +21,7 @@ Image::~Image() {
 }
 
 Image::Image() = default;
+
 Image::Image(int m_rows, int m_cols, int m_components,
              WB_image_depth::Image_depth m_depth, double value) :
     image_header(m_rows, m_cols, m_components, m_depth),
@@ -47,19 +45,16 @@ Image::Image(Image &image) :
       for (int i = 0; i < size; i++)
         buf_8U[i] = image.buf_8U[i];
       break;
-
     case WB_image_depth::Image_depth::CV_32S:
       buf_32S = new pixel_32S[size];
       for (int i = 0; i < size; i++)
         buf_32S[i] = image.buf_32S[i];
       break;
-
     case WB_image_depth::Image_depth::CV_32F:
       buf_32F = new pixel_32F[size];
       for (int i = 0; i < size; i++)
         buf_32F[i] = image.buf_32F[i];
       break;
-
     default:
       break;
   }
@@ -71,8 +66,6 @@ Image::Image(Image_header &m_image_header, double value) :
     buf_32F(nullptr),
     buf_32S(nullptr),
     next_pixel(0) {
-  if (debug)
-    std::cout << "Image::Image: " << to_string() << std::endl;
   init(value);
 }
 
@@ -88,15 +81,12 @@ void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
       case WB_image_depth::Image_depth::CV_8U:
         buf_8U[next_pixel++] = src[i];
         break;
-
       case WB_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
-
       case WB_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
-
       default:
         break;
     }
@@ -115,15 +105,12 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
       case WB_image_depth::Image_depth::CV_8U:
         errors.add("Image::add_32F", "", "cannot update_input_value to 8U buffer");
         break;
-
       case WB_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = wb_utils::float_to_int_round(src[i]);
         break;
-
       case WB_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = src[i];
         break;
-
       default:
         break;
     }
@@ -131,8 +118,6 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
 }
 
 void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
-  if (debug)
-    std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
   if (next_pixel + count > get_npixels()) {
     errors.add("Image::add_32S", "", "adding "
         + wb_utils::int_to_string(count) + " pixels at position " +
@@ -149,22 +134,19 @@ void Image::add_32S(pixel_32S *src, int count, Errors &errors) {
     switch (get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
         break;
-
       case WB_image_depth::Image_depth::CV_32S:
         buf_32S[next_pixel++] = src[i];
         break;
-
       case WB_image_depth::Image_depth::CV_32F:
         buf_32F[next_pixel++] = wb_utils::int_to_float(src[i]);
         break;
-
       default:
         break;
     }
   }
 }
 
-bool Image::check_grayscale(const std::string module, Errors &errors) const {
+bool Image::check_grayscale(const std::string &module, Errors &errors) const {
   if (get_components() != 1) {
     errors.add(module, "", "image not grayscale");
     return false;
@@ -215,9 +197,8 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
        << rows2 << ", " << cols2 << ")";
     errors.add("Operator_transform_image_combine::run", "", os.str());
   }
-  Image *output = nullptr;
   if (!errors.has_error()) {
-    output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
+    auto *output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
     for (int row = 0; row < rows1; row++)
       for (int col = 0; col < cols1; col++) {
         double pixel1 = input1->get(row, col);
@@ -225,8 +206,9 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
         double value = pixel1 * scale1 + pixel2 * scale2 + offset;
         output->set(row, col, value);
       }
+    return output;
   }
-  return output;
+  return nullptr;
 }
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255
@@ -256,80 +238,64 @@ void Image::copy(Image *image, Errors &errors) const {
   }
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
-      for (int i = 0; i < get_npixels(); i++) {
+      for (int i = 0; i < get_npixels(); i++)
         buf_8U[i] = image->buf_8U[i];
-      }
       break;
-
     case WB_image_depth::Image_depth::CV_32S:
       switch (image->get_depth()) {
         case WB_image_depth::Image_depth::CV_8U:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32S[i] = image->buf_8U[i];
-          }
           break;
         case WB_image_depth::Image_depth::CV_32S:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32S[i] = image->buf_32S[i];
-          }
           break;
         case WB_image_depth::Image_depth::CV_32F:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32S[i] = wb_utils::float_to_int_round(image->buf_32F[i]);
-          }
           break;
         default:
           break;
       }
       break;
-
     case WB_image_depth::Image_depth::CV_32F:
       switch (image->get_depth()) {
         case WB_image_depth::Image_depth::CV_8U:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32F[i] = image->buf_8U[i];
-          }
           break;
         case WB_image_depth::Image_depth::CV_32S:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32F[i] = wb_utils::int_to_float(image->buf_32S[i]);
-          }
           break;
         case WB_image_depth::Image_depth::CV_32F:
-          for (int i = 0; i < get_npixels(); i++) {
+          for (int i = 0; i < get_npixels(); i++)
             buf_32F[i] = image->buf_32F[i];
-          }
           break;
         default:
           break;
       }
       break;
-
     default:
       break;
   }
 }
 
 void Image::draw_line_segment(const Line_segment &line_segment, double value) const {
-  if (debug)
-    std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
-              << ") value " << value << std::endl;
-  for (Point point: line_segment.line_points) {
+  for (Point point: line_segment.line_points)
     set(point, value);
-  }
 }
 
 void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value) const {
   Line_segment line_segment(row1, col1, row2, col2);
-  for (Point point: line_segment.line_points) {
+  for (Point point: line_segment.line_points)
     set(point, value);
-  }
 }
 
 void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value) const {
-  for (const Line_segment &line_segment: line_segments) {
+  for (const Line_segment &line_segment: line_segments)
     draw_line_segment(line_segment, value);
-  }
 }
 
 void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value) const {
@@ -359,15 +325,12 @@ double Image::get(int row, int col) const {
     case WB_image_depth::Image_depth::CV_8U:
       index = row_col_to_index(row, col);
       return buf_8U[index];
-
     case WB_image_depth::Image_depth::CV_32S:
       index = row_col_to_index(row, col);
       return (pixel_32F) buf_32S[index];
-
     case WB_image_depth::Image_depth::CV_32F:
       index = row_col_to_index(row, col);
       return buf_32F[index];
-
     default:
       return 0.0;
   }
@@ -392,18 +355,6 @@ pixel_32S Image::get_32S(int row, int col) const {
   return buf_32S[index];
 }
 
-int Image::get_cols() const { return image_header.cols; }
-
-int Image::get_components() const { return image_header.components; }
-
-WB_image_depth::Image_depth Image::get_depth() const { return image_header.depth; }
-
-int Image::get_npixels() const { return image_header.npixels; }
-
-int Image::get_row_stride() const { return image_header.row_stride; }
-
-int Image::get_rows() const { return image_header.rows; }
-
 double Image::get_scaled(int row, int col, double lower_in,
                          double upper_in, double lower_out,
                          double upper_out) const {
@@ -414,12 +365,11 @@ double Image::get_scaled(int row, int col, double lower_in,
 }
 
 void Image::get_stats(Variance_stats &stats) const {
-  for (int row = 0; row < get_rows(); row++) {
-    for (int col = 0; col < get_cols(); col++) {
+  for (int row = get_min_row(); row < get_rows(); row++)
+    for (int col = get_min_col(); col < get_cols(); col++) {
       double value = get(row, col);
       stats.update(value);
     }
-  }
 }
 
 void Image::init(double value) {
@@ -477,12 +427,12 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
 
 Image *Image::read(std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
-  Image *image = nullptr;
   if (fp) {
-    image = Image::read(fp, errors);
+    Image *image = Image::read(fp, errors);
     fclose(fp);
+    return image;
   }
-  return image;
+  return nullptr;
 }
 
 Image *Image::read(FILE *fp, Errors &errors) {
@@ -493,7 +443,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
   auto *image = new Image(image_header);
 
   // Read the data into buffer.
-  switch (image_header.depth) {
+  switch (image_header.get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
       wb_utils::read_byte_buffer(fp,
                                  image->buf_8U,
@@ -507,7 +457,6 @@ Image *Image::read(FILE *fp, Errors &errors) {
         return nullptr;
       }
       break;
-
     case WB_image_depth::Image_depth::CV_32S:
       wb_utils::read_int_buffer(fp,
                                 image->buf_32S,
@@ -521,7 +470,6 @@ Image *Image::read(FILE *fp, Errors &errors) {
         return nullptr;
       }
       break;
-
     case WB_image_depth::Image_depth::CV_32F:
       wb_utils::read_float_buffer(fp,
                                   image->buf_32F,
@@ -535,8 +483,11 @@ Image *Image::read(FILE *fp, Errors &errors) {
         return nullptr;
       }
       break;
-
+    case WB_image_depth::Image_depth::UNDEFINED:
+      return nullptr;
+      break;
     default:
+      return nullptr;
       break;
   }
   return image;
@@ -575,10 +526,13 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   }
   /* Step 1: allocate and initialize JPEG decompression object */
   jpeg_create_decompress(&cinfo);
+
   /* Step 2: specify data source (eg, a file) */
   jpeg_stdio_src(&cinfo, fp);
+
   /* Step 3: read file parameters with jpeg_read_header() */
   (void) jpeg_read_header(&cinfo, TRUE);
+
   /* Step 4: set parameters for decompression */
   /* Step 5: Start decompressor */
   (void) jpeg_start_decompress(&cinfo);
@@ -588,14 +542,17 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
   /* Make a one-row-high sample array that will go away when done with image */
   buffer = (*cinfo.mem->alloc_sarray)
       ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
+
   /* Step 6: while (scan lines remain to be read) */
   while (cinfo.output_scanline < cinfo.output_height) {
     (void) jpeg_read_scanlines(&cinfo, buffer, 1);
     /* Assume put_scanline_someplace wants a pointer and sample count. */
     image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
   }
+
   /* Step 7: Finish decompression */
   (void) jpeg_finish_decompress(&cinfo);
+
   /* Step 8: Release JPEG decompression object */
   jpeg_destroy_decompress(&cinfo);
   fclose(fp);
@@ -604,12 +561,12 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
 
 Image *Image::read_text(const std::string &path, Errors &errors) {
   std::ifstream ifs = file_utils::open_file_read_text(path, errors);
-  Image *image = nullptr;
   if (ifs) {
-    image = read_text(ifs, errors);
+    Image *image = read_text(ifs, errors);
     ifs.close();
+    return image;
   }
-  return image;
+  return nullptr;
 }
 
 Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
@@ -622,7 +579,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     std::vector<std::string> values = wb_utils::string_split(line);
     if (first) {
       first = false;
-      cols = values.size();
+      cols = (int) values.size();
       lines.push_back(values);
     } else if (values.size() != cols) {
       std::ostringstream os;
@@ -630,30 +587,31 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
          << " row " << rows << " column length " << values.size();
       errors.add("Image::read_text", "", os.str());
       return nullptr;
-    } else {
+    } else
       lines.push_back(values);
-    }
     rows++;
   }
   auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
   pixel_32S *buf_ptr = image->buf_32S;
-  for (const std::vector<std::string> &row_values: lines) {
+  for (const std::vector<std::string> &row_values: lines)
     for (const std::string &value_str: row_values) {
       int value;
-      if (wb_utils::string_to_int(value_str, value)) {
+      if (wb_utils::string_to_int(value_str, value))
         *buf_ptr++ = value;
-      } else {
+      else {
         errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
         delete image;
         return nullptr;
       }
     }
-  }
   return image;
 }
 
 int Image::row_col_to_index(int row, int col) const {
-  assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
+  assert(row >= get_min_row()
+             && row < get_rows()
+             && col >= get_min_col()
+             && col < get_cols());
   return row * get_row_stride() + col;
 }
 
@@ -673,22 +631,16 @@ int Image::row_col_to_index(int row, int col) const {
 Image *Image::scale_image(Image *image, double lower_in,
                           double upper_in, double lower_out,
                           double upper_out, WB_image_depth::Image_depth depth) {
-  if (debug)
-    std::cout << "Image *Image::scale_image: lower_in " << lower_in
-              << " upper_in " << upper_in
-              << " lower_out " << lower_out
-              << " upper_out " << upper_out << " depth " << WB_image_depth::to_string(depth) << std::endl;
   auto *convert_image = new Image(image->get_rows(),
                                   image->get_cols(),
                                   image->get_components(),
                                   depth);
-  for (int row = 0; row < image->get_rows(); row++) {
-    for (int col = 0; col < image->get_cols(); col++) {
+  for (int row = image->get_min_row(); row < image->get_rows(); row++)
+    for (int col = image->get_min_col(); col < image->get_cols(); col++) {
       double value = image->get_scaled(row, col, lower_in,
                                        upper_in, lower_out, upper_out);
       convert_image->set(row, col, value);
     }
-  }
   return convert_image;
 }
 
@@ -709,17 +661,56 @@ void Image::set(int row, int col, double value) const {
     case WB_image_depth::Image_depth::CV_8U:
       buf_8U[row_col_to_index(row, col)] = wb_utils::double_to_int_round(value);
       break;
-
     case WB_image_depth::Image_depth::CV_32S:
       buf_32S[row_col_to_index(row, col)] = wb_utils::double_to_int_round(value);
       break;
-
     case WB_image_depth::Image_depth::CV_32F:
       buf_32F[row_col_to_index(row, col)] = wb_utils::double_to_float(value);
       break;
-
     default:
       break;
+  }
+}
+
+void Image::set(Point &point, double value) const {
+  set(point.row, point.col, value);
+}
+
+void Image::set_8U(int row, int col, pixel_8U value) const {
+  buf_8U[row_col_to_index(row, col)] = value;
+}
+
+void Image::set_32F(int row, int col, pixel_32F value) const {
+  buf_32F[row_col_to_index(row, col)] = value;
+}
+
+void Image::set_32S(int row, int col, pixel_32S value) const {
+  buf_32S[row_col_to_index(row, col)] = value;
+}
+
+void Image::reset_subimage() {
+  image_header.set_min_row(0);
+  image_header.set_min_col(0);
+  image_header.set_rows_offset(0);
+  image_header.set_cols_offset(0);
+}
+
+void Image::set_subimage(int min_row,
+                         int min_col,
+                         int max_row,
+                         int max_col,
+                         Errors &errors) {
+  if (min_row < 0) errors.add("Image::set_subimage", "", "min_row outside image");
+  if (min_col < 0) errors.add("Image::set_subimage", "", "min_col outside image");
+  int rows_offset = image_header.get_rows() - max_row - 1;
+  int cols_offset = image_header.get_cols() - max_col - 1;
+  if (rows_offset < 0) errors.add("Image::set_subimage", "", "max_row outside image");
+  if (cols_offset < 0) errors.add("Image::set_subimage", "", "max_col outside image");
+  if (!errors.has_error()) {
+    image_header.set_min_row(min_row);
+    image_header.set_min_col(min_col);
+    image_header.set_rows_offset(rows_offset);
+    image_header.set_cols_offset(cols_offset);
   }
 }
 
@@ -746,37 +737,18 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
       for (int i = 0; i < size; i++)
         out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
       break;
-
     case WB_image_depth::Image_depth::CV_32S:
       for (int i = 0; i < size; i++)
         out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
       break;
-
     case WB_image_depth::Image_depth::CV_32F:
       for (int i = 0; i < size; i++)
         out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
       break;
-
     default:
       break;
   }
   return out_image;
-}
-
-void Image::set(Point &point, double value) const {
-  set(point.row, point.col, value);
-}
-
-void Image::set_8U(int row, int col, pixel_8U value) const {
-  buf_8U[row_col_to_index(row, col)] = value;
-}
-
-void Image::set_32F(int row, int col, pixel_32F value) const {
-  buf_32F[row_col_to_index(row, col)] = value;
-}
-
-void Image::set_32S(int row, int col, pixel_32S value) const {
-  buf_32S[row_col_to_index(row, col)] = value;
 }
 
 /**
@@ -787,15 +759,13 @@ void Image::set_32S(int row, int col, pixel_32S value) const {
  * @return
  */
 Image *Image::to_rgb(int component) const {
-  if (debug)
-    std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
   Image_header new_image_header(get_rows(),
                                 get_cols(),
                                 3,
                                 get_depth());
   auto *new_image = new Image(new_image_header);
-  for (int i = 0; i < new_image->get_npixels(); i++) {
-    switch (image_header.depth) {
+  for (int i = 0; i < new_image->get_npixels(); i++)
+    switch (image_header.get_depth()) {
       case WB_image_depth::Image_depth::CV_8U:
         new_image->buf_8U[i * 3 + component] = buf_8U[i];
         break;
@@ -808,7 +778,6 @@ Image *Image::to_rgb(int component) const {
       default:
         break;
     }
-  }
   return new_image;
 }
 
@@ -835,21 +804,18 @@ void Image::write(FILE *fp, Errors &errors) const {
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
       newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
+      if (ferror(fp) != 0 || newLen != get_npixels())
         errors.add("Image::write", "", "cannot write 8U image data");
-      }
       break;
     case WB_image_depth::Image_depth::CV_32S:
       newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
+      if (ferror(fp) != 0 || newLen != get_npixels())
         errors.add("Image::write", "", "cannot write 32S image data");
-      }
       break;
     case WB_image_depth::Image_depth::CV_32F:
       newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels()) {
+      if (ferror(fp) != 0 || newLen != get_npixels())
         errors.add("Image::write", "", "cannot write 32F image data");
-      }
       break;
     default:
       break;
@@ -875,11 +841,12 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
   cinfo.err = jpeg_std_error(&jerr);
   /* Now we can initialize the JPEG compression object. */
   jpeg_create_compress(&cinfo);
+
   /* Step 2: specify data destination (eg, a file) */
-  if ((outfile = fopen(path.c_str(), "wb")) == nullptr) {
+  if ((outfile = fopen(path.c_str(), "wb")) == nullptr)
     errors.add("Image::write_jpeg", "", "invalid file '" + path + "'");
-  }
   jpeg_stdio_dest(&cinfo, outfile);
+
   /* Step 3: set parameters for compression */
   cinfo.image_width = get_cols();
   cinfo.image_height = get_rows();
@@ -887,17 +854,18 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
   cinfo.in_color_space = JCS_GRAYSCALE;    /* colorspace of input image */
   jpeg_set_defaults(&cinfo);
   jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+
   /* Step 4: Start compressor */
   jpeg_start_compress(&cinfo, TRUE);
+
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
-
   while (cinfo.next_scanline < cinfo.image_height) {
     /* jpeg_write_scanlines expects an array of pointers to scanlines.
      * Here the array is only one element long, but you could pass
      * more than one scanline at a time if that's more convenient.
      */
-    row_pointer[0] = (JSAMPROW) &buf_8U[cinfo.next_scanline * get_row_stride()];
+    row_pointer[0] = (JSAMPROW) &buf_8U[cinfo.next_scanline * get_row_stride() + get_min_col()];
     (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
   }
   /* Step 6: Finish compression */
@@ -917,8 +885,8 @@ void Image::write_text(const std::string &path, const std::string &delim, Errors
 }
 
 void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  for (int row = 0; row < get_rows(); row++) {
-    for (int col = 0; col < get_cols(); col++) {
+  for (int row = get_min_row(); row < get_rows(); row++) {
+    for (int col = get_min_col(); col < get_cols(); col++) {
       double value = get(row, col);
       ofs << value << delim;
     }

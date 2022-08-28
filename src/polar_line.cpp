@@ -67,5 +67,5 @@ void Polar_line::write(FILE *fp, Errors &errors) {
 }
 
 void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << rho_index << delim << theta_index << delim << count<< std::endl;
+  ofs << rho_index << delim << theta_index << delim << count << std::endl;
 }

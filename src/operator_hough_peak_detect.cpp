@@ -36,10 +36,9 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
     if (!errors.has_error() && hough_ptr != nullptr)
       Histogram::find_hough_peaks(hough_ptr, npeaks);
     for (Data_source_descriptor *hough_output_data_store: output_data_stores)
-      for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
-        histogram_output_data_store->write_operator_hough_peaks(hough.get(),
-                                                                "Operator_histOperator_hough_peak_detectogram_hough_create::run",
-                                                                errors);
+      hough_output_data_store->write_operator_hough_peaks(hough.get(),
+                                                          "Operator_histOperator_hough_peak_detectogram_hough_create::run",
+                                                          errors);
   }
 }
 

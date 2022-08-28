@@ -7,19 +7,40 @@
 #include "wb_utils.hpp"
 #include "image_header.hpp"
 
-extern bool debug;
-
 Image_header::Image_header() = default;
 
-Image_header::Image_header(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth) :
+Image_header::Image_header(int m_rows,
+                           int m_cols,
+                           int m_components,
+                           WB_image_depth::Image_depth m_depth) :
     rows(m_rows),
     cols(m_cols),
     components(m_components),
     depth(m_depth),
+    min_row(0),
+    min_col(0),
+    rows_offset(0),
+    cols_offset(0),
     row_stride(cols * components),
     npixels(rows * row_stride) {
-  if (debug)
-    std::cout << "Image_header::Image_header: " << to_string() << std::endl;
+}
+
+Image_header::Image_header(int m_rows, int m_cols, int m_components,
+                           WB_image_depth::Image_depth m_depth,
+                           int m_min_row,
+                           int m_min_col,
+                           int m_rows_offset,
+                           int m_cols_offset) :
+    rows(m_rows),
+    cols(m_cols),
+    components(m_components),
+    depth(m_depth),
+    min_row(m_min_row),
+    min_col(m_min_col),
+    rows_offset(m_rows_offset),
+    cols_offset(m_cols_offset),
+    row_stride(cols * components),
+    npixels(rows * row_stride) {
 }
 
 Image_header::Image_header(Image_header &image_header) :
@@ -51,6 +72,22 @@ void Image_header::read(FILE *fp, Errors &errors) {
     if (!errors.has_error())
       depth = static_cast<WB_image_depth::Image_depth>(depth_int);
   }
+}
+
+ void Image_header::set_min_row(int m_min_row) {
+  min_row = m_min_row;
+}
+
+ void Image_header::set_min_col(int m_min_col) {
+  min_col = m_min_col;
+}
+
+ void Image_header::set_rows_offset(int m_rows_offset) {
+  rows_offset = m_rows_offset;
+}
+
+ void Image_header::set_cols_offset(int m_cols_offset) {
+  cols_offset = m_cols_offset;
 }
 
 void Image_header::write(FILE *fp, Errors &errors) const {

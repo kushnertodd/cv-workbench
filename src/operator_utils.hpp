@@ -33,6 +33,10 @@ class Operator_utils {
                                    std::string &string_value,
                                    Errors &errors,
                                    bool optional = false);
+  static void get_subimage_parameters(Image *image,
+                               const std::string &module,
+                               String_map &parameters,
+                               Errors &errors);
   static bool has_parameter(String_map &parameters, const std::string &parameter);
   static std::string parameters_to_string(String_map &parameters);
 //  static void write_operator_image(Data_source_descriptor *output_data_store,

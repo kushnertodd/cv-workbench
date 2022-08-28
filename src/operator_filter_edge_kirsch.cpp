@@ -41,12 +41,12 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_kirsch::run", "", "output data source required");
   std::string orientation_str;
-  bool orientation_missing = Operator_utils::get_string_parameter("Operator_filter_edge_kirsch::run",
-                                                                  operator_parameters,
-                                                                  "orientation",
-                                                                  orientation_str, errors);
+  bool orientation_found = Operator_utils::get_string_parameter("Operator_filter_edge_kirsch::run",
+                                                                operator_parameters,
+                                                                "orientation",
+                                                                orientation_str, errors);
 
-  if (!orientation_missing &&
+  if (orientation_found &&
       orientation_str != "N"
       && orientation_str != "NW"
       && orientation_str != "W"

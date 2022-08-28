@@ -16,7 +16,7 @@ bool Operator_utils::get_int_parameter(const std::string &module,
                                        bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required " + parameter);
+      errors.add(module, "", parameter + " required");
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
@@ -45,7 +45,7 @@ bool Operator_utils::get_real_parameter(const std::string &module,
                                         bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required " + parameter);
+      errors.add(module, "", parameter + " required");
     return false;
   } else {
     std::string parameter_str = get_parameter(parameters, parameter);
@@ -64,11 +64,32 @@ bool Operator_utils::get_string_parameter(const std::string &module,
                                           bool optional) {
   if (!has_parameter(parameters, parameter)) {
     if (!optional)
-      errors.add(module, "", parameter+ " required " + parameter);
+      errors.add(module, "", parameter + " required");
     return false;
   } else
     string_value = get_parameter(parameters, parameter);
   return true;
+}
+
+void Operator_utils::get_subimage_parameters(Image *image,
+                                             const std::string &module,
+                                             String_map &parameters,
+                                             Errors &errors) {
+  int min_row;
+  bool have_min_row = Operator_utils::get_int_parameter(module, parameters, "min-row", min_row, errors, true);
+  int min_col;
+  bool have_min_col = Operator_utils::get_int_parameter(module, parameters, "min-col", min_col, errors, true);
+  int max_row;
+  bool have_max_row = Operator_utils::get_int_parameter(module, parameters, "max-row", max_row, errors, true);
+  int max_col;
+  bool have_max_col = Operator_utils::get_int_parameter(module, parameters, "max-col", max_col, errors, true);
+  if (!errors.has_error() && (have_min_row || have_min_col || have_max_row || have_max_col)) {
+    if (!have_min_row) min_row = 0;
+    if (!have_min_col) min_col = 0;
+    if (!have_max_row) max_row = image->get_rows() - 1;
+    if (!have_max_col) max_col = image->get_cols() - 1;
+    image->set_subimage(min_row, min_col, max_row, max_col, errors);
+  }
 }
 
 bool Operator_utils::has_parameter(String_map &parameters, const std::string &parameter) {

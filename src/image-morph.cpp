@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
   Errors errors;
   std::unique_ptr<Wb_filename> wb_cross_filename(Wb_filename::create_wb_filename(in_filename, errors));
-  errors.check_exit("invalid filename "+in_filename);
+  errors.check_exit("invalid filename " + in_filename);
   wb_cross_filename->add_suffix(".cross");
   Kernel *cross_structuring_element = Morphology::create_structuring_element_cross(rows, cols, thickness);
   cross_structuring_element->write_text(wb_cross_filename->to_text(), "\t", errors);

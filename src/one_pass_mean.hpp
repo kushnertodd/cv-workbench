@@ -60,12 +60,12 @@ class One_pass_mean {
   One_pass_mean(Image *m_image, int m_window_rows, int m_window_cols);
 
   void col_right();
-  double get_mean();
+  double get_mean() const;
   void init();
   void row_down();
-  double sum_col(int row, int col);
-  double sum_row(int row, int col);
-  double sum_window(int row, int col);
+  double sum_col(int row, int col) const;
+  double sum_row(int row, int col) const;
+  double sum_window(int row, int col) const;
 };
 
 #endif //SRC__ONE_PASS_MEAN_H_

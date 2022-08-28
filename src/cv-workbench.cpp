@@ -12,13 +12,9 @@ This parser makes use of all the functions which reads the value of a json objec
 #include <memory>
 #include <string>
 #include <json-c/json.h>
-#include <json-c/json_object.h>
 #include "wb_log.hpp"
-#include "errors.hpp"
 #include "experiment.hpp"
-#include "file_utils.hpp"
 #include "runtime.hpp"
-#include "wb_filename.hpp"
 
 bool debug = false;
 
