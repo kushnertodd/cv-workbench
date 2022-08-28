@@ -64,22 +64,18 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
     if (!read_image2)
       errors.add("Operator_transform_image_combine::run", "", "missing input image id 2");
     std::unique_ptr<Image> image1(image1_ptr);
-    if (!errors.has_error() && image1_ptr != nullptr)
+    if (!errors.has_error())
       image1->check_grayscale("Operator_transform_image_combine::run image 1", errors);
     std::unique_ptr<Image> image2(image2_ptr);
-    if (!errors.has_error() && image2_ptr != nullptr)
+    if (!errors.has_error())
       image2->check_grayscale("Operator_transform_image_combine::run image 2", errors);
-    Image *output_ptr = nullptr;
-    if (!errors.has_error() && image1 != nullptr && image2 != nullptr)
-      output_ptr = Image::combine(image1.get(), image2.get(), scale1, scale2, offset, errors);
-    std::unique_ptr<Image> output(output_ptr);
-    if (!errors.has_error() && output_ptr != nullptr)
+    if (!errors.has_error()) {
+      std::unique_ptr<Image> output(Image::combine(image1.get(), image2.get(), scale1, scale2, offset, errors));
       for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output.get(), "Operator_transform_image_combine::run", errors);
-    Data_source_descriptor *output_data_store = output_data_stores.front();
-    output_data_store->write_operator_image(output.get(),
-                                            "Operator_transform_image_combine::run", errors);
-    if (!errors.has_error() && output_ptr != nullptr)
-      output->log(log_entries);
+        if (!errors.has_error())
+          output_data_store->write_operator_image(output.get(), "Operator_transform_image_combine::run", errors);
+      if (!errors.has_error())
+        output->log(log_entries);
+    }
   }
 }

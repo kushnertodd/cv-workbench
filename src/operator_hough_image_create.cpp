@@ -53,12 +53,10 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
   bool saw_lrc_col = Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                                        operator_parameters, "lrc_col",
                                                        lrc_col, errors, true);
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input_ptr = nullptr;
   if (!errors.has_error()) {
-    input_ptr = input_data_source->read_operator_image("Operator_hough_image_create::run", errors);
-    std::unique_ptr<Image> input(input_ptr);
-    if (!errors.has_error() && input_ptr != nullptr)
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_hough_image_create::run", errors));
+    if (!errors.has_error())
       input->check_grayscale("Operator_hough_image_create::run", errors);
     if (!errors.has_error()) {
       if (!saw_lrc_row)
@@ -67,7 +65,8 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         lrc_col = input->get_cols() - 1;
       std::unique_ptr<Hough> hough(Hough::create_image(input.get(), theta_inc, threshold));
       for (Data_source_descriptor *hough_output_data_store: output_data_stores)
-        hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run", errors);
+        if (!errors.has_error())
+          hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run", errors);
     }
   }
 }

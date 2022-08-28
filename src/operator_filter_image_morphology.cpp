@@ -72,18 +72,18 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
                                         operator_parameters, "thickness", thickness, errors);
   }
   std::string operation_str;
-  bool operation_found = Operator_utils::get_string_parameter("Operator_filter_image_morphology::run",
-                                                              operator_parameters,
-                                                              "operation",
-                                                              operation_str, errors);
+  Operator_utils::get_string_parameter("Operator_filter_image_morphology::run",
+                                       operator_parameters,
+                                       "operation",
+                                       operation_str, errors);
   Image *input_ptr;
-  if (operation_found && !errors.has_error()) {
+  if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    input_ptr = input_data_source->read_operator_image("Operator_filter_image_morphology::run", errors);
-    std::unique_ptr<Image> input(input_ptr);
-    if (!errors.has_error() && input_ptr != nullptr)
+    std::unique_ptr<Image>
+        input(input_data_source->read_operator_image("Operator_filter_image_morphology::run", errors));
+    if (!errors.has_error())
       input->check_grayscale("Operator_filter_image_morphology::run", errors);
-    if (!errors.has_error() && input_ptr != nullptr) {
+    if (!errors.has_error()) {
       if (operation_str == "erode") {
         std::unique_ptr<Image>
             erode_image(Morphology::erode(input.get(), structuring_element_type,

@@ -71,40 +71,40 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
   double upper_out;
   Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
                                      operator_parameters, "upper_out", upper_out, errors);
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input_ptr = nullptr;
-  if (!errors.has_error())
-    input_ptr = input_data_source->read_image(errors);
-  std::unique_ptr<Image> input(input_ptr);
-  if (!errors.has_error() && input_ptr != nullptr)
-    input->check_grayscale("Operator_transform_intensity_map::run", errors);
-  if (!errors.has_error() && input_ptr != nullptr) {
-    if (!saw_depth) {
-      depth = input->get_depth();
-    }
-    Image *output_image_ptr = nullptr;
+  if (!errors.has_error()) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Image> input(input_data_source->read_image(errors));
     if (!errors.has_error())
+      input->check_grayscale("Operator_transform_intensity_map::run", errors);
+    if (!errors.has_error()) {
+      if (!saw_depth) {
+        depth = input->get_depth();
+      }
       for (Data_source_descriptor *output_data_store: output_data_stores) {
-        if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-          output_image_ptr =
-              Image::scale_image(input.get(),
-                                 lower_in,
-                                 upper_in,
-                                 lower_out,
-                                 upper_out,
-                                 WB_image_depth::Image_depth::CV_8U);
-          std::unique_ptr<Image> output_image(output_image_ptr);
-          output_data_store->write_image_jpeg(output_image.get(), errors);
-          if (!errors.has_error() && output_image_ptr != nullptr)
-            output_image->log(log_entries);
-        } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-          output_image_ptr =
-              Image::scale_image(input.get(), lower_in, upper_in, lower_out, upper_out, depth);
-          std::unique_ptr<Image> output_image(output_image_ptr);
-          output_data_store->write_image(output_image.get(), errors);
-          if (!errors.has_error() && output_image_ptr != nullptr)
-            output_image->log(log_entries);
+        if (!errors.has_error()) {
+          if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+            std::unique_ptr<Image> output_image(Image::scale_image(input.get(),
+                                                                   lower_in,
+                                                                   upper_in,
+                                                                   lower_out,
+                                                                   upper_out,
+                                                                   WB_image_depth::Image_depth::CV_8U));
+            output_data_store->write_image_jpeg(output_image.get(), errors);
+            if (!errors.has_error())
+              output_image->log(log_entries);
+          } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+            std::unique_ptr<Image> output_image(Image::scale_image(input.get(),
+                                                                   lower_in,
+                                                                   upper_in,
+                                                                   lower_out,
+                                                                   upper_out,
+                                                                   depth));
+            output_data_store->write_image(output_image.get(), errors);
+            if (!errors.has_error())
+              output_image->log(log_entries);
+          }
         }
       }
+    }
   }
 }

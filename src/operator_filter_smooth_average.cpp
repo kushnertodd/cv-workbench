@@ -25,29 +25,28 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
   int cols;
   Operator_utils::get_int_parameter("Operator_filter_smooth_average::run",
                                     operator_parameters, "cols", cols, errors);
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input_ptr = nullptr;
-  if (!errors.has_error())
-    input_ptr = input_data_source->read_operator_image("Operator_filter_smooth_average::run", errors);
-  std::unique_ptr<Image> input(input_ptr);
-  if (!errors.has_error() && input_ptr != nullptr)
-    input->check_grayscale("Operator_filter_smooth_average::run", errors);
-  // TODO: implement separable filter
-  if (!errors.has_error() && input_ptr != nullptr) {
-    auto *coeffs_32F = new pixel_32F[rows * cols];
-    double correction = 1.0 / (rows * cols);
-    for (int i = 0; i < rows * cols; i++)
-      coeffs_32F[i] = wb_utils::double_to_float(correction);
-    std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(rows, cols, coeffs_32F));
-    std::unique_ptr<Image> output(average_kernel->convolve_numeric(input.get(), errors));
+  if (!errors.has_error()) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_smooth_average::run", errors));
     if (!errors.has_error())
-      for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output.get(),
-                                                "Operator_filter_smooth_average::run",
-                                                errors);
+      input->check_grayscale("Operator_filter_smooth_average::run", errors);
+    // TODO: implement separable filter
     if (!errors.has_error()) {
-      output->log(log_entries);
+      auto *coeffs_32F = new pixel_32F[rows * cols];
+      double correction = 1.0 / (rows * cols);
+      for (int i = 0; i < rows * cols; i++)
+        coeffs_32F[i] = wb_utils::double_to_float(correction);
+      std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(rows, cols, coeffs_32F));
+      std::unique_ptr<Image> output(average_kernel->convolve_numeric(input.get(), errors));
+      if (!errors.has_error())
+        for (Data_source_descriptor *output_data_store: output_data_stores)
+          output_data_store->write_operator_image(output.get(),
+                                                  "Operator_filter_smooth_average::run",
+                                                  errors);
+      if (!errors.has_error()) {
+        output->log(log_entries);
+      }
+      delete[] coeffs_32F;
     }
-    delete[] coeffs_32F;
   }
 }

@@ -31,30 +31,27 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
   double sigma_y;
   Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
                                      operator_parameters, "sigma-y", sigma_y, errors);
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-  Image *input_ptr = nullptr;
-  if (!errors.has_error())
-    input_ptr = input_data_source->read_operator_image("Operator_filter_smooth_gaussian::run", errors);
-  std::unique_ptr<Image> input(input_ptr);
-  if (!errors.has_error() && input_ptr != nullptr)
-    input->check_grayscale("Operator_filter_smooth_gaussian::run", errors);
-  if (!errors.has_error() && input_ptr != nullptr) {
-    Kernel *gaussian_kernel_y_ptr = Kernel::create_gaussian_y(rows, sigma_y);
-    Kernel *gaussian_kernel_x_ptr = Kernel::create_gaussian_x(cols, sigma_x);
-    std::unique_ptr<Kernel> gaussian_kernel_y(gaussian_kernel_y_ptr);
-    std::unique_ptr<Kernel> gaussian_kernel_x(gaussian_kernel_x_ptr);
-    std::unique_ptr<Image> output_pass1(gaussian_kernel_y->convolve_numeric(input.get(), errors));
-    Image *output2_ptr = nullptr;
+  if (!errors.has_error()) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Image>
+        input(input_data_source->read_operator_image("Operator_filter_smooth_gaussian::run", errors));
     if (!errors.has_error())
-      output2_ptr = gaussian_kernel_x->convolve_numeric(output_pass1.get(), errors);
-    std::unique_ptr<Image> output2(output2_ptr);
-    if (!errors.has_error() && output2_ptr != nullptr)
-      for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(output2.get(),
-                                                "Operator_filter_smooth_gaussian::run",
-                                                errors);
-    if (!errors.has_error() && output2_ptr != nullptr) {
-      output2->log(log_entries);
+      input->check_grayscale("Operator_filter_smooth_gaussian::run", errors);
+    if (!errors.has_error()) {
+      std::unique_ptr<Kernel> gaussian_kernel_y(Kernel::create_gaussian_y(rows, sigma_y));
+      std::unique_ptr<Kernel> gaussian_kernel_x(Kernel::create_gaussian_x(cols, sigma_x));
+      std::unique_ptr<Image> output_pass1(gaussian_kernel_y->convolve_numeric(input.get(), errors));
+      if (!errors.has_error()) {
+        std::unique_ptr<Image> output2(gaussian_kernel_x->convolve_numeric(output_pass1.get(), errors));
+        if (!errors.has_error())
+          for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(output2.get(),
+                                                    "Operator_filter_smooth_gaussian::run",
+                                                    errors);
+        if (!errors.has_error()) {
+          output2->log(log_entries);
+        }
+      }
     }
   }
 }

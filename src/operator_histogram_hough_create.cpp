@@ -37,19 +37,18 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
   bool saw_upper_value =
       Operator_utils::get_real_parameter("Operator_histogram_hough_create::run",
                                          operator_parameters, "upper_value", upper_value, errors);
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-  Hough *hough_ptr;
   if (!errors.has_error()) {
-    hough_ptr = input_data_source->read_hough(errors);
-    std::unique_ptr<Hough> hough(hough_ptr);
-    if (!errors.has_error() && hough_ptr != nullptr) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));
+    if (!errors.has_error()) {
       std::unique_ptr<Histogram> histogram(
           Histogram::create_hough(hough.get(), nbins, lower_value,
                                   upper_value, saw_lower_value, saw_upper_value));
       for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
-        histogram_output_data_store->write_operator_histogram(histogram.get(),
-                                                              "Operator_histogram_hough_create::run",
-                                                              errors);
+        if (!errors.has_error())
+          histogram_output_data_store->write_operator_histogram(histogram.get(),
+                                                                "Operator_histogram_hough_create::run",
+                                                                errors);
       if (!errors.has_error()) {
         histogram->log(log_entries);
       }

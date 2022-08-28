@@ -46,39 +46,38 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
   double pixel_value;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "pixel_value", pixel_value, errors);
-  int out_component;
-  if (!Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                         operator_parameters, "out_component",
-                                         out_component, errors, true))
-    out_component = 1;
-  Data_source_descriptor *input_data_source = input_data_sources.front();
-
-  Image *input_ptr = input_data_source->read_operator_image("Operator_hough_draw_line::run", errors);
-  std::unique_ptr<Image> input(input_ptr);
-  if (!errors.has_error() && input_ptr != nullptr)
-    input->check_grayscale("Operator_hough_draw_line::run", errors);
-  if (!errors.has_error() && input_ptr != nullptr) {
-    int rows = input->get_rows();
-    int cols = input->get_cols();
-    auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
-    int rho_index = Polar_trig::rho_to_index(rho, hough_accum->get_nrhos());
-    Polar_line polar_line(rho_index,
-                          rho,
-                          theta_index,
-                          Polar_trig::to_cos(theta_index),
-                          Polar_trig::to_sin(theta_index),
-                          0);
-    Line_segment line_segment;
-    if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
-      errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
-    } else {
-      input->draw_line_segment(line_segment, pixel_value);
-      for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
-        histogram_output_data_store->write_operator_image(input.get(),
-                                                          "Operator_hough_draw_line::run",
-                                                          errors);
-      if (!errors.has_error()) {
-        input->log(log_entries);
+  int out_component = 1;
+  Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
+                                    operator_parameters, "out_component",
+                                    out_component, errors, true);
+  if (!errors.has_error()) {
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_hough_draw_line::run", errors));
+    if (!errors.has_error())
+      input->check_grayscale("Operator_hough_draw_line::run", errors);
+    if (!errors.has_error()) {
+      int rows = input->get_rows();
+      int cols = input->get_cols();
+      auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
+      int rho_index = Polar_trig::rho_to_index(rho, hough_accum->get_nrhos());
+      Polar_line polar_line(rho_index,
+                            rho,
+                            theta_index,
+                            Polar_trig::to_cos(theta_index),
+                            Polar_trig::to_sin(theta_index),
+                            0);
+      Line_segment line_segment;
+      if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
+        errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
+      } else {
+        input->draw_line_segment(line_segment, pixel_value);
+        for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
+          histogram_output_data_store->write_operator_image(input.get(),
+                                                            "Operator_hough_draw_line::run",
+                                                            errors);
+        if (!errors.has_error()) {
+          input->log(log_entries);
+        }
       }
     }
   }

@@ -41,17 +41,18 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
                                                             operator_parameters, "upper_value", upper_value, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Image *input = input_data_source->read_operator_image("Operator_histogram_image_create::run", errors);
-    if (!errors.has_error() && input != nullptr)
+    std::unique_ptr<Image>
+        input(input_data_source->read_operator_image("Operator_histogram_image_create::run", errors));
+    if (!errors.has_error())
       input->check_grayscale("Operator_histogram_image_create::run", errors);
     if (!errors.has_error()) {
-      std::unique_ptr<Histogram> histogram(Histogram::create_image(input, nbins, lower_value, upper_value,
+      std::unique_ptr<Histogram> histogram(Histogram::create_image(input.get(), nbins, lower_value, upper_value,
                                                                    saw_lower_value, saw_upper_value));
-      for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
-        histogram_output_data_store->write_operator_histogram(histogram.get(),
-                                                              "Operator_histogram_image_create::run",
-                                                              errors);
-      }
+      for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
+        if (!errors.has_error())
+          histogram_output_data_store->write_operator_histogram(histogram.get(),
+                                                                "Operator_histogram_image_create::run",
+                                                                errors);
       if (!errors.has_error())
         histogram->log(log_entries);
 

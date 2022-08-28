@@ -8,6 +8,20 @@
 
 //
 
+/**
+ * find string parameter value and convert to integer:
+ * optional && parameter missing -> return false
+ * | parameter missing -> return false, error(missing)
+ * | parameter non-numeric -> return false, error(format)
+ * | t -> return true
+ * @param module calling module for error message
+ * @param parameters script operation parameters
+ * @param parameter operation parameter to convert
+ * @param int_value output converted integer value
+ * @param errors accumulated errors
+ * @param optional permissible for parameter to be missing
+ * @return
+ */
 bool Operator_utils::get_int_parameter(const std::string &module,
                                        String_map &parameters,
                                        const std::string &parameter,
@@ -22,6 +36,7 @@ bool Operator_utils::get_int_parameter(const std::string &module,
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::string_to_int(parameter_str, int_value)) {
       errors.add(module, "", "non-integer  " + parameter + ": " + parameter_str);
+      return false;
     }
     return true;
   }
@@ -37,6 +52,20 @@ std::string Operator_utils::get_parameter(String_map &parameters, const std::str
   return parameters[parameter];
 }
 
+/**
+ * find string parameter value and convert to real number:
+ * optional && parameter missing -> return false
+ * | parameter missing -> return false, error(missing)
+ * | parameter non-numeric -> return false, error(format)
+ * | t -> return true
+ * @param module calling module for error message
+ * @param parameters script operation parameters
+ * @param parameter operation parameter to convert
+ * @param real_value output converted real value
+ * @param errors accumulated errors
+ * @param optional permissible for parameter to be missing
+ * @return
+ */
 bool Operator_utils::get_real_parameter(const std::string &module,
                                         String_map &parameters,
                                         const std::string &parameter,
@@ -51,11 +80,25 @@ bool Operator_utils::get_real_parameter(const std::string &module,
     std::string parameter_str = get_parameter(parameters, parameter);
     if (!wb_utils::string_to_double(parameter_str, real_value)) {
       errors.add(module, "", "non-real  " + parameter + ": " + parameter_str);
+      return false;
     }
     return true;
   }
 }
 
+/**
+ * find string parameter value and convert to integer:
+ * optional && parameter missing -> return false
+ * | parameter missing -> return false, error(missing)
+ * | t -> return true
+ * @param module calling module for error message
+ * @param parameters script operation parameters
+ * @param parameter operation parameter to convert
+ * @param string_value output string value
+ * @param errors accumulated errors
+ * @param optional permissible for parameter to be missing
+ * @return
+ */
 bool Operator_utils::get_string_parameter(const std::string &module,
                                           String_map &parameters,
                                           const std::string &parameter,
@@ -66,8 +109,8 @@ bool Operator_utils::get_string_parameter(const std::string &module,
     if (!optional)
       errors.add(module, "", parameter + " required");
     return false;
-  } else
-    string_value = get_parameter(parameters, parameter);
+  }
+  string_value = get_parameter(parameters, parameter);
   return true;
 }
 
