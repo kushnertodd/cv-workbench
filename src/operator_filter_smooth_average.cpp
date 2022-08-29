@@ -30,6 +30,11 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_smooth_average::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_smooth_average::run", errors);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
     // TODO: implement separable filter
     if (!errors.has_error()) {
       auto *coeffs_32F = new pixel_32F[rows * cols];

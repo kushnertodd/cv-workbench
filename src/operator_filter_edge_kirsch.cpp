@@ -63,7 +63,11 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_edge_kirsch::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_edge_kirsch::run", errors);
-    if (!errors.has_error()) {
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);    if (!errors.has_error()) {
       Kernel *kirsch_kernel_ptr = nullptr;
       if (orientation_str == "N") {
         //      N = [-3, -3, 5], [-3, 0, 5], [-3, -3, 5]

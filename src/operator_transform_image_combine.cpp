@@ -69,6 +69,13 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
     std::unique_ptr<Image> image2(image2_ptr);
     if (!errors.has_error())
       image2->check_grayscale("Operator_transform_image_combine::run image 2", errors);
+/* not sure how to do this...
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
+*/
     if (!errors.has_error()) {
       std::unique_ptr<Image> output(Image::combine(image1.get(), image2.get(), scale1, scale2, offset, errors));
       for (Data_source_descriptor *output_data_store: output_data_stores)

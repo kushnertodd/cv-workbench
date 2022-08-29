@@ -8,7 +8,7 @@
 #include "wb_utils.hpp"
 #include "kernel.hpp"
 
-extern bool debug;
+//extern bool debug;
 
 Kernel::~Kernel() = default;
 
@@ -36,6 +36,7 @@ Image *Kernel::convolve_morphological(Image *src,
 }
 
 // base convolution, if convolution numeric, error if CV_8U input depth
+// TODO: not sure about that....
 Image *Kernel::convolve(Image *src,
                         WB_image_depth::Image_depth out_depth,
                         WB_morphology_types::Convolution_type convolution_type,
@@ -55,37 +56,37 @@ Image *Kernel::convolve(Image *src,
     auto *out = new Image(src_rows, src_cols, src_components, out_depth);
     int rows_half = (rows + 1) / 2;
     int cols_half = (cols + 1) / 2;
-    int row_lower = 0;
+    int row_lower = src->get_min_row();
     int row_upper = src_rows - rows;
-    int col_lower = 0;
+    int col_lower = src->get_min_col();
     int col_upper = src_cols - cols;
-    if (debug)
-      std::cout << "rows_half " << rows_half
-                << " cols_half " << cols_half
-                << " row_lower " << row_lower
-                << ", row_upper " << row_upper
-                << ", col_lower " << col_lower
-                << ", col_upper " << col_upper << std::endl;
+//    if (debug)
+//      std::cout << "rows_half " << rows_half
+//                << " cols_half " << cols_half
+//                << " row_lower " << row_lower
+//                << "row_upper " << row_upper
+//                << " col_lower " << col_lower
+//                << " col_upper " << col_upper << std::endl;
     int kernel_row_lower = 0;
     int kernel_row_upper = rows - 1;
     int kernel_col_lower = 0;
     int kernel_col_upper = cols - 1;
-    if (debug)
-      std::cout << " kernel_row_lower " << kernel_row_lower
-                << " kernel_row_upper " << kernel_row_upper
-                << " kernel_col_lower " << kernel_col_lower
-                << " kernel_col_upper " << kernel_col_upper << std::endl;
+//    if (debug)
+//      std::cout << " kernel_row_lower " << kernel_row_lower
+//                << " kernel_row_upper " << kernel_row_upper
+//                << " kernel_col_lower " << kernel_col_lower
+//                << " kernel_col_upper " << kernel_col_upper << std::endl;
     for (int row = row_lower; row <= row_upper; row++) {
       int row_center = row + rows_half - 1;
-      if (debug)
-        std::cout << "row " << row
-                  << " row_center " << row_center << std::endl;
+//      if (debug)
+//        std::cout << "row " << row
+//                  << " row_center " << row_center << std::endl;
       for (int col = col_lower; col <= col_upper; col++) {
         int col_center = col + cols_half - 1;
-        if (debug)
-          std::cout << "col " << col
-                    << " col_center " << col_center
-                    << std::endl;
+//        if (debug)
+//          std::cout << "col " << col
+//                    << " col_center " << col_center
+//                    << std::endl;
         double sum;
         switch (convolution_type) {
           case WB_morphology_types::Convolution_type::NUMERIC:
@@ -122,16 +123,16 @@ Image *Kernel::convolve(Image *src,
               default:
                 break;
             }
-            if (debug)
-              std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
-                        << " * image[" << row + i << "," << col + j
-                        << "] " << image_val << " = " << sum << std::endl;
+//            if (debug)
+//              std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
+//                        << " * image[" << row + i << "," << col + j
+//                        << "] " << image_val << " = " << sum << std::endl;
           }
-          if (debug)
-            std::cout << std::endl;
+//          if (debug)
+//            std::cout << std::endl;
         }
-        if (debug)
-          std::cout << "buf[" << row_center << "," << col_center << "] = " << sum << std::endl;
+//        if (debug)
+//          std::cout << "buf[" << row_center << "," << col_center << "] = " << sum << std::endl;
         out->set(row_center, col_center, sum);
       }
     }

@@ -127,6 +127,7 @@ void Operator_utils::get_subimage_parameters(Image *image,
   int max_col;
   bool have_max_col = Operator_utils::get_int_parameter(module, parameters, "max-col", max_col, errors, true);
   if (!errors.has_error() && (have_min_row || have_min_col || have_max_row || have_max_col)) {
+    image->reset_subimage();
     if (!have_min_row) min_row = 0;
     if (!have_min_col) min_col = 0;
     if (!have_max_row) max_row = image->get_rows() - 1;

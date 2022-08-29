@@ -47,7 +47,11 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_edge_roberts::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_edge_roberts::run", errors);
-    if (!errors.has_error()) {
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);    if (!errors.has_error()) {
       Kernel *roberts_kernel_ptr = nullptr;
       if (orientation_str == "0") {
         //     0 = [0, 1], [-1, 0]

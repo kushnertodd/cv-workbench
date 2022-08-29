@@ -72,8 +72,8 @@ int Hough_accum::get_theta_inc() { return Polar_trig::get_theta_inc(); }
  * @param image_theshold
  */
 void Hough_accum::initialize(Image *image, int image_theshold) {
-  for (int row = 0; row < get_rows(); row++) {
-    for (int col = 0; col < get_cols(); col++) {
+  for (int row = image->get_min_row(); row < image->get_rows(); row++) {
+    for (int col = image->get_min_col(); col < image->get_cols(); col++) {
       double value = std::abs(image->get(row, col));
       if (value > image_theshold) {
         for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {

@@ -182,25 +182,23 @@ Image *Image::clone(Image *image, WB_image_depth::Image_depth depth, Errors &err
  */
 Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2, double offset,
                       Errors &errors) {
-  int rows1;
-  int rows2;
-  int cols1;
-  int cols2;
+  int rows1 = input1->get_rows();
+  int cols1 = input1->get_cols();
+  int min_row1 = input1->get_min_row();
+  int min_col1 = input1->get_min_col();
 
-  rows1 = input1->get_rows();
-  rows2 = input2->get_rows();
-  cols1 = input1->get_cols();
-  cols2 = input2->get_cols();
-  if (rows1 != rows2 || cols1 != cols2) {
-    std::ostringstream os;
-    os << "input1 size (" << rows1 << ", " << cols1 << ") not the same as input2 size ("
-       << rows2 << ", " << cols2 << ")";
-    errors.add("Operator_transform_image_combine::run", "", os.str());
-  }
-  if (!errors.has_error()) {
+  int rows2 = input2->get_rows();
+  int cols2 = input2->get_cols();
+  int min_row2 = input2->get_min_row();
+  int min_col2 = input2->get_min_col();
+
+  if (rows1 != rows2 || cols1 != cols2 ||
+      min_row1 != min_row2 || min_col1 != min_col2)
+    errors.add("Operator_transform_image_combine::run", "", "input images not the same size");
+  else {
     auto *output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
-    for (int row = 0; row < rows1; row++)
-      for (int col = 0; col < cols1; col++) {
+    for (int row = input1->get_min_row(); row < rows1; row++)
+      for (int col = input1->get_min_col(); col < cols1; col++) {
         double pixel1 = input1->get(row, col);
         double pixel2 = input2->get(row, col);
         double value = pixel1 * scale1 + pixel2 * scale2 + offset;
@@ -700,13 +698,23 @@ void Image::set_subimage(int min_row,
                          int max_row,
                          int max_col,
                          Errors &errors) {
-  if (min_row < 0) errors.add("Image::set_subimage", "", "min_row outside image");
-  if (min_col < 0) errors.add("Image::set_subimage", "", "min_col outside image");
-  int rows_offset = image_header.get_rows() - max_row - 1;
-  int cols_offset = image_header.get_cols() - max_col - 1;
-  if (rows_offset < 0) errors.add("Image::set_subimage", "", "max_row outside image");
-  if (cols_offset < 0) errors.add("Image::set_subimage", "", "max_col outside image");
+  if (min_row < 0)
+    errors.add("Image::set_subimage", "", "min_row outside image");
+  if (min_row > max_row)
+    errors.add("Image::set_subimage", "", "min_row over max_row");
+  if (min_row >= image_header.get_rows())
+    errors.add("Image::set_subimage", "", "max_row outside image");
+
+  if (min_col < 0)
+    errors.add("Image::set_subimage", "", "min_col outside image");
+  if (min_col > max_col)
+    errors.add("Image::set_subimage", "", "min_col over max_col");
+  if (min_col >= image_header.get_cols())
+    errors.add("Image::set_subimage", "", "max_col outside image");
+
   if (!errors.has_error()) {
+    int rows_offset = image_header.get_rows() - max_row - 1;
+    int cols_offset = image_header.get_cols() - max_col - 1;
     image_header.set_min_row(min_row);
     image_header.set_min_col(min_col);
     image_header.set_rows_offset(rows_offset);

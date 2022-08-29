@@ -74,6 +74,11 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
       std::unique_ptr<Image> image(image_ptr);
       if (!errors.has_error())
         image->check_grayscale("Operator_transform_image_create::run", errors);
+      if (!errors.has_error())
+        Operator_utils::get_subimage_parameters(image.get(),
+                                                "Operator_hough_image_create::run",
+                                                operator_parameters,
+                                                errors);
       if (!errors.has_error() && saw_point) {
         std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
         if (points.empty())

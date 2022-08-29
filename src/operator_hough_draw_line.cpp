@@ -55,6 +55,11 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_hough_draw_line::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_hough_draw_line::run", errors);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
     if (!errors.has_error()) {
       int rows = input->get_rows();
       int cols = input->get_cols();

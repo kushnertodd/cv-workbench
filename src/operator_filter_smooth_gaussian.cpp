@@ -37,6 +37,11 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
         input(input_data_source->read_operator_image("Operator_filter_smooth_gaussian::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_smooth_gaussian::run", errors);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
     if (!errors.has_error()) {
       std::unique_ptr<Kernel> gaussian_kernel_y(Kernel::create_gaussian_y(rows, sigma_y));
       std::unique_ptr<Kernel> gaussian_kernel_x(Kernel::create_gaussian_x(cols, sigma_x));

@@ -45,6 +45,11 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
         input(input_data_source->read_operator_image("Operator_histogram_image_create::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_histogram_image_create::run", errors);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
     if (!errors.has_error()) {
       std::unique_ptr<Histogram> histogram(Histogram::create_image(input.get(), nbins, lower_value, upper_value,
                                                                    saw_lower_value, saw_upper_value));

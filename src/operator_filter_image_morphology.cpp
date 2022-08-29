@@ -83,6 +83,11 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         input(input_data_source->read_operator_image("Operator_filter_image_morphology::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_image_morphology::run", errors);
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);
     if (!errors.has_error()) {
       if (operation_str == "erode") {
         std::unique_ptr<Image>

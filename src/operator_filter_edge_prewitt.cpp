@@ -47,7 +47,11 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors));
     if (!errors.has_error())
       input->check_grayscale("Operator_filter_edge_prewitt::run", errors);
-    if (!errors.has_error()) {
+    if (!errors.has_error())
+      Operator_utils::get_subimage_parameters(input.get(),
+                                              "Operator_hough_image_create::run",
+                                              operator_parameters,
+                                              errors);    if (!errors.has_error()) {
       Kernel *prewitt_kernel_row_ptr = nullptr;
       Kernel *prewitt_kernel_col_ptr = nullptr;
       if (orientation_str == "90") {
