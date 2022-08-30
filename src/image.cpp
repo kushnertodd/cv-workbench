@@ -811,19 +811,34 @@ void Image::write(FILE *fp, Errors &errors) const {
   size_t newLen;
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
-      newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels())
-        errors.add("Image::write", "", "cannot write 8U image data");
+      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+          pixel_8U value = get_8U(row, col);
+          newLen = fwrite(&value, sizeof(pixel_8U), 1, fp);
+          if (ferror(fp) != 0 || newLen != 1)
+            errors.add("Image::write", "", "cannot write 32F image data");
+        }
+      }
       break;
     case WB_image_depth::Image_depth::CV_32S:
-      newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels())
-        errors.add("Image::write", "", "cannot write 32S image data");
+      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+          pixel_32S value = get_32S(row, col);
+          newLen = fwrite(&value, sizeof(pixel_32S), 1, fp);
+          if (ferror(fp) != 0 || newLen != 1)
+            errors.add("Image::write", "", "cannot write 32F image data");
+        }
+      }
       break;
     case WB_image_depth::Image_depth::CV_32F:
-      newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
-      if (ferror(fp) != 0 || newLen != get_npixels())
-        errors.add("Image::write", "", "cannot write 32F image data");
+      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+          pixel_32F value = get_32F(row, col);
+          newLen = fwrite(&value, sizeof(pixel_32F), 1, fp);
+          if (ferror(fp) != 0 || newLen != 1)
+            errors.add("Image::write", "", "cannot write 32F image data");
+        }
+      }
       break;
     default:
       break;

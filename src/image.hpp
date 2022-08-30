@@ -17,9 +17,10 @@
 #include "wb_defs.hpp"
 
 /**
- * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
- * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
- * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+ * Image data. Images have different depths, including:
+ * - CV_8U, unsigned 8-bit data, generally only stored in JPEG files for viewing
+ * - CV_32S, signed 32-bit integer data, used internally for calculations
+ * - CV_32F, signed 32-bit floating data, used internally for calculations
  */
 class Image {
   friend class Kernel;
@@ -63,14 +64,14 @@ class Image {
   pixel_8U get_8U(int row, int col) const;
   pixel_32F get_32F(int row, int col) const;
   pixel_32S get_32S(int row, int col) const;
-  inline int get_cols() const { return image_header.get_cols() - image_header.get_cols_offset(); }
+  inline int get_cols() const { return image_header.get_max_col() - image_header.get_min_col() + 1; }
   inline int get_components() const { return image_header.get_components(); }
   inline WB_image_depth::Image_depth get_depth() const { return image_header.get_depth(); }
   inline int get_min_col() const { return image_header.get_min_col(); }
   inline int get_min_row() const { return image_header.get_min_row(); }
   inline int get_npixels() const { return image_header.get_npixels(); }
   inline int get_row_stride() const { return image_header.get_row_stride(); }
-  inline int get_rows() const { return image_header.get_rows() - image_header.get_rows_offset(); }
+  inline int get_rows() const { return image_header.get_min_row() - image_header.get_min_row() + 1; }
   double get_scaled(int row, int col, double lower_in,
                     double upper_in, double lower_out,
                     double upper_out) const;

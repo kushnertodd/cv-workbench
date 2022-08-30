@@ -15,6 +15,10 @@
  * Welford's single pass online algorithm for calculating variance
  * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
  * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
+ *
+ * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
+ * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
+ * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
  */
 class Variance_stats {
  public:

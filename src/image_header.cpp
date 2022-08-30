@@ -2,6 +2,7 @@
 // Created by kushn on 6/14/2022.
 //
 
+#include <cassert>
 #include <iomanip>
 #include <iostream>
 #include "wb_utils.hpp"
@@ -19,8 +20,8 @@ Image_header::Image_header(int m_rows,
     depth(m_depth),
     min_row(0),
     min_col(0),
-    rows_offset(0),
-    cols_offset(0),
+    max_row(0),
+    max_col(0),
     row_stride(cols * components),
     npixels(rows * row_stride) {
 }
@@ -29,18 +30,24 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components,
                            WB_image_depth::Image_depth m_depth,
                            int m_min_row,
                            int m_min_col,
-                           int m_rows_offset,
-                           int m_cols_offset) :
+                           int m_max_row,
+                           int m_max_col) :
     rows(m_rows),
     cols(m_cols),
     components(m_components),
     depth(m_depth),
     min_row(m_min_row),
     min_col(m_min_col),
-    rows_offset(m_rows_offset),
-    cols_offset(m_cols_offset),
+    max_row(m_max_row),
+    max_col(m_max_col),
     row_stride(cols * components),
     npixels(rows * row_stride) {
+  assert(min_row >= 0);
+  assert(min_row <= min_row);
+  assert(max_row < rows);;
+  assert(min_col >= 0);
+  assert(min_col <= min_col);
+  assert(max_col < cols);
 }
 
 Image_header::Image_header(Image_header &image_header) :
@@ -82,12 +89,12 @@ void Image_header::read(FILE *fp, Errors &errors) {
   min_col = m_min_col;
 }
 
- void Image_header::set_rows_offset(int m_rows_offset) {
-  rows_offset = m_rows_offset;
+ void Image_header::set_max_row(int m_max_row) {
+   max_row = m_max_row;
 }
 
- void Image_header::set_cols_offset(int m_cols_offset) {
-  cols_offset = m_cols_offset;
+ void Image_header::set_max_col(int m_max_col) {
+ max_col = m_max_col;
 }
 
 void Image_header::write(FILE *fp, Errors &errors) const {
@@ -119,6 +126,10 @@ std::string Image_header::to_string(const std::string &prefix) const {
      << prefix << std::setw(20) << std::left << "cols " << cols << std::endl
      << prefix << std::setw(20) << std::left << "components " << components << std::endl
      << prefix << std::setw(20) << std::left << "depth " << WB_image_depth::to_string(depth) << std::endl
+      << prefix << std::setw(20) << std::left << "min_row " << min_row << std::endl
+      << prefix << std::setw(20) << std::left << "min_col " << min_col << std::endl
+      << prefix << std::setw(20) << std::left << "max_row " << max_row << std::endl
+      << prefix << std::setw(20) << std::left << "max_col " << max_col << std::endl
      << prefix << std::setw(20) << std::left << "row_stride " << row_stride << std::endl
      << prefix << std::setw(20) << std::left << "npixels " << npixels << std::endl;
   return os.str();
