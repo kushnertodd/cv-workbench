@@ -184,29 +184,37 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
                       Errors &errors) {
   int rows1 = input1->get_rows();
   int cols1 = input1->get_cols();
-  int min_row1 = input1->get_min_row();
-  int min_col1 = input1->get_min_col();
 
   int rows2 = input2->get_rows();
   int cols2 = input2->get_cols();
-  int min_row2 = input2->get_min_row();
-  int min_col2 = input2->get_min_col();
 
-  if (rows1 != rows2 || cols1 != cols2 ||
-      min_row1 != min_row2 || min_col1 != min_col2)
-    errors.add("Operator_transform_image_combine::run", "", "input images not the same size");
-  else {
-    auto *output = new Image(rows1, cols1, 1, WB_image_depth::Image_depth::CV_32F);
-    for (int row = input1->get_min_row(); row < rows1; row++)
-      for (int col = input1->get_min_col(); col < cols1; col++) {
-        double pixel1 = input1->get(row, col);
-        double pixel2 = input2->get(row, col);
-        double value = pixel1 * scale1 + pixel2 * scale2 + offset;
-        output->set(row, col, value);
-      }
-    return output;
-  }
-  return nullptr;
+  int rows_out = std::min(rows1, rows2);
+  int cols_out = std::min(cols1, cols2);
+  WB_image_depth::Image_depth depth1 = input1->get_depth();
+  WB_image_depth::Image_depth depth2 = input2->get_depth();
+  WB_image_depth::Image_depth depth;
+  if (depth1 == WB_image_depth::Image_depth::CV_32F
+      || depth2 == WB_image_depth::Image_depth::CV_32F)
+    depth = WB_image_depth::Image_depth::CV_32F;
+  else if (depth1 == WB_image_depth::Image_depth::CV_32S
+      || depth2 == WB_image_depth::Image_depth::CV_32S)
+    depth = WB_image_depth::Image_depth::CV_32S;
+  else
+    depth = WB_image_depth::Image_depth::CV_8U;
+  auto *output = new Image(rows_out, cols_out, 1, depth);
+  int row_origin1 = (rows1 - rows_out) / 2;
+  int col_origin1 = (cols1 - cols_out) / 2;
+  int row_origin2 = (rows2 - rows_out) / 2;
+  int col_origin2 = (cols2 - cols_out) / 2;
+
+  for (int row = 0; row < rows_out; row++)
+    for (int col = 0; col < cols_out; col++) {
+      double pixel1 = input1->get(row + row_origin1, col + col_origin1);
+      double pixel2 = input2->get(row + row_origin2, col + col_origin2);
+      double value = pixel1 * scale1 + pixel2 * scale2 + offset;
+      output->set(row, col, value);
+    }
+  return output;
 }
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255
@@ -722,6 +730,8 @@ void Image::set_subimage(int min_row,
 
 // subtracts image without underflow checking for CV_8U images
 Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) {
+  return Image::combine(src_image, subtract_image, 1.0, -1.0, 0.0, errors);
+/*
   if (src_image->get_npixels() != subtract_image->get_npixels()) {
     errors.add("Image::subtract", "", "images not the same size ");
     return nullptr;
@@ -755,6 +765,7 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
       break;
   }
   return out_image;
+*/
 }
 
 /**

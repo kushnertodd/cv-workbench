@@ -1,0 +1,101 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "combine-7x5"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "combine-7x5"
+          }
+        ],
+        "parameters": {
+          "rows": "7",
+          "cols": "5",
+          "foreground": "10",
+          "background": "10",
+          "rectangle-filled": "(0,0):(6,4)"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "combine-4x11"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "combine-4x11"
+          }
+        ],
+        "parameters": {
+          "rows": "4",
+          "cols": "11",
+          "foreground": "25",
+          "background": "25",
+          "rectangle-filled": "(0,0):(3,10)"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "transform-image-combine",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "combine-7x5"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "combine-4x11"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "combine-7x5-4x11"
+          }
+        ],
+        "parameters": {
+          "scale-1": "1.0",
+          "scale-2": "-1.0",
+          "offset": "0.0"
+        }
+      }
+    ]
+  }
+}
