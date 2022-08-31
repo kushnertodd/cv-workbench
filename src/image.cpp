@@ -607,9 +607,9 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 
 int Image::row_col_to_index(int row, int col) const {
   assert(row >= get_min_row());
-  assert(row < get_rows());
+  assert(row <= get_max_row());
   assert(col >= get_min_col());
-  assert(col < get_cols());
+  assert(col <= get_max_col());
   return row * get_row_stride() + col;
 }
 

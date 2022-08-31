@@ -69,6 +69,8 @@ class Image {
   inline WB_image_depth::Image_depth get_depth() const { return image_header.get_depth(); }
   inline int get_min_col() const { return image_header.get_min_col(); }
   inline int get_min_row() const { return image_header.get_min_row(); }
+  inline int get_max_col() const { return image_header.get_max_col(); }
+  inline int get_max_row() const { return image_header.get_max_row(); }
   inline int get_npixels() const { return image_header.get_npixels(); }
   inline int get_row_stride() const { return image_header.get_row_stride(); }
   inline int get_rows() const { return image_header.get_max_row() - image_header.get_min_row() + 1; }

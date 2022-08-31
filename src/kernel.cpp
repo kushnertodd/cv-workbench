@@ -21,7 +21,8 @@ Kernel::Kernel(int rows, int cols, WB_image_depth::Image_depth depth) :
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
-  // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
+  // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are
+  // WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
   WB_image_depth::Image_depth out_depth =
       (src->get_depth() == WB_image_depth::Image_depth::CV_32F || get_depth() == WB_image_depth::Image_depth::CV_32F
        ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
