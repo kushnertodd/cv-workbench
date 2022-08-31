@@ -606,10 +606,10 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 }
 
 int Image::row_col_to_index(int row, int col) const {
-  assert(row >= get_min_row()
-             && row < get_rows()
-             && col >= get_min_col()
-             && col < get_cols());
+  assert(row >= get_min_row());
+  assert(row < get_rows());
+  assert(col >= get_min_col());
+  assert(col < get_cols());
   return row * get_row_stride() + col;
 }
 
@@ -689,8 +689,8 @@ void Image::set_32S(int row, int col, pixel_32S value) const {
 void Image::reset_subimage() {
   image_header.set_min_row(0);
   image_header.set_min_col(0);
-  image_header.set_rows_offset(0);
-  image_header.set_cols_offset(0);
+  image_header.set_max_row(0);
+  image_header.set_max_col(0);
 }
 
 void Image::set_subimage(int min_row,
@@ -713,12 +713,10 @@ void Image::set_subimage(int min_row,
     errors.add("Image::set_subimage", "", "max_col outside image");
 
   if (!errors.has_error()) {
-    int rows_offset = image_header.get_rows() - max_row - 1;
-    int cols_offset = image_header.get_cols() - max_col - 1;
     image_header.set_min_row(min_row);
     image_header.set_min_col(min_col);
-    image_header.set_rows_offset(rows_offset);
-    image_header.set_cols_offset(cols_offset);
+    image_header.set_max_row(max_row);
+    image_header.set_max_col(max_col);
   }
 }
 

@@ -71,7 +71,7 @@ class Image {
   inline int get_min_row() const { return image_header.get_min_row(); }
   inline int get_npixels() const { return image_header.get_npixels(); }
   inline int get_row_stride() const { return image_header.get_row_stride(); }
-  inline int get_rows() const { return image_header.get_min_row() - image_header.get_min_row() + 1; }
+  inline int get_rows() const { return image_header.get_max_row() - image_header.get_min_row() + 1; }
   double get_scaled(int row, int col, double lower_in,
                     double upper_in, double lower_out,
                     double upper_out) const;

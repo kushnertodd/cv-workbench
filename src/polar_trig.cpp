@@ -82,7 +82,10 @@ int Polar_trig::rho_theta_to_index(int rho_index, int theta_index) const {
 }
 
 int Polar_trig::rho_theta_to_index(int rho_index, int theta_index, int nrhos) {
-  assert(rho_index >= 0 && rho_index < nrhos && theta_index >= 0 && theta_index < Polar_trig::get_nthetas());
+  assert(rho_index >= 0);
+  assert(rho_index < nrhos);
+  assert(theta_index >= 0);
+  assert(theta_index < Polar_trig::get_nthetas());
   return theta_index * nrhos + rho_index;
 }
 

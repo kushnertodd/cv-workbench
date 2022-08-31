@@ -54,11 +54,13 @@ Image *Kernel::convolve(Image *src,
     int cols = get_cols();
     int out_rows = src_rows - rows + 1;
     int out_cols = src_cols - cols + 1;
+    int src_min_row = src->get_min_row();
+    int src_min_col = src->get_min_col();
     // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
     auto *out = new Image(out_rows, out_cols, src_components, out_depth);
 
-  for (int row = src->get_min_row(); row < src->get_rows(); row++) {
-    for (int col = src->get_min_col(); col < src->get_cols(); col++) {
+  for (int row = 0; row < out_rows; row++) {
+    for (int col = 0; col < out_cols; col++) {
         double sum;
         switch (convolution_type) {
           case WB_morphology_types::Convolution_type::NUMERIC:
@@ -76,10 +78,10 @@ Image *Kernel::convolve(Image *src,
             sum = 0.0;
             break;
         }
-        for (int i = 0; i <= rows; i++) {
-          for (int j = 0; j <= cols; j++) {
+        for (int i = 0; i < rows; i++) {
+          for (int j = 0; j < cols; j++) {
             double kernel_val = get(i, j);
-            double image_val = src->get(row + i, col + j);
+            double image_val = src->get(row + src_min_row + i, col + src_min_col + j);
             switch (convolution_type) {
               case WB_morphology_types::Convolution_type::NUMERIC:
                 sum += kernel_val * image_val;
