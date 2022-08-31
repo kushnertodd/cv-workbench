@@ -731,41 +731,6 @@ void Image::set_subimage(int min_row,
 // subtracts image without underflow checking for CV_8U images
 Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) {
   return Image::combine(src_image, subtract_image, 1.0, -1.0, 0.0, errors);
-/*
-  if (src_image->get_npixels() != subtract_image->get_npixels()) {
-    errors.add("Image::subtract", "", "images not the same size ");
-    return nullptr;
-  }
-  if (src_image->get_depth() != subtract_image->get_depth()) {
-    errors.add("Image::subtract", "", "images not the same depth ");
-    return nullptr;
-  }
-//  if (src_image->get_depth() == WB_image_depth::Image_depth::CV_8U) {
-//    errors.add("Image::subtract", "", "cannot subtract CV_8U images");
-//    return nullptr;
-//  }
-
-  auto *out_image = new Image(src_image->image_header);
-
-  int size = src_image->get_npixels();
-  switch (src_image->get_depth()) {
-    case WB_image_depth::Image_depth::CV_8U:
-      for (int i = 0; i < size; i++)
-        out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
-      break;
-    case WB_image_depth::Image_depth::CV_32S:
-      for (int i = 0; i < size; i++)
-        out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
-      break;
-    case WB_image_depth::Image_depth::CV_32F:
-      for (int i = 0; i < size; i++)
-        out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
-      break;
-    default:
-      break;
-  }
-  return out_image;
-*/
 }
 
 /**
