@@ -8,8 +8,10 @@
 #include <list>
 #include <string>
 
-//
-
+/**
+ * Error module
+ * Includes calling module, message id, and message text
+ */
 class Errors {
  public:
   int error_ct = 0;

@@ -23,11 +23,13 @@
 #include "operator_transform_intensity_map.hpp"
 #include "operator_dispatcher.hpp"
 
-extern bool debug;
+/**
+ * Convert text operator string to instance
+ * @param operator_name
+ * @return
+ */
 Operator *Operator_dispatcher::create_operator(const std::string &operator_name) {
   Operator *pOperator = nullptr;
-  if (debug)
-    std::cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << std::endl;
   // Creator explicitly creates classes according to type
   if (operator_name == "filter-edge-kirsch") pOperator = new Operator_filter_edge_kirsch();
   else if (operator_name == "filter-edge-laplacian") pOperator = new Operator_filter_edge_laplacian();

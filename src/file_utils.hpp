@@ -8,6 +8,9 @@
 #include <vector>
 #include "errors.hpp"
 
+/**
+ * Utility file functions
+ */
 namespace file_utils {
 
 long file_size(std::ifstream &in);

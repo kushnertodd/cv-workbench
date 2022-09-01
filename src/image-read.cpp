@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * This is a program that reads a tab-delimited text image file and writes it out as an internal binary format file.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc < 2)
     wb_utils::error_exit("usage: image-read filename");

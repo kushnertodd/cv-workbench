@@ -16,6 +16,9 @@
 #include "experiment_step.hpp"
 #include "wb_json_utils.hpp"
 
+/**
+ * List of experiment steps
+ */
 class Experiment {
  public:
   std::list<Experiment_step *> experiment_steps;

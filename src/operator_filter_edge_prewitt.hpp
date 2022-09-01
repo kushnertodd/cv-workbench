@@ -9,7 +9,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Prewitt image edge operator
+ */
 class Operator_filter_edge_prewitt : public Operator {
  public:
   ~Operator_filter_edge_prewitt() override;

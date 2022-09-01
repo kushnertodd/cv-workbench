@@ -9,6 +9,9 @@
 #include "point.hpp"
 #include "wb_log.hpp"
 
+/**
+ * Image line segment
+ */
 class Line_segment {
  public:
   Point point1;

@@ -7,6 +7,9 @@
 
 #include "operator.hpp"
 
+/**
+ * Image gaussian smooth operator
+ */
 class Operator_filter_smooth_gaussian : public Operator {
  public:
   ~Operator_filter_smooth_gaussian() override;

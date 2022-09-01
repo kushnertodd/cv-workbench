@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * This is a program that tests the filter-image-morphology operator.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc < 4)
     wb_utils::error_exit("usage: image-morph in_filename rows cols thickness");

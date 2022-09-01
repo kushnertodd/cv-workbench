@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * This is a program to print statistics of an image file.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
 
   if (argc < 2)

@@ -16,6 +16,9 @@
 #include "data_source_descriptor.hpp"
 #include "wb_log.hpp"
 
+/**
+ * Individual experiment steps
+ */
 class Experiment_step {
  public:
   int id;
@@ -31,11 +34,7 @@ class Experiment_step {
   void log_experiment_step(const std::list<WB_log_entry> &log_entries, Errors &errors) const;
   void run(Errors &errors);
   std::string to_string();
-/**
- * Parse experiment json
- * @param jobj  json-c parsed json
- * @param errors experiment parse errors
- */
+
   static Experiment_step *from_json(json_object *json_experiment_step, Errors &errors);
 };
 

@@ -14,6 +14,9 @@
 #include "image.hpp"
 #include "wb_defs.hpp"
 
+/**
+ * Reads and writes data to the filesystem.
+ */
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
  public:
   std::string directory{};

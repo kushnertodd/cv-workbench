@@ -9,8 +9,6 @@
 #include "wb_window.hpp"
 #include "operator_hough_draw_line.hpp"
 
-extern bool debug;
-
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
@@ -24,10 +22,6 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                                    String_map &operator_parameters,
                                    std::list<WB_log_entry> &log_entries,
                                    Errors &errors) {
-  if (debug) {
-    std::cout << "Operator_hough_draw_line::run parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_hough_draw_line::run", "", "input data source required");
   else if (input_data_sources.size() > 1)

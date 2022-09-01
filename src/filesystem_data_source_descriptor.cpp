@@ -11,8 +11,12 @@
 #include "data_source_descriptor.hpp"
 #include "filesystem_data_source_descriptor.hpp"
 
-extern bool debug;
-
+/**
+ * Constructor
+ * @param m_id
+ * @param m_data_type
+ * @param m_data_format
+ */
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
                                                                      WB_data_type::Data_type m_data_type,
                                                                      WB_data_format::Data_format m_data_format) :
@@ -21,15 +25,21 @@ Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
                            m_data_format,
                            WB_repository_type::Repository_type::FILESYSTEM) {}
 
+/**
+* Creates Filesystem_data_source_descriptor from a JSON file
+* @param json_data_source_descriptor json-c JSON descriptor
+* @param id index of data descriptor
+* @param data_type image, histogram, etc.
+* @param data_format jpeg, binary, etc.
+* @param errors
+* @return
+*/
 Filesystem_data_source_descriptor
 *Filesystem_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
                                               int id,
                                               WB_data_type::Data_type data_type,
                                               WB_data_format::Data_format data_format,
                                               Errors &errors) {
-  if (debug)
-    std::cout << "Filesystem_data_source_descriptor::from_json: id '" << id << "' type "
-              << std::endl;
   auto *filesystem_data_source_descriptor =
       new Filesystem_data_source_descriptor(id, data_type, data_format);
 
@@ -84,8 +94,18 @@ Filesystem_data_source_descriptor
   return filesystem_data_source_descriptor;
 }
 
+/**
+ * Reads binary filesystem histogram data
+ * @param errors
+ * @return
+ */
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 
+/**
+ * Reads binary filesystem hough data
+ * @param errors
+ * @return
+ */
 Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -99,6 +119,11 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
   return hough;
 }
 
+/**
+ * Reads binary filesystem image data
+ * @param errors
+ * @return
+ */
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -112,6 +137,11 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   return image;
 }
 
+/**
+ * Reads JPEG filesystem image data
+ * @param errors
+ * @return
+ */
 Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::JPEG);
@@ -119,6 +149,11 @@ Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
   return Image::read_jpeg(data_filename, errors);
 }
 
+/**
+ * Reads text filesystem image data
+ * @param errors
+ * @return
+ */
 Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
@@ -126,20 +161,42 @@ Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
   return Image::read_text(data_filename, errors);
 }
 
+/**
+ * Reads JSON filesystem data
+ * @param errors
+ * @return
+ */
 std::string Filesystem_data_source_descriptor::read_json(Errors &errors) { return ""; }
 
+/**
+ * Reads text filesystem data
+ * @param errors
+ * @return
+ */
 Hough *Filesystem_data_source_descriptor::read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
 
+/**
+ * Creates filesystem name path
+ * @return
+ */
 std::string Filesystem_data_source_descriptor::to_path() const {
   return to_path_noext() + "." + ext;
 }
 
+/**
+ * Creates filesystem name path with no extension
+ * @return
+ */
 std::string Filesystem_data_source_descriptor::to_path_noext() const {
   return (directory.empty() ? "" : directory + "/") + filename;
 }
 
+/**
+ * convert to information string
+ * @return
+ */
 std::string Filesystem_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()
@@ -150,6 +207,11 @@ std::string Filesystem_data_source_descriptor::to_string() {
   return os.str();
 }
 
+/**
+ * writes binary filesystem histogram data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -161,6 +223,11 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
   }
 }
 
+/**
+ * writes text filesystem histogram data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
@@ -169,6 +236,11 @@ void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogra
   histogram->write_text(path, "\t", errors);
 }
 
+/**
+ * writes binary filesystem hough data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -180,6 +252,11 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
   }
 }
 
+/**
+ * writes text filesystem hough data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
@@ -191,6 +268,11 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
   }
 }
 
+/**
+ * writes binary filesystem hough peak data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -202,6 +284,11 @@ void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &
   }
 }
 
+/**
+ * writes text filesystem hough peak data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
@@ -213,6 +300,11 @@ void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Err
   }
 }
 
+/**
+ * writes binary filesystem image data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -224,6 +316,11 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
   }
 }
 
+/**
+ * writes text filesystem image data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -235,6 +332,11 @@ void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &e
   }
 }
 
+/**
+ * writes JPEG filesystem image data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -242,5 +344,10 @@ void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &e
   image->write_jpeg(data_filename, errors);
 }
 
+/**
+ * writes JSON filesystem data
+ * @param errors
+ * @return
+ */
 void Filesystem_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 

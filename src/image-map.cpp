@@ -5,7 +5,12 @@
 #include "wb_utils.hpp"
 
 bool debug = false;
-
+/**
+ * This is a program that performs the same function as the transform-intensity-map operator
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc < 6)
     wb_utils::error_exit("usage: image-map in_filename out-filename lower-in upper-in lower-out upper-out");

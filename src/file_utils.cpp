@@ -18,6 +18,12 @@ long file_utils::file_size(std::ifstream &in) {
   return in.tellg();
 }
 
+/**
+ * Open read binary file descriptor
+ * @param path
+ * @param errors
+ * @return
+ */
 FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "r");
   if (fp == nullptr) {
@@ -26,6 +32,12 @@ FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
   return fp;
 }
 
+/**
+ * Open read stream file descriptor
+ * @param path
+ * @param errors
+ * @return
+ */
 std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &errors) {
   std::ifstream ifs(path, std::ifstream::in);
   if (!ifs) {
@@ -34,6 +46,12 @@ std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &e
   return ifs;
 }
 
+/**
+ * Open write binary file descriptor
+ * @param path
+ * @param errors
+ * @return
+ */
 FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
   FILE *fp = fopen(path.c_str(), "w");
   if (fp == nullptr) {
@@ -42,6 +60,12 @@ FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
   return fp;
 }
 
+/**
+ * Open write stream file descriptor
+ * @param path
+ * @param errors
+ * @return
+ */
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
   std::ofstream ofs(path, std::ofstream::out);
   if (!ofs) {
@@ -69,16 +93,34 @@ bool file_utils::read_file(const std::string &filename, std::string &contents) {
   return false;
 }
 
+/**
+ * Read binary double from file
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_double(FILE *fp, double &var) {
   size_t newLen = fread(&var, sizeof(double), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);
 }
 
+/**
+ * Read binary float from file
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_float(FILE *fp, float &var) {
   size_t newLen = fread(&var, sizeof(float), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);
 }
 
+/**
+ * Read binary int from file
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_int(FILE *fp, int &var) {
   size_t newLen = fread(&var, sizeof(int), 1, fp);
   return (ferror(fp) == 0 && newLen == 1);

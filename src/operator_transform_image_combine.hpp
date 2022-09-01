@@ -8,7 +8,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Image combine operator
+ */
 class Operator_transform_image_combine : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

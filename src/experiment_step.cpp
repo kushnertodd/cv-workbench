@@ -12,8 +12,9 @@
 #include "operator_dispatcher.hpp"
 #include "wb_json_utils.hpp"
 
-extern bool debug;
-
+/**
+ * Destructor
+ */
 Experiment_step::~Experiment_step() {
   for (Data_source_descriptor *descriptor: input_data_sources) {
     delete descriptor;
@@ -23,11 +24,20 @@ Experiment_step::~Experiment_step() {
   }
 }
 
+/**
+ * Constructor
+ */
 Experiment_step::Experiment_step() : id(0), json_experiment_step(nullptr) {}
 
+/**
+ * Constructor
+ */
 Experiment_step::Experiment_step(json_object *m_json_experiment_step)
     : id(0), json_experiment_step(m_json_experiment_step) {}
 
+/**
+ * Constructor
+ */
 Experiment_step::Experiment_step(int m_id, std::string m_operator_name)
     : id(m_id), operator_name(std::move(m_operator_name)), json_experiment_step(nullptr) {}
 /**
@@ -87,9 +97,6 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
   }
   // parse parameters
   if (json_parameters != nullptr) {
-    if (debug)
-      std::cout << "json_parameters type = '" << json_type_to_name(json_object_get_type(json_parameters)) << "'"
-                << std::endl;
     if (error_check_type("Experiment_step::from_json", "parameters",
                          json_parameters, json_type_object, errors)) {
       json_object_object_foreach(json_parameters, key, val) {
@@ -109,6 +116,11 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
   return experiment_step;
 }
 
+/**
+ * Add experiment log entries
+ * @param log_entries
+ * @param errors
+ */
 void Experiment_step::log_experiment_step(const std::list<WB_log_entry> &log_entries, Errors &errors) const {
   if (errors.has_error()) {
     json_object *json_error_list = json_object_new_array();
@@ -127,29 +139,15 @@ void Experiment_step::log_experiment_step(const std::list<WB_log_entry> &log_ent
   }
 }
 
+/**
+ * Run experiment step
+ * @param errors
+ */
 void Experiment_step::run(Errors &errors) {
   Operator *step_operator = Operator_dispatcher::create_operator(operator_name);
   if (step_operator == nullptr) {
-    if (debug)
-      std::cout << "Experiment_step::run: invalid operator '" + operator_name + "'" << std::endl;
     errors.add("Experiment_step::run", "", "invalid operator '" + operator_name + "'");
   } else {
-    if (debug) {
-      for (Data_source_descriptor *input_data_source: input_data_sources) {
-        std::cout << "Experiment_step::run input_data_source: " << input_data_source->to_string() << std::endl;
-      }
-      for (Data_source_descriptor *output_data_store: output_data_stores) {
-        std::cout << "Experiment_step::run output_data_store: " << output_data_store->to_string() << std::endl;
-      }
-      std::cout << "Experiment_step::run operator_parameters: " << std::endl;
-      String_map::iterator it;
-      for (it = operator_parameters.begin(); it != operator_parameters.end(); it++) {
-        std::cout << it->first    // string (key)
-                  << ':'
-                  << it->second   // string's value
-                  << std::endl;
-      }
-    }
     std::list<WB_log_entry> log_entries;
     step_operator->run(input_data_sources, output_data_stores, operator_parameters, log_entries, errors);
     log_experiment_step(log_entries, errors);
@@ -157,6 +155,10 @@ void Experiment_step::run(Errors &errors) {
   }
 }
 
+/**
+ * convert to information string
+ * @return
+ */
 std::string Experiment_step::to_string() {
   std::ostringstream os;
   os << "Experiment_step::run: id " << id << " operator " << operator_name << std::endl;

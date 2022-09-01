@@ -7,6 +7,9 @@
 
 #include "operator.hpp"
 
+/**
+ * Create hough histogram operator
+ */
 class Operator_histogram_hough_create : public Operator {
  public:
   ~Operator_histogram_hough_create() override;

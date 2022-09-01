@@ -6,6 +6,9 @@
 #define SRC__POINT_HPP_
 #include <string>
 
+/**
+ * Image point
+ */
 class Point {
  public:
   int row{};

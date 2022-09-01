@@ -7,6 +7,9 @@
 
 #include "kernel.hpp"
 
+/**
+ * Image morphology operators
+ */
 class Morphology {
  public:
   static Kernel *create_structuring_element_rectangle(int rows, int cols);

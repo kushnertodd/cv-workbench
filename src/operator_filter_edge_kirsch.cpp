@@ -112,3 +112,4 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
       }
     }
   }
+}

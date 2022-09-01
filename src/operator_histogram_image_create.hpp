@@ -8,6 +8,9 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
+/**
+ * Create image histogram operator
+ */
 class Operator_histogram_image_create : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

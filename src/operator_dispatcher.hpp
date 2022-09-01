@@ -9,7 +9,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Maps text operator string to operator instance
+ */
 class Operator_dispatcher : public Operator {
  public:
   static Operator *create_operator(const std::string &operator_name);

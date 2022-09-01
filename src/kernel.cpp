@@ -8,18 +8,27 @@
 #include "wb_utils.hpp"
 #include "kernel.hpp"
 
-//extern bool debug;
-
 Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
+/**
+ * Constructor
+ * @param rows
+ * @param cols
+ * @param depth
+ */
 Kernel::Kernel(int rows, int cols, WB_image_depth::Image_depth depth) :
     Image(rows, cols, 1, depth) {
   init();
 }
 
-// numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
+/**
+ * numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
+ * @param src
+ * @param errors
+ * @return
+ */
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
   // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are
   // WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
@@ -29,15 +38,27 @@ Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
   return Kernel::convolve(src, out_depth, WB_morphology_types::Convolution_type::NUMERIC, errors);
 }
 
-// morphology convolution, depth defaults to the input image
+/**
+ * morphology convolution, depth defaults to the input image
+ * @param src
+ * @param convolution_type
+ * @param errors
+ * @return
+ */
 Image *Kernel::convolve_morphological(Image *src,
                                       WB_morphology_types::Convolution_type convolution_type,
                                       Errors &errors) const {
   return Kernel::convolve(src, src->get_depth(), convolution_type, errors);
 }
 
-// base convolution, if convolution numeric, error if CV_8U input depth
-// TODO: not sure about that....
+/**
+ * base convolution, if convolution numeric, error if CV_8U input depth
+ * @param src
+ * @param out_depth
+ * @param convolution_type
+ * @param errors
+ * @return
+ */
 Image *Kernel::convolve(Image *src,
                         WB_image_depth::Image_depth out_depth,
                         WB_morphology_types::Convolution_type convolution_type,
@@ -107,6 +128,13 @@ Image *Kernel::convolve(Image *src,
 //  }
 }
 
+/**
+ * Create kernel 32S data
+ * @param rows
+ * @param cols
+ * @param buf_32S
+ * @return
+ */
 Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
   auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32S);
   const pixel_32S *buf_ptr = buf_32S;
@@ -116,6 +144,13 @@ Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
   return kernel;
 }
 
+/**
+ * Create kernel 32F data
+ * @param rows
+ * @param cols
+ * @param buf_32S
+ * @return
+ */
 Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
   auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32F);
   for (int i = 0; i < kernel->get_npixels(); i++) {
@@ -124,6 +159,14 @@ Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
   return kernel;
 }
 
+/**
+ * Create morphology operator structuring element
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @return
+ */
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                            int rows, int cols, int thickness) {
   auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_8U);
@@ -152,6 +195,12 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
   return kernel;
 }
 
+/**
+ * Create row of separable gaussian kernel
+ * @param rows
+ * @param sigma_y
+ * @return
+ */
 Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
   auto *gaussian_y = new Kernel(rows, 1, WB_image_depth::Image_depth::CV_32F);
   double fact1 = 1.0 / (sigma_y * sqrt(2 * M_PI));
@@ -170,6 +219,12 @@ Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
   return gaussian_y;
 }
 
+/**
+ * Create column of separable gaussian kernel
+ * @param rows
+ * @param sigma_y
+ * @return
+ */
 Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
   auto *gaussian_x = new Kernel(1, cols, WB_image_depth::Image_depth::CV_32F);
   double fact1 = 1.0 / (sigma_x * sqrt(2 * M_PI));

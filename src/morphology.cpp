@@ -5,10 +5,22 @@
 #include <memory>
 #include "morphology.hpp"
 
+/**
+ * Create rectangle structuring element
+ * @param rows
+ * @param cols
+ * @return
+ */
 Kernel *Morphology::create_structuring_element_rectangle(int rows, int cols) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::RECTANGLE, rows, cols);
 }
 
+/**
+ * Create cross structuring element
+ * @param rows
+ * @param cols
+ * @return
+ */
 Kernel *Morphology::create_structuring_element_cross(int rows, int cols, int thickness) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::CROSS,
                                             rows,
@@ -16,11 +28,27 @@ Kernel *Morphology::create_structuring_element_cross(int rows, int cols, int thi
                                             thickness);
 }
 
+/**
+ * Create ellipse structuring element
+ * @param rows
+ * @param cols
+ * @return
+ */
 Kernel *Morphology::create_structuring_element_ellipse(int rows, int cols) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::ELLIPSE, rows, cols);
 }
 
-// Subtract the original image from the closed image
+/**
+ * black hat image morphology operator
+ * Subtract the original image from the closed image
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::black_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                              int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Image>
@@ -31,7 +59,17 @@ Image *Morphology::black_hat(Image *image, WB_morphology_types::Structuring_elem
 
 }
 
-// Dilation followed by eroding
+/**
+ * close image morphology operator
+ * Dilation followed by eroding
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::close(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                          int rows, int cols, int thickness, Errors &errors) {
 
@@ -40,7 +78,17 @@ Image *Morphology::close(Image *image, WB_morphology_types::Structuring_element_
   return Morphology::erode(dilated_image.get(), structuring_element_type, rows, cols, thickness, errors);
 }
 
-// Output the maximum value under the structuring element
+/**
+ * Dilate image morphology operator
+ * Output the maximum value under the structuring element
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::dilate(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                           int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
@@ -48,7 +96,17 @@ Image *Morphology::dilate(Image *image, WB_morphology_types::Structuring_element
   return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::DILATE, errors);
 }
 
-// Output the minimum value under the structuring element
+/**
+ * Erode image morphology operator
+ * Output the minimum value under the structuring element
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::erode(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                          int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
@@ -56,6 +114,17 @@ Image *Morphology::erode(Image *image, WB_morphology_types::Structuring_element_
   return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::ERODE, errors);
 }
 
+/**
+ * Gradient image morphology operator
+ * Subtract the eroded image from the dilated image
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 // Subtract the eroded image from the dilated image
 Image *Morphology::gradient(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                             int rows, int cols, int thickness, Errors &errors) {
@@ -70,7 +139,17 @@ Image *Morphology::gradient(Image *image, WB_morphology_types::Structuring_eleme
   return Image::subtract(dilated_image.get(), eroded_image.get(), errors);
 }
 
-// Erosion followed by dilation
+/**
+ * Open image morphology operator
+ * Erosion followed by dilation
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::open(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                         int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Image>
@@ -78,7 +157,17 @@ Image *Morphology::open(Image *image, WB_morphology_types::Structuring_element_t
   return Morphology::dilate(eroded_image.get(), structuring_element_type, rows, cols, thickness, errors);
 }
 
-// Subtract the opened image from the original image
+/**
+ * Top-hat image morphology operator
+ * Subtract the opened image from the original image
+ * @param image
+ * @param structuring_element_type
+ * @param rows
+ * @param cols
+ * @param thickness
+ * @param errors
+ * @return
+ */
 Image *Morphology::top_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
                            int rows, int cols, int thickness, Errors &errors) {
   std::unique_ptr<Image> opened_image(Morphology::open(image, structuring_element_type, rows, cols, thickness, errors));

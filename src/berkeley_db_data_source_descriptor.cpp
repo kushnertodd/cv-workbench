@@ -11,8 +11,12 @@
 #include "data_source_descriptor.hpp"
 #include "berkeley_db_data_source_descriptor.hpp"
 
-extern bool debug;
-
+/**
+ * Constructor inherits from Data_source_descriptor
+ * @param m_id
+ * @param m_data_type
+ * @param m_data_format
+ */
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                                                                        WB_data_type::Data_type m_data_type,
                                                                        WB_data_format::Data_format m_data_format) :
@@ -22,15 +26,21 @@ Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
                            WB_repository_type::Repository_type::BERKELEY_DB),
     ref_id(0) {}
 
+/**
+ * Creates Berkeley_db_data_source_descriptor from a JSON file
+ * @param json_data_source_descriptor json-c JSON descriptor
+ * @param id index of data descriptor
+ * @param data_type image, histogram, etc.
+ * @param data_format jpeg, binary, etc.
+ * @param errors
+ * @return
+ */
 Berkeley_db_data_source_descriptor
 *Berkeley_db_data_source_descriptor::from_json(json_object *json_data_source_descriptor,
                                                int id,
                                                WB_data_type::Data_type data_type,
                                                WB_data_format::Data_format data_format,
                                                Errors &errors) {
-  if (debug)
-    std::cout << "Berkeley_db_data_source_descriptor::from_json: id '" << id << "' type "
-              << std::endl;
   auto *berkeley_db_data_source_descriptor =
       new Berkeley_db_data_source_descriptor(id, data_type, data_format);
   json_object *json_ref_id =
@@ -46,6 +56,11 @@ Berkeley_db_data_source_descriptor
   return berkeley_db_data_source_descriptor;
 }
 
+/**
+ * methods to read and write data types
+ * @param errors
+ * @return
+ */
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
@@ -63,6 +78,10 @@ void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &
 void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
 
+/**
+ * convert to information string
+ * @return
+ */
 std::string Berkeley_db_data_source_descriptor::to_string() {
   std::ostringstream os;
   os << Data_source_descriptor::to_string()

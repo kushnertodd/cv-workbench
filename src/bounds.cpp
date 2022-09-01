@@ -9,25 +9,46 @@
 #include <sstream>
 #include "bounds.hpp"
 
+/**
+ * Constructor
+ */
 Bounds::Bounds() :
     Bounds(DBL_MAX, -DBL_MAX) {
 }
 
+/**
+ * Constructor
+ * @param m_min_value range minimum value
+ * @param m_max_value range maximum value
+ */
 Bounds::Bounds(double m_min_value, double m_max_value) :
     min_value(m_min_value),
     max_value(m_max_value) {
 }
 
+/**
+ * getter
+ * @return range maximum value
+ */
 double Bounds::get_max_value() const {
-
   return max_value;
 }
 
+/**
+ * getter
+ * @return range minimum value
+ */
 double Bounds::get_min_value() const {
-
   return min_value;
 }
 
+/**
+ * Map input value to output value for given input and output ranges
+ * @param value
+ * @param input_bounds
+ * @param output_bounds
+ * @return
+ */
 double Bounds::map_input_to_output_bounds(double value, Bounds &input_bounds, Bounds &output_bounds) {
   if (value < input_bounds.get_min_value())
     return output_bounds.get_min_value();
@@ -40,7 +61,11 @@ double Bounds::map_input_to_output_bounds(double value, Bounds &input_bounds, Bo
             / (input_bounds.get_max_value() - input_bounds.get_min_value());
 }
 
-std::string Bounds::to_string(const std::string &prefix) const {
+/**
+ * convert to information string
+ * @return
+ */
+ std::string Bounds::to_string(const std::string &prefix) const {
   std::ostringstream os;
   os << "bounds: " << std::endl
      << prefix << "    " << std::setw(20) << std::left << "min_value " << min_value << std::endl
@@ -48,6 +73,10 @@ std::string Bounds::to_string(const std::string &prefix) const {
   return os.str();
 }
 
+/**
+ * Update range bounds
+ * @param value
+ */
 void Bounds::update(double value) {
   min_value = std::min(min_value, value);
   max_value = std::max(max_value, value);

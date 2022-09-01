@@ -7,6 +7,9 @@
 
 #include "operator.hpp"
 
+/**
+ * Image copy operator
+ */
 class Operator_transform_image_copy : public Operator {
  public:
   ~Operator_transform_image_copy() override;

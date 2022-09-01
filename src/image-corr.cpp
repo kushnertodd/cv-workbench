@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * unused. test pearson's correlation coefficient
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc < 4)
     wb_utils::error_exit("usage: image-corr in-image in-pattern out-image");

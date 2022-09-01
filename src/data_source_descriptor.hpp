@@ -19,12 +19,14 @@ class Data_source_descriptor {
   WB_data_format::Data_format data_format{};
   WB_repository_type::Repository_type repository_type{};
   virtual ~Data_source_descriptor();
-  Data_source_descriptor(int m_id,
+
+    Data_source_descriptor(int m_id,
                          WB_data_type::Data_type m_data_type,
                          WB_data_format::Data_format m_data_format,
                          WB_repository_type::Repository_type m_repository_type);
-  static Data_source_descriptor *from_json(json_object *json_data_source_descriptor, Errors &errors);
-  virtual Histogram *read_histogram(Errors &errors) = 0;
+    static Data_source_descriptor *from_json(json_object *json_data_source_descriptor, Errors &errors);
+
+   virtual Histogram *read_histogram(Errors &errors) = 0;
   //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
   virtual Hough *read_hough(Errors &errors) = 0;
   //  virtual Hough *read_hough_text(Errors &errors) = 0;

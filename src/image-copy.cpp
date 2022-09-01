@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * This is a program to copy a sub-image of an image to a new file.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc != 3 && argc != 7)
     wb_utils::error_exit("usage: image-copy in_filename out-filename [min-row min_col max_row max_col]");

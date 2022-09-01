@@ -8,6 +8,9 @@
 #include "operator.hpp"
 #include "wb_defs.hpp"
 
+/**
+ * Hough peak detect operator
+ */
 class Operator_hough_peak_detect : public Operator {
  public:
   ~Operator_hough_peak_detect() override;

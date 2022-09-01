@@ -10,6 +10,12 @@
 
 Data_source_descriptor::~Data_source_descriptor() = default;
 
+/**
+ * Constructor inherits from Data_source_descriptor
+ * @param m_id
+ * @param m_data_type
+ * @param m_data_format
+ */
 Data_source_descriptor::Data_source_descriptor(int m_id,
                                                WB_data_type::Data_type m_data_type,
                                                WB_data_format::Data_format m_data_format,
@@ -19,6 +25,15 @@ Data_source_descriptor::Data_source_descriptor(int m_id,
     data_format(m_data_format),
     repository_type(m_repository_type) {}
 
+/**
+* Creates Berkeley_db_data_source_descriptor from a JSON file
+* @param json_data_source_descriptor json-c JSON descriptor
+* @param id index of data descriptor
+* @param data_type image, histogram, etc.
+* @param data_format jpeg, binary, etc.
+* @param errors
+* @return
+*/
 Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data_source_descriptor, Errors &errors) {
   Data_source_descriptor *data_source_descriptor = nullptr;
 
@@ -89,6 +104,10 @@ Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data
   return data_source_descriptor;
 }
 
+/**
+ * convert to information string
+ * @return
+ */
 std::string Data_source_descriptor::to_string() {
   std::ostringstream os;
   os << "id " << id
@@ -99,6 +118,12 @@ std::string Data_source_descriptor::to_string() {
   return os.str();
 }
 
+/**
+ * read operator histogram binary data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 Histogram *Data_source_descriptor::read_operator_histogram(const std::string &module,
                                                            Errors &errors) {
   Histogram *input = nullptr;
@@ -109,6 +134,12 @@ Histogram *Data_source_descriptor::read_operator_histogram(const std::string &mo
   return input;
 }
 
+/**
+ * read operator hough binary data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 Hough *Data_source_descriptor::read_operator_hough(const std::string &module,
                                                    Errors &errors) {
   Hough *input = nullptr;
@@ -119,6 +150,12 @@ Hough *Data_source_descriptor::read_operator_hough(const std::string &module,
   return input;
 }
 
+/**
+ * read operator image binary, JPEG, or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 Image *Data_source_descriptor::read_operator_image(const std::string &module,
                                                    Errors &errors) {
   Image *input = nullptr;
@@ -133,6 +170,12 @@ Image *Data_source_descriptor::read_operator_image(const std::string &module,
   return input;
 }
 
+/**
+ * write operator histogram binary or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 void Data_source_descriptor::write_operator_histogram(Histogram *output,
                                                       const std::string &module,
                                                       Errors &errors) {
@@ -144,6 +187,12 @@ void Data_source_descriptor::write_operator_histogram(Histogram *output,
     errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
 
+/**
+ * write operator hough binary or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 void Data_source_descriptor::write_operator_hough(Hough *output,
                                                   const std::string &module,
                                                   Errors &errors) {
@@ -155,6 +204,12 @@ void Data_source_descriptor::write_operator_hough(Hough *output,
     errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
 
+/**
+ * write operator hough peaks binary or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 void Data_source_descriptor::write_operator_hough_peaks(Hough *output,
                                                         const std::string &module,
                                                         Errors &errors) {
@@ -166,6 +221,12 @@ void Data_source_descriptor::write_operator_hough_peaks(Hough *output,
     errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
 
+/**
+ * write operator image binary, JPEG, or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
 void Data_source_descriptor::write_operator_image(Image *output,
                                                   const std::string &module,
                                                   Errors &errors) {

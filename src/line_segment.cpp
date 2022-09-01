@@ -9,9 +9,15 @@
 
 extern bool debug;
 
+/**
+ * Constructor
+ */
 Line_segment::Line_segment() : Line_segment(0, 0, 0, 0) {
 }
 
+/**
+ * Constructor
+ */
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     point1(min_row, min_col),
     point2(max_row, max_col) {
@@ -22,6 +28,9 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
   plotLine();
 }
 
+/**
+ * Constructor
+ */
 Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
     point1(m_point1),
     point2(m_point2) {
@@ -33,15 +42,29 @@ Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
   plotLine();
 }
 
+/**
+ * add point to line segment
+ * @param x
+ * @param y
+ */
 void Line_segment::add(int x, int y) {
   Point point(y, x);
   add(point);
 }
 
+/**
+ * add point to line segment
+ * @param x
+ * @param y
+ */
 void Line_segment::add(const Point &point) {
   line_points.push_back(point);
 }
 
+/**
+ * add point log entries
+ * @param log_entries
+ */
 void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
   WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(point1.row));
   log_entries.push_back(log_entry_start_row);
@@ -121,12 +144,21 @@ void Line_segment::plotLine() {
   }
 }
 
+/**
+ * setter endpoints
+ * @param m_point1
+ * @param m_point2
+ */
 void Line_segment::set(const Point &m_point1, const Point &m_point2) {
   point1 = m_point1;
   point2 = m_point2;
   plotLine();
 }
 
+/**
+ * Convert to information string
+ * @return
+ */
 std::string Line_segment::to_string() const {
   std::ostringstream os;
   os << "point 1 " << point1.to_string()

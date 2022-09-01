@@ -9,6 +9,9 @@
 #include "wb_log.hpp"
 #include "data_source_descriptor.hpp"
 
+/**
+ * Abstract experiment step operator
+ */
 class Operator {
  public:
   virtual ~Operator();

@@ -9,6 +9,9 @@
 
 //
 
+/**
+ * Image intensity map operator
+ */
 class Operator_transform_intensity_map : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

@@ -9,7 +9,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Roberts cross edge operator
+ */
 class Operator_filter_edge_roberts : public Operator {
  public:
   ~Operator_filter_edge_roberts() override;

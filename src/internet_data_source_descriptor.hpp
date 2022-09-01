@@ -17,6 +17,9 @@
 #include "histogram.hpp"
 #include "hough.hpp"
 
+/**
+ * Reads streaming data from internet endpoint.
+ */
 class Internet_data_source_descriptor : public Data_source_descriptor {
  public:
   std::string url{};

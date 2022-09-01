@@ -10,8 +10,9 @@
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
-//
-
+/**
+ * Operator utility functions
+ */
 class Operator_utils {
  public:
   static bool get_int_parameter(const std::string &module,

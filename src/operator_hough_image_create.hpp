@@ -8,6 +8,9 @@
 #include "operator.hpp"
 #include "wb_defs.hpp"
 
+/**
+ * Create image hough operator
+ */
 class Operator_hough_image_create : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

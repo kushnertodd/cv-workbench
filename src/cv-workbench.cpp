@@ -1,10 +1,8 @@
 // A simple and complete json parser
 // https://linuxprograms.wordpress.com/2010/08/19/json_parser_json-c/
 
-/*
-
-This parser makes use of all the functions which reads the value of a json object. This parser is complete in all respects. You can make use of the functions to create parser for your various requirements
-
+/**
+ Main CV-workbench program
 */
 
 #include <exception>

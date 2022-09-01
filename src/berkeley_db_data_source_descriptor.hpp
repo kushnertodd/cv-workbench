@@ -15,6 +15,9 @@
 #include "wb_defs.hpp"
 #include "image.hpp"
 
+/**
+ * Reads and writes data to a Berkeley DB database.
+ */
 class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
  public:
   int ref_id; // database key

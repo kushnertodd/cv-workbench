@@ -8,7 +8,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Image create operator
+ */
 class Operator_transform_image_create : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

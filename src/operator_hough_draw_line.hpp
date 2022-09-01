@@ -8,6 +8,9 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
+/**
+ * Draw hough image line operator
+ */
 class Operator_hough_draw_line : public Operator {
  public:
   void run(std::list<Data_source_descriptor *> &input_data_sources,

@@ -11,14 +11,21 @@
 #include "polar_trig.hpp"
 #include "histogram.hpp"
 
-extern bool debug;
-
+/**
+ * Destructor
+ */
 Histogram::~Histogram() {
   delete bins;
 }
 
 Histogram::Histogram() = default;
 
+/**
+ * Constructor
+ * @param m_nbins
+ * @param m_lower_value
+ * @param m_upper_value
+ */
 Histogram::Histogram(int m_nbins,
                      double m_lower_value,
                      double m_upper_value) :
@@ -30,6 +37,16 @@ Histogram::Histogram(int m_nbins,
     bins[i] = 0;
 }
 
+/**
+ * Create image histogram
+ * @param image
+ * @param nbins
+ * @param lower_value
+ * @param upper_value
+ * @param saw_lower_value
+ * @param saw_upper_value
+ * @return
+ */
 Histogram *Histogram::create_image(Image *image,
                                    int nbins,
                                    double lower_value,
@@ -41,6 +58,16 @@ Histogram *Histogram::create_image(Image *image,
   return histogram;
 }
 
+/**
+ * Create hough histogram
+ * @param hough
+ * @param nbins
+ * @param lower_value
+ * @param upper_value
+ * @param saw_lower_value
+ * @param saw_upper_value
+ * @return
+ */
 Histogram *Histogram::create_hough(Hough *hough,
                                    int nbins,
                                    double lower_value,
@@ -52,6 +79,11 @@ Histogram *Histogram::create_hough(Hough *hough,
   return histogram;
 }
 
+/**
+ * Find hough peaks by histogramming data
+ * @param hough
+ * @param npeaks
+ */
 void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
   const int nbins = 1000;
   Histogram *histogram = create_hough(hough, nbins, 0, 0, false, false);
@@ -66,6 +98,11 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
   hough->hough_accum->find_peaks(hough->lines, threshold);
 }
 
+/**
+ * Get histogram bin for value
+ * @param value
+ * @return
+ */
 int Histogram::get_bin(double value) const {
   if (value < lower_value)
     return 0;
@@ -75,26 +112,49 @@ int Histogram::get_bin(double value) const {
     return wb_utils::double_to_int_round((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
 }
 
+/**
+ * Get value for histogram bin
+ * @param bin
+ * @return
+ */
 float Histogram::get_value(int bin) const {
   return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
 }
 
+/**
+ * getter for lower_value
+ */
 double Histogram::get_lower_value() const {
   return lower_value;
 }
 
+/**
+ * getter for max_value
+ */
 double Histogram::get_max_value() const {
   return input_value_stats.get_max_value();
 }
 
+/**
+ * getter for min_value
+ */
 double Histogram::get_min_value() const {
   return input_value_stats.get_min_value();
 }
 
+/**
+ * getter for upper_value
+ */
 double Histogram::get_upper_value() const {
   return upper_value;
 }
 
+/**
+ * Histogram hough data
+ * @param hough
+ * @param saw_lower_value
+ * @param saw_upper_value
+ */
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
   for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
@@ -116,6 +176,12 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
   update_bin_count_bounds();
 }
 
+/**
+ * Histogram image data
+ * @param image
+ * @param saw_lower_value
+ * @param saw_upper_value
+ */
 void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
   for (int row = image->get_min_row(); row < image->get_rows(); row++) {
     for (int col = image->get_min_col(); col < image->get_cols(); col++) {
@@ -137,6 +203,10 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
   update_bin_count_bounds();
 }
 
+/**
+ * Create histogram log entries
+ * @param log_entries
+ */
 void Histogram::log(std::list<WB_log_entry> &log_entries) {
   WB_log_entry log_entry_lower_value("lower_value", wb_utils::double_to_string(lower_value));
   log_entries.push_back(log_entry_lower_value);
@@ -166,16 +236,28 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
   log_entries.push_back(log_entry_bin_max_count);
 }
 
+/**
+ * Read binary file histogram data
+ * @param path
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read(std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
-  Histogram *histogram = nullptr;
   if (fp) {
-    histogram = Histogram::read(fp, errors);
+    Histogram *histogram = Histogram::read(fp, errors);
     fclose(fp);
+    return histogram;
   }
-  return histogram;
+  return nullptr;
 }
 
+/**
+ * read binary file descriptor histogram data
+ * @param fp
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read(FILE *fp, Errors &errors) {
   auto *histogram = new Histogram();
   if (fp == nullptr)
@@ -225,14 +307,31 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
   return histogram;
 }
 
+/**
+ * Read text file histogram data
+ * @param path
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read_text(const std::string &path, Errors &errors) {
   return nullptr;
 }
 
+/**
+ * Read text stream file histogram data
+ * @param ifs
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) {
   return nullptr;
 }
 
+/**
+ * Convert to information string
+ * @param prefix
+ * @return
+ */
 std::string Histogram::to_string(const std::string &prefix) {
   std::ostringstream os;
   os << "histogram:" << std::endl
@@ -244,18 +343,41 @@ std::string Histogram::to_string(const std::string &prefix) {
   return os.str();
 }
 
+/**
+ * Updte histogram bin
+ * @param value
+ */
 void Histogram::update_input_value(double value) const {
   int bin = get_bin(value);
   bins[bin]++;
 }
 
+/**
+ * Update histogram bounds
+ */
 void Histogram::update_bin_count_bounds() {
   for (int i = 0; i < nbins; i++)
     bin_count_bounds.update(bins[i]);
 }
 
-void Histogram::write(std::string &path, Errors &errors) const {}
+/**
+ * Write binary file histogram data
+ * @param path
+ * @param errors
+ */
+void Histogram::write(std::string &path, Errors &errors) const {
+  FILE *fp = file_utils::open_file_write(path, errors);
+  if (fp) {
+    write(fp, errors);
+    fclose(fp);
+  }
+}
 
+/**
+ * Write binary file histogram data
+ * @param fp
+ * @param errors
+ */
 void Histogram::write(FILE *fp, Errors &errors) const {
   wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins", errors);
   if (!errors.has_error())
@@ -274,6 +396,10 @@ void Histogram::write(FILE *fp, Errors &errors) const {
     wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins'", errors);
 }
 
+/**
+ * Write text gnuplot script
+ * @param wb_filename
+ */
 void Histogram::write_gp_script(const Wb_filename &wb_filename) {
   std::string script_filename = wb_filename.to_hist_script();
   std::string data_filename = wb_filename.to_hist_text();
@@ -284,7 +410,12 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
   ofs.close();
 }
 
-// path excludes extension, so write_text() can add .txt for text and .gp for gnuplot script
+/**
+ * Write text file histogram data
+ * @param path
+ * @param delim
+ * @param errors
+ */
 void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);

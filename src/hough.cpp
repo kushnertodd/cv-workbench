@@ -9,8 +9,6 @@
 #include "wb_window.hpp"
 #include "hough.hpp"
 
-extern bool debug;
-
 Hough::~Hough() {
   delete hough_accum;
 }

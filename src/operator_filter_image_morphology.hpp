@@ -8,6 +8,9 @@
 #include "wb_defs.hpp"
 #include "operator.hpp"
 
+/**
+ * Image morphology operator
+ */
 class Operator_filter_image_morphology : public Operator {
  public:
   ~Operator_filter_image_morphology() override;

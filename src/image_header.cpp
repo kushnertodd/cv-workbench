@@ -10,6 +10,13 @@
 
 Image_header::Image_header() = default;
 
+/**
+ * Constructor
+ * @param m_rows
+ * @param m_cols
+ * @param m_components
+ * @param m_depth
+ */
 Image_header::Image_header(int m_rows,
                            int m_cols,
                            int m_components,
@@ -26,6 +33,13 @@ Image_header::Image_header(int m_rows,
     npixels(rows * row_stride) {
 }
 
+/**
+ * Constructor
+ * @param m_rows
+ * @param m_cols
+ * @param m_components
+ * @param m_depth
+ */
 Image_header::Image_header(int m_rows, int m_cols, int m_components,
                            WB_image_depth::Image_depth m_depth,
                            int m_min_row,
@@ -50,6 +64,13 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components,
   assert(max_col < cols);
 }
 
+/**
+ * Constructor
+ * @param m_rows
+ * @param m_cols
+ * @param m_components
+ * @param m_depth
+ */
 Image_header::Image_header(Image_header &image_header) :
     Image_header(image_header.rows,
                  image_header.cols,
@@ -57,6 +78,11 @@ Image_header::Image_header(Image_header &image_header) :
                  image_header.depth) {
 }
 
+/**
+ * Read binary file image header
+ * @param fp
+ * @param errors
+ */
 void Image_header::read(FILE *fp, Errors &errors) {
   wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows", errors);
   if (!errors.has_error())
@@ -81,22 +107,43 @@ void Image_header::read(FILE *fp, Errors &errors) {
   }
 }
 
+/**
+ * Setter min_row
+ * @param m_min_row
+ */
 void Image_header::set_min_row(int m_min_row) {
   min_row = m_min_row;
 }
 
+/**
+ * Setter min_col
+ * @param m_min_col
+ */
 void Image_header::set_min_col(int m_min_col) {
   min_col = m_min_col;
 }
 
+/**
+ * Setter max_row
+ * @param m_max_row
+ */
 void Image_header::set_max_row(int m_max_row) {
   max_row = m_max_row;
 }
 
+/**
+ * Setter max_col
+ * @param m_max_col
+ */
 void Image_header::set_max_col(int m_max_col) {
   max_col = m_max_col;
 }
 
+/**
+ * Write binary file image header data
+ * @param fp
+ * @param errors
+ */
 void Image_header::write(FILE *fp, Errors &errors) const {
   fwrite(&rows, sizeof(int), 1, fp);
   if (ferror(fp) != 0) {
@@ -120,6 +167,11 @@ void Image_header::write(FILE *fp, Errors &errors) const {
   }
 }
 
+/**
+ * Convert to information string
+ * @param prefix
+ * @return
+ */
 std::string Image_header::to_string(const std::string &prefix) const {
   std::ostringstream os;
   os << prefix << std::setw(20) << std::left << "rows " << rows << std::endl

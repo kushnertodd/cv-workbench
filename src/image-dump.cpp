@@ -7,6 +7,12 @@
 
 bool debug = false;
 
+/**
+ * This is a program to write out the contents of an image as a tab-delimited text file.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   if (argc < 2)
     wb_utils::error_exit("usage: image-dump in-filename");

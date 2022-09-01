@@ -4,6 +4,12 @@
 
 bool debug = false;
 
+/**
+ * unused. Computes image mean
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   /*
     if (argc < 2)

@@ -9,7 +9,9 @@
 #include "operator.hpp"
 
 //
-
+/**
+ * Kirsch image edge operataor
+ */
 class Operator_filter_edge_kirsch : public Operator {
  public:
   ~Operator_filter_edge_kirsch() override;

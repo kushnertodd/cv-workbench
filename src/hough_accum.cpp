@@ -8,8 +8,6 @@
 #include "polar_trig.hpp"
 #include "hough_accum.hpp"
 
-extern bool debug;
-
 Hough_accum::~Hough_accum() {
   delete polar_trig;
   delete rho_theta_counts;

@@ -7,6 +7,9 @@
 
 #include <string>
 
+/**
+ * Represents value range
+ */
 class Bounds {
  public:
 

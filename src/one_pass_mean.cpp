@@ -7,6 +7,12 @@
 #include "wb_utils.hpp"
 #include "one_pass_mean.hpp"
 
+/**
+ * Constructor
+ * @param m_image
+ * @param m_window_rows
+ * @param m_window_cols
+ */
 One_pass_mean::One_pass_mean(Image *m_image, int m_window_rows, int m_window_cols) :
     image(m_image),
     window_rows(m_window_rows),

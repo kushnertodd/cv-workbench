@@ -7,6 +7,9 @@
 
 #include "operator.hpp"
 
+/**
+ * Image average smooth
+ */
 class Operator_filter_smooth_average : public Operator {
  public:
   ~Operator_filter_smooth_average() override;

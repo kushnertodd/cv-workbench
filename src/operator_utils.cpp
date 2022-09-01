@@ -114,6 +114,13 @@ bool Operator_utils::get_string_parameter(const std::string &module,
   return true;
 }
 
+/**
+ * Get subimage bounds parameters
+ * @param image
+ * @param module
+ * @param parameters
+ * @param errors
+ */
 void Operator_utils::get_subimage_parameters(Image *image,
                                              const std::string &module,
                                              String_map &parameters,
@@ -136,10 +143,21 @@ void Operator_utils::get_subimage_parameters(Image *image,
   }
 }
 
+/**
+ * Check if operator parameters have parameter
+ * @param parameters
+ * @param parameter
+ * @return
+ */
 bool Operator_utils::has_parameter(String_map &parameters, const std::string &parameter) {
   return parameters.find(parameter) != parameters.end();
 }
 
+/**
+ * Convert parameters to information string
+ * @param parameters
+ * @return
+ */
 std::string Operator_utils::parameters_to_string(String_map &parameters) {
   std::ostringstream os;
   String_map::iterator it;
