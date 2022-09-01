@@ -51,7 +51,8 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
       Operator_utils::get_subimage_parameters(input.get(),
                                               "Operator_hough_image_create::run",
                                               operator_parameters,
-                                              errors);    if (!errors.has_error()) {
+                                              errors);
+    if (!errors.has_error()) {
       Kernel *prewitt_kernel_row_ptr = nullptr;
       Kernel *prewitt_kernel_col_ptr = nullptr;
       if (orientation_str == "90") {
@@ -65,7 +66,10 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
         // this is reversed from the separable filter reference
         pixel_32F coeffs_32F_col[] = {-1, 0, 1};
         prewitt_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
-      }
+      } else
+        errors.add("Operator_filter_edge_prewitt",
+                   "",
+                   "orientation not 0 or 90");
       std::unique_ptr<Kernel> prewitt_kernel_row(prewitt_kernel_row_ptr);
       std::unique_ptr<Kernel> prewitt_kernel_col(prewitt_kernel_col_ptr);
       std::unique_ptr<Image> output1(prewitt_kernel_row->convolve_numeric(input.get(), errors));

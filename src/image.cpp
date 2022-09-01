@@ -209,8 +209,8 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
 
   for (int row = 0; row < rows_out; row++)
     for (int col = 0; col < cols_out; col++) {
-      double pixel1 = input1->get(row + row_origin1, col + col_origin1);
-      double pixel2 = input2->get(row + row_origin2, col + col_origin2);
+      double pixel1 = input1->get(row + row_origin1 + input1->get_min_row(), col + col_origin1);
+      double pixel2 = input2->get(row + row_origin2 + input2->get_min_row(), col + col_origin2);
       double value = pixel1 * scale1 + pixel2 * scale2 + offset;
       output->set(row, col, value);
     }

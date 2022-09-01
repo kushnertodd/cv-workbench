@@ -35,10 +35,10 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                                       operator_parameters, "cols", cols, errors);
     double background = 0.0;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                       operator_parameters, "background", background, errors);
+                                       operator_parameters, "background", background, errors, true);
     double foreground = 255.0;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                       operator_parameters, "foreground", foreground, errors);
+                                       operator_parameters, "foreground", foreground, errors, true);
     std::string param_point_str;
     bool saw_point = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                           operator_parameters,
@@ -64,7 +64,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                  "",
                  "'rows' and 'cols' parameters required if no input data source");
     if (!errors.has_error()) {
-      Image *image_ptr = nullptr;
+      Image *image_ptr;
       if (input_data_sources_missing)
         image_ptr = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
       else {

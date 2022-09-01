@@ -33,12 +33,12 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_hough_image_create::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_image_create::run", "", "output data source required");
-  int theta_inc = 0;
+  int theta_inc = 3;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                     operator_parameters, "theta_inc", theta_inc, errors, true);
-  int threshold = 0;
+  int threshold;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "threshold", threshold, errors, true);
+                                    operator_parameters, "threshold", threshold, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_hough_image_create::run", errors));

@@ -51,7 +51,8 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
       Operator_utils::get_subimage_parameters(input.get(),
                                               "Operator_hough_image_create::run",
                                               operator_parameters,
-                                              errors);    if (!errors.has_error()) {
+                                              errors);
+    if (!errors.has_error()) {
       Kernel *roberts_kernel_ptr = nullptr;
       if (orientation_str == "0") {
         //     0 = [0, 1], [-1, 0]
@@ -61,7 +62,10 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
         //     90 = [1, 0],  [0, -1]
         int coeffs_32S[] = {1, 0, 0, -1};
         roberts_kernel_ptr = Kernel::create_32S(2, 2, coeffs_32S);
-      }
+      } else
+        errors.add("Operator_filter_edge_roberts",
+                   "",
+                   "orientation not 0 or 90");
       std::unique_ptr<Kernel> roberts_kernel(roberts_kernel_ptr);
       std::unique_ptr<Image> output(roberts_kernel->convolve_numeric(input.get(), errors));
       for (Data_source_descriptor *output_data_store: output_data_stores)
