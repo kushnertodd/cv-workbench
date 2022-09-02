@@ -1,18 +1,82 @@
-## Installation
-These are instructions to build CV Workbench from source. 
-Below are requirements to set up the system to build and run.
-Once they are in place, the system may be built with:
+# Installation
+These are instructions for installing CV Workbench.
+They include:
+- Downloading the CV Workench Github repository.
+- Setting up Windows 10 to run Linux.  
+- Running the CV Workbench program tests to verify the installation  
 
+Setting up MacOS will not be discussed here, but MacOS comes with Linux installed.
+
+## Downloading the CV Workbench Github repository
+The steps to download CV Workbench on Windows 10 are the following.
+
+### Install Git for Windows
+Download [git for Windows](https://git-scm.com/download/win) and install it.
+
+### Download the repository
+From a command prompt, first go to the directory in which you want to install CV Workbench.
+Then run this command:
+```
+C:\>git clone https://github.com/kushnertodd/cv-workbench.git
+```
+
+## Setting up Windows 10 to run Linux
+
+The first steps to installing Linux on Windows is to install
+[Windows Subsystem for Linux WSL2](https://docs.microsoft.com/en-us/windows/wsl/install).
+Follow those instructions which begin with running this command from an administrator
+command prompt and restarting:
+```
+C:>wsl --install
+```
+This will install Linux [Ubuntu](https://ubuntu.com/). You can also install a
+compatible Linux version such as [Pengwin](https://www.whitewaterfoundry.com/)
+from Microsoft Store.
+You may also want to install Windows Terminal from the Microsoft Store
+to run Linux.
+You may wish to read up on 
+[Linux](https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-basics)
+first if you are new to it.
+
+## Running CV Workbench from Linux
+Start Linux by opening Ubuntu from the Start Menu. 
+Change to the directory in which CV Workbench was installed.
+If CV Workbench was installed in the directory cv-workbench
+under your Windows home directory, run:
+```
+$ cd /mnt/c/Users/user-name/cv-workbench
+```
+where 'user-name' is your Windows user name.
+
+Run the following commands to test the CV Workbench installation:
 ```
 $ cd src
-$ make
+$ ../bin/cv-workbench test/filter-edge-sobel/square45-90_gray-sobel-0.json
 ```
-This builds the main program `cv-workbench` and some additional utilities.
+Test that the expected output images were produced:
+```
+$ cd src/images
+$ ls
+square45-90_gray-sobel-0.bin  square45-90_gray-sobel-0.jpg
+```
+Open `square45-90_gray-sobel-0.jpg` in File Explorer and verify that it looks like this:  
+<img src="src/images/square45-90_gray-sobel-0.jpg">
+If so, your installation is successful.
 
-The software is assumed to run under Linux [Ubuntu](https://ubuntu.com/) or compatible Linux version,
-such as Microsoft WSL2 [Pengwin](https://www.whitewaterfoundry.com/).
+# Building CV Workbench from suorce
+To build custom C++ operators, the Linux build environment must be configured. 
 The following Linux modules need to be installed.
+Building from C++ requires g++ version 10.
+[Pengwin](https://www.whitewaterfoundry.com/) installs version 10
+by default in the install step below
+but Ubuntu installs version 9 which will not build properly.
+At this time, Pengwin is required to build custom operators.
 
+### make
+Install the `make` build utility with:
+```
+$ sudo apt install make
+```
 ### gcc and g++
 Install the `gcc` and `g++` build utilities with:
 ```
@@ -23,10 +87,7 @@ Install the Json-c C/C++ Json parsing library under Linux with:
 ```
 sudo apt install libjson-c-dev
 ```
-or
-```
-sudo apt-get install libjson0 libjson0-dev
-```
+[comment]: <> (or sudo apt-get install libjson0 libjson0-dev)
 
 - It can be cloned and built from [source](https://github.com/json-c/json-c) (cv-workbench was developed using this).
 - See the json-c [documentation](https://json-c.github.io/json-c/)
@@ -40,6 +101,19 @@ sudo apt-get install libjson0 libjson0-dev
   or in some IDEs such as [notepad++](https://notepad-plus-plus.org/) or JetBrains [Clion](https://www.jetbrains.com/clion/).
 - Compile jcson-c C source files with the `json-c/json.h` include file
   and link with `-ljson-c`.
+
+### JPEG support
+Install the [Independent JPEG Group](http://www.ijg.org/) `jpeg-9e` library
+from [source](http://www.ijg.org/files/)
+(also from [github](https://github.com/LuaDist/libjpeg)).
+- See the source [documentation](http://www.ijg.org/files/README).
+- There is a [wiki](https://jpegclub.org/) and more [documentation](https://en.wikipedia.org/wiki/Libjpeg).
+- See the JPEG [documentation](https://jpegclub.org/reference/reference-sources/).
+- There is an `example.c` file in the source that is an example of using the library.
+- Compile `jpeg-9e` C source files with the `jpeglib.h` include file and link with `-ljpeg`.
+
+## Optional packages
+These packages are not yet used by CV Workbench, but may be in the future.
 
 ### Berkeley DB
 Install the Berkeley DB open source embedded database system from the zip
@@ -58,15 +132,6 @@ sudo apt install autoconf libtool
 - Compile Berkeley C source files with the `db.h` include file
   and link with `-ldb`.
 
-### JPEG support
-Install the [Independent JPEG Group](http://www.ijg.org/) `jpeg-9e` library
-from [source](http://www.ijg.org/files/)
-(also from [github](https://github.com/LuaDist/libjpeg)).
-- See the source [documentation](http://www.ijg.org/files/README).
-- There is a [wiki](https://jpegclub.org/) and more [documentation](https://en.wikipedia.org/wiki/Libjpeg).
-- See the JPEG [documentation](https://jpegclub.org/reference/reference-sources/).
-- There is an `example.c` file in the source that is an example of using the library.
-- Compile `jpeg-9e` C source files with the `jpeglib.h` include file and link with `-ljpeg`.
 
 ### OpenCV
 Install the [OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)
