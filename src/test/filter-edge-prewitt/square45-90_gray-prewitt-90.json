@@ -53,8 +53,8 @@
         ],
         "parameters": {
             "depth": "CV_8U",
-            "lower_in": "-500",
-            "upper_in": "1000",
+            "lower_in": "-60",
+            "upper_in": "60",
             "lower_out": "0",
             "upper_out": "255"
         }
