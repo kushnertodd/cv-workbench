@@ -131,7 +131,7 @@ clobber:
 	rm -f $(OBJS) $(PROGRAMS)
 
 install:
-	cp $(PROGRAMS) `which jpegtran` ../bin
+	cp $(PROGRAMS) `which jpegtran` ~/bin
 
 doc:
 	doxygen doxygen.config
