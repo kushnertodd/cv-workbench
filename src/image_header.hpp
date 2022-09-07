@@ -45,8 +45,10 @@ class Image_header {
   int max_col{};
   // pixels are stored continuously in blocks; the number of pixels to skip for a row
   int row_stride{};
-  // the number of pixels = rows * cols
+  // the number of float, int, or unsigned byte pixel values = rows * cols * components
   int npixels{};
+  // the number of 1-3 channel elements = rows * cols
+  int nelements{};
 
  public:
   Image_header();
@@ -73,6 +75,7 @@ class Image_header {
   inline int get_max_col() const { return max_col; }
   inline int get_row_stride() const { return row_stride; }
   inline int get_npixels() const { return npixels; }
+  inline int get_nelements() const { return nelements; }
   void read(FILE *fp, Errors &errors);
   void set_min_row(int m_min_row);
   void set_min_col(int m_min_col);

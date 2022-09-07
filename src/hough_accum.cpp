@@ -66,6 +66,7 @@ int Hough_accum::get_theta_inc() { return Polar_trig::get_theta_inc(); }
 
 /**
  * initialize_image accumulator
+ * grayscale only
  *
  * @param image_theshold
  */

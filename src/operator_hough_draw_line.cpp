@@ -48,7 +48,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Image> input(input_data_source->read_operator_image("Operator_hough_draw_line::run", errors));
     if (!errors.has_error())
-      input->check_grayscale("Operator_hough_draw_line::run", errors);
+      input->check_color(out_component - 1, "Operator_hough_draw_line::run", errors);
     if (!errors.has_error())
       Operator_utils::get_subimage_parameters(input.get(),
                                               "Operator_hough_image_create::run",
@@ -69,7 +69,8 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
         errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
       } else {
-        input->draw_line_segment(line_segment, pixel_value);
+        // user components are 1-3
+        input->draw_line_segment(line_segment, pixel_value, out_component - 1);
         for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
           histogram_output_data_store->write_operator_image(input.get(),
                                                             "Operator_hough_draw_line::run",

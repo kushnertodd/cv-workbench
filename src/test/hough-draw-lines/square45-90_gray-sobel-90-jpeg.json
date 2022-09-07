@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
+            "filename": "square45-90_gray-609x473-sobel-90",
             "ext": "jpg"
           }
         ],
@@ -22,48 +22,15 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_0_-162",
+            "filename": "square45-90_gray-609x473-sobel-90_line_0_30",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "0",
-          "rho": "-162",
-          "threshold": "200",
-          "pixel_value": "255"
-        }
-      },
-
-      {
-        "id": 2,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
-            "ext": "jpg"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_0_3",
-            "ext": "jpg"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "0",
-          "rho": "3.5",
+          "rho": "30",
+          "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
         }
@@ -78,7 +45,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
+            "filename": "square45-90_gray-609x473-sobel-90",
             "ext": "jpg"
           }
         ],
@@ -89,20 +56,89 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_15_-156",
+            "filename": "square45-90_gray-609x473-sobel-90_line_0_196",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "196",
+          "out-component": "2",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "square45-90_gray-609x473-sobel-90",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray-609x473-sobel-90_line_177_-201",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "59",
+          "rho": "-201",
+          "out-component": "2",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "square45-90_gray-609x473-sobel-90",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray-609x473-sobel-90_line_45_-87",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "15",
-          "rho": "-156.5",
+          "rho": "-87",
+          "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
         }
       },
       {
-        "id": 4,
+        "id": 3,
         "operator": "hough-draw-line",
         "input-data": [
           {
@@ -111,7 +147,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
+            "filename": "square45-90_gray-609x473-sobel-90",
             "ext": "jpg"
           }
         ],
@@ -122,20 +158,21 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_15_-76",
+            "filename": "square45-90_gray-609x473-sobel-0_line_45_-7",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "15",
-          "rho": "-76.5",
+          "rho": "-7",
+          "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
         }
       },
       {
-        "id": 5,
+        "id": 3,
         "operator": "hough-draw-line",
         "input-data": [
           {
@@ -144,7 +181,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "jpg"
           }
         ],
@@ -155,20 +192,21 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_45_458",
+            "filename": "square45-90_gray-609x473-sobel-0_line_3_24",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "45",
-          "rho": "458.5",
+          "theta_index": "1",
+          "rho": "24",
+          "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
         }
       },
       {
-        "id": 6,
+        "id": 3,
         "operator": "hough-draw-line",
         "input-data": [
           {
@@ -177,7 +215,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-90",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "jpg"
           }
         ],
@@ -188,14 +226,49 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-90_line_45_295",
+            "filename": "square45-90_gray-609x473-sobel-0_line_135_94",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "45",
-          "rho": "295.5",
+          "rho": "94",
+          "out-component": "2",
+          "threshold": "200",
+          "pixel_value": "255"
+        }
+      },
+      {
+        "id": 3,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "square45-90_gray-609x473-sobel-0",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "square45-90_gray-609x473-sobel-0_line_135_261",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "45",
+          "rho": "261",
+          "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
         }

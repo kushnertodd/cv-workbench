@@ -30,7 +30,8 @@ Image_header::Image_header(int m_rows,
     max_row(rows - 1),
     max_col(cols - 1),
     row_stride(cols * components),
-    npixels(rows * row_stride) {
+    npixels(rows * row_stride),
+    nelements(rows * cols) {
 }
 
 /**
@@ -55,7 +56,8 @@ Image_header::Image_header(int m_rows, int m_cols, int m_components,
     max_row(m_max_row),
     max_col(m_max_col),
     row_stride(cols * components),
-    npixels(rows * row_stride) {
+    npixels(rows * row_stride),
+    nelements(rows * cols) {
   assert(min_row >= 0);
   assert(min_row <= max_row);
   assert(max_row < rows);
@@ -183,6 +185,7 @@ std::string Image_header::to_string(const std::string &prefix) const {
      << prefix << std::setw(20) << std::left << "max_row " << max_row << std::endl
      << prefix << std::setw(20) << std::left << "max_col " << max_col << std::endl
      << prefix << std::setw(20) << std::left << "row_stride " << row_stride << std::endl
-     << prefix << std::setw(20) << std::left << "npixels " << npixels << std::endl;
+     << prefix << std::setw(20) << std::left << "npixels " << npixels << std::endl
+  << prefix << std::setw(20) << std::left << "nelements " << nelements << std::endl;
   return os.str();
 }

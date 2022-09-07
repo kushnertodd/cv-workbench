@@ -34,7 +34,7 @@
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "60"
 				}
 			}
 		]
