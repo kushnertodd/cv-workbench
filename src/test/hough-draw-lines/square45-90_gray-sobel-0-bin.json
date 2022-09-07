@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -22,7 +22,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_0_-162",
+            "filename": "square45-90_gray-609x473-sobel-0_line_0_-162",
             "ext": "bin"
           }
         ],
@@ -45,7 +45,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -56,7 +56,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_0_3",
+            "filename": "square45-90_gray-609x473-sobel-0_line_0_3",
             "ext": "bin"
           }
         ],
@@ -78,7 +78,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -89,7 +89,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_15_-156",
+            "filename": "square45-90_gray-609x473-sobel-0_line_15_-156",
             "ext": "bin"
           }
         ],
@@ -111,7 +111,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -122,7 +122,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_15_-76",
+            "filename": "square45-90_gray-609x473-sobel-0_line_15_-76",
             "ext": "bin"
           }
         ],
@@ -144,7 +144,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -155,7 +155,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_45_458",
+            "filename": "square45-90_gray-609x473-sobel-0_line_45_458",
             "ext": "bin"
           }
         ],
@@ -177,7 +177,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-sobel-0",
+            "filename": "square45-90_gray-609x473-sobel-0",
             "ext": "bin"
           }
         ],
@@ -188,7 +188,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-sobel-0_line_45_295",
+            "filename": "square45-90_gray-609x473-sobel-0_line_45_295",
             "ext": "bin"
           }
         ],

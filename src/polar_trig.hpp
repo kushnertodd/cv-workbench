@@ -11,7 +11,7 @@ const int max_thetas = 180;
 const int rho_pad = 2;
 
 class Polar_trig {
- public:
+ private:
   static int theta_inc;
   static const double polar_cos[max_thetas];
   static const double polar_sin[max_thetas];
@@ -19,6 +19,7 @@ class Polar_trig {
   int cols{};
   int nrhos{};
 
+ public:
   Polar_trig();
   Polar_trig(int n_rows, int m_cols);
   int get_cols() const;

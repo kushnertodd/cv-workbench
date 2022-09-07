@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "du_drone_gray-250x273"
+            "filename": "du_drone_gray-151x118"
           }
         ],
         "output-data": [
@@ -21,7 +21,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du_drone_gray-250x273-sobel-90"
+            "filename": "du_drone_gray-151x118-sobel-90"
           }
         ],
         "parameters": {
@@ -38,7 +38,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "du_drone_gray-250x273-sobel-90"
+            "filename": "du_drone_gray-151x118-sobel-90"
           }
         ],
         "output-data": [
@@ -48,7 +48,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "du_drone_gray-250x273-sobel-90"
+            "filename": "du_drone_gray-151x118-sobel-90"
           }
         ],
         "parameters": {

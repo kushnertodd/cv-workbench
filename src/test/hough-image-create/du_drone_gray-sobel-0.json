@@ -11,7 +11,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/filter-edge-sobel",
-						"filename": "du_drone_gray-250x273-sobel-0"
+						"filename": "du_drone_gray-151x118-sobel-0"
 					}
 				],
 				"output-data": [
@@ -21,7 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "du_drone_gray-250x273-sobel-0"
+						"filename": "du_drone_gray-151x118-sobel-0"
 					},
 					{
 						"id": 2,
@@ -29,12 +29,12 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "du_drone_gray-250x273-sobel-0"
+						"filename": "du_drone_gray-151x118-sobel-0"
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "60"
 				}
 			}
 		]

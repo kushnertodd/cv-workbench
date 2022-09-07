@@ -22,6 +22,7 @@ class Hough {
   void find_lines(int rows, int cols, int nrhos);
   //void find_peaks(int npeaks);
   void lines_to_line_segments(int rows, int cols, int nrhos);
+  void log(Image *image, std::list<WB_log_entry> &log_entries) const;
   static Hough *read(const std::string &path, Errors &errors);
   static Hough *read(FILE *fp, Errors &errors);
   static Hough *read_text(std::ifstream &ifs, Errors &errors);

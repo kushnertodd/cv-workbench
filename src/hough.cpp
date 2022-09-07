@@ -41,6 +41,42 @@ void Hough::lines_to_line_segments(int rows, int cols, int nrhos) {
       line_segments.push_back(line_segment);
   }
 }
+
+void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
+  Variance_stats stats = hough_accum->accumulator_stats;
+  int nthetas = hough_accum->polar_trig->get_nthetas();
+  int theta_inc = hough_accum->polar_trig->get_theta_inc();
+  int nrhos = hough_accum->polar_trig->get_nrhos();
+  int min_count = stats.get_min_value();
+  int max_count = stats.get_max_value();
+  double mean = stats.get_mean();
+  double std_dev = stats.get_standard_deviation();
+
+  WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(image->get_rows()));
+  log_entries.push_back(log_entry_rows);
+  WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(image->get_cols()));
+  log_entries.push_back(log_entry_cols);
+  WB_log_entry log_entry_components("components", wb_utils::int_to_string(image->get_components()));
+  log_entries.push_back(log_entry_components);
+  WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(image->get_depth()));
+  log_entries.push_back(log_entry_depth);
+  WB_log_entry log_entry_theta_inc("theta_inc", wb_utils::int_to_string(theta_inc));
+  log_entries.push_back(log_entry_theta_inc);
+  WB_log_entry log_entry_nrhos("nrhos", wb_utils::int_to_string(nrhos));
+  log_entries.push_back(log_entry_nrhos);
+  WB_log_entry log_entry_nthetas("nthetas", wb_utils::int_to_string(nthetas));
+  log_entries.push_back(log_entry_nthetas);
+  WB_log_entry log_entry_min_value("min bin count", wb_utils::int_to_string(min_count));
+  log_entries.push_back(log_entry_min_value);
+  WB_log_entry log_entry_max_value("max bin count", wb_utils::int_to_string(max_count));
+  log_entries.push_back(log_entry_max_value);
+  WB_log_entry log_entry_mean("bin count mean", wb_utils::double_to_string(mean));
+  log_entries.push_back(log_entry_mean);
+  WB_log_entry log_entry_standard_deviation("bin count standard deviation",
+                                            wb_utils::double_to_string(std_dev));
+  log_entries.push_back(log_entry_standard_deviation);
+}
+
 Hough *Hough::read(const std::string &path, Errors &errors) {
   FILE *fp = file_utils::open_file_read(path, errors);
   Hough *hough = nullptr;

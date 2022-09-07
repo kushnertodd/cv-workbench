@@ -11,7 +11,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/filter-edge-sobel",
-						"filename": "square45-90_gray-sobel-0"
+						"filename": "square45-90_gray-609x473-sobel-0"
 					}
 				],
 				"output-data": [
@@ -21,7 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "square45-90_gray-sobel-0"
+						"filename": "square45-90_gray-609x473-sobel-0"
 					},
 					{
 						"id": 2,
@@ -29,7 +29,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "square45-90_gray-sobel-0"
+						"filename": "square45-90_gray-609x473-sobel-0"
 					}
 				],
 				"parameters": {

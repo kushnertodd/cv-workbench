@@ -21,7 +21,7 @@
  * https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
  */
 class Variance_stats {
- public:
+ private:
   int count{};
   double mean{};
   double M2{};
@@ -30,6 +30,7 @@ class Variance_stats {
   double standard_deviation{};
   Bounds bounds;
 
+ public:
   Variance_stats();
   void finalize();
   int get_count() const;
