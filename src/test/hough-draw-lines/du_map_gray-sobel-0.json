@@ -1,0 +1,262 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_59_-30",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "59",
+          "rho": "-30",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_0_32",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "32",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_0_121",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "0",
+          "rho": "121",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_59_-71",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "59",
+          "rho": "-71",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_56_-32",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "56",
+          "rho": "-32",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_58_-27",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "58",
+          "rho": "-27",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_2_40",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "2",
+          "rho": "40",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0",
+            "ext": "bin"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_line_8_62",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "8",
+          "rho": "62",
+          "pixel_value": "0"
+        }
+      }
+    ]
+  }
+}
