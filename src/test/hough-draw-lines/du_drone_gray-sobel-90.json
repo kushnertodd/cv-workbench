@@ -86,70 +86,6 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "du_drone_gray-151x118-sobel-90_line_93_46.5",
-            "ext": "bin"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "31",
-          "rho": "46.5",
-          "pixel_value": "0"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "du_drone_gray-151x118-sobel-90",
-            "ext": "bin"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray-151x118-sobel-90_line_93_38.5",
-            "ext": "bin"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "31",
-          "rho": "38.5",
-          "pixel_value": "0"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "du_drone_gray-151x118-sobel-90",
-            "ext": "bin"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
             "filename": "du_drone_gray-151x118-sobel-90_line_90_-19.5",
             "ext": "bin"
           }
@@ -158,38 +94,6 @@
           "theta_inc": "3",
           "theta_index": "30",
           "rho": "-19.5",
-          "pixel_value": "0"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "du_drone_gray-151x118-sobel-90",
-            "ext": "bin"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "du_drone_gray-151x118-sobel-90_line_93_11.5",
-            "ext": "bin"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "31",
-          "rho": "11.5",
           "pixel_value": "0"
         }
       }
