@@ -90,40 +90,6 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-609x473-sobel-90_line_177_-201",
-            "ext": "jpg"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "59",
-          "rho": "-201",
-          "out-component": "2",
-          "threshold": "200",
-          "pixel_value": "255"
-        }
-      },
-      {
-        "id": 3,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-609x473-sobel-90",
-            "ext": "jpg"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
             "filename": "square45-90_gray-609x473-sobel-90_line_45_-87",
             "ext": "jpg"
           }
@@ -166,40 +132,6 @@
           "theta_inc": "3",
           "theta_index": "15",
           "rho": "-7",
-          "out-component": "2",
-          "threshold": "200",
-          "pixel_value": "255"
-        }
-      },
-      {
-        "id": 3,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "square45-90_gray-609x473-sobel-0",
-            "ext": "jpg"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "square45-90_gray-609x473-sobel-0_line_3_24",
-            "ext": "jpg"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "1",
-          "rho": "24",
           "out-component": "2",
           "threshold": "200",
           "pixel_value": "255"
