@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "jpeglib.h"

@@ -5,6 +5,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include "wb_utils.hpp"
 #include "image_header.hpp"
 

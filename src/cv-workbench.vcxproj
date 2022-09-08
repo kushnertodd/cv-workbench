@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{B5B9F7B3-BD87-4E8D-B0D3-576D655D6B3F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\kushn\Dropbox\software\installs\windows\Programming\C++\jpegsr9ev17\jpeg-9e;C:\Users\kushn\Dropbox\software\installs\windows\Programming\C++;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\kushn\Dropbox\software\installs\windows\Programming\C++\jpegsr9ev17\jpeg-9e\Release\x6;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\kushn\Dropbox\software\installs\windows\Programming\C++\json-c\build\Debug;C:\Users\kushn\Dropbox\software\installs\windows\Programming\C++\jpegsr9ev17\jpeg-9e\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;json-c-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="berkeley_db_data_source_descriptor.cpp" />
+    <ClCompile Include="bounds.cpp" />
+    <ClCompile Include="cv-workbench.cpp" />
+    <ClCompile Include="data_source_descriptor.cpp" />
+    <ClCompile Include="errors.cpp" />
+    <ClCompile Include="experiment.cpp" />
+    <ClCompile Include="experiment_step.cpp" />
+    <ClCompile Include="filesystem_data_source_descriptor.cpp" />
+    <ClCompile Include="file_utils.cpp" />
+    <ClCompile Include="histogram.cpp" />
+    <ClCompile Include="hough.cpp" />
+    <ClCompile Include="hough_accum.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="image_header.cpp" />
+    <ClCompile Include="internet_data_source_descriptor.cpp" />
+    <ClCompile Include="kernel.cpp" />
+    <ClCompile Include="line_segment.cpp" />
+    <ClCompile Include="morphology.cpp" />
+    <ClCompile Include="one_pass_mean.cpp" />
+    <ClCompile Include="operator.cpp" />
+    <ClCompile Include="operator_dispatcher.cpp" />
+    <ClCompile Include="operator_filter_edge_kirsch.cpp" />
+    <ClCompile Include="operator_filter_edge_laplacian.cpp" />
+    <ClCompile Include="operator_filter_edge_prewitt.cpp" />
+    <ClCompile Include="operator_filter_edge_roberts.cpp" />
+    <ClCompile Include="operator_filter_edge_sobel.cpp" />
+    <ClCompile Include="operator_filter_image_morphology.cpp" />
+    <ClCompile Include="operator_filter_smooth_average.cpp" />
+    <ClCompile Include="operator_filter_smooth_gaussian.cpp" />
+    <ClCompile Include="operator_filter_smooth_median.cpp" />
+    <ClCompile Include="operator_histogram_hough_create.cpp" />
+    <ClCompile Include="operator_histogram_image_create.cpp" />
+    <ClCompile Include="operator_histogram_peak_detect.cpp" />
+    <ClCompile Include="operator_hough_draw_line.cpp" />
+    <ClCompile Include="operator_hough_image_create.cpp" />
+    <ClCompile Include="operator_hough_peak_detect.cpp" />
+    <ClCompile Include="operator_transform_image_combine.cpp" />
+    <ClCompile Include="operator_transform_image_copy.cpp" />
+    <ClCompile Include="operator_transform_image_create.cpp" />
+    <ClCompile Include="operator_transform_intensity_map.cpp" />
+    <ClCompile Include="operator_utils.cpp" />
+    <ClCompile Include="pearsons_correlation.cpp" />
+    <ClCompile Include="point.cpp" />
+    <ClCompile Include="polar_line.cpp" />
+    <ClCompile Include="polar_trig.cpp" />
+    <ClCompile Include="runtime.cpp" />
+    <ClCompile Include="trig.cpp" />
+    <ClCompile Include="variance_stats.cpp" />
+    <ClCompile Include="wb_data_format.cpp" />
+    <ClCompile Include="wb_data_type.cpp" />
+    <ClCompile Include="wb_filename.cpp" />
+    <ClCompile Include="wb_image_depth.cpp" />
+    <ClCompile Include="wb_json_utils.cpp" />
+    <ClCompile Include="wb_log.cpp" />
+    <ClCompile Include="wb_morphology_types.cpp" />
+    <ClCompile Include="wb_repository_type.cpp" />
+    <ClCompile Include="wb_utils.cpp" />
+    <ClCompile Include="wb_window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="berkeley_db_data_source_descriptor.hpp" />
+    <ClInclude Include="bounds.hpp" />
+    <ClInclude Include="data_source_descriptor.hpp" />
+    <ClInclude Include="errors.hpp" />
+    <ClInclude Include="experiment.hpp" />
+    <ClInclude Include="experiment_step.hpp" />
+    <ClInclude Include="filesystem_data_source_descriptor.hpp" />
+    <ClInclude Include="file_utils.hpp" />
+    <ClInclude Include="histogram.hpp" />
+    <ClInclude Include="hough.hpp" />
+    <ClInclude Include="hough_accum.hpp" />
+    <ClInclude Include="image.hpp" />
+    <ClInclude Include="image_header.hpp" />
+    <ClInclude Include="internet_data_source_descriptor.hpp" />
+    <ClInclude Include="kernel.hpp" />
+    <ClInclude Include="line_segment.hpp" />
+    <ClInclude Include="morphology.hpp" />
+    <ClInclude Include="one_pass_mean.hpp" />
+    <ClInclude Include="operator.hpp" />
+    <ClInclude Include="operator_dispatcher.hpp" />
+    <ClInclude Include="operator_filter_edge_kirsch.hpp" />
+    <ClInclude Include="operator_filter_edge_laplacian.hpp" />
+    <ClInclude Include="operator_filter_edge_prewitt.hpp" />
+    <ClInclude Include="operator_filter_edge_roberts.hpp" />
+    <ClInclude Include="operator_filter_edge_sobel.hpp" />
+    <ClInclude Include="operator_filter_image_morphology.hpp" />
+    <ClInclude Include="operator_filter_smooth_average.hpp" />
+    <ClInclude Include="operator_filter_smooth_gaussian.hpp" />
+    <ClInclude Include="operator_filter_smooth_median.hpp" />
+    <ClInclude Include="operator_histogram_hough_create.hpp" />
+    <ClInclude Include="operator_histogram_image_create.hpp" />
+    <ClInclude Include="operator_histogram_peak_detect.hpp" />
+    <ClInclude Include="operator_hough_draw_line.hpp" />
+    <ClInclude Include="operator_hough_image_create.hpp" />
+    <ClInclude Include="operator_hough_peak_detect.hpp" />
+    <ClInclude Include="operator_transform_image_combine.hpp" />
+    <ClInclude Include="operator_transform_image_copy.hpp" />
+    <ClInclude Include="operator_transform_image_create.hpp" />
+    <ClInclude Include="operator_transform_intensity_map.hpp" />
+    <ClInclude Include="operator_utils.hpp" />
+    <ClInclude Include="pearsons_correlation.hpp" />
+    <ClInclude Include="point.hpp" />
+    <ClInclude Include="polar_line.hpp" />
+    <ClInclude Include="polar_trig.hpp" />
+    <ClInclude Include="polar_trig_static.hpp" />
+    <ClInclude Include="runtime.hpp" />
+    <ClInclude Include="variance_stats.hpp" />
+    <ClInclude Include="wb_data_format.hpp" />
+    <ClInclude Include="wb_data_type.hpp" />
+    <ClInclude Include="wb_defs.hpp" />
+    <ClInclude Include="wb_filename.hpp" />
+    <ClInclude Include="wb_image_depth.hpp" />
+    <ClInclude Include="wb_json_utils.hpp" />
+    <ClInclude Include="wb_log.hpp" />
+    <ClInclude Include="wb_morphology_types.hpp" />
+    <ClInclude Include="wb_repository_type.hpp" />
+    <ClInclude Include="wb_utils.hpp" />
+    <ClInclude Include="wb_version.hpp" />
+    <ClInclude Include="wb_window.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-e.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-n.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-ne.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-nw.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-s.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-se.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-sw.bin" />
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-w.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-e.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-n.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-ne.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-nw.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-s.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-se.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-sw.bin" />
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-w.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-e.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-n.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-ne.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-nw.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-s.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-se.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-sw.bin" />
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-w.bin" />
+    <None Include="test\filter-edge-prewitt\du_drone_gray-250x273-prewitt-0.bin" />
+    <None Include="test\filter-edge-prewitt\du_drone_gray-250x273-prewitt-90.bin" />
+    <None Include="test\filter-edge-prewitt\square45-90_gray-609x473-prewitt-0.bin" />
+    <None Include="test\filter-edge-prewitt\square45-90_gray-609x473-prewitt-90.bin" />
+    <None Include="test\filter-edge-roberts\du_drone_gray-250x273-roberts-0.bin" />
+    <None Include="test\filter-edge-roberts\du_map_gray-289x247-roberts-0.bin" />
+    <None Include="test\filter-edge-roberts\du_map_gray-289x247-roberts-90.bin" />
+    <None Include="test\filter-edge-roberts\square45-90_gray-609x473-roberts-0.bin" />
+    <None Include="test\filter-edge-sobel\du_drone_gray-151x118-sobel-0.bin" />
+    <None Include="test\filter-edge-sobel\du_drone_gray-151x118-sobel-90.bin" />
+    <None Include="test\filter-edge-sobel\du_map_gray-289x247-sobel-0.bin" />
+    <None Include="test\filter-edge-sobel\du_map_gray-289x247-sobel-90.bin" />
+    <None Include="test\filter-edge-sobel\keyboard_pixel_gray-709x663-sobel-0.bin" />
+    <None Include="test\filter-edge-sobel\keyboard_pixel_gray-709x663-sobel-90.bin" />
+    <None Include="test\filter-edge-sobel\square45-90_gray-609x473-sobel-0.bin" />
+    <None Include="test\filter-edge-sobel\square45-90_gray-609x473-sobel-90.bin" />
+    <None Include="test\filter-smooth-average\du_drone_gray-average-3x3.bin" />
+    <None Include="test\filter-smooth-average\square45-90_gray-average-12x12.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x5.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-15-25x15-25-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-15x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x5.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-25x25.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x5.bin" />
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x5.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-15-25x15-25-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-15x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10-15-diff-sobel.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x5.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-25x25.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x10.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x15.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x20.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x5.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x10.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x15.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x20.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x5.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-15-25x15-25-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-15x15.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x10.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x15.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x20.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x5.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-25x25.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x10-15-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x10.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x15-20-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x15.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x20.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x5-10-diff.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x5.bin" />
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-gimp-15-25x15-25-diff.bin" />
+    <None Include="test\histogram-hough-create\square45-90_gray-sobel-0.hist.bin" />
+    <None Include="test\histogram-hough-create\square45-90_gray-sobel-0.hough.bin" />
+    <None Include="test\histogram-image-create\square45-90_gray-sobel-0.hist.bin" />
+    <None Include="test\hough-image-create\du_drone_gray-151x118-sobel-0.hough.bin" />
+    <None Include="test\hough-image-create\du_drone_gray-151x118-sobel-90.hough.bin" />
+    <None Include="test\hough-image-create\du_map_gray-289x247-sobel-0.hough.bin" />
+    <None Include="test\hough-image-create\du_map_gray-289x247-sobel-90.hough.bin" />
+    <None Include="test\hough-image-create\keyboard_pixel_gray-709x663-sobel-0.hough.bin" />
+    <None Include="test\hough-image-create\keyboard_pixel_gray-709x663-sobel-90.hough.bin" />
+    <None Include="test\hough-image-create\line0_gray.hough.bin" />
+    <None Include="test\hough-image-create\line15_gray.hough.bin" />
+    <None Include="test\hough-image-create\line30_gray.hough.bin" />
+    <None Include="test\hough-image-create\line45_gray.hough.bin" />
+    <None Include="test\hough-image-create\line90_gray.hough.bin" />
+    <None Include="test\hough-image-create\square45-90_gray-609x473-sobel-0.hough.bin" />
+    <None Include="test\hough-peak-detect\square45-90_gray-sobel-0.peaks.bin" />
+    <None Include="test\reference\line0_gray.bin" />
+    <None Include="test\reference\line15_gray.bin" />
+    <None Include="test\reference\line30_gray.bin" />
+    <None Include="test\reference\line45_gray.bin" />
+    <None Include="test\reference\line90_gray.bin" />
+    <None Include="test\reference\rectangle-filled-3x3_gray.bin" />
+    <None Include="test\reference\rectangle-filled-5x5-3x3_gray.bin" />
+    <None Include="test\reference\rectangle_filled_3x3_gray.bin" />
+    <None Include="test\reference\rectangle_filled_3x3_gray_out.bin" />
+    <None Include="test\reference\rectangle_filled_5x5-3x3_gray.bin" />
+    <None Include="test\reference\sample_gray.bin" />
+    <None Include="test\transform-image-combine\combine-4x11.bin" />
+    <None Include="test\transform-image-combine\combine-7x5.bin" />
+    <None Include="test\transform-image-combine\keyboard-gaussian-10-15_gray-diff.bin" />
+    <None Include="test\transform-image-combine\keyboard-gaussian-15-20_gray-diff.bin" />
+    <None Include="test\transform-image-combine\keyboard-gaussian-20-25_gray-diff.bin" />
+    <None Include="test\transform-image-combine\keyboard-gaussian-5-10_gray-diff.bin" />
+    <None Include="test\transform-image-create\square45-90_gray-create-line.bin" />
+    <None Include="test\transform-image-create\square45-90_gray-create-point.bin" />
+    <None Include="test\transform-image-create\square45-90_gray-create-rectangle.bin" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

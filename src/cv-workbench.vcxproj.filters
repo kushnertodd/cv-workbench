@@ -1,0 +1,833 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="berkeley_db_data_source_descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cv-workbench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="data_source_descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="errors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment_step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem_data_source_descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="histogram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hough.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hough_accum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image_header.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="internet_data_source_descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="line_segment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="morphology.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="one_pass_mean.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_dispatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_edge_kirsch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_edge_laplacian.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_edge_prewitt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_edge_roberts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_edge_sobel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_image_morphology.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_smooth_average.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_smooth_gaussian.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_filter_smooth_median.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_histogram_hough_create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_histogram_image_create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_histogram_peak_detect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_hough_draw_line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_hough_image_create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_hough_peak_detect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_transform_image_combine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_transform_image_copy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_transform_image_create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_transform_intensity_map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operator_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pearsons_correlation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polar_line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polar_trig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="runtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="variance_stats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_data_format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_data_type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_filename.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_image_depth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_json_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_morphology_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_repository_type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wb_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="berkeley_db_data_source_descriptor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bounds.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_source_descriptor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="errors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="experiment.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="experiment_step.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem_data_source_descriptor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="histogram.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hough.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hough_accum.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image_header.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="internet_data_source_descriptor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="line_segment.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="morphology.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="one_pass_mean.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_dispatcher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_edge_kirsch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_edge_laplacian.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_edge_prewitt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_edge_roberts.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_edge_sobel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_image_morphology.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_smooth_average.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_smooth_gaussian.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_filter_smooth_median.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_histogram_hough_create.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_histogram_image_create.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_histogram_peak_detect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_hough_draw_line.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_hough_image_create.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_hough_peak_detect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_transform_image_combine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_transform_image_copy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_transform_image_create.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_transform_intensity_map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operator_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pearsons_correlation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="polar_line.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="polar_trig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="polar_trig_static.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="runtime.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="variance_stats.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_data_format.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_data_type.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_defs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_filename.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_image_depth.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_json_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_log.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_morphology_types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_repository_type.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_version.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wb_window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-e.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-n.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-ne.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-nw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-s.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-se.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-sw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_drone_gray-250x273-kirsch-w.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-e.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-n.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-ne.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-nw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-s.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-se.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-sw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\du_map_gray-289x247-kirsch-w.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-e.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-n.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-ne.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-nw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-s.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-se.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-sw.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-kirsch\square45-90_gray-609x473-kirsch-w.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-prewitt\du_drone_gray-250x273-prewitt-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-prewitt\du_drone_gray-250x273-prewitt-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-prewitt\square45-90_gray-609x473-prewitt-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-prewitt\square45-90_gray-609x473-prewitt-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-roberts\du_drone_gray-250x273-roberts-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-roberts\du_map_gray-289x247-roberts-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-roberts\du_map_gray-289x247-roberts-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-roberts\square45-90_gray-609x473-roberts-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\du_drone_gray-151x118-sobel-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\du_drone_gray-151x118-sobel-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\du_map_gray-289x247-sobel-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\du_map_gray-289x247-sobel-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\keyboard_pixel_gray-709x663-sobel-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\keyboard_pixel_gray-709x663-sobel-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\square45-90_gray-609x473-sobel-0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-edge-sobel\square45-90_gray-609x473-sobel-90.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-average\du_drone_gray-average-3x3.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-average\square45-90_gray-average-12x12.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-100x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-15-25x15-25-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-15x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-250x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-25x25.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone-gaussian-500x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-drone\du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-100x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-15-25x15-25-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-15x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10-15-diff-sobel.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-250x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-25x25.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\du-map\du_map-gaussian-500x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-100x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-15-25x15-25-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-15x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-250x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-25x25.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x10-15-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x10.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x15-20-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x15.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x20.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x5-10-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-500x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\filter-smooth-gaussian\keyboard\keyboard-pixel-gaussian-gimp-15-25x15-25-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\histogram-hough-create\square45-90_gray-sobel-0.hist.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\histogram-hough-create\square45-90_gray-sobel-0.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\histogram-image-create\square45-90_gray-sobel-0.hist.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\du_drone_gray-151x118-sobel-0.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\du_drone_gray-151x118-sobel-90.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\du_map_gray-289x247-sobel-0.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\du_map_gray-289x247-sobel-90.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\keyboard_pixel_gray-709x663-sobel-0.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\keyboard_pixel_gray-709x663-sobel-90.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\line0_gray.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\line15_gray.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\line30_gray.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\line45_gray.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\line90_gray.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-image-create\square45-90_gray-609x473-sobel-0.hough.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\hough-peak-detect\square45-90_gray-sobel-0.peaks.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\line0_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\line15_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\line30_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\line45_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\line90_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\rectangle-filled-3x3_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\rectangle-filled-5x5-3x3_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\rectangle_filled_3x3_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\rectangle_filled_3x3_gray_out.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\rectangle_filled_5x5-3x3_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\reference\sample_gray.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\combine-4x11.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\combine-7x5.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\keyboard-gaussian-10-15_gray-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\keyboard-gaussian-15-20_gray-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\keyboard-gaussian-20-25_gray-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-combine\keyboard-gaussian-5-10_gray-diff.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-create\square45-90_gray-create-line.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-create\square45-90_gray-create-point.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test\transform-image-create\square45-90_gray-create-rectangle.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

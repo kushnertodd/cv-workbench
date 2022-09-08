@@ -139,6 +139,9 @@ doc:
 depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
 
+programs:
+	@echo $(PROGRAMS)
+
 # DO NOT DELETE
 
 berkeley_db_data_source_descriptor.o: wb_data_format.hpp wb_data_type.hpp

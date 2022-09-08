@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include "wb_utils.hpp"
 #include "variance_stats.hpp"
 

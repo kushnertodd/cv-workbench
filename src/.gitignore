@@ -4,7 +4,9 @@ images/
 latex/
 logs/
 scripts/
+x64/
 cv-workbench
+cv-workbench.exe
 image-copy
 image-corr
 image-create

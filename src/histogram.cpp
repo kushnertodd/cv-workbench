@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_utils.hpp"

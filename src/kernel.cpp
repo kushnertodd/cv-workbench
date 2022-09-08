@@ -2,6 +2,7 @@
 // Created by kushn on 6/16/2022.
 //
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
 #include "wb_morphology_types.hpp"
