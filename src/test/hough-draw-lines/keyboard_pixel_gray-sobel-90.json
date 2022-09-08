@@ -111,36 +111,6 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_6_259"
-          }
-        ],
-        "parameters": {
-          "theta_inc": "3",
-          "theta_index": "2",
-          "rho": "259",
-          "pixel_value": "0"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "hough-draw-line",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/filter-edge-sobel",
-            "filename": "keyboard_pixel_gray-709x663-sobel-90"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
             "filename": "keyboard_pixel_gray-709x663-sobel-90_line_0_278"
           }
         ],
