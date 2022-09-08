@@ -5,10 +5,18 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.1.31 dev
+```
+commit 81ae0174e8d7d9156d8c999c9e6f65f3408d07d6 (HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Thu Sep 8 12:46:56 2022 -0600
+
+    Visual Studio Windows version builds if not works
+```
+
 #### v0.1.30 dev
 ```
-commit 16d739ff6cf817462a3ad59c90ed639f5715a968 
-(HEAD -> dev, origin/dev)
+commit 16d739ff6cf817462a3ad59c90ed639f5715a968 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Aug 31 16:09:09 2022 -0600
 ```
@@ -16,8 +24,7 @@ Date:   Wed Aug 31 16:09:09 2022 -0600
 
 #### v0.1.29 dev
 ```
-commit 20b9273669d0fd7ce16cb29909370913541196a7 
-(HEAD -> dev, origin/dev)
+commit 20b9273669d0fd7ce16cb29909370913541196a7 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Aug 25 17:44:37 2022 -0600
 ```
@@ -34,8 +41,7 @@ Date:   Tue Aug 16 16:42:23 2022 -0600
 
 #### v0.1.27 dev
 ```
-commit 5676189757e387f672960b946954de4757566cfc 
-(HEAD -> dev, origin/dev)
+commit 5676189757e387f672960b946954de4757566cfc (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Aug 14 20:34:26 2022 -0600
 ```
@@ -60,8 +66,7 @@ Date:   Fri Aug 12 17:19:09 2022 -0600
 
 #### v0.1.24 dev
 ```
-commit 73af8069ab918fb4d0ffe95d70057d1e24a4eb13 
-(HEAD -> dev, origin/dev)
+commit 73af8069ab918fb4d0ffe95d70057d1e24a4eb13 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Aug 5 16:36:14 2022 -0600
 ```
@@ -78,8 +83,7 @@ Date:   Thu Aug 4 16:07:51 2022 -0600
 
 #### v0.1.22 dev
 ```
-commit c1814b63eb5ea2182d0219262ab4814232b0ce69 
-(HEAD -> dev, origin/dev)
+commit c1814b63eb5ea2182d0219262ab4814232b0ce69 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Aug 3 09:07:17 2022 -0600
 ```
@@ -96,8 +100,7 @@ Date:   Mon Aug 1 20:02:10 2022 -0600
 
 #### v0.1.20
 ```
-commit f7a881cd2a1590f838f31035797573991e0d481c 
-(HEAD -> master, origin/master, origin/HEAD)
+commit f7a881cd2a1590f838f31035797573991e0d481c (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Jul 31 17:38:51 2022 -0600
 ```
@@ -116,8 +119,7 @@ Date:   Sun Jul 31 16:46:32 2022 -0600
 
 #### v0.1.18
 ```
-commit 65e9460b568854578dbc0d99a1f62f76f63ef3d8 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 65e9460b568854578dbc0d99a1f62f76f63ef3d8 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sat Jul 30 18:53:47 2022 -0600
 ```
@@ -125,8 +127,7 @@ Date:   Sat Jul 30 18:53:47 2022 -0600
 
 #### v0.1.17
 ```
-commit 983df2a9146fa2c23409cf709485af76a7be87d6 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 983df2a9146fa2c23409cf709485af76a7be87d6 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Jul 29 17:08:40 2022 -0600
 ```
@@ -134,24 +135,21 @@ Date:   Fri Jul 29 17:08:40 2022 -0600
 
 #### v0.1.16
 ```
-commit aa4268a80f401621b37e3177ff7e8b48fcb5636b 
-(HEAD -> master, origin/master, origin/HEAD)
+commit aa4268a80f401621b37e3177ff7e8b48fcb5636b (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Jul 21 13:46:29 2022 -0600
 ```
 - added hough accumulator create  test
 
 #### v0.1.15
-```
-commit 49b0fc7d2667eeddd8725e9c3de8a755aecc33e8 (HEAD -> master, origin/master, origin/HEAD)
+``` commit 49b0fc7d2667eeddd8725e9c3de8a755aecc33e8 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Jul 21 12:21:49 2022 -0600
 ```
 - added prewitt roberts kirsch test
 
 #### v0.1.14
-```
-commit 4ffec9115af856e1ef8483061e1e3ef2a61b5fda (HEAD -> master, origin/master, origin/HEAD)
+``` commit 4ffec9115af856e1ef8483061e1e3ef2a61b5fda (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jul 20 20:21:18 2022 -0600
 ```
@@ -159,8 +157,7 @@ Date:   Wed Jul 20 20:21:18 2022 -0600
 
 #### v0.1.13
 ```
-commit df263dd308ee5be5b2e36389d2e92e29133cc95a 
-(HEAD -> master, origin/master, origin/HEAD)
+commit df263dd308ee5be5b2e36389d2e92e29133cc95a (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Tue Jul 19 20:58:04 2022 -0600
 ```
@@ -168,8 +165,7 @@ Date:   Tue Jul 19 20:58:04 2022 -0600
 
 #### v0.1.12
 ```
-commit 0db78d78546fb008f1104983819fac36549b8d15 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 0db78d78546fb008f1104983819fac36549b8d15 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jul 13 15:31:32 2022 -0600
 ```
@@ -177,8 +173,7 @@ Date:   Wed Jul 13 15:31:32 2022 -0600
 
 #### v0.1.11
 ```
-commit 1a50f25020d7b38456dbdd7718eed61a2e54d70f 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 1a50f25020d7b38456dbdd7718eed61a2e54d70f (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jul 13 15:21:11 2022 -0600
 ```
@@ -186,8 +181,7 @@ Date:   Wed Jul 13 15:21:11 2022 -0600
 
 #### v0.1.10
 ```
-commit c966b587ffd6bf1329d31cfea308f8cf8195905f 
-(HEAD -> master, origin/master, origin/HEAD)
+commit c966b587ffd6bf1329d31cfea308f8cf8195905f (HEAD -> master, origin/master, origin/HEAD)
   Author: Todd Kushner <kushnertodd@gmail.com>
   Date:   Wed Jul 13 14:34:29 2022 -0600
 ```
@@ -195,8 +189,7 @@ commit c966b587ffd6bf1329d31cfea308f8cf8195905f
 
 #### v0.1.9
 ```
-commit 07070b8607b9eb7f7775773025ee282ae59dfc80 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 07070b8607b9eb7f7775773025ee282ae59dfc80 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jul 13 14:15:34 2022 -0600
 ```
@@ -204,8 +197,7 @@ Date:   Wed Jul 13 14:15:34 2022 -0600
 
 #### v0.1.8
 ```
-commit cb8e00884627c43d6d95d1717d534dfc8ba75b8c 
-(HEAD -> master, origin/master, origin/HEAD)
+commit cb8e00884627c43d6d95d1717d534dfc8ba75b8c (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Mon Jul 11 16:12:14 2022 -0600
 ```
@@ -214,8 +206,7 @@ Date:   Mon Jul 11 16:12:14 2022 -0600
 
 #### v0.1.7
 ```
-commit 29d835c3c8dffcb84858ed81681599c9b0ad30da 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 29d835c3c8dffcb84858ed81681599c9b0ad30da (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Mon Jul 11 10:26:57 2022 -0600
 ```
@@ -223,8 +214,7 @@ Date:   Mon Jul 11 10:26:57 2022 -0600
 
 #### v0.1.7
 ```
-commit bd74de7fdf47dd9eb7761ea1b049eb24c006baf6 
-(HEAD -> master, origin/master, origin/HEAD)
+commit bd74de7fdf47dd9eb7761ea1b049eb24c006baf6 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Jul 8 20:12:54 2022 -0600
 ```
@@ -232,8 +222,7 @@ Date:   Fri Jul 8 20:12:54 2022 -0600
 
 #### v0.1.6
 ```
-commit 3f77c8ec6225b5f806826c44c656f8d2fdf53279 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 3f77c8ec6225b5f806826c44c656f8d2fdf53279 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Jul 1 18:55:40 2022 -0600
 ```
@@ -241,8 +230,7 @@ Date:   Fri Jul 1 18:55:40 2022 -0600
 
 #### v0.1.5
 ```
-commit 1037a5a4dc647a60e26328cb3cb5a5c5d66e36c6
-(HEAD -> master, origin/master, origin/HEAD)
+commit 1037a5a4dc647a60e26328cb3cb5a5c5d66e36c6 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jun 29 20:02:48 2022 -0600
 ```
@@ -250,8 +238,7 @@ Date:   Wed Jun 29 20:02:48 2022 -0600
 - 
 #### v0.1.5
 ```
-commit 8e6745fe7dfcf17625fba599203181dc5796c61a 
-(HEAD -> master, origin/master, origin/HEAD)
+commit 8e6745fe7dfcf17625fba599203181dc5796c61a (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Jun 26 20:14:29 2022 -0600
 ```
@@ -262,8 +249,7 @@ Date:   Sun Jun 26 20:14:29 2022 -0600
 
 #### v0.1.4
 ```
-commit bd928d0da6ea1daa5b1a65ac5b649e96c578d385 
-(HEAD -> master, origin/master, origin/HEAD)
+commit bd928d0da6ea1daa5b1a65ac5b649e96c578d385 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Fri Jun 24 13:34:36 2022 -0600
 ```
@@ -272,8 +258,7 @@ Date:   Fri Jun 24 13:34:36 2022 -0600
 
 #### v0.1.3
 ```
-ccommit 45c09b4f49c2bd44d5497e62de3c53c4a3c0fb4a 
-(HEAD -> master, origin/master, origin/HEAD)
+ccommit 45c09b4f49c2bd44d5497e62de3c53c4a3c0fb4a (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Jun 23 21:33:14 2022 -0600
 ```
@@ -281,17 +266,14 @@ Date:   Thu Jun 23 21:33:14 2022 -0600
 
 #### v0.1.2
 ```
-commit b9b4a7a783dcc8c504dac0fc659c3680511900dd 
-(HEAD -> master, origin/master, origin/HEAD)
+commit b9b4a7a783dcc8c504dac0fc659c3680511900dd (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Wed Jun 22 13:09:39 2022 -0600
 ```
 - operator transform-intensity-map works
 
 #### v0.1.1
-```
-commit 47af0ad1c504a950498559ca4119488218c86d26 
-(HEAD -> master, origin/master, origin/HEAD)
+``` commit 47af0ad1c504a950498559ca4119488218c86d26 (HEAD -> master, origin/master, origin/HEAD)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Sun Jun 19 12:19:38 2022 -0600
 ```
@@ -299,9 +281,7 @@ Date:   Sun Jun 19 12:19:38 2022 -0600
 - image-dump has char mode
 
 #### v0.1.0
-```
-  commit ffae304a1fdafae2e1b94a614230e2e153632257  
-  (HEAD -> master, origin/master, origin/HEAD)
+``` commit ffae304a1fdafae2e1b94a614230e2e153632257  (HEAD -> master, origin/master, origin/HEAD)
   Author: Todd Kushner <kushnertodd@gmail.com>  
   Date:   Fri Jun 17 20:11:03 2022 -0600
 ```
