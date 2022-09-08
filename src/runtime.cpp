@@ -30,7 +30,7 @@ json_object *Runtime::to_log() {
   json_object *log_entry = json_object_new_object();
   json_object_object_add(log_entry, "script-path", json_object_new_string(get_path()));
   json_object_object_add(log_entry, "run-time", json_object_new_string(get_run_time()));
-  json_object_object_add(log_entry, "username", json_object_new_string(get_username()));
+  //json_object_object_add(log_entry, "username", json_object_new_string(get_username()));
   json_object_object_add(log_entry, "version", json_object_new_string(get_version()));
   return log_entry;
 }
