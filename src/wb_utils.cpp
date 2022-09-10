@@ -8,7 +8,6 @@
 #include <iostream>
 #include <iomanip>
 #include <regex>
-#include <sstream>
 #include "errors.hpp"
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"

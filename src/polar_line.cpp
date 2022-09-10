@@ -27,7 +27,7 @@ Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
 }
 
 Polar_line::Polar_line(Hough_peak &hough_peak, int nrhos) :
-    rho_index(hough_peak.get_rho_index()),
+    rho(hough_peak.get_rho()),
     rho(Polar_trig::rho_index_to_rho(rho_index, nrhos)),
     theta_index(hough_peak.get_theta_index()),
     cos_theta(Polar_trig::to_cos(theta_index)),

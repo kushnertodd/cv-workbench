@@ -71,8 +71,7 @@ void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, E
 void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {}
-void Berkeley_db_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {}
+void read_hough_peaks_text(std::list<Hough_peak> &peaks,Errors &errors) override;
 void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}

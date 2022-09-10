@@ -10,6 +10,7 @@ const std::map<WB_data_format::Data_format, std::string> WB_data_format::to_exts
         {WB_data_format::Data_format::JPEG, "jpg"},
         {WB_data_format::Data_format::JSON, "json"},
         {WB_data_format::Data_format::LOG, "log"},
+        {WB_data_format::Data_format::PEAKS, "peaks"},
         {WB_data_format::Data_format::TEXT, "txt"}
     };
 const std::map<WB_data_format::Data_format, std::string> WB_data_format::to_strings =
@@ -18,6 +19,7 @@ const std::map<WB_data_format::Data_format, std::string> WB_data_format::to_stri
         {WB_data_format::Data_format::JPEG, "jpeg"},
         {WB_data_format::Data_format::JSON, "json"},
         {WB_data_format::Data_format::LOG, "log"},
+        {WB_data_format::Data_format::PEAKS, "peaks"},
         {WB_data_format::Data_format::TEXT, "text"}
     };
 const std::map<std::string, WB_data_format::Data_format> WB_data_format::from_exts =
@@ -26,6 +28,7 @@ const std::map<std::string, WB_data_format::Data_format> WB_data_format::from_ex
         {"jpg", WB_data_format::Data_format::JPEG},
         {"json", WB_data_format::Data_format::JSON},
         {"log", WB_data_format::Data_format::LOG},
+        {"peaks",WB_data_format::Data_format::PEAKS},
         {"txt", WB_data_format::Data_format::TEXT}
     };
 const std::map<std::string, WB_data_format::Data_format> WB_data_format::from_strings =
@@ -34,6 +37,7 @@ const std::map<std::string, WB_data_format::Data_format> WB_data_format::from_st
         {"jpeg", WB_data_format::Data_format::JPEG},
         {"json", WB_data_format::Data_format::JSON},
         {"log", WB_data_format::Data_format::LOG},
+        {"peaks", WB_data_format::Data_format::PEAKS},
         {"text", WB_data_format::Data_format::TEXT}
     };
 

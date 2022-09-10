@@ -30,6 +30,8 @@ class Data_source_descriptor {
   //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
   virtual Hough *read_hough(Errors &errors) = 0;
   //  virtual Hough *read_hough_text(Errors &errors) = 0;
+  virtual void read_hough_peaks(std::list<Hough_peak> &peaks,Errors &errors) = 0;
+  virtual void read_hough_peaks_text(std::list<Hough_peak> &peaks,Errors &errors) = 0;
   virtual Image *read_image(Errors &errors) = 0;
   virtual Image *read_image_jpeg(Errors &errors) = 0;
   virtual Image *read_image_text(Errors &errors) = 0;
@@ -42,8 +44,8 @@ class Data_source_descriptor {
   virtual void write_histogram_text(Histogram *histogram, Errors &errors) = 0;
   virtual void write_hough(Hough *hough, Errors &errors) = 0;
   virtual void write_hough_text(Hough *hough, Errors &errors) = 0;
-  virtual void write_hough_peaks(Hough *hough, Errors &errors) = 0;
-  virtual void write_hough_peaks_text(Hough *hough, Errors &errors) = 0;
+  virtual void write_hough_peaks(std::list<Hough_peak> &peaks, Errors &errors) = 0;
+  virtual void write_hough_peaks_text(std::list<Hough_peak> &peaks, Errors &errors) = 0;
   virtual void write_image(Image *image, Errors &errors) = 0;
   virtual void write_image_jpeg(Image *image, Errors &errors) = 0;
   virtual void write_image_text(Image *image, Errors &errors) = 0;

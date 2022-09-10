@@ -15,6 +15,7 @@ class WB_data_format {
     JPEG,
     JSON,
     LOG,
+    PEAKS,
     TEXT,
     UNDEFINED
   };
@@ -23,6 +24,7 @@ class WB_data_format {
   static const std::string jpeg_string;
   static const std::string json_string;
   static const std::string log_string;
+  static const std::string peaks_string;
   static const std::string text_string;
 
   static const std::map<WB_data_format::Data_format, std::string> to_exts;

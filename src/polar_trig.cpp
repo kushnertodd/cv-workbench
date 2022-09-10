@@ -13,30 +13,6 @@ Polar_trig::Polar_trig(int m_rows, int m_cols) :
     cols(m_cols),
     nrhos(nrhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad) {}
 
-int Polar_trig::get_cols() const {
-  return cols;
-}
-
-int Polar_trig::get_nrhos() const {
-  return nrhos;
-}
-
-int Polar_trig::get_nthetas() {
-  return max_thetas / theta_inc;
-}
-
-int Polar_trig::get_rows() const {
-  return rows;
-}
-
-int Polar_trig::get_theta_inc() {
-  return theta_inc;
-}
-
-void Polar_trig::init(int m_theta_inc) {
-  theta_inc = m_theta_inc;
-}
-
 double Polar_trig::rho_index_to_rho(int rho_index) const {
   return rho_index_to_rho(rho_index, nrhos);
 }
@@ -122,13 +98,14 @@ int Polar_trig::row_col_theta_to_rho_index(int row, int col, int theta_index, in
   return rho_index;
 }
 
-void Polar_trig::set_theta_inc(int m_theta_inc) {
-  theta_inc = m_theta_inc;
-}
-
 int Polar_trig::theta_index_to_theta(int theta_index) {
   int theta = theta_index * theta_inc;
   return theta;
+}
+
+int Polar_trig::theta_to_theta_index(int theta) {
+  int theta_index = theta / theta_inc;
+  return theta_index;
 }
 
 double Polar_trig::to_cos(int theta_index) {

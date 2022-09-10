@@ -38,7 +38,8 @@ void Hough_accum::find_peaks(int rho_size, int theta_size, int threshold_count) 
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       Hough_peak hough_peak;
-      if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count)) {
+      double rho = Polar_trig::rho_index_to_rho(rho_index, get_nrhos());
+      if (is_maximum(hough_peak, rho, rho_size, theta_index, theta_size, threshold_count)) {
         peaks.push_back(hough_peak);
       }
     }
@@ -109,7 +110,7 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
   int next_highest = 0;
   for (int i = theta_index_low; i <= theta_index_high; i++)
     for (int j = rho_index_low; j <= rho_index_high; j++) {
-      if (theta_index != i && rho_index != j) {
+      if (theta_index != i || rho_index != j) {
         int index = polar_trig->rho_theta_to_index(j, i);
         int neighbor_bin_count = rho_theta_counts[index];
         if (neighbor_bin_count > bin_count)
@@ -119,7 +120,7 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
       }
     }
   hough_peak.set_theta_index(theta_index);
-  hough_peak.set_rho_index(rho_index);
+  hough_peak.set_rho(rho_index, get_nrhos());
   hough_peak.set_count(bin_count);
   int difference = bin_count - next_highest;
   hough_peak.set_total_difference(bin_count - next_highest);
