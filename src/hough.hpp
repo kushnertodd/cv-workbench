@@ -15,7 +15,7 @@ class Hough {
   ~Hough();
   explicit Hough(Hough_accum *m_hough_accum);
   static Hough *create_image(Image *input, int theta_inc, int pixel_threshold);
-  void find_peaks(int rho_size, int theta_size);
+  void find_peaks(int rho_size, int theta_size, int threshold_count);
   //void peaks_to_line_segments(std::list<Line_segment> &line_segments, int rows, int cols, int nrhos);
   void log(Image *image, std::list<WB_log_entry> &log_entries) const;
   static Hough *read(const std::string &path, Errors &errors);

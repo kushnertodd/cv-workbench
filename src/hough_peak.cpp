@@ -44,21 +44,21 @@ Hough_peak *Hough_peak::read(const std::string &path, Errors &errors) {
 
 Hough_peak *Hough_peak::read(FILE *fp, Errors &errors) {
   int theta_index;
-  wb_utils::read_int(fp, theta_index, "Image_header::read_header", "", "missing theta_index", errors);
+  wb_utils::read_int(fp, theta_index, "Hough_peak::read", "", "missing theta_index", errors);
   int rho_index;
   if (!errors.has_error())
-    wb_utils::read_int(fp, rho_index, "Image_header::read_header", "", "missing rho_index", errors);
+    wb_utils::read_int(fp, rho_index, "Hough_peak::read", "", "missing rho_index", errors);
   int count;
   if (!errors.has_error())
-    wb_utils::read_int(fp, count, "Image_header::read_header", "", "missing count", errors);
+    wb_utils::read_int(fp, count, "Hough_peak::read", "", "missing count", errors);
   int total_difference;
   if (!errors.has_error())
-    wb_utils::read_int(fp, total_difference, "Image_header::read_header", "", "missing total_difference", errors);
+    wb_utils::read_int(fp, total_difference, "Hough_peak::read", "", "missing total_difference", errors);
   float percent_difference_float;
   if (!errors.has_error())
     wb_utils::read_float(fp,
                          percent_difference_float,
-                         "Image_header::read_header",
+                         "Hough_peak::read",
                          "",
                          "missing percent_difference",
                          errors);

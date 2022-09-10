@@ -22,7 +22,7 @@ class Hough_accum {
   Hough_accum(int m_theta_inc, int m_rows, int m_cols);
 
   static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
-  void find_peaks(int rho_size, int theta_size);
+  void find_peaks(int rho_size, int theta_size, int threshold_count);
   int get(int rho_index, int theta_index) const;
 
   inline int get_cols() const { return polar_trig->get_cols(); }
@@ -39,7 +39,7 @@ class Hough_accum {
   inline double get_variance() { return accumulator_stats.get_variance(); }
 
   void initialize(Image *image, int image_threshold);
-  bool is_maximum(Hough_peak &hough_peak, int rho_index, int rho_size, int theta_index, int theta_size) const;
+  bool is_maximum(Hough_peak &hough_peak, int rho_index, int rho_size, int theta_index, int theta_size, int threshold_count) const;
   static Hough_accum *read(FILE *fp, Errors &errors);
   //static Hough_accum *read_text(std::ifstream &ifs, Errors &errors);
   void set(int rho_index, int theta_index, int value) const;
