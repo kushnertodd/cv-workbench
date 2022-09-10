@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
-#include "errors.hpp"
 #include "polar_line.hpp"
+#include "polar_trig.hpp"
 
 extern bool debug;
 
@@ -17,8 +17,7 @@ extern bool debug;
  */
 
 Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
-                       double m_cos_theta, double m_sin_theta, int m_count)
-    :
+                       double m_cos_theta, double m_sin_theta, int m_count) :
     rho_index(m_rho_index),
     rho(m_rho),
     theta_index(m_theta_index),
@@ -26,6 +25,14 @@ Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
     sin_theta(m_sin_theta),
     count(m_count) {
 }
+
+Polar_line::Polar_line(Hough_peak &hough_peak, int nrhos) :
+    rho_index(hough_peak.get_rho_index()),
+    rho(Polar_trig::rho_index_to_rho(rho_index, nrhos)),
+    theta_index(hough_peak.get_theta_index()),
+    cos_theta(Polar_trig::to_cos(theta_index)),
+    sin_theta(Polar_trig::to_sin(theta_index)),
+    count(hough_peak.get_count()) {}
 
 void Polar_line::set(int m_rho_index, double m_rho, int m_theta_index,
                      double m_cos_theta, double m_sin_theta, int m_count) {

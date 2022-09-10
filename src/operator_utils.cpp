@@ -5,6 +5,7 @@
 #include <sstream>
 #include "data_source_descriptor.hpp"
 #include "operator_utils.hpp"
+#include "wb_utils.hpp"
 
 //
 

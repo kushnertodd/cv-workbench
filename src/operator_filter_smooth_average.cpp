@@ -6,6 +6,7 @@
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 #include "operator_filter_smooth_average.hpp"
+#include "wb_utils.hpp"
 
 Operator_filter_smooth_average::~Operator_filter_smooth_average() = default;
 /**

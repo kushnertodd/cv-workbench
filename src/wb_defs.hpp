@@ -2,8 +2,8 @@
 // Created by kushn on 6/11/2022.
 //
 
-#ifndef CV_WORKBENCH_SRC_WB_ENUMS_HPP_
-#define CV_WORKBENCH_SRC_WB_ENUMS_HPP_
+#ifndef CV_WORKBENCH_SRC_WB_DEFS_HPP_
+#define CV_WORKBENCH_SRC_WB_DEFS_HPP_
 
 #include <map>
 #include <string>
@@ -38,4 +38,4 @@ typedef float pixel_16F;
 
 typedef std::map<std::string, std::string> String_map;
 
-#endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_
+#endif //CV_WORKBENCH_SRC_WB_DEFS_HPP_
