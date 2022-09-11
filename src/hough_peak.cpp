@@ -10,7 +10,9 @@
 #include "wb_utils.hpp"
 #include "wb_window.hpp"
 
-Hough_peak::~Hough_peak() = default;
+Hough_peak::~Hough_peak() {
+  delete polar_line;
+};
 
 /**
  *

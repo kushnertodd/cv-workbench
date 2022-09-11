@@ -11,6 +11,9 @@
 
 class Hough_accum {
  private:
+  int rows{};
+  int cols{};
+  int nrhos{};
   int nbins{};
   Polar_trig *polar_trig{};
   int *rho_theta_counts{};
@@ -25,8 +28,8 @@ class Hough_accum {
   void find_peaks(int rho_size, int theta_size, int threshold_count);
   int get(int rho_index, int theta_index) const;
 
-  inline int get_cols() const { return polar_trig->get_cols(); }
-  inline int get_nrhos() const { return polar_trig->get_nrhos(); }
+  inline int get_cols() const { return cols; }//polar_trig->get_cols(); }
+  inline int get_nrhos() const { return nrhos; } //polar_trig->get_nrhos(); }
   inline static int get_nthetas() { return Polar_trig::get_nthetas(); }
   inline int get_rows() const { return polar_trig->get_rows(); }
   inline static int get_theta_inc() { return Polar_trig::get_theta_inc(); }

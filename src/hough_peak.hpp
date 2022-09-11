@@ -6,14 +6,15 @@
 #define CV_WORKBENCH_SRC_HOUGH_PEAK_HPP_
 
 #include <string>
-//#include "polar_line.hpp"
+#include "polar_line.hpp"
 #include "variance_stats.hpp"
 
 class Hough_peak {
  private:
-  int theta{};
-  double rho{};
+  //int theta{};
+  //double rho{};
   int count{};
+  Polar_line *polar_line{};
   int total_difference{};
   double percent_difference{};
   Variance_stats count_stats;
@@ -29,29 +30,35 @@ class Hough_peak {
              float m_percent_difference);
   Hough_peak(int m_theta,
              double m_rho);
-  Hough_peak *get_Hough_peak_from_theta_index_rho(int theta_index,
+  static  Hough_peak *from_theta_index_rho(int theta_index,
                                                   double rho,
                                                   int count,
                                                   int total_difference,
                                                   float percent_difference);
-  Hough_peak *get_Hough_peak_from_theta_rho_index(int theta,
+  static  Hough_peak *from_theta_index_rho_index(int theta_index,
+                                         int rho_index,
+                                         int nrhos,
+                                         int count,
+                                         int total_difference,
+                                         float percent_difference);
+  static  Hough_peak *from_theta_rho(int theta,
+                                                  int rho,
+                                                  int count,
+                                                  int total_difference,
+                                                  float percent_difference);
+  static  Hough_peak *from_theta_rho_index(int theta,
                                                   int rho_index,
                                                   int nrhos,
                                                   int count,
                                                   int total_difference,
                                                   float percent_difference);
-  Hough_peak *get_Hough_peak_from_theta_index_rho_index(int theta_index,
-                                                        int rho_index,
-                                                        int nrhos,
-                                                        int count,
-                                                        int total_difference,
-                                                        float percent_difference);
 
   inline int get_count() const { return count; }
   inline double get_percent_difference() const { return percent_difference; }
   inline int get_rho() const { return rho; }
   int get_rho_index(int nrhos) const;
    int get_theta_index() const;
+   inline
   inline int get_total_difference() const { return total_difference; }
   static Hough_peak *read(const std::string &path, Errors &errors);
   static Hough_peak *read(FILE *fp, Errors &errors);
@@ -59,7 +66,7 @@ class Hough_peak {
   inline void set_percent_difference(double m_percent_difference) { percent_difference = m_percent_difference; }
   inline void set_rho(double m_rho) { rho = m_rho; }
   void set_rho(int rho_index, int nrhos);
-  inline void set_theta_index(int m_theta_index) { theta_index = m_theta_index; }
+  inline void set_theta(int m_theta) { theta = m_theta; }
   inline void set_total_difference(int m_total_difference) { total_difference = m_total_difference; }
   void write(const std::string &path, Errors &errors) const;
   void write(FILE *fp, Errors &errors) const;
