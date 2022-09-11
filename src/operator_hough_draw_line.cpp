@@ -58,7 +58,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       int rows = input->get_rows();
       int cols = input->get_cols();
       auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
-      int rho_index = Polar_trig::rho_to_index(rho, hough_accum->get_nrhos());
+      int rho_index = Polar_trig::rho_to_rho_index(rho, hough_accum->get_nrhos());
       Polar_line polar_line(rho_index,
                             rho,
                             theta_index,

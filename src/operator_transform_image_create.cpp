@@ -6,6 +6,7 @@
 #include <regex>
 #include "operator_transform_image_create.hpp"
 #include "operator_utils.hpp"
+#include "wb_utils.hpp"
 
 extern bool debug;
 

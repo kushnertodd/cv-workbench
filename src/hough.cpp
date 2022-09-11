@@ -3,10 +3,13 @@
 //
 
 #include <cstring>
-#include "errors.hpp"
+#include <fstream>
+//#include "errors.hpp"
 #include "file_utils.hpp"
-#include "hough_accum.hpp"
-#include "wb_window.hpp"
+//#include "hough_accum.hpp"
+//#include "wb_window.hpp"
+#include "image.hpp"
+#include "wb_utils.hpp"
 #include "hough.hpp"
 
 Hough::~Hough() {
@@ -30,27 +33,28 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
   return hough;
 }
 
-void Hough::find_lines(int rows, int cols, int nrhos) {
-  lines_to_line_segments(rows, cols, nrhos);
+void Hough::find_peaks(int rho_size, int theta_size, int threshold_count) {
+  hough_accum->find_peaks(rho_size, theta_size, threshold_count);
 }
 
-void Hough::lines_to_line_segments(int rows, int cols, int nrhos) {
-  for (Polar_line line: lines) {
+/*
+void Hough::peaks_to_line_segments(std::list<Line_segment> &line_segments, int rows, int cols, int nrhos) {
+  for (Hough_peak peak: peaks) {
     Line_segment line_segment;
     if (WB_window::clip_window(rows, cols, line_segment, line, nrhos))
       line_segments.push_back(line_segment);
   }
 }
+*/
 
 void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
-  Variance_stats stats = hough_accum->accumulator_stats;
-  int nthetas = hough_accum->polar_trig->get_nthetas();
-  int theta_inc = hough_accum->polar_trig->get_theta_inc();
-  int nrhos = hough_accum->polar_trig->get_nrhos();
-  int min_count = stats.get_min_value();
-  int max_count = stats.get_max_value();
-  double mean = stats.get_mean();
-  double std_dev = stats.get_standard_deviation();
+  int nthetas = hough_accum->get_nthetas();
+  int theta_inc = hough_accum->get_theta_inc();
+  int nrhos = hough_accum->get_nrhos();
+  int min_count = hough_accum->get_min_value();
+  int max_count = hough_accum->get_max_value();
+  double mean = hough_accum->get_mean();
+  double std_dev = hough_accum->get_standard_deviation();
 
   WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(image->get_rows()));
   log_entries.push_back(log_entry_rows);
@@ -95,12 +99,14 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
 }
 
 // NRFPT
+/*
 Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
   Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
   if (hough_accum == nullptr || errors.has_error())
     return nullptr;
   return new Hough(hough_accum);
 }
+*/
 
 void Hough::write(const std::string &path, Errors &errors) const {
   FILE *fp = file_utils::open_file_write(path, errors);
@@ -127,37 +133,11 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
 }
 
 void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
-  size_t npeaks = lines.size();
-  fwrite(&npeaks, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Hough::write_peak_lines", "", "cannot write Hough peak line count");
-    return;
-  }
-  int theta_inc = Hough_accum::get_theta_inc();
-  fwrite(&theta_inc, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Hough::write_peak_lines", "", "cannot write Hough theta_inc  ");
-    return;
-  }
-  int nrhos = hough_accum->get_nrhos();
-  fwrite(&nrhos, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Hough::write_peak_lines", "", "cannot write Hough nrhos ");
-    return;
-  }
-  for (Polar_line line: lines) {
-    line.write(fp, errors);
-    if (errors.has_error())
-      break;
-  }
+  hough_accum->write_peak_lines(fp, errors);
 }
 
 void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  for (Polar_line line: lines) {
-    line.write_text(ofs, delim, errors);
-    if (errors.has_error())
-      break;
-  }
+  hough_accum->write_peak_lines_text(ofs, delim, errors);
 }
 
 

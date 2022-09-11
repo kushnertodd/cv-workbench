@@ -2,8 +2,10 @@
 // Created by kushn on 6/11/2022.
 //
 
+#include <fstream>
 #include <iostream>
 #include <sstream>
+#include "file_utils.hpp"
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
 #include "wb_repository_type.hpp"

@@ -96,7 +96,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
       threshold = histogram->get_value(i);
     }
   }
-  hough->hough_accum->find_peaks(hough->lines, threshold);
+  //hough->find_peaks( rho_size,  theta_size);
 }
 
 /**

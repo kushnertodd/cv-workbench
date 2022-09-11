@@ -5,36 +5,34 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
-#include "errors.hpp"
 #include "polar_line.hpp"
+#include "polar_trig.hpp"
 
-extern bool debug;
+Polar_line::Polar_line(
+    double m_rho,
+    int m_rho_index,
+    int m_theta_index):
+ rho(m_rho),
+ rho_index(m_rho_index),
+ theta_index(m_theta_index) { }
 
-/**
- * initialize_image (rho, theta) line
- * @param m_rho
- * @param m_theta_index
- */
-
-Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
-                       double m_cos_theta, double m_sin_theta, int m_count)
-    :
-    rho_index(m_rho_index),
-    rho(m_rho),
-    theta_index(m_theta_index),
-    cos_theta(m_cos_theta),
-    sin_theta(m_sin_theta),
-    count(m_count) {
+  Polar_line *Polar_line::from_theta_index_rho(int theta_index,
+                                         double rho,
+                                         int nrhos){
+  return new Polar_line(rho, Polar_trig::get)
 }
+  Polar_line *Polar_line::from_theta_index_rho_index(int theta_index,
+                                               int rho_index,
+                                               int nrhos){
 
-void Polar_line::set(int m_rho_index, double m_rho, int m_theta_index,
-                     double m_cos_theta, double m_sin_theta, int m_count) {
-  rho_index = m_rho_index;
-  rho = m_rho;
-  theta_index = m_theta_index;
-  cos_theta = m_cos_theta;
-  sin_theta = m_sin_theta;
-  count = m_count;
+}
+  Polar_line *Polar_line::from_theta_rho(int theta,
+                                   int rho){
+
+}
+  Polar_line *Polar_line::from_theta_rho_index(int theta,
+                                         int rho_index){
+
 }
 
 std::string Polar_line::to_string() const {
