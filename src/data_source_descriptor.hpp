@@ -36,6 +36,7 @@ class Data_source_descriptor {
   virtual std::string read_json(Errors &errors) = 0;
   Histogram *read_operator_histogram(const std::string &module, Errors &errors);
   Hough *read_operator_hough(const std::string &module, Errors &errors);
+  Hough *read_operator_hough(const std::string &module, Errors &errors);
   Image *read_operator_image(const std::string &module, Errors &errors);
   virtual std::string to_string();
   virtual void write_histogram(Histogram *histogram, Errors &errors) = 0;
