@@ -103,15 +103,31 @@ sudo apt install libjson-c-dev
   and link with `-ljson-c`.
 
 ### JPEG support
-Install the [Independent JPEG Group](http://www.ijg.org/) `jpeg-9e` library
-from [source](http://www.ijg.org/files/)
-(also from [github](https://github.com/LuaDist/libjpeg)).
+Install the Independent JPEG Group version`jpeg-9e` or latest jpeglib library from source.
 - See the source [documentation](http://www.ijg.org/files/README).
 - There is a [wiki](https://jpegclub.org/) and more [documentation](https://en.wikipedia.org/wiki/Libjpeg).
-- See the JPEG [documentation](https://jpegclub.org/reference/reference-sources/).
+- See the JPEG standard [documentation](https://jpegclub.org/reference/reference-sources/).
 - There is an `example.c` file in the source that is an example of using the library.
 - Compile `jpeg-9e` C source files with the `jpeglib.h` include file and link with `-ljpeg`.
-
+- Download the source and build.
+#### Linux build
+- Download [jpegsrc.v9e.tar.gz](https://www.ijg.org/files/jpegsr9e.zip) and extract:  
+```
+$ gunzip jpegsrc.v9e.tar.gz
+$ tar xvf jpegsrc.v9e.tar
+```
+- Follow the instructions in `jpeg-9e/install.txt` to install.
+#### Windows build
+- Download [https://www.ijg.org/files/jpegsr9e.zip](https://www.ijg.org/files/jpegsr9e.zip)  
+```
+$ unzip jpegsrc.v9e.zip
+```
+- Open `Visual Studio Develper Command Prompt (Tools|Command line|Developer Command Prompt`.
+- Follow the instructions in `jpeg-9e/install.txt` to install,
+e.g, for Microsoft Windows Visual Studio 2022 Version 17:
+  - run  `C:\> nmake /f makefile.vs setup-v17`
+  - open `jpeg.sln` in Visual Studio and build.
+  - open `apps.sln` in Visual Studio and build.  
 ## Optional packages
 These packages are not yet used by CV Workbench, but may be in the future.
 

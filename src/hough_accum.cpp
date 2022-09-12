@@ -2,6 +2,7 @@
 // Created by kushn on 6/27/2022.
 //
 
+#include <cmath>
 #include <iostream>
 #include "image.hpp"
 #include "polar_line.hpp"
@@ -10,16 +11,16 @@
 #include "hough_accum.hpp"
 
 Hough_accum::~Hough_accum() {
-  delete polar_trig;
   delete rho_theta_counts;
 }
 
-//Hough_accum::Hough_accum() = default;
-
-Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) {
-  polar_trig = new Polar_trig(m_rows, m_cols);
-  Polar_trig::set_theta_inc(m_theta_inc);
-  nbins = get_nrhos() * get_nthetas();
+Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
+theta_inc(m_theta_inc),
+rows(m_rows),
+cols(m_cols)
+{
+nrhos=wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
+nbins = get_nrhos() * get_nthetas();
   rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++)

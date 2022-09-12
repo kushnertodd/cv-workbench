@@ -2,9 +2,7 @@
 #include "polar_trig.hpp"
 #include "wb_utils.hpp"
 #include "point.hpp"
-#include "polar_trig_static.hpp"
 
-int Polar_trig::theta_inc = 3;
 
 Polar_trig::Polar_trig() = default;
 
@@ -59,10 +57,4 @@ int Polar_trig::row_col_theta_to_rho_index(int row, int col, int theta_index, in
   return rho_index;
 }
 
-int Polar_trig::row_col_to_nrhos(int rows, int cols) {
-  return wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad);
-}
 
-void Polar_trig::set_nthetas(int m_nthetas) {
-  theta_inc = max_thetas / m_nthetas;
-}
