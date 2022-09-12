@@ -63,6 +63,8 @@ Berkeley_db_data_source_descriptor
  */
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
+void Berkeley_db_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image_text(Errors &errors) { return nullptr; }
@@ -71,7 +73,8 @@ void Berkeley_db_data_source_descriptor::write_histogram(Histogram *histogram, E
 void Berkeley_db_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
-void read_hough_peaks_text(std::list<Hough_peak> &peaks,Errors &errors) override;
+void Berkeley_db_data_source_descriptor::write_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
+void Berkeley_db_data_source_descriptor::write_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}

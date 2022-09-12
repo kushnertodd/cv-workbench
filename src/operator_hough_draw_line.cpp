@@ -58,13 +58,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       int rows = input->get_rows();
       int cols = input->get_cols();
       auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
-      int rho_index = Polar_trig::rho_to_rho_index(rho, hough_accum->get_nrhos());
-      Polar_line polar_line(rho_index,
-                            rho,
-                            theta_index,
-                            Polar_trig::to_cos(theta_index),
-                            Polar_trig::to_sin(theta_index),
-                            0);
+      int rho_index = hough_accum->rho_to_rho_index(rho);
+      Polar_line polar_line(rho,
+                            hough_accum->theta_index_to_theta_degrees(theta_index));
       Line_segment line_segment;
       if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
         errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");

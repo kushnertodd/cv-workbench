@@ -20,7 +20,7 @@ class WB_data_type {
     JSON_EXPERIMENT_RESULTS, // result of experiment run
     HISTOGRAM, // CV_8U images initially
     HOUGH, // accumulation space + found features
-    HOUGH_PEAKS, // hough accumulator peaks
+    HOUGH_PEAKS, // hough accumulator hough_peaks
     PATTERN_FEATURE, // e.g. lines, circles for matching
     PATTERN_IMAGE, // for exact sub-image matching
     PYRAMID, // Burt structure

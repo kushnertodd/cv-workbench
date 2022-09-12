@@ -9,7 +9,7 @@
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_utils.hpp"
-#include "polar_trig.hpp"
+#include "theta.hpp"
 #include "histogram.hpp"
 
 /**
@@ -81,7 +81,7 @@ Histogram *Histogram::create_hough(Hough *hough,
 }
 
 /**
- * Find hough peaks by histogramming data
+ * Find hough hough_peaks by histogramming data
  * @param hough
  * @param npeaks
  */
@@ -157,7 +157,7 @@ double Histogram::get_upper_value() const {
  * @param saw_upper_value
  */
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
-  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
+  for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       input_value_stats.update(value);
@@ -168,7 +168,7 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
-  for (int theta_index = 0; theta_index < Polar_trig::get_nthetas(); theta_index++) {
+  for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
       double value = hough->hough_accum->get(rho_index, theta_index);
       update_input_value(value);
@@ -210,31 +210,31 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
  */
 void Histogram::log(std::list<WB_log_entry> &log_entries) {
   WB_log_entry log_entry_lower_value("lower_value", wb_utils::double_to_string(lower_value));
-  log_entries.push_back(log_entry_lower_value);
+  log_entries.emplace_back(log_entry_lower_value);
   WB_log_entry log_entry_upper_value("upper_value", wb_utils::double_to_string(upper_value));
-  log_entries.push_back(log_entry_upper_value);
+  log_entries.emplace_back(log_entry_upper_value);
   WB_log_entry log_entry_pixel_count("pixel count", wb_utils::int_to_string(input_value_stats.get_count()));
-  log_entries.push_back(log_entry_pixel_count);
+  log_entries.emplace_back(log_entry_pixel_count);
   WB_log_entry log_entry_pixel_mean("pixel mean", wb_utils::double_to_string(input_value_stats.get_mean()));
-  log_entries.push_back(log_entry_pixel_mean);
+  log_entries.emplace_back(log_entry_pixel_mean);
   WB_log_entry log_entry_pixel_standard_deviation(
       "pixel standard deviation",
       wb_utils::double_to_string(input_value_stats.get_standard_deviation()));
-  log_entries.push_back(log_entry_pixel_standard_deviation);
+  log_entries.emplace_back(log_entry_pixel_standard_deviation);
   WB_log_entry log_entry_pixel_min_value("min pixel value",
                                          wb_utils::double_to_string(input_value_stats.get_min_value()));
-  log_entries.push_back(log_entry_pixel_min_value);
+  log_entries.emplace_back(log_entry_pixel_min_value);
   WB_log_entry log_entry_pixel_max_value("max pixel value",
                                          wb_utils::double_to_string(input_value_stats.get_max_value()));
-  log_entries.push_back(log_entry_pixel_max_value);
+  log_entries.emplace_back(log_entry_pixel_max_value);
   WB_log_entry log_entry_bin_min_count(
       "min bin count",
       wb_utils::int_to_string(wb_utils::double_to_int_round(bin_count_bounds.get_min_value())));
-  log_entries.push_back(log_entry_bin_min_count);
+  log_entries.emplace_back(log_entry_bin_min_count);
   WB_log_entry log_entry_bin_max_count(
       "max bin count",
       wb_utils::int_to_string(wb_utils::double_to_int_round(bin_count_bounds.get_max_value())));
-  log_entries.push_back(log_entry_bin_max_count);
+  log_entries.emplace_back(log_entry_bin_max_count);
 }
 
 /**

@@ -6,12 +6,13 @@
 #include <iostream>
 #include <sstream>
 #include "file_utils.hpp"
+#include "data_source_descriptor.hpp"
+#include "filesystem_data_source_descriptor.hpp"
+#include "hough_peak.hpp"
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
 #include "wb_repository_type.hpp"
 #include "wb_json_utils.hpp"
-#include "data_source_descriptor.hpp"
-#include "filesystem_data_source_descriptor.hpp"
 
 /**
  * Constructor
@@ -119,6 +120,14 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
     fclose(fp);
   }
   return hough;
+}
+
+void Filesystem_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {
+
+}
+
+void Filesystem_data_source_descriptor::read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {
+
 }
 
 /**
@@ -265,7 +274,7 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
   std::string data_filename = wb_filename.to_hough_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
-    hough->write_text(ofs, "\t", errors);
+    hough->write_text(ofs, "\t");
     ofs.close();
   }
 }
@@ -275,38 +284,31 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
  * @param errors
  * @return
  */
-void Filesystem_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {
+void Filesystem_data_source_descriptor::write_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_peaks();
-  FILE *fp = file_utils::open_file_write(data_filename, errors);
-  if (fp) {
-    hough->write_peak_lines(fp, errors);
-    fclose(fp);
-  }
+    Hough_peak::write(data_filename, hough_peaks, errors);
 }
+
+
 
 /**
  * writes text filesystem hough peak data
  * @param errors
  * @return
  */
-void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {
+void Filesystem_data_source_descriptor::write_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_peaks_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
-    hough->write_peak_lines_text(ofs, "\t", errors);
+    Hough_peak::write_text(ofs, hough_peaks, "\t");
     ofs.close();
   }
 }
 
-/**
- * writes binary filesystem image data
- * @param errors
- * @return
- */
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = to_path_noext();
   Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
@@ -329,7 +331,7 @@ void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &e
   std::string data_filename = wb_filename.to_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
-    image->write_text(ofs, "\t", errors);
+    image->write_text(ofs, "\t");
     ofs.close();
   }
 }

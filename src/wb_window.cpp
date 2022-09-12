@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "polar_trig.hpp"
+#include "theta.hpp"
 #include "wb_window.hpp"
 
 extern bool debug;

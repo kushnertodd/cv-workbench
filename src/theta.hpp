@@ -6,12 +6,13 @@
 #define SRC__THETA_H_
 
 #include <cmath>
-#include "theta_static.hpp"
+#include <iostream>
+#include "wb_utils.hpp"
 
 // give theta resolution fraction length, e.g., for 0.1 allows 45.1)
 const double theta_resolution = 0.1;
 const int max_degrees = 180;
-const int max_thetas = max_degrees / theta_resolution;
+const int max_thetas = static_cast<int>(max_degrees / theta_resolution);
 
 class Theta {
  private:
@@ -20,13 +21,26 @@ class Theta {
   int theta_increment;
  public:
   Theta();
-  static inline int begin() { return 0; }
-  static inline int end(){ return max_thetas - 1;}
-  inline double to_rad() const {    return to_degrees() * M_PI / max_degrees;  }
-  inline  double to_cos() const { return cos_theta_table[theta_increment]; }
-  inline double to_degrees() const { return theta_increment * theta_resolution; }
-  inline  double to_sin() const { return sin_theta_table[theta_increment]; }
+  explicit Theta(int theta_degrees);
 
+  // prefix increment
+  Theta &operator++();
+
+  // postfix increment
+  const Theta operator++(int);
+
+  int get_theta_degrees() const;
+  inline int get_theta_increment() const { return theta_increment; }
+  double get_theta_radians() const;
+  void set_theta_degrees(int theta_degrees);
+  void set_theta_radians(double theta_radians);
+  inline void set_theta_increment(int m_theta_increment) { theta_increment = m_theta_increment; }
+  inline double to_cos() const { return cos_theta_table[theta_increment]; }
+  inline double to_sin() const { return sin_theta_table[theta_increment]; }
+  static  double to_cos(int theta_degrees);
+  static  double to_sin(int theta_degrees);
+  std::string to_string() const;
+  friend std::ostream &operator<<(std::ostream &os, const Theta &theta);
 };
 
 #endif //SRC__THETA_H_

@@ -32,8 +32,8 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
              Errors &errors);
   Histogram *read_histogram(Errors &errors) override;
   Hough *read_hough(Errors &errors) override;
-  void read_hough_peaks(std::list<Hough_peak> &peaks,Errors &errors) override;
-  void read_hough_peaks_text(std::list<Hough_peak> &peaks,Errors &errors) override;
+  void read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) override;
+  void read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) override;
   Image *read_image(Errors &errors) override;
   Image *read_image_jpeg(Errors &errors) override;
   std::string read_json(Errors &errors) override;
@@ -42,8 +42,8 @@ class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
   void write_histogram_text(Histogram *histogram, Errors &errors) override;
   void write_hough(Hough *hough, Errors &errors) override;
   void write_hough_text(Hough *hough, Errors &errors) override;
-  void write_hough_peaks(Hough *hough, Errors &errors) override;
-  void write_hough_peaks_text(Hough *hough, Errors &errors) override;
+  void write_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) override;
+  void write_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) override;
   void write_image(Image *image, Errors &errors) override;
   void write_image_jpeg(Image *image, Errors &errors) override;
   void write_image_text(Image *image, Errors &errors) override;

@@ -148,26 +148,34 @@ void Image_header::set_max_col(int m_max_col) {
  * @param errors
  */
 void Image_header::write(FILE *fp, Errors &errors) const {
-  fwrite(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image rows");
-    return;
-  }
-  fwrite(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image cols");
-    return;
-  }
-  fwrite(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image components");
-    return;
-  }
-  fwrite(&depth, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_headerZZ::write_header", "", "cannot write image depth");
-    return;
-  }
+  wb_utils::write_int(fp,
+                      rows,
+                      "Image_header::write",
+                      "",
+                      "cannot write image rows",
+                      errors);
+if (!errors.has_error())
+  wb_utils::write_int(fp,
+                      cols,
+                      "Image_header::write",
+                      "",
+                      "cannot write image cols",
+                      errors);
+
+  if (!errors.has_error())
+    wb_utils::write_int(fp,
+                        components,
+                        "Image_header::write",
+                        "",
+                        "cannot write image components",
+                        errors);
+  if (!errors.has_error())
+    wb_utils::write_int(fp,
+                        static_cast<int>(depth),
+                        "Image_header::write",
+                        "",
+                        "cannot write image depth",
+                        errors);
 }
 
 /**

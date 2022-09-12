@@ -426,24 +426,24 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
   Variance_stats stats;
   get_stats(stats);
   WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(get_rows()));
-  log_entries.push_back(log_entry_rows);
+  log_entries.emplace_back(log_entry_rows);
   WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(get_cols()));
-  log_entries.push_back(log_entry_cols);
+  log_entries.emplace_back(log_entry_cols);
   WB_log_entry log_entry_components("components", wb_utils::int_to_string(get_components()));
-  log_entries.push_back(log_entry_components);
+  log_entries.emplace_back(log_entry_components);
   WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(get_depth()));
-  log_entries.push_back(log_entry_depth);
+  log_entries.emplace_back(log_entry_depth);
   WB_log_entry log_entry_count("pixel count", wb_utils::int_to_string(get_npixels()));
-  log_entries.push_back(log_entry_count);
+  log_entries.emplace_back(log_entry_count);
   WB_log_entry log_entry_mean("pixel mean", wb_utils::double_to_string(stats.get_mean()));
-  log_entries.push_back(log_entry_count);
+  log_entries.emplace_back(log_entry_count);
   WB_log_entry
       log_entry_standard_deviation("pixel standard deviation", wb_utils::double_to_string(stats.get_standard_deviation()));
-  log_entries.push_back(log_entry_standard_deviation);
+  log_entries.emplace_back(log_entry_standard_deviation);
   WB_log_entry log_entry_min_value("min pixel value", wb_utils::double_to_string(stats.get_min_value()));
-  log_entries.push_back(log_entry_min_value);
+  log_entries.emplace_back(log_entry_min_value);
   WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.get_max_value()));
-  log_entries.push_back(log_entry_max_value);
+  log_entries.emplace_back(log_entry_max_value);
 }
 
 Image *Image::read(std::string &path, Errors &errors) {
@@ -606,7 +606,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     if (first) {
       first = false;
       cols = (int) values.size();
-      lines.push_back(values);
+      lines.emplace_back(values);
     } else if (values.size() != cols) {
       std::ostringstream os;
       os << "invalid image file: initial column length " << cols
@@ -614,7 +614,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
       errors.add("Image::read_text", "", os.str());
       return nullptr;
     } else
-      lines.push_back(values);
+      lines.emplace_back(values);
     rows++;
   }
   auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);
@@ -814,7 +814,7 @@ void Image::write(FILE *fp, Errors &errors) const {
           pixel_8U value = get_8U(row, col);
           newLen = fwrite(&value, sizeof(pixel_8U), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
-            errors.add("Image::write", "", "cannot write 32F image data");
+            errors.add("Image::write", "", "cannot write CV_8U image data");
         }
       }
       break;
@@ -824,7 +824,7 @@ void Image::write(FILE *fp, Errors &errors) const {
           pixel_32S value = get_32S(row, col);
           newLen = fwrite(&value, sizeof(pixel_32S), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
-            errors.add("Image::write", "", "cannot write 32F image data");
+            errors.add("Image::write", "", "cannot write CV_32S image data");
         }
       }
       break;
@@ -834,7 +834,7 @@ void Image::write(FILE *fp, Errors &errors) const {
           pixel_32F value = get_32F(row, col);
           newLen = fwrite(&value, sizeof(pixel_32F), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
-            errors.add("Image::write", "", "cannot write 32F image data");
+            errors.add("Image::write", "", "cannot write CV_32F image data");
         }
       }
       break;
@@ -900,12 +900,12 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
   if (ofs) {
-    write_text(ofs, "\t", errors);
+    write_text(ofs, "\t");
     ofs.close();
   }
 }
 
-void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+void Image::write_text(std::ofstream &ofs, const std::string &delim) const {
   for (int row = get_min_row(); row < get_rows(); row++) {
     for (int col = get_min_col(); col < get_cols(); col++) {
       double value = get(row, col);
@@ -913,6 +913,5 @@ void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     }
     ofs << std::endl;
   }
-  ofs.close();
 }
 

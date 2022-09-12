@@ -33,16 +33,16 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
   return hough;
 }
 
-void Hough::find_peaks(int rho_size, int theta_size, int threshold_count) {
-  hough_accum->find_peaks(rho_size, theta_size, threshold_count);
+void Hough::find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count) {
+  hough_accum->find_peaks(hough_peaks, rho_size, theta_size, threshold_count);
 }
 
 /*
 void Hough::peaks_to_line_segments(std::list<Line_segment> &line_segments, int rows, int cols, int nrhos) {
-  for (Hough_peak peak: peaks) {
+  for (Hough_peak peak: hough_peaks) {
     Line_segment line_segment;
     if (WB_window::clip_window(rows, cols, line_segment, line, nrhos))
-      line_segments.push_back(line_segment);
+      line_segments.emplace_back(line_segment);
   }
 }
 */
@@ -57,28 +57,28 @@ void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
   double std_dev = hough_accum->get_standard_deviation();
 
   WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(image->get_rows()));
-  log_entries.push_back(log_entry_rows);
+  log_entries.emplace_back(log_entry_rows);
   WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(image->get_cols()));
-  log_entries.push_back(log_entry_cols);
+  log_entries.emplace_back(log_entry_cols);
   WB_log_entry log_entry_components("components", wb_utils::int_to_string(image->get_components()));
-  log_entries.push_back(log_entry_components);
+  log_entries.emplace_back(log_entry_components);
   WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(image->get_depth()));
-  log_entries.push_back(log_entry_depth);
+  log_entries.emplace_back(log_entry_depth);
   WB_log_entry log_entry_theta_inc("theta_inc", wb_utils::int_to_string(theta_inc));
-  log_entries.push_back(log_entry_theta_inc);
+  log_entries.emplace_back(log_entry_theta_inc);
   WB_log_entry log_entry_nrhos("nrhos", wb_utils::int_to_string(nrhos));
-  log_entries.push_back(log_entry_nrhos);
+  log_entries.emplace_back(log_entry_nrhos);
   WB_log_entry log_entry_nthetas("nthetas", wb_utils::int_to_string(nthetas));
-  log_entries.push_back(log_entry_nthetas);
+  log_entries.emplace_back(log_entry_nthetas);
   WB_log_entry log_entry_min_value("min bin count", wb_utils::int_to_string(min_count));
-  log_entries.push_back(log_entry_min_value);
+  log_entries.emplace_back(log_entry_min_value);
   WB_log_entry log_entry_max_value("max bin count", wb_utils::int_to_string(max_count));
-  log_entries.push_back(log_entry_max_value);
+  log_entries.emplace_back(log_entry_max_value);
   WB_log_entry log_entry_mean("bin count mean", wb_utils::double_to_string(mean));
-  log_entries.push_back(log_entry_mean);
+  log_entries.emplace_back(log_entry_mean);
   WB_log_entry log_entry_standard_deviation("bin count standard deviation",
                                             wb_utils::double_to_string(std_dev));
-  log_entries.push_back(log_entry_standard_deviation);
+  log_entries.emplace_back(log_entry_standard_deviation);
 }
 
 Hough *Hough::read(const std::string &path, Errors &errors) {
@@ -123,22 +123,11 @@ void Hough::write(FILE *fp, Errors &errors) const {
 void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
   std::ofstream ofs = file_utils::open_file_write_text(path, errors);
   if (ofs) {
-    hough_accum->write_text(ofs, "\t", errors);
+    hough_accum->write_text(ofs, "\t");
     ofs.close();
   }
 }
 
-void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  hough_accum->write_text(ofs, "\t", errors);
+void Hough::write_text(std::ofstream &ofs, const std::string &delim) const {
+  hough_accum->write_text(ofs, "\t");
 }
-
-void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
-  hough_accum->write_peak_lines(fp, errors);
-}
-
-void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-  hough_accum->write_peak_lines_text(ofs, delim, errors);
-}
-
-
-

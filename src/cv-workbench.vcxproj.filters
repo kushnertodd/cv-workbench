@@ -147,9 +147,6 @@
     <ClCompile Include="polar_line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="polar_trig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="runtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -320,10 +317,7 @@
     <ClInclude Include="polar_line.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polar_trig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="polar_trig_static.hpp">
+    <ClInclude Include="theta_static.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="runtime.hpp">

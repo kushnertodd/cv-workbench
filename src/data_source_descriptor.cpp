@@ -205,18 +205,18 @@ void Data_source_descriptor::write_operator_hough(Hough *output,
 }
 
 /**
- * write operator hough peaks binary or text data
+ * write operator hough hough_peaks binary or text data
  * @param module name for error message
  * @param errors
  * @return
  */
-void Data_source_descriptor::write_operator_hough_peaks(Hough *output,
+void Data_source_descriptor::write_operator_hough_peaks(std::list<Hough_peak> &hough_peaks,
                                                         const std::string &module,
                                                         Errors &errors) {
   if (data_format == WB_data_format::Data_format::BINARY)
-    write_hough_peaks(output, errors);
+    write_hough_peaks(hough_peaks, errors);
   else if (data_format == WB_data_format::Data_format::TEXT)
-    write_hough_peaks_text(output, errors);
+    write_hough_peaks_text(hough_peaks, errors);
   else
     errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }

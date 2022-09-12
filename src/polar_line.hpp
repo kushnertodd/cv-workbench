@@ -7,47 +7,34 @@
 
 #include <fstream>
 #include <vector>
-#include "hough_peak.hpp"
-#include "polar_trig.hpp"
+#include "theta.hpp"
 
 class Polar_line {
  private:
   double rho{};
-  int theta{};
-  int nrhos{};
+  Theta theta;
  public:
-  Polar_line() = default;
+  Polar_line();
   Polar_line(double m_rho,
-             int m_theta,
-             int m_nrhos);
-  static Polar_line *from_rho_index_theta_index(int rho_index,
-                                                int theta_index,
-                                                int nrhos);
-  static Polar_line *from_rho_theta_index(double rho,
-                                          int theta_index,
-                                          int nrhos);
-  static Polar_line *from_rho_index_theta(int rho_index,
-                                          int theta,
-                                          int nrhos);
-  static Polar_line *from_rho_theta(int rho,
-                                    int theta,
-                                    int nrhos);
-  inline double get_nrhos() const { return nrhos; }
+             Theta m_theta);
+  Polar_line(double m_rho,
+             int theta_degrees);
+
   inline double get_rho() const { return rho; }
-  inline int get_rho_index() const { return Polar_trig::rho_to_rho_index(rho, nrhos); }
-  inline double get_theta() const { return theta; }
-  inline int get_theta_index() const { return Polar_trig::theta_to_theta_index(theta); }
+  inline Theta get_theta() const { return theta; }
+  inline int get_theta_degrees() const { return theta.get_theta_degrees(); }
+  inline double get_theta_radians() const { return theta.get_theta_radians(); }
   void read(FILE *fp, Errors &errors);
   void read_text(std::vector<std::string> &values, Errors &errors);
-  inline void set_nrhos(int m_nrhos) { nrhos = m_nrhos; }
+  void set(double m_rho, int theta_degrees);
   inline void set_rho(double m_rho) { rho = m_rho; }
-  inline void set_rho_index(double rho_index) { rho = Polar_trig::rho_index_to_rho(rho_index, nrhos); }
-  inline void set_theta(int m_theta) { theta = m_theta; }
-  inline void set_theta_index(int theta_index) { theta = Polar_trig::theta_index_to_theta(theta_index); }
-  inline double to_cos() const { return Polar_trig::to_cos(get_theta_index()); }
-  inline double to_sin() const { return Polar_trig::to_sin(get_theta_index()); }
+  inline void set_theta(Theta m_theta) { theta = m_theta; }
+  inline void set_theta_degrees(int theta_degrees) { theta.set_theta_degrees(theta_degrees); }
+  inline void set_theta_radians(int theta_radians) { theta.set_theta_radians(theta_radians); }
+  inline double to_cos() const { return theta.to_cos(); }
+  inline double to_sin() const { return theta.to_sin(); }
   std::string to_string() const;
   void write(FILE *fp, Errors &errors);
-  void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+  void write_text(std::ofstream &ofs, const std::string &delim) const;
 };
 #endif //SRC__POLAR_LINE_HPP_

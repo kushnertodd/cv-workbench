@@ -152,8 +152,8 @@
     <ClCompile Include="pearsons_correlation.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="polar_line.cpp" />
-    <ClCompile Include="polar_trig.cpp" />
     <ClCompile Include="runtime.cpp" />
+    <ClCompile Include="theta.cpp" />
     <ClCompile Include="variance_stats.cpp" />
     <ClCompile Include="wb_data_format.cpp" />
     <ClCompile Include="wb_data_type.cpp" />
@@ -210,8 +210,8 @@
     <ClInclude Include="pearsons_correlation.hpp" />
     <ClInclude Include="point.hpp" />
     <ClInclude Include="polar_line.hpp" />
-    <ClInclude Include="polar_trig.hpp" />
-    <ClInclude Include="polar_trig_static.hpp" />
+    <ClInclude Include="theta_static.hpp" />
+    <ClCompile Include="theta.hpp" />
     <ClInclude Include="runtime.hpp" />
     <ClInclude Include="variance_stats.hpp" />
     <ClInclude Include="wb_data_format.hpp" />

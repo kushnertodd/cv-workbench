@@ -111,7 +111,7 @@ class Image {
   void write(FILE *fp, Errors &errors) const;
   void write_jpeg(const std::string &path, Errors &errors) const;
   void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
-  void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+  void write_text(std::ofstream &ofs, const std::string &delim) const;
 };
 
 #endif //CV_WORKBENCH_SRC_IMAGE_HPP_

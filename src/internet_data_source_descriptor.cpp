@@ -21,6 +21,8 @@ Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
                            WB_repository_type::Repository_type::INTERNET) {}
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
+void Internet_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
+void Internet_data_source_descriptor::read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
 Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image_jpeg(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image_text(Errors &errors) { return nullptr; }
@@ -29,8 +31,8 @@ void Internet_data_source_descriptor::write_histogram(Histogram *histogram, Erro
 void Internet_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {}
 void Internet_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {}
-void Internet_data_source_descriptor::write_hough_peaks(Hough *hough, Errors &errors) {}
-void Internet_data_source_descriptor::write_hough_peaks_text(Hough *hough, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
+void Internet_data_source_descriptor::write_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {}
 void Internet_data_source_descriptor::write_image(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Internet_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}

@@ -41,11 +41,12 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));
+    std::list<Hough_peak> hough_peaks;
     if (!errors.has_error())
-      hough->find_peaks(rho_size, theta_size, threshold_count);
+      hough->find_peaks(hough_peaks, rho_size, theta_size, threshold_count);
     for (Data_source_descriptor *hough_output_data_store: output_data_stores)
       if (!errors.has_error())
-        hough_output_data_store->write_operator_hough_peaks(hough.get(),
+        hough_output_data_store->write_operator_hough_peaks(hough_peaks,
                                                             "Operator_histOperator_hough_peak_detectogram_hough_create::run",
                                                             errors);
   }
