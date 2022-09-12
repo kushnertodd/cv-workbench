@@ -51,8 +51,7 @@ class Image {
   bool check_color(int component, const std::string &module, Errors &errors) const;
   bool check_grayscale(const std::string &module, Errors &errors) const;
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
-  static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
-                        Errors &errors);
+  static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
   void copy(Image *image, Errors &errors) const;
   void draw_line_segment(const Line_segment &line_segment, double value, int component = 0) const;
   void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component = 0) const;
