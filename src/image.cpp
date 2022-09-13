@@ -386,8 +386,8 @@ double Image::get_scaled(int row, int col, double lower_in,
  * @param stats
  */
 void Image::get_stats(Variance_stats &stats) const {
-  for (int row = get_min_row(); row < get_rows(); row++)
-    for (int col = get_min_col(); col < get_cols(); col++) {
+  for (int row = get_min_row(); row <= get_max_row(); row++)
+    for (int col = get_min_col(); col <= get_max_col(); col++) {
       double value = get(row, col);
       stats.update(value);
     }
@@ -670,8 +670,8 @@ Image *Image::scale_image(Image *image, double lower_in,
                                   image->get_cols(),
                                   image->get_components(),
                                   depth);
-  for (int row = image->get_min_row(); row < image->get_rows(); row++)
-    for (int col = image->get_min_col(); col < image->get_cols(); col++)
+  for (int row = image->get_min_row(); row <= image->get_max_row(); row++)
+    for (int col = image->get_min_col(); col <= image->get_max_col(); col++)
       for (int component = 0; component < image->get_components(); component++){
       double value = image->get_scaled(row, col, lower_in,
                                        upper_in, lower_out, upper_out, component);
@@ -809,8 +809,8 @@ void Image::write(FILE *fp, Errors &errors) const {
   size_t newLen;
   switch (get_depth()) {
     case WB_image_depth::Image_depth::CV_8U:
-      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
-        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+      for (int row = get_min_row(); row <= get_max_row() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col <= get_max_col() && !errors.has_error(); col++) {
           pixel_8U value = get_8U(row, col);
           newLen = fwrite(&value, sizeof(pixel_8U), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
@@ -819,8 +819,8 @@ void Image::write(FILE *fp, Errors &errors) const {
       }
       break;
     case WB_image_depth::Image_depth::CV_32S:
-      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
-        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+      for (int row = get_min_row(); row <= get_max_row() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col <= get_max_col() && !errors.has_error(); col++) {
           pixel_32S value = get_32S(row, col);
           newLen = fwrite(&value, sizeof(pixel_32S), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
@@ -829,8 +829,8 @@ void Image::write(FILE *fp, Errors &errors) const {
       }
       break;
     case WB_image_depth::Image_depth::CV_32F:
-      for (int row = get_min_row(); row < get_rows() && !errors.has_error(); row++) {
-        for (int col = get_min_col(); col < get_cols() && !errors.has_error(); col++) {
+      for (int row = get_min_row(); row <= get_max_row() && !errors.has_error(); row++) {
+        for (int col = get_min_col(); col <= get_max_col() && !errors.has_error(); col++) {
           pixel_32F value = get_32F(row, col);
           newLen = fwrite(&value, sizeof(pixel_32F), 1, fp);
           if (ferror(fp) != 0 || newLen != 1)
@@ -906,8 +906,8 @@ void Image::write_text(const std::string &path, const std::string &delim, Errors
 }
 
 void Image::write_text(std::ofstream &ofs, const std::string &delim) const {
-  for (int row = get_min_row(); row < get_rows(); row++) {
-    for (int col = get_min_col(); col < get_cols(); col++) {
+  for (int row = get_min_row(); row <= get_max_row(); row++) {
+    for (int col = get_min_col(); col <= get_max_col(); col++) {
       double value = get(row, col);
       ofs << value << delim;
     }

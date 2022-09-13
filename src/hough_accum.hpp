@@ -50,7 +50,7 @@ class Hough_accum {
   inline double rho_index_to_rho(int rho_index) const;
   int rho_theta_col_to_row(int rho_index, int theta_index, int col);
   int rho_theta_row_to_col(int rho_index, int theta_index, int row);
-  int rho_theta_to_index(int rho_index, int theta_index) const;
+  int rho_index_theta_index_to_accum_index(int rho_index, int theta_index) const;
   int rho_to_rho_index(double rho) const;
   double row_col_theta_to_rho(int row, int col, int theta_index);
   int row_col_theta_to_rho_index(int row, int col, int theta_index);

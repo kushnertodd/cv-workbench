@@ -184,8 +184,8 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
  * @param saw_upper_value
  */
 void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
-  for (int row = image->get_min_row(); row < image->get_rows(); row++) {
-    for (int col = image->get_min_col(); col < image->get_cols(); col++) {
+  for (int row = image->get_min_row(); row <= image->get_max_row(); row++) {
+    for (int col = image->get_min_col(); col <= image->get_max_col(); col++) {
       double value = image->get(row, col);
       input_value_stats.update(value);
     }
@@ -195,8 +195,8 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
     lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
-  for (int row = image->get_min_row(); row < image->get_rows(); row++) {
-    for (int col = image->get_min_col(); col < image->get_cols(); col++) {
+  for (int row = image->get_min_row(); row <= image->get_max_row(); row++) {
+    for (int col = image->get_min_col(); col <= image->get_max_col(); col++) {
       double value = image->get(row, col);
       update_input_value(value);
     }
