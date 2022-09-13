@@ -19,8 +19,8 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
     rows(m_rows),
     cols(m_cols) {
   nrhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
-  nbins = nrhos * get_nthetas();
   nthetas = max_degrees / theta_inc;
+  nbins = nrhos * get_nthetas();
   rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < nrhos; rho_index++)
