@@ -102,37 +102,3 @@ $ cmp square45-90_gray-sobel-0.peaks.bin ../../images/square45-90_gray-sobel-0.p
 cmp: ../../images/square45-90_gray-sobel-0.peaks.bin: No such file or directory
 $ cmp square45-90_gray-sobel-0.peaks.txt ../../images/square45-90_gray-sobel-0.peaks.txt
 cmp: ../../images/square45-90_gray-sobel-0.peaks.txt: No such file or directory
-==============================================
-cd histogram-hough-create
-sh histogram-hough-create/test-run-dir.sh
-here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-hough-create
-rm -f ../../images/square45-90_gray-sobel-0.hist.bin
-rm -f ../../images/square45-90_gray-sobel-0.hough.bin
-rm -f ../../images/square45-90_gray-sobel-0.hist.txt
-rm -f ../../images/square45-90_gray-sobel-0.hist.gp
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-hough-create/square45-90_gray_sobel_0_degrees.json
-Segmentation fault
-$ cmp square45-90_gray-sobel-0.hist.bin ../../images/square45-90_gray-sobel-0.hist.bin
-cmp: ../../images/square45-90_gray-sobel-0.hist.bin: No such file or directory
-$ cmp square45-90_gray-sobel-0.hough.bin ../../images/square45-90_gray-sobel-0.hough.bin
-cmp: ../../images/square45-90_gray-sobel-0.hough.bin: No such file or directory
-$ cmp square45-90_gray-sobel-0.hist.txt ../../images/square45-90_gray-sobel-0.hist.txt
-cmp: ../../images/square45-90_gray-sobel-0.hist.txt: No such file or directory
-$ cmp square45-90_gray-sobel-0.hist.gp ../../images/square45-90_gray-sobel-0.hist.gp
-cmp: ../../images/square45-90_gray-sobel-0.hist.gp: No such file or directory
-==============================================
-cd histogram-image-create
-sh histogram-image-create/test-run-dir.sh
-here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-image-create
-rm -f ../../images/square45-90_gray-sobel-0.hist.bin
-rm -f ../../images/square45-90_gray-sobel-0.hist.txt
-rm -f ../../images/square45-90_gray-sobel-0.hist.gp
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-image-create/square45-90_gray-sobel-0.json
-Image::read_jpeg: invalid file 'test/filter-edge-sobel/square45-90_gray-sobel-0.jpg'
-
-$ cmp square45-90_gray-sobel-0.hist.bin ../../images/square45-90_gray-sobel-0.hist.bin
-cmp: ../../images/square45-90_gray-sobel-0.hist.bin: No such file or directory
-$ cmp square45-90_gray-sobel-0.hist.txt ../../images/square45-90_gray-sobel-0.hist.txt
-cmp: ../../images/square45-90_gray-sobel-0.hist.txt: No such file or directory
-$ cmp square45-90_gray-sobel-0.hist.gp ../../images/square45-90_gray-sobel-0.hist.gp
-cmp: ../../images/square45-90_gray-sobel-0.hist.gp: No such file or directory
