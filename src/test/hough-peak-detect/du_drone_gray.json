@@ -1,0 +1,43 @@
+{
+  "experiment":{
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"hough",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"test/hough-image-create",
+						"filename": "du_drone_gray-151x118-sobel-0"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":"images",
+						"filename": "du_drone_gray-151x118-sobel-0"
+          },
+          {
+            "id":2,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"images",
+            "filename":"du_drone_gray-151x118"
+          }
+        ],
+        "parameters":{
+          "rho-size":"3",
+          "theta-size":"1",
+          "threshold-count":"10000"
+        }
+      }
+    ]
+  }
+}

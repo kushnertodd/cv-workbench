@@ -21,13 +21,13 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_3_-215"
+            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_6_259"
           }
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "1",
-          "rho": "-215",
+          "theta_index": "2",
+          "rho": "259",
           "pixel_value": "0"
         }
       },
@@ -51,13 +51,13 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_0_-110"
+            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_0_239"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "0",
-          "rho": "-110",
+          "rho": "239",
           "pixel_value": "0"
         }
       },
@@ -81,13 +81,13 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_3_-104"
+            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_3_281"
           }
         ],
         "parameters": {
           "theta_inc": "3",
           "theta_index": "1",
-          "rho": "-104",
+          "rho": "281",
           "pixel_value": "0"
         }
       },
@@ -118,6 +118,66 @@
           "theta_inc": "3",
           "theta_index": "0",
           "rho": "278",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "keyboard_pixel_gray-709x663-sobel-90"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_6_-98"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "2",
+          "rho": "-98",
+          "pixel_value": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "keyboard_pixel_gray-709x663-sobel-90"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard_pixel_gray-709x663-sobel-90_line_33_-76"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta_index": "11",
+          "rho": "-76",
           "pixel_value": "0"
         }
       }
