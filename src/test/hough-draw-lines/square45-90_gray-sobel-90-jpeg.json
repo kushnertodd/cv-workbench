@@ -28,7 +28,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "30",
           "out-component": "2",
           "threshold": "200",
@@ -62,7 +62,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "196",
           "out-component": "2",
           "threshold": "200",
@@ -96,7 +96,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "15",
+          "theta": "45",
           "rho": "-87",
           "out-component": "2",
           "threshold": "200",
@@ -130,7 +130,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "15",
+          "theta": "45",
           "rho": "-7",
           "out-component": "2",
           "threshold": "200",
@@ -164,7 +164,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "45",
+          "theta": "135",
           "rho": "94",
           "out-component": "2",
           "threshold": "200",
@@ -198,7 +198,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "45",
+          "theta": "135",
           "rho": "261",
           "out-component": "2",
           "threshold": "200",

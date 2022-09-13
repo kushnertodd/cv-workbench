@@ -26,7 +26,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "2",
+          "theta": "6",
           "rho": "259",
           "pixel_value": "0"
         }
@@ -56,7 +56,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "239",
           "pixel_value": "0"
         }
@@ -86,7 +86,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "1",
+          "theta": "3",
           "rho": "281",
           "pixel_value": "0"
         }
@@ -116,7 +116,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "278",
           "pixel_value": "0"
         }
@@ -146,7 +146,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "2",
+          "theta": "6",
           "rho": "-98",
           "pixel_value": "0"
         }
@@ -176,7 +176,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "11",
+          "theta": "33",
           "rho": "-76",
           "pixel_value": "0"
         }

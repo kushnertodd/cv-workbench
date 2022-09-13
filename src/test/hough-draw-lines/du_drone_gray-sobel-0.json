@@ -28,7 +28,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "-63.5",
           "pixel_value": "0"
         }
@@ -60,7 +60,7 @@
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta_index": "0",
+          "theta": "0",
           "rho": "65.5",
           "pixel_value": "0"
         }
