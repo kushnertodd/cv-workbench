@@ -3,15 +3,23 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-smooth-average",
+        "operator": "transform-image-combine",
         "input-data": [
           {
             "id": 1,
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "square45-90_gray-609x473"
+            "format": "binary",
+            "directory": "test/filter-smooth-gaussian",
+            "filename": "du_drone-gaussian-15x15"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/filter-smooth-gaussian",
+            "filename": "du_drone-gaussian-25x25"
           }
         ],
         "output-data": [
@@ -21,12 +29,13 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": "images",
-            "filename": "square45-90_gray-609x473.jpg-average-12x12"
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "parameters": {
-          "rows": "12",
-          "cols": "12"
+          "scale-1": "1.0",
+          "scale-2": "-1.0",
+          "offset": "0.0"
         }
       },
       {
@@ -38,8 +47,8 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "images",
-            "filename": "square45-90_gray-609x473.jpg-average-12x12"
+            "directory": "test/filter-smooth-gaussian",
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "output-data": [
@@ -49,13 +58,13 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "square45-90_gray-609x473.jpg-average-12x12"
+            "filename": "du_drone-gaussian-15-25x15-25-diff"
           }
         ],
         "parameters": {
             "depth": "CV_8U",
-            "lower_in": "0",
-            "upper_in": "255",
+            "lower_in": "-20",
+            "upper_in": "20",
             "lower_out": "0",
             "upper_out": "255"
         }

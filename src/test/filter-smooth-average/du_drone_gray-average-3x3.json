@@ -11,7 +11,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "test/reference",
-            "filename": "du_drone_gray"
+            "filename": "du_drone_gray-151x118"
           }
         ],
         "output-data": [
