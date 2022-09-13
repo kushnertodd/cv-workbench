@@ -75,7 +75,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
           Data_source_descriptor *input_data_store_descriptor =
               Data_source_descriptor::from_json(json_input_data_descriptor, errors);
           if (input_data_store_descriptor != nullptr)
-            experiment_step->input_data_sources.emplace_back(input_data_store_descriptor);
+            experiment_step->input_data_sources.push_back(input_data_store_descriptor);
         }
       }
     }
@@ -91,7 +91,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
         Data_source_descriptor *output_data_store_descriptor =
             Data_source_descriptor::from_json(json_output_data_descriptor, errors);
         if (output_data_store_descriptor != nullptr)
-          experiment_step->output_data_stores.emplace_back(output_data_store_descriptor);
+          experiment_step->output_data_stores.push_back(output_data_store_descriptor);
       }
     }
   }

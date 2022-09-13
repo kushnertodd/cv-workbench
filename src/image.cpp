@@ -426,24 +426,24 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
   Variance_stats stats;
   get_stats(stats);
   WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(get_rows()));
-  log_entries.emplace_back(log_entry_rows);
+  log_entries.push_back(log_entry_rows);
   WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(get_cols()));
-  log_entries.emplace_back(log_entry_cols);
+  log_entries.push_back(log_entry_cols);
   WB_log_entry log_entry_components("components", wb_utils::int_to_string(get_components()));
-  log_entries.emplace_back(log_entry_components);
+  log_entries.push_back(log_entry_components);
   WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(get_depth()));
-  log_entries.emplace_back(log_entry_depth);
+  log_entries.push_back(log_entry_depth);
   WB_log_entry log_entry_count("pixel count", wb_utils::int_to_string(get_npixels()));
-  log_entries.emplace_back(log_entry_count);
+  log_entries.push_back(log_entry_count);
   WB_log_entry log_entry_mean("pixel mean", wb_utils::double_to_string(stats.get_mean()));
-  log_entries.emplace_back(log_entry_count);
+  log_entries.push_back(log_entry_count);
   WB_log_entry
       log_entry_standard_deviation("pixel standard deviation", wb_utils::double_to_string(stats.get_standard_deviation()));
-  log_entries.emplace_back(log_entry_standard_deviation);
+  log_entries.push_back(log_entry_standard_deviation);
   WB_log_entry log_entry_min_value("min pixel value", wb_utils::double_to_string(stats.get_min_value()));
-  log_entries.emplace_back(log_entry_min_value);
+  log_entries.push_back(log_entry_min_value);
   WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.get_max_value()));
-  log_entries.emplace_back(log_entry_max_value);
+  log_entries.push_back(log_entry_max_value);
 }
 
 Image *Image::read(std::string &path, Errors &errors) {
@@ -606,7 +606,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     if (first) {
       first = false;
       cols = (int) values.size();
-      lines.emplace_back(values);
+      lines.push_back(values);
     } else if (values.size() != cols) {
       std::ostringstream os;
       os << "invalid image file: initial column length " << cols
@@ -614,7 +614,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
       errors.add("Image::read_text", "", os.str());
       return nullptr;
     } else
-      lines.emplace_back(values);
+      lines.push_back(values);
     rows++;
   }
   auto *image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S);

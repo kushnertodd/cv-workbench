@@ -44,7 +44,7 @@ void Hough_accum::find_peaks(std::list<Hough_peak> &hough_peaks,
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       Hough_peak hough_peak;
       if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count)) {
-        hough_peaks.emplace_back(hough_peak);
+        hough_peaks.push_back(hough_peak);
       }
     }
   }

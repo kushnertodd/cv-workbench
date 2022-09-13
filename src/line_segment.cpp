@@ -47,7 +47,7 @@ void Line_segment::add(int x, int y) {
  * @param y
  */
 void Line_segment::add(const Point &point) {
-  line_points.emplace_back(point);
+  line_points.push_back(point);
 }
 
 /**
@@ -56,13 +56,13 @@ void Line_segment::add(const Point &point) {
  */
 void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
   WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(point1.row));
-  log_entries.emplace_back(log_entry_start_row);
+  log_entries.push_back(log_entry_start_row);
   WB_log_entry log_entry_start_col("start col", wb_utils::int_to_string(point1.col));
-  log_entries.emplace_back(log_entry_start_col);
+  log_entries.push_back(log_entry_start_col);
   WB_log_entry log_entry_end_row("end row", wb_utils::int_to_string(point2.row));
-  log_entries.emplace_back(log_entry_end_row);
+  log_entries.push_back(log_entry_end_row);
   WB_log_entry log_entry_end_col("end col", wb_utils::int_to_string(point2.col));
-  log_entries.emplace_back(log_entry_end_col);
+  log_entries.push_back(log_entry_end_col);
 }
 
 /**

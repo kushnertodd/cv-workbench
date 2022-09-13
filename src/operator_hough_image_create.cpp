@@ -43,11 +43,6 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
                                               "Operator_hough_image_create::run",
                                               operator_parameters,
                                               errors);
-    if (!errors.has_error())
-      Operator_utils::get_subimage_parameters(input.get(),
-                                              "Operator_hough_image_create::run",
-                                              operator_parameters,
-                                              errors);
     if (!errors.has_error()) {
       std::unique_ptr<Hough> hough(Hough::create_image(input.get(), theta_inc, threshold));
       for (Data_source_descriptor *hough_output_data_store: output_data_stores)

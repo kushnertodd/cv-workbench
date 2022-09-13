@@ -40,7 +40,7 @@ void Hough_peak::read(FILE *fp, std::list<Hough_peak> &hough_peaks, Errors &erro
     Hough_peak hough_peak;
     hough_peak.read(fp, errors);
     if (!errors.has_error()) {
-      hough_peaks.emplace_back(hough_peak);
+      hough_peaks.push_back(hough_peak);
     }
   }
 }
@@ -80,8 +80,9 @@ void Hough_peak::read_text(std::ifstream &ifs, std::list<Hough_peak> &hough_peak
     std::vector<std::string> values = wb_utils::string_split(line);
     Polar_line polar_line;
     polar_line.read_text(values, errors);
+    Hough_peak hough_peak(polar_line);
     if (!errors.has_error())
-      hough_peaks.emplace_back(polar_line);
+      hough_peaks.push_back(hough_peak);
   }
 }
 
