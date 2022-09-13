@@ -11,8 +11,6 @@
 
 //
 
-extern bool debug;
-
 Operator_filter_image_morphology::~Operator_filter_image_morphology() = default;
 
 /**

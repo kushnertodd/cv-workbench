@@ -37,8 +37,8 @@ class Theta {
   inline void set_theta_increment(int m_theta_increment) { theta_increment = m_theta_increment; }
   inline double to_cos() const { return cos_theta_table[theta_increment]; }
   inline double to_sin() const { return sin_theta_table[theta_increment]; }
-  static  double to_cos(int theta_degrees);
-  static  double to_sin(int theta_degrees);
+  static double to_cos(int theta_degrees);
+  static double to_sin(int theta_degrees);
   std::string to_string() const;
   friend std::ostream &operator<<(std::ostream &os, const Theta &theta);
 };

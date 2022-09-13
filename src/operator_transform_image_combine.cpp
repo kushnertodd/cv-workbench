@@ -7,8 +7,6 @@
 #include "operator_transform_image_combine.hpp"
 #include "operator_utils.hpp"
 
-extern bool debug;
-
 /**
    combine new image from an existing image
 
@@ -23,10 +21,6 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
                                            std::list<WB_log_entry> &log_entries,
                                            Errors &errors) {
 
-  if (debug) {
-    std::cout << "Operator_transform_image_combine::run:parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_transform_image_combine::run", "", "two input data sources required");
   if (input_data_sources.size() > 2)

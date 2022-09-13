@@ -5,6 +5,7 @@
 #include <ostream>
 #include <sstream>
 #include "theta.hpp"
+#include "theta_static.hpp"
 
 Theta::Theta() :
     theta_increment(0) {}
@@ -41,12 +42,12 @@ void Theta::set_theta_radians(double theta_radians) {
   theta_increment = (theta_radians / M_PI) * max_degrees / theta_resolution;
 }
 
- inline double Theta::to_cos(int theta_degrees)  {
+double Theta::to_cos(int theta_degrees) {
   int theta_increment = static_cast<int>(theta_degrees / theta_resolution);
   return cos_theta_table[theta_increment];
 }
 
- inline double Theta::to_sin(int theta_degrees)  {
+double Theta::to_sin(int theta_degrees) {
   int theta_increment = static_cast<int>(theta_degrees / theta_resolution);
   return sin_theta_table[theta_increment];
 }

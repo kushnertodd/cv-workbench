@@ -16,16 +16,16 @@ class Polar_line {
  public:
   Polar_line();
   Polar_line(double m_rho,
-             Theta m_theta);
-  Polar_line(double m_rho,
              int theta_degrees);
 
+  int col_to_row(int col, int rows, int cols) const;
   inline double get_rho() const { return rho; }
   inline Theta get_theta() const { return theta; }
   inline int get_theta_degrees() const { return theta.get_theta_degrees(); }
   inline double get_theta_radians() const { return theta.get_theta_radians(); }
   void read(FILE *fp, Errors &errors);
   void read_text(std::vector<std::string> &values, Errors &errors);
+  int row_to_col(int row, int rows, int cols) const;
   void set(double m_rho, int theta_degrees);
   inline void set_rho(double m_rho) { rho = m_rho; }
   inline void set_theta(Theta m_theta) { theta = m_theta; }

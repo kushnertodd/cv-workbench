@@ -6,7 +6,6 @@
 #include <cmath>
 #include <iostream>
 #include "image.hpp"
-#include "polar_line.hpp"
 #include "theta.hpp"
 #include "wb_utils.hpp"
 #include "hough_accum.hpp"
@@ -21,6 +20,7 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
     cols(m_cols) {
   nrhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
   nbins = nrhos * get_nthetas();
+  nthetas = max_degrees / theta_inc;
   rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < nrhos; rho_index++)
@@ -29,6 +29,7 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
 }
 
 Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_threshold) {
+  assert(image != nullptr);
   auto *hough_accum = new Hough_accum(theta_inc, image->get_rows(), image->get_cols());
   hough_accum->initialize(image, pixel_threshold);
   return hough_accum;
@@ -42,8 +43,7 @@ void Hough_accum::find_peaks(std::list<Hough_peak> &hough_peaks,
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       Hough_peak hough_peak;
-      double rho = rho_index_to_rho(rho_index);
-      if (is_maximum(hough_peak, rho_to_rho_index(rho), rho_size, theta_index, theta_size, threshold_count)) {
+      if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count)) {
         hough_peaks.emplace_back(hough_peak);
       }
     }
@@ -51,14 +51,9 @@ void Hough_accum::find_peaks(std::list<Hough_peak> &hough_peaks,
 }
 
 int Hough_accum::get(int rho_index, int theta_index) const {
-  if (rho_theta_counts == nullptr)
-    return 0;
-  int index = rho_index_theta_index_to_accum_index(rho_index, theta_index);
+  assert (rho_theta_counts != nullptr);
+  int index = to_accum_index(rho_index, theta_index);
   return rho_theta_counts[index];
-}
-
- int Hough_accum::get_nthetas() const {
-  return max_degrees / theta_inc;
 }
 
 /**
@@ -68,13 +63,13 @@ int Hough_accum::get(int rho_index, int theta_index) const {
  * @param image_theshold
  */
 void Hough_accum::initialize(Image *image, int image_threshold) {
+  assert(image != nullptr);
   for (int row = image->get_min_row(); row <= image->get_max_row(); row++) {
     for (int col = image->get_min_col(); col <= image->get_max_col(); col++) {
       double value = std::abs(image->get(row, col));
       if (value > image_threshold) {
         for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-          int rho_index =
-              row_col_theta_to_rho_index(row, col, theta_index);
+          int rho_index = row_col_theta_index_to_rho_index(row, col, theta_index);
           update(rho_index, theta_index, wb_utils::double_to_int_round(value));
         }
       }
@@ -103,13 +98,12 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
                              int theta_index,
                              int theta_size,
                              int threshold_count) const {
+  assert (rho_theta_counts != nullptr);
   int rho_index_low = std::max(rho_index - rho_size / 2, 0);
   int rho_index_high = std::min(rho_index + rho_size / 2, get_nrhos() - 1);
   int theta_index_low = std::max(theta_index - theta_size / 2, 0);
   int theta_index_high = std::min(theta_index + theta_size / 2, get_nthetas() - 1);
-  if (rho_theta_counts == nullptr)
-    return false;
-  int bin_index = rho_index_theta_index_to_accum_index(rho_index, theta_index);
+  int bin_index = to_accum_index(rho_index, theta_index);
   int bin_count = rho_theta_counts[bin_index];
   if (bin_count < threshold_count)
     return false;
@@ -117,7 +111,7 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
   for (int i = theta_index_low; i <= theta_index_high; i++)
     for (int j = rho_index_low; j <= rho_index_high; j++) {
       if (theta_index != i || rho_index != j) {
-        int index = rho_index_theta_index_to_accum_index(j, i);
+        int index = to_accum_index(j, i);
         int neighbor_bin_count = rho_theta_counts[index];
         if (neighbor_bin_count > bin_count)
           return false;
@@ -125,8 +119,8 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
           next_highest = neighbor_bin_count;
       }
     }
-  hough_peak.set_theta_degrees(theta_index);
-  hough_peak.set_rho(rho_index);
+  hough_peak.set_theta_degrees(to_theta_degrees(theta_index));
+  hough_peak.set_rho(rho_index_to_rho(rho_index));
   hough_peak.set_count(bin_count);
   int difference = bin_count - next_highest;
   hough_peak.set_total_difference(bin_count - next_highest);
@@ -169,33 +163,11 @@ Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
   }
 }
 
- double Hough_accum::rho_index_to_rho(int rho_index) const {
+double Hough_accum::rho_index_to_rho(int rho_index) const {
   return rho_index - nrhos / 2.0;
 }
 
-// can have a singularity if theta ~= , 180, sin ~= 0
-int Hough_accum::rho_theta_col_to_row(int rho_index, int theta_index, int col) {
-  double x = Point::col_to_x(col, cols);
-  double cos_t = Hough_accum::to_cos(theta_index);
-  double rho = rho_index_to_rho(rho_index);
-  double sin_t = Hough_accum::to_sin(theta_index);
-  double row_offset = rows / 2.0;
-  double row = (x * cos_t - rho) / sin_t + row_offset;
-  return wb_utils::double_to_int_round(row);
-}
-
-// can have a singularity if theta ~= 90, cos ~= 0
-int Hough_accum::rho_theta_row_to_col(int rho_index, int theta_index, int row) {
-  double rho = rho_index_to_rho(rho_index);
-  double cos_t = Hough_accum::to_cos(theta_index);
-  double y = Point::row_to_y(row, rows);
-  double sin_t = Hough_accum::to_sin(theta_index);
-  double col_offset = cols / 2.0;
-  double col = (rho - y * sin_t) / cos_t + col_offset;
-  return wb_utils::double_to_int_round(col);
-}
-
-int Hough_accum::rho_index_theta_index_to_accum_index(int rho_index, int theta_index) const {
+int Hough_accum::to_accum_index(int rho_index, int theta_index) const {
   assert(rho_index >= 0);
   assert(rho_index < nrhos);
   assert(theta_index >= 0);
@@ -209,7 +181,7 @@ int Hough_accum::rho_to_rho_index(double rho) const {
   return rho_index;
 }
 
-double Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
+double Hough_accum::row_col_theta_index_to_rho(int row, int col, int theta_index) const {
   double x = Point::col_to_x(col, cols);
   double cos_t = to_cos(theta_index);
   double y = Point::row_to_y(row, rows);
@@ -218,37 +190,34 @@ double Hough_accum::row_col_theta_to_rho(int row, int col, int theta_index) {
   return rho;
 }
 
-int Hough_accum::row_col_theta_to_rho_index(int row, int col, int theta_index) {
-  double rho = row_col_theta_to_rho(row, col, theta_index);
+int Hough_accum::row_col_theta_index_to_rho_index(int row, int col, int theta_index) const {
+  double rho = row_col_theta_index_to_rho(row, col, theta_index);
   int rho_index = rho_to_rho_index(rho);
   return rho_index;
 }
 
 void Hough_accum::set(int rho_index, int theta_index, int value) const {
-  if (rho_theta_counts != nullptr) {
-    int index = rho_index_theta_index_to_accum_index(rho_index, theta_index);
-    rho_theta_counts[index] = value;
-  }
+  assert (rho_theta_counts != nullptr);
+  int index = to_accum_index(rho_index, theta_index);
+  rho_theta_counts[index] = value;
 }
 
-int Hough_accum::theta_index_to_theta_degrees(int theta_index) const {
+int Hough_accum::to_theta_degrees(int theta_index) const {
   return theta_index * theta_inc;
 }
-int Hough_accum::theta_to_theta_index(Theta &theta) const {
-  return theta.get_theta_degrees() / theta_inc;
-}
+
 double Hough_accum::to_cos(int theta_index) const {
-  return Theta::to_cos(theta_index_to_theta_degrees(theta_index));
+  return Theta::to_cos(to_theta_degrees(theta_index));
 }
+
 double Hough_accum::to_sin(int theta_index) const {
-  return Theta::to_sin(theta_index_to_theta_degrees(theta_index));
+  return Theta::to_sin(to_theta_degrees(theta_index));
 }
 
 void Hough_accum::update(int rho_index, int theta_index, int value) const {
-  if (rho_theta_counts != nullptr) {
-    int index = rho_index_theta_index_to_accum_index(rho_index, theta_index);
-    rho_theta_counts[index] += value;
-  }
+  assert (rho_theta_counts != nullptr);
+  int index = to_accum_index(rho_index, theta_index);
+  rho_theta_counts[index] += value;
 }
 
 void Hough_accum::update_accumulator_stats() {
@@ -308,7 +277,7 @@ void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim) const
     ofs << rho_index_to_rho(rho_index) << delim;
   ofs << std::endl;
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-    ofs << theta_index_to_theta_degrees(theta_index) << delim;
+    ofs << to_theta_degrees(theta_index) << delim;
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       ofs << get(rho_index, theta_index) << delim;
     }

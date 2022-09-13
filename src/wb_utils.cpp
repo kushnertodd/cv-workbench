@@ -12,10 +12,6 @@
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
-extern bool debug;
-
-//
-
 /**
  * determine character for Ascii code
  * @param n to convert

@@ -60,7 +60,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
       int rho_index = hough_accum->rho_to_rho_index(rho);
       Polar_line polar_line(rho,
-                            hough_accum->theta_index_to_theta_degrees(theta_index));
+                            hough_accum->to_theta_degrees(theta_index));
       Line_segment line_segment;
       if (!WB_window::clip_window(rows, cols, line_segment, polar_line, hough_accum->get_nrhos())) {
         errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");

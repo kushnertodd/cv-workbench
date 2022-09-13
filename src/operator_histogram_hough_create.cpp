@@ -8,8 +8,6 @@
 #include "operator_utils.hpp"
 #include "operator_histogram_hough_create.hpp"
 
-extern bool debug;
-
 Operator_histogram_hough_create::~Operator_histogram_hough_create() = default;
 /**
  * Run create hough histogram operator
@@ -24,10 +22,6 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
                                           String_map &operator_parameters,
                                           std::list<WB_log_entry> &log_entries,
                                           Errors &errors) {
-  if (debug) {
-    std::cout << "Operator_histogram_hough_create::run parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_histogram_hough_create::run", "", "input data source required");
   else if (input_data_sources.size() > 1)

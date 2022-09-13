@@ -8,8 +8,6 @@
 #include "operator_utils.hpp"
 #include "wb_utils.hpp"
 
-extern bool debug;
-
 /**
    create new image from an existing image
 

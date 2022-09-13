@@ -8,8 +8,6 @@
 #include "operator_utils.hpp"
 #include "operator_hough_image_create.hpp"
 
-extern bool debug;
-
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
@@ -23,10 +21,6 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
                                       String_map &operator_parameters,
                                       std::list<WB_log_entry> &log_entries,
                                       Errors &errors) {
-  if (debug) {
-    std::cout << "Operator_hough_image_create::run parameters: "
-              << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
-  }
   if (input_data_sources.empty())
     errors.add("Operator_hough_image_create::run", "", "input data source required");
   else if (input_data_sources.size() > 1)

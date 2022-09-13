@@ -7,8 +7,6 @@
 #include "wb_utils.hpp"
 #include "line_segment.hpp"
 
-extern bool debug;
-
 /**
  * Constructor
  */
@@ -21,10 +19,6 @@ Line_segment::Line_segment() : Line_segment(0, 0, 0, 0) {
 Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
     point1(min_row, min_col),
     point2(max_row, max_col) {
-  if (debug)
-    std::cout << "Line_segment::Line_segment min_row " << min_row
-              << " min_col " << min_col << " max_row " << max_row
-              << " max_col " << max_col << std::endl;
   plotLine();
 }
 
@@ -34,11 +28,6 @@ Line_segment::Line_segment(int min_row, int min_col, int max_row, int max_col) :
 Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
     point1(m_point1),
     point2(m_point2) {
-  if (debug)
-    std::cout << "Line_segment::Line_segment point1 (" <<
-              point1.to_string()
-              << ") point2 ("
-              << point2.to_string() << ")" << std::endl;
   plotLine();
 }
 

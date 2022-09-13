@@ -8,10 +8,6 @@
 #include "data_source_descriptor.hpp"
 #include "internet_data_source_descriptor.hpp"
 
-extern bool debug;
-
-//
-
 Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
                                                                  WB_data_type::Data_type m_data_type,
                                                                  WB_data_format::Data_format m_data_format) :
@@ -44,9 +40,6 @@ Internet_data_source_descriptor
                                             WB_data_type::Data_type data_type,
                                             WB_data_format::Data_format data_format,
                                             Errors &errors) {
-  if (debug)
-    std::cout << "Internet_data_source_descriptor::from_json: id '" << id << "' type "
-              << std::endl;
   auto *internet_data_source_descriptor =
       new Internet_data_source_descriptor(id, data_type, data_format);
   json_object *json_url =

@@ -6,20 +6,27 @@
 #include <iostream>
 #include <sstream>
 #include "file_utils.hpp"
+#include "point.hpp"
 #include "polar_line.hpp"
 #include "theta.hpp"
 #include "wb_utils.hpp"
 
 Polar_line::Polar_line() = default;
-Polar_line::Polar_line(double m_rho,
-                       Theta m_theta) :
-    rho(m_rho),
-    theta(m_theta) {}
 
 Polar_line::Polar_line(double m_rho,
-           int theta_degrees):
+                       int theta_degrees) :
     rho(m_rho) {
-    theta.set_theta_degrees(theta_degrees);
+  theta.set_theta_degrees(theta_degrees);
+}
+
+// can have a singularity if theta ~= , 180, sin ~= 0
+int Polar_line::col_to_row(int col, int rows, int cols) const {
+  double x = Point::col_to_x(col, cols);
+  double cos_t = to_cos();
+  double sin_t = to_sin();
+  double row_offset = rows / 2.0;
+  double row = (x * cos_t - rho) / sin_t + row_offset;
+  return wb_utils::double_to_int_round(row);
 }
 
 /**
@@ -62,6 +69,16 @@ void Polar_line::read_text(std::vector<std::string> &values, Errors &errors) {
     else
       theta.set_theta_degrees(theta_degrees);
   }
+}
+
+// can have a singularity if theta ~= 90, cos ~= 0
+int Polar_line::row_to_col(int row, int rows, int cols) const {
+  double cos_t = to_cos();
+  double y = Point::row_to_y(row, rows);
+  double sin_t = to_sin();
+  double col_offset = cols / 2.0;
+  double col = (rho - y * sin_t) / cos_t + col_offset;
+  return wb_utils::double_to_int_round(col);
 }
 
 void Polar_line::set(double m_rho, int theta_degrees) {
