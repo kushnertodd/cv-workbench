@@ -24,7 +24,7 @@ void Operator_hough_draw_lines::run(std::list<Data_source_descriptor *> &input_d
                                     Errors &errors) {
   if (input_data_sources.empty())
     errors.add("Operator_hough_draw_lines::run", "", "input data source required");
-  else if (input_data_sources.size() > 1)
+  else if (input_data_sources.size() > 2)
     errors.add("Operator_hough_draw_lines::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_draw_lines::run", "", "output data source required");
@@ -60,14 +60,14 @@ void Operator_hough_draw_lines::run(std::list<Data_source_descriptor *> &input_d
         } else {
           // user components are 1-3
           input->draw_line_segment(line_segment, pixel_value, out_component - 1);
-          for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
-            histogram_output_data_store->write_operator_image(input.get(),
-                                                              "Operator_hough_draw_lines::run",
-                                                              errors);
-          if (!errors.has_error()) {
-            input->log(log_entries);
-          }
         }
+      }
+      for (Data_source_descriptor *hough_peak_output_data_store: output_data_stores)
+        hough_peak_output_data_store->write_operator_image(input.get(),
+                                                          "Operator_hough_draw_lines::run",
+                                                          errors);
+      if (!errors.has_error()) {
+        input->log(log_entries);
       }
     }
   }

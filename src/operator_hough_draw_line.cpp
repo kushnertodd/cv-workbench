@@ -66,8 +66,8 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       } else {
         // user components are 1-3
         input->draw_line_segment(line_segment, pixel_value, out_component - 1);
-        for (Data_source_descriptor *histogram_output_data_store: output_data_stores)
-          histogram_output_data_store->write_operator_image(input.get(),
+        for (Data_source_descriptor *hough_line_output_data_store: output_data_stores)
+          hough_line_output_data_store->write_operator_image(input.get(),
                                                             "Operator_hough_draw_line::run",
                                                             errors);
         if (!errors.has_error()) {

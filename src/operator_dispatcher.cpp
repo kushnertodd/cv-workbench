@@ -15,6 +15,7 @@
 #include "operator_histogram_image_create.hpp"
 #include "operator_histogram_peak_detect.hpp"
 #include "operator_hough_draw_line.hpp"
+#include "operator_hough_draw_lines.hpp"
 #include "operator_hough_image_create.hpp"
 #include "operator_hough_peak_detect.hpp"
 #include "operator_transform_image_combine.hpp"
@@ -44,6 +45,7 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   else if (operator_name == "histogram-image-create") pOperator = new Operator_histogram_image_create();
   else if (operator_name == "histogram-peak-detect") pOperator = new Operator_histogram_peak_detect();
   else if (operator_name == "hough-draw-line") pOperator = new Operator_hough_draw_line();
+  else if (operator_name == "hough-draw-lines") pOperator = new Operator_hough_draw_lines();
   else if (operator_name == "hough-image-create") pOperator = new Operator_hough_image_create();
   else if (operator_name == "hough-peak-detect") pOperator = new Operator_hough_peak_detect();
   else if (operator_name == "transform-image-combine") pOperator = new Operator_transform_image_combine();
