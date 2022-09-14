@@ -5,14 +5,22 @@ Descriptions of each branch, commit, and version of CV-Workbench.
 
 `$WIN_HOME/DropBox/software/projects/cv/cv-workbench`
 
+#### v0.2.1 dev
+```
+commit ad8df1a809d665cb5dd23aa0cbe4dd4b17bfbb23 (HEAD -> dev, origin/dev)
+Author: Todd Kushner <kushnertodd@gmail.com>
+Date:   Tue Sep 13 19:52:47 2022 -0600
+```
+
+- hough-draw-lines works
+
 #### v0.2.0 dev
 ```
 commit 81ae0174e8d7d9156d8c999c9e6f65f3408d07d6 (HEAD -> dev, origin/dev)
 Author: Todd Kushner <kushnertodd@gmail.com>
 Date:   Thu Sep 8 12:46:56 2022 -0600
-
-    Visual Studio Windows version builds if not works
 ```
+- Visual Studio Windows version builds if not works
 
 #### v0.1.30 dev
 ```
