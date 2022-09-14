@@ -1,64 +1,42 @@
 {
-  "experiment": {
-    "steps": [
-      {
-        "id": 1,
-        "operator": "filter-edge-sobel",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "test/reference",
-            "filename": "keyboard_pixel_gray-709x663"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "binary",
-            "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-0"
-          }
-        ],
-        "parameters": {
-          "orientation": "0"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "transform-intensity-map",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "binary",
-            "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-0"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": "images",
-            "filename": "keyboard_pixel_gray-709x663-sobel-0"
-          }
-        ],
-        "parameters": {
-            "depth": "CV_8U",
-            "lower_in": "-60",
-            "upper_in": "60",
-            "lower_out": "0",
-            "upper_out": "255"
-        }
-      }
-    ]
-  }
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "hough-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "test/filter-edge-sobel",
+						"filename": "keyboard_pixel_gray-250x375-sobel-0"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "keyboard_pixel_gray-250x375-sobel-0"
+					},
+					{
+						"id": 2,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "keyboard_pixel_gray-250x375-sobel-0"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"threshold": "60"
+				}
+			}
+		]
+	}
 }

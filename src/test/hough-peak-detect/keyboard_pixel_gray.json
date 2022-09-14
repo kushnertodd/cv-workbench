@@ -11,7 +11,7 @@
             "repository":"filesystem",
             "format":"binary",
             "directory":"test/hough-image-create",
-						"filename": "keyboard_pixel_gray-709x663-sobel-0"
+						"filename": "keyboard_pixel_gray-250x375-sobel-0"
           }
         ],
         "output-data":[
@@ -21,7 +21,7 @@
             "repository":"filesystem",
             "format":"text",
             "directory":"images",
-						"filename": "keyboard_pixel_gray-709x663-sobel-0"
+						"filename": "keyboard_pixel_gray-250x375-sobel-0"
           },
           {
             "id":2,
@@ -29,13 +29,50 @@
             "repository":"filesystem",
             "format":"binary",
             "directory":"images",
-            "filename":"keyboard_pixel_gray-709x663"
+            "filename":"keyboard_pixel_gray-250x375"
           }
         ],
         "parameters":{
           "rho-size":"3",
           "theta-size":"1",
-          "threshold-count":"5000"
+          "threshold-count":"1000"
+        }
+      },
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"hough",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"test/hough-image-create",
+						"filename": "keyboard_pixel_gray-250x375-sobel-90"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":"images",
+						"filename": "keyboard_pixel_gray-250x375-sobel-90"
+          },
+          {
+            "id":2,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"images",
+            "filename":"keyboard_pixel_gray-250x375"
+          }
+        ],
+        "parameters":{
+          "rho-size":"9",
+          "theta-size":"9",
+          "threshold-count":"1000"
         }
       }
     ]
