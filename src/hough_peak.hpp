@@ -11,7 +11,6 @@
 
 class Hough_peak {
  private:
-  Polar_line polar_line;
   int count{};
   int total_difference{};
   double percent_difference{};
@@ -19,6 +18,7 @@ class Hough_peak {
   Variance_stats total_difference_stats;
   Variance_stats percent_difference_stats;
  public:
+  Polar_line polar_line;
   ~Hough_peak();
   Hough_peak() = default;
   Hough_peak(Polar_line &m_polar_line,

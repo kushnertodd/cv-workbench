@@ -53,6 +53,7 @@ SRCOBJS :=  \
   operator_histogram_image_create.o \
   operator_histogram_peak_detect.o \
   operator_hough_draw_line.o \
+  operator_hough_draw_lines.o \
   operator_hough_image_create.o \
   operator_hough_peak_detect.o \
   operator.o \

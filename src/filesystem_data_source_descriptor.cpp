@@ -123,11 +123,23 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
 }
 
 void Filesystem_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {
-
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  std::string data_filename = wb_filename.to_bin();
+  FILE *fp = file_utils::open_file_read(data_filename, errors);
+  Image *image = nullptr;
+  if (fp) {
+    image = Image::read(fp, errors);
+    Hough_peak::read(fp, hough_peaks, errors);
+      fclose(fp);
+  }
 }
 
 void Filesystem_data_source_descriptor::read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {
-
+  std::string path = to_path_noext();
+  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  std::string data_filename = wb_filename.to_text();
+  Hough_peak::read_text(data_filename, hough_peaks, errors);
 }
 
 /**

@@ -151,6 +151,23 @@ Hough *Data_source_descriptor::read_operator_hough(const std::string &module,
 }
 
 /**
+ * read operator hough hough_peaks binary or text data
+ * @param module name for error message
+ * @param errors
+ * @return
+ */
+void Data_source_descriptor::read_operator_hough_peaks(std::list<Hough_peak> &hough_peaks,
+                                                        const std::string &module,
+                                                        Errors &errors) {
+  if (data_format == WB_data_format::Data_format::BINARY)
+    read_hough_peaks(hough_peaks, errors);
+  else if (data_format == WB_data_format::Data_format::TEXT)
+    read_hough_peaks_text(hough_peaks, errors);
+  else
+    errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
+}
+
+/**
  * read operator image binary, JPEG, or text data
  * @param module name for error message
  * @param errors

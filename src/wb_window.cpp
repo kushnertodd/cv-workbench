@@ -55,7 +55,7 @@ extern bool debug;
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos) {
+bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line) {
   int theta_lower = 45;
   int theta_upper = 135;
   // window is in (row, col) coordinates
