@@ -1,42 +1,64 @@
 {
-	"experiment": {
-		"steps": [
-			{
-				"id": 1,
-				"operator": "hough-image-create",
-				"input-data": [
-					{
-						"id": 1,
-						"type": "image",
-						"repository": "filesystem",
-						"format": "binary",
-						"directory": "test/filter-edge-sobel",
-						"filename": "du_drone_gray-151x118-sobel-90"
-					}
-				],
-				"output-data": [
-					{
-						"id": 1,
-						"type": "hough",
-						"repository": "filesystem",
-						"format": "text",
-						"directory": "images",
-						"filename": "du_drone_gray-151x118-sobel-90"
-					},
-					{
-						"id": 2,
-						"type": "hough",
-						"repository": "filesystem",
-						"format": "binary",
-						"directory": "images",
-						"filename": "du_drone_gray-151x118-sobel-90"
-					}
-				],
-				"parameters": {
-					"theta_inc": "3",
-					"threshold": "60"
-				}
-			}
-		]
-	}
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "du_drone_gray-151x118"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_drone_gray-151x118-sobel-90"
+          }
+        ],
+        "parameters": {
+          "orientation": "90"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_drone_gray-151x118-sobel-90"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_drone_gray-151x118-sobel-90"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-60",
+            "upper_in": "60",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
 }
