@@ -2,42 +2,6 @@
 	"experiment": {
 		"steps": [
 			{
-				"id": 1,
-				"operator": "hough-image-create",
-				"input-data": [
-					{
-						"id": 1,
-						"type": "image",
-						"repository": "filesystem",
-						"format": "binary",
-						"directory": "test/reference",
-						"filename": "line0_gray"
-					}
-				],
-				"output-data": [
-					{
-						"id": 1,
-						"type": "image",
-						"repository": "filesystem",
-						"format": "text",
-						"directory": "images",
-						"filename": "line0_gray"
-					},
-					{
-						"id": 2,
-						"type": "image",
-						"repository": "filesystem",
-						"format": "binary",
-						"directory": "images",
-						"filename": "line0_gray"
-					}
-				],
-				"parameters": {
-					"theta_inc": "3",
-					"threshold": "200"
-				}
-			},
-			{
 				"id": 2,
 				"operator": "hough-image-create",
 				"input-data": [
@@ -53,7 +17,7 @@
 				"output-data": [
 					{
 						"id": 1,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
@@ -61,7 +25,7 @@
 					},
 					{
 						"id": 2,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
@@ -70,7 +34,7 @@
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
@@ -89,7 +53,7 @@
 				"output-data": [
 					{
 						"id": 1,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
@@ -97,7 +61,7 @@
 					},
 					{
 						"id": 2,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
@@ -106,7 +70,7 @@
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
@@ -125,7 +89,7 @@
 				"output-data": [
 					{
 						"id": 1,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
@@ -133,7 +97,7 @@
 					},
 					{
 						"id": 2,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
@@ -142,7 +106,7 @@
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
@@ -161,7 +125,7 @@
 				"output-data": [
 					{
 						"id": 1,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
@@ -169,7 +133,7 @@
 					},
 					{
 						"id": 2,
-						"type": "image",
+						"type": "hough",
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
@@ -178,7 +142,7 @@
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			}
 		]

@@ -11,8 +11,7 @@
 						"repository": "filesystem",
 						"format": "jpeg",
 						"directory": "test/reference",
-						"filename": "line90_gray",
-						"ext": "jpg"
+						"filename": "line90_gray"
 					}
 				],
 				"output-data": [
@@ -22,8 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line90_gray",
-						"ext": "txt"
+						"filename": "line90_gray"
 					},
 					{
 						"id": 2,
@@ -31,8 +29,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line90_gray",
-						"ext": "bin"
+						"filename": "line90_gray"
 					}
 				],
 				"parameters": {

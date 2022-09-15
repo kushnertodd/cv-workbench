@@ -10,9 +10,8 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "binary",
-						"directory": "test/reference",
+						"directory": "test/transform-image-create",
 						"filename": "sample_hough",
-						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -23,7 +22,6 @@
 						"format": "text",
 						"directory": "images",
 						"filename": "sample_hough",
-						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -32,16 +30,15 @@
 						"format": "binary",
 						"directory": "images",
 						"filename": "sample_hough",
-						"ext": "bin"
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
-				"id": 2,
+				"id": 1,
 				"operator": "hough-image-create",
 				"input-data": [
 					{
@@ -49,9 +46,8 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "binary",
-						"directory": "test/reference",
-						"filename": "line15_gray",
-						"ext": "bin"
+						"directory": "test/transform-image-create",
+						"filename": "line_gray-5x5",
 					}
 				],
 				"output-data": [
@@ -61,8 +57,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line15_gray",
-						"ext": "txt"
+						"filename": "line_gray-5x5",
 					},
 					{
 						"id": 2,
@@ -70,17 +65,16 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line15_gray",
-						"ext": "bin"
+						"filename": "line_gray-5x5",
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
-				"id": 3,
+				"id": 1,
 				"operator": "hough-image-create",
 				"input-data": [
 					{
@@ -88,9 +82,8 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "binary",
-						"directory": "test/reference",
-						"filename": "line30_gray",
-						"ext": "bin"
+						"directory": "test/transform-image-create",
+						"filename": "point_gray-5x5",
 					}
 				],
 				"output-data": [
@@ -100,8 +93,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line30_gray",
-						"ext": "txt"
+						"filename": "point_gray-5x5",
 					},
 					{
 						"id": 2,
@@ -109,17 +101,16 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line30_gray",
-						"ext": "bin"
+						"filename": "point_gray-5x5",
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
-				"id": 4,
+				"id": 1,
 				"operator": "hough-image-create",
 				"input-data": [
 					{
@@ -127,9 +118,8 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "binary",
-						"directory": "test/reference",
-						"filename": "line45_gray",
-						"ext": "bin"
+						"directory": "test/transform-image-create",
+						"filename": "rectangle-filled-3x3_gray",
 					}
 				],
 				"output-data": [
@@ -139,8 +129,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line45_gray",
-						"ext": "txt"
+						"filename": "rectangle-filled-3x3_gray",
 					},
 					{
 						"id": 2,
@@ -148,17 +137,16 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line45_gray",
-						"ext": "bin"
+						"filename": "rectangle-filled-3x3_gray",
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
 				}
 			},
 			{
-				"id": 5,
+				"id": 1,
 				"operator": "hough-image-create",
 				"input-data": [
 					{
@@ -166,9 +154,8 @@
 						"type": "image",
 						"repository": "filesystem",
 						"format": "binary",
-						"directory": "test/reference",
-						"filename": "line90_gray",
-						"ext": "bin"
+						"directory": "test/transform-image-create",
+						"filename": "rectangle-filled-5x5-3x3_gray",
 					}
 				],
 				"output-data": [
@@ -178,8 +165,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line90_gray",
-						"ext": "txt"
+						"filename": "rectangle-filled-5x5-3x3_gray",
 					},
 					{
 						"id": 2,
@@ -187,13 +173,84 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line90_gray",
-						"ext": "bin"
+						"filename": "rectangle-filled-5x5-3x3_gray",
 					}
 				],
 				"parameters": {
 					"theta_inc": "3",
-					"threshold": "200"
+					"threshold": "100"
+				}
+			},
+			{
+				"id": 1,
+				"operator": "hough-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "test/transform-image-create",
+						"filename": "rectangle_gray-5x5",
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "rectangle_gray-5x5",
+					},
+					{
+						"id": 2,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "rectangle_gray-5x5",
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"threshold": "100"
+				}
+			},
+			{
+				"id": 1,
+				"operator": "hough-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "test/transform-image-create",
+						"filename": "sample_gray",
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "sample_gray",
+					},
+					{
+						"id": 2,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "sample_gray",
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"threshold": "100"
 				}
 			}
 		]

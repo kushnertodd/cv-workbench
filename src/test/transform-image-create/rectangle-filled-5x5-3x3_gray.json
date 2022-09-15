@@ -10,7 +10,7 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "test/reference",
+            "directory": "images",
             "filename": "rectangle-filled-5x5-3x3_gray"
           },
           {
@@ -18,7 +18,7 @@
             "type": "image",
             "repository": "filesystem",
             "format": "text",
-            "directory": "test/reference",
+            "directory": "images",
             "filename": "rectangle-filled-5x5-3x3_gray"
           }
         ],
@@ -39,7 +39,7 @@
             "type": "image",
             "repository": "filesystem",
             "format": "binary",
-            "directory": "test/reference",
+            "directory": "images",
             "filename": "rectangle-filled-3x3_gray"
           },
           {
@@ -47,7 +47,7 @@
             "type": "image",
             "repository": "filesystem",
             "format": "text",
-            "directory": "test/reference",
+            "directory": "images",
             "filename": "rectangle-filled-3x3_gray"
           }
         ],
