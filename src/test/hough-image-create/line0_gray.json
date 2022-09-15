@@ -11,7 +11,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/reference",
-						"filename": "line0_gray"
+						"filename": "line0_gray",
+						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -21,7 +22,8 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line0_gray"
+						"filename": "line0_gray",
+						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -29,7 +31,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line0_gray"
+						"filename": "line0_gray",
+						"ext": "bin"
 					}
 				],
 				"parameters": {
@@ -47,7 +50,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/reference",
-						"filename": "line15_gray"
+						"filename": "line15_gray",
+						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -57,7 +61,8 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line15_gray"
+						"filename": "line15_gray",
+						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -65,7 +70,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line15_gray"
+						"filename": "line15_gray",
+						"ext": "bin"
 					}
 				],
 				"parameters": {
@@ -83,7 +89,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/reference",
-						"filename": "line30_gray"
+						"filename": "line30_gray",
+						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -93,7 +100,8 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line30_gray"
+						"filename": "line30_gray",
+						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -101,7 +109,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line30_gray"
+						"filename": "line30_gray",
+						"ext": "bin"
 					}
 				],
 				"parameters": {
@@ -119,7 +128,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/reference",
-						"filename": "line45_gray"
+						"filename": "line45_gray",
+						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -129,7 +139,8 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line45_gray"
+						"filename": "line45_gray",
+						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -137,7 +148,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line45_gray"
+						"filename": "line45_gray",
+						"ext": "bin"
 					}
 				],
 				"parameters": {
@@ -155,7 +167,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/reference",
-						"filename": "line90_gray"
+						"filename": "line90_gray",
+						"ext": "bin"
 					}
 				],
 				"output-data": [
@@ -165,7 +178,8 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line90_gray"
+						"filename": "line90_gray",
+						"ext": "txt"
 					},
 					{
 						"id": 2,
@@ -173,7 +187,8 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line90_gray"
+						"filename": "line90_gray",
+						"ext": "bin"
 					}
 				],
 				"parameters": {
