@@ -70,9 +70,9 @@
           }
         ],
         "parameters":{
-          "rho-size":"3",
+          "rho-size":"1",
           "theta-size":"1",
-          "threshold-count":"2000"
+          "threshold-count":"10"
         }
       }
     ]
