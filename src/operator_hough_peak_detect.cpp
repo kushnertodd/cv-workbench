@@ -35,20 +35,26 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
                                     operator_parameters, "theta-size", theta_size, errors, true);
   int threshold_count = 100;
   Operator_utils::get_int_parameter("Operator_hough_peak_detect::run",
-                                        operator_parameters, "threshold-count", threshold_count, errors, true);
-
+                                    operator_parameters, "threshold-count", threshold_count, errors, true);
+  int threshold_difference = 0;
+  Operator_utils::get_int_parameter("Operator_hough_peak_detect::run",
+                                    operator_parameters, "threshold-difference", threshold_difference, errors, true);
+  double threshold_percentage = 0.0;
+  Operator_utils::get_real_parameter("Operator_hough_peak_detect::run",
+                                     operator_parameters, "threshold-percentage", threshold_percentage, errors, true);
   Hough *hough_ptr;
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));
     std::list<Hough_peak> hough_peaks;
     if (!errors.has_error())
-      hough->find_peaks(hough_peaks, rho_size, theta_size, threshold_count);
+      hough->find_peaks(hough_peaks, rho_size, theta_size, threshold_count, threshold_difference, threshold_percentage);
     for (Data_source_descriptor *hough_output_data_store: output_data_stores)
       if (!errors.has_error())
-        hough_output_data_store->write_operator_hough_peaks(hough_peaks,
-                                                            "Operator_histOperator_hough_peak_detectogram_hough_create::run",
-                                                            errors);
+        hough_output_data_store->write_operator_hough_peaks(
+            hough_peaks,
+            "Operator_histOperator_hough_peak_detectogram_hough_create::run",
+            errors);
   }
 }
 

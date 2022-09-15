@@ -33,8 +33,10 @@ Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
   return hough;
 }
 
-void Hough::find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count) {
-  hough_accum->find_peaks(hough_peaks, rho_size, theta_size, threshold_count);
+void Hough::find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count,
+                       int threshold_difference,
+                       double threshold_percentage) {
+  hough_accum->find_peaks(hough_peaks, rho_size, theta_size, threshold_count, threshold_difference, threshold_percentage);
 }
 
 /*

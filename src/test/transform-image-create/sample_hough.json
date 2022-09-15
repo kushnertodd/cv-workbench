@@ -1,0 +1,45 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-create",
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/reference",
+            "filename": "sample_hough"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/reference",
+            "filename": "sample_hough"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "sample_hough"
+          }
+        ],
+        "parameters": {
+          "rows": "14",
+          "cols": "11",
+          "foreground": "255",
+          "background": "0",
+          "line-1": "(3,1):(8,4)",
+          "line-2": "(11,6):(11,9)",
+          "line-3": "(2,8):(7,8)"
+        }
+      }
+    ]
+  }
+}

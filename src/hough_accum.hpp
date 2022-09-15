@@ -26,7 +26,12 @@ class Hough_accum {
   Hough_accum(int m_theta_inc, int m_rows, int m_cols);
 
   static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
-  void find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count) const;
+  void find_peaks(std::list<Hough_peak> &hough_peaks,
+                  int rho_size,
+                  int theta_size,
+                  int threshold_count,
+                  int threshold_difference,
+                  double threshold_percentage) const;
   int get(int rho_index, int theta_index) const;
   inline int get_cols() const { return cols; }
   inline int get_count() const { return accumulator_stats.get_count(); }
@@ -44,7 +49,9 @@ class Hough_accum {
                   int rho_size,
                   int theta_index,
                   int theta_size,
-                  int threshold_count) const;
+                  int threshold_count,
+                  int threshold_difference,
+                  double threshold_percentage) const;
   static Hough_accum *read(FILE *fp, Errors &errors);
   inline double rho_index_to_rho(int rho_index) const;
   int to_accum_index(int rho_index, int theta_index) const;

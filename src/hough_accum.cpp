@@ -38,12 +38,15 @@ Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_th
 void Hough_accum::find_peaks(std::list<Hough_peak> &hough_peaks,
                              int rho_size,
                              int theta_size,
-                             int threshold_count) const {
+                             int threshold_count,
+                             int threshold_difference,
+                             double threshold_percentage) const {
   hough_peaks.clear();
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       Hough_peak hough_peak;
-      if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count)) {
+      if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count,
+                     threshold_difference, threshold_percentage)) {
         hough_peaks.push_back(hough_peak);
       }
     }
@@ -97,7 +100,9 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
                              int rho_size,
                              int theta_index,
                              int theta_size,
-                             int threshold_count) const {
+                             int threshold_count,
+                             int threshold_difference,
+                             double threshold_percentage) const {
   assert (rho_theta_counts != nullptr);
   int rho_index_low = std::max(rho_index - rho_size / 2, 0);
   int rho_index_high = std::min(rho_index + rho_size / 2, get_nrhos() - 1);
@@ -119,12 +124,16 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
           next_highest = neighbor_bin_count;
       }
     }
+  int difference = bin_count - next_highest;
+  if (difference < threshold_difference)
+    return false;
+  double percentage_difference = (bin_count == 0 ? 0.0 : ((double) difference) / bin_count);
+  if (percentage_difference < threshold_percentage)
+    return false;
   hough_peak.set_theta_degrees(to_theta_degrees(theta_index));
   hough_peak.set_rho(rho_index_to_rho(rho_index));
   hough_peak.set_count(bin_count);
-  int difference = bin_count - next_highest;
   hough_peak.set_total_difference(bin_count - next_highest);
-  double percentage_difference = (bin_count == 0 ? 0.0 : ((double) difference) / bin_count);
   hough_peak.set_percent_difference(percentage_difference);
   return true;
 }

@@ -38,6 +38,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     double foreground = 255.0;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                        operator_parameters, "foreground", foreground, errors, true);
+/*
     std::string param_point_str;
     bool saw_point = Operator_utils::get_string_parameter("Operator_transform_image_create::run",
                                                           operator_parameters,
@@ -58,6 +59,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                                                      operator_parameters,
                                                                      "rectangle-filled",
                                                                      param_rectangle_filled_str, errors, true);
+*/
     if (input_data_sources_missing && (!saw_rows || !saw_cols))
       errors.add("Operator_transform_image_create::run",
                  "",
@@ -78,158 +80,166 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                                 "Operator_hough_image_create::run",
                                                 operator_parameters,
                                                 errors);
-      if (!errors.has_error() && saw_point) {
-        std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
-        if (points.empty())
-          errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
-        else {
-          std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
-          for (const std::string &point_str: points) {
-            std::smatch msm;
-            if (!std::regex_match(point_str, msm, point_pat) || msm.size() != 3)
-              errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
-            else {
-              std::string row_str = msm[1];
-              std::string col_str = msm[2];
-              int row;
-              int col;
-              if (!wb_utils::string_to_int(row_str, row))
-                errors.add("Operator_transform_image_create::run", "", "invalid point parameter row value");
-              if (!wb_utils::string_to_int(col_str, col))
-                errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
-              if (!errors.has_error() && image_ptr != nullptr) {
-                image->set(row, col, foreground);
+      std::regex line_cmd("line-?.*");
+      std::regex point_cmd("point-?.*");
+          std::regex rectangle_filled_cmd("rectangle-filled-?.*");
+          std::regex rectangle_cmd("rectangle-?.*");
+
+      String_map::iterator it;
+      for (it = operator_parameters.begin();
+           !errors.has_error() && it != operator_parameters.end();
+           it++) {
+        std::string parameter = it->first;
+        std::string parameter_value = it->second;
+        if (std::regex_match(parameter, point_cmd)) {
+       // if (parameter == "point") {
+          std::vector<std::string> points = wb_utils::tokenize(parameter_value, "|");
+          if (points.empty())
+            errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
+          else {
+            std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
+            for (const std::string &point_str: points) {
+              std::smatch msm;
+              if (!std::regex_match(point_str, msm, point_pat) || msm.size() != 3)
+                errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
+              else {
+                std::string row_str = msm[1];
+                std::string col_str = msm[2];
+                int row;
+                int col;
+                if (!wb_utils::string_to_int(row_str, row))
+                  errors.add("Operator_transform_image_create::run", "", "invalid point parameter row value");
+                if (!wb_utils::string_to_int(col_str, col))
+                  errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
+                if (!errors.has_error() && image_ptr != nullptr)
+                  image->set(row, col, foreground);
               }
             }
           }
-        }
-      }
-      if (!errors.has_error() && saw_line) {
-        std::vector<std::string> lines = wb_utils::tokenize(param_line_str, "|");
-        if (lines.empty())
-          errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-        else {
-          std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-          for (const std::string &line_str: lines) {
-            std::smatch msm;
-            if (!std::regex_match(line_str, msm, line_pat))
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else if (msm.size() != 5)
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else {
-              std::string row1_str = msm[1];
-              std::string col1_str = msm[2];
-              std::string row2_str = msm[3];
-              std::string col2_str = msm[4];
-              int row1;
-              int col1;
-              int row2;
-              int col2;
-              if (!wb_utils::string_to_int(row1_str, row1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col1_str, col1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!wb_utils::string_to_int(row2_str, row2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col2_str, col2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!errors.has_error() && image != nullptr) {
-                image->draw_line_segment(row1, col1, row2, col2, foreground);
+//        } else if (parameter == "line") {
+        } else if (std::regex_match(parameter, line_cmd)) {
+          std::vector<std::string> lines = wb_utils::tokenize(parameter_value, "|");
+          if (lines.empty())
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+          else {
+            std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
+            for (const std::string &line_str: lines) {
+              std::smatch msm;
+              if (!std::regex_match(line_str, msm, line_pat))
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else if (msm.size() != 5)
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else {
+                std::string row1_str = msm[1];
+                std::string col1_str = msm[2];
+                std::string row2_str = msm[3];
+                std::string col2_str = msm[4];
+                int row1;
+                int col1;
+                int row2;
+                int col2;
+                if (!wb_utils::string_to_int(row1_str, row1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col1_str, col1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!wb_utils::string_to_int(row2_str, row2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col2_str, col2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!errors.has_error() && image != nullptr)
+                  image->draw_line_segment(row1, col1, row2, col2, foreground);
               }
             }
           }
-        }
-      }
-      if (!errors.has_error() && saw_rectangle) {
-        std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
-        if (rect_lines.empty())
-          errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-        else {
-          std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-          for (const std::string &rect_line_str: rect_lines) {
-            std::smatch msm;
-            if (!std::regex_match(rect_line_str, msm, line_pat))
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else if (msm.size() != 5)
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else {
-              std::string row1_str = msm[1];
-              std::string col1_str = msm[2];
-              std::string row2_str = msm[3];
-              std::string col2_str = msm[4];
-              int row1;
-              int col1;
-              int row2;
-              int col2;
-              if (!wb_utils::string_to_int(row1_str, row1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col1_str, col1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!wb_utils::string_to_int(row2_str, row2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col2_str, col2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!errors.has_error() && image != nullptr) {
-                image->draw_rectangle(row1, col1, row2, col2, foreground);
+        //} else if (parameter == "rectangle") {
+        } else if (std::regex_match(parameter, rectangle_cmd)) {
+          std::vector<std::string> rect_lines = wb_utils::tokenize(parameter_value, "|");
+          if (rect_lines.empty())
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+          else {
+            std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
+            for (const std::string &rect_line_str: rect_lines) {
+              std::smatch msm;
+              if (!std::regex_match(rect_line_str, msm, line_pat))
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else if (msm.size() != 5)
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else {
+                std::string row1_str = msm[1];
+                std::string col1_str = msm[2];
+                std::string row2_str = msm[3];
+                std::string col2_str = msm[4];
+                int row1;
+                int col1;
+                int row2;
+                int col2;
+                if (!wb_utils::string_to_int(row1_str, row1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col1_str, col1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!wb_utils::string_to_int(row2_str, row2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col2_str, col2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!errors.has_error() && image != nullptr)
+                  image->draw_rectangle(row1, col1, row2, col2, foreground);
               }
             }
           }
-        }
-      }
-      if (!errors.has_error() && saw_rectangle_filled) {
-        std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_filled_str, "|");
-        if (rect_lines.empty())
-          errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-        else {
-          std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-          for (const std::string &rect_line_str: rect_lines) {
-            std::smatch msm;
-            if (!std::regex_match(rect_line_str, msm, line_pat))
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else if (msm.size() != 5)
-              errors.add("Operator_transform_image_create::run",
-                         "",
-                         "invalid line parameter value");
-            else {
-              std::string row1_str = msm[1];
-              std::string col1_str = msm[2];
-              std::string row2_str = msm[3];
-              std::string col2_str = msm[4];
-              int row1;
-              int col1;
-              int row2;
-              int col2;
-              if (!wb_utils::string_to_int(row1_str, row1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col1_str, col1))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!wb_utils::string_to_int(row2_str, row2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-              if (!wb_utils::string_to_int(col2_str, col2))
-                errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-              if (!errors.has_error() && image != nullptr)
-                image->draw_rectangle_filled(row1,
-                                             col1,
-                                             row2,
-                                             col2,
-                                             foreground);
+        //} else if (parameter == "rectangle-filled") {
+        } else if (std::regex_match(parameter, rectangle_filled_cmd)) {
+          std::vector<std::string> rect_lines = wb_utils::tokenize(parameter_value, "|");
+          if (rect_lines.empty())
+            errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
+          else {
+            std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
+            for (const std::string &rect_line_str: rect_lines) {
+              std::smatch msm;
+              if (!std::regex_match(rect_line_str, msm, line_pat))
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else if (msm.size() != 5)
+                errors.add("Operator_transform_image_create::run",
+                           "",
+                           "invalid line parameter value");
+              else {
+                std::string row1_str = msm[1];
+                std::string col1_str = msm[2];
+                std::string row2_str = msm[3];
+                std::string col2_str = msm[4];
+                int row1;
+                int col1;
+                int row2;
+                int col2;
+                if (!wb_utils::string_to_int(row1_str, row1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col1_str, col1))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!wb_utils::string_to_int(row2_str, row2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
+                if (!wb_utils::string_to_int(col2_str, col2))
+                  errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
+                if (!errors.has_error() && image != nullptr)
+                  image->draw_rectangle_filled(row1,                                               col1,                                               row2,                                               col2,                                               foreground);
+              }
             }
           }
         }
       }
       for (Data_source_descriptor *output_data_store: output_data_stores)
         if (!errors.has_error())
-          output_data_store->write_operator_image(image.get(), "Operator_transform_image_create::run", errors);
+          output_data_store->
+              write_operator_image(image.get(),
+                                   "Operator_transform_image_create::run", errors);
       if (!errors.has_error())
         image->log(log_entries);
     }
