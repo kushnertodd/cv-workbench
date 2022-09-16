@@ -140,12 +140,7 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
 
 Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
   int theta_inc;
-  wb_utils::read_int(fp,
-                     theta_inc,
-                     "Hough_accum::read",
-                     "",
-                     "missing hough accumulator theta_inc",
-                     errors);
+  wb_utils::read_int(fp,                     theta_inc,                     "Hough_accum::read",                     "",                     "missing hough accumulator theta_inc",                     errors);
   int rows;
   if (!errors.has_error())
     wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator get_rows()", errors);
@@ -156,13 +151,7 @@ Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
     return nullptr;
   else {
     auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
-    wb_utils::read_int_buffer(fp,
-                              hough_accum->rho_theta_counts,
-                              hough_accum->nbins,
-                              "Hough_accum::read",
-                              "",
-                              "cannot read hough accumulator data",
-                              errors);
+    wb_utils::read_int_buffer(fp,                              hough_accum->rho_theta_counts,                              hough_accum->nbins,                              "Hough_accum::read",                              "",                              "cannot read hough accumulator data",                              errors);
     if (errors.has_error()) {
       delete hough_accum;
       return nullptr;
@@ -238,45 +227,15 @@ void Hough_accum::update_accumulator_stats() {
 }
 
 void Hough_accum::write(FILE *fp, Errors &errors) const {
-  wb_utils::write_int(fp,
-                      theta_inc,
-                      "Hough_accum::write",
-                      "",
-                      "cannot write Hough accumulator theta_inc",
-                      errors);
+  wb_utils::write_int(fp,                      theta_inc,                      "Hough_accum::write",                      "",                      "cannot write Hough accumulator theta_inc",                      errors);
   if (!errors.has_error()) {
-    wb_utils::write_int(fp,
-                        rows,
-                        "Hough_accum::write",
-                        "",
-                        "cannot write Hough accumulator rows",
-                        errors);
+    wb_utils::write_int(fp,                        rows,                        "Hough_accum::write",                        "",                        "cannot write Hough accumulator rows",                        errors);
   }
   if (!errors.has_error()) {
-    wb_utils::write_int(fp,
-                        cols,
-                        "Hough_accum::write",
-                        "",
-                        "cannot write Hough accumulator cols",
-                        errors);
-  }
-
-  if (!errors.has_error()) {
-    wb_utils::write_int(fp,
-                        cols,
-                        "Hough_accum::write",
-                        "",
-                        "cannot write Hough accumulator cols",
-                        errors);
+    wb_utils::write_int(fp,                        cols,                        "Hough_accum::write",                        "",                        "cannot write Hough accumulator cols",                        errors);
   }
   if (!errors.has_error()) {
-    wb_utils::write_int_buffer(fp,
-                               rho_theta_counts,
-                               nbins,
-                               "Hough_accum::write",
-                               "",
-                               "cannot write Hough accumulator data",
-                               errors);
+    wb_utils::write_int_buffer(fp,                               rho_theta_counts,                               nbins,                               "Hough_accum::write",                               "",                               "cannot write Hough accumulator data",                               errors);
   }
 }
 
