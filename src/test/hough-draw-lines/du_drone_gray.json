@@ -36,6 +36,42 @@
           "out-component": "2",
           "pixel_value": "255"
         }
+      },
+      {
+        "id": 1,
+        "operator": "hough-draw-lines",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_drone_gray-151x118-sobel-90"
+          },
+          {
+            "id": 2,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/hough-peak-detect",
+            "filename": "du_drone_gray-151x118-sobel-90.hough_peaks"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_drone_gray-151x118-sobel-90"
+          }
+        ],
+        "parameters": {
+          "out-component": "2",
+          "pixel_value": "255"
+        }
       }
     ]
   }

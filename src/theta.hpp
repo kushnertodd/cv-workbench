@@ -27,11 +27,13 @@ class Theta {
   Theta &operator++();
 
   // postfix increment
-  const Theta operator++(int);
+  Theta operator++(int);
 
-  int get_theta_degrees() const;
+  static double degrees_to_radians(int degrees) ;
+    int get_theta_degrees() const;
   inline int get_theta_increment() const { return theta_increment; }
   double get_theta_radians() const;
+  static int radians_to_degrees(double radians);
   void set_theta_degrees(int theta_degrees);
   void set_theta_radians(double theta_radians);
   inline void set_theta_increment(int m_theta_increment) { theta_increment = m_theta_increment; }
@@ -41,6 +43,7 @@ class Theta {
   static double to_sin(int theta_degrees);
   std::string to_string() const;
   friend std::ostream &operator<<(std::ostream &os, const Theta &theta);
+  friend class Polar_line;
 };
 
 #endif //SRC__THETA_H_

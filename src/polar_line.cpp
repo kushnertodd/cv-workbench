@@ -25,7 +25,7 @@ int Polar_line::col_to_row(int col, int rows, int cols) const {
   double cos_t = to_cos();
   double sin_t = to_sin();
   double row_offset = rows / 2.0;
-  double row = row_offset + (x * cos_t - rho) / sin_t;
+  double row = row_offset - (rho - x * cos_t) / sin_t;
   return wb_utils::double_to_int_round(row);
 }
 
@@ -77,7 +77,7 @@ int Polar_line::row_to_col(int row, int rows, int cols) const {
   double cos_t = to_cos();
   double sin_t = to_sin();
   double col_offset = cols / 2.0;
-  double col = (rho - y * sin_t) / cos_t + col_offset;
+  double col = col_offset + (rho - y * sin_t) / cos_t;
   return wb_utils::double_to_int_round(col);
 }
 
@@ -86,11 +86,38 @@ void Polar_line::set(double m_rho, int theta_degrees) {
   theta.set_theta_degrees(theta_degrees);
 }
 
+/**
+ * return arc-tangent angle for tangent in degrees
+ * can have a singularity if theta ~= , 180, delta_x ~= 0
+ * @return
+ */
+double Polar_line::to_atan(double delta_y, double delta_x) const {
+  double ratio = delta_y / delta_x;
+  double last_ratio = ratio;
+  double last_ratio_delta = 0;
+  for (int theta_increment = 0; theta_increment < max_thetas; theta_increment++) {
+    double next_ratio = Theta::sin_theta_table[theta_increment] / Theta::cos_theta_table[theta_increment];
+    double ratio_delta = abs(next_ratio - last_ratio);
+    if (ratio_delta > last_ratio_delta)
+      return theta_increment * theta_resolution;
+  }
+  return 0;
+}
+
 std::string Polar_line::to_string() const {
   std::ostringstream os;
   os << " rho " << rho
      << " theta " << theta.to_string();
   return os.str();
+}
+
+/**
+ * return tangent for line angle
+ * can have a singularity if theta ~= , 180, sin ~= 0
+ * @return
+ */
+double Polar_line::to_tan() const {
+  return to_sin() / to_cos();
 }
 
 void Polar_line::write(FILE *fp, Errors &errors) {

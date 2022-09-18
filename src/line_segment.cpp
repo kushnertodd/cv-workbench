@@ -10,7 +10,7 @@
 /**
  * Constructor
  */
-Line_segment::Line_segment() : Line_segment(0, 0, 0, 0) {
+Line_segment::Line_segment() {
 }
 
 /**

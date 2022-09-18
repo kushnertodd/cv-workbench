@@ -22,6 +22,7 @@ class Line_segment {
   Line_segment(const Point &m_point1, const Point &m_point2);
   void add(int low, int high);
   void add(const Point &point);
+  inline void clear() { line_points.clear(); }
   void log(std::list<WB_log_entry> &log_entries) const;
   void plotLineLow(int x0, int y0, int x1, int y1);
   void plotLineHigh(int x0, int y0, int x1, int y1);

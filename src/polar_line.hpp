@@ -35,8 +35,10 @@ class Polar_line {
   inline void set_theta(Theta m_theta) { theta = m_theta; }
   inline void set_theta_degrees(int theta_degrees) { theta.set_theta_degrees(theta_degrees); }
   inline void set_theta_radians(int theta_radians) { theta.set_theta_radians(theta_radians); }
+  double to_atan(double delta_y, double delta_x) const;
   inline double to_cos() const { return theta.to_cos(); }
   inline double to_sin() const { return theta.to_sin(); }
+  double to_tan() const;
   std::string to_string() const;
   void write(FILE *fp, Errors &errors);
   void write_text(std::ofstream &ofs, const std::string &delim) const;

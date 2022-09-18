@@ -20,10 +20,14 @@ Theta &Theta::operator++() {
 }
 
 // postfix increment
-const Theta Theta::operator++(int) {
+Theta Theta::operator++(int) {
   Theta old = *this; // copy old value
   theta_increment++;
   return old;    // return old value
+}
+
+double Theta::degrees_to_radians(int degrees)  {
+  return degrees * M_PI / max_degrees;
 }
 
 int Theta::get_theta_degrees() const {
@@ -32,6 +36,10 @@ int Theta::get_theta_degrees() const {
 
 double Theta::get_theta_radians() const {
   return get_theta_degrees() * M_PI / max_degrees;
+}
+
+int Theta::radians_to_degrees(double radians)  {
+  return round(radians * max_degrees / M_PI);
 }
 
 void Theta::set_theta_degrees(int theta_degrees) {

@@ -338,15 +338,18 @@ void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double
 double Image::get(int row, int col, int component) const {
   int index;
   switch (get_depth()) {
-    case WB_image_depth::Image_depth::CV_8U:
+    case WB_image_depth::Image_depth::CV_8U: {
       index = row_col_to_index(row, col, component);
       return buf_8U[index];
-    case WB_image_depth::Image_depth::CV_32S:
+    }
+    case WB_image_depth::Image_depth::CV_32S: {
       index = row_col_to_index(row, col, component);
       return (pixel_32F) buf_32S[index];
-    case WB_image_depth::Image_depth::CV_32F:
+    }
+    case WB_image_depth::Image_depth::CV_32F: {
       index = row_col_to_index(row, col, component);
       return buf_32F[index];
+    }
     default:
       return 0.0;
   }
@@ -641,7 +644,7 @@ void Image::reset_subimage() {
 }
 
 int Image::row_col_to_index(int row, int col, int component) const {
-  assert(component <= get_components());
+  assert(component < get_components());
   assert(row >= get_min_row());
   assert(row <= get_max_row());
   assert(col >= get_min_col());
@@ -693,17 +696,23 @@ double Image::scale_pixel(double pixel_in,
 
 // -> CV_8U may lose precision/overflow
 void Image::set(int row, int col, double value, int component) const {
-  assert(component <= get_components());
+  assert(component < get_components());
   switch (get_depth()) {
-    case WB_image_depth::Image_depth::CV_8U:
-      buf_8U[row_col_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
+    case WB_image_depth::Image_depth::CV_8U: {
+      int index = row_col_to_index(row, col, component);
+      buf_8U[index] = wb_utils::double_to_int_round(value);
       break;
-    case WB_image_depth::Image_depth::CV_32S:
-      buf_32S[row_col_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
+    }
+    case WB_image_depth::Image_depth::CV_32S: {
+      int index = row_col_to_index(row, col, component);
+      buf_32S[index] = wb_utils::double_to_int_round(value);
       break;
-    case WB_image_depth::Image_depth::CV_32F:
-      buf_32F[row_col_to_index(row, col, component)] = wb_utils::double_to_float(value);
+    }
+    case WB_image_depth::Image_depth::CV_32F: {
+      int index = row_col_to_index(row, col, component);
+      buf_32F[index] = wb_utils::double_to_float(value);
       break;
+    }
     default:
       break;
   }
@@ -714,15 +723,18 @@ void Image::set(Point &point, double value, int component) const {
 }
 
 void Image::set_8U(int row, int col, pixel_8U value, int component) const {
-  buf_8U[row_col_to_index(row, col, component)] = value;
+  int index = row_col_to_index(row, col, component);
+  buf_8U[index] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value, int component) const {
-  buf_32F[row_col_to_index(row, col, component)] = value;
+  int index = row_col_to_index(row, col, component);
+  buf_32F[index] = value;
 }
 
 void Image::set_32S(int row, int col, pixel_32S value, int component) const {
-  buf_32S[row_col_to_index(row, col, component)] = value;
+  int index = row_col_to_index(row, col, component);
+  buf_32S[index] = value;
 }
 
 void Image::set_subimage(int min_row,
