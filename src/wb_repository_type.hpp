@@ -8,6 +8,11 @@
 #include <map>
 #include <string>
 
+/**
+ * Location of cv-workbench data.
+ *
+ * @image WB_repository_type.jpg
+ */
 class WB_repository_type {
  public:
   enum class Repository_type {

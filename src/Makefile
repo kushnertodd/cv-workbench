@@ -139,7 +139,7 @@ install:
 	cp $(PROGRAMS) `which jpegtran` ~/bin
 
 doc:
-	doxygen doxygen.config
+	doxygen doxygen.config; cp ../docs/html
 
 depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
