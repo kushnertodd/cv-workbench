@@ -11,7 +11,7 @@
 /**
  * Location of cv-workbench data.
  *
- * @image WB_repository_type.jpg
+ *  @image html WB_repository_type.jpg
  */
 class WB_repository_type {
  public:

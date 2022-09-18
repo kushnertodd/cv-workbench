@@ -139,7 +139,7 @@ install:
 	cp $(PROGRAMS) `which jpegtran` ~/bin
 
 doc:
-	doxygen doxygen.config; cp ../docs/html
+	doxygen doxygen.config; cp ../doc/images/*.jpg html
 
 depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCFILES)
@@ -198,16 +198,17 @@ experiment_step.o: wb_utils.hpp hough_peak.hpp polar_line.hpp wb_filename.hpp
 experiment_step.o: experiment_step.hpp operator.hpp operator_dispatcher.hpp
 experiment_step.o: wb_json_utils.hpp
 filesystem_data_source_descriptor.o: file_utils.hpp errors.hpp
-filesystem_data_source_descriptor.o: wb_data_format.hpp wb_data_type.hpp
-filesystem_data_source_descriptor.o: wb_repository_type.hpp wb_json_utils.hpp
 filesystem_data_source_descriptor.o: data_source_descriptor.hpp wb_defs.hpp
 filesystem_data_source_descriptor.o: histogram.hpp hough.hpp hough_accum.hpp
 filesystem_data_source_descriptor.o: image.hpp bounds.hpp image_header.hpp
-filesystem_data_source_descriptor.o: wb_image_depth.hpp line_segment.hpp
+filesystem_data_source_descriptor.o: wb_data_format.hpp wb_data_type.hpp
+filesystem_data_source_descriptor.o: wb_image_depth.hpp
+filesystem_data_source_descriptor.o: wb_repository_type.hpp line_segment.hpp
 filesystem_data_source_descriptor.o: point.hpp wb_log.hpp variance_stats.hpp
 filesystem_data_source_descriptor.o: theta.hpp wb_utils.hpp hough_peak.hpp
 filesystem_data_source_descriptor.o: polar_line.hpp wb_filename.hpp
 filesystem_data_source_descriptor.o: filesystem_data_source_descriptor.hpp
+filesystem_data_source_descriptor.o: wb_json_utils.hpp
 file_utils.o: file_utils.hpp errors.hpp
 histogram.o: errors.hpp file_utils.hpp wb_utils.hpp wb_data_format.hpp
 histogram.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
@@ -218,8 +219,8 @@ histogram.o: wb_filename.hpp
 hough_accum.o: image.hpp bounds.hpp errors.hpp image_header.hpp
 hough_accum.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 hough_accum.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
-hough_accum.o: wb_log.hpp variance_stats.hpp polar_line.hpp theta.hpp
-hough_accum.o: wb_utils.hpp hough_accum.hpp hough_peak.hpp
+hough_accum.o: wb_log.hpp variance_stats.hpp theta.hpp wb_utils.hpp
+hough_accum.o: hough_accum.hpp hough_peak.hpp polar_line.hpp
 hough.o: file_utils.hpp errors.hpp image.hpp bounds.hpp image_header.hpp
 hough.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 hough.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
@@ -334,6 +335,7 @@ operator_dispatcher.o: operator_histogram_hough_create.hpp
 operator_dispatcher.o: operator_histogram_image_create.hpp
 operator_dispatcher.o: operator_histogram_peak_detect.hpp
 operator_dispatcher.o: operator_hough_draw_line.hpp
+operator_dispatcher.o: operator_hough_draw_lines.hpp
 operator_dispatcher.o: operator_hough_image_create.hpp
 operator_dispatcher.o: operator_hough_peak_detect.hpp
 operator_dispatcher.o: operator_transform_image_combine.hpp
@@ -494,6 +496,16 @@ operator_hough_draw_line.o: hough_peak.hpp polar_line.hpp operator_utils.hpp
 operator_hough_draw_line.o: data_source_descriptor.hpp histogram.hpp
 operator_hough_draw_line.o: wb_filename.hpp wb_window.hpp
 operator_hough_draw_line.o: operator_hough_draw_line.hpp operator.hpp
+operator_hough_draw_lines.o: hough.hpp hough_accum.hpp image.hpp bounds.hpp
+operator_hough_draw_lines.o: errors.hpp image_header.hpp wb_data_format.hpp
+operator_hough_draw_lines.o: wb_data_type.hpp wb_image_depth.hpp
+operator_hough_draw_lines.o: wb_repository_type.hpp wb_defs.hpp
+operator_hough_draw_lines.o: line_segment.hpp point.hpp wb_log.hpp
+operator_hough_draw_lines.o: variance_stats.hpp theta.hpp wb_utils.hpp
+operator_hough_draw_lines.o: hough_peak.hpp polar_line.hpp operator_utils.hpp
+operator_hough_draw_lines.o: data_source_descriptor.hpp histogram.hpp
+operator_hough_draw_lines.o: wb_filename.hpp wb_window.hpp
+operator_hough_draw_lines.o: operator_hough_draw_lines.hpp operator.hpp
 operator_hough_image_create.o: hough.hpp hough_accum.hpp image.hpp bounds.hpp
 operator_hough_image_create.o: errors.hpp image_header.hpp wb_data_format.hpp
 operator_hough_image_create.o: wb_data_type.hpp wb_image_depth.hpp
@@ -573,14 +585,15 @@ pearsons_correlation.o: point.hpp wb_log.hpp variance_stats.hpp kernel.hpp
 pearsons_correlation.o: wb_morphology_types.hpp one_pass_mean.hpp
 point.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 point.o: wb_repository_type.hpp errors.hpp wb_defs.hpp point.hpp
-polar_line.o: file_utils.hpp errors.hpp polar_line.hpp theta.hpp wb_utils.hpp
-polar_line.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
-polar_line.o: wb_repository_type.hpp wb_defs.hpp
+polar_line.o: file_utils.hpp errors.hpp point.hpp polar_line.hpp theta.hpp
+polar_line.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
+polar_line.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
 runtime.o: runtime.hpp wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
 runtime.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp wb_defs.hpp
 runtime.o: wb_version.hpp
 theta.o: theta.hpp wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
 theta.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp wb_defs.hpp
+theta.o: theta_static.hpp
 variance_stats.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
 variance_stats.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp
 variance_stats.o: wb_defs.hpp variance_stats.hpp bounds.hpp
@@ -596,7 +609,7 @@ wb_morphology_types.o: wb_morphology_types.hpp
 wb_repository_type.o: wb_repository_type.hpp
 wb_utils.o: errors.hpp wb_defs.hpp wb_utils.hpp wb_data_format.hpp
 wb_utils.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
-wb_window.o: theta.hpp wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
-wb_window.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp wb_defs.hpp
-wb_window.o: wb_window.hpp line_segment.hpp point.hpp wb_log.hpp
-wb_window.o: polar_line.hpp
+wb_window.o: wb_window.hpp line_segment.hpp point.hpp wb_log.hpp errors.hpp
+wb_window.o: polar_line.hpp theta.hpp wb_utils.hpp wb_data_format.hpp
+wb_window.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
+wb_window.o: wb_defs.hpp

@@ -44,6 +44,9 @@ double Bounds::get_min_value() const {
 
 /**
  * Map input value to output value for given input and output ranges
+ *
+ * @image html map_input_to_output_bounds.jpg
+ *
  * @param value
  * @param input_bounds
  * @param output_bounds

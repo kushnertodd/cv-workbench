@@ -8,7 +8,11 @@
 #include <fstream>
 #include <vector>
 #include "theta.hpp"
-
+/**
+ * Polar line (rho, theta)
+ *
+ * @image html polar_line.jpg
+ */
 class Polar_line {
  private:
   double rho{};

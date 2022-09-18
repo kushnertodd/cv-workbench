@@ -12,7 +12,7 @@
  * Image pixel content types.
  * Based on OpenCV pixel 'depth':
  *
- * @image WB_image_depth.jpg
+ *  @image html WB_image_depth.jpg
  */
 class WB_image_depth {
  public:
