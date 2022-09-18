@@ -1,0 +1,36 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-draw-line",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "du_map_gray-289x247-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map_gray-289x247-sobel-0_48_-2"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "3",
+          "theta": "48",
+          "rho": "-2",
+          "pixel_value": "0"
+        }
+      }
+    ]
+  }
+}

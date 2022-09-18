@@ -25,7 +25,7 @@ int Polar_line::col_to_row(int col, int rows, int cols) const {
   double cos_t = to_cos();
   double sin_t = to_sin();
   double row_offset = rows / 2.0;
-  double row = (x * cos_t - rho) / sin_t + row_offset;
+  double row = row_offset + (x * cos_t - rho) / sin_t;
   return wb_utils::double_to_int_round(row);
 }
 
@@ -73,8 +73,8 @@ void Polar_line::read_text(std::vector<std::string> &values, Errors &errors) {
 
 // can have a singularity if theta ~= 90, cos ~= 0
 int Polar_line::row_to_col(int row, int rows, int cols) const {
-  double cos_t = to_cos();
   double y = Point::row_to_y(row, rows);
+  double cos_t = to_cos();
   double sin_t = to_sin();
   double col_offset = cols / 2.0;
   double col = (rho - y * sin_t) / cos_t + col_offset;

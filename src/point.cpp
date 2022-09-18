@@ -55,7 +55,6 @@ void Point::check_point_valid(int rows, int cols) const {
  */
 double Point::col_to_x(int col, int cols) {
   return (col + 0.5) - cols / 2.0;
-
 }
 
 /**
@@ -129,7 +128,6 @@ bool Point::is_valid(int row, int col, int rows, int cols) {
  */
 double Point::row_to_y(int row, int rows) {
   return rows / 2.0 - (row + 0.5);
-
 }
 
 /**

@@ -64,6 +64,7 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
   int window_top = 0;
   int window_bottom = rows - 1;
   if (line.get_theta_degrees() <= theta_lower || line.get_theta_degrees() > theta_upper) {
+  //if (line.get_theta_degrees() >= theta_lower && line.get_theta_degrees() < theta_upper) {
     // case 1: 0 < theta < pi/4 or 3*pi/4 < theta < pi
     // must clip against the window top and bottom first
     int col_at_window_top = line.row_to_col(window_top, rows, cols);
@@ -210,7 +211,7 @@ bool WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
                   << " col_at_window_bottom " << col_at_window_bottom
                   << std::endl;
       left_point.set(row_at_window_left, window_left);
-      right_point.set(col_at_window_bottom, window_bottom);
+      right_point.set(window_bottom, col_at_window_bottom);
     } else if (row_at_window_left > window_bottom
         && row_at_window_right >= window_top
         && row_at_window_right <= window_bottom) {
