@@ -1,0 +1,84 @@
+{
+  "experiment":{
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"hough",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"test/hough-image-create",
+						"filename": "road_gray-194x259-sobel-0"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":"images",
+						"filename": "road_gray-194x259-sobel-0"
+          },
+          {
+            "id":2,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"images",
+            "filename":"road_gray-194x259-sobel-0"
+          }
+        ],
+        "parameters":{
+          "rho-size":"3",
+          "theta-size":"1",
+          "threshold-count":"2500",
+          "threshold-difference":"600",
+          "threshold-percentage":"0.25"
+        }
+      },
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"hough",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"test/hough-image-create",
+						"filename": "road_gray-194x259-sobel-90"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":"images",
+						"filename": "road_gray-194x259-sobel-90"
+          },
+          {
+            "id":2,
+            "type":"hough peaks",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":"images",
+            "filename":"road_gray-194x259-sobel-90"
+          }
+        ],
+        "parameters":{
+          "rho-size":"3",
+          "theta-size":"1",
+          "threshold-count":"2300",
+          "threshold-difference":"800",
+          "threshold-percentage":"0.25"
+        }
+      }
+    ]
+  }
+}

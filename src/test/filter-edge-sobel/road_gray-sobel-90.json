@@ -1,0 +1,64 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "road_gray-194x259"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "road_gray-194x259-sobel-90"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "road_gray-194x259-sobel-90"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "road_gray-194x259-sobel-90"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-60",
+            "upper_in": "60",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}
