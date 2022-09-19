@@ -33,7 +33,7 @@
 					}
 				],
 				"parameters": {
-					"theta_inc": "3",
+					"theta_inc": "6",
 					"threshold": "30"
 				}
 			},
@@ -69,7 +69,7 @@
 					}
 				],
 				"parameters": {
-					"theta_inc": "3",
+					"theta_inc": "6",
 					"threshold": "30"
 				}
 			}
