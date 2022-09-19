@@ -1,6 +1,10 @@
 #!/bin/bash
 here=$PWD
 echo here $here
+if [ ! -d ../../images ] ; then
+  mkdir ../../images
+  touch ../../images/.gitkeep
+fi
 sh test-clean-dir.sh
 for f in *.json ; do
   #echo cd ../..
