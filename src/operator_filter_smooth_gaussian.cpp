@@ -56,8 +56,8 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
       std::unique_ptr<Image> output_pass1(gaussian_kernel_y->convolve_numeric(input.get(), errors));
       if (!errors.has_error()) {
         std::unique_ptr<Image> output2(gaussian_kernel_x->convolve_numeric(output_pass1.get(), errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(output2.get(),
                                                     "Operator_filter_smooth_gaussian::run",
                                                     errors);

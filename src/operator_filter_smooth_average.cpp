@@ -52,8 +52,8 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
         coeffs_32F[i] = wb_utils::double_to_float(correction);
       std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(rows, cols, coeffs_32F));
       std::unique_ptr<Image> output(average_kernel->convolve_numeric(input.get(), errors));
-      if (!errors.has_error())
         for (Data_source_descriptor *output_data_store: output_data_stores)
+          if (!errors.has_error())
           output_data_store->write_operator_image(output.get(),
                                                   "Operator_filter_smooth_average::run",
                                                   errors);

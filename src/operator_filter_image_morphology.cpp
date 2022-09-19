@@ -91,8 +91,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             erode_image(Morphology::erode(input.get(), structuring_element_type,
                                           height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(erode_image.get(),
                                                     "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) erode_image->log(log_entries);
@@ -100,8 +100,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             dilate_image(Morphology::dilate(input.get(), structuring_element_type,
                                             height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(dilate_image.get(),
                                                     "Operator_filter_image_morphology::run",
                                                     errors);
@@ -110,8 +110,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             open_image(Morphology::open(input.get(), structuring_element_type,
                                         height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(open_image.get(),
                                                     "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) open_image->log(log_entries);
@@ -119,8 +119,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             close_image(Morphology::close(input.get(), structuring_element_type,
                                           height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(close_image.get(),
                                                     "Operator_filter_image_morphology::run", errors);
         if (!errors.has_error()) close_image->log(log_entries);
@@ -128,8 +128,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             gradient_image(Morphology::gradient(input.get(), structuring_element_type,
                                                 height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(gradient_image.get(),
                                                     "Operator_filter_image_morphology::run",
                                                     errors);
@@ -138,8 +138,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
         std::unique_ptr<Image>
             top_hat_image(Morphology::top_hat(input.get(), structuring_element_type,
                                               height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(top_hat_image.get(),
                                                     "Operator_filter_image_morphology::run",
                                                     errors);
@@ -149,8 +149,8 @@ void Operator_filter_image_morphology::run(std::list<Data_source_descriptor *> &
             black_hat_image
             (Morphology::black_hat(input.get(), structuring_element_type,
                                    height, width, thickness, errors));
-        if (!errors.has_error())
           for (Data_source_descriptor *output_data_store: output_data_stores)
+            if (!errors.has_error())
             output_data_store->write_operator_image(black_hat_image.get(),
                                                     "Operator_filter_image_morphology::run",
                                                     errors);

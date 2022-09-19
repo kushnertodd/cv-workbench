@@ -21,9 +21,11 @@ Polar_line::Polar_line(double m_rho,
 
 // can have a singularity if theta ~= , 180, sin ~= 0
 int Polar_line::col_to_row(int col, int rows, int cols) const {
-  double x = Point::col_to_x(col, cols);
   double cos_t = to_cos();
   double sin_t = to_sin();
+  if (abs(sin_t) < 1e-8)
+    return INT32_MAX;
+  double x = Point::col_to_x(col, cols);
   double row_offset = rows / 2.0;
   double row = row_offset - (rho - x * cos_t) / sin_t;
   return wb_utils::double_to_int_round(row);
@@ -73,9 +75,11 @@ void Polar_line::read_text(std::vector<std::string> &values, Errors &errors) {
 
 // can have a singularity if theta ~= 90, cos ~= 0
 int Polar_line::row_to_col(int row, int rows, int cols) const {
-  double y = Point::row_to_y(row, rows);
   double cos_t = to_cos();
   double sin_t = to_sin();
+  if (abs(cos_t) < 1e-8)
+    return INT32_MAX;
+  double y = Point::row_to_y(row, rows);
   double col_offset = cols / 2.0;
   double col = col_offset + (rho - y * sin_t) / cos_t;
   return wb_utils::double_to_int_round(col);
@@ -106,8 +110,7 @@ double Polar_line::to_atan(double delta_y, double delta_x) const {
 
 std::string Polar_line::to_string() const {
   std::ostringstream os;
-  os << " rho " << rho
-     << " theta " << theta.to_string();
+  os << "(" << rho << ", " << theta.to_string() << ")";
   return os.str();
 }
 
@@ -142,4 +145,9 @@ void Polar_line::write(FILE *fp, Errors &errors) {
 
 void Polar_line::write_text(std::ofstream &ofs, const std::string &delim) const {
   ofs << rho << delim << theta;
+}
+
+std::ostream &operator<<(std::ostream &out, const Polar_line &polar_line) {
+  out << "(" << polar_line.rho << ", " << polar_line.theta.to_string() << ")";
+  return out;
 }

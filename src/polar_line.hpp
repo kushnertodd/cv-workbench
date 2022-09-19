@@ -6,6 +6,7 @@
 #define SRC__POLAR_LINE_HPP_
 
 #include <fstream>
+#include <ostream>
 #include <vector>
 #include "theta.hpp"
 /**
@@ -42,5 +43,6 @@ class Polar_line {
   std::string to_string() const;
   void write(FILE *fp, Errors &errors);
   void write_text(std::ofstream &ofs, const std::string &delim) const;
+  friend std::ostream &operator<<(std::ostream &os, const Polar_line &polar_line);
 };
 #endif //SRC__POLAR_LINE_HPP_

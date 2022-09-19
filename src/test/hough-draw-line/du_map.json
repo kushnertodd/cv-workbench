@@ -21,13 +21,13 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": "images",
-            "filename": "du_map_gray-289x247-sobel-0_81_4"
+            "filename": "du_map_gray-289x247-sobel-0_165_-27"
           }
         ],
         "parameters": {
           "theta_inc": "3",
-          "theta": "81",
-          "rho": "4",
+          "theta": "165",
+          "rho": "-27",
           "pixel_value": "0"
         }
       }

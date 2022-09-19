@@ -62,11 +62,11 @@ double Theta::to_sin(int theta_degrees) {
 
 std::string Theta::to_string() const {
   std::ostringstream os;
-  os << "theta " << get_theta_degrees();
+  os << get_theta_degrees();
   return os.str();
 }
 
 std::ostream &operator<<(std::ostream &out, const Theta &theta) {
-  out << theta.get_theta_degrees();
+  out << theta.to_string();
   return out;
 }

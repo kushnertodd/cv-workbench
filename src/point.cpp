@@ -130,6 +130,14 @@ double Point::row_to_y(int row, int rows) {
   return rows / 2.0 - (row + 0.5);
 }
 
+void Point::set_row(int m_row) {
+  row = m_row;
+}
+
+void Point::set_col(int m_col) {
+  col = m_col;
+}
+
 /**
  * setter from row, col
  * @param m_row

@@ -59,20 +59,19 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       int cols = input->get_cols();
       auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
       int rho_index = hough_accum->rho_to_rho_index(rho);
-      Polar_line polar_line(rho,theta);
+      Polar_line polar_line(rho, theta);
       Line_segment line_segment;
-      if (!WB_window::clip_window(rows, cols, line_segment, polar_line)) {
-        errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta) against image ");
-      } else {
+      WB_window::clip_window(rows, cols, line_segment, polar_line, errors);
+        if (!errors.has_error()) {
         // user components are 1-3
         input->draw_line_segment(line_segment, pixel_value, out_component - 1);
         for (Data_source_descriptor *hough_line_output_data_store: output_data_stores)
-          hough_line_output_data_store->write_operator_image(input.get(),
-                                                            "Operator_hough_draw_line::run",
-                                                            errors);
-        if (!errors.has_error()) {
+          if (!errors.has_error())
+            hough_line_output_data_store->write_operator_image(input.get(),
+                                                               "Operator_hough_draw_line::run",
+                                                               errors);
+        if (!errors.has_error())
           input->log(log_entries);
-        }
       }
     }
   }

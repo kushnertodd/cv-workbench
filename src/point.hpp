@@ -26,6 +26,8 @@ class Point {
   static bool is_valid(int row, int col, int rows, int cols);
   static double row_to_y(int row, int rows);
   void set(int m_row, int m_col);
+  void set_row(int m_row);
+  void set_col(int m_col);
   std::string to_string() const;
   double to_x(int cols) const;
   double to_y(int rows) const;
