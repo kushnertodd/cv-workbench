@@ -33,8 +33,8 @@
           }
         ],
         "parameters":{
-          "rho-size":"3",
-          "theta-size":"1",
+          "rho-size":"5",
+          "theta-size":"3",
           "threshold-count":"7000"
         }
       },
@@ -70,8 +70,8 @@
           }
         ],
         "parameters":{
-          "rho-size":"3",
-          "theta-size":"1",
+          "rho-size":"7",
+          "theta-size":"5",
           "threshold-count":"7000"
         }
       }
