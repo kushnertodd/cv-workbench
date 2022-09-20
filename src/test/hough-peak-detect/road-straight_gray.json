@@ -35,9 +35,9 @@
         "parameters":{
           "rho-size":"3",
           "theta-size":"1",
-          "threshold-count":"1100",
-          "threshold-difference":"300",
-          "threshold-percentage":"0.2"
+          "threshold-count":"2000",
+          "threshold-difference":"0",
+          "threshold-percentage":"0.0"
         }
       },
       {
@@ -74,9 +74,9 @@
         "parameters":{
           "rho-size":"3",
           "theta-size":"1",
-          "threshold-count":"1100",
-          "threshold-difference":"300",
-          "threshold-percentage":"0.2"
+          "threshold-count":"2000",
+          "threshold-difference":"0",
+          "threshold-percentage":"0.0"
         }
       }
     ]
