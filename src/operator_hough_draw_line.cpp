@@ -31,6 +31,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
   int theta_inc;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "theta_inc", theta_inc, errors);
+  int rho_inc;
+  Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
+                                    operator_parameters, "rho_inc", rho_inc, errors);
   double rho;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "rho", rho, errors);
@@ -57,7 +60,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     if (!errors.has_error()) {
       int rows = input->get_rows();
       int cols = input->get_cols();
-      auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
+      auto *hough_accum = new Hough_accum(theta_inc, rho_inc, rows, cols);
       int rho_index = hough_accum->rho_to_rho_index(rho);
       Polar_line polar_line(rho, theta);
       Line_segment line_segment;

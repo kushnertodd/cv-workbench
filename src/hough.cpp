@@ -27,8 +27,8 @@ Hough::Hough(Hough_accum *m_hough_accum) :
     hough_accum(m_hough_accum) {
 }
 
-Hough *Hough::create_image(Image *image, int theta_inc, int pixel_threshold) {
-  auto *hough_accum = Hough_accum::create_image(image, theta_inc, pixel_threshold);
+Hough *Hough::create_image(Image *image, int theta_inc, int rho_inc, int pixel_threshold) {
+  auto *hough_accum = Hough_accum::create_image(image, theta_inc, rho_inc, pixel_threshold);
   auto *hough = new Hough(hough_accum);
   return hough;
 }
@@ -52,6 +52,7 @@ void Hough::peaks_to_line_segments(std::list<Line_segment> &line_segments, int r
 void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
   int nthetas = hough_accum->get_nthetas();
   int theta_inc = hough_accum->get_theta_inc();
+  int rho_inc = hough_accum->get_rho_inc();
   int nrhos = hough_accum->get_nrhos();
   int min_count = hough_accum->get_min_value();
   int max_count = hough_accum->get_max_value();
@@ -68,6 +69,8 @@ void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
   log_entries.push_back(log_entry_depth);
   WB_log_entry log_entry_theta_inc("theta_inc", wb_utils::int_to_string(theta_inc));
   log_entries.push_back(log_entry_theta_inc);
+  WB_log_entry log_entry_rho_inc("rho_inc", wb_utils::int_to_string(rho_inc));
+  log_entries.push_back(log_entry_rho_inc);
   WB_log_entry log_entry_nrhos("nrhos", wb_utils::int_to_string(nrhos));
   log_entries.push_back(log_entry_nrhos);
   WB_log_entry log_entry_nthetas("nthetas", wb_utils::int_to_string(nthetas));

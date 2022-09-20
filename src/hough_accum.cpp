@@ -14,12 +14,14 @@ Hough_accum::~Hough_accum() {
   delete rho_theta_counts;
 }
 
-Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
+Hough_accum::Hough_accum(int m_theta_inc, int m_rho_inc, int m_rows, int m_cols) :
     theta_inc(m_theta_inc),
+    rho_inc(m_rho_inc),
     rows(m_rows),
     cols(m_cols) {
-  nrhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
   nthetas = max_degrees / theta_inc;
+  max_rhos = wb_utils::double_to_int_round(sqrt(rows * rows + cols * cols)) + rho_pad;
+  nrhos = max_rhos / rho_inc;
   nbins = nrhos * get_nthetas();
   rho_theta_counts = new int[nbins];
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
@@ -28,9 +30,9 @@ Hough_accum::Hough_accum(int m_theta_inc, int m_rows, int m_cols) :
   }
 }
 
-Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int pixel_threshold) {
+Hough_accum *Hough_accum::create_image(Image *image, int theta_inc, int rho_inc, int pixel_threshold) {
   assert(image != nullptr);
-  auto *hough_accum = new Hough_accum(theta_inc, image->get_rows(), image->get_cols());
+  auto *hough_accum = new Hough_accum(theta_inc, rho_inc, image->get_rows(), image->get_cols());
   hough_accum->initialize(image, pixel_threshold);
   return hough_accum;
 }
@@ -141,6 +143,8 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
 Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
   int theta_inc;
   wb_utils::read_int(fp, theta_inc, "Hough_accum::read", "", "missing hough accumulator theta_inc", errors);
+  int rho_inc;
+  wb_utils::read_int(fp, rho_inc, "Hough_accum::read", "", "missing hough accumulator rho_inc", errors);
   int rows;
   if (!errors.has_error())
     wb_utils::read_int(fp, rows, "Hough_accum::read", "", "missing hough accumulator get_rows()", errors);
@@ -150,7 +154,7 @@ Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
   if (errors.has_error())
     return nullptr;
   else {
-    auto *hough_accum = new Hough_accum(theta_inc, rows, cols);
+    auto *hough_accum = new Hough_accum(theta_inc, rho_inc, rows, cols);
     wb_utils::read_int_buffer(fp,
                               hough_accum->rho_theta_counts,
                               hough_accum->nbins,
@@ -168,7 +172,7 @@ Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
 }
 
 double Hough_accum::rho_index_to_rho(int rho_index) const {
-  return rho_index - nrhos / 2.0;
+  return rho_inc * rho_index - max_rhos / 2.0;
 }
 
 int Hough_accum::to_accum_index(int rho_index, int theta_index) const {
@@ -180,8 +184,8 @@ int Hough_accum::to_accum_index(int rho_index, int theta_index) const {
 }
 
 int Hough_accum::rho_to_rho_index(double rho) const {
-  double rho_offset = nrhos / 2.0;
-  int rho_index = wb_utils::double_to_int_round(rho + rho_offset);
+  double rho_offset = max_rhos / 2.0;
+  int rho_index = wb_utils::double_to_int_round((rho + rho_offset) / rho_inc);
   return rho_index;
 }
 
@@ -234,13 +238,13 @@ void Hough_accum::update_accumulator_stats() {
 
 void Hough_accum::write(FILE *fp, Errors &errors) const {
   wb_utils::write_int(fp, theta_inc, "Hough_accum::write", "", "cannot write Hough accumulator theta_inc", errors);
-  if (!errors.has_error()) {
+  if (!errors.has_error())
+    wb_utils::write_int(fp, rho_inc, "Hough_accum::write", "", "cannot write Hough accumulator rho_inc", errors);
+  if (!errors.has_error()) 
     wb_utils::write_int(fp, rows, "Hough_accum::write", "", "cannot write Hough accumulator rows", errors);
-  }
-  if (!errors.has_error()) {
+  if (!errors.has_error()) 
     wb_utils::write_int(fp, cols, "Hough_accum::write", "", "cannot write Hough accumulator cols", errors);
-  }
-  if (!errors.has_error()) {
+  if (!errors.has_error()) 
     wb_utils::write_int_buffer(fp,
                                rho_theta_counts,
                                nbins,
@@ -248,7 +252,6 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
                                "",
                                "cannot write Hough accumulator data",
                                errors);
-  }
 }
 
 void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim) const {

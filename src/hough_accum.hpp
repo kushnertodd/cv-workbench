@@ -14,18 +14,20 @@ const int rho_pad = 2;
 class Hough_accum {
  private:
   int theta_inc{};
+  int rho_inc{};
   int rows{};
   int cols{};
-  int nrhos{};
   int nbins{};
   int nthetas{};
+  int max_rhos{};
+  int nrhos{};
   int *rho_theta_counts{};
   Variance_stats accumulator_stats;
  public:
   ~Hough_accum();
-  Hough_accum(int m_theta_inc, int m_rows, int m_cols);
+  Hough_accum(int m_theta_inc, int m_rho_inc, int m_rows, int m_cols);
 
-  static Hough_accum *create_image(Image *image, int theta_inc, int pixel_threshold);
+  static Hough_accum *create_image(Image *image, int theta_inc, int rho_inc, int pixel_threshold);
   void find_peaks(std::list<Hough_peak> &hough_peaks,
                   int rho_size,
                   int theta_size,
@@ -40,6 +42,7 @@ class Hough_accum {
   inline double get_min_value() const { return accumulator_stats.get_min_value(); }
   inline int get_nrhos() const { return nrhos; }
   inline int get_nthetas() const { return nthetas; }
+  inline int get_rho_inc() const { return rho_inc; }
   inline int get_rows() const { return rows; }
   inline double get_standard_deviation() { return accumulator_stats.get_standard_deviation(); }
   inline int get_theta_inc() const { return theta_inc; }
