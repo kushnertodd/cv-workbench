@@ -4,6 +4,7 @@ images/
 latex/
 lib/
 logs/
+output/
 scripts/
 x64/
 cv-workbench
