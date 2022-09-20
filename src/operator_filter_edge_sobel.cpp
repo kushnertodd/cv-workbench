@@ -74,7 +74,6 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
       std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
       std::unique_ptr<Image> output1(sobel_kernel_row->convolve_numeric(input.get(), errors));
       if (!errors.has_error()) {
-        output1->write_text("foo.txt", "\t", errors);
         std::unique_ptr<Image> output2(sobel_kernel_col->convolve_numeric(output1.get(), errors));
         for (Data_source_descriptor *output_data_store: output_data_stores)
           if (!errors.has_error())

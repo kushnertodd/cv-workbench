@@ -1,0 +1,175 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "exper/hough-peaks",
+            "filename": "road"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "parameters": {
+          "depth": "CV_8U",
+          "lower_in": "-60",
+          "upper_in": "60",
+          "lower_out": "0",
+          "upper_out": "255"
+        }
+      },
+      {
+        "id": 1,
+        "operator": "hough-image-create",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "hough",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          },
+          {
+            "id": 2,
+            "type": "hough",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "parameters": {
+          "theta_inc": "6",
+          "threshold": "30"
+        }
+      },
+      {
+        "id": 1,
+        "operator": "hough-peak-detect",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "hough",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          },
+          {
+            "id": 2,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          }
+        ],
+        "parameters": {
+          "rho-size": "3",
+          "theta-size": "1",
+          "threshold-count": "2500",
+          "threshold-difference": "600",
+          "threshold-percentage": "0.25"
+        }
+      },
+      {
+        "id": 1,
+        "operator": "hough-draw-lines",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "output",
+            "filename": "road-sobel-0"
+          },
+          {
+            "id": 2,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "output",
+            "filename": "road-sobel-0.hough_peaks"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "output",
+            "filename": "road-sobel-0-lines"
+          }
+        ],
+        "parameters": {
+          "out-component": "2",
+          "pixel_value": "255"
+        }
+      }
+    ]
+  }
+}

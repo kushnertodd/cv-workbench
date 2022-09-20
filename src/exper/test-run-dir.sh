@@ -15,10 +15,3 @@ for f in *.json ; do
   #echo cd $here
   cd $here
 done
-for f in *.jpg *.bin *.txt *.gp; do
-  #echo $f
-  if [ -f $f ] ; then
-    echo "$ cmp $f ../../output/$f"
-    cmp $f ../../output/$f
-  fi
-done

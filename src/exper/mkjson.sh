@@ -4,8 +4,8 @@ if [ "$file_root" == "" ] ; then
   echo usage $0 file_root
   exit
 fi
-if [ ! -f template.json ] ; then
-  echo missing file template.json
+if [ ! -f json.template ] ; then
+  echo missing file json.template
   exit
 fi
-sed -e "s/template/$file_root/g" template.json >$file_root.json
+sed -e "s/template/$file_root/g" json.template >$file_root.json
