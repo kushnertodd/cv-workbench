@@ -42,7 +42,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                                     operator_parameters, "theta", theta, errors);
   double pixel_value;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
-                                     operator_parameters, "pixel_value", pixel_value, errors);
+                                     operator_parameters, "pixel-value", pixel_value, errors);
   int out_component = 1;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "out_component",

@@ -29,10 +29,10 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_hough_image_create::run", "", "output data source required");
   int theta_inc = 3;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "theta_inc", theta_inc, errors, true);
+                                    operator_parameters, "theta-inc", theta_inc, errors, true);
   int rho_inc = 1;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                    operator_parameters, "rho_inc", rho_inc, errors, true);
+                                    operator_parameters, "rho-inc", rho_inc, errors, true);
   int threshold;
   Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                     operator_parameters, "threshold", threshold, errors);

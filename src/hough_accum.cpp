@@ -172,20 +172,14 @@ Hough_accum *Hough_accum::read(FILE *fp, Errors &errors) {
 }
 
 double Hough_accum::rho_index_to_rho(int rho_index) const {
-  return rho_inc * rho_index - max_rhos / 2.0;
-}
-
-int Hough_accum::to_accum_index(int rho_index, int theta_index) const {
-  assert(rho_index >= 0);
-  assert(rho_index < nrhos);
-  assert(theta_index >= 0);
-  assert(theta_index < get_nthetas());
-  return theta_index * nrhos + rho_index;
+  double rho_offset = (nrhos - 1) / 2.0;
+  double rho = rho_inc * (rho_index - rho_offset);
+  return rho;
 }
 
 int Hough_accum::rho_to_rho_index(double rho) const {
-  double rho_offset = max_rhos / 2.0;
-  int rho_index = wb_utils::double_to_int_round((rho + rho_offset) / rho_inc);
+  double rho_offset = (nrhos - 1) / 2.0;
+  int rho_index = wb_utils::double_to_int_round((rho / rho_inc)  + rho_offset);
   return rho_index;
 }
 
@@ -208,6 +202,14 @@ void Hough_accum::set(int rho_index, int theta_index, int value) const {
   assert (rho_theta_counts != nullptr);
   int index = to_accum_index(rho_index, theta_index);
   rho_theta_counts[index] = value;
+}
+
+int Hough_accum::to_accum_index(int rho_index, int theta_index) const {
+  assert(rho_index >= 0);
+  assert(rho_index < nrhos);
+  assert(theta_index >= 0);
+  assert(theta_index < nthetas);
+  return theta_index * nrhos + rho_index;
 }
 
 int Hough_accum::to_theta_degrees(int theta_index) const {

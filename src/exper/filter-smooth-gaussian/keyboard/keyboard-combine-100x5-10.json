@@ -1,0 +1,75 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-image-combine",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "keyboard-pixel-gaussian-100x5"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "keyboard-pixel-gaussian-100x10"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "keyboard-pixel-gaussian-100x5-10-diff"
+          }
+        ],
+        "parameters": {
+          "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "scale-1": "1.0",
+          "scale-2": "-1.0",
+          "offset": "0.0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "keyboard-pixel-gaussian-100x5-10-diff"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "keyboard-pixel-gaussian-100x5-10-diff"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-10",
+            "upper_in": "10",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}

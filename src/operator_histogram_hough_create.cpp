@@ -34,11 +34,11 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
   double lower_value;
   bool saw_lower_value =
       Operator_utils::get_real_parameter("Operator_histogram_hough_create::run",
-                                         operator_parameters, "lower_value", lower_value, errors);
+                                         operator_parameters, "lower-value", lower_value, errors);
   double upper_value;
   bool saw_upper_value =
       Operator_utils::get_real_parameter("Operator_histogram_hough_create::run",
-                                         operator_parameters, "upper_value", upper_value, errors);
+                                         operator_parameters, "upper-value", upper_value, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));

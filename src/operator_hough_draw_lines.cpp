@@ -32,7 +32,7 @@ void Operator_hough_draw_lines::run(std::list<Data_source_descriptor *> &input_d
   std::list<Hough_peak> hough_peaks;
   double pixel_value;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
-                                     operator_parameters, "pixel_value", pixel_value, errors);
+                                     operator_parameters, "pixel-value", pixel_value, errors);
   int out_component = 1;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "out_component",

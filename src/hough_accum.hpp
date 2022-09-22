@@ -57,11 +57,11 @@ class Hough_accum {
                   double threshold_percentage) const;
   static Hough_accum *read(FILE *fp, Errors &errors);
   inline double rho_index_to_rho(int rho_index) const;
-  int to_accum_index(int rho_index, int theta_index) const;
   int rho_to_rho_index(double rho) const;
   double row_col_theta_index_to_rho(int row, int col, int theta_index) const;
   int row_col_theta_index_to_rho_index(int row, int col, int theta_index) const;
   void set(int rho_index, int theta_index, int value) const;
+  int to_accum_index(int rho_index, int theta_index) const;
   int to_theta_degrees(int theta_index) const;
   double to_cos(int theta_index) const;
   double to_sin(int theta_index) const;

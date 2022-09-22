@@ -53,8 +53,8 @@
         ],
         "parameters": {
           "depth": "CV_8U",
-          "lower_in": "-60",
-          "upper_in": "60",
+          "lower_in": "-30",
+          "upper_in": "30",
           "lower_out": "0",
           "upper_out": "255"
         }
@@ -91,8 +91,9 @@
           }
         ],
         "parameters": {
-          "theta_inc": "6",
-          "threshold": "30"
+          "theta-inc": "6",
+          "rho-inc": "6",
+          "threshold": "100"
         }
       },
       {
@@ -127,11 +128,11 @@
           }
         ],
         "parameters": {
-          "rho-size": "3",
-          "theta-size": "1",
-          "threshold-count": "2500",
-          "threshold-difference": "600",
-          "threshold-percentage": "0.25"
+          "rho-size": "6",
+          "theta-size": "3",
+          "threshold-count": "2000",
+          "threshold-difference": "900",
+          "threshold-percentage": "0.15"
         }
       },
       {

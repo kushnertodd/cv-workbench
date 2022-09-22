@@ -91,7 +91,8 @@
           }
         ],
         "parameters": {
-          "theta_inc": "6",
+          "theta-inc": "6",
+          "rho-inc": "6",
           "threshold": "30"
         }
       },
@@ -127,8 +128,8 @@
           }
         ],
         "parameters": {
-          "rho-size": "3",
-          "theta-size": "1",
+          "rho-size": "5",
+          "theta-size": "3",
           "threshold-count": "2500",
           "threshold-difference": "600",
           "threshold-percentage": "0.25"

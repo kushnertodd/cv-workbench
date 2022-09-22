@@ -1,0 +1,64 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/filter-smooth-gaussian/du-map",
+            "filename": "du_map-gaussian-250x10-15-diff"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_map-gaussian-250x10-15-diff-sobel"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_map-gaussian-250x10-15-diff-sobel"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_map-gaussian-250x10-15-diff-sobel"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower_in": "-25",
+            "upper_in": "25",
+            "lower_out": "0",
+            "upper_out": "255"
+        }
+      }
+    ]
+  }
+}
