@@ -93,7 +93,7 @@
         "parameters": {
           "theta-inc": "6",
           "rho-inc": "6",
-          "threshold": "30"
+          "threshold": "60"
         }
       },
       {
