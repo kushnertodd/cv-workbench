@@ -64,7 +64,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       Polar_line polar_line(rho, theta);
       Line_segment line_segment;
       WB_window::clip_window(rows, cols, line_segment, polar_line, errors);
-        if (!errors.has_error()) {
+      if (!errors.has_error()) {
         // user components are 1-3
         input->draw_line_segment(line_segment, pixel_value, out_component - 1);
         for (Data_source_descriptor *hough_line_output_data_store: output_data_stores)

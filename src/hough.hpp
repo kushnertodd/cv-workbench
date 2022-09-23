@@ -13,7 +13,7 @@ class Hough {
   Hough_accum *hough_accum{};
  public:
   Variance_stats count_stats;
-      Variance_stats difference_stats;
+  Variance_stats difference_stats;
   Variance_stats percentage_stats;
 
   ~Hough();
@@ -26,10 +26,10 @@ class Hough {
   inline int get_nrhos() const { return hough_accum->get_nrhos(); }
   inline int get_nthetas() const { return hough_accum->get_nthetas(); }
   void log(std::list<WB_log_entry> &log_entries) const;
-  void log_peaks( std::list<Hough_peak> &hough_peaks, std::list<WB_log_entry> &log_entries) ;
+  void log_peaks(std::list<Hough_peak> &hough_peaks, std::list<WB_log_entry> &log_entries);
   static Hough *read(const std::string &path, Errors &errors);
   static Hough *read(FILE *fp, Errors &errors);
- // static Hough *read_text(std::ifstream &ifs, Errors &errors);
+  // static Hough *read_text(std::ifstream &ifs, Errors &errors);
   void write(const std::string &path, Errors &errors) const;
   void write(FILE *fp, Errors &errors) const;
   void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
