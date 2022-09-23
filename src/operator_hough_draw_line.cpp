@@ -61,7 +61,6 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       int rows = input->get_rows();
       int cols = input->get_cols();
       auto *hough_accum = new Hough_accum(theta_inc, rho_inc, rows, cols);
-      int rho_index = hough_accum->rho_to_rho_index(rho);
       Polar_line polar_line(rho, theta);
       Line_segment line_segment;
       WB_window::clip_window(rows, cols, line_segment, polar_line, errors);

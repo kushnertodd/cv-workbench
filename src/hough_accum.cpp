@@ -42,13 +42,19 @@ void Hough_accum::find_peaks(std::list<Hough_peak> &hough_peaks,
                              int theta_size,
                              int threshold_count,
                              int threshold_difference,
-                             double threshold_percentage) const {
+                             double threshold_percentage,
+                             Variance_stats &count_stats,
+                             Variance_stats &difference_stats,
+                             Variance_stats &percentage_stats) const {
   hough_peaks.clear();
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       Hough_peak hough_peak;
       if (is_maximum(hough_peak, rho_index, rho_size, theta_index, theta_size, threshold_count,
-                     threshold_difference, threshold_percentage)) {
+                     threshold_difference, threshold_percentage,
+                     count_stats,
+                     difference_stats,
+                     percentage_stats)) {
         hough_peaks.push_back(hough_peak);
       }
     }
@@ -104,7 +110,10 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
                              int theta_size,
                              int threshold_count,
                              int threshold_difference,
-                             double threshold_percentage) const {
+                             double threshold_percentage,
+                             Variance_stats &count_stats,
+                             Variance_stats &difference_stats,
+                             Variance_stats &percentage_stats) const {
   assert (rho_theta_counts != nullptr);
   int rho_index_low = std::max(rho_index - rho_size / 2, 0);
   int rho_index_high = std::min(rho_index + rho_size / 2, get_nrhos() - 1);
@@ -135,8 +144,11 @@ bool Hough_accum::is_maximum(Hough_peak &hough_peak,
   hough_peak.set_theta_degrees(to_theta_degrees(theta_index));
   hough_peak.set_rho(rho_index_to_rho(rho_index));
   hough_peak.set_count(bin_count);
-  hough_peak.set_total_difference(bin_count - next_highest);
+  hough_peak.set_total_difference(difference);
   hough_peak.set_percent_difference(percentage_difference);
+  count_stats.update(bin_count);
+  difference_stats.update(difference);
+  percentage_stats.update(percentage_difference);
   return true;
 }
 
@@ -179,7 +191,7 @@ double Hough_accum::rho_index_to_rho(int rho_index) const {
 
 int Hough_accum::rho_to_rho_index(double rho) const {
   double rho_offset = (nrhos - 1) / 2.0;
-  int rho_index = wb_utils::double_to_int_round((rho / rho_inc)  + rho_offset);
+  int rho_index = wb_utils::double_to_int_round((rho / rho_inc) + rho_offset);
   return rho_index;
 }
 
@@ -242,11 +254,11 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
   wb_utils::write_int(fp, theta_inc, "Hough_accum::write", "", "cannot write Hough accumulator theta_inc", errors);
   if (!errors.has_error())
     wb_utils::write_int(fp, rho_inc, "Hough_accum::write", "", "cannot write Hough accumulator rho_inc", errors);
-  if (!errors.has_error()) 
+  if (!errors.has_error())
     wb_utils::write_int(fp, rows, "Hough_accum::write", "", "cannot write Hough accumulator rows", errors);
-  if (!errors.has_error()) 
+  if (!errors.has_error())
     wb_utils::write_int(fp, cols, "Hough_accum::write", "", "cannot write Hough accumulator cols", errors);
-  if (!errors.has_error()) 
+  if (!errors.has_error())
     wb_utils::write_int_buffer(fp,
                                rho_theta_counts,
                                nbins,

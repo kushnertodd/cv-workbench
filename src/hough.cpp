@@ -2,12 +2,7 @@
 // Created by kushn on 6/11/2022.
 //
 
-#include <cstring>
-#include <fstream>
-//#include "errors.hpp"
 #include "file_utils.hpp"
-//#include "hough_accum.hpp"
-//#include "wb_window.hpp"
 #include "image.hpp"
 #include "wb_utils.hpp"
 #include "hough.hpp"
@@ -36,37 +31,22 @@ Hough *Hough::create_image(Image *image, int theta_inc, int rho_inc, int pixel_t
 void Hough::find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count,
                        int threshold_difference,
                        double threshold_percentage) {
-  hough_accum->find_peaks(hough_peaks, rho_size, theta_size, threshold_count, threshold_difference, threshold_percentage);
+  hough_accum->find_peaks(hough_peaks, rho_size, theta_size, threshold_count, threshold_difference, threshold_percentage,
+                          count_stats,
+                          difference_stats,
+                          percentage_stats);
 }
 
-/*
-void Hough::peaks_to_line_segments(std::list<Line_segment> &line_segments, int rows, int cols, int nrhos) {
-  for (Hough_peak peak: hough_peaks) {
-    Line_segment line_segment;
-    if (WB_window::clip_window(rows, cols, line_segment, line, nrhos))
-      line_segments.push_back(line_segment);
-  }
-}
-*/
-
-void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
+void Hough::log(std::list<WB_log_entry> &log_entries) const {
   int nthetas = hough_accum->get_nthetas();
   int theta_inc = hough_accum->get_theta_inc();
   int rho_inc = hough_accum->get_rho_inc();
   int nrhos = hough_accum->get_nrhos();
-  int min_count = hough_accum->get_min_value();
-  int max_count = hough_accum->get_max_value();
+  int min_count = wb_utils::double_to_int(hough_accum->get_min_value());
+  int max_count = wb_utils::double_to_int(hough_accum->get_max_value());
   double mean = hough_accum->get_mean();
   double std_dev = hough_accum->get_standard_deviation();
 
-  WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(image->get_rows()));
-  log_entries.push_back(log_entry_rows);
-  WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(image->get_cols()));
-  log_entries.push_back(log_entry_cols);
-  WB_log_entry log_entry_components("components", wb_utils::int_to_string(image->get_components()));
-  log_entries.push_back(log_entry_components);
-  WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(image->get_depth()));
-  log_entries.push_back(log_entry_depth);
   WB_log_entry log_entry_theta_inc("theta inc", wb_utils::int_to_string(theta_inc));
   log_entries.push_back(log_entry_theta_inc);
   WB_log_entry log_entry_rho_inc("rho inc", wb_utils::int_to_string(rho_inc));
@@ -84,6 +64,56 @@ void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
   WB_log_entry log_entry_standard_deviation("bin count standard deviation",
                                             wb_utils::double_to_string(std_dev));
   log_entries.push_back(log_entry_standard_deviation);
+}
+
+void Hough::log_peaks(std::list<Hough_peak> &hough_peaks, std::list<WB_log_entry> &log_entries) {
+  int npeaks = (int)hough_peaks.size();
+  int count_min =  wb_utils::double_to_int(count_stats.get_min_value());
+  int count_max =  wb_utils::double_to_int(count_stats.get_max_value());
+  double count_mean = count_stats.get_mean();
+  double count_standard_deviation = count_stats.get_standard_deviation();
+
+  int difference_min =  wb_utils::double_to_int(difference_stats.get_min_value());
+  int difference_max =  wb_utils::double_to_int(difference_stats.get_max_value());
+  double difference_mean = difference_stats.get_mean();
+  double difference_standard_deviation = difference_stats.get_standard_deviation();
+
+  double percentage_min =  percentage_stats.get_min_value();
+  double percentage_max =  percentage_stats.get_max_value();
+  double percentage_mean = percentage_stats.get_mean();
+  double percentage_standard_deviation = percentage_stats.get_standard_deviation();
+
+  WB_log_entry log_entry_npeaks("npeaks", wb_utils::int_to_string(npeaks));
+  log_entries.push_back(log_entry_npeaks);
+  WB_log_entry log_entry_count_min_value("min bin count", wb_utils::int_to_string(count_min));
+  log_entries.push_back(log_entry_count_min_value);
+  WB_log_entry log_entry_count_max_value("max bin count", wb_utils::int_to_string(count_max));
+  log_entries.push_back(log_entry_count_max_value);
+  WB_log_entry log_entry_count_mean("bin count mean", wb_utils::double_to_string(count_mean));
+  log_entries.push_back(log_entry_count_mean);
+  WB_log_entry log_entry_count_standard_deviation("bin count standard deviation",
+                                            wb_utils::double_to_string(count_standard_deviation));
+  log_entries.push_back(log_entry_count_standard_deviation);
+
+  WB_log_entry log_entry_difference_min_value("min difference", wb_utils::int_to_string(difference_min));
+  log_entries.push_back(log_entry_difference_min_value);
+  WB_log_entry log_entry_difference_max_value("max difference", wb_utils::int_to_string(difference_max));
+  log_entries.push_back(log_entry_difference_max_value);
+  WB_log_entry log_entry_difference_mean("difference mean", wb_utils::double_to_string(difference_mean));
+  log_entries.push_back(log_entry_difference_mean);
+  WB_log_entry log_entry_difference_standard_deviation("difference standard deviation",
+                                                  wb_utils::double_to_string(difference_standard_deviation));
+  log_entries.push_back(log_entry_difference_standard_deviation);
+
+  WB_log_entry log_entry_percentage_min_value("min difference percentage", wb_utils::double_to_string(percentage_min));
+  log_entries.push_back(log_entry_percentage_min_value);
+  WB_log_entry log_entry_percentage_max_value("max difference percentage", wb_utils::double_to_string(percentage_max));
+  log_entries.push_back(log_entry_percentage_max_value);
+  WB_log_entry log_entry_percentage_mean("difference percentage mean", wb_utils::double_to_string(percentage_mean));
+  log_entries.push_back(log_entry_percentage_mean);
+  WB_log_entry log_entry_percentage_standard_deviation("difference percentage standard deviation",
+                                                  wb_utils::double_to_string(percentage_standard_deviation));
+  log_entries.push_back(log_entry_percentage_standard_deviation);
 }
 
 Hough *Hough::read(const std::string &path, Errors &errors) {

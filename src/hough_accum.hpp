@@ -33,7 +33,10 @@ class Hough_accum {
                   int theta_size,
                   int threshold_count,
                   int threshold_difference,
-                  double threshold_percentage) const;
+                  double threshold_percentage,
+                  Variance_stats &count_stats,
+                  Variance_stats &difference_stats,
+                  Variance_stats &percentage_stats) const;
   int get(int rho_index, int theta_index) const;
   inline int get_cols() const { return cols; }
   inline int get_count() const { return accumulator_stats.get_count(); }
@@ -54,7 +57,10 @@ class Hough_accum {
                   int theta_size,
                   int threshold_count,
                   int threshold_difference,
-                  double threshold_percentage) const;
+                  double threshold_percentage,
+                  Variance_stats &count_stats,
+                  Variance_stats &difference_stats,
+                  Variance_stats &percentage_stats) const;
   static Hough_accum *read(FILE *fp, Errors &errors);
   inline double rho_index_to_rho(int rho_index) const;
   int rho_to_rho_index(double rho) const;

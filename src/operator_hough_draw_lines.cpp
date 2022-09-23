@@ -37,17 +37,12 @@ void Operator_hough_draw_lines::run(std::list<Data_source_descriptor *> &input_d
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
                                     operator_parameters, "out_component",
                                     out_component, errors, true);
-  bool read_image = false;
-  bool read_peaks = false;
   if (!errors.has_error()) {
     for (Data_source_descriptor *input_data_source: input_data_sources) {
-      if (input_data_source->id == 1) {
-        read_image = true;
+      if (input_data_source->id == 1)
         image_ptr = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
-      } else if (input_data_source->id == 2) {
-        read_peaks = true;
+      else if (input_data_source->id == 2)
         input_data_source->read_operator_hough_peaks(hough_peaks, "Operator_transform_image_combine::run", errors);
-      }
     }
     std::unique_ptr<Image> input(image_ptr);
     if (!errors.has_error()) {

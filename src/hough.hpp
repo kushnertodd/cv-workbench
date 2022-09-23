@@ -9,8 +9,12 @@
 #include "hough_accum.hpp"
 
 class Hough {
- public:
+ private:
   Hough_accum *hough_accum{};
+ public:
+  Variance_stats count_stats;
+      Variance_stats difference_stats;
+  Variance_stats percentage_stats;
 
   ~Hough();
   explicit Hough(Hough_accum *m_hough_accum);
@@ -18,8 +22,11 @@ class Hough {
   void find_peaks(std::list<Hough_peak> &hough_peaks, int rho_size, int theta_size, int threshold_count,
                   int threshold_difference,
                   double threshold_percentage);
-  //void peaks_to_line_segments(std::list<Line_segment> &line_segments, int rows, int cols, int nrhos);
-  void log(Image *image, std::list<WB_log_entry> &log_entries) const;
+  inline int get(int rho_index, int theta_index) const { return hough_accum->get(rho_index, theta_index); }
+  inline int get_nrhos() const { return hough_accum->get_nrhos(); }
+  inline int get_nthetas() const { return hough_accum->get_nthetas(); }
+  void log(std::list<WB_log_entry> &log_entries) const;
+  void log_peaks( std::list<Hough_peak> &hough_peaks, std::list<WB_log_entry> &log_entries) ;
   static Hough *read(const std::string &path, Errors &errors);
   static Hough *read(FILE *fp, Errors &errors);
  // static Hough *read_text(std::ifstream &ifs, Errors &errors);
