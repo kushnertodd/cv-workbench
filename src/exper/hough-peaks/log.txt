@@ -1,0 +1,62 @@
+sobel log
+
+        "results":{
+          "rows":"116",
+          "cols":"149",
+          "components":"1",
+          "depth":"CV_32F",
+          "pixel count":"17284",
+          "pixel standard deviation":"32.3945",
+          "min pixel value":"-181.25",
+          "max pixel value":"171"
+        }
+
+
+map log
+        "results":{
+          "rows":"116",
+          "cols":"149",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"17284",
+          "pixel standard deviation":"70.5027",
+          "min pixel value":"0",
+          "max pixel value":"255"
+
+hough create log
+        "results":{
+          "rows":"116",
+          "cols":"149",
+          "components":"1",
+          "depth":"CV_32F",
+          "theta_inc":"3",
+          "rho_inc":"1",
+          "nrhos":"191",
+          "nthetas":"60",
+          "min bin count":"0",
+          "max bin count":"11208",
+          "bin count mean":"345.88",
+          "bin count standard deviation":"490.867"
+
+
+hough peak detect log
+none
+
+hough draw lines log
+        "results":{
+          "rows":"116",
+          "cols":"149",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"17284",
+          "pixel standard deviation":"71.6391",
+          "min pixel value":"0",
+          "max pixel value":"255"
+        }
+
+run log
+    "run":{
+      "script-path":"/mnt/c/Users/kushn/DropBox/software/projects/cv/local/cv-workbench/src/exper/hough-peaks/du-drone.json",
+      "run-time":"",
+      "version":"0.1.18"
+    }
