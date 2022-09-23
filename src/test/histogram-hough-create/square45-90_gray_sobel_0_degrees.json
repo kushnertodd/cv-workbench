@@ -25,7 +25,7 @@
           }
         ],
         "parameters": {
-          "theta_inc": "3",
+          "theta-inc": "3",
           "threshold": "200"
         }
       },
@@ -62,8 +62,8 @@
         ],
         "parameters": {
           "nbins": "100",
-          "lower_value": "0",
-          "upper_value": "90000"
+          "lower-value": "0",
+          "upper-value": "90000"
         }
       }
     ]

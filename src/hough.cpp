@@ -67,9 +67,9 @@ void Hough::log(Image *image, std::list<WB_log_entry> &log_entries) const {
   log_entries.push_back(log_entry_components);
   WB_log_entry log_entry_depth("depth", WB_image_depth::to_string(image->get_depth()));
   log_entries.push_back(log_entry_depth);
-  WB_log_entry log_entry_theta_inc("theta_inc", wb_utils::int_to_string(theta_inc));
+  WB_log_entry log_entry_theta_inc("theta inc", wb_utils::int_to_string(theta_inc));
   log_entries.push_back(log_entry_theta_inc);
-  WB_log_entry log_entry_rho_inc("rho_inc", wb_utils::int_to_string(rho_inc));
+  WB_log_entry log_entry_rho_inc("rho inc", wb_utils::int_to_string(rho_inc));
   log_entries.push_back(log_entry_rho_inc);
   WB_log_entry log_entry_nrhos("nrhos", wb_utils::int_to_string(nrhos));
   log_entries.push_back(log_entry_nrhos);

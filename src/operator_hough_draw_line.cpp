@@ -28,12 +28,12 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     errors.add("Operator_hough_draw_line::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_draw_line::run", "", "output data source required");
-  int theta_inc;
+  int theta_inc = 3;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                    operator_parameters, "theta_inc", theta_inc, errors);
-  int rho_inc;
+                                    operator_parameters, "theta-inc", theta_inc, errors, true);
+  int rho_inc = 1;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                    operator_parameters, "rho_inc", rho_inc, errors);
+                                    operator_parameters, "rho-inc", rho_inc, errors, true);
   double rho;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "rho", rho, errors);

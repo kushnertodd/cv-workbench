@@ -61,16 +61,16 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
   }
   double lower_in;
   Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                     operator_parameters, "lower_in", lower_in, errors);
+                                     operator_parameters, "lower-in", lower_in, errors);
   double upper_in;
   Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                     operator_parameters, "upper_in", upper_in, errors);
+                                     operator_parameters, "upper-in", upper_in, errors);
   double lower_out;
   Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                     operator_parameters, "lower_out", lower_out, errors);
+                                     operator_parameters, "lower-out", lower_out, errors);
   double upper_out;
   Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                     operator_parameters, "upper_out", upper_out, errors);
+                                     operator_parameters, "upper-out", upper_out, errors);
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Image> input(input_data_source->read_image(errors));

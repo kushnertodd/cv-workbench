@@ -25,10 +25,10 @@
           }
         ],
         "parameters": {
-          "theta_inc": "3",
+          "theta-inc": "3",
           "theta": "3",
           "rho": "-215",
-          "pixel_value": "0"
+          "pixel-value": "0"
         }
       },
       {
@@ -55,7 +55,7 @@
           }
         ],
         "parameters": {
-          "theta_inc": "3",
+          "theta-inc": "3",
           "theta": "3",
           "rho": "-104",
           "pixel_value": "0"
@@ -85,7 +85,7 @@
           }
         ],
         "parameters": {
-          "theta_inc": "3",
+          "theta-inc": "3",
           "theta": "0",
           "rho": "278",
           "pixel_value": "0"

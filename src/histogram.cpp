@@ -209,9 +209,9 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
  * @param log_entries
  */
 void Histogram::log(std::list<WB_log_entry> &log_entries) {
-  WB_log_entry log_entry_lower_value("lower_value", wb_utils::double_to_string(lower_value));
+  WB_log_entry log_entry_lower_value("lower value", wb_utils::double_to_string(lower_value));
   log_entries.push_back(log_entry_lower_value);
-  WB_log_entry log_entry_upper_value("upper_value", wb_utils::double_to_string(upper_value));
+  WB_log_entry log_entry_upper_value("upper value", wb_utils::double_to_string(upper_value));
   log_entries.push_back(log_entry_upper_value);
   WB_log_entry log_entry_pixel_count("pixel count", wb_utils::int_to_string(input_value_stats.get_count()));
   log_entries.push_back(log_entry_pixel_count);

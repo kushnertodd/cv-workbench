@@ -34,8 +34,8 @@
         ],
         "parameters": {
           "nbins": "50",
-          "lower_value": "-20",
-          "upper_value": "20"
+          "lower-value": "-20",
+          "upper-value": "20"
         }
       }
     ]
