@@ -5,6 +5,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
+#include "wb_linear_config_mask.hpp"
 #include "wb_morphology_types.hpp"
 #include "wb_utils.hpp"
 #include "kernel.hpp"
@@ -70,62 +71,62 @@ Image *Kernel::convolve(Image *src,
 //    errors.add("Kernel::convolve_numeric", "", "cannot perform numeric convolution with CV_8U output image");
 //    return nullptr;
 //  } else {
-    int src_rows = src->get_rows();
-    int src_cols = src->get_cols();
-    int src_components = src->get_components();
-    int rows = get_rows();
-    int cols = get_cols();
-    int out_rows = src_rows - rows + 1;
-    int out_cols = src_cols - cols + 1;
-    int src_min_row = src->get_min_row();
-    int src_min_col = src->get_min_col();
-    // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
-    auto *out = new Image(out_rows, out_cols, src_components, out_depth);
+  int src_rows = src->get_rows();
+  int src_cols = src->get_cols();
+  int src_components = src->get_components();
+  int rows = get_rows();
+  int cols = get_cols();
+  int out_rows = src_rows - rows + 1;
+  int out_cols = src_cols - cols + 1;
+  int src_min_row = src->get_min_row();
+  int src_min_col = src->get_min_col();
+  // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
+  auto *out = new Image(out_rows, out_cols, src_components, out_depth);
 
   for (int row = 0; row < out_rows; row++) {
     for (int col = 0; col < out_cols; col++) {
-        double sum;
-        switch (convolution_type) {
-          case WB_morphology_types::Convolution_type::NUMERIC:
-            sum = 0.0;
-            break;
-          case WB_morphology_types::Convolution_type::ERODE:
-            sum = INT32_MAX;
-            break;
-          case WB_morphology_types::Convolution_type::DILATE:
-            sum = 0.0;
-            break;
-          case WB_morphology_types::Convolution_type::UNDEFINED:
-            break;
-          default:
-            sum = 0.0;
-            break;
-        }
-        for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-            double kernel_val = get(i, j);
-            double image_val = src->get(row + src_min_row + i, col + src_min_col + j);
-            switch (convolution_type) {
-              case WB_morphology_types::Convolution_type::NUMERIC:
-                sum += kernel_val * image_val;
-                break;
-              case WB_morphology_types::Convolution_type::ERODE:
-                if (kernel_val > 0)
-                  sum = std::min(sum, image_val);
-                break;
-              case WB_morphology_types::Convolution_type::DILATE:
-                if (kernel_val > 0)
-                  sum = std::max(sum, image_val);
-                break;
-              default:
-                break;
-            }
+      double sum;
+      switch (convolution_type) {
+        case WB_morphology_types::Convolution_type::NUMERIC:
+          sum = 0.0;
+          break;
+        case WB_morphology_types::Convolution_type::ERODE:
+          sum = INT32_MAX;
+          break;
+        case WB_morphology_types::Convolution_type::DILATE:
+          sum = 0.0;
+          break;
+        case WB_morphology_types::Convolution_type::UNDEFINED:
+          break;
+        default:
+          sum = 0.0;
+          break;
+      }
+      for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+          double kernel_val = get(i, j);
+          double image_val = src->get(row + src_min_row + i, col + src_min_col + j);
+          switch (convolution_type) {
+            case WB_morphology_types::Convolution_type::NUMERIC:
+              sum += kernel_val * image_val;
+              break;
+            case WB_morphology_types::Convolution_type::ERODE:
+              if (kernel_val > 0)
+                sum = std::min(sum, image_val);
+              break;
+            case WB_morphology_types::Convolution_type::DILATE:
+              if (kernel_val > 0)
+                sum = std::max(sum, image_val);
+              break;
+            default:
+              break;
           }
         }
-        out->set(row, col, sum);
       }
+      out->set(row, col, sum);
     }
-    return out;
+  }
+  return out;
 //  }
 }
 
@@ -242,6 +243,32 @@ Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
     gaussian_x->set(0, col, value / sum);
   }
   return gaussian_x;
+}
+
+Kernel *Kernel::create_linear_mask(int rows, int cols,
+                                   double theta_degrees,
+                                   int width_left,
+                                   double value_left,
+                                   int width_center,
+                                   double value_center,
+                                   int width_right,
+                                   double value_right) {
+  auto *rotated_mask_kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32F);
+  auto *rotated_mask_values = new WB_linear_config_mask(width_left,
+                                                        value_left,
+                                                        width_center,
+                                                        value_center,
+                                                        width_right,
+                                                        value_right);
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      double x;
+      double y;
+      Point::rotate(theta_degrees, row, col, x, y, rows, cols);
+      double value = rotated_mask_values->value(x, y);
+      rotated_mask_kernel.set(row, col, value);
+    }
+  }
 }
 
 /** Compute a Gaussian kernel of length 'kernel->dim',

@@ -24,6 +24,8 @@ class Point {
   bool in_ellipse(int rows, int cols) const;
   static bool in_ellipse(int row, int col, int rows, int cols);
   static bool is_valid(int row, int col, int rows, int cols);
+  void rotate(int theta_degrees, double &x, double &y, int rows, int cols) const;
+  static void rotate(int theta_degrees, int row, int col, double &x, double &y, int rows, int cols) const;
   static double row_to_y(int row, int rows);
   void set(int m_row, int m_col);
   void set_row(int m_row);

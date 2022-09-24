@@ -64,6 +64,14 @@ class Kernel : public Image {
   static Kernel *create_32F(int rows, int cols, const pixel_32F *buf_32F);
   static Kernel *create_gaussian_y(int rows, double sigma_y);
   static Kernel *create_gaussian_x(int cols, double sigma_x);
+  static Kernel *create_linear_mask(int m_rows, int m_cols,
+                                    double theta_degrees,
+                                    int m_width_left,
+                                    double m_value_left,
+                                    int m_width_center,
+                                    double m_value_center,
+                                    int m_width_right,
+                                    double m_value_right);
   static Kernel *create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                             int rows,
                                             int cols,

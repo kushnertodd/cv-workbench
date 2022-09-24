@@ -29,8 +29,8 @@ class Theta {
   // postfix increment
   Theta operator++(int);
 
-  static double degrees_to_radians(int degrees) ;
-    int get_theta_degrees() const;
+  static double degrees_to_radians(int degrees);
+  int get_theta_degrees() const;
   inline int get_theta_increment() const { return theta_increment; }
   double get_theta_radians() const;
   static int radians_to_degrees(double radians);

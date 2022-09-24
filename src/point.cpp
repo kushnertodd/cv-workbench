@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <sstream>
+#include "theta.hpp"
 #include "wb_utils.hpp"
 #include "point.hpp"
 
@@ -118,6 +119,27 @@ bool Point::in_ellipse(int row, int col, int rows, int cols) {
  */
 bool Point::is_valid(int row, int col, int rows, int cols) {
   return (row >= 0 && row < rows && col >= 0 && col < cols);
+}
+
+/**
+ * rotate point around window (0,0)-(cols-1, rows-1) centered at (cols/2, rows/2)
+ * @param theta_degrees
+ * @param rows
+ * @param cols
+ * @return
+ */
+void Point::rotate(int theta_degrees, double &x, double &y, int rows, int cols) const {
+  rotate(theta_degrees,  row,  col, x, y,  rows, cols);
+}
+
+void rotate(int theta_degrees, int row, int col, double &x, double &y, int rows, int cols) const {
+  double x_curr = Point::col_to_x(col, cols);
+  double y_curr = Point::row_to_y(row, rows);
+  double theta_radians = Theta::degrees_to_radians(theta_degrees);
+  double cos_theta = cos(theta_radians);
+  double sin_theta = sin(theta_radians);
+  x = x_curr * cos_theta + y_curr * sin_theta;
+  y = -x_curr * sin_theta + y_curr * cos_theta;
 }
 
 /**
