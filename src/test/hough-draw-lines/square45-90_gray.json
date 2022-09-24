@@ -34,7 +34,7 @@
         ],
         "parameters": {
           "out-component": "2",
-          "pixel_value": "255"
+          "pixel-value": "255"
         }
       },
       {

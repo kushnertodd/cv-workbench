@@ -2,7 +2,6 @@
 // Created by kushn on 7/23/2022.
 //
 
-#include <iostream>
 #include <memory>
 #include "operator_utils.hpp"
 #include "operator_hough_peak_detect.hpp"
@@ -42,7 +41,6 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
   double threshold_percentage = 0.0;
   Operator_utils::get_real_parameter("Operator_hough_peak_detect::run",
                                      operator_parameters, "threshold-percentage", threshold_percentage, errors, true);
-  Hough *hough_ptr;
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
     std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));
@@ -55,6 +53,8 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
             hough_peaks,
             "Operator_histOperator_hough_peak_detectogram_hough_create::run",
             errors);
+    if (!errors.has_error())
+      hough->log_peaks(hough_peaks, log_entries);
   }
 }
 

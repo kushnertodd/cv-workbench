@@ -11,7 +11,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/transform-image-create",
-						"filename": "sample_hough",
+						"filename": "sample_hough"
 					}
 				],
 				"output-data": [
@@ -21,7 +21,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "sample_hough",
+						"filename": "sample_hough"
 					},
 					{
 						"id": 2,
@@ -29,7 +29,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "sample_hough",
+						"filename": "sample_hough"
 					}
 				],
 				"parameters": {
@@ -47,7 +47,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/transform-image-create",
-						"filename": "line_gray-5x5",
+						"filename": "line_gray-5x5"
 					}
 				],
 				"output-data": [
@@ -57,7 +57,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "line_gray-5x5",
+						"filename": "line_gray-5x5"
 					},
 					{
 						"id": 2,
@@ -65,7 +65,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "line_gray-5x5",
+						"filename": "line_gray-5x5"
 					}
 				],
 				"parameters": {
@@ -83,7 +83,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/transform-image-create",
-						"filename": "point_gray-5x5",
+						"filename": "point_gray-5x5"
 					}
 				],
 				"output-data": [
@@ -93,7 +93,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "point_gray-5x5",
+						"filename": "point_gray-5x5"
 					},
 					{
 						"id": 2,
@@ -101,7 +101,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "point_gray-5x5",
+						"filename": "point_gray-5x5"
 					}
 				],
 				"parameters": {
@@ -191,7 +191,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "test/transform-image-create",
-						"filename": "rectangle_gray-5x5",
+						"filename": "rectangle_gray-5x5"
 					}
 				],
 				"output-data": [
@@ -201,7 +201,7 @@
 						"repository": "filesystem",
 						"format": "text",
 						"directory": "images",
-						"filename": "rectangle_gray-5x5",
+						"filename": "rectangle_gray-5x5"
 					},
 					{
 						"id": 2,
@@ -209,7 +209,7 @@
 						"repository": "filesystem",
 						"format": "binary",
 						"directory": "images",
-						"filename": "rectangle_gray-5x5",
+						"filename": "rectangle_gray-5x5"
 					}
 				],
 				"parameters": {

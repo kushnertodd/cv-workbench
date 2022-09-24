@@ -6,7 +6,6 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 #include "wb_utils.hpp"
 #include "variance_stats.hpp"
 
@@ -18,7 +17,8 @@ Variance_stats::Variance_stats() :
     M2(0.0),
     variance(0.0),
     sample_variance(0.0),
-    standard_deviation(0.0) {}
+    standard_deviation(0.0),
+    dirty(false) {}
 
 /**
  * # Retrieve the mean, variance and sample variance from an aggregate
@@ -31,10 +31,13 @@ Variance_stats::Variance_stats() :
  *         return (mean, variance, sampleVariance)
  */
 void Variance_stats::finalize() {
-  assert(is_valid());
-  variance = M2 / count;
-  sample_variance = M2 / (count - 1);
-  standard_deviation = sqrt(sample_variance);
+  if (dirty) {
+    assert(is_valid());
+    variance = M2 / count;
+    sample_variance = M2 / (count - 1);
+    standard_deviation = sqrt(sample_variance);
+    dirty = false;
+  }
 }
 
 int Variance_stats::get_count() const {
@@ -149,6 +152,7 @@ std::string Variance_stats::to_string(const std::string &prefix) {
  * @param new_value
  */
 void Variance_stats::update(double new_value) {
+  dirty = true;
   count++;
   double delta = new_value - mean;
   mean += delta / count;

@@ -28,12 +28,12 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     errors.add("Operator_hough_draw_line::run", "", "too many input data sources");
   else if (output_data_stores.empty())
     errors.add("Operator_hough_draw_line::run", "", "output data source required");
-  int theta_inc;
+  int theta_inc = 3;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                    operator_parameters, "theta_inc", theta_inc, errors);
-  int rho_inc;
+                                    operator_parameters, "theta-inc", theta_inc, errors, true);
+  int rho_inc = 1;
   Operator_utils::get_int_parameter("Operator_hough_draw_line::run",
-                                    operator_parameters, "rho_inc", rho_inc, errors);
+                                    operator_parameters, "rho-inc", rho_inc, errors, true);
   double rho;
   Operator_utils::get_real_parameter("Operator_hough_draw_line::run",
                                      operator_parameters, "rho", rho, errors);
@@ -61,11 +61,10 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
       int rows = input->get_rows();
       int cols = input->get_cols();
       auto *hough_accum = new Hough_accum(theta_inc, rho_inc, rows, cols);
-      int rho_index = hough_accum->rho_to_rho_index(rho);
       Polar_line polar_line(rho, theta);
       Line_segment line_segment;
       WB_window::clip_window(rows, cols, line_segment, polar_line, errors);
-        if (!errors.has_error()) {
+      if (!errors.has_error()) {
         // user components are 1-3
         input->draw_line_segment(line_segment, pixel_value, out_component - 1);
         for (Data_source_descriptor *hough_line_output_data_store: output_data_stores)

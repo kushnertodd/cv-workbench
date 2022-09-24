@@ -28,6 +28,7 @@ class Variance_stats {
   double variance{};
   double sample_variance{};
   double standard_deviation{};
+  bool dirty{};
   Bounds bounds;
 
  public:

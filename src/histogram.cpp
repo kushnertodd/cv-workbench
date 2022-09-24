@@ -157,9 +157,9 @@ double Histogram::get_upper_value() const {
  * @param saw_upper_value
  */
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
-  for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
-      double value = hough->hough_accum->get(rho_index, theta_index);
+  for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
+    for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
+      double value = hough->get(rho_index, theta_index);
       input_value_stats.update(value);
     }
   }
@@ -168,9 +168,9 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     lower_value = input_value_stats.get_min_value();
   if (!saw_upper_value)
     upper_value = input_value_stats.get_max_value();
-  for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
-    for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
-      double value = hough->hough_accum->get(rho_index, theta_index);
+  for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
+    for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
+      double value = hough->get(rho_index, theta_index);
       update_input_value(value);
     }
   }
@@ -209,9 +209,9 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
  * @param log_entries
  */
 void Histogram::log(std::list<WB_log_entry> &log_entries) {
-  WB_log_entry log_entry_lower_value("lower_value", wb_utils::double_to_string(lower_value));
+  WB_log_entry log_entry_lower_value("lower value", wb_utils::double_to_string(lower_value));
   log_entries.push_back(log_entry_lower_value);
-  WB_log_entry log_entry_upper_value("upper_value", wb_utils::double_to_string(upper_value));
+  WB_log_entry log_entry_upper_value("upper value", wb_utils::double_to_string(upper_value));
   log_entries.push_back(log_entry_upper_value);
   WB_log_entry log_entry_pixel_count("pixel count", wb_utils::int_to_string(input_value_stats.get_count()));
   log_entries.push_back(log_entry_pixel_count);

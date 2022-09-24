@@ -438,14 +438,15 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
   log_entries.push_back(log_entry_depth);
   WB_log_entry log_entry_count("pixel count", wb_utils::int_to_string(get_npixels()));
   log_entries.push_back(log_entry_count);
-  WB_log_entry log_entry_mean("pixel mean", wb_utils::double_to_string(stats.get_mean()));
-  log_entries.push_back(log_entry_count);
+  WB_log_entry log_entry_mean("magnitude mean", wb_utils::double_to_string(stats.get_mean()));
+  log_entries.push_back(log_entry_mean);
   WB_log_entry
-      log_entry_standard_deviation("pixel standard deviation", wb_utils::double_to_string(stats.get_standard_deviation()));
+      log_entry_standard_deviation
+      ("magnitude standard deviation", wb_utils::double_to_string(stats.get_standard_deviation()));
   log_entries.push_back(log_entry_standard_deviation);
-  WB_log_entry log_entry_min_value("min pixel value", wb_utils::double_to_string(stats.get_min_value()));
+  WB_log_entry log_entry_min_value("min magnitude value", wb_utils::double_to_string(stats.get_min_value()));
   log_entries.push_back(log_entry_min_value);
-  WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.get_max_value()));
+  WB_log_entry log_entry_max_value("max magnitude value", wb_utils::double_to_string(stats.get_max_value()));
   log_entries.push_back(log_entry_max_value);
 }
 
@@ -675,11 +676,11 @@ Image *Image::scale_image(Image *image, double lower_in,
                                   depth);
   for (int row = image->get_min_row(); row <= image->get_max_row(); row++)
     for (int col = image->get_min_col(); col <= image->get_max_col(); col++)
-      for (int component = 0; component < image->get_components(); component++){
-      double value = image->get_scaled(row, col, lower_in,
-                                       upper_in, lower_out, upper_out, component);
-      convert_image->set(row, col, value);
-    }
+      for (int component = 0; component < image->get_components(); component++) {
+        double value = image->get_scaled(row, col, lower_in,
+                                         upper_in, lower_out, upper_out, component);
+        convert_image->set(row, col, value);
+      }
   return convert_image;
 }
 

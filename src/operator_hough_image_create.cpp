@@ -52,7 +52,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         if (!errors.has_error())
           hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run", errors);
       if (!errors.has_error())
-        hough->log(input.get(), log_entries);
+        hough->log(log_entries);
     }
   }
 }
