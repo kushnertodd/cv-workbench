@@ -52,16 +52,16 @@ void Line_segment::add(const Point &point) {
 
 /**
  * add point log entries
- * @param log_entries
+ * @param log_entriesR
  */
 void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
-  WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(point1.row));
+  WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(point1.get_row()));
   log_entries.push_back(log_entry_start_row);
-  WB_log_entry log_entry_start_col("start col", wb_utils::int_to_string(point1.col));
+  WB_log_entry log_entry_start_col("start col", wb_utils::int_to_string(point1.get_col()));
   log_entries.push_back(log_entry_start_col);
-  WB_log_entry log_entry_end_row("end row", wb_utils::int_to_string(point2.row));
+  WB_log_entry log_entry_end_row("end row", wb_utils::int_to_string(point2.get_row()));
   log_entries.push_back(log_entry_end_row);
-  WB_log_entry log_entry_end_col("end col", wb_utils::int_to_string(point2.col));
+  WB_log_entry log_entry_end_col("end col", wb_utils::int_to_string(point2.get_col()));
   log_entries.push_back(log_entry_end_col);
 }
 
@@ -114,10 +114,10 @@ void Line_segment::plotLineHigh(int x0, int y0, int x1, int y1) {
 }
 
 void Line_segment::plotLine() {
-  int x0 = point1.col;
-  int y0 = point1.row;
-  int x1 = point2.col;
-  int y1 = point2.row;
+  int x0 = point1.get_col();
+  int y0 = point1.get_row();
+  int x1 = point2.get_col();
+  int y1 = point2.get_row();
   if (abs(y1 - y0) < abs(x1 - x0)) {
     if (x0 > x1) {
       plotLineLow(x1, y1, x0, y0);

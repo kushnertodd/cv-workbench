@@ -356,7 +356,7 @@ double Image::get(int row, int col, int component) const {
 }
 
 double Image::get(Point &point, int component) const {
-  return get(point.row, point.col, component);
+  return get(point.get_row(), point.get_col(), component);
 }
 
 pixel_8U Image::get_8U(int row, int col, int component) const {
@@ -720,7 +720,7 @@ void Image::set(int row, int col, double value, int component) const {
 }
 
 void Image::set(Point &point, double value, int component) const {
-  set(point.row, point.col, value, component);
+  set(point.get_row(), point.get_col(), value, component);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value, int component) const {

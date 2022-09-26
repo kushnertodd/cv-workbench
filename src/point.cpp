@@ -29,7 +29,7 @@ Point::Point(int m_row,
  * Constructor
  */
 Point::Point(const Point &point) :
-    Point::Point(point.row, point.col) {}
+    Point::Point(point.get_row(), point.get_col()) {}
 
 /**
  * Constructor
@@ -128,18 +128,30 @@ bool Point::is_valid(int row, int col, int rows, int cols) {
  * @param cols
  * @return
  */
-void Point::rotate(int theta_degrees, double &x, double &y, int rows, int cols) const {
-  rotate(theta_degrees,  row,  col, x, y,  rows, cols);
+Point Point::rotate(int theta_degrees, int rows, int cols) const {
+  return rotate(theta_degrees,  row,  col, rows, cols);
 }
 
-void rotate(int theta_degrees, int row, int col, double &x, double &y, int rows, int cols) const {
-  double x_curr = Point::col_to_x(col, cols);
-  double y_curr = Point::row_to_y(row, rows);
+Point Point::rotate(double cos_theta, double sin_theta, int rows, int cols) const {
+  return rotate(cos_theta, sin_theta,  row,  col, rows, cols);
+}
+
+Point Point::rotate(int theta_degrees, int row, int col, int rows, int cols)  {
   double theta_radians = Theta::degrees_to_radians(theta_degrees);
   double cos_theta = cos(theta_radians);
   double sin_theta = sin(theta_radians);
-  x = x_curr * cos_theta + y_curr * sin_theta;
-  y = -x_curr * sin_theta + y_curr * cos_theta;
+  return rotate(cos_theta, sin_theta,  row,  col, rows, cols);
+}
+
+Point Point::rotate(double cos_theta, double sin_theta, int row, int col, int rows, int cols)  {
+  double x = Point::col_to_x(col, cols);
+  double y = Point::row_to_y(row, rows);
+  double x_rotate = x * cos_theta + y * sin_theta;
+  double y_rotate = -x * sin_theta + y * cos_theta;
+  int col_rotate = x_to_col(x, cols);
+  int row_rotate = y_to_row(y, rows);
+  Point rotate(row_rotate, col_rotate);
+  return rotate;
 }
 
 /**

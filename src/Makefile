@@ -74,6 +74,7 @@ SRCOBJS :=  \
   wb_image_depth.o \
   wb_json_utils.o \
   wb_log.o \
+  wb_linear_config_mask.o \
   wb_morphology_types.o \
   wb_repository_type.o \
   wb_utils.o \
@@ -86,6 +87,7 @@ PROGRAMS = \
   image-dump \
   image-info \
   image-map \
+  image-mask \
   image-mean \
   image-morph \
   image-read \
@@ -109,6 +111,9 @@ image-info: image-info.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-map: image-map.o $(SRCOBJS)
+	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
+
+image-mask: image-mask.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
 image-mean: image-mean.o $(SRCOBJS)
@@ -263,6 +268,11 @@ image-map.o: errors.hpp image.hpp bounds.hpp image_header.hpp
 image-map.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-map.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
 image-map.o: wb_log.hpp variance_stats.hpp wb_filename.hpp wb_utils.hpp
+image-mask.o: errors.hpp kernel.hpp image.hpp bounds.hpp image_header.hpp
+image-mask.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
+image-mask.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
+image-mask.o: wb_log.hpp variance_stats.hpp wb_morphology_types.hpp
+image-mask.o: wb_filename.hpp wb_utils.hpp
 image-mean.o: image.hpp bounds.hpp errors.hpp image_header.hpp
 image-mean.o: wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
 image-mean.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp point.hpp
@@ -290,9 +300,10 @@ internet_data_source_descriptor.o: variance_stats.hpp theta.hpp wb_utils.hpp
 internet_data_source_descriptor.o: hough_peak.hpp polar_line.hpp
 internet_data_source_descriptor.o: wb_filename.hpp
 internet_data_source_descriptor.o: internet_data_source_descriptor.hpp
-kernel.o: wb_morphology_types.hpp wb_utils.hpp wb_data_format.hpp
-kernel.o: wb_data_type.hpp wb_image_depth.hpp wb_repository_type.hpp
-kernel.o: errors.hpp wb_defs.hpp kernel.hpp image.hpp bounds.hpp
+kernel.o: theta.hpp wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
+kernel.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp wb_defs.hpp
+kernel.o: wb_linear_config_mask.hpp wb_config_mask.hpp
+kernel.o: wb_morphology_types.hpp kernel.hpp image.hpp bounds.hpp
 kernel.o: image_header.hpp line_segment.hpp point.hpp wb_log.hpp
 kernel.o: variance_stats.hpp
 line_segment.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
@@ -365,6 +376,18 @@ operator_filter_edge_laplacian.o: line_segment.hpp point.hpp
 operator_filter_edge_laplacian.o: variance_stats.hpp theta.hpp wb_utils.hpp
 operator_filter_edge_laplacian.o: hough_peak.hpp polar_line.hpp
 operator_filter_edge_laplacian.o: wb_filename.hpp
+operator_filter_edge_linear.o: kernel.hpp image.hpp bounds.hpp errors.hpp
+operator_filter_edge_linear.o: image_header.hpp wb_data_format.hpp
+operator_filter_edge_linear.o: wb_data_type.hpp wb_image_depth.hpp
+operator_filter_edge_linear.o: wb_repository_type.hpp wb_defs.hpp
+operator_filter_edge_linear.o: line_segment.hpp point.hpp wb_log.hpp
+operator_filter_edge_linear.o: variance_stats.hpp wb_morphology_types.hpp
+operator_filter_edge_linear.o: operator_utils.hpp data_source_descriptor.hpp
+operator_filter_edge_linear.o: histogram.hpp hough.hpp hough_accum.hpp
+operator_filter_edge_linear.o: theta.hpp wb_utils.hpp hough_peak.hpp
+operator_filter_edge_linear.o: polar_line.hpp wb_filename.hpp
+operator_filter_edge_linear.o: operator_filter_edge_linear.hpp operator.hpp
+operator_filter_edge_linear.o: wb_linear_config_mask.hpp wb_config_mask.hpp
 operator_filter_edge_prewitt.o: kernel.hpp image.hpp bounds.hpp errors.hpp
 operator_filter_edge_prewitt.o: image_header.hpp wb_data_format.hpp
 operator_filter_edge_prewitt.o: wb_data_type.hpp wb_image_depth.hpp
@@ -583,8 +606,9 @@ pearsons_correlation.o: wb_data_type.hpp wb_image_depth.hpp
 pearsons_correlation.o: wb_repository_type.hpp wb_defs.hpp line_segment.hpp
 pearsons_correlation.o: point.hpp wb_log.hpp variance_stats.hpp kernel.hpp
 pearsons_correlation.o: wb_morphology_types.hpp one_pass_mean.hpp
-point.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp wb_image_depth.hpp
-point.o: wb_repository_type.hpp errors.hpp wb_defs.hpp point.hpp
+point.o: theta.hpp wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
+point.o: wb_image_depth.hpp wb_repository_type.hpp errors.hpp wb_defs.hpp
+point.o: point.hpp
 polar_line.o: file_utils.hpp errors.hpp point.hpp polar_line.hpp theta.hpp
 polar_line.o: wb_utils.hpp wb_data_format.hpp wb_data_type.hpp
 polar_line.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
@@ -604,6 +628,7 @@ wb_filename.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
 wb_filename.o: wb_filename.hpp
 wb_image_depth.o: wb_image_depth.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
+wb_linear_config_mask.o: wb_linear_config_mask.hpp wb_config_mask.hpp
 wb_log.o: errors.hpp wb_log.hpp
 wb_morphology_types.o: wb_morphology_types.hpp
 wb_repository_type.o: wb_repository_type.hpp

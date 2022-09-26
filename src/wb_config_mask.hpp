@@ -9,7 +9,7 @@
  * Configurable edge mask
  */
 class WB_config_mask {
-  double value(double x, double y) = 0;
+  virtual double value(int row, int col) = 0;
 };
 
 #endif //SRC__WB_CONFIG_MASK_H_

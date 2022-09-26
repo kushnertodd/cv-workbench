@@ -10,9 +10,10 @@
  * Image point
  */
 class Point {
- public:
+ private:
   int row{};
   int col{};
+ public:
   Point();
   Point(int m_row, int m_col);
   Point(const Point &point);
@@ -21,11 +22,15 @@ class Point {
   static double col_to_x(int col, int cols);
   double ellipse_dist(int rows, int cols) const;
   static double ellipse_dist(int row, int col, int rows, int cols);
+  inline int get_col() const { return col; }
+  inline int get_row() const { return row; }
   bool in_ellipse(int rows, int cols) const;
   static bool in_ellipse(int row, int col, int rows, int cols);
   static bool is_valid(int row, int col, int rows, int cols);
-  void rotate(int theta_degrees, double &x, double &y, int rows, int cols) const;
-  static void rotate(int theta_degrees, int row, int col, double &x, double &y, int rows, int cols) const;
+  Point rotate(int theta_degrees, int rows, int cols) const;
+  Point rotate(double cos_theta, double sin_theta, int rows, int cols) const;
+  static Point rotate(int theta_degrees, int row, int col, int rows, int cols);
+  static Point rotate(double cos_theta, double sin_theta, int row, int col, int rows, int cols);
   static double row_to_y(int row, int rows);
   void set(int m_row, int m_col);
   void set_row(int m_row);

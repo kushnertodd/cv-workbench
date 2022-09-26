@@ -5,6 +5,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
+#include <memory>
+#include "theta.hpp"
 #include "wb_linear_config_mask.hpp"
 #include "wb_morphology_types.hpp"
 #include "wb_utils.hpp"
@@ -246,29 +248,33 @@ Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
 }
 
 Kernel *Kernel::create_linear_mask(int rows, int cols,
-                                   double theta_degrees,
+                                   int theta_degrees,
+                                   int height,
                                    int width_left,
                                    double value_left,
                                    int width_center,
                                    double value_center,
                                    int width_right,
                                    double value_right) {
-  auto *rotated_mask_kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32F);
-  auto *rotated_mask_values = new WB_linear_config_mask(width_left,
-                                                        value_left,
-                                                        width_center,
-                                                        value_center,
-                                                        width_right,
-                                                        value_right);
+  Kernel *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32F);
+  std::unique_ptr<WB_linear_config_mask> rotated_mask_values(
+      new WB_linear_config_mask(height,
+                                width_left,
+                                value_left,
+                                width_center,
+                                value_center,
+                                width_right,
+                                value_right));
+  double cos_theta = Theta::to_cos(theta_degrees);
+  double sin_theta = Theta::to_sin(theta_degrees);
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
-      double x;
-      double y;
-      Point::rotate(theta_degrees, row, col, x, y, rows, cols);
-      double value = rotated_mask_values->value(x, y);
-      rotated_mask_kernel.set(row, col, value);
+      Point rotated = Point::rotate(cos_theta, sin_theta, row, col, rows, cols);
+      double value = rotated_mask_values->value(rotated.get_row(), rotated.get_col());
+      kernel->set(row, col, value);
     }
   }
+  return kernel;
 }
 
 /** Compute a Gaussian kernel of length 'kernel->dim',
