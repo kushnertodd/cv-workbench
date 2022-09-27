@@ -1,3 +1,335 @@
+[$WIN_HOME/DropBox/software/projects/cv/cv-workbench/src/test (dev)]$ sh test-run-dirs.sh
+==============================================
+cd filter-edge-kirsch
+sh filter-edge-kirsch/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch
+rm -f ../../images/du_drone_gray-250x273-kirsch-e.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-n.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-ne.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-nw.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-s.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-se.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-sw.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-w.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-e.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-n.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-ne.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-nw.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-s.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-se.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-sw.jpg
+rm -f ../../images/du_map_gray-289x247-kirsch-w.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-e.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-n.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-ne.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-nw.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-s.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-se.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-sw.jpg
+rm -f ../../images/square45-90_gray-609x473-kirsch-w.jpg
+rm -f ../../images/du_drone_gray-250x273-kirsch-e.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-n.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-ne.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-nw.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-s.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-se.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-sw.bin
+rm -f ../../images/du_drone_gray-250x273-kirsch-w.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-e.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-n.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-ne.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-nw.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-s.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-se.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-sw.bin
+rm -f ../../images/du_map_gray-289x247-kirsch-w.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-e.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-n.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-ne.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-nw.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-s.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-se.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-sw.bin
+rm -f ../../images/square45-90_gray-609x473-kirsch-w.bin
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-e.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-n.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-ne.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-nw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-s.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-se.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-sw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_drone_gray-kirsch-w.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-e.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-n.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-ne.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-nw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-s.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-se.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-sw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/du_map_gray-kirsch-w.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-e.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-n.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-ne.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-nw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-s.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-se.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-sw.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-kirsch/square45-90_gray-kirsch-w.json
+$ cmp du_drone_gray-250x273-kirsch-e.jpg ../../images/du_drone_gray-250x273-kirsch-e.jpg
+$ cmp du_drone_gray-250x273-kirsch-n.jpg ../../images/du_drone_gray-250x273-kirsch-n.jpg
+$ cmp du_drone_gray-250x273-kirsch-ne.jpg ../../images/du_drone_gray-250x273-kirsch-ne.jpg
+$ cmp du_drone_gray-250x273-kirsch-nw.jpg ../../images/du_drone_gray-250x273-kirsch-nw.jpg
+$ cmp du_drone_gray-250x273-kirsch-s.jpg ../../images/du_drone_gray-250x273-kirsch-s.jpg
+$ cmp du_drone_gray-250x273-kirsch-se.jpg ../../images/du_drone_gray-250x273-kirsch-se.jpg
+$ cmp du_drone_gray-250x273-kirsch-sw.jpg ../../images/du_drone_gray-250x273-kirsch-sw.jpg
+$ cmp du_drone_gray-250x273-kirsch-w.jpg ../../images/du_drone_gray-250x273-kirsch-w.jpg
+$ cmp du_map_gray-289x247-kirsch-e.jpg ../../images/du_map_gray-289x247-kirsch-e.jpg
+$ cmp du_map_gray-289x247-kirsch-n.jpg ../../images/du_map_gray-289x247-kirsch-n.jpg
+$ cmp du_map_gray-289x247-kirsch-ne.jpg ../../images/du_map_gray-289x247-kirsch-ne.jpg
+$ cmp du_map_gray-289x247-kirsch-nw.jpg ../../images/du_map_gray-289x247-kirsch-nw.jpg
+$ cmp du_map_gray-289x247-kirsch-s.jpg ../../images/du_map_gray-289x247-kirsch-s.jpg
+$ cmp du_map_gray-289x247-kirsch-se.jpg ../../images/du_map_gray-289x247-kirsch-se.jpg
+$ cmp du_map_gray-289x247-kirsch-sw.jpg ../../images/du_map_gray-289x247-kirsch-sw.jpg
+$ cmp du_map_gray-289x247-kirsch-w.jpg ../../images/du_map_gray-289x247-kirsch-w.jpg
+$ cmp square45-90_gray-609x473-kirsch-e.jpg ../../images/square45-90_gray-609x473-kirsch-e.jpg
+$ cmp square45-90_gray-609x473-kirsch-n.jpg ../../images/square45-90_gray-609x473-kirsch-n.jpg
+$ cmp square45-90_gray-609x473-kirsch-ne.jpg ../../images/square45-90_gray-609x473-kirsch-ne.jpg
+$ cmp square45-90_gray-609x473-kirsch-nw.jpg ../../images/square45-90_gray-609x473-kirsch-nw.jpg
+$ cmp square45-90_gray-609x473-kirsch-s.jpg ../../images/square45-90_gray-609x473-kirsch-s.jpg
+$ cmp square45-90_gray-609x473-kirsch-se.jpg ../../images/square45-90_gray-609x473-kirsch-se.jpg
+$ cmp square45-90_gray-609x473-kirsch-sw.jpg ../../images/square45-90_gray-609x473-kirsch-sw.jpg
+$ cmp square45-90_gray-609x473-kirsch-w.jpg ../../images/square45-90_gray-609x473-kirsch-w.jpg
+$ cmp du_drone_gray-250x273-kirsch-e.bin ../../images/du_drone_gray-250x273-kirsch-e.bin
+$ cmp du_drone_gray-250x273-kirsch-n.bin ../../images/du_drone_gray-250x273-kirsch-n.bin
+$ cmp du_drone_gray-250x273-kirsch-ne.bin ../../images/du_drone_gray-250x273-kirsch-ne.bin
+$ cmp du_drone_gray-250x273-kirsch-nw.bin ../../images/du_drone_gray-250x273-kirsch-nw.bin
+$ cmp du_drone_gray-250x273-kirsch-s.bin ../../images/du_drone_gray-250x273-kirsch-s.bin
+$ cmp du_drone_gray-250x273-kirsch-se.bin ../../images/du_drone_gray-250x273-kirsch-se.bin
+$ cmp du_drone_gray-250x273-kirsch-sw.bin ../../images/du_drone_gray-250x273-kirsch-sw.bin
+$ cmp du_drone_gray-250x273-kirsch-w.bin ../../images/du_drone_gray-250x273-kirsch-w.bin
+$ cmp du_map_gray-289x247-kirsch-e.bin ../../images/du_map_gray-289x247-kirsch-e.bin
+$ cmp du_map_gray-289x247-kirsch-n.bin ../../images/du_map_gray-289x247-kirsch-n.bin
+$ cmp du_map_gray-289x247-kirsch-ne.bin ../../images/du_map_gray-289x247-kirsch-ne.bin
+$ cmp du_map_gray-289x247-kirsch-nw.bin ../../images/du_map_gray-289x247-kirsch-nw.bin
+$ cmp du_map_gray-289x247-kirsch-s.bin ../../images/du_map_gray-289x247-kirsch-s.bin
+$ cmp du_map_gray-289x247-kirsch-se.bin ../../images/du_map_gray-289x247-kirsch-se.bin
+$ cmp du_map_gray-289x247-kirsch-sw.bin ../../images/du_map_gray-289x247-kirsch-sw.bin
+$ cmp du_map_gray-289x247-kirsch-w.bin ../../images/du_map_gray-289x247-kirsch-w.bin
+$ cmp square45-90_gray-609x473-kirsch-e.bin ../../images/square45-90_gray-609x473-kirsch-e.bin
+$ cmp square45-90_gray-609x473-kirsch-n.bin ../../images/square45-90_gray-609x473-kirsch-n.bin
+$ cmp square45-90_gray-609x473-kirsch-ne.bin ../../images/square45-90_gray-609x473-kirsch-ne.bin
+$ cmp square45-90_gray-609x473-kirsch-nw.bin ../../images/square45-90_gray-609x473-kirsch-nw.bin
+$ cmp square45-90_gray-609x473-kirsch-s.bin ../../images/square45-90_gray-609x473-kirsch-s.bin
+$ cmp square45-90_gray-609x473-kirsch-se.bin ../../images/square45-90_gray-609x473-kirsch-se.bin
+$ cmp square45-90_gray-609x473-kirsch-sw.bin ../../images/square45-90_gray-609x473-kirsch-sw.bin
+$ cmp square45-90_gray-609x473-kirsch-w.bin ../../images/square45-90_gray-609x473-kirsch-w.bin
+==============================================
+cd filter-edge-prewitt
+sh filter-edge-prewitt/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-prewitt
+rm -f ../../images/du_drone_gray-250x273-prewitt-0.jpg
+rm -f ../../images/du_drone_gray-250x273-prewitt-90.jpg
+rm -f ../../images/square45-90_gray-609x473-prewitt-0.jpg
+rm -f ../../images/square45-90_gray-609x473-prewitt-90.jpg
+rm -f ../../images/du_drone_gray-250x273-prewitt-0.bin
+rm -f ../../images/du_drone_gray-250x273-prewitt-90.bin
+rm -f ../../images/square45-90_gray-609x473-prewitt-0.bin
+rm -f ../../images/square45-90_gray-609x473-prewitt-90.bin
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-prewitt/du_drone_gray-prewitt-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-prewitt/du_drone_gray-prewitt-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-prewitt/square45-90_gray-prewitt-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-prewitt/square45-90_gray-prewitt-90.json
+$ cmp du_drone_gray-250x273-prewitt-0.jpg ../../images/du_drone_gray-250x273-prewitt-0.jpg
+$ cmp du_drone_gray-250x273-prewitt-90.jpg ../../images/du_drone_gray-250x273-prewitt-90.jpg
+$ cmp square45-90_gray-609x473-prewitt-0.jpg ../../images/square45-90_gray-609x473-prewitt-0.jpg
+$ cmp square45-90_gray-609x473-prewitt-90.jpg ../../images/square45-90_gray-609x473-prewitt-90.jpg
+$ cmp du_drone_gray-250x273-prewitt-0.bin ../../images/du_drone_gray-250x273-prewitt-0.bin
+$ cmp du_drone_gray-250x273-prewitt-90.bin ../../images/du_drone_gray-250x273-prewitt-90.bin
+$ cmp square45-90_gray-609x473-prewitt-0.bin ../../images/square45-90_gray-609x473-prewitt-0.bin
+$ cmp square45-90_gray-609x473-prewitt-90.bin ../../images/square45-90_gray-609x473-prewitt-90.bin
+==============================================
+cd filter-edge-roberts
+sh filter-edge-roberts/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts
+rm -f ../../images/du_drone_gray-250x273-roberts-0.jpg
+rm -f ../../images/du_map_gray-289x247-roberts-0.jpg
+rm -f ../../images/du_map_gray-289x247-roberts-90.jpg
+rm -f ../../images/square45-90_gray-609x473-roberts-0.jpg
+rm -f ../../images/du_drone_gray-250x273-roberts-0.bin
+rm -f ../../images/du_map_gray-289x247-roberts-0.bin
+rm -f ../../images/du_map_gray-289x247-roberts-90.bin
+rm -f ../../images/square45-90_gray-609x473-roberts-0.bin
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/du_drone_gray-roberts-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/du_drone_gray-roberts-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/du_map_gray-roberts-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/du_map_gray-roberts-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/square45-90_gray-roberts-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-roberts/square45-90_gray-roberts-90.json
+$ cmp du_drone_gray-250x273-roberts-0.jpg ../../images/du_drone_gray-250x273-roberts-0.jpg
+$ cmp du_map_gray-289x247-roberts-0.jpg ../../images/du_map_gray-289x247-roberts-0.jpg
+$ cmp du_map_gray-289x247-roberts-90.jpg ../../images/du_map_gray-289x247-roberts-90.jpg
+$ cmp square45-90_gray-609x473-roberts-0.jpg ../../images/square45-90_gray-609x473-roberts-0.jpg
+$ cmp du_drone_gray-250x273-roberts-0.bin ../../images/du_drone_gray-250x273-roberts-0.bin
+$ cmp du_map_gray-289x247-roberts-0.bin ../../images/du_map_gray-289x247-roberts-0.bin
+$ cmp du_map_gray-289x247-roberts-90.bin ../../images/du_map_gray-289x247-roberts-90.bin
+$ cmp square45-90_gray-609x473-roberts-0.bin ../../images/square45-90_gray-609x473-roberts-0.bin
+==============================================
+cd filter-edge-sobel
+sh filter-edge-sobel/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel
+rm -f ../../images/du_drone_gray-151x118-sobel-0.jpg
+rm -f ../../images/du_drone_gray-151x118-sobel-90.jpg
+rm -f ../../images/du_map_gray-289x247-sobel-0.jpg
+rm -f ../../images/du_map_gray-289x247-sobel-90.jpg
+rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.jpg
+rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.jpg
+rm -f ../../images/road-straight_gray-180x280-sobel-0.jpg
+rm -f ../../images/road-straight_gray-180x280-sobel-90.jpg
+rm -f ../../images/road_gray-194x259-sobel-0.jpg
+rm -f ../../images/road_gray-194x259-sobel-90.jpg
+rm -f ../../images/square45-90_gray-609x473-sobel-0.jpg
+rm -f ../../images/square45-90_gray-609x473-sobel-90.jpg
+rm -f ../../images/du_drone_gray-151x118-sobel-0.bin
+rm -f ../../images/du_drone_gray-151x118-sobel-90.bin
+rm -f ../../images/du_map_gray-289x247-sobel-0.bin
+rm -f ../../images/du_map_gray-289x247-sobel-90.bin
+rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.bin
+rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.bin
+rm -f ../../images/road-straight_gray-180x280-sobel-0.bin
+rm -f ../../images/road-straight_gray-180x280-sobel-90.bin
+rm -f ../../images/road_gray-194x259-sobel-0.bin
+rm -f ../../images/road_gray-194x259-sobel-90.bin
+rm -f ../../images/square45-90_gray-609x473-sobel-0.bin
+rm -f ../../images/square45-90_gray-609x473-sobel-90.bin
+rm -f ../../images/sample_gray-subimage-1,1-10,6.txt
+rm -f ../../images/sample_gray-subimage-3,2-10,8.txt
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/du_drone_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/du_drone_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/du_map_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/du_map_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/keyboard_pixel_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/keyboard_pixel_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/road-straight_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/road-straight_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/road_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/road_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/sample_gray-subimage-1,1-10,6.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/sample_gray-subimage-3,2-10,8.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/square45-90_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-sobel/square45-90_gray-sobel-90.json
+$ cmp du_drone_gray-151x118-sobel-0.jpg ../../images/du_drone_gray-151x118-sobel-0.jpg
+$ cmp du_drone_gray-151x118-sobel-90.jpg ../../images/du_drone_gray-151x118-sobel-90.jpg
+$ cmp du_map_gray-289x247-sobel-0.jpg ../../images/du_map_gray-289x247-sobel-0.jpg
+$ cmp du_map_gray-289x247-sobel-90.jpg ../../images/du_map_gray-289x247-sobel-90.jpg
+$ cmp keyboard_pixel_gray-250x375-sobel-0.jpg ../../images/keyboard_pixel_gray-250x375-sobel-0.jpg
+$ cmp keyboard_pixel_gray-250x375-sobel-90.jpg ../../images/keyboard_pixel_gray-250x375-sobel-90.jpg
+$ cmp road-straight_gray-180x280-sobel-0.jpg ../../images/road-straight_gray-180x280-sobel-0.jpg
+$ cmp road-straight_gray-180x280-sobel-90.jpg ../../images/road-straight_gray-180x280-sobel-90.jpg
+$ cmp road_gray-194x259-sobel-0.jpg ../../images/road_gray-194x259-sobel-0.jpg
+$ cmp road_gray-194x259-sobel-90.jpg ../../images/road_gray-194x259-sobel-90.jpg
+$ cmp square45-90_gray-609x473-sobel-0.jpg ../../images/square45-90_gray-609x473-sobel-0.jpg
+$ cmp square45-90_gray-609x473-sobel-90.jpg ../../images/square45-90_gray-609x473-sobel-90.jpg
+$ cmp du_drone_gray-151x118-sobel-0.bin ../../images/du_drone_gray-151x118-sobel-0.bin
+$ cmp du_drone_gray-151x118-sobel-90.bin ../../images/du_drone_gray-151x118-sobel-90.bin
+$ cmp du_map_gray-289x247-sobel-0.bin ../../images/du_map_gray-289x247-sobel-0.bin
+$ cmp du_map_gray-289x247-sobel-90.bin ../../images/du_map_gray-289x247-sobel-90.bin
+$ cmp keyboard_pixel_gray-250x375-sobel-0.bin ../../images/keyboard_pixel_gray-250x375-sobel-0.bin
+$ cmp keyboard_pixel_gray-250x375-sobel-90.bin ../../images/keyboard_pixel_gray-250x375-sobel-90.bin
+$ cmp road-straight_gray-180x280-sobel-0.bin ../../images/road-straight_gray-180x280-sobel-0.bin
+$ cmp road-straight_gray-180x280-sobel-90.bin ../../images/road-straight_gray-180x280-sobel-90.bin
+$ cmp road_gray-194x259-sobel-0.bin ../../images/road_gray-194x259-sobel-0.bin
+$ cmp road_gray-194x259-sobel-90.bin ../../images/road_gray-194x259-sobel-90.bin
+$ cmp square45-90_gray-609x473-sobel-0.bin ../../images/square45-90_gray-609x473-sobel-0.bin
+$ cmp square45-90_gray-609x473-sobel-90.bin ../../images/square45-90_gray-609x473-sobel-90.bin
+$ cmp sample_gray-subimage-1,1-10,6.txt ../../images/sample_gray-subimage-1,1-10,6.txt
+$ cmp sample_gray-subimage-3,2-10,8.txt ../../images/sample_gray-subimage-3,2-10,8.txt
+==============================================
+cd filter-image-morphology
+sh filter-image-morphology/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-image-morphology
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.black_hat.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.close.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.dilate.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.erode.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.gradient.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.open.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98.top_hat.jpg
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-image-morphology/du_drone_gray_sobel_0_degrees_thresh-98.json
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.black_hat.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.black_hat.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.close.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.close.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.dilate.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.dilate.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.erode.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.erode.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.gradient.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.gradient.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.open.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.open.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98.top_hat.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98.top_hat.jpg
+==============================================
+cd filter-smooth-average
+sh filter-smooth-average/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-average
+rm -f ../../images/du_drone_gray-average-3x3.jpg
+rm -f ../../images/square45-90_gray-609x473.jpg-average-12x12.jpg
+rm -f ../../images/du_drone_gray-average-3x3.bin
+rm -f ../../images/square45-90_gray-609x473.jpg-average-12x12.bin
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-average/du_drone_gray-average-3x3.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-average/square45-90_gray-average-12x12.json
+$ cmp du_drone_gray-average-3x3.jpg ../../images/du_drone_gray-average-3x3.jpg
+$ cmp square45-90_gray-609x473.jpg-average-12x12.jpg ../../images/square45-90_gray-609x473.jpg-average-12x12.jpg
+$ cmp du_drone_gray-average-3x3.bin ../../images/du_drone_gray-average-3x3.bin
+$ cmp square45-90_gray-609x473.jpg-average-12x12.bin ../../images/square45-90_gray-609x473.jpg-average-12x12.bin
+==============================================
+cd filter-smooth-gaussian
+sh filter-smooth-gaussian/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian
+rm -f ../../images/du_drone-gaussian-15-25x15-25-diff.jpg
+rm -f ../../images/du_drone-gaussian-15x15.jpg
+rm -f ../../images/du_drone-gaussian-25x25.jpg
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.jpg
+rm -f ../../images/du_map-gaussian-15-25x15-25-diff.jpg
+rm -f ../../images/du_map-gaussian-15x15.jpg
+rm -f ../../images/du_map-gaussian-25x25.jpg
+rm -f ../../images/keyboard-pixel-gaussian-15-25x15-25-diff.jpg
+rm -f ../../images/keyboard-pixel-gaussian-15x15.jpg
+rm -f ../../images/keyboard-pixel-gaussian-25x25.jpg
+rm -f ../../images/du_drone-gaussian-15-25x15-25-diff.bin
+rm -f ../../images/du_drone-gaussian-15x15.bin
+rm -f ../../images/du_drone-gaussian-25x25.bin
+rm -f ../../images/du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin
+rm -f ../../images/du_map-gaussian-15-25x15-25-diff.bin
+rm -f ../../images/du_map-gaussian-15x15.bin
+rm -f ../../images/du_map-gaussian-25x25.bin
+rm -f ../../images/keyboard-pixel-gaussian-15-25x15-25-diff.bin
+rm -f ../../images/keyboard-pixel-gaussian-15x15.bin
+rm -f ../../images/keyboard-pixel-gaussian-25x25.bin
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-drone-combine-15-25x15-25.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-drone-pixel-gaussian-15x15.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-drone-pixel-gaussian-25x25.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-map-combine-15-25x15-25.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-map-pixel-gaussian-15x15.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du-map-pixel-gaussian-25x25.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/keyboard-combine-15-25x15-25.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/keyboard-pixel-gaussian-15x15.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-smooth-gaussian/keyboard-pixel-gaussian-25x25.json
+$ cmp du_drone-gaussian-15-25x15-25-diff.jpg ../../images/du_drone-gaussian-15-25x15-25-diff.jpg
+$ cmp du_drone-gaussian-15x15.jpg ../../images/du_drone-gaussian-15x15.jpg
+$ cmp du_drone-gaussian-25x25.jpg ../../images/du_drone-gaussian-25x25.jpg
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.jpg ../../images/du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.jpg
+$ cmp du_map-gaussian-15-25x15-25-diff.jpg ../../images/du_map-gaussian-15-25x15-25-diff.jpg
+$ cmp du_map-gaussian-15x15.jpg ../../images/du_map-gaussian-15x15.jpg
+$ cmp du_map-gaussian-25x25.jpg ../../images/du_map-gaussian-25x25.jpg
+$ cmp keyboard-pixel-gaussian-15-25x15-25-diff.jpg ../../images/keyboard-pixel-gaussian-15-25x15-25-diff.jpg
+$ cmp keyboard-pixel-gaussian-15x15.jpg ../../images/keyboard-pixel-gaussian-15x15.jpg
+$ cmp keyboard-pixel-gaussian-25x25.jpg ../../images/keyboard-pixel-gaussian-25x25.jpg
+$ cmp du_drone-gaussian-15-25x15-25-diff.bin ../../images/du_drone-gaussian-15-25x15-25-diff.bin
+$ cmp du_drone-gaussian-15x15.bin ../../images/du_drone-gaussian-15x15.bin
+$ cmp du_drone-gaussian-25x25.bin ../../images/du_drone-gaussian-25x25.bin
+$ cmp du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin ../../images/du_drone_gray_sobel_0_degrees_thresh-98-gaussian-smooth.bin
+$ cmp du_map-gaussian-15-25x15-25-diff.bin ../../images/du_map-gaussian-15-25x15-25-diff.bin
+$ cmp du_map-gaussian-15x15.bin ../../images/du_map-gaussian-15x15.bin
+$ cmp du_map-gaussian-25x25.bin ../../images/du_map-gaussian-25x25.bin
+$ cmp keyboard-pixel-gaussian-15-25x15-25-diff.bin ../../images/keyboard-pixel-gaussian-15-25x15-25-diff.bin
+$ cmp keyboard-pixel-gaussian-15x15.bin ../../images/keyboard-pixel-gaussian-15x15.bin
+$ cmp keyboard-pixel-gaussian-25x25.bin ../../images/keyboard-pixel-gaussian-25x25.bin
 ==============================================
 cd hough-draw-line
 sh hough-draw-line/test-run-dir.sh
@@ -376,3 +708,14 @@ square45-90_gray-609x473-sobel-0.hough.bin ../../images/square45-90_gray-609x473
 $ cmp square45-90_gray-609x473-sobel-0.hist.txt ../../images/square45-90_gray-609x473-sobel-0.hist.txt
 square45-90_gray-609x473-sobel-0.hist.txt ../../images/square45-90_gray-609x473-sobel-0.hist.txt differ: byte 16, line 2
 $ cmp square45-90_gray-609x473-sobel-0.hist.gp ../../images/square45-90_gray-609x473-sobel-0.hist.gp
+==============================================
+cd histogram-image-create
+sh histogram-image-create/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-image-create
+rm -f ../../images/square45-90_gray-609x473-sobel-0.hist.bin
+rm -f ../../images/square45-90_gray-609x473-sobel-0.hist.txt
+rm -f ../../images/square45-90_gray-609x473-sobel-0.hist.gp
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-image-create/square45-90_gray-sobel-0.json
+$ cmp square45-90_gray-609x473-sobel-0.hist.bin ../../images/square45-90_gray-609x473-sobel-0.hist.bin
+$ cmp square45-90_gray-609x473-sobel-0.hist.txt ../../images/square45-90_gray-609x473-sobel-0.hist.txt
+$ cmp square45-90_gray-609x473-sobel-0.hist.gp ../../images/square45-90_gray-609x473-sobel-0.hi

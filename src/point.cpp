@@ -148,8 +148,8 @@ Point Point::rotate(double cos_theta, double sin_theta, int row, int col, int ro
   double y = Point::row_to_y(row, rows);
   double x_rotate = x * cos_theta + y * sin_theta;
   double y_rotate = -x * sin_theta + y * cos_theta;
-  int col_rotate = x_to_col(x, cols);
-  int row_rotate = y_to_row(y, rows);
+  int col_rotate = x_to_col(x_rotate, cols);
+  int row_rotate = y_to_row(y_rotate, rows);
   Point rotate(row_rotate, col_rotate);
   return rotate;
 }

@@ -15,6 +15,7 @@ image-create
 image-dump
 image-info
 image-map
+image-mask
 image-mean
 image-morph
 image-read
