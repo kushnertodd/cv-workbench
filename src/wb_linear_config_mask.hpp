@@ -36,6 +36,8 @@ class WB_linear_config_mask : public WB_config_mask {
   double value_center;
   int width_right;
   double value_right;
+  int rows;
+  int cols;
  public:
   WB_linear_config_mask(int m_height,
                         int m_width_left,
@@ -44,7 +46,7 @@ class WB_linear_config_mask : public WB_config_mask {
                         double m_value_center,
                         int m_width_right,
                         double m_value_right);
-  double value(int row, int col);
+  double value(double x, double y) const;
 };
 
 #endif //SRC__WB_LINEAR_CONFIG_MASK_H_

@@ -47,17 +47,19 @@ void Theta::set_theta_degrees(int theta_degrees) {
 }
 
 void Theta::set_theta_radians(double theta_radians) {
-  theta_increment = (theta_radians / M_PI) * max_degrees / theta_resolution;
+  theta_increment =
+      wb_utils::double_to_int_round((theta_radians / M_PI) * max_degrees / theta_resolution);
 }
 
 double Theta::to_cos(int theta_degrees) {
-  int theta_increment = static_cast<int>(theta_degrees / theta_resolution);
+  int theta_increment = static_cast<int>(abs(theta_degrees) / theta_resolution);
   return cos_theta_table[theta_increment];
 }
 
 double Theta::to_sin(int theta_degrees) {
-  int theta_increment = static_cast<int>(theta_degrees / theta_resolution);
-  return sin_theta_table[theta_increment];
+  int sign = (theta_degrees < 0 ? -1 : 1);
+  int theta_increment = static_cast<int>(abs(theta_degrees) / theta_resolution);
+  return sign * sin_theta_table[theta_increment];
 }
 
 std::string Theta::to_string() const {

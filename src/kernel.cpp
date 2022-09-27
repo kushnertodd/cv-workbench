@@ -269,8 +269,10 @@ Kernel *Kernel::create_linear_mask(int rows, int cols,
   double sin_theta = Theta::to_sin(theta_degrees);
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
-      Point rotated = Point::rotate(cos_theta, sin_theta, row, col, rows, cols);
-      double value = rotated_mask_values->value(rotated.get_row(), rotated.get_col());
+      double x_rotate;
+      double y_rotate;
+      Point::rotate(cos_theta, sin_theta, row, col, x_rotate, y_rotate, rows, cols);
+      double value = rotated_mask_values->value(x_rotate, y_rotate);
       kernel->set(row, col, value);
     }
   }

@@ -88,6 +88,14 @@ double Point::ellipse_dist(int row, int col, int rows, int cols) {
   return dist;
 }
 
+double Point::get_x(int cols) const {
+  return col_to_x(col, cols);
+}
+
+double Point::get_y(int rows) const {
+  return row_to_y(row, rows);
+}
+
 /**
  * Check if point is in ellipse
  * @param rows
@@ -128,30 +136,36 @@ bool Point::is_valid(int row, int col, int rows, int cols) {
  * @param cols
  * @return
  */
-Point Point::rotate(int theta_degrees, int rows, int cols) const {
-  return rotate(theta_degrees,  row,  col, rows, cols);
+void Point::rotate(int theta_degrees, double &x_rotate, double &y_rotate, int rows, int cols) const {
+  rotate(theta_degrees,  row,  col, x_rotate, y_rotate, rows, cols);
 }
 
-Point Point::rotate(double cos_theta, double sin_theta, int rows, int cols) const {
-  return rotate(cos_theta, sin_theta,  row,  col, rows, cols);
+void Point::rotate(double cos_theta, double sin_theta, double &x_rotate, double &y_rotate, int rows, int cols) const {
+   rotate(cos_theta, sin_theta,  row,  col, x_rotate, y_rotate, rows, cols);
 }
 
-Point Point::rotate(int theta_degrees, int row, int col, int rows, int cols)  {
+void Point::rotate(int theta_degrees, int row, int col, double &x_rotate, double &y_rotate, int rows, int cols)  {
   double theta_radians = Theta::degrees_to_radians(theta_degrees);
   double cos_theta = cos(theta_radians);
   double sin_theta = sin(theta_radians);
-  return rotate(cos_theta, sin_theta,  row,  col, rows, cols);
+  rotate(cos_theta, sin_theta,  row,  col, x_rotate, y_rotate, rows, cols);
 }
 
-Point Point::rotate(double cos_theta, double sin_theta, int row, int col, int rows, int cols)  {
+/**
+ * rotate point around center (rows/2, cols/2) of (rows, cols) size window
+ * @param cos_theta
+ * @param sin_theta
+ * @param row
+ * @param col
+ * @param rows
+ * @param cols
+ * @return
+ */
+void Point::rotate(double cos_theta, double sin_theta, int row, int col, double &x_rotate, double &y_rotate, int rows, int cols)  {
   double x = Point::col_to_x(col, cols);
   double y = Point::row_to_y(row, rows);
-  double x_rotate = x * cos_theta + y * sin_theta;
-  double y_rotate = -x * sin_theta + y * cos_theta;
-  int col_rotate = x_to_col(x_rotate, cols);
-  int row_rotate = y_to_row(y_rotate, rows);
-  Point rotate(row_rotate, col_rotate);
-  return rotate;
+   x_rotate = x * cos_theta + y * sin_theta;
+   y_rotate = -x * sin_theta + y * cos_theta;
 }
 
 /**
