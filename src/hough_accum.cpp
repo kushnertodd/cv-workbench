@@ -8,6 +8,7 @@
 #include "image.hpp"
 #include "theta.hpp"
 #include "wb_utils.hpp"
+#include "wb_window.hpp"
 #include "hough_accum.hpp"
 
 Hough_accum::~Hough_accum() {
@@ -196,9 +197,9 @@ int Hough_accum::rho_to_rho_index(double rho) const {
 }
 
 double Hough_accum::row_col_theta_index_to_rho(int row, int col, int theta_index) const {
-  double x = Point::col_to_x(col, cols);
+  double x = WB_window::col_to_x(col, cols);
   double cos_t = to_cos(theta_index);
-  double y = Point::row_to_y(row, rows);
+  double y = WB_window::row_to_y(row, rows);
   double sin_t = to_sin(theta_index);
   double rho = x * cos_t + y * sin_t;
   return rho;

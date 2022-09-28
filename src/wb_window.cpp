@@ -7,6 +7,11 @@
 
 extern bool debug;
 
+WB_window::WB_window(int m_rows, int m_cols) :
+rows(m_rows),
+cols(m_cols) {
+}
+
 /**
  * Clips a polar line against a window and returns a line segment from the endpoints
  * There are two main cases based on the angle of the line, because there is a potential
@@ -280,3 +285,149 @@ void WB_window::clip_window(int rows, int cols, Line_segment &line_segment, Pola
   //return !clip_failed;
 }
 
+/**
+ * Convert column to x coordinate
+ * @param col
+ * @return
+ */
+double WB_window::col_to_x(int col) {
+  return col_to_x(col, cols);
+}
+
+/**
+ * Convert column to x coordinate
+ * @param col
+ * @param cols
+ * @return
+ */
+double WB_window::col_to_x(int col, int cols) {
+  return (col + 0.5) - cols / 2.0;
+}
+
+/**
+ * distance from (row, col) to center of elipse inscribed into rectangle (rows, cols) is:
+ *   a = cols/2
+ *   b = rows/2
+ *   dist = x^2/a^2 + y^2/b^2
+ * @param row
+ * @param col
+ * @param rows
+ * @param cols
+ * @return
+ */
+double WB_window::ellipse_dist(int row, int col, int rows, int cols) {
+  double a_sq = cols * cols / 4.0;
+  double b_sq = rows * rows / 4.0;
+  double x = WB_window::col_to_x(col, cols);
+  double y = WB_window::row_to_y(row, rows);
+  double dist = x * x / a_sq + y * y / b_sq;
+  return dist;
+}
+
+/**
+ * Check if point is in ellipse
+ * @param rows
+ * @param cols
+ * @return
+ */
+bool WB_window::in_ellipse(int row, int col, int rows, int cols) {
+  double dist = ellipse_dist(row, col, rows, cols);
+  return dist <= 1.0;
+}
+
+/**
+ * rotate point around window (0,0)-(cols-1, rows-1) centered at (cols/2, rows/2)
+ * @param theta_degrees
+ * @param rows
+ * @param cols
+ * @return
+ */
+void WB_window::rotate(int theta_degrees, int row, int col, double &x_rotate, double &y_rotate) const {
+  rotate(theta_degrees,  row,  col, x_rotate, y_rotate, rows, cols);
+}
+
+void WB_window::rotate(double cos_theta, double sin_theta, int row, int col, double &x_rotate, double &y_rotate) const {
+  rotate(cos_theta, sin_theta,  row,  col, x_rotate, y_rotate, rows, cols);
+}
+
+void WB_window::rotate(int theta_degrees, int row, int col, double &x_rotate, double &y_rotate, int rows, int cols)  {
+  double theta_radians = Theta::degrees_to_radians(theta_degrees);
+  double cos_theta = cos(theta_radians);
+  double sin_theta = sin(theta_radians);
+  rotate(cos_theta, sin_theta,  row,  col, x_rotate, y_rotate, rows, cols);
+}
+
+/**
+ * rotate point around center (rows/2, cols/2) of (rows, cols) size window
+ * @param cos_theta
+ * @param sin_theta
+ * @param row
+ * @param col
+ * @param rows
+ * @param cols
+ * @return
+ */
+void WB_window::rotate(double cos_theta, double sin_theta, int row, int col, double &x_rotate, double &y_rotate, int rows, int cols)  {
+  double x = WB_window::col_to_x(col, cols);
+  double y = WB_window::row_to_y(row, rows);
+  x_rotate = x * cos_theta + y * sin_theta;
+  y_rotate = -x * sin_theta + y * cos_theta;
+}
+
+/**
+ * Convert row to y coordinate
+ * @param row
+ * @return
+ */
+double WB_window::row_to_y(int row) const {
+  return row_to_y(row, rows);
+}
+
+/**
+ * Convert row to y coordinate
+ * @param row
+ * @param rows
+ * @return
+ */
+double WB_window::row_to_y(int row, int rows) {
+  return rows / 2.0 - (row + 0.5);
+}
+
+/**
+ * convert x coordinate to column
+ * @param x
+ * @return
+ */
+int WB_window::x_to_col(double x) const {
+  return x_to_col(x, cols);
+}
+
+/**
+ * convert x coordinate to column
+ * @param x
+ * @param cols
+ * @return
+ */
+int WB_window::x_to_col(double x, int cols) {
+  return wb_utils::double_to_int_round(x + cols / 2.0 - 0.5);
+}
+
+/**
+ * convert  y coordinate to row
+ * @param y
+ * @param rows
+ * @return
+ */
+int WB_window::y_to_row(double y) const {
+  return y_to_row(y, rows);
+}
+
+/**
+ * convert  y coordinate to row
+ * @param y
+ * @param rows
+ * @return
+ */
+int WB_window::y_to_row(double y, int rows) {
+  return wb_utils::double_to_int_round(rows / 2.0 - y - 0.5);
+}

@@ -3,6 +3,7 @@
 //
 
 #include "point.hpp"
+#include "wb_window.hpp"
 #include "wb_linear_config_mask.hpp"
 
 WB_linear_config_mask::WB_linear_config_mask(int m_height,
@@ -23,8 +24,8 @@ WB_linear_config_mask::WB_linear_config_mask(int m_height,
     cols(m_width_left+m_width_center+m_width_right) {}
 
 double WB_linear_config_mask::value(double x, double y) const {
-  int row = Point::y_to_row(y, rows);
-  int col = Point::x_to_col(x, cols);
+  int row = WB_window::y_to_row(y, rows);
+  int col = WB_window::x_to_col(x, cols);
   if (col >= 0 && col < width_left
       && row >= 0 && row < height) {
     return value_left;

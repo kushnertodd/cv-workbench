@@ -9,7 +9,7 @@
 #include "theta.hpp"
 #include "wb_linear_config_mask.hpp"
 #include "wb_morphology_types.hpp"
-#include "wb_utils.hpp"
+#include "wb_window.hpp"
 #include "kernel.hpp"
 
 Kernel::~Kernel() = default;
@@ -181,14 +181,14 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
           kernel->set_8U(row, col, 1);
           break;
         case WB_morphology_types::Structuring_element_type::CROSS: {
-          double x = Point::col_to_x(col, cols);
-          double y = Point::row_to_y(row, rows);
+          double x = WB_window::col_to_x(col, cols);
+          double y = WB_window::row_to_y(row, rows);
           if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
             kernel->set_8U(row, col, 1);
           break;
         }
         case WB_morphology_types::Structuring_element_type::ELLIPSE:
-          if (Point::in_ellipse(row, col, rows, cols))
+          if (WB_window::in_ellipse(row, col, rows, cols))
             kernel->set_8U(row, col, 1);
           break;
         default:
@@ -211,7 +211,7 @@ Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
   double denom1 = 2 * sigma_y * sigma_y;
   double sum = 0.0;
   for (int row = 0; row < rows; row++) {
-    double y = Point::row_to_y(row, rows);
+    double y = WB_window::row_to_y(row, rows);
     double value = fact1 * exp(-((y * y) / denom1));
     gaussian_y->set(row, 0, value);
     sum += value;
@@ -235,7 +235,7 @@ Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
   double denom1 = 2 * sigma_x * sigma_x;
   double sum = 0.0;
   for (int col = 0; col < cols; col++) {
-    double x = Point::col_to_x(col, cols);
+    double x = WB_window::col_to_x(col, cols);
     double value = fact1 * exp(-((x * x) / denom1));
     gaussian_x->set(0, col, value);
     sum += value;
@@ -271,7 +271,7 @@ Kernel *Kernel::create_linear_mask(int rows, int cols,
     for (int col = 0; col < cols; col++) {
       double x_rotate;
       double y_rotate;
-      Point::rotate(cos_theta, sin_theta, row, col, x_rotate, y_rotate, rows, cols);
+      WB_window::rotate(cos_theta, sin_theta, row, col, x_rotate, y_rotate, rows, cols);
       double value = rotated_mask_values->value(x_rotate, y_rotate);
       kernel->set(row, col, value);
     }

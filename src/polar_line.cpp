@@ -7,9 +7,10 @@
 #include <sstream>
 #include "file_utils.hpp"
 #include "point.hpp"
-#include "polar_line.hpp"
 #include "theta.hpp"
 #include "wb_utils.hpp"
+#include "wb_window.hpp"
+#include "polar_line.hpp"
 
 Polar_line::Polar_line() = default;
 
@@ -25,7 +26,7 @@ int Polar_line::col_to_row(int col, int rows, int cols) const {
   double sin_t = to_sin();
   if (abs(sin_t) < 1e-8)
     return INT32_MAX;
-  double x = Point::col_to_x(col, cols);
+  double x = WB_window::col_to_x(col, cols);
   double row_offset = rows / 2.0;
   double row = row_offset - (rho - x * cos_t) / sin_t;
   return wb_utils::double_to_int_round(row);
@@ -79,7 +80,7 @@ int Polar_line::row_to_col(int row, int rows, int cols) const {
   double sin_t = to_sin();
   if (abs(cos_t) < 1e-8)
     return INT32_MAX;
-  double y = Point::row_to_y(row, rows);
+  double y = WB_window::row_to_y(row, rows);
   double col_offset = cols / 2.0;
   double col = col_offset + (rho - y * sin_t) / cos_t;
   return wb_utils::double_to_int_round(col);
