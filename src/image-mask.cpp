@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
       width_right,
       value_right);
   Errors errors;
-  std::unique_ptr<Wb_filename> wb_out_filename(Wb_filename::create_wb_filename(out_filename, errors));
+  std::unique_ptr<WB_filename> wb_out_filename(WB_filename::create_wb_filename(out_filename, errors));
   errors.check_exit("invalid out-filename");
   mask->write_text(out_filename, "\t", errors);
   errors.check_exit(out_filename + " kernel write failed");

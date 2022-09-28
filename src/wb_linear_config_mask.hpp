@@ -25,7 +25,9 @@
  * - lrc (height-1,width_left+width_center+width_right-1)
  * - value value_right
  *
- * @image html WB_config_mask.jpg
+ * @image html WB_config_mask1.jpg
+ *
+ * @image html WB_config_mask1.jpg
  */
 class WB_linear_config_mask : public WB_config_mask {
  private:

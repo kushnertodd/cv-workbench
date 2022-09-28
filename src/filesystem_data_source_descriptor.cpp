@@ -111,7 +111,7 @@ Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { r
  */
 Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_hough();
   FILE *fp = file_utils::open_file_read(data_filename, errors);
   Hough *hough = nullptr;
@@ -124,7 +124,7 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
 
 void Filesystem_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_bin();
   FILE *fp = file_utils::open_file_read(data_filename, errors);
   Image *image = nullptr;
@@ -137,7 +137,7 @@ void Filesystem_data_source_descriptor::read_hough_peaks(std::list<Hough_peak> &
 
 void Filesystem_data_source_descriptor::read_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_text();
   Hough_peak::read_text(data_filename, hough_peaks, errors);
 }
@@ -149,7 +149,7 @@ void Filesystem_data_source_descriptor::read_hough_peaks_text(std::list<Hough_pe
  */
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_bin();
   FILE *fp = file_utils::open_file_read(data_filename, errors);
   Image *image = nullptr;
@@ -167,7 +167,7 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
  */
 Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::JPEG);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::JPEG);
   std::string data_filename = wb_filename.to_jpeg();
   return Image::read_jpeg(data_filename, errors);
 }
@@ -179,7 +179,7 @@ Image *Filesystem_data_source_descriptor::read_image_jpeg(Errors &errors) {
  */
 Image *Filesystem_data_source_descriptor::read_image_text(Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_text();
   return Image::read_text(data_filename, errors);
 }
@@ -237,7 +237,7 @@ std::string Filesystem_data_source_descriptor::to_string() {
  */
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_hist();
   FILE *fp = file_utils::open_file_write(data_filename, errors);
   if (fp) {
@@ -253,7 +253,7 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
  */
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_hist_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   histogram->write_text(path, "\t", errors);
@@ -266,7 +266,7 @@ void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogra
  */
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_hough();
   FILE *fp = file_utils::open_file_write(data_filename, errors);
   if (fp) {
@@ -282,7 +282,7 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
  */
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_hough_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
@@ -298,7 +298,7 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
  */
 void Filesystem_data_source_descriptor::write_hough_peaks(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_peaks();
     Hough_peak::write(data_filename, hough_peaks, errors);
 }
@@ -312,7 +312,7 @@ void Filesystem_data_source_descriptor::write_hough_peaks(std::list<Hough_peak> 
  */
 void Filesystem_data_source_descriptor::write_hough_peaks_text(std::list<Hough_peak> &hough_peaks, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::string data_filename = wb_filename.to_peaks_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
@@ -323,7 +323,7 @@ void Filesystem_data_source_descriptor::write_hough_peaks_text(std::list<Hough_p
 
 void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_bin();
   FILE *fp = file_utils::open_file_write(data_filename, errors);
   if (fp) {
@@ -339,7 +339,7 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
  */
 void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_text();
   std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
   if (ofs) {
@@ -355,7 +355,7 @@ void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &e
  */
 void Filesystem_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {
   std::string path = to_path_noext();
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
   std::string data_filename = wb_filename.to_jpeg();
   image->write_jpeg(data_filename, errors);
 }

@@ -401,7 +401,7 @@ void Histogram::write(FILE *fp, Errors &errors) const {
  * Write text gnuplot script
  * @param wb_filename
  */
-void Histogram::write_gp_script(const Wb_filename &wb_filename) {
+void Histogram::write_gp_script(const WB_filename &wb_filename) {
   std::string script_filename = wb_filename.to_hist_script();
   std::string data_filename = wb_filename.to_hist_text();
   std::ofstream ofs(script_filename, std::ofstream::out);
@@ -418,7 +418,7 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
  * @param errors
  */
 void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
-  Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+  WB_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
   std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
   if (!ofs) {
     errors.add("Histogram::write_text", "", "invalid file '" + path + "'");

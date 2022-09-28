@@ -34,9 +34,9 @@ int main(int argc, char **argv) {
       wb_utils::error_exit("invalid max-col");
   }
   Errors errors;
-  std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_in_filename(WB_filename::create_wb_filename(in_filename, errors));
   errors.check_exit("invalid in-filename");
-  std::unique_ptr<Wb_filename> wb_out_filename(Wb_filename::create_wb_filename(out_filename, errors));
+  std::unique_ptr<WB_filename> wb_out_filename(WB_filename::create_wb_filename(out_filename, errors));
   errors.check_exit("invalid out-filename");
   Image *in_image = nullptr;
   if (wb_in_filename->is_jpeg()) {

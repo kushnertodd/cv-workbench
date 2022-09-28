@@ -20,11 +20,11 @@ int main(int argc, char **argv) {
   std::string in_pattern_filename = argv[2];
   std::string out_image_filename = argv[3];
   Errors errors;
-  std::unique_ptr<Wb_filename> wb_in_image_filename(Wb_filename::create_wb_filename(in_image_filename, errors));
+  std::unique_ptr<WB_filename> wb_in_image_filename(WB_filename::create_wb_filename(in_image_filename, errors));
   errors.check_exit("invalid in-image");
-  std::unique_ptr<Wb_filename> wb_in_pattern_filename(Wb_filename::create_wb_filename(in_pattern_filename, errors));
+  std::unique_ptr<WB_filename> wb_in_pattern_filename(WB_filename::create_wb_filename(in_pattern_filename, errors));
   errors.check_exit("invalid in-pattern");
-  std::unique_ptr<Wb_filename> wb_out_image_filename(Wb_filename::create_wb_filename(out_image_filename, errors));
+  std::unique_ptr<WB_filename> wb_out_image_filename(WB_filename::create_wb_filename(out_image_filename, errors));
   errors.check_exit("invalid out-filename");
   Image *in_image = nullptr;
   if (wb_in_image_filename->is_jpeg()) {

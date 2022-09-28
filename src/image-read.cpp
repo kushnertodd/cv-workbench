@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     wb_utils::error_exit("usage: image-read filename");
   std::string filename = argv[1];
   Errors errors;
-  std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(filename, errors));
+  std::unique_ptr<WB_filename> wb_filename(WB_filename::create_wb_filename(filename, errors));
   std::string in_filename = wb_filename->to_text();
   Image *image = Image::read_text(in_filename, errors);
   errors.check_exit("unable to read " + in_filename);

@@ -28,33 +28,33 @@ int main(int argc, char **argv) {
     wb_utils::error_exit("invalid thickness");
 
   Errors errors;
-  std::unique_ptr<Wb_filename> wb_cross_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_cross_filename(WB_filename::create_wb_filename(in_filename, errors));
   errors.check_exit("invalid filename " + in_filename);
   wb_cross_filename->add_suffix(".cross");
   Kernel *cross_structuring_element = Morphology::create_structuring_element_cross(rows, cols, thickness);
   cross_structuring_element->write_text(wb_cross_filename->to_text(), "\t", errors);
   errors.check_exit("cross structuring element write failed");
 
-  std::unique_ptr<Wb_filename> wb_rectangle_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_rectangle_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_rectangle_filename->add_suffix(".rectangle");
   Kernel *rectangle_structuring_element = Morphology::create_structuring_element_rectangle(rows, cols);
   rectangle_structuring_element->write_text(wb_rectangle_filename->to_text(), "\t", errors);
   errors.check_exit("rectangle structuring element write failed");
 
-  std::unique_ptr<Wb_filename> wb_ellipse_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_ellipse_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_ellipse_filename->add_suffix(".ellipse");
   Kernel *ellipse_structuring_element = Morphology::create_structuring_element_ellipse(rows, cols);
   ellipse_structuring_element->write_text(wb_ellipse_filename->to_text(), "\t", errors);
   errors.check_exit("ellipse structuring element write failed");
 
-  std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_in_filename(WB_filename::create_wb_filename(in_filename, errors));
   errors.check_exit("invalid in-filename");
   Image *in_image = Image::read_jpeg(wb_in_filename->to_jpeg(), errors);
   errors.check_exit("cannot read in-filename");
   in_image->write_text(wb_in_filename->to_text(), "\t", errors);
   errors.check_exit("cannot write text in-filename");
 
-  std::unique_ptr<Wb_filename> wb_dilate_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_dilate_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_dilate_filename->add_suffix(".dilate");
   std::unique_ptr<Image>
       dilate_image(Morphology::dilate(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
   dilate_image->write_jpeg(wb_dilate_filename->to_jpeg(), errors);
   errors.check_exit("dilate image write failed");
 
-  std::unique_ptr<Wb_filename> wb_erode_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_erode_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_erode_filename->add_suffix(".erode");
   std::unique_ptr<Image>
       erode_image(Morphology::erode(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   erode_image->write_jpeg(wb_erode_filename->to_jpeg(), errors);
   errors.check_exit("erode image write failed");
 
-  std::unique_ptr<Wb_filename> wb_black_hat_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_black_hat_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_black_hat_filename->add_suffix(".black_hat");
   std::unique_ptr<Image>
       black_hat_image(Morphology::black_hat(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
   black_hat_image->write_jpeg(wb_black_hat_filename->to_jpeg(), errors);
   errors.check_exit("black hat image write failed");
 
-  std::unique_ptr<Wb_filename> wb_close_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_close_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_close_filename->add_suffix(".close");
   std::unique_ptr<Image>
       close_image(Morphology::close(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
   close_image->write_jpeg(wb_close_filename->to_jpeg(), errors);
   errors.check_exit("close image write failed");
 
-  std::unique_ptr<Wb_filename> wb_gradient_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_gradient_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_gradient_filename->add_suffix(".gradient");
   std::unique_ptr<Image>
       gradient_image(Morphology::gradient(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
   gradient_image->write_jpeg(wb_gradient_filename->to_jpeg(), errors);
   errors.check_exit("gradient image write failed");
 
-  std::unique_ptr<Wb_filename> wb_open_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_open_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_open_filename->add_suffix(".open");
   std::unique_ptr<Image>
       open_image(Morphology::open(in_image, WB_morphology_types::Structuring_element_type::CROSS,
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
   open_image->write_jpeg(wb_open_filename->to_jpeg(), errors);
   errors.check_exit("open image write failed");
 
-  std::unique_ptr<Wb_filename> wb_top_hat_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_top_hat_filename(WB_filename::create_wb_filename(in_filename, errors));
   wb_top_hat_filename->add_suffix(".top_hat");
   std::unique_ptr<Image>
       top_hat_image(Morphology::top_hat(in_image, WB_morphology_types::Structuring_element_type::CROSS,

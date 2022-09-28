@@ -90,8 +90,8 @@ PROGRAMS = \
   image-mask \
   image-mean \
   image-morph \
-  image-read \
-  image-trig \
+  image-read 
+#  image-trig \
 
 %.o: %.cpp %.hpp
 	$(CXX) -c $< -o $@ $(CXXFLAGS)
@@ -125,8 +125,8 @@ image-morph: image-morph.o $(SRCOBJS)
 image-read: image-read.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
-image-trig: image-trig.o theta.o
-	$(CXX) $< -o $@ theta.o $(CXXFLAGS) 
+#image-trig: image-trig.o theta.o
+#	$(CXX) $< -o $@ theta.o $(CXXFLAGS) 
 
 cv-workbench : cv-workbench.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
@@ -628,7 +628,8 @@ wb_filename.o: wb_image_depth.hpp wb_repository_type.hpp wb_defs.hpp
 wb_filename.o: wb_filename.hpp
 wb_image_depth.o: wb_image_depth.hpp
 wb_json_utils.o: wb_json_utils.hpp errors.hpp
-wb_linear_config_mask.o: wb_linear_config_mask.hpp wb_config_mask.hpp
+wb_linear_config_mask.o: point.hpp wb_linear_config_mask.hpp
+wb_linear_config_mask.o: wb_config_mask.hpp
 wb_log.o: errors.hpp wb_log.hpp
 wb_morphology_types.o: wb_morphology_types.hpp
 wb_repository_type.o: wb_repository_type.hpp

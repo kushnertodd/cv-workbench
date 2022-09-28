@@ -10,7 +10,7 @@
 #include "errors.hpp"
 #include "wb_defs.hpp"
 
-class Wb_filename {
+class WB_filename {
  public:
   std::string filename{};
   std::string root{};
@@ -19,15 +19,15 @@ class Wb_filename {
   WB_data_format::Data_format format{};
   bool from_filename{};
 
-  Wb_filename();
-  Wb_filename(std::string m_filename,
+  WB_filename();
+  WB_filename(std::string m_filename,
               std::string m_root,
               std::string m_ext,
               //WB_data_type::Data_type m_type,
               WB_data_format::Data_format m_format,
               bool m_from_filename = false);
   void add_suffix(const std::string &suffix);
-  static Wb_filename *create_wb_filename(const std::string &m_filename, Errors &errors);
+  static WB_filename *create_wb_filename(const std::string &m_filename, Errors &errors);
 
   bool is_bin() const;
   bool is_jpeg() const;

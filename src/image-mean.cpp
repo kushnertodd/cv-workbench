@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
       wb_utils::error_exit("usage: image-mean in-filename");
     std::string in_filename = argv[1];
     Errors errors;
-    std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(in_filename, errors));
+    std::unique_ptr<WB_filename> wb_filename(WB_filename::create_wb_filename(in_filename, errors));
     errors.check_exit("invalid in-filename");
     Image *image = nullptr;
     if (wb_filename->is_jpeg()) {

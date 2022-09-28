@@ -30,9 +30,9 @@ int main(int argc, char **argv) {
   if (!wb_utils::string_to_double(lower_out_str, lower_out)) errors.add("", "", "invalid lower_in: " + lower_out_str);
   if (!wb_utils::string_to_double(upper_out_str, upper_out)) errors.add("", "", "invalid lower_in: " + upper_out_str);
   errors.check_exit("invalid arguments");
-  std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(in_filename, errors));
+  std::unique_ptr<WB_filename> wb_in_filename(WB_filename::create_wb_filename(in_filename, errors));
   errors.check_exit("invalid in-filename");
-  std::unique_ptr<Wb_filename> wb_out_filename(Wb_filename::create_wb_filename(out_filename, errors));
+  std::unique_ptr<WB_filename> wb_out_filename(WB_filename::create_wb_filename(out_filename, errors));
   errors.check_exit("invalid out-filename");
   Image *in_image = nullptr;
   if (wb_in_filename->is_jpeg()) {

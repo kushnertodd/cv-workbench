@@ -67,7 +67,7 @@ class Histogram {
   void update_bin_count_bounds();
   void write(std::string &path, Errors &errors) const;
   void write(FILE *fp, Errors &errors) const;
-  static void write_gp_script(const Wb_filename &wb_filename);
+  static void write_gp_script(const WB_filename &wb_filename);
   void write_text(std::string &path, const std::string &delim, Errors &errors) const;
 };
 
