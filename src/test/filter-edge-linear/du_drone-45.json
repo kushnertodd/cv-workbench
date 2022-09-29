@@ -1,0 +1,81 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-linear",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-linear",
+            "filename": "du_drone"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_drone-linear-45"
+          },
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "du_drone-linear-45"
+          }
+        ],
+        "parameters": {
+          "theta-degrees": "45",
+          "rows": "140",
+          "cols": "9",
+          "height": "120",
+          "width-left": "3",
+          "value-left": "-1",
+          "width-center": "3",
+          "value-center": "0",
+          "width-right": "3",
+          "value-right": "1"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "du_drone-linear-45"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "du_drone-linear-45"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower-in": "2500",
+            "upper-in": "2500",
+            "lower-out": "0",
+            "upper-out": "255"
+        }
+      }
+    ]
+  }
+}

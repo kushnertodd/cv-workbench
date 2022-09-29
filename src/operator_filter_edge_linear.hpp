@@ -2,13 +2,13 @@
 // Created by kushn on 7/23/2022.
 //
 
-#ifndef SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_
-#define SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_
+#ifndef CV_WORKBENCH_SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_
+#define CV_WORKBENCH_SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_
 
 #include "operator.hpp"
 
 /**
- * Image gaussian smooth operator
+ * Linear edge operator
  */
 class Operator_filter_edge_linear : public Operator {
  public:
@@ -21,4 +21,4 @@ class Operator_filter_edge_linear : public Operator {
 
 };
 
-#endif //SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_
+#endif //CV_WORKBENCH_SRC__OPERATOR_FILTER_EDGE_LINEAR_HPP_

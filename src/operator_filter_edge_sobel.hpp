@@ -5,7 +5,7 @@
 #ifndef CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_SOBEL_HPP_
 #define CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_SOBEL_HPP_
 
-#include "wb_defs.hpp"
+//#include "wb_defs.hpp"
 #include "operator.hpp"
 
 /**

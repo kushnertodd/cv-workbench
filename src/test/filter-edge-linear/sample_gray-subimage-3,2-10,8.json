@@ -1,0 +1,37 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "test/reference",
+            "filename": "sample_gray"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 2,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "images",
+            "filename": "sample_gray-subimage-3,2-10,8"
+          }
+        ],
+        "parameters": {
+          "orientation": "0",
+          "min-row": "3",
+          "min-col": "2",
+          "max-row": "10",
+          "max-col": "8"
+        }
+      }
+    ]
+  }
+}

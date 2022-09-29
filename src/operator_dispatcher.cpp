@@ -4,6 +4,7 @@
 
 #include "operator_filter_edge_kirsch.hpp"
 #include "operator_filter_edge_laplacian.hpp"
+#include "operator_filter_edge_linear.hpp"
 #include "operator_filter_edge_prewitt.hpp"
 #include "operator_filter_edge_roberts.hpp"
 #include "operator_filter_edge_sobel.hpp"
@@ -34,6 +35,7 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   // Creator explicitly creates classes according to type
   if (operator_name == "filter-edge-kirsch") pOperator = new Operator_filter_edge_kirsch();
   else if (operator_name == "filter-edge-laplacian") pOperator = new Operator_filter_edge_laplacian();
+  else if (operator_name == "filter-edge-linear") pOperator = new Operator_filter_edge_linear();
   else if (operator_name == "filter-edge-prewitt") pOperator = new Operator_filter_edge_prewitt();
   else if (operator_name == "filter-edge-roberts") pOperator = new Operator_filter_edge_roberts();
   else if (operator_name == "filter-edge-sobel") pOperator = new Operator_filter_edge_sobel();

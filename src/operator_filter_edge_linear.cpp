@@ -28,9 +28,15 @@ void Operator_filter_edge_linear::run(std::list<Data_source_descriptor *> &input
     errors.add("Operator_filter_edge_linear::run", "", "too many input data sources");
   if (output_data_stores.empty())
     errors.add("Operator_filter_edge_linear::run", "", "output data source required");
-  int theta_degrees;
+  int rows;
   Operator_utils::get_int_parameter("Operator_filter_edge_linear::run",
-                                    operator_parameters, "theta-degrees", theta_degrees, errors);
+                                    operator_parameters, "rows", rows, errors);
+  int cols;
+  Operator_utils::get_int_parameter("Operator_filter_edge_linear::run",
+                                    operator_parameters, "cols", cols, errors);
+  int theta_degrees = 0;
+  Operator_utils::get_int_parameter("Operator_filter_edge_linear::run",
+                                    operator_parameters, "theta-degrees", theta_degrees, errors, true);
   int height;
   Operator_utils::get_int_parameter("Operator_filter_edge_linear::run",
                                     operator_parameters, "height", height, errors);
@@ -66,7 +72,7 @@ void Operator_filter_edge_linear::run(std::list<Data_source_descriptor *> &input
                                               errors);
     if (!errors.has_error()) {
       std::unique_ptr<Kernel> linear_mask(
-          Kernel::create_linear_mask(input->get_rows(), input->get_cols(),
+          Kernel::create_linear_mask(rows, cols,
                                      theta_degrees,
                                      height,
                                      width_left,

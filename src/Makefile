@@ -42,6 +42,7 @@ SRCOBJS :=  \
   operator_dispatcher.o \
   operator_filter_edge_kirsch.o \
   operator_filter_edge_laplacian.o \
+  operator_filter_edge_linear.o \
   operator_filter_edge_prewitt.o \
   operator_filter_edge_roberts.o \
   operator_filter_edge_sobel.o \
