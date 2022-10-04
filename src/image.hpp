@@ -53,11 +53,11 @@ class Image {
   static Image *clone(Image *image, WB_image_depth::Image_depth depth, Errors &errors);
   static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
   void copy(Image *image, Errors &errors) const;
-  void draw_line_segment(const Line_segment &line_segment, double value, int component = 0) const;
-  void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component = 0) const;
-  void draw_line_segments(std::list<Line_segment> &line_segments, double value, int component = 0) const;
-  void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component = 0) const;
-  void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component = 0) const;
+  void draw_line_segment( Line_segment &line_segment, double value, int component = 0) ;
+  void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component = 0) ;
+  void draw_line_segments(std::list<Line_segment> &line_segments, double value, int component = 0) ;
+  void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component = 0) ;
+  void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component = 0) ;
   // TODO: add component
   double get(int row, int col, int component = 0) const;
   double get(Point &point, int component = 0) const;
@@ -88,11 +88,6 @@ class Image {
   static Image *read_text(std::ifstream &ifs, Errors &errors);
   void reset_subimage();
   int row_col_to_index(int row, int col, int component = 0) const;
-  void set_subimage(int min_row,
-                    int min_col,
-                    int max_row,
-                    int max_col,
-                    Errors &errors);
   static Image *scale_image(Image *image, double lower_in,
                             double upper_in, double lower_out,
                             double upper_out, WB_image_depth::Image_depth depth);
@@ -104,6 +99,11 @@ class Image {
   void set_8U(int row, int col, pixel_8U value, int component = 0) const;
   void set_32F(int row, int col, pixel_32F value, int component = 0) const;
   void set_32S(int row, int col, pixel_32S value, int component = 0) const;
+  void set_subimage(int min_row,
+                    int min_col,
+                    int max_row,
+                    int max_col,
+                    Errors &errors);
   static Image *subtract(Image *src_image, Image *subtract_image, Errors &errors);
   Image *to_rgb(int components) const;
   std::string to_string(const std::string &prefix = "") const;

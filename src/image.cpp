@@ -298,23 +298,31 @@ void Image::copy(Image *image, Errors &errors) const {
   }
 }
 
-void Image::draw_line_segment(const Line_segment &line_segment, double value, int component) const {
-  for (Point point: line_segment.line_points)
+void Image::draw_line_segment( Line_segment &line_segment, double value, int component)  {
+  for (auto iter = line_segment.begin();
+       iter != line_segment.end();
+       iter++) {
+    Point point = *iter;
     set(point, value, component);
+  }
 }
 
-void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value, int component) const {
+void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value, int component)  {
   Line_segment line_segment(row1, col1, row2, col2);
-  for (Point point: line_segment.line_points)
+  for (auto iter = line_segment.begin();
+       iter != line_segment.end();
+       iter++) {
+    Point point = *iter;
     set(point, value, component);
+  }
 }
 
-void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value, int component) const {
-  for (const Line_segment &line_segment: line_segments)
+void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value, int component)  {
+  for ( Line_segment &line_segment: line_segments)
     draw_line_segment(line_segment, value, component);
 }
 
-void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value, int component) const {
+void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value, int component)  {
   Line_segment line_segment1(row1, col1, row1, col2);
   Line_segment line_segment2(row1, col2, row2, col2);
   Line_segment line_segment3(row2, col2, row2, col1);
@@ -325,7 +333,7 @@ void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value,
   draw_line_segment(line_segment4, value, component);
 }
 
-void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component) const {
+void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component)  {
   int row_min = std::min(row1, row2);
   int col_min = std::min(col1, col2);
   int row_max = std::max(row1, row2);

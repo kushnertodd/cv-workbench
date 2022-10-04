@@ -13,6 +13,7 @@ image-copy
 image-corr
 image-create
 image-dump
+image-features
 image-info
 image-map
 image-mask
