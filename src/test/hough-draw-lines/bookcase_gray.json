@@ -1,0 +1,78 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-draw-lines",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "bookcase_gray-sobel-0"
+          },
+          {
+            "id": 2,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/hough-peak-detect",
+            "filename": "bookcase_gray-sobel-0.hough_peaks"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-0"
+          }
+        ],
+        "parameters": {
+          "out-component": "2",
+          "pixel-value": "255"
+        }
+      },
+      {
+        "id": 1,
+        "operator": "hough-draw-lines",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/filter-edge-sobel",
+            "filename": "bookcase_gray-sobel-90"
+          },
+          {
+            "id": 2,
+            "type": "hough peaks",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": "test/hough-peak-detect",
+            "filename": "bookcase_gray-sobel-90.hough_peaks"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-90"
+          }
+        ],
+        "parameters": {
+          "out-component": "2",
+          "pixel_value": "255"
+        }
+      }
+    ]
+  }
+}

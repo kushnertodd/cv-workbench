@@ -1,0 +1,122 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "bookcase_gray"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-90"
+          }
+        ],
+        "parameters": {
+          "orientation": "90"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-90"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-90"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower-in": "-60",
+            "upper-in": "60",
+            "lower-out": "0",
+            "upper-out": "255"
+        }
+      },
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "test/reference",
+            "filename": "bookcase_gray"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-0"
+          }
+        ],
+        "parameters": {
+          "orientation": "0"
+        }
+      },
+      {
+        "id": 2,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-0"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": "images",
+            "filename": "bookcase_gray-sobel-0"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U",
+            "lower-in": "-60",
+            "upper-in": "60",
+            "lower-out": "0",
+            "upper-out": "255"
+        }
+      }
+    ]
+  }
+}
