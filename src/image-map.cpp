@@ -1,4 +1,4 @@
-image-map.cpp#include <memory>
+#include <memory>
 #include "errors.hpp"
 #include "image.hpp"
 #include "wb_filename.hpp"
