@@ -1,4 +1,29 @@
 ==============================================
+cd filter-edge-linear
+sh filter-edge-linear/test-run-dir.sh
+here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear
+rm -f ../../images/du_drone.jpg
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone-45.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_drone_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_map_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/du_map_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/keyboard_pixel_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/keyboard_pixel_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/road-straight_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/road-straight_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/road_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/road_gray-sobel-90.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/sample_gray-subimage-1,1-10,6.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/sample_gray-subimage-3,2-10,8.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/square45-90_gray-sobel-0.json
+./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/filter-edge-linear/square45-90_gray-sobel-90.json
+$ cmp du_drone.jpg ../../images/du_drone.jpg
+cmp: ../../images/du_drone.jpg: No such file or directory
+==============================================
 cd hough-draw-line
 sh hough-draw-line/test-run-dir.sh
 here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-line
@@ -76,291 +101,6 @@ $ cmp square45-90_gray-609x473-sobel-90_line_0_30.jpg ../../images/square45-90_g
 $ cmp square45-90_gray-609x473-sobel-90_line_45_-87.jpg ../../images/square45-90_gray-609x473-sobel-90_line_45_-87.jpg
 cmp: ../../images/square45-90_gray-609x473-sobel-90_line_45_-87.jpg: No such file or directory
 ==============================================
-cd hough-draw-lines
-sh hough-draw-lines/test-run-dir.sh
-here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines
-rm -f ../../images/du_drone_gray-151x118-sobel-0.jpg
-rm -f ../../images/du_drone_gray-151x118-sobel-90.jpg
-rm -f ../../images/du_map_gray-289x247-sobel-0.jpg
-rm -f ../../images/du_map_gray-289x247-sobel-90.jpg
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.jpg
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.jpg
-rm -f ../../images/road-straight_gray-180x280-sobel-0.jpg
-rm -f ../../images/road-straight_gray-180x280-sobel-90.jpg
-rm -f ../../images/road_gray-194x259-sobel-0.jpg
-rm -f ../../images/road_gray-194x259-sobel-90.jpg
-rm -f ../../images/square45-90_gray-609x473-sobel-0.jpg
-rm -f ../../images/square45-90_gray-609x473-sobel-90.jpg
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/du_drone_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/du_map_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/keyboard_pixel_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/road-straight_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/road_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-draw-lines/square45-90_gray.json
-$ cmp du_drone_gray-151x118-sobel-0.jpg ../../images/du_drone_gray-151x118-sobel-0.jpg
-$ cmp du_drone_gray-151x118-sobel-90.jpg ../../images/du_drone_gray-151x118-sobel-90.jpg
-du_drone_gray-151x118-sobel-90.jpg ../../images/du_drone_gray-151x118-sobel-90.jpg differ: byte 1483, line 11
-$ cmp du_map_gray-289x247-sobel-0.jpg ../../images/du_map_gray-289x247-sobel-0.jpg
-$ cmp du_map_gray-289x247-sobel-90.jpg ../../images/du_map_gray-289x247-sobel-90.jpg
-du_map_gray-289x247-sobel-90.jpg ../../images/du_map_gray-289x247-sobel-90.jpg differ: byte 7247, line 30
-$ cmp keyboard_pixel_gray-250x375-sobel-0.jpg ../../images/keyboard_pixel_gray-250x375-sobel-0.jpg
-$ cmp keyboard_pixel_gray-250x375-sobel-90.jpg ../../images/keyboard_pixel_gray-250x375-sobel-90.jpg
-keyboard_pixel_gray-250x375-sobel-90.jpg ../../images/keyboard_pixel_gray-250x375-sobel-90.jpg differ: byte 419, line 3
-$ cmp road-straight_gray-180x280-sobel-0.jpg ../../images/road-straight_gray-180x280-sobel-0.jpg
-road-straight_gray-180x280-sobel-0.jpg ../../images/road-straight_gray-180x280-sobel-0.jpg differ: byte 350, line 3
-$ cmp road-straight_gray-180x280-sobel-90.jpg ../../images/road-straight_gray-180x280-sobel-90.jpg
-road-straight_gray-180x280-sobel-90.jpg ../../images/road-straight_gray-180x280-sobel-90.jpg differ: byte 350, line 3
-$ cmp road_gray-194x259-sobel-0.jpg ../../images/road_gray-194x259-sobel-0.jpg
-$ cmp road_gray-194x259-sobel-90.jpg ../../images/road_gray-194x259-sobel-90.jpg
-road_gray-194x259-sobel-90.jpg ../../images/road_gray-194x259-sobel-90.jpg differ: byte 329, line 3
-$ cmp square45-90_gray-609x473-sobel-0.jpg ../../images/square45-90_gray-609x473-sobel-0.jpg
-$ cmp square45-90_gray-609x473-sobel-90.jpg ../../images/square45-90_gray-609x473-sobel-90.jpg
-square45-90_gray-609x473-sobel-90.jpg ../../images/square45-90_gray-609x473-sobel-90.jpg differ: byte 333, line 3
-==============================================
-cd hough-image-create
-sh hough-image-create/test-run-dir.sh
-here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create
-rm -f ../../images/du_drone_gray-151x118-sobel-0.hough.bin
-rm -f ../../images/du_drone_gray-151x118-sobel-90.hough.bin
-rm -f ../../images/du_map_gray-289x247-sobel-0.hough.bin
-rm -f ../../images/du_map_gray-289x247-sobel-90.hough.bin
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.bin
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.bin
-rm -f ../../images/line0_gray.hough.bin
-rm -f ../../images/line15_gray.hough.bin
-rm -f ../../images/line30_gray.hough.bin
-rm -f ../../images/line45_gray.hough.bin
-rm -f ../../images/line90_gray.hough.bin
-rm -f ../../images/line_gray-5x5.hough.bin
-rm -f ../../images/point_gray-5x5.hough.bin
-rm -f ../../images/rectangle-filled-3x3_gray.hough.bin
-rm -f ../../images/rectangle-filled-5x5-3x3_gray.hough.bin
-rm -f ../../images/rectangle_gray-5x5.hough.bin
-rm -f ../../images/road-straight_gray-180x280-sobel-0.hough.bin
-rm -f ../../images/road-straight_gray-180x280-sobel-90.hough.bin
-rm -f ../../images/road_gray-194x259-sobel-0.hough.bin
-rm -f ../../images/road_gray-194x259-sobel-90.hough.bin
-rm -f ../../images/sample_gray.hough.bin
-rm -f ../../images/sample_hough.hough.bin
-rm -f ../../images/square45-90_gray-609x473-sobel-0.hough.bin
-rm -f ../../images/square45-90_gray-609x473-sobel-90.hough.bin
-rm -f ../../images/du_drone_gray-151x118-sobel-0.hough.txt
-rm -f ../../images/du_drone_gray-151x118-sobel-90.hough.txt
-rm -f ../../images/du_map_gray-289x247-sobel-0.hough.txt
-rm -f ../../images/du_map_gray-289x247-sobel-90.hough.txt
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.txt
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.txt
-rm -f ../../images/line0_gray.hough.txt
-rm -f ../../images/line15_gray.hough.txt
-rm -f ../../images/line30_gray.hough.txt
-rm -f ../../images/line45_gray.hough.txt
-rm -f ../../images/line90_gray.hough.txt
-rm -f ../../images/line_gray-5x5.hough.txt
-rm -f ../../images/point_gray-5x5.hough.txt
-rm -f ../../images/rectangle-filled-3x3_gray.hough.txt
-rm -f ../../images/rectangle-filled-5x5-3x3_gray.hough.txt
-rm -f ../../images/rectangle_gray-5x5.hough.txt
-rm -f ../../images/road-straight_gray-180x280-sobel-0.hough.txt
-rm -f ../../images/road-straight_gray-180x280-sobel-90.hough.txt
-rm -f ../../images/road_gray-194x259-sobel-0.hough.txt
-rm -f ../../images/road_gray-194x259-sobel-90.hough.txt
-rm -f ../../images/sample_gray.hough.txt
-rm -f ../../images/sample_hough.hough.txt
-rm -f ../../images/square45-90_gray-609x473-sobel-0.hough.txt
-rm -f ../../images/square45-90_gray-609x473-sobel-90.hough.txt
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/du_drone_gray-sobel.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/du_map_gray-sobel.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/keyboard_pixel_gray-sobel.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/line0_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/road-straight_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/road_gray-sobel.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/sample_hough.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/samples.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-image-create/square45-90_gray-sobel.json
-$ cmp du_drone_gray-151x118-sobel-0.hough.bin ../../images/du_drone_gray-151x118-sobel-0.hough.bin
-du_drone_gray-151x118-sobel-0.hough.bin ../../images/du_drone_gray-151x118-sobel-0.hough.bin differ: byte 101, line 1
-$ cmp du_drone_gray-151x118-sobel-90.hough.bin ../../images/du_drone_gray-151x118-sobel-90.hough.bin
-du_drone_gray-151x118-sobel-90.hough.bin ../../images/du_drone_gray-151x118-sobel-90.hough.bin differ: byte 113, line 1
-$ cmp du_map_gray-289x247-sobel-0.hough.bin ../../images/du_map_gray-289x247-sobel-0.hough.bin
-du_map_gray-289x247-sobel-0.hough.bin ../../images/du_map_gray-289x247-sobel-0.hough.bin differ: byte 1717, line 9
-$ cmp du_map_gray-289x247-sobel-90.hough.bin ../../images/du_map_gray-289x247-sobel-90.hough.bin
-du_map_gray-289x247-sobel-90.hough.bin ../../images/du_map_gray-289x247-sobel-90.hough.bin differ: byte 1681, line 4
-$ cmp keyboard_pixel_gray-250x375-sobel-0.hough.bin ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.bin
-keyboard_pixel_gray-250x375-sobel-0.hough.bin ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.bin differ: byte 505, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-90.hough.bin ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.bin
-keyboard_pixel_gray-250x375-sobel-90.hough.bin ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.bin differ: byte 421, line 1
-$ cmp line0_gray.hough.bin ../../images/line0_gray.hough.bin
-line0_gray.hough.bin ../../images/line0_gray.hough.bin differ: byte 61, line 1
-$ cmp line15_gray.hough.bin ../../images/line15_gray.hough.bin
-line15_gray.hough.bin ../../images/line15_gray.hough.bin differ: byte 1, line 1
-$ cmp line30_gray.hough.bin ../../images/line30_gray.hough.bin
-line30_gray.hough.bin ../../images/line30_gray.hough.bin differ: byte 1, line 1
-$ cmp line45_gray.hough.bin ../../images/line45_gray.hough.bin
-line45_gray.hough.bin ../../images/line45_gray.hough.bin differ: byte 1, line 1
-$ cmp line90_gray.hough.bin ../../images/line90_gray.hough.bin
-line90_gray.hough.bin ../../images/line90_gray.hough.bin differ: byte 1, line 1
-$ cmp line_gray-5x5.hough.bin ../../images/line_gray-5x5.hough.bin
-line_gray-5x5.hough.bin ../../images/line_gray-5x5.hough.bin differ: byte 1, line 1
-$ cmp point_gray-5x5.hough.bin ../../images/point_gray-5x5.hough.bin
-point_gray-5x5.hough.bin ../../images/point_gray-5x5.hough.bin differ: byte 1, line 1
-$ cmp rectangle-filled-3x3_gray.hough.bin ../../images/rectangle-filled-3x3_gray.hough.bin
-rectangle-filled-3x3_gray.hough.bin ../../images/rectangle-filled-3x3_gray.hough.bin differ: byte 1, line 1
-$ cmp rectangle-filled-5x5-3x3_gray.hough.bin ../../images/rectangle-filled-5x5-3x3_gray.hough.bin
-rectangle-filled-5x5-3x3_gray.hough.bin ../../images/rectangle-filled-5x5-3x3_gray.hough.bin differ: byte 1, line 1
-$ cmp rectangle_gray-5x5.hough.bin ../../images/rectangle_gray-5x5.hough.bin
-rectangle_gray-5x5.hough.bin ../../images/rectangle_gray-5x5.hough.bin differ: byte 1, line 1
-$ cmp road-straight_gray-180x280-sobel-0.hough.bin ../../images/road-straight_gray-180x280-sobel-0.hough.bin
-road-straight_gray-180x280-sobel-0.hough.bin ../../images/road-straight_gray-180x280-sobel-0.hough.bin differ: byte 125, line 1
-$ cmp road-straight_gray-180x280-sobel-90.hough.bin ../../images/road-straight_gray-180x280-sobel-90.hough.bin
-road-straight_gray-180x280-sobel-90.hough.bin ../../images/road-straight_gray-180x280-sobel-90.hough.bin differ: byte 125, line 1
-$ cmp road_gray-194x259-sobel-0.hough.bin ../../images/road_gray-194x259-sobel-0.hough.bin
-road_gray-194x259-sobel-0.hough.bin ../../images/road_gray-194x259-sobel-0.hough.bin differ: byte 149, line 1
-$ cmp road_gray-194x259-sobel-90.hough.bin ../../images/road_gray-194x259-sobel-90.hough.bin
-road_gray-194x259-sobel-90.hough.bin ../../images/road_gray-194x259-sobel-90.hough.bin differ: byte 149, line 1
-$ cmp sample_gray.hough.bin ../../images/sample_gray.hough.bin
-sample_gray.hough.bin ../../images/sample_gray.hough.bin differ: byte 1, line 1
-$ cmp sample_hough.hough.bin ../../images/sample_hough.hough.bin
-sample_hough.hough.bin ../../images/sample_hough.hough.bin differ: byte 1, line 1
-$ cmp square45-90_gray-609x473-sobel-0.hough.bin ../../images/square45-90_gray-609x473-sobel-0.hough.bin
-square45-90_gray-609x473-sobel-0.hough.bin ../../images/square45-90_gray-609x473-sobel-0.hough.bin differ: byte 1, line 1
-$ cmp square45-90_gray-609x473-sobel-90.hough.bin ../../images/square45-90_gray-609x473-sobel-90.hough.bin
-square45-90_gray-609x473-sobel-90.hough.bin ../../images/square45-90_gray-609x473-sobel-90.hough.bin differ: byte 1, line 1
-$ cmp du_drone_gray-151x118-sobel-0.hough.txt ../../images/du_drone_gray-151x118-sobel-0.hough.txt
-du_drone_gray-151x118-sobel-0.hough.txt ../../images/du_drone_gray-151x118-sobel-0.hough.txt differ: byte 5, line 1
-$ cmp du_drone_gray-151x118-sobel-90.hough.txt ../../images/du_drone_gray-151x118-sobel-90.hough.txt
-du_drone_gray-151x118-sobel-90.hough.txt ../../images/du_drone_gray-151x118-sobel-90.hough.txt differ: byte 5, line 1
-$ cmp du_map_gray-289x247-sobel-0.hough.txt ../../images/du_map_gray-289x247-sobel-0.hough.txt
-du_map_gray-289x247-sobel-0.hough.txt ../../images/du_map_gray-289x247-sobel-0.hough.txt differ: byte 4, line 1
-$ cmp du_map_gray-289x247-sobel-90.hough.txt ../../images/du_map_gray-289x247-sobel-90.hough.txt
-du_map_gray-289x247-sobel-90.hough.txt ../../images/du_map_gray-289x247-sobel-90.hough.txt differ: byte 4, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-0.hough.txt ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.txt
-keyboard_pixel_gray-250x375-sobel-0.hough.txt ../../images/keyboard_pixel_gray-250x375-sobel-0.hough.txt differ: byte 5, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-90.hough.txt ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.txt
-keyboard_pixel_gray-250x375-sobel-90.hough.txt ../../images/keyboard_pixel_gray-250x375-sobel-90.hough.txt differ: byte 5, line 1
-$ cmp line0_gray.hough.txt ../../images/line0_gray.hough.txt
-line0_gray.hough.txt ../../images/line0_gray.hough.txt differ: byte 5, line 1
-$ cmp line15_gray.hough.txt ../../images/line15_gray.hough.txt
-line15_gray.hough.txt ../../images/line15_gray.hough.txt differ: byte 5, line 1
-$ cmp line30_gray.hough.txt ../../images/line30_gray.hough.txt
-line30_gray.hough.txt ../../images/line30_gray.hough.txt differ: byte 5, line 1
-$ cmp line45_gray.hough.txt ../../images/line45_gray.hough.txt
-line45_gray.hough.txt ../../images/line45_gray.hough.txt differ: byte 5, line 1
-$ cmp line90_gray.hough.txt ../../images/line90_gray.hough.txt
-line90_gray.hough.txt ../../images/line90_gray.hough.txt differ: byte 5, line 1
-$ cmp line_gray-5x5.hough.txt ../../images/line_gray-5x5.hough.txt
-line_gray-5x5.hough.txt ../../images/line_gray-5x5.hough.txt differ: byte 4, line 1
-$ cmp point_gray-5x5.hough.txt ../../images/point_gray-5x5.hough.txt
-point_gray-5x5.hough.txt ../../images/point_gray-5x5.hough.txt differ: byte 4, line 1
-$ cmp rectangle-filled-3x3_gray.hough.txt ../../images/rectangle-filled-3x3_gray.hough.txt
-rectangle-filled-3x3_gray.hough.txt ../../images/rectangle-filled-3x3_gray.hough.txt differ: byte 3, line 1
-$ cmp rectangle-filled-5x5-3x3_gray.hough.txt ../../images/rectangle-filled-5x5-3x3_gray.hough.txt
-rectangle-filled-5x5-3x3_gray.hough.txt ../../images/rectangle-filled-5x5-3x3_gray.hough.txt differ: byte 4, line 1
-$ cmp rectangle_gray-5x5.hough.txt ../../images/rectangle_gray-5x5.hough.txt
-rectangle_gray-5x5.hough.txt ../../images/rectangle_gray-5x5.hough.txt differ: byte 4, line 1
-$ cmp road-straight_gray-180x280-sobel-0.hough.txt ../../images/road-straight_gray-180x280-sobel-0.hough.txt
-road-straight_gray-180x280-sobel-0.hough.txt ../../images/road-straight_gray-180x280-sobel-0.hough.txt differ: byte 5, line 1
-$ cmp road-straight_gray-180x280-sobel-90.hough.txt ../../images/road-straight_gray-180x280-sobel-90.hough.txt
-road-straight_gray-180x280-sobel-90.hough.txt ../../images/road-straight_gray-180x280-sobel-90.hough.txt differ: byte 5, line 1
-$ cmp road_gray-194x259-sobel-0.hough.txt ../../images/road_gray-194x259-sobel-0.hough.txt
-road_gray-194x259-sobel-0.hough.txt ../../images/road_gray-194x259-sobel-0.hough.txt differ: byte 6, line 1
-$ cmp road_gray-194x259-sobel-90.hough.txt ../../images/road_gray-194x259-sobel-90.hough.txt
-road_gray-194x259-sobel-90.hough.txt ../../images/road_gray-194x259-sobel-90.hough.txt differ: byte 6, line 1
-$ cmp sample_gray.hough.txt ../../images/sample_gray.hough.txt
-sample_gray.hough.txt ../../images/sample_gray.hough.txt differ: byte 3, line 1
-$ cmp sample_hough.hough.txt ../../images/sample_hough.hough.txt
-sample_hough.hough.txt ../../images/sample_hough.hough.txt differ: byte 3, line 1
-$ cmp square45-90_gray-609x473-sobel-0.hough.txt ../../images/square45-90_gray-609x473-sobel-0.hough.txt
-square45-90_gray-609x473-sobel-0.hough.txt ../../images/square45-90_gray-609x473-sobel-0.hough.txt differ: byte 5, line 1
-$ cmp square45-90_gray-609x473-sobel-90.hough.txt ../../images/square45-90_gray-609x473-sobel-90.hough.txt
-square45-90_gray-609x473-sobel-90.hough.txt ../../images/square45-90_gray-609x473-sobel-90.hough.txt differ: byte 5, line 1
-==============================================
-cd hough-peak-detect
-sh hough-peak-detect/test-run-dir.sh
-here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect
-rm -f ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.bin
-rm -f ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.bin
-rm -f ../../images/du_map_gray-289x247-sobel-0.hough_peaks.bin
-rm -f ../../images/du_map_gray-289x247-sobel-90.hough_peaks.bin
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.bin
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.bin
-rm -f ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.bin
-rm -f ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.bin
-rm -f ../../images/road_gray-194x259-sobel-0.hough_peaks.bin
-rm -f ../../images/road_gray-194x259-sobel-90.hough_peaks.bin
-rm -f ../../images/sample_hough.hough_peaks.bin
-rm -f ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.bin
-rm -f ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.bin
-rm -f ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.txt
-rm -f ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.txt
-rm -f ../../images/du_map_gray-289x247-sobel-0.hough_peaks.txt
-rm -f ../../images/du_map_gray-289x247-sobel-90.hough_peaks.txt
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.txt
-rm -f ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.txt
-rm -f ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.txt
-rm -f ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.txt
-rm -f ../../images/road_gray-194x259-sobel-0.hough_peaks.txt
-rm -f ../../images/road_gray-194x259-sobel-90.hough_peaks.txt
-rm -f ../../images/sample_hough.hough_peaks.txt
-rm -f ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.txt
-rm -f ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.txt
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/du_drone_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/du_map_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/keyboard_pixel_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/road-straight_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/road_gray.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/sample_hough.json
-./cv-workbench /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/hough-peak-detect/square45-90_gray-sobel-0.json
-$ cmp du_drone_gray-151x118-sobel-0.hough_peaks.bin ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.bin
-du_drone_gray-151x118-sobel-0.hough_peaks.bin ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp du_drone_gray-151x118-sobel-90.hough_peaks.bin ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.bin
-du_drone_gray-151x118-sobel-90.hough_peaks.bin ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp du_map_gray-289x247-sobel-0.hough_peaks.bin ../../images/du_map_gray-289x247-sobel-0.hough_peaks.bin
-du_map_gray-289x247-sobel-0.hough_peaks.bin ../../images/du_map_gray-289x247-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp du_map_gray-289x247-sobel-90.hough_peaks.bin ../../images/du_map_gray-289x247-sobel-90.hough_peaks.bin
-du_map_gray-289x247-sobel-90.hough_peaks.bin ../../images/du_map_gray-289x247-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-0.hough_peaks.bin ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.bin
-keyboard_pixel_gray-250x375-sobel-0.hough_peaks.bin ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-90.hough_peaks.bin ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.bin
-keyboard_pixel_gray-250x375-sobel-90.hough_peaks.bin ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp road-straight_gray-180x280-sobel-0.hough_peaks.bin ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.bin
-road-straight_gray-180x280-sobel-0.hough_peaks.bin ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp road-straight_gray-180x280-sobel-90.hough_peaks.bin ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.bin
-road-straight_gray-180x280-sobel-90.hough_peaks.bin ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp road_gray-194x259-sobel-0.hough_peaks.bin ../../images/road_gray-194x259-sobel-0.hough_peaks.bin
-road_gray-194x259-sobel-0.hough_peaks.bin ../../images/road_gray-194x259-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp road_gray-194x259-sobel-90.hough_peaks.bin ../../images/road_gray-194x259-sobel-90.hough_peaks.bin
-road_gray-194x259-sobel-90.hough_peaks.bin ../../images/road_gray-194x259-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp sample_hough.hough_peaks.bin ../../images/sample_hough.hough_peaks.bin
-$ cmp square45-90_gray-609x473-sobel-0.hough_peaks.bin ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.bin
-square45-90_gray-609x473-sobel-0.hough_peaks.bin ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.bin differ: byte 3, line 1
-$ cmp square45-90_gray-609x473-sobel-90.hough_peaks.bin ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.bin
-square45-90_gray-609x473-sobel-90.hough_peaks.bin ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.bin differ: byte 3, line 1
-$ cmp du_drone_gray-151x118-sobel-0.hough_peaks.txt ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.txt
-du_drone_gray-151x118-sobel-0.hough_peaks.txt ../../images/du_drone_gray-151x118-sobel-0.hough_peaks.txt differ: byte 4, line 1
-$ cmp du_drone_gray-151x118-sobel-90.hough_peaks.txt ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.txt
-du_drone_gray-151x118-sobel-90.hough_peaks.txt ../../images/du_drone_gray-151x118-sobel-90.hough_peaks.txt differ: byte 4, line 1
-$ cmp du_map_gray-289x247-sobel-0.hough_peaks.txt ../../images/du_map_gray-289x247-sobel-0.hough_peaks.txt
-du_map_gray-289x247-sobel-0.hough_peaks.txt ../../images/du_map_gray-289x247-sobel-0.hough_peaks.txt differ: byte 4, line 1
-$ cmp du_map_gray-289x247-sobel-90.hough_peaks.txt ../../images/du_map_gray-289x247-sobel-90.hough_peaks.txt
-du_map_gray-289x247-sobel-90.hough_peaks.txt ../../images/du_map_gray-289x247-sobel-90.hough_peaks.txt differ: byte 4, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-0.hough_peaks.txt ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.txt
-keyboard_pixel_gray-250x375-sobel-0.hough_peaks.txt ../../images/keyboard_pixel_gray-250x375-sobel-0.hough_peaks.txt differ: byte 3, line 1
-$ cmp keyboard_pixel_gray-250x375-sobel-90.hough_peaks.txt ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.txt
-keyboard_pixel_gray-250x375-sobel-90.hough_peaks.txt ../../images/keyboard_pixel_gray-250x375-sobel-90.hough_peaks.txt differ: byte 3, line 1
-$ cmp road-straight_gray-180x280-sobel-0.hough_peaks.txt ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.txt
-road-straight_gray-180x280-sobel-0.hough_peaks.txt ../../images/road-straight_gray-180x280-sobel-0.hough_peaks.txt differ: byte 3, line 1
-$ cmp road-straight_gray-180x280-sobel-90.hough_peaks.txt ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.txt
-road-straight_gray-180x280-sobel-90.hough_peaks.txt ../../images/road-straight_gray-180x280-sobel-90.hough_peaks.txt differ: byte 3, line 1
-$ cmp road_gray-194x259-sobel-0.hough_peaks.txt ../../images/road_gray-194x259-sobel-0.hough_peaks.txt
-road_gray-194x259-sobel-0.hough_peaks.txt ../../images/road_gray-194x259-sobel-0.hough_peaks.txt differ: byte 5, line 1
-$ cmp road_gray-194x259-sobel-90.hough_peaks.txt ../../images/road_gray-194x259-sobel-90.hough_peaks.txt
-road_gray-194x259-sobel-90.hough_peaks.txt ../../images/road_gray-194x259-sobel-90.hough_peaks.txt differ: byte 5, line 1
-$ cmp sample_hough.hough_peaks.txt ../../images/sample_hough.hough_peaks.txt
-$ cmp square45-90_gray-609x473-sobel-0.hough_peaks.txt ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.txt
-square45-90_gray-609x473-sobel-0.hough_peaks.txt ../../images/square45-90_gray-609x473-sobel-0.hough_peaks.txt differ: byte 3, line 1
-$ cmp square45-90_gray-609x473-sobel-90.hough_peaks.txt ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.txt
-square45-90_gray-609x473-sobel-90.hough_peaks.txt ../../images/square45-90_gray-609x473-sobel-90.hough_peaks.txt differ: byte 3, line 1
-==============================================
 cd histogram-hough-create
 sh histogram-hough-create/test-run-dir.sh
 here /mnt/c/Users/kushn/DropBox/software/projects/cv/cv-workbench/src/test/histogram-hough-create
@@ -376,3 +116,4 @@ square45-90_gray-609x473-sobel-0.hough.bin ../../images/square45-90_gray-609x473
 $ cmp square45-90_gray-609x473-sobel-0.hist.txt ../../images/square45-90_gray-609x473-sobel-0.hist.txt
 square45-90_gray-609x473-sobel-0.hist.txt ../../images/square45-90_gray-609x473-sobel-0.hist.txt differ: byte 16, line 2
 $ cmp square45-90_gray-609x473-sobel-0.hist.gp ../../images/square45-90_gray-609x473-sobel-0.hist.gp
+==============================================
