@@ -1,0 +1,42 @@
+{
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "hough-image-create",
+				"input-data": [
+					{
+						"id": 1,
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "test/filter-edge-sobel",
+						"filename": "scan-sobel-90"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": "images",
+						"filename": "scan-sobel-90"
+					},
+					{
+						"id": 2,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "scan-sobel-90"
+					}
+				],
+				"parameters": {
+					"theta-inc": "6",
+					"threshold": "30"
+				}
+			}
+		]
+	}
+}

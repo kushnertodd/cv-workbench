@@ -1,1 +1,0 @@
-../test-clean-dir.sh
