@@ -1,5 +1,5 @@
 # cv-workbench build tools and libraries installation <a id="build-tools-and-libraries-installation"/>
-These are instruction to build cv-workbench for Linux.
+These are instruction to build `cv-workbench` for Linux.
 
 # Table of Contents
 - [Linux development tools and libraries](#linux-development)
@@ -120,8 +120,15 @@ $ sudo apt install git
 ### Cmake <a id="linux-cmake-tool"/>
 Berkeley DB C++ Framework is written in C++.
 [Cmake](https://cmake.org/) is used for building C++ applications.
-The build requires the latest version, currently 3.26.1.
-The version available from`apt`is too old to use, so it must be built from source.
+The CMake website has a nice [totorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
+for learning it.
+It can be installed with this command:
+```
+$ sudo apt-get update
+$ sudo apt install cmake
+```
+In the unlikely case that the version available from`apt`is too old to use.
+If so, it must be built from source.
 Select the latest source from the`Unix/Linux Source`link on the [download website](https://cmake.org/download/),
 e.g.,`cmake-3.31.1.tar.gz`,
 and [build](https://cmake.org/install/) with these instructions:
@@ -187,9 +194,10 @@ Build using these [instructions](https://docs.oracle.com/cd/E17276_01/html/insta
 - In Linux, first install`autoconf`and other required development tools:
   - [autoconf](https://askubuntu.com/questions/290194/how-to-install-autoconf)
   - [libtool](https://www.gnu.org/software/make/)
-  - [libdb5.3-dev](https://packages.ubuntu.com/bionic/libdb-dev)
-  - [libssl-dev](https://packages.ubuntu.com/bionic/libssl-dev)
-    Install these with:
+  - [libdb5.3-dev](https://launchpad.net/ubuntu/jammy/+package/libdb5.3++-dev)
+  - [libssl-dev](https://launchpad.net/ubuntu/bionic/+package/libssl-dev)
+
+Install these with:
 ```
 $ sudo apt-get update
 $ sudo apt-get install autoconf
@@ -234,8 +242,4 @@ open source computer vision package to develop workbench applications with [Open
 - Compile OpenCV C++ source files with the `opencv2/opencv.hpp` include file
   and link with various `-lopencv_*` libraries found in `/usr/local/lib`.
 
-### ESP32-CAM <a id="esp32-cam"/>
-To use the Arduino ESP32-CAM for image input, install the Arduino
-[ESP32-CAM module](https://www.edgoad.com/2021/02/programming-esp32cam-using-arduino-uno.html) in the [Arduino IDE](https://www.arduino.cc/en/software).
-- See the ESP32-CAM camera webserver [still photo capture](https://github.com/kushnertodd/CameraWebServer-still) project.
 
