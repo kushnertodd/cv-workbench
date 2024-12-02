@@ -1,0 +1,38 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "filter-edge-sobel",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "320x240gray",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary",
+            "directory": ".",
+            "filename": "320x240gray_sobel_exp",
+            "ext": "bin"
+          }
+        ],
+        "parameters": {
+          "__comment": " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+          "orientation": "0"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_comment1": [
+    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
+  ],
+  "id": 2,
+  "domain": "filters",
+  "class": "edge detection",
+  "instance": "2Dx2",
+  "parameters": [
+    {
+      "__comment1": [
+        " 0 = [-1, 1], [-1, 1]",
+        "90 = [1, 1],  [-1, -1]"
+      ],
+      "name": "orientation",
+      "data-type": "int",
+      "default": 0,
+      "valid-values": [
+        0,
+        90
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+    "id": 1,
+    "domain": "filters",
+    "class": "edge detection",
+    "instance": "1Dx2",
+    "parameters": [
+      {
+        "__comment1": [
+          " 0 = [-1, 1] (horiz)",
+          "90 = [1, -1] (vert)"
+        ],
+        "name": "orientation",
+        "data-type": "int",
+        "default": 0,
+        "valid-values": [
+          0,
+          90
+        ]
+      }
+    ]
+  }

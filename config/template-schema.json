@@ -1,0 +1,36 @@
+{
+  "_comment": [
+    "string, etc."
+  ],
+  "id": 1,
+  "domain": "string",
+  "class": "string",
+  "instance": "string",
+  "input-data": {
+  },
+  "output-data": {
+  },
+  "parameters": [
+    {
+      "_comment": [
+        "string, etc."
+      ],
+      "name": "string",
+      "required": "true|false",
+      "data-type": "int|real|string|boolean",
+      "default": "string",
+      "range": {
+        "min-value": "string",
+        "max-value": "string"
+      },
+      "valid-values": [
+        "string",
+        "string"
+      ]
+    },
+    {
+      "name": "string, etc."
+    }
+  ]
+}
+

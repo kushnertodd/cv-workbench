@@ -1,0 +1,37 @@
+{
+  "experiment": {
+    "steps": [
+      {
+        "id": 1,
+        "operator": "transform-intensity-map",
+        "input-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "320x240gray",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "__comment": "depth = 8UC1 320x240",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "320x240gray_same_exp2",
+            "ext": "jpg"
+          }
+        ],
+        "parameters": {
+            "depth": "CV_8U"
+        }
+      }
+    ]
+  }
+}

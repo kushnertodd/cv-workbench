@@ -1,0 +1,211 @@
+{
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_0_-162",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "0",
+					"rho": "-162",
+					"pixel_value": "0"
+				}
+			},
+
+			{
+				"id": 2,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_0_3",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "0",
+					"rho": "3.5",
+					"pixel_value": "0"
+				}
+			},
+			{
+				"id": 3,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_15_-156",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "15",
+					"rho": "-156.5",
+					"pixel_value": "0"
+				}
+			},
+			{
+				"id": 4,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_15_-76",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "15",
+					"rho": "-76.5",
+					"pixel_value": "0"
+				}
+			},
+			{
+				"id": 5,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_45_458",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "45",
+					"rho": "458.5",
+					"pixel_value": "0"
+				}
+			},
+			{
+				"id": 6,
+				"operator": "hough-draw-line",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": "images",
+						"filename": "square45-90_sobel_gray_line_45_295",
+						"ext": "bin"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3",
+					"theta_index": "45",
+					"rho": "295.5",
+					"pixel_value": "0"
+				}
+		  }
+		]
+	}
+}

@@ -1,0 +1,8 @@
+.git/
+.idea/
+.*swp
+build/
+cmake-build-debug/
+demo/
+examples/
+test/

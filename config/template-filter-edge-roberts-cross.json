@@ -1,0 +1,24 @@
+{
+  "_comment1": [
+    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
+  ],
+  "id": 3,
+  "domain": "filters",
+  "class": "edge detection",
+  "instance": "Roberts cross",
+  "parameters": [
+    {
+      "__comment1": [
+        " 45 = [1, 0],  [0, -1]",
+        "135 = [0, -1], [1, 0]"
+      ],
+      "name": "orientation",
+      "data-type": "int",
+      "default": 45,
+      "valid-values": [
+        45,
+        135
+      ]
+    }
+  ]
+}

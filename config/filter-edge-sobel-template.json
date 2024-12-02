@@ -1,0 +1,36 @@
+{
+  "_comment": [
+    "https://web.stanford.edu/class/ee368/Handouts/Lectures/2016_Autumn/12-EdgeDetection_16x9.pdf"
+  ],
+  "operator": "filter-edge-Sobel",
+  "input-data": [
+    {
+      "id": 1,
+      "__comment": "depth = 8U",
+      "source": "image-data-descriptor"
+    }
+  ],
+  "output-data": [
+    {
+      "id": 1,
+      "__comment": "depth = 8U",
+      "source": "image-data-descriptor"
+    }
+  ],
+  "parameters": [
+    {
+      "__comment": [
+        " 0 = [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]",
+        "90 = [1, 2, 1],  [0, 0, 0],  [-1, -2, -1]"
+      ],
+      "orientation": {
+        "required": "int",
+        "default": "0",
+        "valid-values": [
+          "0",
+          "90"
+        ]
+      }
+    }
+  ]
+}

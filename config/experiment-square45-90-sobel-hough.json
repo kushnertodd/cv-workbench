@@ -1,0 +1,46 @@
+{
+	"experiment": {
+		"steps": [
+			{
+				"id": 1,
+				"operator": "hough-accumulator-create",
+				"input-data": [
+					{
+						"id": 1,
+						"__comment": "depth = 32SC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "binary",
+						"directory": ".",
+						"filename": "square45-90_sobel_gray",
+						"ext": "bin"
+					}
+				],
+				"output-data": [
+					{
+						"id": 1,
+						"type": "hough",
+						"repository": "filesystem",
+						"format": "text",
+						"directory": ".",
+						"filename": "square45-90_sobel_gray_hough",
+						"ext": "txt"
+					},
+					{
+						"id": 2,
+						"__comment": "depth = 8UC1",
+						"type": "image",
+						"repository": "filesystem",
+						"format": "jpeg",
+						"directory": ".",
+						"filename": "square45-90_sobel_gray_lines",
+						"ext": "jpg"
+					}
+				],
+				"parameters": {
+					"theta_inc": "3"
+				}
+			}
+		]
+	}
+}

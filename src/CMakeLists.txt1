@@ -1,0 +1,33 @@
+add_library(bdb-lib STATIC
+        bdb_cursor.hpp
+        bdb_dao.hpp
+        bdb_databases_config.cpp
+        bdb_databases_config.hpp
+        bdb_databases.cpp
+        bdb_databases.hpp
+        bdb_db.cpp
+        bdb_db.hpp
+        bdb_errors.cpp
+        bdb_errors.hpp
+        bdb_file_io.cpp
+        bdb_file_io.hpp
+        bdb_global.hpp
+        bdb_json_utils.cpp
+        bdb_json_utils.hpp
+        bdb_key_extractor.hpp
+        bdb_serializable.hpp
+        bdb_serialization.cpp
+        bdb_serialization.hpp
+        bdb_tokens.cpp
+        bdb_tokens.hpp
+        )
+target_include_directories(bdb-lib PUBLIC .)
+image-copy.cpp
+image-corr.cpp
+image-dump.cpp
+image-info.cpp
+image-map.cpp
+image-mean.cpp
+image-morph.cpp
+image-read.cpp
+image-trig.cpp
