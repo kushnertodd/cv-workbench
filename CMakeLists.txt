@@ -19,7 +19,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/module/")
 
 include(UseDoxygenDoc)
 
-
 ## link libs
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -47,28 +46,6 @@ find_package(Doxygen REQUIRED dot OPTIONAL_COMPONENTS mscgen dia)
 # https://github.com/Kitware/CMake/blob/master/Modules/FindPackageHandleStandardArgs.cmake
 # https://github.com/Kitware/CMake/blob/master/Modules/FindPackageMessage.cmake
 
-#
-# examples
-
-#add_executable(excxx_example_database_load apps/excxx_example_database_load.cpp)
-#
-#target_link_libraries(excxx_example_database_load
-#        PRIVATE example-lib bdb-lib
-#        PUBLIC Oracle::BerkeleyDB
-#        PUBLIC ${JSON-C_LIBRARIES}
-#        )
-#
-#add_executable(excxx_example_database_read apps/excxx_example_database_read.cpp)
-#
-#target_link_libraries(excxx_example_database_read
-#        PRIVATE example-lib bdb-lib
-#        PUBLIC Oracle::BerkeleyDB
-#        PUBLIC ${JSON-C_LIBRARIES}
-#        PUBLIC OpenSSL::SSL
-#        PUBLIC OpenSSL::Crypto
-#        PUBLIC Threads::Threads
-#        )
-#
 add_doxygen_doc(
         BUILD_DIR
         ${CMAKE_CURRENT_BINARY_DIR}/_build
@@ -81,12 +58,12 @@ add_doxygen_doc(
 )
 add_subdirectory(cv-lib)
 add_executable(cv-workbench
-src/cv-workbench.cpp
+        src/cv-workbench.cpp
 )
 target_link_libraries(cv-workbench
         PRIVATE cv-lib
         PUBLIC Oracle::BerkeleyDB
         PUBLIC ${JSON-C_LIBRARIES}
         PUBLIC ${JPEG_LIBRARIES}
-        )
+)
 target_include_directories(cv-workbench PUBLIC cv-lib)
