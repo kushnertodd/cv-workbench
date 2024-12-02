@@ -6,3 +6,6 @@ cmake-build-debug/
 demo/
 examples/
 test/
+image-mean-out.txt
+image-mean-test.txt
+polar_trig_static.hpp

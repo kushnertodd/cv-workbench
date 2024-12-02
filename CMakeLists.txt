@@ -66,4 +66,85 @@ target_link_libraries(cv-workbench
         PUBLIC ${JSON-C_LIBRARIES}
         PUBLIC ${JPEG_LIBRARIES}
 )
-target_include_directories(cv-workbench PUBLIC cv-lib)
+add_executable(image-copy
+        src/image-copy.cpp
+)
+target_link_libraries(image-copy
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+#target_include_directories(cv-workbench PUBLIC cv-lib)
+add_executable(image-corr
+        src/image-corr.cpp
+)
+target_link_libraries(image-corr
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-dump
+        src/image-dump.cpp
+)
+target_link_libraries(image-dump
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-info
+        src/image-info.cpp
+)
+target_link_libraries(image-info
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-map
+        src/image-map.cpp
+)
+target_link_libraries(image-map
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-mean
+        src/image-mean.cpp
+)
+target_link_libraries(image-mean
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-morph
+        src/image-morph.cpp
+)
+target_link_libraries(image-morph
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-read
+        src/image-read.cpp
+)
+target_link_libraries(image-read
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
+add_executable(image-trig
+        src/image-trig.cpp
+)
+target_link_libraries(image-trig
+        PRIVATE cv-lib
+        PUBLIC Oracle::BerkeleyDB
+        PUBLIC ${JSON-C_LIBRARIES}
+        PUBLIC ${JPEG_LIBRARIES}
+)
