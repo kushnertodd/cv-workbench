@@ -1,154 +1,110 @@
 # cv-workbench build tools and libraries installation <a id="build-tools-and-libraries-installation"/>
-These are instruction to build `cv-workbench` for Linux.
-
-# Table of Contents
-- [Linux development tools and libraries](#linux-development)
-  - [Linux C++ Development Tools](#linux-c++-development-tools)
-    - [JetBrains CLion](#jetbrains-clion)
-    - [WSL2 Linux distribution for Windows 10](#windows-10-wsl2-linux-distributions)
-    - [Windows Terminal](#windows-terminal-tool)
-    - [Linux Build Tools](#linux-build-tools)
-    - [Git](#linux-git-tool)
-    - [Cmake](#linux-cmake-tool)
-  - [Linux C++ Libraries](#linux-c++-libraries)
-    - [pthreads Library](#linux-pthreads-library)
-    - [OpenSSL Library](#linux-openssl-library)
-    - [Doxygen](#linux-doxygen)
-    - [json-c Library](#linux-json-c-library)
-    - [Berekley DB Library](#linux-berkeley-db-library)
-    - [JPEG library](#jpeg-library)
-    - [OpenCV](#opencv-library)
-    - [ESP32-CAM](#esp32-cam)
-## Installation
-These are instructions to build CV Workbench from source. 
-Below are requirements to set up the system to build and run.
+Below are requirements to set up the system to build and run `cv-workbench` for Linux from source.
 Once they are in place, the system may be built with:
-
 ```
 $ sh build.sh
 ```
 This builds the main program `cv-workbench` and some additional utilities.
-
-The software is assumed to run under Linux [Ubuntu](https://ubuntu.com/) or compatible Linux version,
-such as Microsoft WSL2 [Pengwin](https://www.whitewaterfoundry.com/).
-The following Linux modules need to be installed.
-
-# Linux development tools and libraries <a id="linux-development"/>
-These are instructions to prepare the Linux build environment.
-
-## Linux C++ Development Tools <a id="linux-c++-development-tools"/>
-Linux development tools include:
-- JetBrains CLion
-- WSL2 Linux distribution for Windows 10
-- Windows Terminal
-- Linux Build Tools
-- Git
-- Cmake
-
-### JetBrains CLion <a id="jetbrains-clion"/>
-[JetBrains CLion](https://www.jetbrains.com/clion/download/#section=windows) is a free C++ IDE.
-The Berekeley DB C++ Framework is a Cmake project.
-JetBrains has a
-[tutorial](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html)
-on setting up CLion for a Cmake project.
-
-- install CLion from jetbrains, buy license
-- install Windows [CMake](https://cmake.org/download/)
-- install Perl from activastate.com
-
-### WSL2 Linux distribution for Windows 10 <a id="windows-10-wsl2-linux-distributions"/>
-WSL2 is a native Linux running under Windows 10.
-These are instructions for installing [Windows 10 WSL2](https://learn.microsoft.com/en-us/windows/wsl/).
+Successful building verifies that the installation of the system is correct.
+## Table of Contents
+- [Windows build tools](#windows-build-tools)
+  - [WSL2 Linux](#windows-10-wsl2-linux-distributions)
+  - [WSL2 Pengwin Linux Distribution](#wsl2-pengwin-distribution)
+  - [Windows Terminal](#windows-terminal-tool)
+  - [JetBrains CLion](#jetbrains-clion)
+- [Linux Build Tools and C++ libraries](#linux-build-tools-and c++-libraries)
+  - [Linux compiler tools](#linux-compiler-tools)
+  - [Git](#linux-git-tool)
+  - [pthreads Library](#linux-pthreads-library)
+  - [OpenSSL Library](#linux-openssl-library)
+  - [Doxygen](#linux-doxygen)
+  - [Cmake](#linux-cmake-tool)
+  - [json-c Library](#linux-json-c-library)
+  - [Berekley DB Library](#linux-berkeley-db-library)
+  - [JPEG library](#jpeg-library)
+  - [OpenCV](#opencv-library)
+## Windows build tools <a id="windows-build-tools"/>
+The following are Windows tools to install for building the system.
+The software installation has been tested under Windows using Windows Subsystem for Linux
+[WSL2](#windows-wsl2-linux) and [Pengwin](https://www.whitewaterfoundry.com/).
+The following additional Windows tools may be installed.
+- [Windows Terminal](#windows-terminal-tool) is a useful Windows command line interface for WSL2.
+- [JetBrains CLion](#jetbrains-clion) is an optional C++ IDE.
+### WSL2 Linux <a id="windows-wsl2-linux"/>
+[WLS2](https://learn.microsoft.com/en-us/windows/wsl/) is a native Linux running under Windows 10/11.
+These are instructions for installing [Windows WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 WSL2 has specific [hardware requirements](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting?source=recommendations),
-including a 64-bit processor with second-level address translation (SLAT) and at least 4GB of RAM. Any new Intel Windows system should be adequate.
-The command to [install](https://learn.microsoft.com/en-us/windows/wsl/install) WSL2 on Windows 10 is:
+including a 64-bit processor with second-level address translation (SLAT) and at least 4GB of RAM. 
+Most new Windows systems should be adequate.
+The command to install WSL2 on Windows is:
 ```
 $ wsl --install
 ```
-The install instructions are currently for Pengwin or Ubuntu.
-The Linux build is currently tested on Windows 10 WSL2 with [Pengwin](https://www.whitewaterfoundry.com/),
+After installing WSL2 a Linux distribution must be selected, in our case, Pengwin.
 
-#### Linux Distributions
-Linux development was done under Windows 10 WSL2 with [Pengwin](https://www.whitewaterfoundry.com/),
-which may be obtained from the Microsoft Store.
-[Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview)
-may also be obtained from the Microsoft Store.
-The instructions likely work for other types of Linux,
-such as CentOS,
-or other types of Unix,
-such as MacOS, possibly with modifications.
-These are [instructions](https://learn.microsoft.com/en-us/windows/wsl/use-custom-distro)
-for installing other WSL2 Linux distributions.
+### WSL2 Pengwin Linux Distribution <a id="wsl2-pengwin-distribution"/>
+THe WSL2 [Pengwin](https://www.whitewaterfoundry.com/) Windows distribution
+which may be obtained from the Microsoft Store for a nominal cost.
+The current version of [Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview),
+22.04, is not a current enough version of Linux to build the system and is not supported.
+Other Linux versions such as MacOS and Centos are not supported.
 
 ### Windows Terminal <a id="windows-terminal-tool"/>
-You likely would like to use [Windows Terminal](https://aka.ms/terminal)
-to develop using WSL2 Linux.
-Windows Terminal may be obtained from the Microsoft Store.
-This is a Microsoft [tutorial](https://learn.microsoft.com/en-us/windows/terminal/install) for starting with Windows Terminal.
+Windows Terminal is a useful Windows tool to develop WSL2 Linux applications and
+may be obtained from the Microsoft Store for free.
+Microsoft has a [tutorial](https://learn.microsoft.com/en-us/windows/terminal/install) for starting with Windows Terminal.
 Scott Hanselman has an excellent [video](https://www.youtube.com/watch?v=FC-gLkYWXLw) on using Windows Terminal.
 
-### Linux Build Tools <a id="linux-build-tools"/>
-There are several Linux C++ libraries and tools required for the build.
-Pengwin and Ubuntu use the`apt`command to install many Linux library and tool packages:
+### JetBrains CLion <a id="jetbrains-clion"/>
+[JetBrains CLion](https://www.jetbrains.com/clion) is an optional Windows C++ IDE.
+It requires buying a license if not for a student or teacher.
+
+- run the following commands in Pengwin Linux before installing CLion:
+```
+$ pengwin-setup install PROGRAMMING C++
+$ pengwin-setup install PROGRAMMING JETBRAINS
+```
+- [download](https://www.jetbrains.com/clion/download/#section=windows) and install Jetbrains CLion
+- set up CLion to run with Windows WSL2 Linux using these [instructions](https://www.jetbrains.com/help/clion/how-to-use-wsl-development-environment-in-product.html),
+
+`cv-workbench`is written in C++ and builds using Cmake.
+JetBrains has a [tutorial](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html) on setting up CLion for a Cmake project.
+Do not install Cmake for Windows as it may interfere with the Linux Cmake build.
+
+## Linux Build Tools and C++ libraries <a id="linux-build-tools-and c++-libraries"/>
+There are several Linux tools and C++ libraries required for the build.
+Pengwin Linux uses the`apt`command to install many Linux library and tool packages:
 ```
 $ sudo apt update
 $ sudo apt install <package>
 ```
 Always run`apt update`before`install`.
-Some packages are not available under`apt`, or some`apt`packages
-have versions that are too old to use.
+Some packages are not available under`apt`, or have`apt`packages
+versions that are too old to use.
 In those cases, they can be directly downloaded from a web site or built from source.
 
-The Linux`build-essentials`package installs the C++ compiler,
+### Linux compiler tools <a id="linux-compiler-tools"/>
+The Linux`build-essential`package installs the C++ compiler,
 debugger, libraries, other development tools required for the build.
 `build-essential`includes:
 - [g++, gcc](https://gcc.gnu.org/)
 - [make](https://www.gnu.org/software/make/)  
-  They are installed with:
+Some other Linux build tools are also included.
+They are installed with:
 ```
 $ sudo apt-get update
-$ sudo apt install build-essential
+$ sudo apt install build-essential libncurses-dev libbsd-dev
 ```
 
 ### Git <a id="linux-git-tool"/>
-[git](https://git-scm.com/) is required for the build.
+Linux [git](https://git-scm.com/) is required for the build.
 It can be installed with this command:
 ```
 $ sudo apt-get update
 $ sudo apt install git
 ```
-### Cmake <a id="linux-cmake-tool"/>
-Berkeley DB C++ Framework is written in C++.
-[Cmake](https://cmake.org/) is used for building C++ applications.
-The CMake website has a nice [totorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
-for learning it.
-It can be installed with this command:
-```
-$ sudo apt-get update
-$ sudo apt install cmake
-```
-In the unlikely case that the version available from`apt`is too old to use.
-If so, it must be built from source.
-Select the latest source from the`Unix/Linux Source`link on the [download website](https://cmake.org/download/),
-e.g.,`cmake-3.31.1.tar.gz`,
-and [build](https://cmake.org/install/) with these instructions:
-```
-$ gunzip -c cmake-3.31.1.tar.gz | tar xvf -
-$ cd cmake-3.31.1
-$ ./configure --prefix=/usr
-$ sudo make install
-```
-Cmake requires an additional tool be installed,`pkg-config`:
-```
-$ sudo apt-get update
-$ sudo apt install pkg-config
-```
-## Linux C++ Libraries <a id="linux-c++-libraries"/>
-Various C++ libraries are required for the Linux build.
 ### pthreads Library <a id="linux-pthreads-library"/>
 Linux`pthreads`is a C++ threading library is required for the build.
-It should already be installed in Linux.
-In the event it is not, it can be installed with this command:
 ```
 $ sudo apt-get update
 $ sudo apt install libpthread-stubs0-dev
@@ -161,10 +117,48 @@ $ sudo apt-get update
 $ sudo apt install libssl-dev openssl
 ```
 ### Doxygen <a id="linux-doxygen"/>
-Doxygen generates Javadoc-like html files from C++ source code.
+Doxygen generates [Javadoc](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html)-like html files from C++ source code.
 It can be installed with these [instructions](https://www.tutorialspoint.com/how-to-install-doxygen-on-ubuntu):
 ```
-$ sudo apt-get install doxygen opt graphviz 
+$ sudo apt-get install doxygen opt graphviz mscgen dia
+```
+### Cmake <a id="linux-cmake-tool"/>
+[Cmake](https://cmake.org/) is required for building`cv-workbench` and some C++ iibraries that must be built from source.
+The CMake website has a nice [totorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
+for creating a Cmake project.
+The basic Linux version can be installed with this command:
+```
+$ sudo apt-get update
+$ sudo apt install cmake
+```
+Building the [JPEG library](#jpeg-library) from source, 
+below, will require the a `cmake` version 3.29 or later.
+The default`apt` version may not be recent enough.
+If so, `cmake`must be built from the latest source.
+The `cmake` version can be checked with this command:
+```
+$ cmake --version
+cmake version 3.25.1
+```
+Building the JPEG library with an `apt` version before 3.29  will produce a
+[CMP0159](https://manpages.debian.org/unstable/cmake-data/cmake-policies.7.en.html) error.
+
+To build`cmake` from source,
+sownload the latest source from the`Unix/Linux Source` link on the [download website](https://cmake.org/download/),
+e.g.,`cmake-3.31.1.tar.gz`.
+[Build](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting%20Started.html#getting-and-installing-cmake-on-your-computer) it with these instructions:
+```
+$ tar xvf cmake-3.31.1.tar.gz
+$ cd cmake-3.31.1
+$ mkdir build
+$ cd build
+$ ../bootstrap 
+$ sudo make install
+```
+Cmake requires an additional tool be installed,`pkg-config`:
+```
+$ sudo apt-get update
+$ sudo apt install pkg-config
 ```
 ### json-c Library <a id="linux-json-c-library"/>
 [json-c](https://github.com/json-c/json-c) is a C-based JSON manipulation library.
@@ -180,35 +174,33 @@ $ sudo cmake --install .
 ```
 ### Berekley DB Library <a id="linux-berkeley-db-library"/>
 The [Berkeley DB](https://www.oracle.com/database/technologies/related/berkeleydb.html) library
-is an efficient, embedded non-SQL key-indexed database.
+is an efficient, embedded non-SQL key-indexed database used by`cv-workbench` for image storage.
 The latest version is required and can be built from source.
-Download source for the latest version from:  
-https://www.oracle.com/database/technologies/related/berkeleydb-downloads.html
-- Select from the Berkeley DB *version* link. You may need to create an Oracle account.
-- Select the`Linux x86-64 platform,`read accept the license agreement, and select`Download`.
-- Run the downloaded Windows executable named Oracle_SSN_DLM_*nnn*.exe to create a file named V*nnnnnn-nn*.zip.
-- Select Open Destination from the opened window to find the zip.
-- Right-click/drag the zip using File Explorer and select Expand into a directory named V*nnnnnn-nn*.
-
-Build using these [instructions](https://docs.oracle.com/cd/E17276_01/html/installation/build_unix.html).
-- In Linux, first install`autoconf`and other required development tools:
+- download the latest version of the [source](https://www.oracle.com/database/technologies/related/berkeleydb-downloads.html).
+- select the latest Berkeley DB *version* Download link. You may need to create an Oracle account.
+- select the`Linux x86-64 platform`, accept the license agreement, and select`Download`.
+- run the downloaded Windows executable named Oracle_SSN_DLM_*nnn*.exe to create a file named V*nnnnnn-nn*.zip.
+- select Open Destination from the opened window to find the zip.
+- right-click/drag the zip using File Explorer and select Expand into a directory named V*nnnnnn-nn*.
+- the build requires these Linux development tools:
   - [autoconf](https://askubuntu.com/questions/290194/how-to-install-autoconf)
   - [libtool](https://www.gnu.org/software/make/)
   - [libdb5.3-dev](https://launchpad.net/ubuntu/jammy/+package/libdb5.3++-dev)
-  - [libssl-dev](https://launchpad.net/ubuntu/bionic/+package/libssl-dev)
-
-Install these with:
+- Install these with:
 ```
 $ sudo apt-get update
 $ sudo apt-get install autoconf
 $ sudo apt-get install libtool
 $ sudo apt install libdb5.3-dev
 ```
-To build, let BDB_HOME be the Berkeley DB installation directory, e.g.,V*nnnnnn-nn*/db-18.1.40.
+- build using these [instructions](https://docs.oracle.com/cd/E17276_01/html/installation/build_unix.html).
+
+To build, let`BDB_HOME`be the Berkeley DB installation directory, e.g.,V*nnnnnn-nn*/db-18.1.40.
 There are some other`configure` arguments described in these files:
 - `$BDB_HOME/docs/installation/build_unix_conf.html`
 - `$BDB_HOME/docs/installation/build_unix_flags.html`
-  Useful ones include:
+ 
+Useful ones include:
 - `--prefix=`*directory* determines the final installation directory, default is`/usr/local`
 - `--enable-cxx`to build the C++ library
 - `--disable-shared`is useful to build with static rather than dynamic libraries
@@ -216,8 +208,9 @@ There are some other`configure` arguments described in these files:
 - `CC=`*c compiler* is the C compiler to use, e.g.,`cc`or`gcc`, default is`gcc`
 - `CFLAGS=`*flags* are the C compiler flags
 - `CXXFLAGS=`*flags* are the C++ compiler flags
-  A good set of commands to [build Berkeley DB](https://github.com/SerenadeEXE/BerkeleyDBTutorial)
-  to install C++ and C static libraries under`/usr/local`are:
+
+A good set of commands to [build Berkeley DB](https://github.com/SerenadeEXE/BerkeleyDBTutorial)
+to install C++ and C static libraries under`/usr/local`are:
 ```
 $ cd $BDB_HOME/build_unix
 $ LDFLAGS="-R/usr/lib/x86_64-linux-gnu"
@@ -236,10 +229,13 @@ from [source](http://www.ijg.org/files/)
 - Compile `jpeg-9e` C source files with the `jpeglib.h` include file and link with `-ljpeg`.
 
 ### OpenCV <a id="opencv-library"/>
-Install the [OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)
-open source computer vision package to develop workbench applications with [OpenCV](https://opencv.org).
-- See the OpenCV [documentation](https://docs.opencv.org/).
+Optionally install the [OpenCV](https://docs.opencv.org/)
+open source computer vision package to develop workbench applications with OpenCV.
+- install OpenCV with these [instructions](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)
+  )
+- See the OpenCV [documentation]()
 - Compile OpenCV C++ source files with the `opencv2/opencv.hpp` include file
-  and link with various `-lopencv_*` libraries found in `/usr/local/lib`.
+and add the libraries to the `CMakeFiles.txt` file
+
 
 
