@@ -228,6 +228,14 @@ from [source](http://www.ijg.org/files/)
 - There is an `example.c` file in the source that is an example of using the library.
 - Compile `jpeg-9e` C source files with the `jpeglib.h` include file and link with `-ljpeg`.
 
+Install the C static libraries under`/usr/local`with:
+```
+$ ./configure
+$ make
+$ make test
+$ sudo make install
+```
+
 ### OpenCV <a id="opencv-library"/>
 Optionally install the [OpenCV](https://docs.opencv.org/)
 open source computer vision package to develop workbench applications with OpenCV.
