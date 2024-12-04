@@ -1,4 +1,5 @@
 .git/
+archive/
 .idea/
 .*swp
 build/
