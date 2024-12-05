@@ -44,11 +44,17 @@ After installing WSL2 a Linux distribution must be selected, in our case, Pengwi
 
 ### WSL2 Pengwin Linux Distribution <a id="wsl2-pengwin-distribution"/>
 THe WSL2 [Pengwin](https://www.whitewaterfoundry.com/) Windows distribution
-which may be obtained from the Microsoft Store for a nominal cost.
-The current version of [Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview),
-22.04, is not a current enough version of Linux to build the system and is not supported.
+which may be obtained from the 
+[Microsoft Store](https://www.microsoft.com/store/apps/9NV1GV1PXZ6P?cid=storebadge&ocid=badge) 
+for a nominal cost.
+The current version of [Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview)
+22.04 is not a current enough version of Linux to build the system and is not supported.
 Other Linux versions such as MacOS and Centos are not supported.
-
+- ths command`lets you setup some 
+[settings and tools](https://www.youtube.com/watch?v=xpo1MFARIzo) for pengwin:
+```
+$ pengwin-setup
+```
 ### Windows Terminal <a id="windows-terminal-tool"/>
 Windows Terminal is a useful Windows tool to develop WSL2 Linux applications and
 may be obtained from the Microsoft Store for free.
@@ -59,7 +65,7 @@ Scott Hanselman has an excellent [video](https://www.youtube.com/watch?v=FC-gLkY
 [JetBrains CLion](https://www.jetbrains.com/clion) is an optional Windows C++ IDE.
 It requires buying a license if not for a student or teacher.
 
-- run the following commands in Pengwin Linux before installing CLion:
+- run the following commands in [Pengwin Linux](https://github.com/WhitewaterFoundry/Pengwin/issues/581) before installing CLion:
 ```
 $ pengwin-setup install PROGRAMMING C++
 $ pengwin-setup install PROGRAMMING JETBRAINS
