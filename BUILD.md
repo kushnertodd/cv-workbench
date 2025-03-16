@@ -4,6 +4,8 @@ C++ framework for Berkeley DB can be built with these instructions:
 - Build using Clion, or run from the command line, 
 ```
 $ cmake -B build -S .
+$ cd build
+$ make
 ```
 - Build the Doxygen html documentation files with:
 ```
