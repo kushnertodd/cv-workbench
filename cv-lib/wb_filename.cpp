@@ -38,7 +38,7 @@ bool Wb_filename::is_bin() const {
   return ext == "bin";
 }
 bool Wb_filename::is_jpeg() const {
-  return ext == "jpg";
+  return ext == "jpg" || ext == "jpeg";
 }
 bool Wb_filename::is_json() const {
   return ext == "json";

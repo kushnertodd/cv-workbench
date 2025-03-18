@@ -24,6 +24,7 @@ const std::map<std::string, WB_data_format::Data_format> WB_data_format::from_ex
     {
         {"bin", WB_data_format::Data_format::BINARY},
         {"jpg", WB_data_format::Data_format::JPEG},
+        {"jpeg", WB_data_format::Data_format::JPEG},
         {"json", WB_data_format::Data_format::JSON},
         {"log", WB_data_format::Data_format::LOG},
         {"txt", WB_data_format::Data_format::TEXT}
