@@ -9,7 +9,7 @@
 #include <json-c/json.h>
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
-#include "wb_image_depth.hpp"
+#include "image_depth.hpp"
 #include "wb_repository_type.hpp"
 #include "wb_defs.hpp"
 #include "errors.hpp"
@@ -20,7 +20,7 @@
 class Internet_data_source_descriptor : public Data_source_descriptor {
  public:
   std::string url{};
-  std::string depth{}; // WB_image_depth::Image_depth::CV_8U, WB_image_depth::Image_depth::CV_32S, or WB_image_depth::Image_depth::CV_32F
+  std::string depth{}; // Image_depth::CV_8U, Image_depth::CV_32S, or Image_depth::CV_32F
   int rows{};
   int cols{};
   Internet_data_source_descriptor(int m_id,

@@ -6,7 +6,7 @@
 #include "operator_transform_intensity_map.hpp"
 #include "operator_utils.hpp"
 #include "wb_data_format.hpp"
-#include "wb_image_depth.hpp"
+#include "image_depth.hpp"
 #include "wb_defs.hpp"
 
 extern bool debug;
@@ -17,9 +17,9 @@ extern bool debug;
      depth_enum depth
        depth of output image
        optional: defaults to input image depth
-         WB_image_depth::Image_depth::CV_8U   unsigned byte
-         WB_image_depth::Image_depth::CV_32S  int
-         WB_image_depth::Image_depth::CV_32F  float
+         Image_depth::CV_8U   unsigned byte
+         Image_depth::CV_32S  int
+         Image_depth::CV_32F  float
      real lower_in
      real upper_in
      real lower_out
@@ -53,7 +53,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     errors.add("Operator_transform_intensity_map::run", "", "output data source required");
   else if (output_data_stores.size() > 1)
     errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
-  WB_image_depth::Image_depth depth;
+  Image_depth depth;
   double lower_in;
   double upper_in;
   double lower_out;
@@ -67,7 +67,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     saw_depth = true;
     std::string depth_str = Operator_utils::get_parameter(operator_parameters, "depth");
     depth = WB_image_depth::from_string(depth_str);
-    if (depth == WB_image_depth::Image_depth::UNDEFINED) {
+    if (depth == Image_depth::UNDEFINED) {
       errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
     }
   }
@@ -119,7 +119,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     }
     if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
       Image *output_image =
-          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, WB_image_depth::Image_depth::CV_8U);
+          Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, Image_depth::CV_8U);
       output_data_store->write_image_jpeg(output_image, errors);
     } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
       Image *output_image =

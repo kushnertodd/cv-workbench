@@ -85,7 +85,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                  "'rows' and 'cols' parameters required if no input data source");
     if (!errors.has_error()) {
       if (input_data_sources_missing)
-        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
+        image = new Image(rows, cols, 1, Image_depth::CV_32S, background);
       else {
         input_data_source = input_data_sources.front();
         image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);

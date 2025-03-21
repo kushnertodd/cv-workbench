@@ -50,14 +50,14 @@ class Kernel : public Image {
 
   ~Kernel() override;
   Kernel();
-  Kernel(int m_rows, int m_cols, WB_image_depth::Image_depth m_depth);
+  Kernel(int m_rows, int m_cols, Image_depth m_depth);
 
   Image *convolve_numeric(Image *src, Errors &errors) const;
   Image *convolve_morphological(Image *src,
                                 WB_morphology_types::Convolution_type convolution_type,
                                 Errors &errors) const;
   Image *convolve(Image *src,
-                  WB_image_depth::Image_depth out_depth,
+                  Image_depth out_depth,
                   WB_morphology_types::Convolution_type convolution_type,
                   Errors &errors) const;
   static Kernel *create_32S(int rows, int cols, const pixel_32S *buf_32S);

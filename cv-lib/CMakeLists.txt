@@ -100,8 +100,8 @@ wb_data_type.hpp
 wb_defs.hpp
 wb_filename.cpp
 wb_filename.hpp
-wb_image_depth.cpp
-wb_image_depth.hpp
+        image_depth.cpp
+        image_depth.hpp
 wb_json_utils.cpp
 wb_json_utils.hpp
 wb_log.cpp

@@ -14,17 +14,17 @@ Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
-Kernel::Kernel(int rows, int cols, WB_image_depth::Image_depth depth) :
+Kernel::Kernel(int rows, int cols, Image_depth depth) :
     Image(rows, cols, 1, depth) {
   init();
 }
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
-  // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
-  WB_image_depth::Image_depth out_depth =
-      (src->get_depth() == WB_image_depth::Image_depth::CV_32F || get_depth() == WB_image_depth::Image_depth::CV_32F
-       ? WB_image_depth::Image_depth::CV_32F : WB_image_depth::Image_depth::CV_32S);
+  // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is Image_depth::CV_32S
+  Image_depth out_depth =
+      (src->get_depth() == Image_depth::CV_32F || get_depth() == Image_depth::CV_32F
+       ? Image_depth::CV_32F : Image_depth::CV_32S);
   return Kernel::convolve(src, out_depth, WB_morphology_types::Convolution_type::NUMERIC, errors);
 }
 
@@ -37,11 +37,11 @@ Image *Kernel::convolve_morphological(Image *src,
 
 // base convolution, if convolution numeric, error if CV_8U input depth
 Image *Kernel::convolve(Image *src,
-                        WB_image_depth::Image_depth out_depth,
+                        Image_depth out_depth,
                         WB_morphology_types::Convolution_type convolution_type,
                         Errors &errors) const {
-  WB_image_depth::Image_depth depth = get_depth();
-  if (depth == WB_image_depth::Image_depth::CV_8U
+  Image_depth depth = get_depth();
+  if (depth == Image_depth::CV_8U
       && convolution_type == WB_morphology_types::Convolution_type::NUMERIC) {
     errors.add("Kernel::convolve_numeric", "", "cannot perform numeric convolution with CV_8U output image");
     return nullptr;
@@ -51,7 +51,7 @@ Image *Kernel::convolve(Image *src,
     int src_components = src->get_components();
     int rows = get_rows();
     int cols = get_cols();
-    // output image is WB_image_depth::Image_depth::CV_32F if either the image and kernel are WB_image_depth::Image_depth::CV_32F, else it is WB_image_depth::Image_depth::CV_32S
+    // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is Image_depth::CV_32S
     auto *out = new Image(src_rows, src_cols, src_components, out_depth);
     int rows_half = (rows + 1) / 2;
     int cols_half = (cols + 1) / 2;
@@ -140,7 +140,7 @@ Image *Kernel::convolve(Image *src,
 }
 
 Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
-  auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32S);
+  auto *kernel = new Kernel(rows, cols, Image_depth::CV_32S);
   const pixel_32S *buf_ptr = buf_32S;
   for (int row = 0; row < rows; row++)
     for (int col = 0; col < cols; col++)
@@ -149,7 +149,7 @@ Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
 }
 
 Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
-  auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_32F);
+  auto *kernel = new Kernel(rows, cols, Image_depth::CV_32F);
   for (int i = 0; i < kernel->get_npixels(); i++) {
     kernel->buf_32F[i] = buf_32F[i];
   }
@@ -158,7 +158,7 @@ Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
 
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                            int rows, int cols, int thickness) {
-  auto *kernel = new Kernel(rows, cols, WB_image_depth::Image_depth::CV_8U);
+  auto *kernel = new Kernel(rows, cols, Image_depth::CV_8U);
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < cols; col++) {
       switch (structuring_element_type) {
@@ -185,7 +185,7 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
 }
 
 Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
-  auto *gaussian_y = new Kernel(rows, 1, WB_image_depth::Image_depth::CV_32F);
+  auto *gaussian_y = new Kernel(rows, 1, Image_depth::CV_32F);
   double fact1 = 1.0 / (sigma_y * sqrt(2 * M_PI));
   double denom1 = 2 * sigma_y * sigma_y;
   double sum = 0.0;
@@ -203,7 +203,7 @@ Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
 }
 
 Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
-  auto *gaussian_x = new Kernel(1, cols, WB_image_depth::Image_depth::CV_32F);
+  auto *gaussian_x = new Kernel(1, cols, Image_depth::CV_32F);
   double fact1 = 1.0 / (sigma_x * sqrt(2 * M_PI));
   double denom1 = 2 * sigma_x * sigma_x;
   double sum = 0.0;

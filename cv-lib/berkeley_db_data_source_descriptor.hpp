@@ -7,7 +7,7 @@
 
 #include <string>
 #include <json-c/json.h>
-#include "wb_image_depth.hpp"
+#include "image_depth.hpp"
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"

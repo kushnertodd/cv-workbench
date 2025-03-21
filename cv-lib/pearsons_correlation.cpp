@@ -58,7 +58,7 @@ double Pearsons_correlation::accumulate(int ulc_row, int ulc_col) {
 }
 
 Image *Pearsons_correlation::correlate() {
-  auto *output = new Image(image->get_rows(), image->get_rows(), 1, WB_image_depth::Image_depth::CV_32F);
+  auto *output = new Image(image->get_rows(), image->get_rows(), 1, Image_depth::CV_32F);
   for (int row = 0; row <= image_rows - pattern_rows; row++) {
     for (int col = 0; col <= image_cols - pattern_cols; col++) {
       //double mean = opm->get_mean();
