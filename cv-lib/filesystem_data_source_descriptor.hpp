@@ -15,10 +15,10 @@
 #include "wb_defs.hpp"
 
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
- public:
   std::string directory{};
   std::string filename{};
   std::string ext{};
+ public:
   Filesystem_data_source_descriptor(int m_id,
                                     WB_data_type::Data_type m_data_type,
                                     WB_data_format::Data_format m_data_format);

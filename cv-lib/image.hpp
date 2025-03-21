@@ -24,7 +24,7 @@
 #define IMAGE_COMPONENT_CHECK
 
 class Image {
-public:
+    friend class Kernel;
     Image_header image_header;
     int next_pixel{};
     // image stores one buffer per image_header->depth
@@ -32,6 +32,7 @@ public:
     pixel_32F *buf_32F{};
     pixel_32S *buf_32S{};
 
+public:
     virtual ~Image();
 
     Image();

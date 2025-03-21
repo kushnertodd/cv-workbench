@@ -59,10 +59,10 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
     bool read_image1 = false;
     bool read_image2 = false;
     for (Data_source_descriptor *input_data_source: input_data_sources) {
-      if (input_data_source->id == 1) {
+      if (input_data_source->get_id() == 1) {
         read_image1 = true;
         image1 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
-      } else if (input_data_source->id == 2) {
+      } else if (input_data_source->get_id() == 2) {
         read_image2 = true;
         image2 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
       }

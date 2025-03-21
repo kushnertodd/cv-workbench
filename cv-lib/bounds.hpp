@@ -8,10 +8,11 @@
 #include <string>
 
 class Bounds {
- public:
-
+friend class Image;
+public:
   double max_value;
   double min_value;
+
   Bounds();
   Bounds(double m_min_value, double m_max_value);
   double get_max_value() const;

@@ -12,7 +12,6 @@
 class Image_header {
     friend class Image;
 
-private:
     int rows{};
     int cols{};
     int components{}; // we're only supported 1 grayscale component or 3 color components

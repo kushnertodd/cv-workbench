@@ -25,8 +25,6 @@
  * max_value           stats.bounds.max_value    The overall maximum input value
  */
 class Histogram {
- public:
-  Histogram();
   int *bins{};
   int nbins{};
   double lower_value{};
@@ -34,7 +32,9 @@ class Histogram {
   Bounds bin_count_bounds;
   Variance_stats input_value_stats;
 
+ public:
   ~Histogram();
+  Histogram();
   Histogram(int m_nbins,
             double m_lower_value,
             double m_upper_value);

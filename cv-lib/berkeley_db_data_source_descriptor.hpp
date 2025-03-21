@@ -16,8 +16,8 @@
 #include "image.hpp"
 
 class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
- public:
   int ref_id; // database key
+ public:
   Berkeley_db_data_source_descriptor(int m_id,
                                      WB_data_type::Data_type m_data_type,
                                      WB_data_format::Data_format m_data_format);
