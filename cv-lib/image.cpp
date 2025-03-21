@@ -22,11 +22,10 @@ Image::~Image() {
     delete[] buf_32F;
 }
 
-Image::Image() = default;
+Image::Image() =  default;
 
 Image::Image(const int m_rows, const int m_cols, const int m_components,
-             const Image_depth m_depth, const double value) : image_header(m_rows, m_cols, m_components, m_depth),
-                                                              m_rows_(m_rows), m_components_(m_components) {
+             const Image_depth m_depth, const double value) : image_header(m_rows, m_cols, m_components, m_depth) {
     init(value);
 }
 
@@ -414,7 +413,7 @@ void Image::get_stats(Variance_stats &stats) const {
 */
 
 void Image::init(double value) {
-    int size = get_npixels();
+    int size = get_npixels();;
     switch (get_depth()) {
         case Image_depth::CV_8U: {
             int int_value = wb_utils::double_to_int(value);

@@ -1,7 +1,7 @@
 //
 // Created by kushn on 7/27/2022.
 //
-
+#include <string>
 #include "image_depth.hpp"
 
 const std::map<Image_depth, std::string> WB_image_depth::to_strings =

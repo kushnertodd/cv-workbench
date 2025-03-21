@@ -4,6 +4,7 @@ archive/
 .*swp
 build/
 cmake-build-debug/
+background/
 demo/
 examples/
 test/

@@ -31,8 +31,6 @@ public:
     pixel_8U *buf_8U{};
     pixel_32F *buf_32F{};
     pixel_32S *buf_32S{};
-    int m_rows_;
-    int m_components_;
 
     virtual ~Image();
 
