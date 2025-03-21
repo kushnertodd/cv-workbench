@@ -5,6 +5,7 @@
 #ifndef CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 #define CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 
+#include <cfloat>
 #include <map>
 #include <string>
 
@@ -25,8 +26,8 @@ const int pixel_32S_MIN = -2147483648;
 const int pixel_32S_MAX = 2147483647;
 typedef int pixel_32S;
 
-const int pixel_32S_MIN = -FLT_MAX;
-const int pixel_32S_MAX = FLT_MAX;
+const float pixel_32F_MIN = -FLT_MAX;
+const float pixel_32F_MAX = FLT_MAX;
 typedef float pixel_32F;
 
 typedef std::map<std::string, std::string> String_map;

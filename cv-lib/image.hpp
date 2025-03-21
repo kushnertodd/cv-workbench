@@ -21,7 +21,7 @@
  */
 
 // comment for production
-#define IMAGE_ACCESS_CHECK
+#define IMAGE_COMPONENT_CHECK
 
 class Image {
 public:
@@ -42,42 +42,43 @@ public:
 
     explicit Image(const Image_header &image_header, double value = 0.0);
 
-    // TODO: add component
     void add_8U(const pixel_8U *src, int count, Errors &errors);
 
     void add_32F(const pixel_32F *src, int count, Errors &errors);
 
     void add_32S(const pixel_32S *src, int count, Errors &errors);
 
-    bool check_grayscale(std::string module, Errors &errors) const;
+    bool check_color(const std::string &module, Errors &errors) const;
 
-    static Image *clone(Image *image, Image_depth depth, Errors &errors);
+    bool check_grayscale(const std::string &module, Errors &errors) const;
 
-    /*
+    static Image *clone(const Image *image, Image_depth depth, Errors &errors);
+
+
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
                           Errors &errors);
-    */
-    void copy(Image *image, Errors &errors) const;
 
-    void draw_line_segment(const Line_segment &line_segment, double value, int component /* = 0*/) const;
+    void copy(const Image *image, Errors &errors) const;
 
-    void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component /* = 0*/) const;
+    void draw_line_segment(const Line_segment &line_segment, double value, int component = 0) const;
 
-    void draw_line_segments(std::list<Line_segment> &line_segments, double value, int component /* = 0*/) const;
+    void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component = 0) const;
 
-    void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component /* = 0*/) const;
+    void draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component = 0) const;
 
-    void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component /* = 0*/) const;
+    void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component = 0) const;
 
-    double get(int row, int col, int component /* = 0*/) const;
+    void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component = 0) const;
 
-    double get(const Point &point, int component /* = 0*/) const;
+    double get(int row, int col, int component = 0) const;
 
-    pixel_8U get_8U(int row, int col, int component /* = 0*/) const;
+    double get(const Point &point, int component = 0) const;
 
-    pixel_32F get_32F(int row, int col, int component /* = 0*/) const;
+    pixel_8U get_8U(int row, int col, int component = 0) const;
 
-    pixel_32S get_32S(int row, int col, int component /* = 0*/) const;
+    pixel_32F get_32F(int row, int col, int component = 0) const;
+
+    pixel_32S get_32S(int row, int col, int component = 0) const;
 
     int get_cols() const;
 
@@ -93,14 +94,18 @@ public:
 
     double get_scaled(int row, int col, double lower_in,
                       double upper_in, double lower_out,
-                      double upper_out, int component /* = 0*/) const;
+                      double upper_out, int component = 0) const;
 
     //void get_stats(Variance_stats &stats) const;
     void init(double value = 0.0);
 
+    bool is_color() const;
+
+    bool is_grayscale() const;
+
     void log(std::list<WB_log_entry> &log_entries) const;
 
-    static Image *read(std::string &path, Errors &errors);
+    static Image *read(const std::string &path, Errors &errors);
 
     static Image *read(FILE *fp, Errors &errors);
 
@@ -110,30 +115,27 @@ public:
 
     static Image *read_jpeg(const std::string &path, Errors &errors);
 
-    int row_col_to_index(int row, int col, int component /* = 0*/) const;
+    int row_col_to_index(int row, int col, int component = 0) const;
 
-    static Image *scale_image(Image *image, double lower_in,
+    static Image *scale_image(const Image *image, double lower_in,
                               double upper_in, double lower_out,
-                              double upper_out, Image_depth depth, int component /* = 0*/);
+                              double upper_out, Image_depth depth, int component = 0);
 
     static double scale_pixel(double in_value, double lower_in,
                               double upper_in, double lower_out,
                               double upper_out);
 
-    static Image *subtract(Image *src_image, Image *subtract_image, Errors &errors);
+    static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
 
-    // TODO: add component
-    void set(int row, int col, double value, int component /* = 0*/) const;
+    void set(int row, int col, double value, int component = 0) const;
 
-    void set(Point &point, double value, int component /* = 0*/) const;
+    void set(const Point &point, double value, int component = 0) const;
 
-    void set_8U(int row, int col, pixel_8U value, int component /* = 0*/) const;
+    void set_8U(int row, int col, pixel_8U value, int component = 0) const;
 
-    void set_32F(int row, int col, pixel_32F value, int component /* = 0*/) const;
+    void set_32F(int row, int col, pixel_32F value, int component = 0) const;
 
-    void set_32S(int row, int col, pixel_32S value, int component /* = 0*/) const;
-
-    Image *to_rgb(int components) const;
+    void set_32S(int row, int col, pixel_32S value, int component = 0) const;
 
     std::string to_string(const std::string &prefix = "") const;
 

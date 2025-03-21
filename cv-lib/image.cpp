@@ -22,7 +22,8 @@ Image::~Image() {
     delete[] buf_32F;
 }
 
-Image::Image() =  default;
+
+Image::Image() = default;
 
 Image::Image(const int m_rows, const int m_cols, const int m_components,
              const Image_depth m_depth, const double value) : image_header(m_rows, m_cols, m_components, m_depth) {
@@ -150,7 +151,15 @@ void Image::add_32S(const pixel_32S *src, int count, Errors &errors) {
     }
 }
 
-bool Image::check_grayscale(const std::string module, Errors &errors) const {
+bool Image::check_color(const std::string &module, Errors &errors) const {
+    if (get_components() != 3) {
+        errors.add(module, "", "image not color");
+        return false;
+    }
+    return true;
+}
+
+bool Image::check_grayscale(const std::string &module, Errors &errors) const {
     if (get_components() != 1) {
         errors.add(module, "", "image not grayscale");
         return false;
@@ -158,13 +167,15 @@ bool Image::check_grayscale(const std::string module, Errors &errors) const {
     return true;
 }
 
+
 /***
  * Not really what want. Doesn't copy contents.
  * @param image
  * @param depth
+ * @param errors
  * @return
  */
-Image *Image::clone(Image *image, Image_depth depth, Errors &errors) {
+Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
     auto *new_image = new Image(image->get_rows(),
                                 image->get_cols(),
                                 image->get_components(),
@@ -176,6 +187,7 @@ Image *Image::clone(Image *image, Image_depth depth, Errors &errors) {
 /**
  * return linear combination of input images:
  * pixel_32F output-pixel = image1-pixel * scale1 + image2-pixel * scale2 + offset;
+ * @param image
  * @param image1
  * @param image2
  * @param scale1
@@ -184,41 +196,39 @@ Image *Image::clone(Image *image, Image_depth depth, Errors &errors) {
  * @param errors
  * @return
  */
-/*
 Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2, double offset,
                       Errors &errors) {
-  int rows1;
-  int rows2;
-  int cols1;
-  int cols2;
+    int rows1;
+    int rows2;
+    int cols1;
+    int cols2;
 
-  rows1 = input1->get_rows();
-  rows2 = input2->get_rows();
-  cols1 = input1->get_cols();
-  cols2 = input2->get_cols();
-  if (rows1 != rows2 || cols1 != cols2) {
-    std::ostringstream os;
-    os << "input1 size (" << rows1 << ", " << cols1 << ") not the same as input2 size ("
-       << rows2 << ", " << cols2 << ")";
-    errors.add("Operator_transform_image_combine::run", "", os.str());
-  }
-  Image *output = nullptr;
-  if (!errors.has_error()) {
-    output = new Image(rows1, cols1, 1, Image_depth::CV_32F);
-    for (int row = 0; row < rows1; row++)
-      for (int col = 0; col < cols1; col++) {
-        double pixel1 = input1->get(row, col);
-        double pixel2 = input2->get(row, col);
-        double value = pixel1 * scale1 + pixel2 * scale2 + offset;
-        output->set(row, col, value);
-      }
-  }
-  return output;
+    rows1 = input1->get_rows();
+    rows2 = input2->get_rows();
+    cols1 = input1->get_cols();
+    cols2 = input2->get_cols();
+    if (rows1 != rows2 || cols1 != cols2) {
+        std::ostringstream os;
+        os << "input1 size (" << rows1 << ", " << cols1 << ") not the same as input2 size ("
+                << rows2 << ", " << cols2 << ")";
+        errors.add("Operator_transform_image_combine::run", "", os.str());
+    }
+    Image *output = nullptr;
+    if (!errors.has_error()) {
+        output = new Image(rows1, cols1, 1, Image_depth::CV_32F);
+        for (int row = 0; row < rows1; row++)
+            for (int col = 0; col < cols1; col++) {
+                double pixel1 = input1->get(row, col);
+                double pixel2 = input2->get(row, col);
+                double value = pixel1 * scale1 + pixel2 * scale2 + offset;
+                output->set(row, col, value);
+            }
+    }
+    return output;
 }
-*/
 
 // copies CV_32S and CV_32F to CV_8U with truncation to 0..255
-void Image::copy(Image *image, Errors &errors) const {
+void Image::copy(const Image *image, Errors &errors) const {
     if (get_npixels() != image->get_npixels()) {
         errors.add("Image::copy", "", "images not the same size ");
         return;
@@ -299,28 +309,53 @@ void Image::copy(Image *image, Errors &errors) const {
 }
 
 void Image::draw_line_segment(const Line_segment &line_segment, double value, int component) const {
-    if (debug)
-        std::cout << "Hough::draw_lines; line_segment (" << line_segment.to_string()
-                << ") value " << value << std::endl;
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::draw_line_segment: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     for (Point point: line_segment.line_points) {
         set(point, value, component);
     }
 }
 
 void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::draw_line_segment: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     Line_segment line_segment(row1, col1, row2, col2);
     for (Point point: line_segment.line_points) {
         set(point, value, component);
     }
 }
 
-void Image::draw_line_segments(std::list<Line_segment> &line_segments, double value, int component) const {
+void Image::draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::draw_line_segments: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     for (const Line_segment &line_segment: line_segments) {
         draw_line_segment(line_segment, value, component);
     }
 }
 
 void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::draw_rectangle: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     Line_segment line_segment1(row1, col1, row1, col2);
     Line_segment line_segment2(row1, col2, row2, col2);
     Line_segment line_segment3(row2, col2, row2, col1);
@@ -332,6 +367,13 @@ void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value,
 }
 
 void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::draw_rectangle_filled: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     int row_min = std::min(row1, row2);
     int col_min = std::min(col1, col2);
     int row_max = std::max(row1, row2);
@@ -341,7 +383,14 @@ void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double
             set(row, col, value, component);
 }
 
-double Image::get(int row, int col, int component) const {
+double Image::get(const int row, const int col, const int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     int index;
     switch (get_depth()) {
         case Image_depth::CV_8U:
@@ -350,7 +399,7 @@ double Image::get(int row, int col, int component) const {
 
         case Image_depth::CV_32S:
             index = row_col_to_index(row, col, component);
-            return (pixel_32F) buf_32S[index];
+            return static_cast<pixel_32F>(buf_32S[index]);
 
         case Image_depth::CV_32F:
             index = row_col_to_index(row, col, component);
@@ -362,20 +411,48 @@ double Image::get(int row, int col, int component) const {
 }
 
 double Image::get(const Point &point, const int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     return get(point.row, point.col, component);
 }
 
 auto Image::get_8U(const int row, const int col, const int component) const -> pixel_8U {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get_8U: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     int index = row_col_to_index(row, col, component);
     return buf_8U[index];
 }
 
 auto Image::get_32F(const int row, const int col, const int component) const -> pixel_32F {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get_32F: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     int index = row_col_to_index(row, col, component);
     return buf_32F[index];
 }
 
 pixel_32S Image::get_32S(const int row, const int col, const int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get_32S: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     int index = row_col_to_index(row, col, component);
     return buf_32S[index];
 }
@@ -395,6 +472,13 @@ int Image::get_rows() const { return image_header.rows; }
 double Image::get_scaled(int row, int col, double lower_in,
                          double upper_in, double lower_out,
                          double upper_out, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::get_scaled: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0.0;
+    }
+#endif
     double pixel_in = get(row, col, component);
     double pixel_out = scale_pixel(pixel_in, lower_in,
                                    upper_in, lower_out, upper_out);
@@ -441,6 +525,14 @@ void Image::init(double value) {
     }
 }
 
+bool Image::is_color() const {
+    return get_components() == 3;
+}
+
+bool Image::is_grayscale() const {
+    return get_components() == 1;
+}
+
 void Image::log(std::list<WB_log_entry> &log_entries) const {
     Variance_stats stats;
     //get_stats(stats);
@@ -466,7 +558,7 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
     log_entries.push_back(log_entry_max_value);
 }
 
-Image *Image::read(std::string &path, Errors &errors) {
+Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
     Image *image = nullptr;
     if (fp) {
@@ -543,7 +635,7 @@ typedef struct my_error_mgr *my_error_ptr;
 
 // for read_jpeg()
 void my_error_exit(j_common_ptr cinfo) {
-    my_error_ptr myerr = (my_error_ptr) cinfo->err;
+    my_error_ptr myerr = reinterpret_cast<my_error_ptr>(cinfo->err);
     (*cinfo->err->output_message)(cinfo);
     longjmp(myerr->setjmp_buffer, 1);
 }
@@ -579,7 +671,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
             new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U);
     /* Make a one-row-high sample array that will go away when done with image */
     buffer = (*cinfo.mem->alloc_sarray)
-            ((j_common_ptr) &cinfo, JPOOL_IMAGE, image->get_row_stride(), 1);
+            (reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE, image->get_row_stride(), 1);
     /* Step 6: while (scan lines remain to be read) */
     while (cinfo.output_scanline < cinfo.output_height) {
         (void) jpeg_read_scanlines(&cinfo, buffer, 1);
@@ -645,6 +737,13 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 }
 
 int Image::row_col_to_index(int row, int col, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::row_col_to_index: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return 0;
+    }
+#endif
     assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
     return row * get_row_stride() + col * image_header.components + component;
 }
@@ -660,9 +759,11 @@ int Image::row_col_to_index(int row, int col, int component) const {
  * @param upper_in
  * @param lower_out
  * @param upper_out
+ * @param depth
+ * @param component
  * @return
  */
-Image *Image::scale_image(Image *image, double lower_in,
+Image *Image::scale_image(const Image *image, double lower_in,
                           double upper_in, double lower_out,
                           double upper_out, Image_depth depth, int component) {
     if (debug)
@@ -670,6 +771,13 @@ Image *Image::scale_image(Image *image, double lower_in,
                 << " upper_in " << upper_in
                 << " lower_out " << lower_out
                 << " upper_out " << upper_out << " depth " << WB_image_depth::to_string(depth) << std::endl;
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > image->get_components()) {
+        std::cout << "Image::scale_image: component " << component << " too large (" <<
+                wb_utils::int_to_string(image->get_components()) << ")" << std::endl;
+        return nullptr;
+    }
+#endif
     auto *convert_image = new Image(image->get_rows(),
                                     image->get_cols(),
                                     image->get_components(),
@@ -697,6 +805,13 @@ double Image::scale_pixel(double pixel_in,
 
 // -> CV_8U may lose precision/overflow
 void Image::set(int row, int col, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::set: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     switch (get_depth()) {
         case Image_depth::CV_8U:
             buf_8U[row_col_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
@@ -716,7 +831,7 @@ void Image::set(int row, int col, double value, int component) const {
 }
 
 // subtracts image without underflow checking for CV_8U images
-Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) {
+Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
     if (src_image->get_npixels() != subtract_image->get_npixels()) {
         errors.add("Image::subtract", "", "images not the same size ");
         return nullptr;
@@ -755,53 +870,48 @@ Image *Image::subtract(Image *src_image, Image *subtract_image, Errors &errors) 
     return out_image;
 }
 
-void Image::set(Point &point, double value, int component) const {
+void Image::set(const Point &point, double value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::set: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     set(point.row, point.col, value, component);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::set_8U: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     buf_8U[row_col_to_index(row, col, component)] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::set_32F: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
+    }
+#endif
     buf_32F[row_col_to_index(row, col, component)] = value;
 }
 
 void Image::set_32S(int row, int col, pixel_32S value, int component) const {
-    buf_32S[row_col_to_index(row, col, component)] = value;
-}
-
-/**
- * convert grayscale image to rgb
- * preconditions:
- *   components = 1
- * @param component
- * @return
- */
-Image *Image::to_rgb(int component) const {
-    if (debug)
-        std::cout << "Image::clone: component " << component << " " << to_string() << std::endl;
-    Image_header new_image_header(get_rows(),
-                                  get_cols(),
-                                  3,
-                                  get_depth());
-    auto *new_image = new Image(new_image_header);
-    for (int i = 0; i < new_image->get_npixels(); i++) {
-        switch (image_header.depth) {
-            case Image_depth::CV_8U:
-                new_image->buf_8U[i * 3 + component] = buf_8U[i];
-                break;
-            case Image_depth::CV_32S:
-                new_image->buf_32S[i * 3 + component] = buf_32S[i];
-                break;
-            case Image_depth::CV_32F:
-                new_image->buf_32F[i * 3 + component] = buf_32F[i];
-                break;
-            default:
-                break;
-        }
+#ifdef IMAGE_COMPONENT_CHECK
+    if (component > get_components()) {
+        std::cout << "Image::set_32S: component " << component << " too large (" <<
+                wb_utils::int_to_string(get_components()) << ")" << std::endl;
+        return;
     }
-    return new_image;
+#endif
+    buf_32S[row_col_to_index(row, col, component)] = value;
 }
 
 std::string Image::to_string(const std::string &prefix) const {
@@ -811,8 +921,7 @@ std::string Image::to_string(const std::string &prefix) const {
 }
 
 void Image::write(const std::string &path, Errors &errors) const {
-    FILE *fp = file_utils::open_file_write(path, errors);
-    if (fp) {
+    if (FILE *fp = file_utils::open_file_write(path, errors)) {
         write(fp, errors);
         fclose(fp);
     }
@@ -901,8 +1010,7 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
 }
 
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
-    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
-    if (ofs) {
+    if (std::ofstream ofs = file_utils::open_file_write_text(path, errors)) {
         write_text(ofs, "\t", errors);
         ofs.close();
     }

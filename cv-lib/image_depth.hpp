@@ -13,15 +13,16 @@ enum class Image_depth {
     CV_32S,
     CV_32F,
     UNDEFINED
-  };
+};
 
 class WB_image_depth {
- public:
+public:
+    static const std::map<Image_depth, std::string> to_strings;
+    static const std::map<std::string, Image_depth> from_strings;
 
-  static const std::map<Image_depth, std::string> to_strings;
-  static const std::map<std::string, Image_depth> from_strings;
-  static std::string to_string(Image_depth depth);
-  static Image_depth from_string(const std::string &text);
+    static std::string to_string(Image_depth depth);
+
+    static Image_depth from_string(const std::string &text);
 };
 
 #endif //SRC__CV_IMAGE_DEPTH_HPP_
