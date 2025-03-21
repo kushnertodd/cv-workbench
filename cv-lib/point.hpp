@@ -7,9 +7,11 @@
 #include <string>
 
 class Point {
- public:
+friend class Image;
+friend class Line_segment;
   int row{};
   int col{};
+ public:
   Point();
   Point(int m_row, int m_col);
   Point(const Point &point);

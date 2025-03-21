@@ -11,12 +11,12 @@
 #include "wb_defs.hpp"
 
 class Wb_filename {
- public:
   std::string filename{};
   std::string root{};
   std::string ext{};
   WB_data_format::Data_format format{};
 
+ public:
   Wb_filename();
   Wb_filename(std::string m_filename,
               std::string m_root,
