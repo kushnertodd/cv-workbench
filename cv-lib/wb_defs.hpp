@@ -10,11 +10,10 @@
 #include <string>
 
 namespace cv_enums {
-
-enum class WB_threshold_type {
-  FIXED,
-  PERCENTAGE
-};
+    enum class WB_threshold_type {
+        FIXED,
+        PERCENTAGE
+    };
 }
 
 // built-in types

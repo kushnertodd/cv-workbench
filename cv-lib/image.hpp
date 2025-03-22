@@ -81,9 +81,12 @@ public:
 
     pixel_32S get_32S(int row, int col, int component = 0) const;
 
-double get_blue(const int row, const int col) const;
+    double get_blue(const int row, const int col) const;
+
     int get_cols() const;
-double get_green(const int row, const int col) const;
+
+    double get_green(const int row, const int col) const;
+
     double get_red(const int row, const int col) const;
 
     int get_components() const;
