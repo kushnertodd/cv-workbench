@@ -310,11 +310,7 @@ void Image::copy(const Image *image, Errors &errors) const {
 
 void Image::draw_line_segment(const Line_segment &line_segment, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::draw_line_segment: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+     assert (component <= get_components());
 #endif
     for (Point point: line_segment.line_points) {
         set(point, value, component);
@@ -323,11 +319,7 @@ void Image::draw_line_segment(const Line_segment &line_segment, double value, in
 
 void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::draw_line_segment: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     Line_segment line_segment(row1, col1, row2, col2);
     for (Point point: line_segment.line_points) {
@@ -337,11 +329,7 @@ void Image::draw_line_segment(int row1, int col1, int row2, int col2, double val
 
 void Image::draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::draw_line_segments: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     for (const Line_segment &line_segment: line_segments) {
         draw_line_segment(line_segment, value, component);
@@ -350,11 +338,7 @@ void Image::draw_line_segments(const std::list<Line_segment> &line_segments, dou
 
 void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::draw_rectangle: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     Line_segment line_segment1(row1, col1, row1, col2);
     Line_segment line_segment2(row1, col2, row2, col2);
@@ -368,11 +352,7 @@ void Image::draw_rectangle(int row1, int col1, int row2, int col2, double value,
 
 void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::draw_rectangle_filled: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     int row_min = std::min(row1, row2);
     int col_min = std::min(col1, col2);
@@ -385,11 +365,7 @@ void Image::draw_rectangle_filled(int row1, int col1, int row2, int col2, double
 
 double Image::get(const int row, const int col, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     int index;
     switch (get_depth()) {
@@ -412,22 +388,14 @@ double Image::get(const int row, const int col, const int component) const {
 
 double Image::get(const Point &point, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     return get(point.row, point.col, component);
 }
 
 auto Image::get_8U(const int row, const int col, const int component) const -> pixel_8U {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get_8U: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     int index = row_col_to_index(row, col, component);
     return buf_8U[index];
@@ -435,11 +403,7 @@ auto Image::get_8U(const int row, const int col, const int component) const -> p
 
 auto Image::get_32F(const int row, const int col, const int component) const -> pixel_32F {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get_32F: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     int index = row_col_to_index(row, col, component);
     return buf_32F[index];
@@ -447,17 +411,22 @@ auto Image::get_32F(const int row, const int col, const int component) const -> 
 
 pixel_32S Image::get_32S(const int row, const int col, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get_32S: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     int index = row_col_to_index(row, col, component);
     return buf_32S[index];
 }
 
+double Image::get_blue(const int row, const int col) const {
+  return get(row, col, RGB_BLUE);
+  }
 int Image::get_cols() const { return image_header.cols; }
+double Image::get_green(const int row, const int col) const {
+  return get(row, col, RGB_GREEN);
+  }
+double Image::get_red(const int row, const int col) const {
+  return get(row, col, RGB_RED);
+  }
 
 int Image::get_components() const { return image_header.components; }
 
@@ -473,11 +442,7 @@ double Image::get_scaled(int row, int col, double lower_in,
                          double upper_in, double lower_out,
                          double upper_out, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::get_scaled: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0.0;
-    }
+    assert (component <= get_components());
 #endif
     double pixel_in = get(row, col, component);
     double pixel_out = scale_pixel(pixel_in, lower_in,
@@ -738,13 +703,9 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 
 int Image::row_col_to_index(int row, int col, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::row_col_to_index: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return 0;
-    }
-#endif
+    assert (component <= get_components());
     assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
+#endif
     return row * get_row_stride() + col * image_header.components + component;
 }
 
@@ -772,11 +733,7 @@ Image *Image::scale_image(const Image *image, double lower_in,
                 << " lower_out " << lower_out
                 << " upper_out " << upper_out << " depth " << WB_image_depth::to_string(depth) << std::endl;
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > image->get_components()) {
-        std::cout << "Image::scale_image: component " << component << " too large (" <<
-                wb_utils::int_to_string(image->get_components()) << ")" << std::endl;
-        return nullptr;
-    }
+    assert (component <= image->get_components());
 #endif
     auto *convert_image = new Image(image->get_rows(),
                                     image->get_cols(),
@@ -806,11 +763,7 @@ double Image::scale_pixel(double pixel_in,
 // -> CV_8U may lose precision/overflow
 void Image::set(int row, int col, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::set: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     switch (get_depth()) {
         case Image_depth::CV_8U:
@@ -872,44 +825,28 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
 
 void Image::set(const Point &point, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::set: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     set(point.row, point.col, value, component);
 }
 
 void Image::set_8U(int row, int col, pixel_8U value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::set_8U: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     buf_8U[row_col_to_index(row, col, component)] = value;
 }
 
 void Image::set_32F(int row, int col, pixel_32F value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::set_32F: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     buf_32F[row_col_to_index(row, col, component)] = value;
 }
 
 void Image::set_32S(int row, int col, pixel_32S value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
-    if (component > get_components()) {
-        std::cout << "Image::set_32S: component " << component << " too large (" <<
-                wb_utils::int_to_string(get_components()) << ")" << std::endl;
-        return;
-    }
+    assert (component <= get_components());
 #endif
     buf_32S[row_col_to_index(row, col, component)] = value;
 }

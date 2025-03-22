@@ -1,3 +1,4 @@
+
 //
 // Created by kushn on 7/27/2022.
 //
@@ -13,6 +14,12 @@ enum class Image_depth {
     CV_32S,
     CV_32F,
     UNDEFINED
+};
+
+enum  Image_colors {
+ RGB_RED	=	0,	// Offset of Red in an RGB scanline element
+RGB_GREEN	=1,	// Offset of Green
+ RGB_BLUE	=20	// Offset of Blue
 };
 
 class WB_image_depth {
