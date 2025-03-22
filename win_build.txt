@@ -1,0 +1,20 @@
+building cv-workbench from windows
+
+- install openssl
+ + install perl
+  + activestate
+ + nasm
+  = add nasm to PATH
+  C:\Program Files\NASM
+https://github.com/openssl/openssl 
+Use Visual Studio Developer Command Prompt with administrative privileges
+perl Configure 
+nmake
+nmake test
+nmake install
+
+- install jpeglib
+   Open the Developer Command Prompt for VS 2019-2022, change to the
+   source directory and execute the command line
+	nmake /f makefile.vs setup-v16
+	
