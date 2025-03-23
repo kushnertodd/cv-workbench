@@ -21,6 +21,11 @@ enum Image_colors {
     RGB_BLUE = 20 // Offset of Blue
 };
 
+enum Image_components {
+    COMPONENTS_GRAYSCALE = 1,
+    COMPONENTS_RGB = 3
+};
+
 class WB_image_depth {
     static const std::map<Image_depth, std::string> to_strings;
     static const std::map<std::string, Image_depth> from_strings;

@@ -3,6 +3,7 @@
 //
 
 #include <cassert>
+#include <cmath>
 #include <csetjmp>
 #include <cstdio>
 #include <fstream>
@@ -182,6 +183,55 @@ Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
                                 depth);
     new_image->copy(image, errors);
     return new_image;
+}
+
+
+// color edge detection
+Image *Image::color_edge(Image *src, Errors &errors) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    assert(src->is_color());
+#endif
+    int rows = src->get_rows();
+    int cols = src->get_cols();
+    auto *out = new Image(rows, cols, COMPONENTS_RGB, Image_depth::CV_32F);
+    int row_lower = 1;
+    int row_upper = rows - 1;
+    int col_lower = 1;
+    int col_upper = cols - 1;
+    if (debug)
+    std::cout << "row_lower " << row_lower
+        << ", row_upper " << row_upper
+        << ", col_lower " << col_lower
+        << ", col_upper " << col_upper << std::endl;
+    for (int row = row_lower; row <= row_upper; row++) {
+        if (debug)
+                std::cout << "row " << row << std::endl;
+            for (int col = col_lower; col <= col_upper; col++) {
+                if (debug)
+                    std::cout << "col " << col << std::endl;
+                double sum = 0.0;
+                double image_center = src->get(row, col);
+                double image_up = src->get(row - 1, col);
+                double image_down =src-> get(row +1, col);
+                double image_left = src->get(row, col-1);
+                double image_right = src->get(row, col+1);
+                sum +=
+                    sqrt((image_up-image_center) * (image_up-image_center));
+                sqrt((image_down-image_center) * (image_down-image_center));
+                sqrt((image_left-image_center) * (image_left-image_center));
+                sqrt((image_right-image_center) * (image_right-image_center));
+                if (debug) {
+                    std::cout << "image_center  = " << image_center << std::endl;
+                    std::cout << "image_up  = " << image_up << std::endl;
+                    std::cout << "image_down  = " << image_down << std::endl;
+                    std::cout << "image_left  = " << image_left << std::endl;
+                    std::cout << "image_right  = " << image_right << std::endl;
+                }
+            }
+            if (debug)
+                std::cout << std::endl;
+        }
+    return out;
 }
 
 /**
