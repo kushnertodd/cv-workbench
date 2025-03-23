@@ -54,7 +54,8 @@ public:
     bool check_grayscale(const std::string &module, Errors &errors) const;
 
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
-  Image *color_edge(Image *src, Errors &errors) const;
+
+    Image *color_edge(Image *src, Errors &errors) const;
 
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
                           Errors &errors);
