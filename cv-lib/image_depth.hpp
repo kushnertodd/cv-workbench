@@ -18,7 +18,7 @@ enum class Image_depth {
 enum Image_colors {
     RGB_RED = 0, // Offset of Red in an RGB scanline element
     RGB_GREEN = 1, // Offset of Green
-    RGB_BLUE = 20 // Offset of Blue
+    RGB_BLUE = 2 // Offset of Blue
 };
 
 enum Image_components {
