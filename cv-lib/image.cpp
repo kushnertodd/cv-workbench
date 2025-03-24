@@ -193,11 +193,11 @@ Image *Image::color_edge(Image *src, Errors &errors) const {
 #endif
     int rows = src->get_rows();
     int cols = src->get_cols();
-    auto *out = new Image(rows, cols, COMPONENTS_RGB, Image_depth::CV_32F);
+    auto *out = new Image(rows, cols, COMPONENTS_RGB, Image_depth::CV_8U);
     int row_lower = 1;
-    int row_upper = rows - 1;
+    int row_upper = rows - 2;
     int col_lower = 1;
-    int col_upper = cols - 1;
+    int col_upper = cols - 2;
     if (debug)
         std::cout << "row_lower " << row_lower
                 << ", row_upper " << row_upper
@@ -757,6 +757,8 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 int Image::row_col_to_index(int row, int col, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_components());
+    if (!(row >= 0 && row < get_rows() && col >= 0 && col < get_cols()))
+        int i = 0;
     assert(row >= 0 && row < get_rows() && col >= 0 && col < get_cols());
 #endif
     return row * get_row_stride() + col * image_header.components + component;

@@ -44,33 +44,9 @@ void Operator_filter_edge_color::run(std::list<Data_source_descriptor *> &input_
     if (!errors.has_error() && input_ptr != nullptr)
         input->check_color("Operator_filter_edge_color::run", errors);
     if (!errors.has_error() && input_ptr != nullptr) {
-        Kernel *color_kernel_row_ptr = nullptr;
-        Kernel *color_kernel_col_ptr = nullptr;
-        if (extent_str == "adjacent") {
-            pixel_32F coeffs_32F_row[] = {1, 0, -1};
-            color_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
-            pixel_32F coeffs_32F_col[] = {0.25, 0.5, 0.25};
-            color_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
-        } else if (extent_str == "0") {
-            pixel_32F coeffs_32F_row[] = {0.25, 0.5, 0.25};
-            color_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
-            // this is reversed from the separable filter reference
-            pixel_32F coeffs_32F_col[] = {-1, 0, 1};
-            color_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
-        }
-        std::unique_ptr<Kernel> color_kernel_row(color_kernel_row_ptr);
-        std::unique_ptr<Kernel> color_kernel_col(color_kernel_col_ptr);
-        Image *output1_ptr = color_kernel_row->convolve_numeric(input.get(), errors);
-        std::unique_ptr<Image> output1(output1_ptr);
-        Image *output2_ptr = nullptr;
-        if (!errors.has_error() && output1_ptr != nullptr)
-            output2_ptr = color_kernel_col->convolve_numeric(output1.get(), errors);
-        std::unique_ptr<Image> output2(output2_ptr);
-        if (!errors.has_error() && output2_ptr != nullptr)
-
-            for (Data_source_descriptor *output_data_store: output_data_stores)
-                output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_color::run", errors);
-        if (!errors.has_error() && output2_ptr != nullptr)
-            output2->log(log_entries);
+        Image *output_ptr = input_ptr->color_edge(input.get(), errors);
+        std::unique_ptr<Image> output1(output_ptr);
+        if (!errors.has_error() && output_ptr != nullptr)
+            output_ptr->log(log_entries);
     }
 }

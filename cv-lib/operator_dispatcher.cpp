@@ -2,6 +2,7 @@
 // Created by kushn on 6/14/2022.
 //
 
+#include "operator_filter_edge_color.hpp"
 #include "operator_filter_edge_kirsch.hpp"
 #include "operator_filter_edge_laplacian.hpp"
 #include "operator_filter_edge_prewitt.hpp"
@@ -29,7 +30,8 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
   if (debug)
     std::cout << "Operator_dispatcher::create_operator operator_name '" << operator_name << "'" << std::endl;
   // Creator explicitly creates classes according to type
-  if (operator_name == "filter-edge-kirsch") pOperator = new Operator_filter_edge_kirsch();
+  if (operator_name == "filter-edge-color") pOperator = new Operator_filter_edge_color();
+  else if (operator_name == "filter-edge-kirsch") pOperator = new Operator_filter_edge_kirsch();
   else if (operator_name == "filter-edge-laplacian") pOperator = new Operator_filter_edge_laplacian();
   else if (operator_name == "filter-edge-prewitt") pOperator = new Operator_filter_edge_prewitt();
   else if (operator_name == "filter-edge-roberts") pOperator = new Operator_filter_edge_roberts();
