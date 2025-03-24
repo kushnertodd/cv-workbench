@@ -9,7 +9,6 @@ cmake-build-debug/
 background/
 demo/
 examples/
-test/
 CMakeFiles/
 .cmake/
 CMakeCache.txt
