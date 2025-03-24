@@ -209,17 +209,17 @@ Image *Image::color_edge(Image *src, Errors &errors) const {
         for (int col = col_lower; col <= col_upper; col++) {
             if (debug)
                 std::cout << "col " << col << std::endl;
-            double sum = 0.0;
             double image_center = src->get(row, col);
             double image_up = src->get(row - 1, col);
             double image_down = src->get(row + 1, col);
             double image_left = src->get(row, col - 1);
             double image_right = src->get(row, col + 1);
-            sum +=
-                    sqrt((image_up - image_center) * (image_up - image_center));
-            sqrt((image_down - image_center) * (image_down - image_center));
-            sqrt((image_left - image_center) * (image_left - image_center));
-            sqrt((image_right - image_center) * (image_right - image_center));
+            double sum =
+                    sqrt((image_up - image_center) * (image_up - image_center)
+                         + (image_down - image_center) * (image_down - image_center)
+                         + (image_left - image_center) * (image_left - image_center)
+                         + (image_right - image_center) * (image_right - image_center));
+            out->set(row, col, sum);
             if (debug) {
                 std::cout << "image_center  = " << image_center << std::endl;
                 std::cout << "image_up  = " << image_up << std::endl;
