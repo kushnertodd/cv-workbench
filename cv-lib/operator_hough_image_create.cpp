@@ -42,32 +42,32 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
   bool saw_threshold = false;
   bool saw_lrc_row = false;
   bool saw_lrc_col = false;
-  if (Operator_utils::has_parameter(operator_parameters, "theta_inc")) {
+  if (Operator_utils::has_parameter(operator_parameters, "theta-inc")) {
     saw_theta_inc = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "theta_inc", theta_inc, errors);
+                                      operator_parameters, "theta-inc", theta_inc, errors);
   }
   if (Operator_utils::has_parameter(operator_parameters, "threshold")) {
     saw_threshold = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                       operator_parameters, "threshold", threshold, errors);
   }
-  if (Operator_utils::has_parameter(operator_parameters, "ulc_row")) {
+  if (Operator_utils::has_parameter(operator_parameters, "ulc-row")) {
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "ulc_row", ulc_row, errors);
+                                      operator_parameters, "ulc-row", ulc_row, errors);
   } else
     ulc_row = 0;
-  if (Operator_utils::has_parameter(operator_parameters, "ulc_col")) {
+  if (Operator_utils::has_parameter(operator_parameters, "ulc-col")) {
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "ulc_col", ulc_col, errors);
+                                      operator_parameters, "ulc-col", ulc_col, errors);
   } else
     ulc_col = 0;
-  if (Operator_utils::has_parameter(operator_parameters, "lrc_row")) {
+  if (Operator_utils::has_parameter(operator_parameters, "lrc-row")) {
     saw_lrc_row = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "lrc_row", lrc_row, errors);
+                                      operator_parameters, "lrc-row", lrc_row, errors);
   }
-  if (Operator_utils::has_parameter(operator_parameters, "lrc_col")) {
+  if (Operator_utils::has_parameter(operator_parameters, "lrc-col")) {
     saw_lrc_col = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                       operator_parameters, "lrc_col", lrc_col, errors);

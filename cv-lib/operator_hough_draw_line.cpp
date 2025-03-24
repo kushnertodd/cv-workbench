@@ -37,20 +37,20 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
   int theta_inc;
   Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                    operator_parameters, "theta_inc", theta_inc, errors);
+                                    operator_parameters, "theta-inc", theta_inc, errors);
   double rho;
   Operator_utils::get_real_parameter("Operator_transform_image_create::run",
                                      operator_parameters, "rho", rho, errors);
   int theta_index;
   Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                    operator_parameters, "theta_index", theta_index, errors);
+                                    operator_parameters, "theta-index", theta_index, errors);
   double pixel_value;
   Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                     operator_parameters, "pixel_value", pixel_value, errors);
+                                     operator_parameters, "pixel-value", pixel_value, errors);
   int out_component;
-  if (Operator_utils::has_parameter(operator_parameters, "out_component")) {
+  if (Operator_utils::has_parameter(operator_parameters, "out-component")) {
     Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                      operator_parameters, "out_component", out_component, errors);
+                                      operator_parameters, "out-component", out_component, errors);
   } else
     out_component = 1;
   Data_source_descriptor *input_data_source = input_data_sources.front();

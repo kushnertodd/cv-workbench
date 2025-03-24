@@ -76,7 +76,6 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
       output2_ptr = sobel_kernel_col->convolve_numeric(output1.get(), errors);
     std::unique_ptr<Image> output2(output2_ptr);
     if (!errors.has_error() && output2_ptr != nullptr)
-
       for (Data_source_descriptor *output_data_store: output_data_stores)
         output_data_store->write_operator_image(output2.get(), "Operator_filter_edge_sobel::run", errors);
     if (!errors.has_error() && output2_ptr != nullptr)

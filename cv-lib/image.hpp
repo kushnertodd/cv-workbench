@@ -104,7 +104,7 @@ public:
                       double upper_in, double lower_out,
                       double upper_out, int component = 0) const;
 
-    //void get_stats(Variance_stats &stats) const;
+    void get_stats(Variance_stats &stats) const;
     void init(double value = 0.0);
 
     bool is_color() const;

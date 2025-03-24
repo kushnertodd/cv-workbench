@@ -193,11 +193,11 @@ Image *Image::color_edge(Image *src, Errors &errors) const {
 #endif
     int rows = src->get_rows();
     int cols = src->get_cols();
-    auto *out = new Image(rows, cols, COMPONENTS_RGB, Image_depth::CV_8U);
     int row_lower = 1;
     int row_upper = rows - 2;
     int col_lower = 1;
     int col_upper = cols - 2;
+    auto *out = new Image(row_upper, col_upper, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
     if (debug)
         std::cout << "row_lower " << row_lower
                 << ", row_upper " << row_upper
@@ -219,7 +219,7 @@ Image *Image::color_edge(Image *src, Errors &errors) const {
                          + (image_down - image_center) * (image_down - image_center)
                          + (image_left - image_center) * (image_left - image_center)
                          + (image_right - image_center) * (image_right - image_center));
-            out->set(row, col, sum);
+            out->set(row - 1, col - 1, sum);
             if (debug) {
                 std::cout << "image_center  = " << image_center << std::endl;
                 std::cout << "image_up  = " << image_up << std::endl;
@@ -503,16 +503,14 @@ double Image::get_scaled(int row, int col, double lower_in,
     return pixel_out;
 }
 
-/*
 void Image::get_stats(Variance_stats &stats) const {
-  for (int row = 0; row < get_rows(); row++) {
-    for (int col = 0; col < get_cols(); col++) {
-      double value = get(row, col);
-      stats.update(value);
+    for (int row = 0; row < get_rows(); row++) {
+        for (int col = 0; col < get_cols(); col++) {
+            double value = get(row, col);
+            stats.update(value);
+        }
     }
-  }
 }
-*/
 
 void Image::init(double value) {
     int size = get_npixels();;
@@ -553,7 +551,7 @@ bool Image::is_grayscale() const {
 
 void Image::log(std::list<WB_log_entry> &log_entries) const {
     Variance_stats stats;
-    //get_stats(stats);
+    get_stats(stats);
     WB_log_entry log_entry_rows("rows", wb_utils::int_to_string(get_rows()));
     log_entries.push_back(log_entry_rows);
     WB_log_entry log_entry_cols("cols", wb_utils::int_to_string(get_cols()));

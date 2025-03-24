@@ -70,37 +70,37 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
             errors.add("Operator_transform_intensity_map::run", "", "undefined depth value");
         }
     }
-    if (Operator_utils::has_parameter(operator_parameters, "lower_in")) {
+    if (Operator_utils::has_parameter(operator_parameters, "lower-in")) {
         saw_lower_in = true;
         Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                           operator_parameters, "lower_in", lower_in, errors);
+                                           operator_parameters, "lower-in", lower_in, errors);
     }
-    if (Operator_utils::has_parameter(operator_parameters, "upper_in")) {
+    if (Operator_utils::has_parameter(operator_parameters, "upper-in")) {
         saw_upper_in = true;
         Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                           operator_parameters, "upper_in", upper_in, errors);
+                                           operator_parameters, "upper-in", upper_in, errors);
     }
-    if (Operator_utils::has_parameter(operator_parameters, "lower_out")) {
+    if (Operator_utils::has_parameter(operator_parameters, "lower-out")) {
         saw_lower_out = true;
         Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                           operator_parameters, "lower_out", lower_out, errors);
+                                           operator_parameters, "lower-out", lower_out, errors);
     }
-    if (Operator_utils::has_parameter(operator_parameters, "upper_out")) {
+    if (Operator_utils::has_parameter(operator_parameters, "upper-out")) {
         saw_upper_out = true;
         Operator_utils::get_real_parameter("Operator_transform_intensity_map::run",
-                                           operator_parameters, "upper_out", upper_out, errors);
+                                           operator_parameters, "upper-out", upper_out, errors);
     }
     if (!saw_lower_in) {
-        errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_in' parameters");
+        errors.add("Operator_transform_intensity_map::run", "", "missing 'lower-in' parameters");
     }
     if (!saw_upper_in) {
-        errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_in' parameters");
+        errors.add("Operator_transform_intensity_map::run", "", "missing 'upper-in' parameters");
     }
     if (!saw_lower_out) {
-        errors.add("Operator_transform_intensity_map::run", "", "missing 'lower_out' parameters");
+        errors.add("Operator_transform_intensity_map::run", "", "missing 'lower-out' parameters");
     }
     if (!saw_upper_out) {
-        errors.add("Operator_transform_intensity_map::run", "", "missing 'upper_out' parameters");
+        errors.add("Operator_transform_intensity_map::run", "", "missing 'upper-out' parameters");
     }
     Image *input;
     Data_source_descriptor *input_data_source;

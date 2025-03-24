@@ -39,17 +39,17 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
                                     operator_parameters, "nbins", nbins, errors);
   double lower_value;
   bool saw_lower_value = false;
-  if (Operator_utils::has_parameter(operator_parameters, "lower_value")) {
+  if (Operator_utils::has_parameter(operator_parameters, "lower-value")) {
     saw_lower_value = true;
     Operator_utils::get_real_parameter("Operator_histogram_image_create::run",
-                                       operator_parameters, "lower_value", lower_value, errors);
+                                       operator_parameters, "lower-value", lower_value, errors);
   }
   double upper_value;
   bool saw_upper_value = false;
-  if (Operator_utils::has_parameter(operator_parameters, "upper_value")) {
+  if (Operator_utils::has_parameter(operator_parameters, "upper-value")) {
     saw_upper_value = true;
     Operator_utils::get_real_parameter("Operator_histogram_image_create::run",
-                                       operator_parameters, "upper_value", upper_value, errors);
+                                       operator_parameters, "upper-value", upper_value, errors);
   }
   if (!errors.has_error()) {
     Data_source_descriptor *input_data_source = input_data_sources.front();
