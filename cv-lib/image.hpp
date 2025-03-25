@@ -23,6 +23,21 @@
 // comment for production
 #define IMAGE_COMPONENT_CHECK
 
+class Pixel_RGB {
+    friend class Image;
+    double red{};
+    double green{};
+    double blue{};
+
+public:
+    Pixel_RGB();
+
+    Pixel_RGB(double m_red, double m_green, double m_blue);
+
+
+    double diff(const Pixel_RGB &other) const;
+};
+
 class Image {
     friend class Kernel;
     Image_header image_header;
@@ -55,7 +70,7 @@ public:
 
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
 
-    Image *color_edge(Image *src, Errors &errors) const;
+    Image *color_edge(Errors &errors);
 
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
                           Errors &errors);
@@ -105,6 +120,7 @@ public:
                       double upper_out, int component = 0) const;
 
     void get_stats(Variance_stats &stats) const;
+
     void init(double value = 0.0);
 
     bool is_color() const;
@@ -112,6 +128,9 @@ public:
     bool is_grayscale() const;
 
     void log(std::list<WB_log_entry> &log_entries) const;
+
+    void to_pixel_RGB(Pixel_RGB &pixel_RGB, int row, int col);
+
 
     static Image *read(const std::string &path, Errors &errors);
 
@@ -144,6 +163,7 @@ public:
     void set_32F(int row, int col, pixel_32F value, int component = 0) const;
 
     void set_32S(int row, int col, pixel_32S value, int component = 0) const;
+
 
     std::string to_string(const std::string &prefix = "") const;
 

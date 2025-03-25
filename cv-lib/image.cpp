@@ -17,12 +17,24 @@
 
 extern bool debug;
 
+Pixel_RGB::Pixel_RGB() {
+}
+
+Pixel_RGB::Pixel_RGB(double m_red, double m_green, double m_blue) : red(m_red), green(m_green), blue(m_blue) {
+};
+
+
+double Pixel_RGB::diff(const Pixel_RGB &other) const {
+    return sqrt((other.red - red) * (other.red - red)
+                + (other.green - green) * (other.green - green)
+                + (other.blue - blue) * (other.blue - blue));
+}
+
 Image::~Image() {
     delete[] buf_8U;
     delete[] buf_32S;
     delete[] buf_32F;
 }
-
 
 Image::Image() = default;
 
@@ -187,17 +199,17 @@ Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
 
 
 // color edge detection
-Image *Image::color_edge(Image *src, Errors &errors) const {
+Image *Image::color_edge(Errors &errors) {
 #ifdef IMAGE_COMPONENT_CHECK
-    assert(src->is_color());
+    assert(is_color());
 #endif
-    int rows = src->get_rows();
-    int cols = src->get_cols();
+    int rows = get_rows();
+    int cols = get_cols();
     int row_lower = 1;
     int row_upper = rows - 2;
     int col_lower = 1;
     int col_upper = cols - 2;
-    auto *out = new Image(row_upper, col_upper, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    auto *out = new Image(row_upper+1, col_upper+1, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
     if (debug)
         std::cout << "row_lower " << row_lower
                 << ", row_upper " << row_upper
@@ -209,27 +221,22 @@ Image *Image::color_edge(Image *src, Errors &errors) const {
         for (int col = col_lower; col <= col_upper; col++) {
             if (debug)
                 std::cout << "col " << col << std::endl;
-            double image_center = src->get(row, col);
-            double image_up = src->get(row - 1, col);
-            double image_down = src->get(row + 1, col);
-            double image_left = src->get(row, col - 1);
-            double image_right = src->get(row, col + 1);
-            double sum =
-                    sqrt((image_up - image_center) * (image_up - image_center)
-                         + (image_down - image_center) * (image_down - image_center)
-                         + (image_left - image_center) * (image_left - image_center)
-                         + (image_right - image_center) * (image_right - image_center));
-            out->set(row - 1, col - 1, sum);
-            if (debug) {
-                std::cout << "image_center  = " << image_center << std::endl;
-                std::cout << "image_up  = " << image_up << std::endl;
-                std::cout << "image_down  = " << image_down << std::endl;
-                std::cout << "image_left  = " << image_left << std::endl;
-                std::cout << "image_right  = " << image_right << std::endl;
-            }
+            Pixel_RGB image_center;
+            to_pixel_RGB(image_center, row, col);
+            Pixel_RGB image_up;
+            to_pixel_RGB(image_up, row - 1, col);
+            Pixel_RGB image_down;
+            to_pixel_RGB(image_down, row + 1, col);
+            Pixel_RGB image_left;
+            to_pixel_RGB(image_left, row, col - 1);
+            Pixel_RGB image_right;
+            to_pixel_RGB(image_right, row, col + 1);
+            double sum = image_up.diff(image_center)
+                         + image_down.diff(image_center)
+                         + image_left.diff(image_center)
+                         + image_right.diff(image_center);
+            out->set(row, col, sum);
         }
-        if (debug)
-            std::cout << std::endl;
     }
     return out;
 }
@@ -574,6 +581,12 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
     log_entries.push_back(log_entry_max_value);
 }
 
+void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int row, int col) {
+    pixel_RGB.red = get_red(row, col);
+    pixel_RGB.red = get_green(row, col);
+    pixel_RGB.red = get_blue(row, col);
+};
+
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
     Image *image = nullptr;
@@ -903,6 +916,7 @@ void Image::set_32S(int row, int col, pixel_32S value, int component) const {
 #endif
     buf_32S[row_col_to_index(row, col, component)] = value;
 }
+
 
 std::string Image::to_string(const std::string &prefix) const {
     std::ostringstream os;

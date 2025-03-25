@@ -17,7 +17,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "square_color",
+            "filename": "test",
             "ext": "jpg"
           }
         ],
@@ -28,7 +28,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "square_color_edge_color",
+            "filename": "test_edge_color",
             "ext": "bin"
           }
         ],
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "square_color_edge_color",
+            "filename": "test_edge_color",
             "ext": "bin"
           }
         ],
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "square_color_edge_color_jpeg",
+            "filename": "test_edge_color_jpeg",
             "ext": "jpg"
           }
         ],
@@ -66,7 +66,7 @@
           "lower-in": "0",
           "upper-in": "100",
           "lower-out": "0",
-          "upper-out": "256"
+          "upper-out": "255"
         }
       }
     ]
