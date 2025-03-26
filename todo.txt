@@ -1,2 +1,0 @@
-- use valid tests from test/, figure out how to store images efficiently
-- ditto for examples/
