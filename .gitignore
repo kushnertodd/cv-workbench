@@ -12,6 +12,3 @@ examples/
 CMakeFiles/
 .cmake/
 CMakeCache.txt
-image-mean-out.txt
-image-mean-test.txt
-polar_trig_static.hpp
