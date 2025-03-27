@@ -181,6 +181,29 @@ bool Image::check_grayscale(const std::string &module, Errors &errors) const {
 }
 
 
+void Image::clear(double value) {
+    int size = get_npixels();
+    switch (get_depth()) {
+        case Image_depth::CV_8U:
+        for (int i = 0; i < size; i++)
+            buf_8U[i] = value;
+        break;
+
+        case Image_depth::CV_32S:
+        for (int i = 0; i < size; i++)
+            buf_32S[i] = value;
+        break;
+
+        case Image_depth::CV_32F:
+        for (int i = 0; i < size; i++)
+            buf_32F[i] = value;
+        break;
+
+        default:
+            break;
+    }
+}
+
 /***
  * Not really what want. Doesn't copy contents.
  * @param image
@@ -209,7 +232,8 @@ Image *Image::color_edge(Errors &errors) {
     int row_upper = rows - 2;
     int col_lower = 1;
     int col_upper = cols - 2;
-    auto *out = new Image(row_upper+1, col_upper+1, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    auto *out = new Image(rows, cols, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    out->clear(0.0);
     if (debug)
         std::cout << "row_lower " << row_lower
                 << ", row_upper " << row_upper

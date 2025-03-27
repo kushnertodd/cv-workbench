@@ -68,6 +68,8 @@ public:
 
     bool check_grayscale(const std::string &module, Errors &errors) const;
 
+    void clear(double value = 0.0);
+
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
 
     Image *color_edge(Errors &errors);
