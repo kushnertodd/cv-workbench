@@ -28,7 +28,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "test_edge_sobel",
+            "filename": "test_edge_grayscale",
             "ext": "bin"
           }
         ],
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "test_edge_sobel",
+            "filename": "test_edge_grayscale",
             "ext": "bin"
           }
         ],
@@ -57,16 +57,16 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "test_edge_sobel",
+            "filename": "test_edge_grayscale",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "depth": "CV_8U",
           "lower-in": "0",
-          "upper-in": "50",
+          "upper-in": "-250",
           "lower-out": "0",
-          "upper-out": "255"
+          "upper-out": "250"
         }
       }
     ]
