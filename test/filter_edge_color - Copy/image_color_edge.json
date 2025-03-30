@@ -9,7 +9,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-edge-sobel",
+        "operator": "filter-edge-color",
          "input-data": [
           {
             "id": 1,
@@ -17,7 +17,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "test",
+            "filename": "image_color",
             "ext": "jpg"
           }
         ],
@@ -28,12 +28,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "test_edge_grayscale",
+            "filename": "image_color_edge",
             "ext": "bin"
           }
         ],
         "parameters": {
-          "orientation": "0"
+          "extent": "adjacent"
         }
       },
       {
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "test_edge_grayscale",
+            "filename": "image_color_edge",
             "ext": "bin"
           }
         ],
@@ -57,16 +57,16 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "test_edge_grayscale",
+            "filename": "image_color_edge",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "depth": "CV_8U",
           "lower-in": "0",
-          "upper-in": "-250",
+          "upper-in": "371",
           "lower-out": "0",
-          "upper-out": "250"
+          "upper-out": "255"
         }
       }
     ]

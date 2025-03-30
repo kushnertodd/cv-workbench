@@ -47,10 +47,10 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
                                       operator_parameters, "theta-inc", theta_inc, errors);
   }
-  if (Operator_utils::has_parameter(operator_parameters, "threshold")) {
+  if (Operator_utils::has_parameter(operator_parameters, "pixel-threshold")) {
     saw_threshold = true;
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
-                                      operator_parameters, "threshold", threshold, errors);
+                                      operator_parameters, "pixel-threshold", threshold, errors);
   }
   if (Operator_utils::has_parameter(operator_parameters, "ulc-row")) {
     Operator_utils::get_int_parameter("Operator_hough_image_create::run",
