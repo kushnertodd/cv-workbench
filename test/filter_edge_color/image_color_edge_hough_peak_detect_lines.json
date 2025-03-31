@@ -34,8 +34,8 @@
         ],
         "parameters": {
           "theta-inc": "3",
-          "rho": "-32",
-          "theta-index": "29",
+          "rho": "74",
+          "theta-index": "15",
           "pixel-value": "255",
           "out-component": "1"
   	    }
