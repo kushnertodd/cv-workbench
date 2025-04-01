@@ -1,1 +1,1 @@
-rm *.bin *.log *.txt
+rm -f *.bin *.log *.txt
