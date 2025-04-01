@@ -29,7 +29,7 @@
             "format": "text",
             "directory": ".",
             "filename": "image_color_edge_hough",
-            "ext": "bin"
+            "ext": "txt"
           }
         ],
         "output-data": [
