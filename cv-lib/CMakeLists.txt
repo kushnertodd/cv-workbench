@@ -77,6 +77,8 @@ add_library(cv-lib STATIC
         operator_transform_image_copy.hpp
         operator_transform_image_create.cpp
         operator_transform_image_create.hpp
+        operator_transform_image_resize.cpp
+        operator_transform_image_resize.hpp
         operator_transform_intensity_map.cpp
         operator_transform_intensity_map.hpp
         operator_utils.cpp

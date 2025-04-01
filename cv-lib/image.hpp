@@ -9,10 +9,10 @@
 #include "errors.hpp"
 #include "image_header.hpp"
 #include "line_segment.hpp"
-#include "wb_log.hpp"
 #include "point.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
+#include "wb_log.hpp"
 
 /**
  * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
@@ -22,6 +22,8 @@
 
 // comment for production
 #define IMAGE_COMPONENT_CHECK
+
+enum class Resize_type { AVERAGE, MAX, MIN, SUM };
 
 class Pixel_RGB {
     friend class Image;
@@ -74,8 +76,7 @@ public:
 
     Image *color_edge(Errors &errors);
 
-    static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset,
-                          Errors &errors);
+    static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
 
     void copy(const Image *image, Errors &errors) const;
 
@@ -117,9 +118,8 @@ public:
 
     int get_rows() const;
 
-    double get_scaled(int row, int col, double lower_in,
-                      double upper_in, double lower_out,
-                      double upper_out, int component = 0) const;
+    double get_scaled(int row, int col, double lower_in, double upper_in, double lower_out, double upper_out,
+                      int component = 0) const;
 
     void get_stats(Variance_stats &stats) const;
 
@@ -144,15 +144,14 @@ public:
 
     static Image *read_jpeg(const std::string &path, Errors &errors);
 
+    static Image *resize(const Image *image, int area_rows, int area_cols, Resize_type resize_type);
+
     int row_col_to_index(int row, int col, int component = 0) const;
 
-    static Image *scale_image(const Image *image, double lower_in,
-                              double upper_in, double lower_out,
-                              double upper_out, Image_depth depth, int component = 0);
+    static Image *scale_image(const Image *image, double lower_in, double upper_in, double lower_out, double upper_out,
+                              Image_depth depth, int component = 0);
 
-    static double scale_pixel(double in_value, double lower_in,
-                              double upper_in, double lower_out,
-                              double upper_out);
+    static double scale_pixel(double in_value, double lower_in, double upper_in, double lower_out, double upper_out);
 
     static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
 
@@ -180,4 +179,4 @@ public:
     void write_jpeg(const std::string &path, Errors &errors) const;
 };
 
-#endif //CV_WORKBENCH_SRC_IMAGE_HPP_
+#endif // CV_WORKBENCH_SRC_IMAGE_HPP_
