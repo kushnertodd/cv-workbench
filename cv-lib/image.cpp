@@ -745,7 +745,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 }
 
 // component 1 only
-Image *Image::resize(const Image *image, int area_rows, int area_cols, Resize_type resize_type) {
+Image *Image::resize(const Image *image, int area_rows, int area_cols, WB_resize_types::Resize_type resize_type) {
     int out_rows = image->get_rows() / area_rows;
     int out_cols = image->get_rows() / area_cols;
     int area = area_rows * area_cols;
@@ -756,25 +756,25 @@ Image *Image::resize(const Image *image, int area_rows, int area_cols, Resize_ty
             for (int area_row = 0; area_row < area_rows; area_row++) {
                 for (int area_col = 0; area_col < area_cols; area_col++)
                     switch (resize_type) {
-                        case Resize_type::AVERAGE : {
+                        case WB_resize_types::Resize_type::AVERAGE: {
                             value += image->get(row * area_rows + area_row, col * area_cols + area_col);
                             break;
                         }
-                        case Resize_type::MAX: {
+                        case WB_resize_types::Resize_type::MAX: {
                             value = std::max(value, image->get(row * area_rows + area_row, col * area_cols + area_col));
                             break;
                         }
-                        case Resize_type::MIN: {
+                        case WB_resize_types::Resize_type::MIN: {
                             value = std::min(value, image->get(row * area_rows + area_row, col * area_cols + area_col));
                             break;
                         }
-                        case Resize_type::SUM: {
+                        case WB_resize_types::Resize_type::SUM: {
                             value += image->get(row * area_rows + area_row, col * area_cols + area_col);
                             break;
                         }
                     }
             }
-            if (resize_type == Resize_type::AVERAGE)
+            if (resize_type == WB_resize_types::Resize_type::AVERAGE)
                 value /= area;
             resize_image->set(row, col, value, 0);
         }

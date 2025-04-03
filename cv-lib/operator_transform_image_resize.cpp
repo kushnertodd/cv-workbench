@@ -2,34 +2,18 @@
 // Created by kushn on 6/14/2022.
 //
 
-#include "operator_transform_image_resize.hpp"
 #include <iostream>
 #include "image_depth.hpp"
 #include "operator_utils.hpp"
 #include "wb_data_format.hpp"
 #include "wb_defs.hpp"
+#include "operator_transform_image_resize.hpp"
 
 extern bool debug;
 
 /**
-   create new image from an existing image
-   parameters:
-     depth_enum depth
-       depth of output image
-       optional: defaults to input image depth
-         Image_depth::CV_8U   unsigned byte
-         Image_depth::CV_32S  int
-         Image_depth::CV_32F  float
-     real lower_in
-     real upper_in
-     real lower_out
-     real upper_out
-       pixel intensity mapping parameters
-       optional: all omitted defaults to no mapping
-       else: all required
-         pixel_in <= in_lower -> out_lower
-         pixel_in >= in_upper -> out_upper;
-         else -> out_lower + (pixel_in-in_lower) * (out_upper-out_lower) / (in_upper-in_lower)
+ * create new image from an existing image
+ *
  * @param input_data_source
  * @param output_data_store
  * @param operator_parameters
@@ -73,6 +57,16 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         errors.add("Operator_transform_image_resize::run", "", "missing 'area-cols' parameter");
     }
 
+    if (!Operator_utils::has_parameter(operator_parameters, "resize-type"))
+        errors.add("Operator_filter_image_morphology::run", "", "resize-type parameter required");
+    WB_resize_types::Resize_type resize_type;
+    if (!errors.has_error()) {
+        std::string resize_type_str = Operator_utils::get_parameter(operator_parameters, "resize-type");
+        resize_type = WB_resize_types::from_string(resize_type_str);
+        if (resize_type == WB_resize_types::Resize_type::UNDEFINED)
+            errors.add("Operator_filter_image_morphology::run", "", "invalid 'resize-type' parameter");
+    }
+
     Image *input;
     Data_source_descriptor *input_data_source;
     Data_source_descriptor *output_data_store;
@@ -85,7 +79,7 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         }
     }
     if (!errors.has_error()) {
-        Image *output_image = Image::resize(input, area_rows, area_cols, Resize_type::MAX);
+        Image *output_image = Image::resize(input, area_rows, area_cols, WB_resize_types::Resize_type::MAX);
         output_data_store->write_image(output_image, errors);
     }
 }

@@ -19,7 +19,7 @@ Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id,
     Data_source_descriptor(m_id,
                            m_data_type,
                            m_data_format,
-                           WB_repository_type::Repository_type::FILESYSTEM) {}
+                           WB_repository_types::Repository_type::FILESYSTEM) {}
 
 Filesystem_data_source_descriptor
 *Filesystem_data_source_descriptor::from_json(json_object *json_data_source_descriptor,

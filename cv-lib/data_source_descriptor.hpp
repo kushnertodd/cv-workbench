@@ -18,14 +18,14 @@ class Data_source_descriptor {
 public:
     WB_data_type::Data_type data_type{};
     WB_data_format::Data_format data_format{};
-    WB_repository_type::Repository_type repository_type{};
+    WB_repository_types::Repository_type repository_type{};
 
     virtual ~Data_source_descriptor();
 
     Data_source_descriptor(int m_id,
                            WB_data_type::Data_type m_data_type,
                            WB_data_format::Data_format m_data_format,
-                           WB_repository_type::Repository_type m_repository_type);
+                           WB_repository_types::Repository_type m_repository_type);
 
     constexpr int get_id() const { return id; }
 

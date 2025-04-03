@@ -13,6 +13,7 @@
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
+#include "wb_resize_types.hpp"
 
 /**
  * Numerically Stable Parallel Computation of (Co-)Variance, Erich Schubert, Michael Gertz
@@ -22,8 +23,6 @@
 
 // comment for production
 #define IMAGE_COMPONENT_CHECK
-
-enum class Resize_type { AVERAGE, MAX, MIN, SUM };
 
 class Pixel_RGB {
     friend class Image;
@@ -144,7 +143,7 @@ public:
 
     static Image *read_jpeg(const std::string &path, Errors &errors);
 
-    static Image *resize(const Image *image, int area_rows, int area_cols, Resize_type resize_type);
+    static Image *resize(const Image *image, int area_rows, int area_cols, WB_resize_types::Resize_type resize_type);
 
     int row_col_to_index(int row, int col, int component = 0) const;
 

@@ -114,6 +114,8 @@ add_library(cv-lib STATIC
         wb_morphology_types.hpp
         wb_repository_type.cpp
         wb_repository_type.hpp
+        wb_resize_types.cpp
+        wb_resize_types.hpp
         wb_utils.cpp
         wb_utils.hpp
         wb_version.hpp

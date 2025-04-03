@@ -19,7 +19,7 @@ Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id,
     Data_source_descriptor(m_id,
                            m_data_type,
                            m_data_format,
-                           WB_repository_type::Repository_type::BERKELEY_DB),
+                           WB_repository_types::Repository_type::BERKELEY_DB),
     ref_id(0) {}
 
 Berkeley_db_data_source_descriptor

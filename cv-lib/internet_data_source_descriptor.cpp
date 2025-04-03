@@ -18,7 +18,7 @@ Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id,
     Data_source_descriptor(m_id,
                            m_data_type,
                            m_data_format,
-                           WB_repository_type::Repository_type::INTERNET) {}
+                           WB_repository_types::Repository_type::INTERNET) {}
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Internet_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Internet_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
