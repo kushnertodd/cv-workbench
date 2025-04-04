@@ -747,7 +747,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
 // component 1 only
 Image *Image::resize(const Image *image, int area_rows, int area_cols, WB_resize_types::Resize_type resize_type) {
     int out_rows = image->get_rows() / area_rows;
-    int out_cols = image->get_rows() / area_cols;
+    int out_cols = image->get_cols() / area_cols;
     int area = area_rows * area_cols;
     auto *resize_image = new Image(out_rows, out_cols, 1, image->get_depth());
     for (int row = 0; row < out_rows; row++) {
