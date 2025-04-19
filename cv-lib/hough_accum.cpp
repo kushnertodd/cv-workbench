@@ -40,7 +40,7 @@ void Hough_accum::find_peaks(std::list<Polar_line> &lines, double threshold) con
       int count = get(rho_index, theta_index);
       if (count > threshold) {
         Polar_line line(rho_index,
-                        polar_trig->rho_index_to_rho(rho_index),
+                        polar_trig->to_rho(rho_index),
                         theta_index,
                         Polar_trig::to_cos(theta_index),
                         Polar_trig::to_sin(theta_index),
@@ -56,13 +56,13 @@ int Hough_accum::get(int rho_index, int theta_index) const {
   return rho_theta_counts[index];
 }
 
-int Hough_accum::get_cols() const { return polar_trig->get_cols(); }
+int Hough_accum::get_cols() const { return polar_trig->get_ncols(); }
 
 int Hough_accum::get_nrhos() const { return polar_trig->get_nrhos(); }
 
 int Hough_accum::get_nthetas() { return Polar_trig::get_nthetas(); }
 
-int Hough_accum::get_rows() const { return polar_trig->get_rows(); }
+int Hough_accum::get_rows() const { return polar_trig->get_nrows(); }
 
 int Hough_accum::get_theta_inc() { return Polar_trig::get_theta_inc(); }
 
@@ -186,10 +186,10 @@ void Hough_accum::write(FILE *fp, Errors &errors) const {
 
 void Hough_accum::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
   for (int rho_index = 0; rho_index <= get_nrhos(); rho_index++)
-    ofs << polar_trig->rho_index_to_rho(rho_index) << delim;
+    ofs << polar_trig->to_rho(rho_index) << delim;
   ofs << std::endl;
   for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-    ofs << Polar_trig::theta_index_to_theta(theta_index) << delim;
+    ofs << Polar_trig::to_theta(theta_index) << delim;
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
       ofs << get(rho_index, theta_index) << delim;
     }
