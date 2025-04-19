@@ -1,4 +1,4 @@
-const double Polar_trig::polar_cos[max_thetas] = {
+const double Polar_trig::polar_cos[theta_max] = {
     1,
     0.99863,
     0.994522,
@@ -61,7 +61,7 @@ const double Polar_trig::polar_cos[max_thetas] = {
     -0.998629
 };
 
-const double Polar_trig::polar_sin[max_thetas] = {
+const double Polar_trig::polar_sin[theta_max] = {
     0,
     0.0523359,
     0.104528,

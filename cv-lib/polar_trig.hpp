@@ -7,68 +7,44 @@
 
 #include <cassert>
 
-const int max_thetas = 180;
+const int default_rho_inc = 1;
+const int default_theta_inc = 3;
+int rho_inc = 1;
+int theta_inc = 3;
+const int theta_max = 180;
 const int rho_pad = 2;
 
 class Polar_trig {
-    static int theta_inc;
-    static const double polar_cos[max_thetas];
-    static const double polar_sin[max_thetas];
-    int rows{};
-    int cols{};
+    static const double polar_cos[theta_max];
+    static const double polar_sin[theta_max];
+    int ncols{};
     int nrhos{};
+    int nrows{};
+    int nthetas{};
+    int rho_inc{};
+    double rho_max{};
+    int theta_inc{};
 
 public:
     Polar_trig();
-
-    Polar_trig(int n_rows, int m_cols);
-
-    int get_cols() const;
-
+    Polar_trig(int n_nrows, int m_ncols);
+    Polar_trig(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc);
+    int get_ncols() const;
     int get_nrhos() const;
-
-    int get_rows() const;
-
-    static int get_theta_inc();
-
-    static int get_nthetas();
-
-    static void init(int m_theta_inc);
-
-    double rho_index_to_rho(int rho_index) const;
-
-    static double rho_index_to_rho(int rho_index, int nrhos);
-
+    int get_nrows() const;
+    int get_nthetas() const;
+    int get_rho_inc() const;
+    int get_theta_inc() const;
     int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
-
-    static int rho_theta_col_to_row(int rho_index, int theta_index, int col, int rows, int cols, int nrhos);
-
     int rho_theta_row_to_col(int rho_index, int theta_index, int row) const;
-
-    static int rho_theta_row_to_col(int rho_index, int theta_index, int row, int rows, int cols, int nrhos);
-
-    int rho_theta_to_index(int rho_index, int theta_index) const;
-
-    static int rho_theta_to_index(int rho_index, int theta_index, int nrhos);
-
-    int rho_to_index(double rho) const;
-
-    static int rho_to_index(double rho, int nrhos);
-
-    double row_col_theta_to_rho(int row, int col, int theta_index) const;
-
-    static double row_col_theta_to_rho(int row, int col, int theta_index, int rows, int cols);
-
-    int row_col_theta_to_rho_index(int row, int col, int theta_index) const;
-
-    static int row_col_theta_to_rho_index(int row, int col, int theta_index, int nrhos, int rows, int cols);
-
-    static void set_theta_inc(int theta_inc);
-
-    static int theta_index_to_theta(int index);
-
-    static double to_cos(int theta_index);
-
-    static double to_sin(int theta_index);
+    double row_col_theta_index_to_rho(int row, int col, int theta_index) const;
+    double to_cos(int theta) const;
+    static double to_cos_index(int theta_index) const;
+    double to_rho(int rho_index) const;
+    int to_rho_index(double rho) const;
+    double to_sin(int theta) const;
+    static double to_sin_index(int theta_index) const;
+    int to_theta(int theta_index) const;
+    int to_theta_index(int theta) const;
 };
-#endif //SRC__POLAR_TRIG_HPP_
+#endif // SRC__POLAR_TRIG_HPP_
