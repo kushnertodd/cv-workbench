@@ -38,12 +38,13 @@ public:
     int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
     int rho_theta_row_to_col(int rho_index, int theta_index, int row) const;
     double row_col_theta_index_to_rho(int row, int col, int theta_index) const;
-    double to_cos(int theta) const;
-    static double to_cos_index(int theta_index) const;
+    double row_col_theta_index_to_rho_index(int row, int col, int theta_index) const;
+    static double to_cos(int theta);
+    double to_cos_index(int theta_index) const;
     double to_rho(int rho_index) const;
     int to_rho_index(double rho) const;
-    double to_sin(int theta) const;
-    static double to_sin_index(int theta_index) const;
+    static double to_sin(int theta);
+    double to_sin_index(int theta_index) const;
     int to_theta(int theta_index) const;
     int to_theta_index(int theta) const;
 };

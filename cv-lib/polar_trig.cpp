@@ -8,7 +8,7 @@ Polar_trig::Polar_trig() = default;
 Polar_trig::Polar_trig(int m_ncols, int m_nrows) : Polar_trig(m_ncols, m_nrows, default_rho_inc, default_theta_inc) {}
 Polar_trig::Polar_trig(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc) :
     ncols(m_ncols), nrows(m_nrows), rho_inc(m_rho_inc), theta_inc(m_theta_inc) {
-    rho_max = wb_utils::double_to_int_round((sqrt(nrows * nrows + ncols * ncols)) + rho_pad)/2.0);
+    rho_max = wb_utils::double_to_int_round((sqrt(nrows * nrows + ncols * ncols)) + rho_pad) / 2.0;
     nrhos = rho_max / rho_inc;
     nthetas = theta_max / theta_inc;
 }
@@ -46,18 +46,21 @@ double Polar_trig::row_col_theta_index_to_rho(int row, int col, int theta_index)
     double rho = x * cos_t + y * sin_t;
     return rho;
 }
-double Polar_trig::to_cos(int theta) const { return to_cos_index(to_theta_index(theta)); }
-double Polar_trig::to_cos_index(int theta_index) const { return to_cos(theta_index); }
+double Polar_trig::row_col_theta_index_to_rho_index(int row, int col, int theta_index) const {
+    return to_rho_index(row_col_theta_index_to_rho(row, col, theta_index));
+}
+double Polar_trig::to_cos(int theta) { return polar_cos[theta]; }
+double Polar_trig::to_cos_index(int theta_index) const { return to_cos(to_theta(theta_index)); }
 double Polar_trig::to_rho(int rho_index) const {
-    double rho = rho_index * rho_inc - rho_max;
+    double rho = rho_index * rho_inc - nrhos;
     return rho;
 }
 int Polar_trig::to_rho_index(double rho) const {
-    int rho_index = wb_utils::double_to_int_round(rho + rho_max);
+    int rho_index = wb_utils::double_to_int_round((rho + nrhos) / rho_inc);
     return rho_index;
 }
-double Polar_trig::to_sin(int theta) const { return to_sin_index(to_theta_index(theta)); }
-double Polar_trig::to_sin_index(int theta_index) const { return to_sin(theta_index); }
+double Polar_trig::to_sin(int theta) { return polar_sin[theta]; }
+double Polar_trig::to_sin_index(int theta_index) const { return to_sin(to_theta(theta_index)); }
 int Polar_trig::to_theta(int theta_index) const {
     int theta = theta_index * theta_inc;
     return theta;

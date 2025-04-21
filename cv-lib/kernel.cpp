@@ -2,11 +2,11 @@
 // Created by kushn on 6/16/2022.
 //
 
+#include "kernel.hpp"
 #include <cmath>
 #include <iostream>
 #include "wb_morphology_types.hpp"
 #include "wb_utils.hpp"
-#include "kernel.hpp"
 
 extern bool debug;
 
@@ -14,44 +14,39 @@ Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
-Kernel::Kernel(int rows, int cols, Image_depth depth) : Image(rows, cols, 1, depth) {
-    init();
-}
+Kernel::Kernel(int rows, int cols, Image_depth depth) : Image(rows, cols, 1, depth) { init(); }
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
-    // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is Image_depth::CV_32S
+    // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is
+    // Image_depth::CV_32S
     Image_depth out_depth =
-    (src->get_depth() == Image_depth::CV_32F || get_depth() == Image_depth::CV_32F
-         ? Image_depth::CV_32F
-         : Image_depth::CV_32S);
+            (src->get_depth() == Image_depth::CV_32F || get_depth() == Image_depth::CV_32F ? Image_depth::CV_32F
+                                                                                           : Image_depth::CV_32S);
     return Kernel::convolve(src, out_depth, WB_morphology_types::Convolution_type::NUMERIC, errors);
 }
 
 // morphology convolution, depth defaults to the input image
-Image *Kernel::convolve_morphological(Image *src,
-                                      WB_morphology_types::Convolution_type convolution_type,
+Image *Kernel::convolve_morphological(Image *src, WB_morphology_types::Convolution_type convolution_type,
                                       Errors &errors) const {
     return Kernel::convolve(src, src->get_depth(), convolution_type, errors);
 }
 
 // base convolution, if convolution numeric, error if CV_8U input depth
-Image *Kernel::convolve(Image *src,
-                        Image_depth out_depth,
-                        WB_morphology_types::Convolution_type convolution_type,
+Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::Convolution_type convolution_type,
                         Errors &errors) const {
     Image_depth depth = get_depth();
-    if (depth == Image_depth::CV_8U
-        && convolution_type == WB_morphology_types::Convolution_type::NUMERIC) {
+    if (depth == Image_depth::CV_8U && convolution_type == WB_morphology_types::Convolution_type::NUMERIC) {
         errors.add("Kernel::convolve_numeric", "", "cannot perform numeric convolution with CV_8U output image");
         return nullptr;
     } else {
-        int src_rows = src->get_rows();
-        int src_cols = src->get_cols();
-        int src_components = src->get_components();
-        int rows = get_rows();
-        int cols = get_cols();
-        // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is Image_depth::CV_32S
+        int src_rows = src->get_nrows();
+        int src_cols = src->get_ncols();
+        int src_components = src->get_ncomponents();
+        int rows = get_nrows();
+        int cols = get_ncols();
+        // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is
+        // Image_depth::CV_32S
         auto *out = new Image(src_rows, src_cols, src_components, out_depth);
         int rows_half = (rows + 1) / 2;
         int cols_half = (cols + 1) / 2;
@@ -60,32 +55,25 @@ Image *Kernel::convolve(Image *src,
         int col_lower = 0;
         int col_upper = src_cols - cols;
         if (debug)
-            std::cout << "rows_half " << rows_half
-                    << " cols_half " << cols_half
-                    << " row_lower " << row_lower
-                    << ", row_upper " << row_upper
-                    << ", col_lower " << col_lower
-                    << ", col_upper " << col_upper << std::endl;
+            std::cout << "rows_half " << rows_half << " cols_half " << cols_half << " row_lower " << row_lower
+                      << ", row_upper " << row_upper << ", col_lower " << col_lower << ", col_upper " << col_upper
+                      << std::endl;
         int kernel_row_lower = 0;
         int kernel_row_upper = rows - 1;
         int kernel_col_lower = 0;
         int kernel_col_upper = cols - 1;
         if (debug)
-            std::cout << " kernel_row_lower " << kernel_row_lower
-                    << " kernel_row_upper " << kernel_row_upper
-                    << " kernel_col_lower " << kernel_col_lower
-                    << " kernel_col_upper " << kernel_col_upper << std::endl;
+            std::cout << " kernel_row_lower " << kernel_row_lower << " kernel_row_upper " << kernel_row_upper
+                      << " kernel_col_lower " << kernel_col_lower << " kernel_col_upper " << kernel_col_upper
+                      << std::endl;
         for (int row = row_lower; row <= row_upper; row++) {
             int row_center = row + rows_half - 1;
             if (debug)
-                std::cout << "row " << row
-                        << " row_center " << row_center << std::endl;
+                std::cout << "row " << row << " row_center " << row_center << std::endl;
             for (int col = col_lower; col <= col_upper; col++) {
                 int col_center = col + cols_half - 1;
                 if (debug)
-                    std::cout << "col " << col
-                            << " col_center " << col_center
-                            << std::endl;
+                    std::cout << "col " << col << " col_center " << col_center << std::endl;
                 double sum;
                 switch (convolution_type) {
                     case WB_morphology_types::Convolution_type::NUMERIC:
@@ -123,9 +111,8 @@ Image *Kernel::convolve(Image *src,
                                 break;
                         }
                         if (debug)
-                            std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val
-                                    << " * image[" << row + i << "," << col + j
-                                    << "] " << image_val << " = " << sum << std::endl;
+                            std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val << " * image["
+                                      << row + i << "," << col + j << "] " << image_val << " = " << sum << std::endl;
                     }
                     if (debug)
                         std::cout << std::endl;
@@ -238,10 +225,12 @@ void Kernel::gaussian_kernel(ntuple_list kernel, double sigma, double mean) {
     /* check parameters */
     if (kernel == nullptr || kernel->values == nullptr)
         wb_utils::error_exit("gaussian_kernel: invalid n-tuple 'kernel'.");
-    if (sigma <= 0.0) wb_utils::error_exit("gaussian_kernel: 'sigma' must be positive.");
+    if (sigma <= 0.0)
+        wb_utils::error_exit("gaussian_kernel: 'sigma' must be positive.");
 
     /* compute Gaussian kernel */
-    if (kernel->max_size < 1) enlarge_ntuple_list(kernel);
+    if (kernel->max_size < 1)
+        enlarge_ntuple_list(kernel);
     kernel->size = 1;
     for (i = 0; i < kernel->dim; i++) {
         val = ((double) i - mean) / sigma;
@@ -250,7 +239,9 @@ void Kernel::gaussian_kernel(ntuple_list kernel, double sigma, double mean) {
     }
 
     /* normalization */
-    if (sum >= 0.0) for (i = 0; i < kernel->dim; i++) kernel->values[i] /= sum;
+    if (sum >= 0.0)
+        for (i = 0; i < kernel->dim; i++)
+            kernel->values[i] /= sum;
 }
 
 /** Enlarge the allocated memory of an n-tuple list.
@@ -265,7 +256,7 @@ void Kernel::enlarge_ntuple_list(ntuple_list n_tuple) {
     n_tuple->max_size *= 2;
 
     /* realloc memory */
-    n_tuple->values = (double *) realloc((void *) n_tuple->values,
-                                         n_tuple->dim * n_tuple->max_size * sizeof(double));
-    if (n_tuple->values == nullptr) wb_utils::error_exit("not enough memory.");
+    n_tuple->values = (double *) realloc((void *) n_tuple->values, n_tuple->dim * n_tuple->max_size * sizeof(double));
+    if (n_tuple->values == nullptr)
+        wb_utils::error_exit("not enough memory.");
 }

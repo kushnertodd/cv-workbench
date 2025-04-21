@@ -6,24 +6,23 @@
 #define CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 
 #include <cstdio>
-#include "image_depth.hpp"
 #include "errors.hpp"
+#include "image_depth.hpp"
 
 class Image_header {
     friend class Image;
 
-    int rows{};
-    int cols{};
-    int components{}; // we're only supported 1 grayscale component or 3 color components
-    int row_stride{}; // for jpeg
+    int ncomponents{}; // we're only supported 1 grayscale component or 3 color components
     Image_depth depth{};
+    int ncols{};
     int npixels{};
+    int nrows{};
+    int row_stride{}; // for jpeg
 
 public:
     Image_header();
 
-    Image_header(const int m_rows, const int m_cols, const int m_components,
-                 const Image_depth m_depth);
+    Image_header(const int m_nrows, const int m_ncols, const int m_ncomponents, const Image_depth m_depth);
 
     Image_header(const Image_header &image_header);
 
@@ -34,4 +33,4 @@ public:
     std::string to_string(const std::string &prefix = "") const;
 };
 
-#endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
+#endif // CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

@@ -7,10 +7,12 @@
 
 #include "line_segment.hpp"
 #include "polar_line.hpp"
+#include "polar_trig.hpp"
 
 class WB_window {
- public:
-  static bool clip_window(int rows, int cols, Line_segment &line_segment, Polar_line &line, int nrhos);
+public:
+    static bool clip_window(int nrows, int ncols, int nrhos, int nthetas, Line_segment &line_segment,
+                            Polar_trig &polar_trig, Polar_line &line);
 };
 
-#endif //SRC__WB_WINDOW_HPP_
+#endif // SRC__WB_WINDOW_HPP_
