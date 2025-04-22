@@ -14,6 +14,24 @@ int theta_inc = 3;
 const int theta_max = 180;
 const int rho_pad = 2;
 
+class Polar_index {
+    friend class Polar_trig;
+    int rho_index{};
+    int theta_index{};
+    Polar_index();
+    Polar_index(int m_rho_index, int m_theta_index);
+    void init(int m_rho_index, int m_theta_index);
+};
+
+class Polar_point {
+    friend class Polar_trig;
+    double rho{};
+    double theta{};
+    Polar_point();
+    Polar_point(double m_rho, double m_theta);
+    void init(double m_rho, double m_theta);
+};
+
 class Polar_trig {
     static const double polar_cos[theta_max];
     static const double polar_sin[theta_max];
@@ -41,6 +59,8 @@ public:
     double row_col_theta_index_to_rho_index(int row, int col, int theta_index) const;
     static double to_cos(int theta);
     double to_cos_index(int theta_index) const;
+    void to_index(Polar_index &polar_index, Polar_point &polar_point);
+    void to_point(Polar_point &polar_point, Polar_index &polar_index);
     double to_rho(int rho_index) const;
     int to_rho_index(double rho) const;
     static double to_sin(int theta);

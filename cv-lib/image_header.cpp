@@ -9,6 +9,20 @@
 
 extern bool debug;
 
+Image_index::Image_index() = default;
+Image_index::Image_index(int m_col, int m_row) : col(m_col), row(m_row) {}
+void Image_index::init(int m_col, int m_row) {
+    col = m_col;
+    row = m_row;
+}
+
+Image_point::Image_point() = default;
+Image_point::Image_point(double m_x, double m_y) : x(m_x), y(m_y) {}
+void Image_point::init(double m_x, double m_y) {
+    x = m_x;
+    y = m_y;
+}
+
 Image_header::Image_header() = default;
 /*
  *
@@ -38,6 +52,16 @@ void Image_header::read(FILE *fp, Errors &errors) {
         if (!errors.has_error())
             depth = static_cast<Image_depth>(depth_int);
     }
+}
+double Image_header::to_x(int col) { return col - ncols / 2.0; }
+double Image_header::to_y(int row) { return nrows / 2.0 - row; }
+int Image_header::to_col(double x) { return wb_utils::double_to_int_round(x + ncols / 2.0); }
+int Image_header::to_row(double y) { return wb_utils::double_to_int_round(nrows / 2.0 - y); }
+void Image_header::to_index(Image_index &image_index, Image_point &image_point) {
+    image_index.init(to_col(image_point.x), to_row(image_point.y));
+}
+void Image_header::to_point(Image_point &image_point, Image_index &image_index) {
+    image_point.init(to_x(image_index.col), to_y(image_index.row));
 }
 void Image_header::write(FILE *fp, Errors &errors) const {
     fwrite(&nrows, sizeof(int), 1, fp);

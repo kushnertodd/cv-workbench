@@ -4,6 +4,20 @@
 #include "polar_trig_static.hpp"
 #include "wb_utils.hpp"
 
+Polar_index::Polar_index() = default;
+Polar_index::Polar_index(int m_rho_index, int m_theta_index) : rho_index(m_rho_index), theta_index(m_theta_index) {}
+void Polar_index::init(int m_rho_index, int m_theta_index) {
+    rho_index = m_rho_index;
+    theta_index = m_theta_index;
+}
+
+Polar_point::Polar_point() = default;
+Polar_point::Polar_point(double m_rho, double m_theta) : rho(m_rho), theta(m_theta) {}
+void Polar_point::init(double m_rho, double m_theta) {
+    rho = m_rho;
+    theta = m_theta;
+}
+
 Polar_trig::Polar_trig() = default;
 Polar_trig::Polar_trig(int m_ncols, int m_nrows) : Polar_trig(m_ncols, m_nrows, default_rho_inc, default_theta_inc) {}
 Polar_trig::Polar_trig(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc) :
@@ -51,6 +65,12 @@ double Polar_trig::row_col_theta_index_to_rho_index(int row, int col, int theta_
 }
 double Polar_trig::to_cos(int theta) { return polar_cos[theta]; }
 double Polar_trig::to_cos_index(int theta_index) const { return to_cos(to_theta(theta_index)); }
+void Polar_trig::to_index(Polar_index &polar_index, Polar_point &polar_point) {
+    polar_index.init(to_rho_index(polar_point.rho), to_theta_index(polar_point.theta));
+}
+void Polar_trig::to_point(Polar_point &polar_point, Polar_index &polar_index) {
+    polar_point.init(to_rho(polar_index.rho_index), to_theta(polar_index.theta_index));
+}
 double Polar_trig::to_rho(int rho_index) const {
     double rho = rho_index * rho_inc - nrhos;
     return rho;
