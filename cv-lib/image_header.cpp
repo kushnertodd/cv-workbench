@@ -26,7 +26,7 @@ void Image_point::init(double m_x, double m_y) {
 Image_header::Image_header() = default;
 /*
  *
- * @param m_rows
+ * @param m_nrows
  * @param m_ncols
  * @param m_ncomponents
  * @param m_depth

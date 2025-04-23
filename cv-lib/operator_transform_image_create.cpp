@@ -26,29 +26,29 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
     if (output_data_stores.empty())
         errors.add("Operator_transform_image_create::run", "", "output data source required");
     else {
-        int rows;
-        int cols;
+        int nrows;
+        int ncols;
         double background;
         double foreground;
         std::string param_point_str;
         std::string param_line_str;
         std::string param_rectangle_str;
         std::string param_rectangle_filled_str;
-        bool saw_rows = false;
-        bool saw_cols = false;
+        bool saw_nrows = false;
+        bool saw_ncols = false;
         bool saw_point = false;
         bool saw_line = false;
         bool saw_rectangle = false;
         bool saw_rectangle_filled = false;
-        if (Operator_utils::has_parameter(operator_parameters, "rows")) {
-            saw_rows = true;
+        if (Operator_utils::has_parameter(operator_parameters, "nrows")) {
+            saw_nrows = true;
             Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                              operator_parameters, "rows", rows, errors);
+                                              operator_parameters, "nrows", nrows, errors);
         }
-        if (Operator_utils::has_parameter(operator_parameters, "cols")) {
-            saw_cols = true;
+        if (Operator_utils::has_parameter(operator_parameters, "ncols")) {
+            saw_ncols = true;
             Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                              operator_parameters, "cols", cols, errors);
+                                              operator_parameters, "ncols", ncols, errors);
         }
         if (Operator_utils::has_parameter(operator_parameters, "background"))
             Operator_utils::get_real_parameter("Operator_transform_image_create::run",
@@ -78,13 +78,13 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         }
         Image *image = nullptr;
         Data_source_descriptor *input_data_source;
-        if (input_data_sources_missing && (!saw_rows || !saw_cols))
+        if (input_data_sources_missing && (!saw_nrows || !saw_ncols))
             errors.add("Operator_transform_image_create::run",
                        "",
-                       "'rows' and 'cols' parameters required if no input data source");
+                       "'nrows' and 'ncols' parameters required if no input data source");
         if (!errors.has_error()) {
             if (input_data_sources_missing)
-                image = new Image(rows, cols, 1, Image_depth::CV_32S, background);
+                image = new Image(nrows, ncols, 1, Image_depth::CV_32S, background);
             else {
                 input_data_source = input_data_sources.front();
                 image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);

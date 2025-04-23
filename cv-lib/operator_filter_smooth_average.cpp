@@ -21,12 +21,12 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
     errors.add("Operator_filter_smooth_average::run", "", "output data source required");
   if (output_data_stores.size() > 1)
     errors.add("Operator_filter_smooth_average::run", "", "too many output data sources");
-  int rows;
+  int nrows;
   Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                    operator_parameters, "rows", rows, errors);
-  int cols;
+                                    operator_parameters, "nrows", nrows, errors);
+  int ncols;
   Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                    operator_parameters, "cols", cols, errors);
+                                    operator_parameters, "ncols", ncols, errors);
   Data_source_descriptor *input_data_source = input_data_sources.front();
   Data_source_descriptor *output_data_store = output_data_stores.front();
   Image *input = nullptr;
@@ -36,11 +36,11 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
     input->check_grayscale("Operator_filter_smooth_average::run", errors);
   // TODO: implement separable filter
   if (!errors.has_error() && input != nullptr) {
-    auto *coeffs_32F = new pixel_32F[rows * cols];
-    double correction = 1.0 / (rows * cols);
-    for (int i = 0; i < rows * cols; i++)
+    auto *coeffs_32F = new pixel_32F[nrows * ncols];
+    double correction = 1.0 / (nrows * ncols);
+    for (int i = 0; i < nrows * ncols; i++)
       coeffs_32F[i] = wb_utils::double_to_float(correction);
-    std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(rows, cols, coeffs_32F));
+    std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(nrows, ncols, coeffs_32F));
     Image *output = average_kernel->convolve_numeric(input, errors);
     if (!errors.has_error() && output != nullptr)
       output_data_store->write_operator_image(output,

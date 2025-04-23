@@ -35,26 +35,26 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         errors.add("Operator_transform_image_resize::run", "", "output data source required");
     else if (output_data_stores.size() > 1)
         errors.add("Operator_transform_image_resize::run", "", "too many output data sources");
-    int area_rows;
-    int area_cols;
+    int area_nrows;
+    int area_ncols;
 
-    bool saw_area_rows = false;
-    bool saw_area_cols = false;
-    if (Operator_utils::has_parameter(operator_parameters, "area-rows")) {
-        saw_area_rows = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_resize::run", operator_parameters, "area-rows",
-                                          area_rows, errors);
+    bool saw_area_nrows = false;
+    bool saw_area_ncols = false;
+    if (Operator_utils::has_parameter(operator_parameters, "area-nrows")) {
+        saw_area_nrows = true;
+        Operator_utils::get_int_parameter("Operator_transform_image_resize::run", operator_parameters, "area-nrows",
+                                          area_nrows, errors);
     }
-    if (Operator_utils::has_parameter(operator_parameters, "area-cols")) {
-        saw_area_cols = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_resize::run", operator_parameters, "area-cols",
-                                          area_cols, errors);
+    if (Operator_utils::has_parameter(operator_parameters, "area-ncols")) {
+        saw_area_ncols = true;
+        Operator_utils::get_int_parameter("Operator_transform_image_resize::run", operator_parameters, "area-ncols",
+                                          area_ncols, errors);
     }
-    if (!saw_area_rows) {
-        errors.add("Operator_transform_image_resize::run", "", "missing 'area-rows' parameter");
+    if (!saw_area_nrows) {
+        errors.add("Operator_transform_image_resize::run", "", "missing 'area-nrows' parameter");
     }
-    if (!saw_area_cols) {
-        errors.add("Operator_transform_image_resize::run", "", "missing 'area-cols' parameter");
+    if (!saw_area_ncols) {
+        errors.add("Operator_transform_image_resize::run", "", "missing 'area-ncols' parameter");
     }
 
     if (!Operator_utils::has_parameter(operator_parameters, "resize-type"))
@@ -79,7 +79,7 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         }
     }
     if (!errors.has_error()) {
-        Image *output_image = Image::resize(input, area_rows, area_cols, WB_resize_types::Resize_type::MAX);
+        Image *output_image = Image::resize(input, area_nrows, area_ncols, WB_resize_types::Resize_type::MAX);
         output_data_store->write_image(output_image, errors);
     }
 }

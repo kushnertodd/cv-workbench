@@ -28,14 +28,14 @@ Hough *Hough::create_image(Image *image, int rho_inc, int theta_inc, int pixel_t
     return hough;
 }
 /*
-void Hough::find_lines(int rows, int cols, int nrhos, int nthetas) {
-  lines_to_line_segments(rows, cols, nrhos, nthetas);
+void Hough::find_lines(int nrows, int ncols, int nrhos, int nthetas) {
+  lines_to_line_segments(nrows, ncols, nrhos, nthetas);
 }
 
-void Hough::lines_to_line_segments(int rows, int cols, int nrhos, int nthetas) {
+void Hough::lines_to_line_segments(int nrows, int cols, int nrhos, int nthetas) {
   for (Polar_line line: lines) {
     Line_segment line_segment;
-      if (WB_window::clip_window(rows, cols, nrhos, nthetas,line_segment, line))
+      if (WB_window::clip_window(nrows, cols, nrhos, nthetas,line_segment, line))
       line_segments.push_back(line_segment);
   }
 }

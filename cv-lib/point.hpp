@@ -19,35 +19,35 @@ public:
 
     Point(const Point &point);
 
-    Point(double x, double y, int cols, int rows);
+    Point(double x, double y, int ncols, int nrows);
 
-    void check_point_valid(int rows, int cols) const;
+    void check_point_valid(int nrows, int ncols) const;
 
-    static double col_to_x(int col, int cols);
+    static double col_to_x(int col, int ncols);
 
-    double ellipse_dist(int rows, int cols) const;
+    double ellipse_dist(int nrows, int ncols) const;
 
-    static double ellipse_dist(int row, int col, int rows, int cols);
+    static double ellipse_dist(int row, int col, int nrows, int ncols);
 
-    bool in_ellipse(int rows, int cols) const;
+    bool in_ellipse(int nrows, int ncols) const;
 
-    static bool in_ellipse(int row, int col, int rows, int cols);
+    static bool in_ellipse(int row, int col, int nrows, int ncols);
 
-    static bool is_valid(int row, int col, int rows, int cols);
+    static bool is_valid(int row, int col, int nrows, int ncols);
 
-    static double row_to_y(int row, int rows);
+    static double row_to_y(int row, int nrows);
 
     void set(int m_row, int m_col);
 
     std::string to_string() const;
 
-    double to_x(int cols) const;
+    double to_x(int ncols) const;
 
-    double to_y(int rows) const;
+    double to_y(int nrows) const;
 
-    static int x_to_col(double x, int cols);
+    static int x_to_col(double x, int ncols);
 
-    static int y_to_row(double y, int rows);
+    static int y_to_row(double y, int nrows);
 };
 
 #endif //SRC__POINT_HPP_

@@ -21,14 +21,14 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
     errors.add("Operator_filter_smooth_gaussian::run", "", "output data source required");
   if (output_data_stores.size() > 1)
     errors.add("Operator_filter_smooth_gaussian::run", "", "too many output data sources");
-  int rows;
-  int cols;
+  int nrows;
+  int ncols;
   double sigma_x;
   double sigma_y;
   Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
-                                    operator_parameters, "rows", rows, errors);
+                                    operator_parameters, "nrows", nrows, errors);
   Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run",
-                                    operator_parameters, "cols", cols, errors);
+                                    operator_parameters, "ncols", ncols, errors);
   Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
                                      operator_parameters, "sigma-x", sigma_x, errors);
   Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run",
@@ -41,8 +41,8 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
   if (!errors.has_error() && input != nullptr)
     input->check_grayscale("Operator_filter_smooth_gaussian::run", errors);
   if (!errors.has_error() && input != nullptr) {
-    Kernel *gaussian_kernel_y_ptr = Kernel::create_gaussian_y(rows, sigma_y);
-    Kernel *gaussian_kernel_x_ptr = Kernel::create_gaussian_x(cols, sigma_x);
+    Kernel *gaussian_kernel_y_ptr = Kernel::create_gaussian_y(nrows, sigma_y);
+    Kernel *gaussian_kernel_x_ptr = Kernel::create_gaussian_x(ncols, sigma_x);
     std::unique_ptr<Kernel> gaussian_kernel_y(gaussian_kernel_y_ptr);
     std::unique_ptr<Kernel> gaussian_kernel_x(gaussian_kernel_x_ptr);
     Image *output_pass1 = gaussian_kernel_y->convolve_numeric(input, errors);

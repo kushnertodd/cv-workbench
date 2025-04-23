@@ -32,6 +32,8 @@ int Polar_trig::get_nrows() const { return nrows; }
 int Polar_trig::get_nthetas() const { return nthetas; }
 int Polar_trig::get_rho_inc() const { return rho_inc; }
 int Polar_trig::get_theta_inc() const { return theta_inc; }
+
+bool 
 // can have a singularity if theta ~= 180, sin ~= 0
 int Polar_trig::rho_theta_col_to_row(int rho_index, int theta_index, int col) const {
     double x = Point::col_to_x(col, ncols);

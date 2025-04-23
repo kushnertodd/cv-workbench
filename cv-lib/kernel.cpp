@@ -14,7 +14,7 @@ Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
-Kernel::Kernel(int rows, int cols, Image_depth depth) : Image(rows, cols, 1, depth) { init(); }
+Kernel::Kernel(int nrows, int ncols, Image_depth depth) : Image(nrows, ncols, 1, depth) { init(); }
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
@@ -40,38 +40,38 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
         errors.add("Kernel::convolve_numeric", "", "cannot perform numeric convolution with CV_8U output image");
         return nullptr;
     } else {
-        int src_rows = src->get_nrows();
-        int src_cols = src->get_ncols();
+        int src_nrows = src->get_nrows();
+        int src_ncols = src->get_ncols();
         int src_components = src->get_ncomponents();
-        int rows = get_nrows();
-        int cols = get_ncols();
+        int nrows = get_nrows();
+        int ncols = get_ncols();
         // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is
         // Image_depth::CV_32S
-        auto *out = new Image(src_rows, src_cols, src_components, out_depth);
-        int rows_half = (rows + 1) / 2;
-        int cols_half = (cols + 1) / 2;
+        auto *out = new Image(src_nrows, src_ncols, src_components, out_depth);
+        int nrows_half = (nrows + 1) / 2;
+        int ncols_half = (ncols + 1) / 2;
         int row_lower = 0;
-        int row_upper = src_rows - rows;
+        int row_upper = src_nrows - nrows;
         int col_lower = 0;
-        int col_upper = src_cols - cols;
+        int col_upper = src_ncols - ncols;
         if (debug)
-            std::cout << "rows_half " << rows_half << " cols_half " << cols_half << " row_lower " << row_lower
+            std::cout << "nrows_half " << nrows_half << " ncols_half " << ncols_half << " row_lower " << row_lower
                       << ", row_upper " << row_upper << ", col_lower " << col_lower << ", col_upper " << col_upper
                       << std::endl;
         int kernel_row_lower = 0;
-        int kernel_row_upper = rows - 1;
+        int kernel_row_upper = nrows - 1;
         int kernel_col_lower = 0;
-        int kernel_col_upper = cols - 1;
+        int kernel_col_upper = ncols - 1;
         if (debug)
             std::cout << " kernel_row_lower " << kernel_row_lower << " kernel_row_upper " << kernel_row_upper
                       << " kernel_col_lower " << kernel_col_lower << " kernel_col_upper " << kernel_col_upper
                       << std::endl;
         for (int row = row_lower; row <= row_upper; row++) {
-            int row_center = row + rows_half - 1;
+            int row_center = row + nrows_half - 1;
             if (debug)
                 std::cout << "row " << row << " row_center " << row_center << std::endl;
             for (int col = col_lower; col <= col_upper; col++) {
-                int col_center = col + cols_half - 1;
+                int col_center = col + ncols_half - 1;
                 if (debug)
                     std::cout << "col " << col << " col_center " << col_center << std::endl;
                 double sum;
@@ -126,17 +126,17 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
     }
 }
 
-Kernel *Kernel::create_32S(int rows, int cols, const pixel_32S *buf_32S) {
-    auto *kernel = new Kernel(rows, cols, Image_depth::CV_32S);
+Kernel *Kernel::create_32S(int nrows, int ncols, const pixel_32S *buf_32S) {
+    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32S);
     const pixel_32S *buf_ptr = buf_32S;
-    for (int row = 0; row < rows; row++)
-        for (int col = 0; col < cols; col++)
+    for (int row = 0; row < nrows; row++)
+        for (int col = 0; col < ncols; col++)
             kernel->set_32S(row, col, *buf_ptr++);
     return kernel;
 }
 
-Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
-    auto *kernel = new Kernel(rows, cols, Image_depth::CV_32F);
+Kernel *Kernel::create_32F(int nrows, int ncols, const pixel_32F *buf_32F) {
+    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32F);
     for (int i = 0; i < kernel->get_npixels(); i++) {
         kernel->buf_32F[i] = buf_32F[i];
     }
@@ -144,23 +144,23 @@ Kernel *Kernel::create_32F(int rows, int cols, const pixel_32F *buf_32F) {
 }
 
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
-                                           int rows, int cols, int thickness) {
-    auto *kernel = new Kernel(rows, cols, Image_depth::CV_8U);
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; col++) {
+                                           int nrows, int ncols, int thickness) {
+    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_8U);
+    for (int row = 0; row < nrows; row++) {
+        for (int col = 0; col < ncols; col++) {
             switch (structuring_element_type) {
                 case WB_morphology_types::Structuring_element_type::RECTANGLE:
                     kernel->set_8U(row, col, 1);
                     break;
                 case WB_morphology_types::Structuring_element_type::CROSS: {
-                    double x = Point::col_to_x(col, cols);
-                    double y = Point::row_to_y(row, rows);
+                    double x = Point::col_to_x(col, ncols);
+                    double y = Point::row_to_y(row, nrows);
                     if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
                         kernel->set_8U(row, col, 1);
                     break;
                 }
                 case WB_morphology_types::Structuring_element_type::ELLIPSE:
-                    if (Point::in_ellipse(row, col, rows, cols))
+                    if (Point::in_ellipse(row, col, nrows, ncols))
                         kernel->set_8U(row, col, 1);
                     break;
                 default:
@@ -171,36 +171,36 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
     return kernel;
 }
 
-Kernel *Kernel::create_gaussian_y(int rows, double sigma_y) {
-    auto *gaussian_y = new Kernel(rows, 1, Image_depth::CV_32F);
+Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
+    auto *gaussian_y = new Kernel(nrows, 1, Image_depth::CV_32F);
     double fact1 = 1.0 / (sigma_y * sqrt(2 * M_PI));
     double denom1 = 2 * sigma_y * sigma_y;
     double sum = 0.0;
-    for (int row = 0; row < rows; row++) {
-        double y = Point::row_to_y(row, rows);
+    for (int row = 0; row < nrows; row++) {
+        double y = Point::row_to_y(row, nrows);
         double value = fact1 * exp(-((y * y) / denom1));
         gaussian_y->set(row, 0, value);
         sum += value;
     }
-    for (int row = 0; row < rows; row++) {
+    for (int row = 0; row < nrows; row++) {
         double value = gaussian_y->get(row, 0);
         gaussian_y->set(row, 0, value / sum);
     }
     return gaussian_y;
 }
 
-Kernel *Kernel::create_gaussian_x(int cols, double sigma_x) {
-    auto *gaussian_x = new Kernel(1, cols, Image_depth::CV_32F);
+Kernel *Kernel::create_gaussian_x(int ncols, double sigma_x) {
+    auto *gaussian_x = new Kernel(1, ncols, Image_depth::CV_32F);
     double fact1 = 1.0 / (sigma_x * sqrt(2 * M_PI));
     double denom1 = 2 * sigma_x * sigma_x;
     double sum = 0.0;
-    for (int col = 0; col < cols; col++) {
-        double x = Point::col_to_x(col, cols);
+    for (int col = 0; col < ncols; col++) {
+        double x = Point::col_to_x(col, ncols);
         double value = fact1 * exp(-((x * x) / denom1));
         gaussian_x->set(0, col, value);
         sum += value;
     }
-    for (int col = 0; col < cols; col++) {
+    for (int col = 0; col < ncols; col++) {
         double value = gaussian_x->get(0, col);
         gaussian_x->set(0, col, value / sum);
     }
