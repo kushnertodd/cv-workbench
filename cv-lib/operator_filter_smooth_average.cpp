@@ -40,7 +40,7 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
     double correction = 1.0 / (nrows * ncols);
     for (int i = 0; i < nrows * ncols; i++)
       coeffs_32F[i] = wb_utils::double_to_float(correction);
-    std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(nrows, ncols, coeffs_32F));
+    std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(ncols, nrows, coeffs_32F));
     Image *output = average_kernel->convolve_numeric(input, errors);
     if (!errors.has_error() && output != nullptr)
       output_data_store->write_operator_image(output,

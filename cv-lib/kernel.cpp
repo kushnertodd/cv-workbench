@@ -14,7 +14,7 @@ Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
-Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(nrows, ncols, 1, depth) { init(); }
+Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(ncols, nrows, 1, depth) { init(); }
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
@@ -127,7 +127,7 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
 }
 
 Kernel *Kernel::create_32S(int ncols, int nrows, const pixel_32S *buf_32S) {
-    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32S);
+    auto *kernel = new Kernel(ncols, nrows, Image_depth::CV_32S);
     const pixel_32S *buf_ptr = buf_32S;
     for (int row = 0; row < nrows; row++)
         for (int col = 0; col < ncols; col++)
@@ -136,7 +136,7 @@ Kernel *Kernel::create_32S(int ncols, int nrows, const pixel_32S *buf_32S) {
 }
 
 Kernel *Kernel::create_32F(int ncols, int nrows, const pixel_32F *buf_32F) {
-    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32F);
+    auto *kernel = new Kernel(ncols, nrows, Image_depth::CV_32F);
     for (int i = 0; i < kernel->get_npixels(); i++) {
         kernel->buf_32F[i] = buf_32F[i];
     }
@@ -145,7 +145,7 @@ Kernel *Kernel::create_32F(int ncols, int nrows, const pixel_32F *buf_32F) {
 
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                            int ncols, int nrows, int thickness) {
-    auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_8U);
+    auto *kernel = new Kernel(ncols, nrows, Image_depth::CV_8U);
     for (int row = 0; row < nrows; row++) {
         for (int col = 0; col < ncols; col++) {
             switch (structuring_element_type) {
@@ -160,7 +160,7 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
                     break;
                 }
                 case WB_morphology_types::Structuring_element_type::ELLIPSE:
-                    if (Pixel::in_ellipse(row, col, nrows, ncols))
+                    if (Pixel::in_ellipse(row, col, ncols, nrows))
                         kernel->set_8U(row, col, 1);
                     break;
                 default:

@@ -25,7 +25,7 @@ void Image_frame::check_point_valid(int col, int row) const {
     assert(col >= 0 && col < ncols && row >= 0 && row < nrows);
 }
 /**
- * distance from (row, col) to center of elipse inscribed into rectangle (nrows, ncols) is:
+ * distance from (row, col) to center of elipse inscribed into rectangle (ncols, nrows) is:
  *   a = ncols/2
  *   b = nrows/2
  *   dist = x^2/a^2 + y^2/b^2
@@ -42,7 +42,7 @@ double Image_frame::ellipse_dist(int col, int row) const {
     return dist;
 }
 bool Image_frame::in_ellipse(int col, int row) const {
-    double dist = ellipse_dist(row, col, nrows, ncols);
+    double dist = ellipse_dist(row, col, ncols, nrows);
     return dist <= 1.0;
 }
 void init(const int m_ncols, const int m_nrows) {

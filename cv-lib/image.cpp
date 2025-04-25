@@ -207,7 +207,7 @@ Image *Image::color_edge(Errors &errors) {
     int row_upper = nrows - 2;
     int col_lower = 1;
     int col_upper = ncols - 2;
-    auto *out = new Image(nrows, ncols, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    auto *out = new Image(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
     out->clear(0.0);
     if (debug)
         std::cout << "row_lower " << row_lower << ", row_upper " << row_upper << ", col_lower " << col_lower
@@ -677,7 +677,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
         }
         nrows++;
     }
-    auto *image = new Image(nrows, ncols, 1, Image_depth::CV_32S);
+    auto *image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
     pixel_32S *buf_ptr = image->buf_32S;
     for (const std::vector<std::string> &row_values: lines) {
         for (const std::string &value_str: row_values) {

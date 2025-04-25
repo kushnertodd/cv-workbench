@@ -121,6 +121,9 @@ image-read: image-read.o $(SRCOBJS)
 cv-workbench : cv-workbench.o $(SRCOBJS)
 	$(CXX) $< -o $@ $(SRCOBJS) $(CXXFLAGS) $(LDFLAGS_JSON) $(LDFLAGS_JPEG)
 
+polar_trig_static: polar_trig_static.o
+	$(CXX) $< -o $@ 
+
 objs:
 	@echo $(OBJS)
 

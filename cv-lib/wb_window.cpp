@@ -133,8 +133,8 @@ bool WB_window::clip_window(int ncols, int nrows, int nrhos, int nthetas, Line_s
                 std::cout << "Hough_accum::clip_window case 1 shouldn't get here" << std::endl;
             return false;
         }
-        top_point.check_point_valid(nrows, ncols);
-        bottom_point.check_point_valid(nrows, ncols);
+        top_point.check_point_valid(ncols, nrows);
+        bottom_point.check_point_valid(ncols, nrows);
         line_segment.set(top_point, bottom_point);
         return true;
     } else {
@@ -210,8 +210,8 @@ bool WB_window::clip_window(int ncols, int nrows, int nrhos, int nthetas, Line_s
                           << " shouldn't get here " << std::endl;
             return false;
         }
-        left_point.check_point_valid(nrows, ncols);
-        right_point.check_point_valid(nrows, ncols);
+        left_point.check_point_valid(ncols, nrows);
+        right_point.check_point_valid(ncols, nrows);
         line_segment.set(left_point, right_point);
         return true;
     }

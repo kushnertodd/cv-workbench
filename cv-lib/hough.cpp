@@ -29,7 +29,7 @@ Hough *Hough::create_image(Image *image, int rho_inc, int theta_inc, int pixel_t
 }
 /*
 void Hough::find_lines(int ncols, int nrows, int nrhos, int nthetas) {
-  lines_to_line_segments(nrows, ncols, nrhos, nthetas);
+  lines_to_line_segments(ncols, nrows, nrhos, nthetas);
 }
 
 void Hough::lines_to_line_segments(int nrows, int cols, int nrhos, int nthetas) {
