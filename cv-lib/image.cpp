@@ -357,8 +357,8 @@ void Image::draw_line_segment(const Line_segment &line_segment, double value, in
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    for (Point point: line_segment.line_points) {
-        set(point, value, component);
+    for (Point pixel: line_segment.line_points) {
+        set(pixel, value, component);
     }
 }
 void Image::draw_line_segment(int row1, int col1, int row2, int col2, double value, int component) const {
@@ -366,8 +366,8 @@ void Image::draw_line_segment(int row1, int col1, int row2, int col2, double val
     assert(component <= get_ncomponents());
 #endif
     Line_segment line_segment(row1, col1, row2, col2);
-    for (Point point: line_segment.line_points) {
-        set(point, value, component);
+    for (Point pixel: line_segment.line_points) {
+        set(pixel, value, component);
     }
 }
 void Image::draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component) const {
@@ -410,46 +410,46 @@ double Image::get(const int row, const int col, const int component) const {
     int index;
     switch (get_depth()) {
         case Image_depth::CV_8U:
-            index = row_col_to_index(row, col, component);
+            index = col_row_to_index(row, col, component);
             return buf_8U[index];
 
         case Image_depth::CV_32S:
-            index = row_col_to_index(row, col, component);
+            index = col_row_to_index(row, col, component);
             return static_cast<pixel_32F>(buf_32S[index]);
 
         case Image_depth::CV_32F:
-            index = row_col_to_index(row, col, component);
+            index = col_row_to_index(row, col, component);
             return buf_32F[index];
 
         default:
             return 0.0;
     }
 }
-double Image::get(const Point &point, const int component) const {
+double Image::get(const Point &pixel, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    return get(point.row, point.col, component);
+    return get(pixel.row, pixel.col, component);
 }
 auto Image::get_8U(const int row, const int col, const int component) const -> pixel_8U {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    int index = row_col_to_index(row, col, component);
+    int index = col_row_to_index(row, col, component);
     return buf_8U[index];
 }
 auto Image::get_32F(const int row, const int col, const int component) const -> pixel_32F {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    int index = row_col_to_index(row, col, component);
+    int index = col_row_to_index(row, col, component);
     return buf_32F[index];
 }
 pixel_32S Image::get_32S(const int row, const int col, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    int index = row_col_to_index(row, col, component);
+    int index = col_row_to_index(row, col, component);
     return buf_32S[index];
 }
 double Image::get_blue(const int row, const int col) const { return get(row, col, RGB_BLUE); }
@@ -461,7 +461,7 @@ int Image::get_npixels() const { return image_header.npixels; }
 int Image::get_nrows() const { return image_header.nrows; }
 double Image::get_red(const int row, const int col) const { return get(row, col, RGB_RED); }
 int Image::get_row_stride() const { return image_header.row_stride; }
-double Image::get_scaled(int row, int col, double lower_in, double upper_in, double lower_out, double upper_out,
+double Image::get_scaled(int col, int row, double lower_in, double upper_in, double lower_out, double upper_out,
                          int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -532,7 +532,7 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
     WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.bounds.max_value));
     log_entries.push_back(log_entry_max_value);
 }
-void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int row, int col) {
+void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
     pixel_RGB.red = get_red(row, col);
     pixel_RGB.red = get_green(row, col);
     pixel_RGB.red = get_blue(row, col);
@@ -732,7 +732,7 @@ Image *Image::resize(const Image *image, int area_nrows, int area_ncols, WB_resi
     }
     return resize_image;
 }
-int Image::row_col_to_index(int row, int col, int component) const {
+int Image::col_row_to_index(int col, int row, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
     if (!(row >= 0 && row < get_nrows() && col >= 0 && col < get_ncols()))
@@ -781,21 +781,21 @@ double Image::scale_pixel(double pixel_in, double in_lower, double in_upper, dou
     return pixel_out;
 }
 // -> CV_8U may lose precision/overflow
-void Image::set(int row, int col, double value, int component) const {
+void Image::set(int col, int row, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     switch (get_depth()) {
         case Image_depth::CV_8U:
-            buf_8U[row_col_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
+            buf_8U[col_row_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
             break;
 
         case Image_depth::CV_32S:
-            buf_32S[row_col_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
+            buf_32S[col_row_to_index(row, col, component)] = wb_utils::double_to_int_round(value);
             break;
 
         case Image_depth::CV_32F:
-            buf_32F[row_col_to_index(row, col, component)] = wb_utils::double_to_float(value);
+            buf_32F[col_row_to_index(row, col, component)] = wb_utils::double_to_float(value);
             break;
 
         default:
@@ -842,29 +842,29 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
     return out_image;
 }
 
-void Image::set(const Point &point, double value, int component) const {
+void Image::set(const Point &pixel, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    set(point.row, point.col, value, component);
+    set(pixel.row, pixel.col, value, component);
 }
-void Image::set_8U(int row, int col, pixel_8U value, int component) const {
+void Image::set_8U(int col, int row, pixel_8U value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_8U[row_col_to_index(row, col, component)] = value;
+    buf_8U[col_row_to_index(row, col, component)] = value;
 }
-void Image::set_32F(int row, int col, pixel_32F value, int component) const {
+void Image::set_32F(int col, int row, pixel_32F value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_32F[row_col_to_index(row, col, component)] = value;
+    buf_32F[col_row_to_index(row, col, component)] = value;
 }
-void Image::set_32S(int row, int col, pixel_32S value, int component) const {
+void Image::set_32S(int col, int row, pixel_32S value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_32S[row_col_to_index(row, col, component)] = value;
+    buf_32S[col_row_to_index(row, col, component)] = value;
 }
 std::string Image::to_string(const std::string &prefix) const {
     std::ostringstream os;

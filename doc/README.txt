@@ -41,7 +41,7 @@ images/square45-90_gray_sobel_0_degrees.jpg
 
 3. Hough line detector
 
-The Hough line detector will find edge pixels that lie on a common line. It does this brute force by passing lines in all angles through a point and keeping track of those lines. It then finds lines at all angles passing through another points, tracking those lines and noting which lines on which both of those points lie. Every two points will have one line passing through them. The process is repeated for other points, and by chance multiple points may lie on the same line. The lines with the most points are found as candidate lines in the image.
+The Hough line detector will find edge pixels that lie on a common line. It does this brute force by passing lines in all angles through a pixel and keeping track of those lines. It then finds lines at all angles passing through another points, tracking those lines and noting which lines on which both of those points lie. Every two points will have one line passing through them. The process is repeated for other points, and by chance multiple points may lie on the same line. The lines with the most points are found as candidate lines in the image.
 
 - Run this command:
 

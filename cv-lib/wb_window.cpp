@@ -21,17 +21,17 @@ extern bool debug;
  *
  *  @image html cv-workbench_wb_window_clip_90_degree.jpg
  *
- *   This shows the position of the clip point in each subcase:
+ *   This shows the position of the clip pixel in each subcase:
  *   case        | 1.1| 1.2  | 1.3  | 1.4  | 1.5  | 1.6  |1.7
  *   ------------|----|------|------|------|------|------|-----
- *   upper point |left|left  |inside|inside|inside|right |right
- *   lower point |left|inside|left  |inside|right |inside|right
+ *   upper pixel |left|left  |inside|inside|inside|right |right
+ *   lower pixel |left|inside|left  |inside|right |inside|right
  *
  *   This shows the intersection points that make up the resulting line segment, or none:
  *   case         |1.1 |1.2   |1.3   |1.4   |1.5  | 1.6  |1.7
  *   -------------|----|------|------|------|-----|------|-----
- *   first point  |none|left  |top   |top   |top  |right |none
- *   second point |none|bottom|left  |bottom|right|bottom|none
+ *   first pixel  |none|left  |top   |top   |top  |right |none
+ *   second pixel |none|bottom|left  |bottom|right|bottom|none
  *
  * - case 2: pi/4 < theta < 3*pi/4
  *   must clip against the window left and right first
@@ -41,22 +41,22 @@ extern bool debug;
  *
  *  @image html cv-workbench_wb_window_clip_0_degree.jpg
  *
- *   This shows the position of the clip point in each subcase:
+ *   This shows the position of the clip pixel in each subcase:
  *   case       | 2.1 | 2.2  | 2.3   | 2.4  | 2.5  | 2.6  | 2.7
  *   -----------|-----|------|-------|------|------|------|-----
- *   upper point|above|above |inside |inside|inside|below |below
- *   lower point|above|inside|above  |inside|below |inside|below
+ *   upper pixel|above|above |inside |inside|inside|below |below
+ *   lower pixel|above|inside|above  |inside|below |inside|below
  *
  *   This shows the intersection points that make up the resulting line segment, or none:
  *   case        |2.1 |2.2  | 2.3 |  2.4  | 2.5   |2.6   |2.7
  *   ------------|----|-----|-----|-------|-------|------|-----
- *   first point |none|top  | left|  left | left  |bottom|none
- *   second point|none|right| top |  right| bottom|right |none
+ *   first pixel |none|top  | left|  left | left  |bottom|none
+ *   second pixel|none|right| top |  right| bottom|right |none
  *
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-bool WB_window::clip_window(int nrows, int ncols, int nrhos, int nthetas, Line_segment &line_segment,
+bool WB_window::clip_window(int ncols, int nrows, int nrhos, int nthetas, Line_segment &line_segment,
                             Polar_trig &polar_trig, Polar_line &line) {
     int theta_lower = nthetas / 4;
     int theta_upper = nthetas * 3 / 4;
@@ -70,9 +70,9 @@ bool WB_window::clip_window(int nrows, int ncols, int nrhos, int nthetas, Line_s
         // must clip against the window top and bottom first
         int col_at_window_top = polar_trig.rho_theta_row_to_col(line.rho_index, line.theta_index, window_top);
         int col_at_window_bottom = polar_trig.rho_theta_row_to_col(line.rho_index, line.theta_index, window_bottom);
-        // get the top or right point
-        Point top_point;
-        Point bottom_point;
+        // get the top or right pixel
+        Pixel top_point;
+        Pixel bottom_point;
         if (col_at_window_top < window_left && col_at_window_bottom < window_left) {
             // case 1.1: window top and bottom column both to the left of window
             // clipped line invalid -- should not happen with Hough
@@ -142,9 +142,9 @@ bool WB_window::clip_window(int nrows, int ncols, int nrhos, int nthetas, Line_s
         // must clip against the window left and right first
         int row_at_window_left = polar_trig.rho_theta_col_to_row(line.rho_index, line.theta_index, window_left);
         int row_at_window_right = polar_trig.rho_theta_col_to_row(line.rho_index, line.theta_index, window_right);
-        // get the top or right point
-        Point left_point;
-        Point right_point;
+        // get the top or right pixel
+        Pixel left_point;
+        Pixel right_point;
         if (debug)
             std::cout << "Hough_accum::clip_window"
                       << " row_at_window_left " << row_at_window_left << " row_at_window_right " << row_at_window_right

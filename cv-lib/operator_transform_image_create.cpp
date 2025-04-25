@@ -60,9 +60,9 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                                operator_parameters, "foreground", foreground, errors);
         else
             foreground = 255;
-        if (Operator_utils::has_parameter(operator_parameters, "point")) {
+        if (Operator_utils::has_parameter(operator_parameters, "pixel")) {
             saw_point = true;
-            param_point_str = Operator_utils::get_parameter(operator_parameters, "point");
+            param_point_str = Operator_utils::get_parameter(operator_parameters, "pixel");
         }
         if (Operator_utils::has_parameter(operator_parameters, "line")) {
             saw_line = true;
@@ -95,22 +95,22 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         if (!errors.has_error() && saw_point) {
             std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
             if (points.empty())
-                errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
+                errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter value");
             if (!errors.has_error()) {
                 std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
                 for (const std::string &point_str: points) {
                     std::smatch msm;
                     if (!std::regex_match(point_str, msm, point_pat) || msm.size() != 3)
-                        errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
+                        errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter value");
                     else {
                         std::string row_str = msm[1];
                         std::string col_str = msm[2];
                         int row;
                         int col;
                         if (!wb_utils::string_to_int(row_str, row))
-                            errors.add("Operator_transform_image_create::run", "", "invalid point parameter row value");
+                            errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter row value");
                         if (!wb_utils::string_to_int(col_str, col))
-                            errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
+                            errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter col value");
                         if (!errors.has_error() && image != nullptr) {
                             image->set(row, col, foreground);
                         }

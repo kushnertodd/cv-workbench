@@ -85,8 +85,8 @@ add_library(cv-lib STATIC
         operator_utils.hpp
         pearsons_correlation.cpp
         pearsons_correlation.hpp
-        point.cpp
-        point.hpp
+        pixel.cpp
+        pixel.hpp
         polar_line.cpp
         polar_line.hpp
         polar_trig.cpp

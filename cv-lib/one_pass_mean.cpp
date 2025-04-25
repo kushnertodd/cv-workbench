@@ -55,21 +55,21 @@ void One_pass_mean::row_down() {
     }
 }
 
-double One_pass_mean::sum_col(int row, int col) {
+double One_pass_mean::sum_col(int col, int row) {
     double sum = 0.0;
     for (int i = 0; i < window_rows; i++)
         sum += image->get(row + i, col);
     return sum;
 }
 
-double One_pass_mean::sum_row(int row, int col) {
+double One_pass_mean::sum_row(int col, int row) {
     double sum = 0.0;
     for (int j = 0; j < window_cols; j++)
         sum += image->get(row, col + j);
     return sum;
 }
 
-double One_pass_mean::sum_window(int row, int col) {
+double One_pass_mean::sum_window(int col, int row) {
     double sum = 0.0;
     for (int i = 0; i < window_rows; i++)
         for (int j = 0; j < window_cols; j++)

@@ -63,9 +63,9 @@ class One_pass_mean {
   double get_mean();
   void init();
   void row_down();
-  double sum_col(int row, int col);
-  double sum_row(int row, int col);
-  double sum_window(int row, int col);
+  double sum_col(int col, int row);
+  double sum_row(int col, int row);
+  double sum_window(int col, int row);
 };
 
 #endif //SRC__ONE_PASS_MEAN_H_

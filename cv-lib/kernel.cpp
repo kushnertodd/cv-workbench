@@ -14,7 +14,7 @@ Kernel::~Kernel() = default;
 
 Kernel::Kernel() = default;
 
-Kernel::Kernel(int nrows, int ncols, Image_depth depth) : Image(nrows, ncols, 1, depth) { init(); }
+Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(nrows, ncols, 1, depth) { init(); }
 
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 Image *Kernel::convolve_numeric(Image *src, Errors &errors) const {
@@ -126,7 +126,7 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
     }
 }
 
-Kernel *Kernel::create_32S(int nrows, int ncols, const pixel_32S *buf_32S) {
+Kernel *Kernel::create_32S(int ncols, int nrows, const pixel_32S *buf_32S) {
     auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32S);
     const pixel_32S *buf_ptr = buf_32S;
     for (int row = 0; row < nrows; row++)
@@ -135,7 +135,7 @@ Kernel *Kernel::create_32S(int nrows, int ncols, const pixel_32S *buf_32S) {
     return kernel;
 }
 
-Kernel *Kernel::create_32F(int nrows, int ncols, const pixel_32F *buf_32F) {
+Kernel *Kernel::create_32F(int ncols, int nrows, const pixel_32F *buf_32F) {
     auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_32F);
     for (int i = 0; i < kernel->get_npixels(); i++) {
         kernel->buf_32F[i] = buf_32F[i];
@@ -144,7 +144,7 @@ Kernel *Kernel::create_32F(int nrows, int ncols, const pixel_32F *buf_32F) {
 }
 
 Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
-                                           int nrows, int ncols, int thickness) {
+                                           int ncols, int nrows, int thickness) {
     auto *kernel = new Kernel(nrows, ncols, Image_depth::CV_8U);
     for (int row = 0; row < nrows; row++) {
         for (int col = 0; col < ncols; col++) {
@@ -153,14 +153,14 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
                     kernel->set_8U(row, col, 1);
                     break;
                 case WB_morphology_types::Structuring_element_type::CROSS: {
-                    double x = Point::col_to_x(col, ncols);
-                    double y = Point::row_to_y(row, nrows);
+                    double x = Pixel::col_to_x(col, ncols);
+                    double y = Pixel::row_to_y(row, nrows);
                     if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
                         kernel->set_8U(row, col, 1);
                     break;
                 }
                 case WB_morphology_types::Structuring_element_type::ELLIPSE:
-                    if (Point::in_ellipse(row, col, nrows, ncols))
+                    if (Pixel::in_ellipse(row, col, nrows, ncols))
                         kernel->set_8U(row, col, 1);
                     break;
                 default:
@@ -177,7 +177,7 @@ Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
     double denom1 = 2 * sigma_y * sigma_y;
     double sum = 0.0;
     for (int row = 0; row < nrows; row++) {
-        double y = Point::row_to_y(row, nrows);
+        double y = Pixel::row_to_y(row, nrows);
         double value = fact1 * exp(-((y * y) / denom1));
         gaussian_y->set(row, 0, value);
         sum += value;
@@ -195,7 +195,7 @@ Kernel *Kernel::create_gaussian_x(int ncols, double sigma_x) {
     double denom1 = 2 * sigma_x * sigma_x;
     double sum = 0.0;
     for (int col = 0; col < ncols; col++) {
-        double x = Point::col_to_x(col, ncols);
+        double x = Pixel::col_to_x(col, ncols);
         double value = fact1 * exp(-((x * x) / denom1));
         gaussian_x->set(0, col, value);
         sum += value;
@@ -211,7 +211,7 @@ Kernel *Kernel::create_gaussian_x(int ncols, double sigma_x) {
     standard deviation 'sigma', and centered at value 'mean'.
 
     For example, if mean=0.5, the Gaussian will be centered
-    in the middle point between values 'kernel->values[0]'
+    in the middle pixel between values 'kernel->values[0]'
     and 'kernel->values[1]'.
 
     from this, not using, just for interest.

@@ -10,7 +10,7 @@
 #include "errors.hpp"
 #include "image_header.hpp"
 #include "line_segment.hpp"
-#include "point.hpp"
+#include "pixel.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
@@ -71,11 +71,11 @@ public:
     void draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component = 0) const;
     void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component = 0) const;
     void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component = 0) const;
-    double get(int row, int col, int component = 0) const;
-    double get(const Point &point, int component = 0) const;
-    pixel_8U get_8U(int row, int col, int component = 0) const;
-    pixel_32F get_32F(int row, int col, int component = 0) const;
-    pixel_32S get_32S(int row, int col, int component = 0) const;
+    double get(int col, int row, int component = 0) const;
+    double get(const Pixel &pixel, int component = 0) const;
+    pixel_8U get_8U(int col, int row, int component = 0) const;
+    pixel_32F get_32F(int col, int row, int component = 0) const;
+    pixel_32S get_32S(int col, int row, int component = 0) const;
     double get_blue(const int row, const int col) const;
     int get_ncomponents() const;
     Image_depth get_depth() const;
@@ -85,7 +85,7 @@ public:
     int get_nrows() const;
     double get_red(const int row, const int col) const;
     int get_row_stride() const;
-    double get_scaled(int row, int col, double lower_in, double upper_in, double lower_out, double upper_out,
+    double get_scaled(int col, int row, double lower_in, double upper_in, double lower_out, double upper_out,
                       int component = 0) const;
     void get_stats(Variance_stats &stats) const;
     void init(double value = 0.0);
@@ -98,17 +98,17 @@ public:
     static Image *read_text(std::ifstream &ifs, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);
     static Image *resize(const Image *image, int area_nrows, int area_ncols, WB_resize_types::Resize_type resize_type);
-    int row_col_to_index(int row, int col, int component = 0) const;
+    int col_row_to_index(int col, int row, int component = 0) const;
     static Image *scale_image(const Image *image, double lower_in, double upper_in, double lower_out, double upper_out,
                               Image_depth depth, int component = 0);
     static double scale_pixel(double in_value, double lower_in, double upper_in, double lower_out, double upper_out);
     static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
-    void set(int row, int col, double value, int component = 0) const;
-    void set(const Point &point, double value, int component = 0) const;
-    void set_8U(int row, int col, pixel_8U value, int component = 0) const;
-    void set_32F(int row, int col, pixel_32F value, int component = 0) const;
-    void set_32S(int row, int col, pixel_32S value, int component = 0) const;
-    void to_pixel_RGB(Pixel_RGB &pixel_RGB, int row, int col);
+    void set(int col, int row, double value, int component = 0) const;
+    void set(const Pixel &pixel, double value, int component = 0) const;
+    void set_8U(int col, int row, pixel_8U value, int component = 0) const;
+    void set_32F(int col, int row, pixel_32F value, int component = 0) const;
+    void set_32S(int col, int row, pixel_32S value, int component = 0) const;
+    void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row);
     std::string to_string(const std::string &prefix = "") const;
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;

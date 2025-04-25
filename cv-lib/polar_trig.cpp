@@ -1,6 +1,6 @@
 #include "polar_trig.hpp"
 #include <cmath>
-#include "point.hpp"
+#include "pixel.hpp"
 #include "polar_trig_static.hpp"
 #include "wb_utils.hpp"
 
@@ -54,23 +54,20 @@ int Polar_trig::rho_theta_row_to_col(int rho_index, int theta_index, int row) co
     double col = (rho - y * sin_t) / cos_t + col_offset;
     return wb_utils::double_to_int_round(col);
 }
-double Polar_trig::row_col_theta_index_to_rho(int row, int col, int theta_index) const {
+int Polar_trig::col_row_theta_to_rho(int col, int row, int theta_index) const {
     double x = Point::col_to_x(col, ncols);
     double cos_t = Polar_trig::to_cos_index(theta_index);
     double y = Point::row_to_y(row, nrows);
     double sin_t = Polar_trig::to_sin_index(theta_index);
     double rho = x * cos_t + y * sin_t;
-    return rho;
-}
-double Polar_trig::row_col_theta_index_to_rho_index(int row, int col, int theta_index) const {
-    return to_rho_index(row_col_theta_index_to_rho(row, col, theta_index));
+    return to_rho_index(rho);
 }
 double Polar_trig::to_cos(int theta) { return polar_cos[theta]; }
 double Polar_trig::to_cos_index(int theta_index) const { return to_cos(to_theta(theta_index)); }
-void Polar_trig::to_index(Polar_index &polar_index, Polar_point &polar_point) {
+void Polar_trig::to_index(Polar_index &polar_index, Polar_point &polar_point) const {
     polar_index.init(to_rho_index(polar_point.rho), to_theta_index(polar_point.theta));
 }
-void Polar_trig::to_point(Polar_point &polar_point, Polar_index &polar_index) {
+void Polar_trig::to_point(Polar_point &polar_point, Polar_index &polar_index) const {
     polar_point.init(to_rho(polar_index.rho_index), to_theta(polar_index.theta_index));
 }
 double Polar_trig::to_rho(int rho_index) const {

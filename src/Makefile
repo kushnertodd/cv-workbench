@@ -61,7 +61,7 @@ SRCOBJS :=  \
   operator_transform_intensity_map.o \
   operator_utils.o \
   pearsons_correlation.o \
-  point.o \
+  pixel.o \
   polar_line.o \
   polar_trig.o \
   runtime.o \

@@ -11,7 +11,7 @@
 
 class WB_window {
 public:
-    static bool clip_window(int nrows, int ncols, int nrhos, int nthetas, Line_segment &line_segment,
+    static bool clip_window(int ncols, int nrows, int nrhos, int nthetas, Line_segment &line_segment,
                             Polar_trig &polar_trig, Polar_line &line);
 };
 

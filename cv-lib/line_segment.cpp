@@ -34,12 +34,12 @@ Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
 }
 
 void Line_segment::add(int x, int y) {
-  Point point(y, x);
-  add(point);
+  Point pixel(y, x);
+  add(pixel);
 }
 
-void Line_segment::add(const Point &point) {
-  line_points.push_back(point);
+void Line_segment::add(const Point &pixel) {
+  line_points.push_back(pixel);
 }
 
 void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
@@ -129,8 +129,8 @@ void Line_segment::set(const Point &m_point1, const Point &m_point2) {
 
 std::string Line_segment::to_string() const {
   std::ostringstream os;
-  os << "point 1 " << point1.to_string()
-     << " point 2 " << point2.to_string();
+  os << "pixel 1 " << point1.to_string()
+     << " pixel 2 " << point2.to_string();
   return os.str();
 }
 

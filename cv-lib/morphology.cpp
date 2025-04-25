@@ -5,24 +5,24 @@
 #include <memory>
 #include "morphology.hpp"
 
-Kernel *Morphology::create_structuring_element_rectangle(int nrows, int ncols) {
+Kernel *Morphology::create_structuring_element_rectangle(int ncols, int nrows) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::RECTANGLE, nrows, ncols);
 }
 
-Kernel *Morphology::create_structuring_element_cross(int nrows, int ncols, int thickness) {
+Kernel *Morphology::create_structuring_element_cross(int ncols, int nrows, int thickness) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::CROSS,
                                             nrows,
                                             ncols,
                                             thickness);
 }
 
-Kernel *Morphology::create_structuring_element_ellipse(int nrows, int ncols) {
+Kernel *Morphology::create_structuring_element_ellipse(int ncols, int nrows) {
   return Kernel::create_structuring_element(WB_morphology_types::Structuring_element_type::ELLIPSE, nrows, ncols);
 }
 
 // Subtract the original image from the closed image
 Image *Morphology::black_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                             int nrows, int ncols, int thickness, Errors &errors) {
+                             int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Image>
       closed_image(Morphology::close(image, structuring_element_type, nrows, ncols, thickness, errors));
   if (errors.has_error())
@@ -33,7 +33,7 @@ Image *Morphology::black_hat(Image *image, WB_morphology_types::Structuring_elem
 
 // Dilation followed by eroding
 Image *Morphology::close(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                         int nrows, int ncols, int thickness, Errors &errors) {
+                         int ncols, int nrows, int thickness, Errors &errors) {
 
   std::unique_ptr<Image>
       dilated_image(Morphology::dilate(image, structuring_element_type, nrows, ncols, thickness, errors));
@@ -42,7 +42,7 @@ Image *Morphology::close(Image *image, WB_morphology_types::Structuring_element_
 
 // Output the maximum value under the structuring element
 Image *Morphology::dilate(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                          int nrows, int ncols, int thickness, Errors &errors) {
+                          int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
       structuring_element(Kernel::create_structuring_element(structuring_element_type, nrows, ncols, thickness));
   return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::DILATE, errors);
@@ -50,7 +50,7 @@ Image *Morphology::dilate(Image *image, WB_morphology_types::Structuring_element
 
 // Output the minimum value under the structuring element
 Image *Morphology::erode(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                         int nrows, int ncols, int thickness, Errors &errors) {
+                         int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Kernel>
       structuring_element(Kernel::create_structuring_element(structuring_element_type, nrows, ncols, thickness));
   return structuring_element->convolve_morphological(image, WB_morphology_types::Convolution_type::ERODE, errors);
@@ -58,7 +58,7 @@ Image *Morphology::erode(Image *image, WB_morphology_types::Structuring_element_
 
 // Subtract the eroded image from the dilated image
 Image *Morphology::gradient(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                            int nrows, int ncols, int thickness, Errors &errors) {
+                            int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Image>
       eroded_image(Morphology::erode(image, structuring_element_type, nrows, ncols, thickness, errors));
   if (errors.has_error())
@@ -72,7 +72,7 @@ Image *Morphology::gradient(Image *image, WB_morphology_types::Structuring_eleme
 
 // Erosion followed by dilation
 Image *Morphology::open(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                        int nrows, int ncols, int thickness, Errors &errors) {
+                        int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Image>
       eroded_image(Morphology::erode(image, structuring_element_type, nrows, ncols, thickness, errors));
   return Morphology::dilate(eroded_image.get(), structuring_element_type, nrows, ncols, thickness, errors);
@@ -80,7 +80,7 @@ Image *Morphology::open(Image *image, WB_morphology_types::Structuring_element_t
 
 // Subtract the opened image from the original image
 Image *Morphology::top_hat(Image *image, WB_morphology_types::Structuring_element_type structuring_element_type,
-                           int nrows, int ncols, int thickness, Errors &errors) {
+                           int ncols, int nrows, int thickness, Errors &errors) {
   std::unique_ptr<Image> opened_image(Morphology::open(image, structuring_element_type, nrows, ncols, thickness, errors));
   if (errors.has_error())
     return nullptr;

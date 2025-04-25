@@ -66,7 +66,7 @@ void Hough_accum::initialize(Image *image, int image_theshold) {
             double value = std::abs(image->get(row, col));
             if (value > image_theshold) {
                 for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-                    int rho_index = polar_trig->row_col_theta_index_to_rho_index(row, col, theta_index);
+                    int rho_index = polar_trig->col_row_theta_to_rho(row, col, theta_index);
                     update(rho_index, theta_index, wb_utils::double_to_int_round(value));
                 }
             }

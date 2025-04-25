@@ -7,47 +7,16 @@
 #include <string>
 
 class Point {
-    friend class Image;
-    friend class Line_segment;
-    int row{};
-    int col{};
+    double x{};
+    double y{};
 
 public:
     Point();
-
-    Point(int m_row, int m_col);
-
+    Point(double m_x, double m_y);
     Point(const Point &point);
 
-    Point(double x, double y, int ncols, int nrows);
-
-    void check_point_valid(int nrows, int ncols) const;
-
-    static double col_to_x(int col, int ncols);
-
-    double ellipse_dist(int nrows, int ncols) const;
-
-    static double ellipse_dist(int row, int col, int nrows, int ncols);
-
-    bool in_ellipse(int nrows, int ncols) const;
-
-    static bool in_ellipse(int row, int col, int nrows, int ncols);
-
-    static bool is_valid(int row, int col, int nrows, int ncols);
-
-    static double row_to_y(int row, int nrows);
-
-    void set(int m_row, int m_col);
-
+    void init(int m_x, int m_y);
     std::string to_string() const;
-
-    double to_x(int ncols) const;
-
-    double to_y(int nrows) const;
-
-    static int x_to_col(double x, int ncols);
-
-    static int y_to_row(double y, int nrows);
 };
 
 #endif //SRC__POINT_HPP_

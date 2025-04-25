@@ -12,7 +12,7 @@
 #include "file_utils.hpp"
 #include "image.hpp"
 #include "line_segment.hpp"
-#include "point.hpp"
+#include "pixel.hpp"
 #include "polar_line.hpp"
 #include "polar_trig.hpp"
 #include "variance_stats.hpp"

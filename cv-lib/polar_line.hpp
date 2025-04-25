@@ -6,7 +6,7 @@
 #define SRC__POLAR_LINE_HPP_
 
 #include <fstream>
-#include "point.hpp"
+#include "pixel.hpp"
 
 class Polar_line {
     friend class WB_window;
