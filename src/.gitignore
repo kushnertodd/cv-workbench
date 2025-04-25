@@ -15,7 +15,7 @@ image-mean
 image-morph
 image-read
 image-trig
-polar_trig_static
+gen_polar_trig_static
 *.bak
 *.o
 .*.swp

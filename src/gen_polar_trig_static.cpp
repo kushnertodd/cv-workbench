@@ -24,7 +24,7 @@ int main() {
         double cosineValue = cos(radians);
 
         // Print the degree and its corresponding cosine value, formatted for readability
-        cout << setw(7) << fixed << setprecision(6) << cosineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+        cout << "    " << setw(7) << fixed << setprecision(6) << cosineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
     }
 
     cout << "};" << endl; 
@@ -41,7 +41,7 @@ int main() {
         double sineValue = sin(radians);
 
         // Print the degree and its corresponding sine value, formatted for readability
-        cout << setw(7) << fixed << setprecision(6) << sineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+        cout << "    " << setw(7) << fixed << setprecision(6) << sineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
     }
 
     cout << "};" << endl; 
