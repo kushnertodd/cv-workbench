@@ -8,6 +8,9 @@
 #include <cstdio>
 #include "errors.hpp"
 #include "image_depth.hpp"
+#include "image_frame.hpp"
+#include "pixel.hpp"
+#include "point.hpp"
 
 class Image_header {
     friend class Image;

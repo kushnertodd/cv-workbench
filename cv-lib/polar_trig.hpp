@@ -39,27 +39,31 @@ public:
 class Polar_trig {
     static const double polar_cos[theta_max];
     static const double polar_sin[theta_max];
-    int ncols{};
     int nrhos{};
-    int nrows{};
     int nthetas{};
     int rho_inc{};
     double rho_max{};
     int theta_inc{};
+    double x_max{};
+    double y_max{};
 
 public:
     Polar_trig();
-    Polar_trig(int n_nrows, int m_ncols);
-    Polar_trig(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc);
-    int get_ncols() const;
+    Polar_trig(int n_y_max, int m_x_max);
+    Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
     int get_nrhos() const;
-    int get_nrows() const;
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
-    int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
-    int rho_theta_row_to_col(int rho_index, int theta_index, int row) const;
-    int col_row_theta_to_rho(int col, int row, int theta_index) const;
+    int get_x_max() const;
+    int get_y_max() const;
+    static double point_theta_to_rho(double x, double y, int theta_index);
+    static double rho_theta_x_to_y(int rho_index, int theta_index, double x);
+    static double rho_theta_y_to_x(int rho_index, int theta_index, double y);
+    static bool singular_cos(int theta);
+    static bool singular_cos_index(int theta_index);
+    static bool singular_sin(int theta);
+    static bool singular_sin_index(int theta_index);
     double to_cos_index(int theta_index) const;
     static double to_cos(int theta);
     void to_index(Polar_index &polar_index, Polar_point &polar_point) const;

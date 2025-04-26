@@ -19,49 +19,47 @@ void Polar_point::init(double m_rho, double m_theta) {
 }
 
 Polar_trig::Polar_trig() = default;
-Polar_trig::Polar_trig(int m_ncols, int m_nrows) : Polar_trig(m_ncols, m_nrows, default_rho_inc, default_theta_inc) {}
-Polar_trig::Polar_trig(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc) :
-    ncols(m_ncols), nrows(m_nrows), rho_inc(m_rho_inc), theta_inc(m_theta_inc) {
-    rho_max = wb_utils::double_to_int_round((sqrt(nrows * nrows + ncols * ncols)) + rho_pad) / 2.0;
+Polar_trig::Polar_trig(int m_x_max, int m_y_max) : Polar_trig(m_x_max, m_y_max, default_rho_inc, default_theta_inc) {}
+Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) :
+    x_max(m_x_max), y_max(m_y_max), rho_inc(m_rho_inc), theta_inc(m_theta_inc) {
+    rho_max = wb_utils::double_to_int_round((sqrt(y_max * y_max + x_max * x_max)) + rho_pad) / 2.0;
     nrhos = rho_max / rho_inc;
     nthetas = theta_max / theta_inc;
 }
-int Polar_trig::get_ncols() const { return ncols; }
 int Polar_trig::get_nrhos() const { return nrhos; }
-int Polar_trig::get_nrows() const { return nrows; }
 int Polar_trig::get_nthetas() const { return nthetas; }
 int Polar_trig::get_rho_inc() const { return rho_inc; }
 int Polar_trig::get_theta_inc() const { return theta_inc; }
-
-bool 
-// can have a singularity if theta ~= 180, sin ~= 0
-int Polar_trig::rho_theta_col_to_row(int rho_index, int theta_index, int col) const {
-    double x = Point::col_to_x(col, ncols);
+int Polar_trig::get_x_max() const { return x_max; }
+int Polar_trig::get_y_max() const { return y_max; }
+int Polar_trig::point_theta_to_rho(double x, double y, int theta_index)  {
     double cos_t = Polar_trig::to_cos_index(theta_index);
-    double rho = to_rho(rho_index);
-    double sin_t = Polar_trig::to_sin_index(theta_index);
-    double row_offset = nrows / 2.0;
-    double row = (x * cos_t - rho) / sin_t + row_offset;
-    return wb_utils::double_to_int_round(row);
-}
-// can have a singularity if theta ~= 90, cos ~= 0
-int Polar_trig::rho_theta_row_to_col(int rho_index, int theta_index, int row) const {
-    double rho = to_rho(rho_index);
-    double cos_t = Polar_trig::to_cos_index(theta_index);
-    double y = Point::row_to_y(row, nrows);
-    double sin_t = Polar_trig::to_sin_index(theta_index);
-    double col_offset = ncols / 2.0;
-    double col = (rho - y * sin_t) / cos_t + col_offset;
-    return wb_utils::double_to_int_round(col);
-}
-int Polar_trig::col_row_theta_to_rho(int col, int row, int theta_index) const {
-    double x = Point::col_to_x(col, ncols);
-    double cos_t = Polar_trig::to_cos_index(theta_index);
-    double y = Point::row_to_y(row, nrows);
     double sin_t = Polar_trig::to_sin_index(theta_index);
     double rho = x * cos_t + y * sin_t;
     return to_rho_index(rho);
 }
+// can have a singularity if theta ~= 180, sin ~= 0
+double Polar_trig::rho_theta_x_to_y(int rho_index, int theta_index, double x)  {
+    assert(!singular_sin_index(theta_index));
+    double cos_t = Polar_trig::to_cos_index(theta_index);
+    double sin_t = Polar_trig::to_sin_index(theta_index);
+    double rho = to_rho(rho_index);
+    double y = (x * cos_t - rho) / sin_t;
+    return y;
+}
+// can have a singularity if theta ~= 90, cos ~= 0
+double Polar_trig::rho_theta_y_to_x(int rho_index, int theta_index, double y)  {
+    assert(!singular_cos_index(theta_index));
+    double cos_t = Polar_trig::to_cos_index(theta_index);
+    double sin_t = Polar_trig::to_sin_index(theta_index);
+    double rho = to_rho(rho_index);
+    double x = (rho - y * sin_t) / cos_t;
+    return x;
+}
+bool Polar_trig::singular_cos(int theta)  { return theta == theta_max / 2; }
+bool Polar_trig::singular_cos_index(int theta_index)  { return singular_cos(to_theta(theta_index)); }
+bool Polar_trig::singular_sin(int theta)  { return theta == 0; }
+bool Polar_trig::singular_sin_index(int theta_index)  { return singular_sin(to_theta(theta_index)); }
 double Polar_trig::to_cos(int theta) { return polar_cos[theta]; }
 double Polar_trig::to_cos_index(int theta_index) const { return to_cos(to_theta(theta_index)); }
 void Polar_trig::to_index(Polar_index &polar_index, Polar_point &polar_point) const {
@@ -88,3 +86,4 @@ int Polar_trig::to_theta_index(int theta) const {
     int theta_index = theta / theta_inc;
     return theta_index;
 }
+

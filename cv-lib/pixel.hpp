@@ -15,7 +15,7 @@ public:
     Pixel(int m_col, int m_row);
     Pixel(const Pixel &pixel);
 
-    init(int m_col, int m_row);
+    void init(int m_col, int m_row);
     std::string to_string() const;
 };
 

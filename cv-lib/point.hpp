@@ -19,4 +19,4 @@ public:
     std::string to_string() const;
 };
 
-#endif //SRC__POINT_HPP_
+#endif // SRC__POINT_HPP_

@@ -8,6 +8,9 @@
 
 extern bool debug;
 
+WB_window::WB_window(double m_x_max, double m_x_min, double m_y_max, double m_y_min) :
+    x_max(m_x_max), x_min(m_x_min), y_max(m_y_max), y_min(m_y_min) {}
+
 /**
  * Clips a polar line against a window and returns a line segment from the endpoints
  * There are two main cases based on the angle of the line, because there is a potential
@@ -19,45 +22,16 @@ extern bool debug;
  *   In case 1, there are 7 subcases where clip points are to the left, inside,
  *   or to the right of the window:
  *
- *  @image html cv-workbench_wb_window_clip_90_degree.jpg
- *
- *   This shows the position of the clip pixel in each subcase:
- *   case        | 1.1| 1.2  | 1.3  | 1.4  | 1.5  | 1.6  |1.7
- *   ------------|----|------|------|------|------|------|-----
- *   upper pixel |left|left  |inside|inside|inside|right |right
- *   lower pixel |left|inside|left  |inside|right |inside|right
- *
- *   This shows the intersection points that make up the resulting line segment, or none:
- *   case         |1.1 |1.2   |1.3   |1.4   |1.5  | 1.6  |1.7
- *   -------------|----|------|------|------|-----|------|-----
- *   first pixel  |none|left  |top   |top   |top  |right |none
- *   second pixel |none|bottom|left  |bottom|right|bottom|none
  *
  * - case 2: pi/4 < theta < 3*pi/4
  *   must clip against the window left and right first
  *
- *   In case 2, there are 7 subcases where clip points are above, inside,
- *   or below the window:
- *
- *  @image html cv-workbench_wb_window_clip_0_degree.jpg
- *
- *   This shows the position of the clip pixel in each subcase:
- *   case       | 2.1 | 2.2  | 2.3   | 2.4  | 2.5  | 2.6  | 2.7
- *   -----------|-----|------|-------|------|------|------|-----
- *   upper pixel|above|above |inside |inside|inside|below |below
- *   lower pixel|above|inside|above  |inside|below |inside|below
- *
- *   This shows the intersection points that make up the resulting line segment, or none:
- *   case        |2.1 |2.2  | 2.3 |  2.4  | 2.5   |2.6   |2.7
- *   ------------|----|-----|-----|-------|-------|------|-----
- *   first pixel |none|top  | left|  left | left  |bottom|none
- *   second pixel|none|right| top |  right| bottom|right |none
  *
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-bool WB_window::clip_window(int ncols, int nrows, int nrhos, int nthetas, Line_segment &line_segment,
-                            Polar_trig &polar_trig, Polar_line &line) {
+bool WB_window::clip_window(int nrhos, int nthetas, Line_segment &line_segment, Polar_trig &polar_trig,
+                            Polar_line &line) {
     int theta_lower = nthetas / 4;
     int theta_upper = nthetas * 3 / 4;
     // window is in (row, col) coordinates
