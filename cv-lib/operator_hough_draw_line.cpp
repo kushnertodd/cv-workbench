@@ -1,7 +1,3 @@
-//
-// Created by kushn on 7/13/2022.
-//
-
 #include "operator_hough_draw_line.hpp"
 #include <iostream>
 #include "hough.hpp"
@@ -63,8 +59,8 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     if (!errors.has_error() && input != nullptr) {
         int ncols = input->get_ncols();
         int nrows = input->get_nrows();
-        Polar_trig polar_trig(ncols, nrows, rho_inc, theta_inc); //
-        int nthetas = 0; // TODO: define
+        Polar_trig polar_trig(ncols, nrows, rho_inc, theta_inc);
+        int nthetas = 0;
         auto *hough_accum = new Hough_accum(rho_inc, theta_inc, ncols, nrows);
         int rho_index = hough_accum->polar_trig->to_rho_index(rho);
         Polar_line polar_line(rho_index, rho, theta_index, polar_trig.to_cos(theta_index),

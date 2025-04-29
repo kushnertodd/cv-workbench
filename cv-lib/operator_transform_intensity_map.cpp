@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #include "operator_transform_intensity_map.hpp"
 #include <iostream>
 #include "image_depth.hpp"
@@ -41,7 +37,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
                                            Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_intensity_map::run:parameters: "
-                << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
+                  << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
     if (input_data_sources.empty())
         errors.add("Operator_transform_intensity_map::run", "", "input data source required");

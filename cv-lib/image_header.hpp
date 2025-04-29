@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 
@@ -24,7 +20,6 @@ public:
     Image_header();
     Image_header(const int m_ncols, const int m_nrows, const int m_ncomponents, const Image_depth m_depth);
     Image_header(const Image_header &image_header);
-
     void read(FILE *fp, Errors &errors);
     double to_x(int col) const;
     double to_y(int row) const;

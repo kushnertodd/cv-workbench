@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #include "operator_dispatcher.hpp"
 #include "operator_filter_edge_color.hpp"
 #include "operator_filter_edge_kirsch.hpp"

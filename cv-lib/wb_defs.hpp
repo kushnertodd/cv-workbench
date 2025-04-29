@@ -1,19 +1,14 @@
-//
-// Created by kushn on 6/11/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 #define CV_WORKBENCH_SRC_WB_ENUMS_HPP_
 
 #include <cfloat>
 #include <map>
 #include <string>
-
+/**
+ * @brief
+ */
 namespace cv_enums {
-    enum class WB_threshold_type {
-        FIXED,
-        PERCENTAGE
-    };
+    enum class WB_threshold_type { FIXED, PERCENTAGE };
 }
 
 // built-in types
@@ -31,4 +26,4 @@ typedef float pixel_32F;
 
 typedef std::map<std::string, std::string> String_map;
 
-#endif //CV_WORKBENCH_SRC_WB_ENUMS_HPP_
+#endif // CV_WORKBENCH_SRC_WB_ENUMS_HPP_

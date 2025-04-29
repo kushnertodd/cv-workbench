@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_IMAGE_FRAME_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_FRAME_HPP_
 
@@ -24,7 +20,6 @@ public:
     Image_frame();
     Image_frame(const int m_ncols, const int m_nrows);
     Image_frame(const Image_frame &image_frame);
-
     void check_pixel_valid(int col, int row) const;
     double ellipse_dist(int col, int row) const;
     bool in_ellipse(int col, int row) const;

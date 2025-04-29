@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/11/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_HOUGH_HPP_
 #define CV_WORKBENCH_SRC_HOUGH_HPP_
 
@@ -11,11 +7,11 @@
 #include "polar_line.hpp"
 
 class Hough {
-public:
     Hough_accum *hough_accum{};
     std::list<Polar_line> lines;
     std::list<Line_segment> line_segments;
 
+public:
     ~Hough();
     explicit Hough(Hough_accum *m_hough_accum);
     static Hough *create_image(Image *input, int rho_inc, int theta_inc, int pixel_threshold);

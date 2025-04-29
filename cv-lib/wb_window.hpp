@@ -1,7 +1,3 @@
-//
-// Created by kushn on 8/9/2022.
-//
-
 #ifndef SRC__WB_WINDOW_HPP_
 #define SRC__WB_WINDOW_HPP_
 

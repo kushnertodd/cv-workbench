@@ -22,9 +22,15 @@ add_library(cv-lib STATIC
         hough.cpp
         hough.hpp
         image.cpp
+        image_depth.cpp
+        image_depth.hpp
+        image_frame.cpp
+        image_frame.hpp
         image_header.cpp
         image_header.hpp
         image.hpp
+        image_line_segment.cpp
+        image_line_segment.hpp
         internet_data_source_descriptor.cpp
         internet_data_source_descriptor.hpp
         kernel.cpp
@@ -87,6 +93,8 @@ add_library(cv-lib STATIC
         pearsons_correlation.hpp
         pixel.cpp
         pixel.hpp
+        point.cpp
+        point.hpp
         polar_line.cpp
         polar_line.hpp
         polar_trig.cpp
@@ -94,7 +102,6 @@ add_library(cv-lib STATIC
         polar_trig_static.hpp
         runtime.cpp
         runtime.hpp
-        trig.cpp
         variance_stats.cpp
         variance_stats.hpp
         wb_data_format.cpp
@@ -104,16 +111,14 @@ add_library(cv-lib STATIC
         wb_defs.hpp
         wb_filename.cpp
         wb_filename.hpp
-        image_depth.cpp
-        image_depth.hpp
         wb_json_utils.cpp
         wb_json_utils.hpp
         wb_log.cpp
         wb_log.hpp
         wb_morphology_types.cpp
         wb_morphology_types.hpp
-        wb_repository_type.cpp
-        wb_repository_type.hpp
+        wb_repository_types.cpp
+        wb_repository_types.hpp
         wb_resize_types.cpp
         wb_resize_types.hpp
         wb_utils.cpp

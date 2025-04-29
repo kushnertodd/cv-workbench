@@ -1,12 +1,10 @@
-//
-// Created by kushn on 7/27/2022.
-//
-
-#include <string>
 #include "wb_data_type.hpp"
+#include <string>
 
-const std::map<WB_data_type::Data_type, std::string> WB_data_type::to_strings =
-    {
+/**
+ * @brief
+ */
+const std::map<WB_data_type::Data_type, std::string> WB_data_type::to_strings = {
         {WB_data_type::Data_type::CONTOUR, "contour"},
         {WB_data_type::Data_type::CONVOLUTION_KERNEL, "convolution kernel"},
         {WB_data_type::Data_type::CONVOLVED_IMAGE, "convolved image"},
@@ -22,9 +20,11 @@ const std::map<WB_data_type::Data_type, std::string> WB_data_type::to_strings =
         {WB_data_type::Data_type::PYRAMID, "pyramid"},
         {WB_data_type::Data_type::QUADTREE, "quadtree"},
         {WB_data_type::Data_type::REGION, "region"},
-    };
-const std::map<std::string, WB_data_type::Data_type> WB_data_type::from_strings =
-    {
+};
+/**
+ * @brief
+ */
+const std::map<std::string, WB_data_type::Data_type> WB_data_type::from_strings = {
         {"contour", WB_data_type::Data_type::CONTOUR},
         {"convolution kernel", WB_data_type::Data_type::CONVOLUTION_KERNEL},
         {"convolved image", WB_data_type::Data_type::CONVOLVED_IMAGE},
@@ -41,15 +41,23 @@ const std::map<std::string, WB_data_type::Data_type> WB_data_type::from_strings 
         {"quadtree", WB_data_type::Data_type::QUADTREE},
         {"region", WB_data_type::Data_type::REGION},
 
-    };
-
+};
+/**
+ * @brief
+ * @param repository_type
+ * @return
+ */
 std::string WB_data_type::to_string(WB_data_type::Data_type repository_type) {
-  return WB_data_type::to_strings.at(repository_type);
+    return WB_data_type::to_strings.at(repository_type);
 }
-
+/**
+ * @brief
+ * @param text
+ * @return
+ */
 WB_data_type::Data_type WB_data_type::from_string(const std::string &text) {
-  if (WB_data_type::from_strings.count(text))
-    return WB_data_type::from_strings.at(text);
-  else
-    return WB_data_type::Data_type::UNDEFINED;
+    if (WB_data_type::from_strings.count(text))
+        return WB_data_type::from_strings.at(text);
+    else
+        return WB_data_type::Data_type::UNDEFINED;
 }

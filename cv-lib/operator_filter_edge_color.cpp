@@ -1,17 +1,10 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
+#include "operator_filter_edge_color.hpp"
 #include <iostream>
 #include <memory>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
-#include "operator_filter_edge_color.hpp"
-
-//
 
 Operator_filter_edge_color::~Operator_filter_edge_color() = default;
-
 /**
  * @param input_data_sources
  * @param output_data_stores
@@ -20,8 +13,7 @@ Operator_filter_edge_color::~Operator_filter_edge_color() = default;
  */
 void Operator_filter_edge_color::run(std::list<Data_source_descriptor *> &input_data_sources,
                                      std::list<Data_source_descriptor *> &output_data_stores,
-                                     String_map &operator_parameters,
-                                     std::list<WB_log_entry> &log_entries,
+                                     String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
                                      Errors &errors) {
     if (input_data_sources.empty())
         errors.add("Operator_filter_edge_color::run", "", "input data source required");
@@ -30,10 +22,8 @@ void Operator_filter_edge_color::run(std::list<Data_source_descriptor *> &input_
     if (output_data_stores.empty())
         errors.add("Operator_filter_edge_color::run", "", "output data source required");
     std::string extent_str;
-    bool extent_missing = Operator_utils::get_string_parameter("Operator_filter_edge_color::run",
-                                                               operator_parameters,
-                                                               "extent",
-                                                               extent_str, errors);
+    bool extent_missing = Operator_utils::get_string_parameter("Operator_filter_edge_color::run", operator_parameters,
+                                                               "extent", extent_str, errors);
     if (extent_missing)
         extent_str = "adjacent";
     Data_source_descriptor *input_data_source = input_data_sources.front();

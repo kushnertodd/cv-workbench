@@ -1,7 +1,3 @@
-//
-// Created by kushn on 8/9/2022.
-//
-
 #include "wb_window.hpp"
 #include <iostream>
 #include "polar_trig.hpp"
@@ -34,7 +30,7 @@ bool WB_window::clip_window(int nrhos, int nthetas, Line_segment &line_segment, 
                             Polar_line &line) {
     int theta_lower = nthetas / 4;
     int theta_upper = nthetas * 3 / 4;
-    // window is in (row, col) coordinates
+    // window is in (col, row) coordinates
     int window_left = 0;
     int window_right = ncols - 1;
     int window_top = 0;

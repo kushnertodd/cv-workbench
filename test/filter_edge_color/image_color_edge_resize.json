@@ -92,8 +92,8 @@
                     }
                 ],
                 "parameters": {
-                    "area-rows": "2",
-                    "area-cols": "2",
+                    "area-nrows": "2",
+                    "area-ncols": "2",
                     "resize-type": "max"
                 }
             },
@@ -153,8 +153,8 @@
                     }
                 ],
                 "parameters": {
-                    "area-rows": "2",
-                    "area-cols": "2",
+                    "area-nrows": "2",
+                    "area-ncols": "2",
                     "resize-type": "max"
                 }
             },
@@ -214,8 +214,8 @@
                     }
                 ],
                 "parameters": {
-                    "area-rows": "2",
-                    "area-cols": "2",
+                    "area-nrows": "2",
+                    "area-ncols": "2",
                     "resize-type": "max"
                 }
             },

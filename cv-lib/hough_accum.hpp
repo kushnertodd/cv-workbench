@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/27/2022.
-//
-
 #ifndef SRC__HOUGH_ACCUM_HPP_
 #define SRC__HOUGH_ACCUM_HPP_
 
@@ -20,27 +16,22 @@
 #include "wb_utils.hpp"
 
 class Hough_accum {
-public:
     int nbins{};
     Polar_trig *polar_trig{};
     int *rho_theta_counts{};
     Variance_stats accumulator_stats;
 
+public:
     ~Hough_accum();
     Hough_accum();
-    Hough_accum(int m_ncols, int m_rows, int m_rho_inc, int m_theta_inc);
-
+    Hough_accum(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc);
     //  bool clip_window(Line_segment &line_segment, Polar_line &line) const;
     //  double col_to_x(int col) const;
-    static Hough_accum *create_image(Image *image, int rho_inc, int theta_inc, int pixel_threshold);
+    static Hough_accum *create_image(Image *image, int rho_inc, int theta_inc, int pixel_threshold = 0);
     void find_peaks(std::list<Polar_line> &lines, double threshold);
     int get(int rho_index, int theta_index);
-    int get_ncols() const;
-    int get_nrhos() const;
-    int get_nthetas() const;
-    int get_nrows() const;
-    int get_rho_inc() const;
-    int get_theta_inc() const;
+    int get_nrhos();
+    int get_nthetas();
     void initialize(Image *image, int image_theshold);
     static Hough_accum *read(FILE *fp, Errors &errors);
     static Hough_accum *read_text(std::ifstream &ifs, Errors &errors);

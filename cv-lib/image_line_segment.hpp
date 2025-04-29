@@ -1,7 +1,3 @@
-//
-// Created by kushn on 7/5/2022.
-//
-
 #ifndef SRC__IMAGE_LINE_SEGMENT_HPP_
 #define SRC__IMAGE_LINE_SEGMENT_HPP_
 
@@ -18,7 +14,6 @@ class Image_line_segment {
 public:
     Image_line_segment();
     Image_line_segment(const Pixel &m_pixel1, const Pixel &m_pixel2);
-
     void add(int col, int row);
     void add(const Pixel &pixel);
     void init(const Pixel &m_pixel1, const Pixel &m_pixel2);

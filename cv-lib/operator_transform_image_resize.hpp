@@ -1,13 +1,7 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_OPERATOR_TRANSFORM_IMAGE_RESIZE_HPP_
 #define CV_WORKBENCH_SRC_OPERATOR_TRANSFORM_IMAGE_RESIZE_HPP_
 
 #include "operator.hpp"
-
-//
 
 class Operator_transform_image_resize : public Operator {
 public:

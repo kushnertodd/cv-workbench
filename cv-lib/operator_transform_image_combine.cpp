@@ -1,10 +1,6 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
+#include "operator_transform_image_combine.hpp"
 #include <iostream>
 #include <regex>
-#include "operator_transform_image_combine.hpp"
 #include "operator_utils.hpp"
 
 extern bool debug;
@@ -19,12 +15,11 @@ extern bool debug;
  */
 void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &input_data_sources,
                                            std::list<Data_source_descriptor *> &output_data_stores,
-                                           String_map &operator_parameters,
-                                           std::list<WB_log_entry> &log_entries,
+                                           String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
                                            Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_image_combine::run:parameters: "
-                << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
+                  << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
     if (input_data_sources.empty())
         errors.add("Operator_transform_image_combine::run", "", "two input data sources required");
@@ -39,18 +34,18 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
         double scale2;
         double offset;
         if (Operator_utils::has_parameter(operator_parameters, "scale-1"))
-            Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                               operator_parameters, "scale-1", scale1, errors);
+            Operator_utils::get_real_parameter("Operator_transform_image_combine::run", operator_parameters, "scale-1",
+                                               scale1, errors);
         else
             scale1 = 1.0;
         if (Operator_utils::has_parameter(operator_parameters, "scale-2"))
-            Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                               operator_parameters, "scale-2", scale2, errors);
+            Operator_utils::get_real_parameter("Operator_transform_image_combine::run", operator_parameters, "scale-2",
+                                               scale2, errors);
         else
             scale2 = 1.0;
         if (Operator_utils::has_parameter(operator_parameters, "offset"))
-            Operator_utils::get_real_parameter("Operator_transform_image_combine::run",
-                                               operator_parameters, "offset", offset, errors);
+            Operator_utils::get_real_parameter("Operator_transform_image_combine::run", operator_parameters, "offset",
+                                               offset, errors);
         else
             offset = 0.0;
         Image *image1 = nullptr;
@@ -79,8 +74,7 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
             output = Image::combine(image1, image2, scale1, scale2, offset, errors);
         if (!errors.has_error() && output != nullptr) {
             Data_source_descriptor *output_data_store = output_data_stores.front();
-            output_data_store->write_operator_image(output,
-                                                    "Operator_transform_image_combine::run", errors);
+            output_data_store->write_operator_image(output, "Operator_transform_image_combine::run", errors);
         }
     }
 }

@@ -1,8 +1,3 @@
-//
-//
-// Created by kushn on 6/11/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_IMAGE_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HPP_
 
@@ -52,10 +47,9 @@ class Image {
 public:
     virtual ~Image();
     Image();
-    Image(int m_nrows, int m_ncols, int m_components, Image_depth m_depth, double value = 0.0);
+    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double value = 0.0);
     Image(const Image &image);
     explicit Image(const Image_header &image_header, double value = 0.0);
-
     void add_8U(const pixel_8U *src, int count, Errors &errors);
     void add_32F(const pixel_32F *src, int count, Errors &errors);
     void add_32S(const pixel_32S *src, int count, Errors &errors);
@@ -67,29 +61,30 @@ public:
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
     void draw_line_segment(const Line_segment &line_segment, double value, int component = 0) const;
-    void draw_line_segment(int row1, int col1, int row2, int col2, double value, int component = 0) const;
+    void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     void draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component = 0) const;
-    void draw_rectangle(int row1, int col1, int row2, int col2, double value, int component = 0) const;
-    void draw_rectangle_filled(int row1, int col1, int row2, int col2, double value, int component = 0) const;
+    void draw_rectangle(int col1, int row1, int col2, int row2, double value, int component = 0) const;
+    void draw_rectangle_filled(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     double get(int col, int row, int component = 0) const;
     double get(const Pixel &pixel, int component = 0) const;
     pixel_8U get_8U(int col, int row, int component = 0) const;
     pixel_32F get_32F(int col, int row, int component = 0) const;
     pixel_32S get_32S(int col, int row, int component = 0) const;
-    double get_blue(const int row, const int col) const;
+    double get_blue(const int col, const int row) const;
     int get_ncomponents() const;
     Image_depth get_depth() const;
-    double get_green(const int row, const int col) const;
+    double get_green(const int col, const int row) const;
     int get_ncols() const;
     int get_npixels() const;
     int get_nrows() const;
-    double get_red(const int row, const int col) const;
+    double get_red(const int col, const int row) const;
     int get_row_stride() const;
     double get_scaled(int col, int row, double lower_in, double upper_in, double lower_out, double upper_out,
                       int component = 0) const;
     void get_stats(Variance_stats &stats) const;
     void init(double value = 0.0);
     bool is_color() const;
+    bool is_valid(int col, int row) const;
     bool is_grayscale() const;
     void log(std::list<WB_log_entry> &log_entries) const;
     static Image *read(const std::string &path, Errors &errors);
@@ -97,7 +92,7 @@ public:
     static Image *read_text(const std::string &path, Errors &errors);
     static Image *read_text(std::ifstream &ifs, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);
-    static Image *resize(const Image *image, int area_nrows, int area_ncols, WB_resize_types::Resize_type resize_type);
+    static Image *resize(const Image *image, int area_ncols, int area_nrows, WB_resize_types::Resize_type resize_type);
     int col_row_to_index(int col, int row, int component = 0) const;
     static Image *scale_image(const Image *image, double lower_in, double upper_in, double lower_out, double upper_out,
                               Image_depth depth, int component = 0);

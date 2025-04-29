@@ -1,7 +1,3 @@
-//
-// Created by kushn on 7/5/2022.
-//
-
 #include "image_line_segment.hpp"
 #include <iostream>
 #include <sstream>
@@ -17,7 +13,7 @@ Image_line_segment::Image_line_segment(const Pixel &m_pixel1, const Pixel &m_pix
                   << pixel2.to_string() << ")" << std::endl;
 }
 void Image_line_segment::add(int col, int row) {
-    Pixel pixel(row, col);
+    Pixel pixel(col, row);
     add(pixel);
 }
 void Image_line_segment::add(const Pixel &pixel) { line_pixels.push_back(pixel); }

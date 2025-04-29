@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/27/2022.
-//
-
 #ifndef SRC__POLAR_LINE_HPP_
 #define SRC__POLAR_LINE_HPP_
 

@@ -1,7 +1,3 @@
-//
-// Created by kushn on 6/11/2022.
-//
-
 #include "hough.hpp"
 #include <cstring>
 #include "errors.hpp"
@@ -12,7 +8,6 @@
 extern bool debug;
 
 Hough::~Hough() { delete hough_accum; }
-
 /**
  * For reading a Hough
  * @param m_hough_accum
@@ -21,7 +16,6 @@ Hough::~Hough() { delete hough_accum; }
  * @param m_threshold
  */
 Hough::Hough(Hough_accum *m_hough_accum) : hough_accum(m_hough_accum) {}
-
 Hough *Hough::create_image(Image *image, int rho_inc, int theta_inc, int pixel_threshold) {
     auto *hough_accum = Hough_accum::create_image(image, rho_inc, theta_inc, pixel_threshold);
     auto *hough = new Hough(hough_accum);
@@ -32,10 +26,10 @@ void Hough::find_lines(int ncols, int nrows, int nrhos, int nthetas) {
   lines_to_line_segments(ncols, nrows, nrhos, nthetas);
 }
 
-void Hough::lines_to_line_segments(int nrows, int cols, int nrhos, int nthetas) {
+void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas) {
   for (Polar_line line: lines) {
     Line_segment line_segment;
-      if (WB_window::clip_window(nrows, cols, nrhos, nthetas,line_segment, line))
+      if (WB_window::clip_window(nrows, ncols, nrhos, nthetas,line_segment, line))
       line_segments.push_back(line_segment);
   }
 }
@@ -49,22 +43,18 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
     }
     return hough;
 }
-
 Hough *Hough::read(FILE *fp, Errors &errors) {
     Hough_accum *hough_accum = Hough_accum::read(fp, errors);
     if (hough_accum == nullptr || errors.has_error())
         return nullptr;
     return new Hough(hough_accum);
 }
-
-// NRFPT
 Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
     Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
     if (hough_accum == nullptr || errors.has_error())
         return nullptr;
     return new Hough(hough_accum);
 }
-
 void Hough::write(const std::string &path, Errors &errors) const {
     FILE *fp = file_utils::open_file_write(path, errors);
     if (fp) {
@@ -72,9 +62,7 @@ void Hough::write(const std::string &path, Errors &errors) const {
         fclose(fp);
     }
 }
-
 void Hough::write(FILE *fp, Errors &errors) const { hough_accum->write(fp, errors); }
-
 void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
     std::ofstream ofs = file_utils::open_file_write_text(path, errors);
     if (ofs) {
@@ -82,11 +70,9 @@ void Hough::write_text(const std::string &path, const std::string &delim, Errors
         ofs.close();
     }
 }
-
 void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
     hough_accum->write_text(ofs, "\t", errors);
 }
-
 void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
     size_t npeaks = lines.size();
     fwrite(&npeaks, sizeof(int), 1, fp);
@@ -112,7 +98,6 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
             break;
     }
 }
-
 void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
     for (Polar_line line: lines) {
         line.write_text(ofs, delim, errors);
