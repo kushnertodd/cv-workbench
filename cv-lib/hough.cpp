@@ -2,7 +2,6 @@
 #include <cstring>
 #include "errors.hpp"
 #include "file_utils.hpp"
-#include "hough_accum.hpp"
 #include "wb_window.hpp"
 
 extern bool debug;
@@ -180,7 +179,7 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
  * @return
  */
 Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
-    auto *hough_accum = new Hough();
+    auto *hough = new Hough();
     std::string line;
     while (getline(ifs, line)) {
         std::vector<std::string> values = wb_utils::string_split(line);
@@ -188,12 +187,12 @@ Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
             int value;
             if (!wb_utils::string_to_int(value_str, value)) {
                 errors.add("Hough::read_text", "", "invalid value '" + value_str + "'");
-                delete hough_accum;
+                delete hough;
                 return nullptr;
             }
         }
     }
-    return hough_accum;
+    return hough;
 }
 /**
  * @brief

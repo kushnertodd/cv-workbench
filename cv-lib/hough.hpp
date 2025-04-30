@@ -29,7 +29,7 @@ public:
     std::unique_ptr<Image_frame> image_frame;
     Variance_stats accumulator_stats;
     std::list<Polar_line> lines;
-    std::list<Line_segment> line_segments;
+    std::list<Image_line_segment> image_line_segments;
 
     ~Hough();
     Hough(Image *image, int rho_inc, int theta_inc, int pixel_threshold = 0);

@@ -13,7 +13,7 @@ class WB_window {
 
 public:
     WB_window(double m_x_max, double m_x_min, double m_y_max, double m_y_min);
-    bool clip_window(Line_segment &line_segment, Polar_trig &polar_trig, Polar_line &line);
+    bool clip_window(int nrhos, int nthetas, Line_segment &line_segment, Polar_trig &polar_trig, Polar_line &line);
 };
 
 #endif // SRC__WB_WINDOW_HPP_

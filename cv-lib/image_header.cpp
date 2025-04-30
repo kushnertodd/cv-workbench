@@ -14,8 +14,7 @@ Image_header::Image_header() = default;
  * @param m_depth
  */
 Image_header::Image_header(const int m_ncols, const int m_nrows, const int m_ncomponents, const Image_depth m_depth) :
-    ncomponents(m_ncomponents), depth(m_depth), ncols(m_ncols), nrows(m_nrows), npixels(nrows * row_stride),
-    row_stride(ncols * ncomponents) {
+    ncomponents(m_ncomponents), depth(m_depth), npixels(m_nrows * row_stride), row_stride(m_ncols * ncomponents) {
     if (debug)
         std::cout << "Image_header::Image_header: " << to_string() << std::endl;
     image_frame.init(m_ncols, m_nrows);
@@ -25,8 +24,16 @@ Image_header::Image_header(const int m_ncols, const int m_nrows, const int m_nco
  * @param image_header
  */
 Image_header::Image_header(const Image_header &image_header) :
-    Image_header(image_header.ncols, image_header.nrows, image_header.ncomponents, image_header.depth) {}
+    Image_header(image_header.get_ncols(), image_header.get_nrows(), image_header.ncomponents, image_header.depth) {}
+/**
+ * @brief
+ * TODO: fix
+ * @param fp
+ * @param errors
+ */
 void Image_header::read(FILE *fp, Errors &errors) {
+    int ncols;
+    int nrows;
     wb_utils::read_int(fp, ncols, "Image_header::read_header", "", "missing image ncols", errors);
     if (!errors.has_error())
         wb_utils::read_int(fp, nrows, "Image_header::read_header", "", "missing image nrows", errors);
@@ -47,13 +54,6 @@ void Image_header::read(FILE *fp, Errors &errors) {
 void Image_header::check_pixel_valid(int col, int row) const { image_frame.check_pixel_valid(col, row); }
 /**
  * @brief
- * @param col
- * @param row
- * @return
- */
-double Image_header::ellipse_dist(int col, int row) const { return image_frame.ellipse_dist(col, row); }
-/**
- * @brief
  * @return
  */
 int Image_header::get_ncols() const { return image_frame.get_ncols(); }
@@ -61,14 +61,7 @@ int Image_header::get_ncols() const { return image_frame.get_ncols(); }
  * @brief
  * @return
  */
-int Image_header::get_nrows() const { return image_frame.get_nrowss(); }
-/**
- * @brief
- * @param col
- * @param row
- * @return
- */
-bool Image_header::in_ellipse(int col, int row) const { return image_frame.in_ellipse(col, row); }
+int Image_header::get_nrows() const { return image_frame.get_nrows(); }
 /**
  * @brief
  * @param col
@@ -76,36 +69,6 @@ bool Image_header::in_ellipse(int col, int row) const { return image_frame.in_el
  * @return
  */
 bool Image_header::is_pixel_valid(int col, int row) const { return image_frame.is_pixel_valid(col, row); }
-/**
- * @brief
- * @param polar_trig
- * @param col
- * @param row
- * @param theta_index
- * @return
- */
-int Image_header::pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index) {
-    return image_frame.pixel_theta_to_rho(polar_trig, col, row, theta_index);
-}
-/**
- * @brief
- * @param x
- * @return
- */
-int Image_header::to_col(double x) const { return image_frame.to_col(x); }
-/**
- * @brief
- * @param pixel
- * @param x
- * @param y
- */
-void Image_header::to_pixel(Pixel &pixel, double x, double y) const { image_frame.to_pixel(pixel, x, y); }
-/**
- * @brief
- * @param pixel
- * @param point
- */
-void Image_header::to_pixel(Pixel &pixel, Point &point) const { image_frame.to_pixel(pixel, point); }
 /**
  * @brief
  * @param point
@@ -121,18 +84,6 @@ void Image_header::to_point(Point &point, int col, int row) const { image_frame.
 void Image_header::to_point(Point &point, Pixel &pixel) const { image_frame.to_point(point, pixel); }
 /**
  * @brief
- * @param y
- * @return
- */
-int Image_header::to_row(double y) const { return image_frame.to_row(double y); }
-/**
- * @brief
- * @param y
- * @return
- */
-int Image_header::to_row(double y) const { return image_frame.to_row(y); }
-/**
- * @brief
  * @param col
  * @return
  */
@@ -145,10 +96,13 @@ double Image_header::to_x(int col) const { return image_frame.to_x(col); }
 double Image_header::to_y(int row) const { return image_frame.to_y(row); }
 /**
  * @brief
+ * TODO: fix
  * @param fp
  * @param errors
  */
 void Image_header::write(FILE *fp, Errors &errors) const {
+    int ncols;
+    int nrows;
     fwrite(&ncols, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Image_header::write_header", "", "cannot write image nrows");
@@ -177,8 +131,8 @@ void Image_header::write(FILE *fp, Errors &errors) const {
  */
 std::string Image_header::to_string(const std::string &prefix) const {
     std::ostringstream os;
-    os << prefix << std::setw(20) << std::left << "ncols " << ncols << std::endl
-       << prefix << std::setw(20) << std::left << "nrows " << nrows << std::endl
+    os << prefix << std::setw(20) << std::left << "ncols " << get_ncols() << std::endl
+       << prefix << std::setw(20) << std::left << "nrows " << get_nrows() << std::endl
        << prefix << std::setw(20) << std::left << "ncomponents " << ncomponents << std::endl
        << prefix << std::setw(20) << std::left << "depth " << WB_image_depth::to_string(depth) << std::endl
        << prefix << std::setw(20) << std::left << "row_stride " << row_stride << std::endl

@@ -198,15 +198,19 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
                     kernel->set_8U(col, row, 1);
                     break;
                 case WB_morphology_types::Structuring_element_type::CROSS: {
-                    double x = Pixel::col_to_x(col, ncols);
-                    double y = Pixel::row_to_y(row, nrows);
+                    // TODO: check ncols, nrows
+                    // double Image_frame::to_x(int col) const { return col - col_offset; }
+                    // double Image_frame::to_y(int row) const { return row_offset - row; }
+                    double x = col - ncols / 2.0;
+                    double y = nrows / 2.0 - row;
                     if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
                         kernel->set_8U(col, row, 1);
                     break;
                 }
                 case WB_morphology_types::Structuring_element_type::ELLIPSE:
-                    if (Pixel::in_ellipse(col, row, ncols, nrows))
-                        kernel->set_8U(col, row, 1);
+                    // TODO: check ncols, nrows
+                    // if (in_ellipse(col, row))
+                    //    kernel->set_8U(col, row, 1);
                     break;
                 default:
                     break;
@@ -215,19 +219,22 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
     }
     return kernel;
 }
+
 /**
  * @brief
  * @param nrows
  * @param sigma_y
  * @return
  */
+// double Image_frame::to_y(int row) const { return row_offset - row; }
+// double y = nrows / 2.0 - row;
 Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
     auto *gaussian_y = new Kernel(nrows, 1, Image_depth::CV_32F);
     double fact1 = 1.0 / (sigma_y * sqrt(2 * M_PI));
     double denom1 = 2 * sigma_y * sigma_y;
     double sum = 0.0;
     for (int row = 0; row < nrows; row++) {
-        double y = Pixel::row_to_y(row, nrows);
+        double y = nrows / 2.0 - row;
         double value = fact1 * exp(-((y * y) / denom1));
         gaussian_y->set(row, 0, value);
         sum += value;
@@ -244,13 +251,15 @@ Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
  * @param sigma_x
  * @return
  */
+// double Image_frame::to_x(int col) const { return col - col_offset; }
+// double x = col - ncols / 2.0;
 Kernel *Kernel::create_gaussian_x(int ncols, double sigma_x) {
     auto *gaussian_x = new Kernel(1, ncols, Image_depth::CV_32F);
     double fact1 = 1.0 / (sigma_x * sqrt(2 * M_PI));
     double denom1 = 2 * sigma_x * sigma_x;
     double sum = 0.0;
     for (int col = 0; col < ncols; col++) {
-        double x = Pixel::col_to_x(col, ncols);
+        double x = col - ncols / 2.0;
         double value = fact1 * exp(-((x * x) / denom1));
         gaussian_x->set(0, col, value);
         sum += value;

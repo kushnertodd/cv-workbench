@@ -5,6 +5,7 @@
 
 class Bounds {
     friend class Image;
+    friend class Variance_stats;
     double max_value;
     double min_value;
 

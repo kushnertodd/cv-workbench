@@ -7,13 +7,14 @@
 #include "wb_log.hpp"
 
 class Image_line_segment {
+
+public:
     Pixel pixel1;
     Pixel pixel2;
     std::list<Pixel> line_pixels;
-
-public:
     Image_line_segment();
     Image_line_segment(const Pixel &m_pixel1, const Pixel &m_pixel2);
+    Image_line_segment(int col1, int row1, int col2, int row2);
     void add(int col, int row);
     void add(const Pixel &pixel);
     void init(const Pixel &m_pixel1, const Pixel &m_pixel2);

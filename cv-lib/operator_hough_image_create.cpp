@@ -93,12 +93,12 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
             lrc_col = input->get_ncols() - 1;
         if (!saw_lrc_row)
             lrc_row = input->get_nrows() - 1;
-        hough_ptr = Hough::create_image(input.get(), rho_inc, theta_inc, threshold);
+        hough_ptr = new Hough(input.get(), rho_inc, theta_inc, threshold);
     }
     std::unique_ptr<Hough> output(hough_ptr);
     if (!errors.has_error() && hough_ptr != nullptr)
         for (Data_source_descriptor *hough_output_data_store: output_data_stores)
-            hough_output_data_store->write_operator_hough(hough, "Operator_hough_image_create::run", errors);
+            hough_output_data_store->write_operator_hough(output.get(), "Operator_hough_image_create::run", errors);
     // if (!errors.has_error() && hough_ptr != nullptr)
     //     hough_ptr->log(log_entries);
 }

@@ -19,8 +19,10 @@ void Pearsons_correlation::init_stats() {
     sum_y = 0;
     sum_y_sq = 0;
     for (int col = 0; col < pattern_ncols; col++) {
+        // TODO: check
+        double y;
         for (int row = 0; row < pattern_nrows; row++)
-            double y = pattern->get(col, row);
+            y = pattern->get(col, row);
         sum_y += y;
         sum_y_sq += y * y;
     }

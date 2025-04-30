@@ -339,11 +339,12 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
     if (!errors.has_error()) {
         output = new Image(ncols1, nrows1, 1, Image_depth::CV_32F);
         for (int col = 0; col < ncols1; col++) {
-            for (int row = 0; row < nrows1; row++)
+            for (int row = 0; row < nrows1; row++) {
                 double pixel1 = input1->get(col, row);
-            double pixel2 = input2->get(col, row);
-            double value = pixel1 * scale1 + pixel2 * scale2 + offset;
-            output->set(col, row, value);
+                double pixel2 = input2->get(col, row);
+                double value = pixel1 * scale1 + pixel2 * scale2 + offset;
+                output->set(col, row, value);
+            }
         }
     }
     return output;
@@ -435,11 +436,11 @@ void Image::copy(const Image *image, Errors &errors) const {
  * @param value
  * @param component
  */
-void Image::draw_line_segment(const Line_segment &line_segment, double value, int component) const {
+void Image::draw_line_segment(const Image_line_segment &image_line_segment, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    for (Point pixel: line_segment.line_points) {
+    for (Pixel pixel: image_line_segment.line_pixels) {
         set(pixel, value, component);
     }
 }
@@ -456,8 +457,8 @@ void Image::draw_line_segment(int col1, int row1, int col2, int row2, double val
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    Line_segment line_segment(col1, row1, col2, row2);
-    for (Point pixel: line_segment.line_points) {
+    Image_line_segment image_line_segment(col1, row1, col2, row2);
+    for (Pixel pixel: image_line_segment.line_pixels) {
         set(pixel, value, component);
     }
 }
@@ -467,12 +468,13 @@ void Image::draw_line_segment(int col1, int row1, int col2, int row2, double val
  * @param value
  * @param component
  */
-void Image::draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component) const {
+void Image::draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
+                               int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    for (const Line_segment &line_segment: line_segments) {
-        draw_line_segment(line_segment, value, component);
+    for (const Image_line_segment &image_line_segment: image_line_segments) {
+        draw_line_segment(image_line_segment, value, component);
     }
 }
 /**
@@ -488,10 +490,10 @@ void Image::draw_rectangle(int col1, int row1, int col2, int row2, double value,
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    Line_segment line_segment1(col1, row1, col1, row2);
-    Line_segment line_segment2(col1, row2, col2, row2);
-    Line_segment line_segment3(col2, row2, col2, row1);
-    Line_segment line_segment4(col2, row1, col1, row1);
+    Image_line_segment line_segment1(col1, row1, col1, row2);
+    Image_line_segment line_segment2(col1, row2, col2, row2);
+    Image_line_segment line_segment3(col2, row2, col2, row1);
+    Image_line_segment line_segment4(col2, row1, col1, row1);
     draw_line_segment(line_segment1, value, component);
     draw_line_segment(line_segment2, value, component);
     draw_line_segment(line_segment3, value, component);
@@ -524,7 +526,14 @@ void Image::draw_rectangle_filled(int col1, int row1, int col2, int row2, double
  * @param row
  * @return
  */
-double Image::ellipse_dist(int col, int row) const { return image_header.ellipse_dist(col, row); }
+double Image::ellipse_dist(int col, int row) const {
+    double a_sq = get_ncols() * get_ncols() / 4.0;
+    double b_sq = get_nrows() * get_nrows() / 4.0;
+    double x = to_x(col);
+    double y = to_y(row);
+    double dist = x * x / a_sq + y * y / b_sq;
+    return dist;
+}
 /**
  * @brief
  * @param col
@@ -636,7 +645,7 @@ double Image::get_green(const int col, const int row) const { return get(col, ro
  * @brief
  * @return
  */
-int Image::get_ncols() const { return image_header.ncols; }
+int Image::get_ncols() const { return image_header.get_ncols(); }
 /**
  * @brief
  * @return
@@ -646,7 +655,7 @@ int Image::get_npixels() const { return image_header.npixels; }
  * @brief
  * @return
  */
-int Image::get_nrows() const { return image_header.nrows; }
+int Image::get_nrows() const { return image_header.get_nrows(); }
 /**
  * @brief
  * @param col
@@ -697,7 +706,10 @@ void Image::get_stats(Variance_stats &stats) const {
  * @param row
  * @return
  */
-bool Image::in_ellipse(int col, int row) const { return image_header.in_ellipse(col, row); }
+bool Image::in_ellipse(int col, int row) const {
+    double dist = ellipse_dist(col, row);
+    return dist <= 1.0;
+}
 /**
  * @brief
  * @param value
@@ -777,38 +789,6 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
 }
 /**
  * @brief
- * @param polar_trig
- * @param col
- * @param row
- * @param theta_index
- * @return
- */
-int Image::pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index) {
-    return image_header.pixel_theta_to_rho(polar_trig, col, row, theta_index);
-}
-/**
- * @brief
- * @param x
- * @return
- */
-int Image::to_col(double x) const { return image_header.to_col(double x); }
-/**
- * @brief
- * @param pixel
- * @param x
- * @param y
- */
-void Image::to_pixel(Pixel &pixel, double x, double y) const {
-    image_header.to_pixel(Pixel & pixel, double x, double y);
-}
-/**
- * @brief
- * @param pixel
- * @param point
- */
-void Image::to_pixel(Pixel &pixel, Point &point) const { image_header.to_pixel(Pixel & pixel, Point & point); }
-/**
- * @brief
  * @param pixel_RGB
  * @param col
  * @param row
@@ -824,31 +804,25 @@ void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
  * @param col
  * @param row
  */
-void Image::to_point(Point &point, int col, int row) const { image_header.to_point(Point & point, int col, int row); }
+void Image::to_point(Point &point, int col, int row) const { image_header.to_point(point, col, row); }
 /**
  * @brief
  * @param point
  * @param pixel
  */
-void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(Point & point, Pixel & pixel); }
-/**
- * @brief
- * @param y
- * @return
- */
-int Image::to_row(double y) const { return image_header.to_row(double y); }
+void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(point, pixel); }
 /**
  * @brief
  * @param col
  * @return
  */
-double Image::to_x(int col) const { return image_header.to_x(int col); }
+double Image::to_x(int col) const { return image_header.to_x(col); }
 /**
  * @brief
  * @param row
  * @return
  */
-double Image::to_y(int row) const { return image_header.to_y(int row); }
+double Image::to_y(int row) const { return image_header.to_y(row); }
 /**
  * @brief
  * @param path
@@ -1098,7 +1072,7 @@ int Image::col_row_to_index(int col, int row, int component) const {
     assert(component <= get_ncomponents());
     if (!is_pixel_valid(col, row))
         int i = 0;
-    assertis_valid(col, row);
+    assert(is_pixel_valid(col, row));
 #endif
     return row * get_row_stride() + col * image_header.ncomponents + component;
 }
@@ -1180,13 +1154,6 @@ void Image::set(int col, int row, double value, int component) const {
             break;
     }
 }
-/**
- * @brief
- * @param pixel
- * @param value
- * @param component
- */
-void Image::set(const Pixel &pixel, double value, int component) const { set(pixel.col, pixel.row, value, component); }
 // subtracts image without underflow checking for CV_8U images
 Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
     if (src_image->get_npixels() != subtract_image->get_npixels()) {
@@ -1232,7 +1199,7 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
  * @param value
  * @param component
  */
-void Image::set(const Point &pixel, double value, int component) const {
+void Image::set(const Pixel &pixel, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif

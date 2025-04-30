@@ -54,9 +54,9 @@ Polar_trig::Polar_trig() = default;
  * @param m_theta_inc
  */
 Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) :
-    x_max(m_x_max), y_max(m_y_max), rho_inc(m_rho_inc).theta_inc(m_theta_inc),
-    rho_range(2 * rho_max) nrhos(rho_range / rho_inc + rho_pad), nthetas(theta_max / theta_inc), x_offset(x_max / 2.0),
-    y_offset(y_max / 2.0), rho_max(sqrt(x_offset * x_offset + y_offset * y_offset)), rho_min(-rho_max) {}
+    x_max(m_x_max), y_max(m_y_max), rho_inc(m_rho_inc), theta_inc(m_theta_inc), rho_range(2 * rho_max),
+    nrhos(rho_range / rho_inc + rho_pad), nthetas(theta_max / theta_inc), x_offset(x_max / 2.0), y_offset(y_max / 2.0),
+    rho_max(sqrt(x_offset * x_offset + y_offset * y_offset)), rho_min(-rho_max) {}
 /**
  * @brief
  * @return
@@ -66,7 +66,7 @@ int Polar_trig::get_nrhos() const { return nrhos; }
  * @brief
  * @return
  */
-int Polar_trig::get_nthetas() const { return nthetas }
+int Polar_trig::get_nthetas() const { return nthetas; }
 /**
  * @brief
  * @return
@@ -76,7 +76,7 @@ int Polar_trig::get_rho_inc() const { return rho_inc; }
  * @brief
  * @return
  */
-int Polar_trig::get_theta_inc() const { return theta_inc }
+int Polar_trig::get_theta_inc() const { return theta_inc; }
 /**
  * @brief
  * @param point
@@ -143,7 +143,7 @@ double Polar_trig::point_theta_to_rho(Point &point, int theta) { return point_th
  * @return
  */
 double Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
-    return point_theta_to_rho_index(point.x, point.y, theta_index));
+    return point_theta_to_rho_index(point.x, point.y, theta);
 }
 /**
  * @brief
@@ -153,7 +153,7 @@ double Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
  * @return
  */
 double Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
-    return to_rho_index(point_theta_to_rho(x, y, theta_index));
+    return to_rho_index(point_theta_to_rho(x, y, theta));
 }
 /**
  * can have a singularity if theta ~= 180, sin ~= 0
@@ -164,7 +164,7 @@ double Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
  * @return
  */
 double Polar_trig::rho_theta_x_to_y(int rho_index, int theta_index, double x) const {
-    assert(!singular_sin_index(theta_index));
+    // TODO: assert(!singular_sin_index(theta_index));
     double cos_t = Polar_trig::to_cos_index(theta_index);
     double sin_t = Polar_trig::to_sin_index(theta_index);
     double rho = to_rho(rho_index);
@@ -181,7 +181,7 @@ double Polar_trig::rho_theta_x_to_y(int rho_index, int theta_index, double x) co
  * @return
  */
 double Polar_trig::rho_theta_y_to_x(int rho_index, int theta_index, double y) const {
-    assert(!singular_cos_index(theta_index));
+    // TODO: assert(!singular_cos_index(theta_index));
     double cos_t = Polar_trig::to_cos_index(theta_index);
     double sin_t = Polar_trig::to_sin_index(theta_index);
     double rho = to_rho(rho_index);

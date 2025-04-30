@@ -61,9 +61,10 @@ public:
     Image *color_edge(Errors &errors);
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
-    void draw_line_segment(const Line_segment &line_segment, double value, int component = 0) const;
+    void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;
     void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
-    void draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component = 0) const;
+    void draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
+                            int component = 0) const;
     void draw_rectangle(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     void draw_rectangle_filled(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     double ellipse_dist(int col, int row) const;
@@ -90,7 +91,6 @@ public:
     bool is_pixel_valid(int col, int row) const;
     bool is_grayscale() const;
     void log(std::list<WB_log_entry> &log_entries) const;
-    int pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index);
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
     static Image *read_text(const std::string &path, Errors &errors);
@@ -107,13 +107,9 @@ public:
     void set_8U(int col, int row, pixel_8U value, int component = 0) const;
     void set_32F(int col, int row, pixel_32F value, int component = 0) const;
     void set_32S(int col, int row, pixel_32S value, int component = 0) const;
-    int to_col(double x) const;
-    void to_pixel(Pixel &pixel, double x, double y) const;
-    void to_pixel(Pixel &pixel, Point &point) const;
     void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row);
     void to_point(Point &point, int col, int row) const;
     void to_point(Point &point, Pixel &pixel) const;
-    int to_row(double y) const;
     std::string to_string(const std::string &prefix = "") const;
     double to_x(int col) const;
     double to_y(int row) const;

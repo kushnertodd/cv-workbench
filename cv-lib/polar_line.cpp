@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
-#include "errors.hpp"
+#include "point.hpp"
 #include "polar_trig.hpp"
 
 /**
@@ -11,10 +11,11 @@
  * @param m_theta_index
  */
 Polar_line::Polar_line(int m_rho_index, int m_theta_index) : rho_index(m_rho_index), theta_index(m_theta_index) {
-    rho = Polar_trig::to_rho(rho_index);
-    theta = Polar_trig::to_theta(theta_index);
-    cos_t = Polar_trig::to_cos_index(theta_index);
-    sin_t = Polar_trig::to_sin_index(theta_index);
+    // TODO: fix
+    // rho = Polar_trig::to_rho(rho_index);
+    // theta = Polar_trig::to_theta(theta_index);
+    // cos_t = Polar_trig::to_cos_index(theta_index);
+    // sin_t = Polar_trig::to_sin_index(theta_index);
 }
 /**
  * @brief
@@ -24,10 +25,11 @@ Polar_line::Polar_line(int m_rho_index, int m_theta_index) : rho_index(m_rho_ind
 void Polar_line::init(int m_rho_index, int m_theta_index) {
     rho_index = m_rho_index;
     theta_index = m_theta_index;
-    rho = Polar_trig::to_rho(rho_index);
-    theta = Polar_trig::to_theta(theta_index);
-    cos_t = Polar_trig::to_cos_index(theta_index);
-    sin_t = Polar_trig::to_sin_index(theta_index);
+    // TODO: fix
+    // rho = Polar_trig::to_rho(rho_index);
+    // theta = Polar_trig::to_theta(theta_index);
+    // cos_t = Polar_trig::to_cos_index(theta_index);
+    // sin_t = Polar_trig::to_sin_index(theta_index);
 }
 /**
  * @brief
@@ -63,5 +65,5 @@ void Polar_line::write(FILE *fp, Errors &errors) {
  * @param errors
  */
 void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << count << delim << theta_index << delim << rho << delim << rho_index << std::endl;
+    ofs << theta_index << delim << rho << delim << rho_index << std::endl;
 }

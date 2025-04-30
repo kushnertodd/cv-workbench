@@ -3,6 +3,7 @@
 
 #include <json-c/json.h>
 #include <string>
+#include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"

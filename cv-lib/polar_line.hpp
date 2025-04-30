@@ -2,6 +2,7 @@
 #define SRC__POLAR_LINE_HPP_
 
 #include <fstream>
+#include "errors.hpp"
 
 class Polar_line {
     double rho{};

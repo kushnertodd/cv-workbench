@@ -3,6 +3,7 @@
 #include <string>
 
 class Point {
+    friend class Polar_trig;
     double x{};
     double y{};
 

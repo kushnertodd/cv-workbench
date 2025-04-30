@@ -2,6 +2,7 @@
 #define SRC__POLAR_TRIG_HPP_
 
 #include <cassert>
+#include "point.hpp"
 
 const int default_rho_inc = 1;
 const int default_theta_inc = 3;
@@ -72,9 +73,9 @@ public:
     double rho_theta_x_to_y(int rho_index, int theta_index, double x) const;
     double rho_theta_y_to_x(int rho_index, int theta_index, double y) const;
     static bool singular_cos(int theta);
-    static bool singular_cos_index(int theta_index);
+    bool singular_cos_index(int theta_index);
     static bool singular_sin(int theta);
-    static bool singular_sin_index(int theta_index);
+    bool singular_sin_index(int theta_index);
     double to_cos_index(int theta_index) const;
     static double to_cos(int theta);
     void to_index(Polar_index &polar_index, Polar_point &polar_point) const;

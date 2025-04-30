@@ -35,6 +35,7 @@
  * At any time, get_mean() can give the current running mean.
  */
 class One_pass_mean {
+    friend class Pearsons_correlation;
     Image *image{};
     int window_ncols{};
     int window_nrows{};

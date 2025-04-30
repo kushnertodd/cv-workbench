@@ -9,12 +9,13 @@
  * @brief
  */
 class Line_segment {
-    Point point1;
-    Point point2;
+    Pixel pixel1;
+    Pixel pixel2;
 
 public:
+    std::list<Pixel> line_pixels;
     Line_segment();
-    Line_segment(const Point &m_point1, const Point &m_point2);
+    Line_segment(const int col1, int row1, int col2, int row2);
     void init(const Point &m_point1, const Point &m_point2);
     std::string to_string() const;
 };

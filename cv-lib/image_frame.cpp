@@ -22,23 +22,6 @@ Image_frame::Image_frame(const int m_ncols, const int m_nrows) : ncols(m_ncols),
 Image_frame::Image_frame(const Image_frame &image_frame) : Image_frame(image_frame.ncols, image_frame.nrows) {}
 void Image_frame::check_pixel_valid(int col, int row) const { assert(!is_pixel_valid(col, row)); }
 /**
- * @brief distance from (col, row) to center of elipse inscribed into rectangle (ncols, nrows) is:
- *   a = ncols/2
- *   b = nrows/2
- *   dist = x^2/a^2 + y^2/b^2
- * @param col
- * @param row
- * @return
- */
-double Image_frame::ellipse_dist(int col, int row) const {
-    double a_sq = ncols * ncols / 4.0;
-    double b_sq = nrows * nrows / 4.0;
-    double x = col_to_x(col, ncols);
-    double y = row_to_y(row, nrows);
-    double dist = x * x / a_sq + y * y / b_sq;
-    return dist;
-}
-/**
  * @brief
  * @return
  */
@@ -48,16 +31,6 @@ int Image_frame::get_ncols() const { return ncols; }
  * @return
  */
 int Image_frame::get_nrows() const { return nrows; }
-/**
- * @brief
- * @param col
- * @param row
- * @return
- */
-bool Image_frame::in_ellipse(int col, int row) const {
-    double dist = ellipse_dist(col, row, ncols, nrows);
-    return dist <= 1.0;
-}
 /**
  * @brief
  * @param m_ncols
@@ -75,18 +48,6 @@ void Image_frame::init(const int m_ncols, const int m_nrows) {
  */
 bool Image_frame::is_pixel_valid(int col, int row) const {
     return (col >= 0 && col < ncols && row >= 0 && row < nrows);
-}
-/**
- * @brief
- * @param polar_trig
- * @param col
- * @param row
- * @param theta_index
- * @return
- */
-int Image_frame::pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index) {
-    int rho_index = Polar_trig::point_theta_to_rho(polar_trig.to_x(col), polar_trig.to_y(row), theta_index);
-    return rho_index;
 }
 /**
  * @brief
@@ -158,56 +119,31 @@ void Image_frame::plot_line(Image_line_segment &image_line_segment) {
     int row2 = image_line_segment.pixel2.row;
     if (abs(row2 - row1) < abs(col2 - col1)) {
         if (col1 > col2) {
-            plot_line_low(col2, row2, col1, row1);
+            plot_line_low(image_line_segment, col2, row2, col1, row1);
         } else {
-            plot_line_low(col1, row1, col2, row2);
+            plot_line_low(image_line_segment, col1, row1, col2, row2);
         }
     } else {
         if (row1 > row2) {
-            plot_line_high(col2, row2, col1, row1);
+            plot_line_high(image_line_segment, col2, row2, col1, row1);
         } else {
-            plot_line_high(col1, row1, col2, row2);
+            plot_line_high(image_line_segment, col1, row1, col2, row2);
         }
     }
 }
-/**
- * @brief
- * @param x
- * @return
- */
-int Image_frame::to_col(double x) const { return wb_utils::double_to_int_round(x + col_offset); }
-/**
- * @brief
- * @param pixel
- * @param x
- * @param y
- */
-void Image_frame::to_pixel(Pixel &pixel, double x, double y) const { pixel.init(to_col(x), to_row(y)); }
-/**
- * @brief
- * @param pixel
- * @param point
- */
-void Image_frame::to_pixel(Pixel &pixel, Point &point) const { to_pixel(point.x, point.y); }
 /**
  * @brief
  * @param point
  * @param col
  * @param row
  */
-void Image_frame::to_point(Point &point, int col, int row) const { pixel.init(to_x(col), to_y(row)); }
+void Image_frame::to_point(Point &point, int col, int row) const { point.init(to_x(col), to_y(row)); }
 /**
  * @brief
  * @param point
  * @param pixel
  */
 void Image_frame::to_point(Point &point, Pixel &pixel) const { to_point(point, pixel.col, pixel.row); }
-/**
- * @brief
- * @param y
- * @return
- */
-int Image_frame::to_row(double y) const { return wb_utils::double_to_int_round(row_offset - y); }
 /**
  * @brief
  * @param prefix

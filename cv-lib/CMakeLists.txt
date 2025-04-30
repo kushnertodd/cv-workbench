@@ -33,8 +33,6 @@ add_library(cv-lib STATIC
         internet_data_source_descriptor.hpp
         kernel.cpp
         kernel.hpp
-        line_segment.cpp
-        line_segment.hpp
         morphology.cpp
         morphology.hpp
         one_pass_mean.cpp
@@ -122,7 +120,7 @@ add_library(cv-lib STATIC
         wb_utils.cpp
         wb_utils.hpp
         wb_version.hpp
-        wb_window.cpp
-        wb_window.hpp
+#        wb_window.cpp
+#        wb_window.hpp
 )
 target_include_directories(cv-lib PUBLIC .)
