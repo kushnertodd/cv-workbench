@@ -5,6 +5,8 @@
 #include <string>
 
 class WB_data_format {
+public:
+    enum class Data_format { BINARY, JPEG, JSON, LOG, TEXT, UNDEFINED };
     static const std::string bin_string;
     static const std::string jpeg_string;
     static const std::string json_string;
@@ -16,8 +18,6 @@ class WB_data_format {
     static const std::map<std::string, WB_data_format::Data_format> from_exts;
     static const std::map<std::string, WB_data_format::Data_format> from_strings;
 
-public:
-    enum class Data_format { BINARY, JPEG, JSON, LOG, TEXT, UNDEFINED };
     static std::string to_ext(WB_data_format::Data_format data_format);
     static std::string to_string(WB_data_format::Data_format data_format);
     static WB_data_format::Data_format from_ext(const std::string &ext);

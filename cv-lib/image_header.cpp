@@ -42,15 +42,51 @@ void Image_header::read(FILE *fp, Errors &errors) {
 /**
  * @brief
  * @param col
- * @return
+ * @param row
  */
-double Image_header::to_x(int col) const { return image_frame.to_x(col); }
+void Image_header::check_pixel_valid(int col, int row) const { image_frame.check_pixel_valid(col, row); }
 /**
  * @brief
+ * @param col
  * @param row
  * @return
  */
-double Image_header::to_y(int row) const { return image_frame.to_y(row); }
+double Image_header::ellipse_dist(int col, int row) const { return image_frame.ellipse_dist(col, row); }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_ncols() const { return image_frame.get_ncols(); }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_nrows() const { return image_frame.get_nrowss(); }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
+bool Image_header::in_ellipse(int col, int row) const { return image_frame.in_ellipse(col, row); }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
+bool Image_header::is_pixel_valid(int col, int row) const { return image_frame.is_pixel_valid(col, row); }
+/**
+ * @brief
+ * @param polar_trig
+ * @param col
+ * @param row
+ * @param theta_index
+ * @return
+ */
+int Image_header::pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index) {
+    return image_frame.pixel_theta_to_rho(polar_trig, col, row, theta_index);
+}
 /**
  * @brief
  * @param x
@@ -63,16 +99,7 @@ int Image_header::to_col(double x) const { return image_frame.to_col(x); }
  * @param x
  * @param y
  */
-void Image_header::to_pixel(Pixel &pixel, double x, double y);
-{
-    image_frame.to_pixel(pixel, x, y);
-}
-/**
- * @brief
- * @param y
- * @return
- */
-int Image_header::to_row(double y) const { return image_frame.to_row(y); }
+void Image_header::to_pixel(Pixel &pixel, double x, double y) const { image_frame.to_pixel(pixel, x, y); }
 /**
  * @brief
  * @param pixel
@@ -92,6 +119,30 @@ void Image_header::to_point(Point &point, int col, int row) const { image_frame.
  * @param pixel
  */
 void Image_header::to_point(Point &point, Pixel &pixel) const { image_frame.to_point(point, pixel); }
+/**
+ * @brief
+ * @param y
+ * @return
+ */
+int Image_header::to_row(double y) const { return image_frame.to_row(double y); }
+/**
+ * @brief
+ * @param y
+ * @return
+ */
+int Image_header::to_row(double y) const { return image_frame.to_row(y); }
+/**
+ * @brief
+ * @param col
+ * @return
+ */
+double Image_header::to_x(int col) const { return image_frame.to_x(col); }
+/**
+ * @brief
+ * @param row
+ * @return
+ */
+double Image_header::to_y(int row) const { return image_frame.to_y(row); }
 /**
  * @brief
  * @param fp

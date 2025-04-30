@@ -80,21 +80,25 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     if (!saw_threshold) {
         errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
     }
-    if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
-        Image *input = input_data_source->read_operator_image("Operator_hough_image_create::run", errors);
-        if (!errors.has_error() && input != nullptr)
-            input->check_grayscale("Operator_hough_image_create::run", errors);
-        if (!errors.has_error()) {
-            if (!saw_lrc_col)
-                lrc_col = input->get_ncols() - 1;
-            if (!saw_lrc_row)
-                lrc_row = input->get_nrows() - 1;
-            Hough *hough = Hough::create_image(input, rho_inc, theta_inc, threshold);
-            for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-                hough_output_data_store->write_operator_hough(hough, "Operator_hough_image_create::run", errors);
-            }
-            delete hough;
-        }
+    Data_source_descriptor *input_data_source = input_data_sources.front();
+    Image *input_ptr = nullptr;
+    Hough *hough_ptr = nullptr;
+    if (!errors.has_error())
+        input_ptr = input_data_source->read_operator_image("Operator_hough_image_create::run", errors);
+    std::unique_ptr<Image> input(input_ptr);
+    if (!errors.has_error() && input_ptr != nullptr)
+        input->check_grayscale("Operator_hough_image_create::run", errors);
+    if (!errors.has_error() && input_ptr != nullptr) {
+        if (!saw_lrc_col)
+            lrc_col = input->get_ncols() - 1;
+        if (!saw_lrc_row)
+            lrc_row = input->get_nrows() - 1;
+        hough_ptr = Hough::create_image(input.get(), rho_inc, theta_inc, threshold);
     }
+    std::unique_ptr<Hough> output(hough_ptr);
+    if (!errors.has_error() && hough_ptr != nullptr)
+        for (Data_source_descriptor *hough_output_data_store: output_data_stores)
+            hough_output_data_store->write_operator_hough(hough, "Operator_hough_image_create::run", errors);
+    // if (!errors.has_error() && hough_ptr != nullptr)
+    //     hough_ptr->log(log_entries);
 }

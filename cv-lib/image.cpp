@@ -13,22 +13,52 @@
 
 extern bool debug;
 
+/**/
 Pixel_RGB::Pixel_RGB() {}
+/**
+ * @brief
+ * @param m_red
+ * @param m_green
+ * @param m_blue
+ */
 Pixel_RGB::Pixel_RGB(double m_red, double m_green, double m_blue) : red(m_red), green(m_green), blue(m_blue) {};
+/**
+ * @brief
+ * @param other
+ * @return
+ */
 double Pixel_RGB::diff(const Pixel_RGB &other) const {
     return sqrt((other.red - red) * (other.red - red) + (other.green - green) * (other.green - green) +
                 (other.blue - blue) * (other.blue - blue));
 }
+/**
+ * @brief
+ */
 Image::~Image() {
     delete[] buf_8U;
     delete[] buf_32S;
     delete[] buf_32F;
 }
+/**
+ * @brief
+ */
 Image::Image() = default;
+/**
+ * @brief
+ * @param m_ncols
+ * @param m_nrows
+ * @param m_components
+ * @param m_depth
+ * @param value
+ */
 Image::Image(const int m_ncols, const int m_nrows, const int m_components, const Image_depth m_depth,
              const double value) : image_header(m_ncols, m_nrows, m_components, m_depth) {
     init(value);
 }
+/**
+ * @brief
+ * @param image
+ */
 Image::Image(const Image &image) :
     image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth()) {
     int size = get_npixels();
@@ -55,11 +85,22 @@ Image::Image(const Image &image) :
             break;
     }
 }
+/**
+ * @brief
+ * @param m_image_header
+ * @param value
+ */
 Image::Image(const Image_header &m_image_header, double value) : image_header(m_image_header) {
     if (debug)
         std::cout << "Image::Image: " << to_string() << std::endl;
     init(value);
 }
+/**
+ * @brief
+ * @param src
+ * @param count
+ * @param errors
+ */
 void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
     if (next_pixel + count > get_npixels())
         errors.add("Image::add_8U", "",
@@ -85,6 +126,12 @@ void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
         }
     }
 }
+/**
+ * @brief
+ * @param src
+ * @param count
+ * @param errors
+ */
 void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
     if (next_pixel + count > get_npixels())
         errors.add("Image::add_32F", "",
@@ -110,6 +157,12 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
         }
     }
 }
+/**
+ * @brief
+ * @param src
+ * @param count
+ * @param errors
+ */
 void Image::add_32S(const pixel_32S *src, int count, Errors &errors) {
     if (debug)
         std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
@@ -142,6 +195,12 @@ void Image::add_32S(const pixel_32S *src, int count, Errors &errors) {
         }
     }
 }
+/**
+ * @brief
+ * @param module
+ * @param errors
+ * @return
+ */
 bool Image::check_color(const std::string &module, Errors &errors) const {
     if (get_ncomponents() != 3) {
         errors.add(module, "", "image not color");
@@ -149,6 +208,12 @@ bool Image::check_color(const std::string &module, Errors &errors) const {
     }
     return true;
 }
+/**
+ * @brief
+ * @param module
+ * @param errors
+ * @return
+ */
 bool Image::check_grayscale(const std::string &module, Errors &errors) const {
     if (get_ncomponents() != 1) {
         errors.add(module, "", "image not grayscale");
@@ -156,6 +221,16 @@ bool Image::check_grayscale(const std::string &module, Errors &errors) const {
     }
     return true;
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ */
+void Image::check_pixel_valid(int col, int row) const { image_header.check_pixel_valid(col, row); }
+/**
+ * @brief
+ * @param value
+ */
 void Image::clear(double value) {
     int size = get_npixels();
     switch (get_depth()) {
@@ -190,7 +265,11 @@ Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
     new_image->copy(image, errors);
     return new_image;
 }
-// color edge detection
+/**
+ * @brief color edge detection
+ * @param errors
+ * @return
+ */
 Image *Image::color_edge(Errors &errors) {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(is_color());
@@ -232,13 +311,13 @@ Image *Image::color_edge(Errors &errors) {
 /**
  * @brief return linear combination of input images:
  * pixel_32F output-pixel = image1-pixel * scale1 + image2-pixel * scale2 + offset;
- * @param input1 
- * @param input2 
- * @param scale1 
- * @param scale2 
- * @param offset 
- * @param errors 
- * @return 
+ * @param input1
+ * @param input2
+ * @param scale1
+ * @param scale2
+ * @param offset
+ * @param errors
+ * @return
  */
 Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2, double offset, Errors &errors) {
     int ncols1;
@@ -269,7 +348,11 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
     }
     return output;
 }
-// copies CV_32S and CV_32F to CV_8U with truncation to 0..255
+/**
+ * @brief copies CV_32S and CV_32F to CV_8U with truncation to 0..255
+ * @param image
+ * @param errors
+ */
 void Image::copy(const Image *image, Errors &errors) const {
     if (get_npixels() != image->get_npixels()) {
         errors.add("Image::copy", "", "images not the same size ");
@@ -346,6 +429,12 @@ void Image::copy(const Image *image, Errors &errors) const {
             break;
     }
 }
+/**
+ * @brief
+ * @param line_segment
+ * @param value
+ * @param component
+ */
 void Image::draw_line_segment(const Line_segment &line_segment, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -354,6 +443,15 @@ void Image::draw_line_segment(const Line_segment &line_segment, double value, in
         set(pixel, value, component);
     }
 }
+/**
+ * @brief
+ * @param col1
+ * @param row1
+ * @param col2
+ * @param row2
+ * @param value
+ * @param component
+ */
 void Image::draw_line_segment(int col1, int row1, int col2, int row2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -363,6 +461,12 @@ void Image::draw_line_segment(int col1, int row1, int col2, int row2, double val
         set(pixel, value, component);
     }
 }
+/**
+ * @brief
+ * @param line_segments
+ * @param value
+ * @param component
+ */
 void Image::draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -371,6 +475,15 @@ void Image::draw_line_segments(const std::list<Line_segment> &line_segments, dou
         draw_line_segment(line_segment, value, component);
     }
 }
+/**
+ * @brief
+ * @param col1
+ * @param row1
+ * @param col2
+ * @param row2
+ * @param value
+ * @param component
+ */
 void Image::draw_rectangle(int col1, int row1, int col2, int row2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -384,6 +497,15 @@ void Image::draw_rectangle(int col1, int row1, int col2, int row2, double value,
     draw_line_segment(line_segment3, value, component);
     draw_line_segment(line_segment4, value, component);
 }
+/**
+ * @brief
+ * @param col1
+ * @param row1
+ * @param col2
+ * @param row2
+ * @param value
+ * @param component
+ */
 void Image::draw_rectangle_filled(int col1, int row1, int col2, int row2, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -396,6 +518,20 @@ void Image::draw_rectangle_filled(int col1, int row1, int col2, int row2, double
         for (int row = row_min; row <= row_max; row++)
             set(col, row, value, component);
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
+double Image::ellipse_dist(int col, int row) const { return image_header.ellipse_dist(col, row); }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
 double Image::get(const int col, const int row, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -418,12 +554,25 @@ double Image::get(const int col, const int row, const int component) const {
             return 0.0;
     }
 }
+/**
+ * @brief
+ * @param pixel
+ * @param component
+ * @return
+ */
 double Image::get(const Pixel &pixel, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     return get(pixel.col, pixel.row, component);
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
 auto Image::get_8U(const int col, const int row, const int component) const -> pixel_8U {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -431,6 +580,13 @@ auto Image::get_8U(const int col, const int row, const int component) const -> p
     int index = col_row_to_index(col, row, component);
     return buf_8U[index];
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
 auto Image::get_32F(const int col, const int row, const int component) const -> pixel_32F {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -438,6 +594,13 @@ auto Image::get_32F(const int col, const int row, const int component) const -> 
     int index = col_row_to_index(col, row, component);
     return buf_32F[index];
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
 pixel_32S Image::get_32S(const int col, const int row, const int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -445,15 +608,68 @@ pixel_32S Image::get_32S(const int col, const int row, const int component) cons
     int index = col_row_to_index(col, row, component);
     return buf_32S[index];
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
 double Image::get_blue(const int col, const int row) const { return get(col, row, RGB_BLUE); }
+/**
+ * @brief
+ * @return
+ */
 int Image::get_ncomponents() const { return image_header.ncomponents; }
+/**
+ * @brief
+ * @return
+ */
 Image_depth Image::get_depth() const { return image_header.depth; }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
 double Image::get_green(const int col, const int row) const { return get(col, row, RGB_GREEN); }
+/**
+ * @brief
+ * @return
+ */
 int Image::get_ncols() const { return image_header.ncols; }
+/**
+ * @brief
+ * @return
+ */
 int Image::get_npixels() const { return image_header.npixels; }
+/**
+ * @brief
+ * @return
+ */
 int Image::get_nrows() const { return image_header.nrows; }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
 double Image::get_red(const int col, const int row) const { return get(col, row, RGB_RED); }
+/**
+ * @brief
+ * @return
+ */
 int Image::get_row_stride() const { return image_header.row_stride; }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param lower_in
+ * @param upper_in
+ * @param lower_out
+ * @param upper_out
+ * @param component
+ * @return
+ */
 double Image::get_scaled(int col, int row, double lower_in, double upper_in, double lower_out, double upper_out,
                          int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
@@ -463,6 +679,10 @@ double Image::get_scaled(int col, int row, double lower_in, double upper_in, dou
     double pixel_out = scale_pixel(pixel_in, lower_in, upper_in, lower_out, upper_out);
     return pixel_out;
 }
+/**
+ * @brief
+ * @param stats
+ */
 void Image::get_stats(Variance_stats &stats) const {
     for (int col = 0; col < get_ncols(); col++) {
         for (int row = 0; row < get_nrows(); row++) {
@@ -471,6 +691,17 @@ void Image::get_stats(Variance_stats &stats) const {
         }
     }
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
+bool Image::in_ellipse(int col, int row) const { return image_header.in_ellipse(col, row); }
+/**
+ * @brief
+ * @param value
+ */
 void Image::init(double value) {
     int size = get_npixels();
     ;
@@ -500,9 +731,27 @@ void Image::init(double value) {
             break;
     }
 }
+/**
+ * @brief
+ * @return
+ */
 bool Image::is_color() const { return get_ncomponents() == 3; }
+/**
+ * @brief
+ * @return
+ */
 bool Image::is_grayscale() const { return get_ncomponents() == 1; }
-bool Image::is_valid(int col, int row) const { return (col >= 0 && col < get_ncols() && row >= 0 && row < get_nrows()) }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @return
+ */
+bool Image::is_pixel_valid(int col, int row) const { return image_header.is_pixel_valid(col, row); }
+/**
+ * @brief
+ * @param log_entries
+ */
 void Image::log(std::list<WB_log_entry> &log_entries) const {
     Variance_stats stats;
     get_stats(stats);
@@ -526,11 +775,86 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
     WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(stats.bounds.max_value));
     log_entries.push_back(log_entry_max_value);
 }
+/**
+ * @brief
+ * @param polar_trig
+ * @param col
+ * @param row
+ * @param theta_index
+ * @return
+ */
+int Image::pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index) {
+    return image_header.pixel_theta_to_rho(polar_trig, col, row, theta_index);
+}
+/**
+ * @brief
+ * @param x
+ * @return
+ */
+int Image::to_col(double x) const { return image_header.to_col(double x); }
+/**
+ * @brief
+ * @param pixel
+ * @param x
+ * @param y
+ */
+void Image::to_pixel(Pixel &pixel, double x, double y) const {
+    image_header.to_pixel(Pixel & pixel, double x, double y);
+}
+/**
+ * @brief
+ * @param pixel
+ * @param point
+ */
+void Image::to_pixel(Pixel &pixel, Point &point) const { image_header.to_pixel(Pixel & pixel, Point & point); }
+/**
+ * @brief
+ * @param pixel_RGB
+ * @param col
+ * @param row
+ */
 void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
     pixel_RGB.red = get_red(col, row);
     pixel_RGB.red = get_green(col, row);
     pixel_RGB.red = get_blue(col, row);
-};
+}
+/**
+ * @brief
+ * @param point
+ * @param col
+ * @param row
+ */
+void Image::to_point(Point &point, int col, int row) const { image_header.to_point(Point & point, int col, int row); }
+/**
+ * @brief
+ * @param point
+ * @param pixel
+ */
+void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(Point & point, Pixel & pixel); }
+/**
+ * @brief
+ * @param y
+ * @return
+ */
+int Image::to_row(double y) const { return image_header.to_row(double y); }
+/**
+ * @brief
+ * @param col
+ * @return
+ */
+double Image::to_x(int col) const { return image_header.to_x(int col); }
+/**
+ * @brief
+ * @param row
+ * @return
+ */
+double Image::to_y(int row) const { return image_header.to_y(int row); }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
     Image *image = nullptr;
@@ -540,6 +864,12 @@ Image *Image::read(const std::string &path, Errors &errors) {
     }
     return image;
 }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ * @return
+ */
 Image *Image::read(FILE *fp, Errors &errors) {
     Image_header image_header;
     image_header.read(fp, errors);
@@ -581,20 +911,30 @@ Image *Image::read(FILE *fp, Errors &errors) {
     }
     return image;
 }
-// for read_jpeg()
+/**
+ * @brief for read_jpeg()
+ */
 struct my_error_mgr {
     struct jpeg_error_mgr pub; /* "public" fields */
     jmp_buf setjmp_buffer; /* for return to caller */
 };
 
 typedef struct my_error_mgr *my_error_ptr;
-
-// for read_jpeg()
+/**
+ * @brief for read_jpeg()
+ * @param cinfo
+ */
 void my_error_exit(j_common_ptr cinfo) {
     my_error_ptr myerr = reinterpret_cast<my_error_ptr>(cinfo->err);
     (*cinfo->err->output_message)(cinfo);
     longjmp(myerr->setjmp_buffer, 1);
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     struct jpeg_decompress_struct cinfo;
     struct my_error_mgr jerr;
@@ -639,6 +979,12 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     fclose(fp);
     return image;
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 Image *Image::read_text(const std::string &path, Errors &errors) {
     std::ifstream ifs = file_utils::open_file_read_text(path, errors);
     Image *image = nullptr;
@@ -648,6 +994,12 @@ Image *Image::read_text(const std::string &path, Errors &errors) {
     }
     return image;
 }
+/**
+ * @brief
+ * @param ifs
+ * @param errors
+ * @return
+ */
 Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     int ncols = 0;
     int nrows = 0;
@@ -687,7 +1039,15 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
     }
     return image;
 }
-// component 1 only
+/**
+ * @brief
+ * component 1 only
+ * @param image
+ * @param area_ncols
+ * @param area_nrows
+ * @param resize_type
+ * @return
+ */
 Image *Image::resize(const Image *image, int area_ncols, int area_nrows, WB_resize_types::Resize_type resize_type) {
     int out_ncols = image->get_ncols() / area_ncols;
     int out_nrows = image->get_nrows() / area_nrows;
@@ -726,16 +1086,24 @@ Image *Image::resize(const Image *image, int area_ncols, int area_nrows, WB_resi
     }
     return resize_image;
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
 int Image::col_row_to_index(int col, int row, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
-    if (!is_valid(col, row))
+    if (!is_pixel_valid(col, row))
         int i = 0;
     assertis_valid(col, row);
 #endif
     return row * get_row_stride() + col * image_header.ncomponents + component;
 }
 /***
+ * @brief
  * preconditions not checked:
  *   lower_in < lower_out
  *   upper_in < upper_out
@@ -768,13 +1136,29 @@ Image *Image::scale_image(const Image *image, double lower_in, double upper_in, 
     }
     return convert_image;
 }
+/**
+ * @brief
+ * @param pixel_in
+ * @param in_lower
+ * @param in_upper
+ * @param out_lower
+ * @param out_upper
+ * @return
+ */
 double Image::scale_pixel(double pixel_in, double in_lower, double in_upper, double out_lower, double out_upper) {
     Bounds in_bounds(in_lower, in_upper);
     Bounds out_bounds(out_lower, out_upper);
     double pixel_out = Bounds::map_input_to_output_bounds(pixel_in, in_bounds, out_bounds);
     return pixel_out;
 }
-// -> CV_8U may lose precision/overflow
+/**
+ * @brief
+ * CV_8U may lose precision/overflow
+ * @param col
+ * @param row
+ * @param value
+ * @param component
+ */
 void Image::set(int col, int row, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -796,7 +1180,13 @@ void Image::set(int col, int row, double value, int component) const {
             break;
     }
 }
-void set(const Pixel &pixel, double value, int component) const { set(pixel.col, pixel.row, value, componponent); }
+/**
+ * @brief
+ * @param pixel
+ * @param value
+ * @param component
+ */
+void Image::set(const Pixel &pixel, double value, int component) const { set(pixel.col, pixel.row, value, component); }
 // subtracts image without underflow checking for CV_8U images
 Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
     if (src_image->get_npixels() != subtract_image->get_npixels()) {
@@ -836,41 +1226,83 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
     }
     return out_image;
 }
+/**
+ * @brief
+ * @param pixel
+ * @param value
+ * @param component
+ */
 void Image::set(const Point &pixel, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     set(pixel.col, pixel.row, value, component);
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param value
+ * @param component
+ */
 void Image::set_8U(int col, int row, pixel_8U value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     buf_8U[col_row_to_index(col, row, component)] = value;
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param value
+ * @param component
+ */
 void Image::set_32F(int col, int row, pixel_32F value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     buf_32F[col_row_to_index(col, row, component)] = value;
 }
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param value
+ * @param component
+ */
 void Image::set_32S(int col, int row, pixel_32S value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
     buf_32S[col_row_to_index(col, row, component)] = value;
 }
+/**
+ * @brief
+ * @param prefix
+ * @return
+ */
 std::string Image::to_string(const std::string &prefix) const {
     std::ostringstream os;
     os << prefix << image_header.to_string(prefix + "    ");
     return os.str();
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ */
 void Image::write(const std::string &path, Errors &errors) const {
     if (FILE *fp = file_utils::open_file_write(path, errors)) {
         write(fp, errors);
         fclose(fp);
     }
 }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
 void Image::write(FILE *fp, Errors &errors) const {
     image_header.write(fp, errors);
     if (errors.has_error())
@@ -900,6 +1332,11 @@ void Image::write(FILE *fp, Errors &errors) const {
             break;
     }
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ */
 void Image::write_jpeg(const std::string &path, Errors &errors) const {
     if (get_depth() != Image_depth::CV_8U) {
         errors.add("Image::write_jpeg", "", "cannot write " + WB_image_depth::to_string(get_depth()) + " image");
@@ -949,12 +1386,24 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
     /* Step 7: release JPEG compression object */
     jpeg_destroy_compress(&cinfo);
 }
+/**
+ * @brief
+ * @param path
+ * @param delim
+ * @param errors
+ */
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
     if (std::ofstream ofs = file_utils::open_file_write_text(path, errors)) {
         write_text(ofs, "\t", errors);
         ofs.close();
     }
 }
+/**
+ * @brief
+ * @param ofs
+ * @param delim
+ * @param errors
+ */
 void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
     for (int col = 0; col < get_ncols(); col++) {
         for (int row = 0; row < get_nrows(); row++) {

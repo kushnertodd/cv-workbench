@@ -6,8 +6,6 @@
  * @brief
  */
 class WB_data_type {
-    static const std::map<WB_data_type::Data_type, std::string> to_strings;
-    static const std::map<std::string, WB_data_type::Data_type> from_strings;
 
 public:
     enum class Data_type {
@@ -29,6 +27,8 @@ public:
         REGION, // complex area, shape properties
         UNDEFINED
     };
+    static const std::map<WB_data_type::Data_type, std::string> to_strings;
+    static const std::map<std::string, WB_data_type::Data_type> from_strings;
     static std::string to_string(WB_data_type::Data_type repository_type);
     static WB_data_type::Data_type from_string(const std::string &text);
 };

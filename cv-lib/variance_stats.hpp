@@ -29,7 +29,7 @@ public:
     double get_sample_variance();
     double get_standard_deviation();
     double get_variance();
-    bool is_valid() const;
+    bool is_pixel_valid() const;
     void read(FILE *fp, const std::string &path, Errors &errors);
     std::string to_string(const std::string &prefix = "");
     void update(double new_value);

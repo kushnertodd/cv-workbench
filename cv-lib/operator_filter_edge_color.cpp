@@ -28,19 +28,18 @@ void Operator_filter_edge_color::run(std::list<Data_source_descriptor *> &input_
         extent_str = "adjacent";
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Image *input_ptr = nullptr;
+    Image *output_ptr = nullptr;
     if (!errors.has_error())
         input_ptr = input_data_source->read_operator_image("Operator_filter_edge_color::run", errors);
     std::unique_ptr<Image> input(input_ptr);
     if (!errors.has_error() && input_ptr != nullptr)
         input->check_color("Operator_filter_edge_color::run", errors);
-    if (!errors.has_error() && input_ptr != nullptr) {
-        Image *output_ptr = input_ptr->color_edge(errors);
-        std::unique_ptr<Image> output(output_ptr);
-
-        if (!errors.has_error() && output_ptr != nullptr)
-            for (Data_source_descriptor *output_data_store: output_data_stores)
-                output_data_store->write_operator_image(output.get(), "Operator_filter_edge_color::run", errors);
-        if (!errors.has_error() && output_ptr != nullptr)
-            output_ptr->log(log_entries);
-    }
+    if (!errors.has_error() && input_ptr != nullptr)
+        output_ptr = input_ptr->color_edge(errors);
+    std::unique_ptr<Image> output(output_ptr);
+    if (!errors.has_error() && output_ptr != nullptr)
+        for (Data_source_descriptor *output_data_store: output_data_stores)
+            output_data_store->write_operator_image(output.get(), "Operator_filter_edge_color::run", errors);
+    if (!errors.has_error() && output_ptr != nullptr)
+        output_ptr->log(log_entries);
 }

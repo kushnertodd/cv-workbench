@@ -55,6 +55,7 @@ public:
     void add_32S(const pixel_32S *src, int count, Errors &errors);
     bool check_color(const std::string &module, Errors &errors) const;
     bool check_grayscale(const std::string &module, Errors &errors) const;
+    void check_pixel_valid(int col, int row) const;
     void clear(double value = 0.0);
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
     Image *color_edge(Errors &errors);
@@ -65,6 +66,7 @@ public:
     void draw_line_segments(const std::list<Line_segment> &line_segments, double value, int component = 0) const;
     void draw_rectangle(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     void draw_rectangle_filled(int col1, int row1, int col2, int row2, double value, int component = 0) const;
+    double ellipse_dist(int col, int row) const;
     double get(int col, int row, int component = 0) const;
     double get(const Pixel &pixel, int component = 0) const;
     pixel_8U get_8U(int col, int row, int component = 0) const;
@@ -82,11 +84,13 @@ public:
     double get_scaled(int col, int row, double lower_in, double upper_in, double lower_out, double upper_out,
                       int component = 0) const;
     void get_stats(Variance_stats &stats) const;
+    bool in_ellipse(int col, int row) const;
     void init(double value = 0.0);
     bool is_color() const;
-    bool is_valid(int col, int row) const;
+    bool is_pixel_valid(int col, int row) const;
     bool is_grayscale() const;
     void log(std::list<WB_log_entry> &log_entries) const;
+    int pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index);
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
     static Image *read_text(const std::string &path, Errors &errors);
@@ -103,8 +107,16 @@ public:
     void set_8U(int col, int row, pixel_8U value, int component = 0) const;
     void set_32F(int col, int row, pixel_32F value, int component = 0) const;
     void set_32S(int col, int row, pixel_32S value, int component = 0) const;
+    int to_col(double x) const;
+    void to_pixel(Pixel &pixel, double x, double y) const;
+    void to_pixel(Pixel &pixel, Point &point) const;
     void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row);
+    void to_point(Point &point, int col, int row) const;
+    void to_point(Point &point, Pixel &pixel) const;
+    int to_row(double y) const;
     std::string to_string(const std::string &prefix = "") const;
+    double to_x(int col) const;
+    double to_y(int row) const;
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;
     void write_text(const std::string &path, const std::string &delim, Errors &errors) const;

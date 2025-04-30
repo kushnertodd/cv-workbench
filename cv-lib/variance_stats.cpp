@@ -23,7 +23,7 @@ Variance_stats::Variance_stats() :
  * @brief
  */
 void Variance_stats::finalize() {
-    assert(is_valid());
+    assert(is_pixel_valid());
     variance = M2 / count;
     sample_variance = M2 / (count - 1);
     standard_deviation = sqrt(sample_variance);
@@ -80,7 +80,7 @@ double Variance_stats::get_variance() {
  * @brief test if the result is valid
  * @return
  */
-bool Variance_stats::is_valid() const { return (count >= 2); }
+bool Variance_stats::is_pixel_valid() const { return (count >= 2); }
 /**
  * @brief
  * @param fp

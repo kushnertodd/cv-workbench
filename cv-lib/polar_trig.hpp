@@ -56,11 +56,17 @@ class Polar_trig {
 
 public:
     Polar_trig();
-    Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
+    void init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
     int get_nrhos();
-    int get_nthetas();
+    int get_nthetas() const;
+    static double point_theta_index_to_rho(Point &point, int theta_index);
     static double point_theta_index_to_rho(double x, double y, int theta_index);
+    static double point_theta_index_to_rho_index(Point &point, int theta_index);
+    static double point_theta_index_to_rho_index(double x, double y, int theta_index);
+    static double point_theta_to_rho(Point &point, int theta);
     static double point_theta_to_rho(double x, double y, int theta);
+    static double point_theta_to_rho_index(Point &point, int theta);
+    static double point_theta_to_rho_index(double x, double y, int theta);
     static double rho_theta_x_to_y(int rho_index, int theta_index, double x);
     static double rho_theta_y_to_x(int rho_index, int theta_index, double y);
     static bool singular_cos(int theta);

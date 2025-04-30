@@ -7,10 +7,10 @@
  * @brief
  */
 class WB_log_entry {
+public:
     std::string item{};
     std::string value{};
 
-public:
     WB_log_entry(std::string m_item, std::string m_value);
 };
 /**

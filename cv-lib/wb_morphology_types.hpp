@@ -5,6 +5,10 @@
 #include <string>
 
 class WB_morphology_types {
+public:
+    enum class Convolution_type { NUMERIC, ERODE, DILATE, UNDEFINED };
+
+    enum class Structuring_element_type { RECTANGLE, CROSS, ELLIPSE, UNDEFINED };
     static const std::string bin_string;
     static const std::string jpeg_string;
     static const std::string json_string;
@@ -17,11 +21,6 @@ class WB_morphology_types {
     static const std::map<std::string, WB_morphology_types::Convolution_type> from_convolution_type_strings;
     static const std::map<std::string, WB_morphology_types::Structuring_element_type>
             from_structuring_element_type_strings;
-
-public:
-    enum class Convolution_type { NUMERIC, ERODE, DILATE, UNDEFINED };
-
-    enum class Structuring_element_type { RECTANGLE, CROSS, ELLIPSE, UNDEFINED };
 
     static std::string to_convolution_type_string(WB_morphology_types::Convolution_type convolution_type);
     static std::string

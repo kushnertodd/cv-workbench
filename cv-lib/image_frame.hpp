@@ -22,6 +22,8 @@ public:
     Image_frame(const Image_frame &image_frame);
     void check_pixel_valid(int col, int row) const;
     double ellipse_dist(int col, int row) const;
+    int get_ncols() const;
+    int get_nrows() const;
     bool in_ellipse(int col, int row) const;
     bool is_pixel_valid(int col, int row) const;
     int pixel_theta_to_rho(Polar_trig &polar_trig, int col, int row, int theta_index);
@@ -30,7 +32,7 @@ public:
     void plot_line(Image_line_segment &image_line_segment);
     int to_col(double x) const;
     void to_pixel(Pixel &pixel, double x, double y) const;
-    void to_pixel(Pixel &pixel, Point &point);
+    void to_pixel(Pixel &pixel, Point &point) const;
     void to_point(Point &point, int col, int row) const;
     void to_point(Point &point, Pixel &pixel) const;
     int to_row(double y) const;

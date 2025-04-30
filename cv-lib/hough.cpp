@@ -7,7 +7,7 @@
 
 extern bool debug;
 
-Hough::~Hough() { delete hough_accum; }
+Hough::~Hough() { delete accumulator; }
 /**
  * For reading a Hough
  * @param m_hough_accum
@@ -15,11 +15,57 @@ Hough::~Hough() { delete hough_accum; }
  * @param m_theta_inc
  * @param m_threshold
  */
-Hough::Hough(Hough_accum *m_hough_accum) : hough_accum(m_hough_accum) {}
-Hough *Hough::create_image(Image *image, int rho_inc, int theta_inc, int pixel_threshold) {
-    auto *hough_accum = Hough_accum::create_image(image, rho_inc, theta_inc, pixel_threshold);
-    auto *hough = new Hough(hough_accum);
-    return hough;
+Hough::Hough() = default;
+Hough::Hough(Image *image, int m_rho_inc, int m_theta_inc, int pixel_threshold) {
+    polar_trig.init(image->get_ncols(), image->get_nrows(), m_rho_inc, m_theta_inc);
+    nbins = get_nrhos() * get_nthetas();
+    accumulator = new int[nbins];
+    initialize(image, pixel_threshold);
+}
+void Hough::clear() {
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++)
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++)
+            set(rho_index, theta_index, 0);
+}
+void Hough::find_peaks(std::list<Polar_line> &lines, double threshold) {
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+            int count = get(rho_index, theta_index);
+            if (count > threshold) {
+                Polar_line line(rho_index, polar_trig->to_rho(rho_index), theta_index, Polar_trig::to_cos(theta_index),
+                                Polar_trig::to_sin(theta_index), count);
+                lines.push_back(line);
+            }
+        }
+    }
+}
+int Hough::get(int rho_index, int theta_index) {
+    int index = rho_theta_to_index(rho_index, theta_index);
+    return rho_theta_counts[index];
+}
+int Hough::get_nrhos() { return polar_trig.get_nrhos(); }
+int Hough::get_nthetas() { return polar_trig.get_nthetas(); }
+/**
+ * initialize_image accumulator
+ *
+ * @param image_theshold
+ */
+void Hough::initialize(Image *image, int image_theshold) {
+    clear();
+    for (int col = 0; col < image->get_ncols(); col++) {
+        for (int row = 0; row < image->get_nrows(); row++) {
+            double value = std::abs(image->get(col, row));
+            if (value > image_theshold) {
+                for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+                    Point point;
+                    image->to_point(point, col, row);
+                    int rho_index = polar_trig->point_theta_to_rho(col, row, theta_index);
+                    update(rho_index, theta_index, wb_utils::double_to_int_round(value));
+                }
+            }
+        }
+    }
+    update_accumulator_stats();
 }
 /*
 void Hough::find_lines(int ncols, int nrows, int nrhos, int nthetas) {
@@ -34,6 +80,11 @@ void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas)
   }
 }
 */
+int Hough::pixel_theta_to_rho_index(Image *image, int col, int row, int theta_index) {
+    Point point;
+    image->to_point(point, col, row);
+    return polar_trig->point_theta_index_to_rho(point, theta_index);
+}
 Hough *Hough::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
     Hough *hough = nullptr;
@@ -44,16 +95,60 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
     return hough;
 }
 Hough *Hough::read(FILE *fp, Errors &errors) {
-    Hough_accum *hough_accum = Hough_accum::read(fp, errors);
-    if (hough_accum == nullptr || errors.has_error())
+    int rho_inc = 0; // TODO: define
+    int theta_inc = 0; // TODO: define
+    wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough accumulator theta_inc", errors);
+    int nrows;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, nrows, "Hough::read", "", "missing hough accumulator get_nrows()", errors);
+    int ncols;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, ncols, "Hough::read", "", "missing hough accumulator get_ncols()", errors);
+    if (errors.has_error())
         return nullptr;
-    return new Hough(hough_accum);
+    else {
+        auto *hough_accum = new Hough(ncols, nrows, rho_inc, theta_inc);
+        wb_utils::read_int_buffer(fp, hough_accum->rho_theta_counts, hough_accum->nbins, "Hough::read", "",
+                                  "cannot read hough accumulator data", errors);
+        if (errors.has_error()) {
+            delete hough_accum;
+            return nullptr;
+        }
+        hough_accum->update_accumulator_stats();
+        return hough_accum;
+    }
 }
 Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
-    Hough_accum *hough_accum = Hough_accum::read_text(ifs, errors);
-    if (hough_accum == nullptr || errors.has_error())
-        return nullptr;
-    return new Hough(hough_accum);
+    auto *hough_accum = new Hough();
+    std::string line;
+    while (getline(ifs, line)) {
+        std::vector<std::string> values = wb_utils::string_split(line);
+        for (const std::string &value_str: values) {
+            int value;
+            if (!wb_utils::string_to_int(value_str, value)) {
+                errors.add("Hough::read_text", "", "invalid value '" + value_str + "'");
+                delete hough_accum;
+                return nullptr;
+            }
+        }
+    }
+    return hough_accum;
+}
+int Hough::rho_theta_to_index(int rho_index, int theta_index) { return rho_index * get_nthetas() + theta_index; }
+void Hough::set(int rho_index, int theta_index, int value) {
+    int index = rho_theta_to_index(rho_index, theta_index);
+    rho_theta_counts[index] = value;
+}
+void Hough::update(int rho_index, int theta_index, int value) {
+    int index = rho_theta_to_index(rho_index, theta_index);
+    rho_theta_counts[index] += value;
+}
+void Hough::update_accumulator_stats() {
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+            accumulator_stats.update(get(rho_index, theta_index));
+        }
+    }
 }
 void Hough::write(const std::string &path, Errors &errors) const {
     FILE *fp = file_utils::open_file_write(path, errors);
@@ -62,16 +157,50 @@ void Hough::write(const std::string &path, Errors &errors) const {
         fclose(fp);
     }
 }
-void Hough::write(FILE *fp, Errors &errors) const { hough_accum->write(fp, errors); }
+void Hough::write(FILE *fp, Errors &errors) const {
+    int theta_inc = get_theta_inc();
+    fwrite(&theta_inc, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
+        return;
+    }
+    int nrows = get_nrows();
+    fwrite(&nrows, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator get_nrows()");
+        return;
+    }
+    int ncols = get_ncols();
+    fwrite(&ncols, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator get_ncols()");
+        return;
+    }
+    size_t newLen;
+    newLen = fwrite(rho_theta_counts, sizeof(int), nbins, fp);
+    if (ferror(fp) != 0 || newLen != nbins) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator data ");
+        return;
+    }
+}
 void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
     std::ofstream ofs = file_utils::open_file_write_text(path, errors);
     if (ofs) {
-        hough_accum->write_text(ofs, "\t", errors);
+        write_text(ofs, "\t", errors);
         ofs.close();
     }
 }
 void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    hough_accum->write_text(ofs, "\t", errors);
+    for (int rho_index = 0; rho_index <= get_nrhos(); rho_index++)
+        ofs << polar_trig->to_rho(rho_index) << delim;
+    ofs << std::endl;
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+        ofs << polar_trig->to_theta(theta_index) << delim;
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+            ofs << get(rho_index, theta_index) << delim;
+        }
+        ofs << std::endl;
+    }
 }
 void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
     size_t npeaks = lines.size();

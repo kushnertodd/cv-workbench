@@ -53,8 +53,11 @@ Polar_trig::Polar_trig() = default;
  * @param m_rho_inc
  * @param m_theta_inc
  */
-Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) :
-    x_max(m_x_max), y_max(m_y_max), rho_inc(m_rho_inc), theta_inc(m_theta_inc) {
+Polar_trig::init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) {
+    x_max = m_x_max;
+    y_max = m_y_max;
+    rho_inc = m_rho_inc;
+    theta_inc = m_theta_inc;
     x_offset = x_max / 2.0;
     y_offset = y_max / 2.0;
     rho_max = sqrt(x_offset * x_offset + y_offset * y_offset);
@@ -72,7 +75,7 @@ int Polar_trig::get_nrhos() { return nrhos; }
  * @brief
  * @return
  */
-int Polar_trig::get_nthetas() { return nthetas }
+int Polar_trig::get_nthetas() const { return nthetas }
 /**
  * @brief
  * @param x
@@ -87,6 +90,35 @@ double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index)
  * @brief
  * @param x
  * @param y
+ * @param theta_index
+ * @return
+ */
+double Polar_trig::point_theta_index_to_rho(Point &point, int theta_index) {
+    return point_theta_index_to_rho(point.x, point.y, theta_index);
+}
+/**
+ * @brief
+ * @param point
+ * @param theta_index
+ * @return
+ */
+static double point_theta_index_to_rho_index(Point &point, int theta_index) {
+    return point_theta_index_to_rho_index(point.x, point.y, theta_index);
+}
+/**
+ * @brief
+ * @param x
+ * @param y
+ * @param theta_index
+ * @return
+ */
+static double point_theta_index_to_rho_index(double x, double y, int theta_index) {
+    return to_rho_index(point_theta_index_to_rho(x, y, theta_index));
+}
+/**
+ * @brief
+ * @param x
+ * @param y
  * @param theta
  * @return
  */
@@ -96,7 +128,33 @@ double Polar_trig::point_theta_to_rho(double x, double y, int theta) {
     double rho = x * cos_t + y * sin_t;
     return rho;
 }
-
+/**
+ * @brief
+ * @param x
+ * @param y
+ * @param theta
+ * @return
+ */
+double Polar_trig::point_theta_to_rho(Point &point, int theta) { return point_theta_to_rho(point.x, point.y, theta); }
+/**
+ * @brief
+ * @param point
+ * @param theta
+ * @return
+ */
+static double point_theta_to_rho_index(Point &point, int theta) {
+    return point_theta_to_rho_index(point.x, point.y, theta_index));
+}
+/**
+ * @brief
+ * @param x
+ * @param y
+ * @param theta
+ * @return
+ */
+static double point_theta_to_rho_index(double x, double y, int theta) {
+    return to_rho_index(point_theta_to_rho(x, y, theta_index));
+}
 /**
  * can have a singularity if theta ~= 180, sin ~= 0
  * @brief

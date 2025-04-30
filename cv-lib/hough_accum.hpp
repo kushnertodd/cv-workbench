@@ -16,10 +16,7 @@
 #include "wb_utils.hpp"
 
 class Hough_accum {
-    int nbins{};
-    Polar_trig *polar_trig{};
-    int *rho_theta_counts{};
-    Variance_stats accumulator_stats;
+
 
 public:
     ~Hough_accum();

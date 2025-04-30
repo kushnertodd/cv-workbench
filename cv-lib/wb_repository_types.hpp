@@ -7,8 +7,6 @@
  * @brief
  */
 class WB_repository_types {
-    static const std::map<WB_repository_types::Repository_type, std::string> to_strings;
-    static const std::map<std::string, WB_repository_types::Repository_type> from_strings;
 
 public:
     enum class Repository_type {
@@ -17,6 +15,8 @@ public:
         INTERNET, // endpoint that produced binary data
         UNDEFINED
     };
+    static const std::map<WB_repository_types::Repository_type, std::string> to_strings;
+    static const std::map<std::string, WB_repository_types::Repository_type> from_strings;
     static std::string to_string(WB_repository_types::Repository_type repository_type);
     static WB_repository_types::Repository_type from_string(const std::string &text);
 };

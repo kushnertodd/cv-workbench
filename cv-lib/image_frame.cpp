@@ -40,6 +40,16 @@ double Image_frame::ellipse_dist(int col, int row) const {
 }
 /**
  * @brief
+ * @return
+ */
+int Image_frame::get_ncols() const { return ncols; }
+/**
+ * @brief
+ * @return
+ */
+int Image_frame::get_nrows() const { return nrows; }
+/**
+ * @brief
  * @param col
  * @param row
  * @return
@@ -178,7 +188,7 @@ void Image_frame::to_pixel(Pixel &pixel, double x, double y) const { pixel.init(
  * @param pixel
  * @param point
  */
-void Image_frame::to_pixel(Pixel &pixel, Point &point) { to_pixel(point.x, point.y); }
+void Image_frame::to_pixel(Pixel &pixel, Point &point) const { to_pixel(point.x, point.y); }
 /**
  * @brief
  * @param point
