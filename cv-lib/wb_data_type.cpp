@@ -1,4 +1,3 @@
-#include <string>
 #include "wb_data_type.hpp"
 
 /**

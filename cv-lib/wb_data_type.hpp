@@ -2,6 +2,7 @@
 #define SRC__CV_DATA_TYPE_HPP_
 
 #include <map>
+#include <string>
 /**
  * @brief
  */
