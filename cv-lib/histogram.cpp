@@ -40,7 +40,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
             threshold = histogram->get_value(i);
         }
     }
-    hough->hough_accum->find_peaks(hough->lines, threshold);
+    hough->find_peaks(hough->lines, threshold);
 }
 int Histogram::get_bin(double value) const {
     if (value < lower_value)
@@ -58,9 +58,9 @@ double Histogram::get_max_value() const { return input_value_stats.get_max_value
 double Histogram::get_min_value() const { return input_value_stats.get_min_value(); }
 double Histogram::get_upper_value() const { return upper_value; }
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
-    for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
-        for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
-            double value = hough->hough_accum->get(rho_index, theta_index);
+    for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
+        for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
+            double value = hough->get(rho_index, theta_index);
             input_value_stats.update(value);
         }
     }
@@ -69,9 +69,9 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
         lower_value = input_value_stats.get_min_value();
     if (!saw_upper_value)
         upper_value = input_value_stats.get_max_value();
-    for (int theta_index = 0; theta_index < hough->hough_accum->get_nthetas(); theta_index++) {
-        for (int rho_index = 0; rho_index < hough->hough_accum->get_nrhos(); rho_index++) {
-            double value = hough->hough_accum->get(rho_index, theta_index);
+    for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
+        for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
+            double value = hough->get(rho_index, theta_index);
             update_input_value(value);
         }
     }

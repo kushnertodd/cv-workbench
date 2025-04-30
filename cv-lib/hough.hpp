@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <fstream>
+#include <memory>
 #include <string>
 #include "bounds.hpp"
 #include "errors.hpp"
@@ -18,34 +19,43 @@
 #include "wb_utils.hpp"
 
 class Hough {
+    Hough();
+
 public:
-    int *accumulator{};
+    std::unique_ptr<Polar_trig> polar_trig;
+    int nbins{};
+    int pixel_threshold{};
+    std::unique_ptr<int[]> accumulator;
+    std::unique_ptr<Image_frame> image_frame;
     Variance_stats accumulator_stats;
     std::list<Polar_line> lines;
     std::list<Line_segment> line_segments;
-    int nbins{};
-    Polar_trig polar_trig;
 
     ~Hough();
-    Hough(Image *inimageput, int rho_inc, int theta_inc, int pixel_threshold);
+    Hough(Image *image, int rho_inc, int theta_inc, int pixel_threshold = 0);
+    Hough(int ncols, int nrows, int rho_inc, int theta_inc, int pixel_threshold = 0);
     void clear();
     void find_peaks(std::list<Polar_line> &lines, double threshold);
     int get(int rho_index, int theta_index);
-    int get_nrhos();
-    int get_nthetas();
+    int get_ncols() const;
+    int get_nrhos() const;
+    int get_nrows() const;
+    int get_nthetas() const;
+    int get_rho_inc() const;
+    int get_theta_inc() const;
     void initialize(Image *image, int image_theshold);
-    int pixel_theta_to_rho(int col, int row, int theta_index);
-    static Hough *read(const std::string &path, Errors &errors);
-    Hough *read(FILE *fp, Errors &errors);
-    static Hough *read_text(std::ifstream &ifs, Errors &errors);
-    int rho_theta_to_index(int rho_index, int theta_index);
+    int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
+    Hough *read(const std::string &path, Errors &errors);
+    static Hough *read(FILE *fp, Errors &errors);
+    Hough *read_text(std::ifstream &ifs, Errors &errors);
+    int rho_theta_to_index(int rho_index, int theta_index) const;
     void set(int rho_index, int theta_index, int value);
-    void update(int rho_index, int theta_index, int value);
+    void update(int rho_index, int theta_index, int value) const;
     void update_accumulator_stats();
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;
-    void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
-    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+    void write_text(const std::string &path, const std::string &delim, Errors &errors);
+    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors);
     void write_peak_lines(FILE *fp, Errors &errors) const;
     void write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
 

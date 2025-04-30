@@ -17,8 +17,6 @@ add_library(cv-lib STATIC
         file_utils.hpp
         histogram.cpp
         histogram.hpp
-        hough_accum.cpp
-        hough_accum.hpp
         hough.cpp
         hough.hpp
         image.cpp
