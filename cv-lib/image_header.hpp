@@ -5,6 +5,7 @@
 #include "errors.hpp"
 #include "image_depth.hpp"
 #include "image_line_segment.hpp"
+#include "line_segment.hpp"
 #include "pixel.hpp"
 #include "point.hpp"
 
@@ -28,12 +29,17 @@ public:
     int get_npixels() const;
     int get_nrows() const;
     int get_row_stride() const;
-    void plot_line_low(Image_line_segment &image_line_segment, int col1, int row1, int col2, int row2);
-    void plot_line_high(Image_line_segment &image_line_segment, int col1, int row1, int col2, int row2);
-    void plot_line(Image_line_segment &image_line_segment);
     void read(FILE *fp, Errors &errors);
-    void to_point(Point &point, int col, int row) const;
-    void to_point(Point &point, Pixel &pixel) const;
+    double to_col(double x) const;
+    static double to_col(double x, int ncols);
+    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
+    void to_line_segment(Line_segment &line_segment, Image_line_segment &image_line_segment);
+    void to_pixel(Pixel &pixel, double x, double y);
+    void to_pixel(Pixel &pixel, Point &point);
+    void to_point(Point &point, int col, int row);
+    void to_point(Point &point, Pixel &pixel);
+    double to_row(double y) const;
+    static double to_row(double y, int nrows);
     std::string to_string(const std::string &prefix = "") const;
     double to_x(int col) const;
     static double to_x(int col, int ncols);

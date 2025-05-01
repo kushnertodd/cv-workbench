@@ -62,7 +62,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
         Polar_trig polar_trig(ncols, nrows, rho_inc, theta_inc);
         int nthetas = 0;
         auto *hough = new Hough(rho_inc, theta_inc, ncols, nrows);
-        int rho_index = hough->polar_trig->to_rho_index(rho);
+        int rho_index = hough->to_rho_index(rho);
         Polar_line polar_line(rho_index, theta_index);
         Image_line_segment image_line_segment;
         // TODO: fix

@@ -2,21 +2,22 @@
 #define SRC__LINE_SEGMENT_HPP_
 
 #include <list>
-#include "pixel.hpp"
 #include "point.hpp"
 #include "wb_log.hpp"
 /**
  * @brief
  */
 class Line_segment {
-    Pixel pixel1;
-    Pixel pixel2;
+    friend class Image_header;
+    Point point1;
+    Point point2;
 
 public:
-    std::list<Pixel> line_pixels;
     Line_segment();
-    Line_segment(const int col1, int row1, int col2, int row2);
+    Line_segment(const Point &m_point1, const Point &m_point2);
+    Line_segment(const double x1, double y1, double x2, double y2);
     void init(const Point &m_point1, const Point &m_point2);
+    void log(std::list<WB_log_entry> &log_entries) const;
     std::string to_string() const;
 };
 

@@ -18,25 +18,25 @@
 #include "wb_utils.hpp"
 
 class Hough {
-    Hough();
-
-public:
-    std::unique_ptr<Polar_trig> polar_trig;
-    int nbins{};
-    int ncols;
-    int nrows;
+    friend class Histogram;
+    int ncols{};
+    int nrows{};
     int pixel_threshold{};
+    int nbins{};
+    Polar_trig polar_trig;
     std::unique_ptr<int[]> accumulator;
     Variance_stats accumulator_stats;
     std::list<Polar_line> lines;
     std::list<Image_line_segment> image_line_segments;
 
+public:
     ~Hough();
+    Hough();
     Hough(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
     Hough(Image *m_image, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
     void clear();
-    void find_peaks(std::list<Polar_line> &lines, double threshold);
-    int get(int rho_index, int theta_index);
+    void find_peaks(std::list<Polar_line> &lines, double threshold) const;
+    int get(int rho_index, int theta_index) const;
     int get_ncols() const;
     int get_nrhos() const;
     int get_nrows() const;
@@ -50,6 +50,7 @@ public:
     Hough *read_text(std::ifstream &ifs, Errors &errors);
     int rho_theta_to_index(int rho_index, int theta_index) const;
     void set(int rho_index, int theta_index, int value);
+    int to_rho_index(double rho) const;
     void update(int rho_index, int theta_index, int value) const;
     void update_accumulator_stats();
     void write(const std::string &path, Errors &errors) const;

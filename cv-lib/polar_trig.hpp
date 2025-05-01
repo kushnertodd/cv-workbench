@@ -54,14 +54,15 @@ class Polar_trig {
     const int rho_pad = 5;
     static const double polar_cos[theta_max];
     static const double polar_sin[theta_max];
-    Polar_trig();
 
 public:
+    Polar_trig();
     Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
     int get_nrhos() const;
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
+    void init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
     double point_theta_index_to_rho(Point &point, int theta_index);
     double point_theta_index_to_rho(double x, double y, int theta_index);
     double point_theta_index_to_rho_index(Point &point, int theta_index);

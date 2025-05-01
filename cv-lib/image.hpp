@@ -104,9 +104,9 @@ public:
     void set_32F(int col, int row, pixel_32F value, int component = 0) const;
     void set_32S(int col, int row, pixel_32S value, int component = 0) const;
     static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
-    void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row);
-    void to_point(Point &point, int col, int row) const;
-    void to_point(Point &point, Pixel &pixel) const;
+    void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const;
+    void to_point(Point &point, int col, int row);
+    void to_point(Point &point, Pixel &pixel);
     std::string to_string(const std::string &prefix = "") const;
     double to_x(int col) const;
     static double to_x(int col, int ncols);

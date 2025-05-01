@@ -60,89 +60,6 @@ int Image_header::get_nrows() const { return nrows; }
 int Image_header::get_row_stride() const { return row_stride; }
 /**
  * @brief
- * https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
- * This fills in line segment pixels with Bresenham's line algorithm
- * @param image_line_segment
- * @param col1
- * @param row1
- * @param col2
- * @param row2
- */
-void Image_header::plot_line_low(Image_line_segment &image_line_segment, int col1, int row1, int col2, int row2) {
-    int d_col = col2 - col1;
-    int d_row = row2 - row1;
-    int row_i = 1;
-    if (d_row < 0) {
-        row_i = -1;
-        d_row = -d_row;
-    }
-    int D = (2 * d_row) - d_col;
-    int row = row1;
-
-    for (int x = col1; x <= col2; x++) {
-        image_line_segment.add(x, row);
-        if (D > 0) {
-            row = row + row_i;
-            D = D + (2 * (d_row - d_col));
-        } else {
-            D = D + 2 * d_row;
-        }
-    }
-}
-/**
- * @brief
- * @param image_line_segment
- * @param col1
- * @param row1
- * @param col2
- * @param row2
- */
-void Image_header::plot_line_high(Image_line_segment &image_line_segment, int col1, int row1, int col2, int row2) {
-    int d_col = col2 - col1;
-    int d_row = row2 - row1;
-    int col_i = 1;
-    if (d_col < 0) {
-        col_i = -1;
-        d_col = -d_col;
-    }
-    int D = (2 * d_col) - d_row;
-    int col = col1;
-    for (int row = row1; row <= row2; row++) {
-        image_line_segment.add(col, row);
-        if (D > 0) {
-            col = col + col_i;
-            D = D + (2 * (d_col - d_row));
-        } else {
-            D = D + 2 * d_col;
-        }
-    }
-}
-/**
- * @brief
- * @param image_line_segment
- */
-void Image_header::plot_line(Image_line_segment &image_line_segment) {
-    int col1 = image_line_segment.pixel1.col;
-    int row1 = image_line_segment.pixel1.row;
-    int col2 = image_line_segment.pixel2.col;
-    int row2 = image_line_segment.pixel2.row;
-    if (abs(row2 - row1) < abs(col2 - col1)) {
-        if (col1 > col2) {
-            plot_line_low(image_line_segment, col2, row2, col1, row1);
-        } else {
-            plot_line_low(image_line_segment, col1, row1, col2, row2);
-        }
-    } else {
-        if (row1 > row2) {
-            plot_line_high(image_line_segment, col2, row2, col1, row1);
-        } else {
-            plot_line_high(image_line_segment, col1, row1, col2, row2);
-        }
-    }
-}
-/**
- * @brief
- * TODO: fix
  * @param fp
  * @param errors
  */
@@ -161,17 +78,80 @@ void Image_header::read(FILE *fp, Errors &errors) {
 }
 /**
  * @brief
+ * @param image_line_segment
+ * @param line_segment
+ */
+void Image_header::to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment) {
+    Pixel pixel1;
+    Pixel pixel2;
+    to_pixel(pixel1, line_segment.point1);
+    to_pixel(pixel2, line_segment.point2);
+    image_line_segment.init(pixel1, pixel2);
+}
+/**
+ * @brief
+ * @param line_segment
+ * @param image_line_segment
+ */
+void Image_header::to_line_segment(Line_segment &line_segment, Image_line_segment &image_line_segment) {
+    Point point1;
+    Point point2;
+    to_point(point1, image_line_segment.pixel1);
+    to_point(point2, image_line_segment.pixel2);
+    line_segment.init(point1, point2);
+}
+/**
+ * @brief
+ * @param x
+ * @return
+ */
+double Image_header::to_col(double x) const { return x + col_offset; }
+/**
+ * @brief
+ * @param x
+ * @param ncols
+ * @return
+ */
+double Image_header::to_col(double x, int ncols) { return x + ncols / 2.0; }
+/**
+ * @brief
+ * @param pixel
+ * @param x
+ * @param y
+ */
+void Image_header::to_pixel(Pixel &pixel, double x, double y) { pixel.init(to_col(x), to_row(y)); }
+/**
+ * @brief
+ * @param pixel
+ * @param point
+ */
+void Image_header::to_pixel(Pixel &pixel, Point &point) { to_pixel(pixel, point.x, point.y); }
+/**
+ * @brief
  * @param point
  * @param col
  * @param row
  */
-void Image_header::to_point(Point &point, int col, int row) const { point.init(to_x(col), to_y(row)); }
+void Image_header::to_point(Point &point, int col, int row) { point.init(to_x(col), to_y(row)); }
 /**
  * @brief
  * @param point
  * @param pixel
  */
-void Image_header::to_point(Point &point, Pixel &pixel) const { to_point(point, pixel.col, pixel.row); }
+void Image_header::to_point(Point &point, Pixel &pixel) { to_point(point, pixel.col, pixel.row); }
+/**
+ * @brief
+ * @param y
+ * @return
+ */
+double Image_header::to_row(double y) const { return row_offset - y; }
+/**
+ * @brief
+ * @param y
+ * @param nrows
+ * @return
+ */
+double Image_header::to_row(double y, int nrows) { return nrows / 2.0 - y; }
 /**
  * @brief
  * @param prefix
@@ -215,7 +195,6 @@ double Image_header::to_y(int row) const { return row_offset - row; }
 double Image_header::to_y(int row, int nrows) { return nrows / 2.0 - row; }
 /**
  * @brief
- * TODO: fix
  * @param fp
  * @param errors
  */

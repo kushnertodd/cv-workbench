@@ -4,6 +4,7 @@
 
 class Point {
     friend class Polar_trig;
+    friend class Image_header;
     double x{};
     double y{};
 

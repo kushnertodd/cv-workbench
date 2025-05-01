@@ -875,7 +875,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
  * @param col
  * @param row
  */
-void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
+void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const {
     pixel_RGB.red = get_red(col, row);
     pixel_RGB.red = get_green(col, row);
     pixel_RGB.red = get_blue(col, row);
@@ -886,13 +886,13 @@ void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
  * @param col
  * @param row
  */
-void Image::to_point(Point &point, int col, int row) const { image_header.to_point(point, col, row); }
+void Image::to_point(Point &point, int col, int row) { image_header.to_point(point, col, row); }
 /**
  * @brief
  * @param point
  * @param pixel
  */
-void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(point, pixel); }
+void Image::to_point(Point &point, Pixel &pixel) { image_header.to_point(point, pixel); }
 /**
  * @brief for read_jpeg()
  */

@@ -53,10 +53,9 @@ Polar_trig::Polar_trig() = default;
  * @param m_rho_inc
  * @param m_theta_inc
  */
-Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) :
-    x_max(m_x_max), y_max(m_y_max), rho_inc(m_rho_inc), theta_inc(m_theta_inc), rho_range(2 * rho_max),
-    nrhos(rho_range / rho_inc + rho_pad), nthetas(theta_max / theta_inc), x_offset(x_max / 2.0), y_offset(y_max / 2.0),
-    rho_max(sqrt(x_offset * x_offset + y_offset * y_offset)), rho_min(-rho_max) {}
+Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) {
+    init(m_x_max, m_y_max, m_rho_inc, m_theta_inc);
+}
 /**
  * @brief
  * @return
@@ -77,6 +76,19 @@ int Polar_trig::get_rho_inc() const { return rho_inc; }
  * @return
  */
 int Polar_trig::get_theta_inc() const { return theta_inc; }
+void Polar_trig::init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) {
+    x_max = m_x_max;
+    y_max = m_y_max;
+    rho_inc = m_rho_inc;
+    theta_inc = m_theta_inc;
+    rho_range = 2 * rho_max;
+    nrhos = rho_range / rho_inc + rho_pad;
+    nthetas = theta_max / theta_inc;
+    x_offset = x_max / 2.0;
+    y_offset = y_max / 2.0;
+    rho_max = sqrt(x_offset * x_offset + y_offset * y_offset);
+    rho_min = -rho_max;
+}
 /**
  * @brief
  * @param point
