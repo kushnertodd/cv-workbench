@@ -4,7 +4,7 @@
 
 class Pixel {
     friend class Image;
-    friend class Image_frame;
+    friend class Image_header;
     friend class Image_line_segment;
     int col{};
     int row{};

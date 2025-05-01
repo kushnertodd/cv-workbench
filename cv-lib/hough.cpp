@@ -6,8 +6,26 @@
 
 extern bool debug;
 
+/**
+ * @brief
+ */
 Hough::~Hough() = default;
+/**
+ * @brief
+ */
 Hough::Hough() = default;
+/**
+ * https://stackoverflow.com/questions/21377360/proper-way-to-create-unique-ptr-that-holds-an-allocated-array
+ * @brief
+ * @param m_image
+ * @param m_rho_inc
+ * @param m_theta_inc
+ * @param m_pixel_threshold
+ */
+Hough::Hough(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold) :
+    ncols(m_ncols), nrows(m_nrows), polar_trig(std::make_unique<Polar_trig>(ncols, nrows, m_rho_inc, m_theta_inc)),
+    nbins(get_nrhos() * get_nthetas()), pixel_threshold(m_pixel_threshold),
+    accumulator(std::make_unique<int[]>(nbins)) {}
 /**
  * @brief
  * @param m_image
@@ -19,11 +37,6 @@ Hough::Hough(Image *m_image, int m_rho_inc, int m_theta_inc, int m_pixel_thresho
     Hough(m_image->get_ncols(), m_image->get_nrows(), m_rho_inc, m_theta_inc, m_pixel_threshold) {
     initialize(m_image, pixel_threshold);
 }
-Hough::Hough(int ncols, int nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold) :
-    polar_trig(std::make_unique<Polar_trig>(ncols, nrows, m_rho_inc, m_theta_inc)), nbins(get_nrhos() * get_nthetas()),
-    pixel_threshold(m_pixel_threshold),
-    // https://stackoverflow.com/questions/21377360/proper-way-to-create-unique-ptr-that-holds-an-allocated-array
-    image_frame(std::make_unique<Image_frame>(ncols, nrows)), accumulator(std::make_unique<int[]>(nbins)) {}
 /**
  * @brief
  */
@@ -62,7 +75,7 @@ int Hough::get(int rho_index, int theta_index) {
  * @brief
  * @return
  */
-int Hough::get_ncols() const { return image_frame->get_ncols(); }
+int Hough::get_ncols() const { return ncols; }
 /**
  * @brief
  * @return
@@ -72,7 +85,7 @@ int Hough::get_nrhos() const { return polar_trig->get_nrhos(); }
  * @brief
  * @return
  */
-int Hough::get_nrows() const { return image_frame->get_nrows(); }
+int Hough::get_nrows() const { return nrows; }
 /**
  * @brief
  * @return
@@ -94,14 +107,14 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
  */
 void Hough::initialize(Image *image, int image_theshold) {
     clear();
-    for (int col = 0; col < image->get_ncols(); col++) {
-        for (int row = 0; row < image->get_nrows(); row++) {
+    for (int col = 0; col < ncols; col++) {
+        for (int row = 0; row < nrows; row++) {
             double value = std::abs(image->get(col, row));
             if (value > image_theshold) {
                 for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
                     Point point;
-                    image_frame->to_point(point, col, row);
-                    int rho_index = polar_trig->point_theta_to_rho(col, row, theta_index);
+                    image->to_point(point, col, row);
+                    int rho_index = polar_trig->point_theta_to_rho(point, theta_index);
                     update(rho_index, theta_index, wb_utils::double_to_int_round(value));
                 }
             }
@@ -122,11 +135,11 @@ void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas)
   }
 }
 */
-int Hough::pixel_theta_index_to_rho_index(int col, int row, int theta_index) const {
-    Point point;
-    image_frame->to_point(point, col, row);
-    return polar_trig->point_theta_index_to_rho(point, theta_index);
-}
+// int Hough::pixel_theta_index_to_rho_index(int col, int row, int theta_index) const {
+//     Point point;
+//     image->to_point(point, col, row);
+//     return polar_trig->point_theta_index_to_rho(point, theta_index);
+// }
 /**
  * @brief
  * @param path

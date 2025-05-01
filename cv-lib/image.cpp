@@ -51,9 +51,9 @@ Image::Image() = default;
  * @param m_depth
  * @param value
  */
-Image::Image(const int m_ncols, const int m_nrows, const int m_components, const Image_depth m_depth,
-             const double value) : image_header(m_ncols, m_nrows, m_components, m_depth) {
-    init(value);
+Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
+    image_header(m_ncols, m_nrows, m_components, m_depth) {
+    initialize(m_value);
 }
 /**
  * @brief
@@ -90,10 +90,10 @@ Image::Image(const Image &image) :
  * @param m_image_header
  * @param value
  */
-Image::Image(const Image_header &m_image_header, double value) : image_header(m_image_header) {
+Image::Image(const Image_header &m_image_header, double m_value) : image_header(m_image_header) {
     if (debug)
         std::cout << "Image::Image: " << to_string() << std::endl;
-    init(value);
+    initialize(m_value);
 }
 /**
  * @brief
@@ -226,7 +226,7 @@ bool Image::check_grayscale(const std::string &module, Errors &errors) const {
  * @param col
  * @param row
  */
-void Image::check_pixel_valid(int col, int row) const { image_header.check_pixel_valid(col, row); }
+void Image::check_pixel_valid(int col, int row) const { assert(!is_pixel_valid(col, row)); }
 /**
  * @brief
  * @param value
@@ -264,6 +264,22 @@ Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
     auto *new_image = new Image(image->get_ncols(), image->get_nrows(), image->get_ncomponents(), depth);
     new_image->copy(image, errors);
     return new_image;
+}
+/**
+ * @brief
+ * @param col
+ * @param row
+ * @param component
+ * @return
+ */
+int Image::col_row_to_index(int col, int row, int component) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    assert(component <= get_ncomponents());
+    if (!is_pixel_valid(col, row))
+        int i = 0;
+    assert(is_pixel_valid(col, row));
+#endif
+    return row * get_row_stride() + col * get_ncomponents() + component;
 }
 /**
  * @brief color edge detection
@@ -628,12 +644,12 @@ double Image::get_blue(const int col, const int row) const { return get(col, row
  * @brief
  * @return
  */
-int Image::get_ncomponents() const { return image_header.ncomponents; }
+int Image::get_ncomponents() const { return image_header.get_ncomponents(); }
 /**
  * @brief
  * @return
  */
-Image_depth Image::get_depth() const { return image_header.depth; }
+Image_depth Image::get_depth() const { return image_header.get_depth(); }
 /**
  * @brief
  * @param col
@@ -650,7 +666,7 @@ int Image::get_ncols() const { return image_header.get_ncols(); }
  * @brief
  * @return
  */
-int Image::get_npixels() const { return image_header.npixels; }
+int Image::get_npixels() const { return image_header.get_npixels(); }
 /**
  * @brief
  * @return
@@ -667,7 +683,7 @@ double Image::get_red(const int col, const int row) const { return get(col, row,
  * @brief
  * @return
  */
-int Image::get_row_stride() const { return image_header.row_stride; }
+int Image::get_row_stride() const { return image_header.get_row_stride(); }
 /**
  * @brief
  * @param col
@@ -714,7 +730,7 @@ bool Image::in_ellipse(int col, int row) const {
  * @brief
  * @param value
  */
-void Image::init(double value) {
+void Image::initialize(double value) {
     int size = get_npixels();
     ;
     switch (get_depth()) {
@@ -759,7 +775,9 @@ bool Image::is_grayscale() const { return get_ncomponents() == 1; }
  * @param row
  * @return
  */
-bool Image::is_pixel_valid(int col, int row) const { return image_header.is_pixel_valid(col, row); }
+bool Image::is_pixel_valid(int col, int row) const {
+    return (col >= 0 && col < get_ncols() && row >= 0 && row < get_nrows());
+}
 /**
  * @brief
  * @param log_entries
@@ -789,48 +807,14 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
 }
 /**
  * @brief
- * @param pixel_RGB
- * @param col
- * @param row
- */
-void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
-    pixel_RGB.red = get_red(col, row);
-    pixel_RGB.red = get_green(col, row);
-    pixel_RGB.red = get_blue(col, row);
-}
-/**
- * @brief
- * @param point
- * @param col
- * @param row
- */
-void Image::to_point(Point &point, int col, int row) const { image_header.to_point(point, col, row); }
-/**
- * @brief
- * @param point
- * @param pixel
- */
-void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(point, pixel); }
-/**
- * @brief
- * @param col
- * @return
- */
-double Image::to_x(int col) const { return image_header.to_x(col); }
-/**
- * @brief
- * @param row
- * @return
- */
-double Image::to_y(int row) const { return image_header.to_y(row); }
-/**
- * @brief
  * @param path
  * @param errors
  * @return
  */
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
+    if (errors.has_error())
+        return nullptr;
     Image *image = nullptr;
     if (fp) {
         image = Image::read(fp, errors);
@@ -852,7 +836,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
     auto *image = new Image(image_header);
 
     // Read the data into buffer.
-    switch (image_header.depth) {
+    switch (image_header.get_depth()) {
         case Image_depth::CV_8U:
             wb_utils::read_byte_buffer(fp, image->buf_8U, image->get_npixels(), "Image::read", "",
                                        "cannot read 8U image data", errors);
@@ -885,6 +869,30 @@ Image *Image::read(FILE *fp, Errors &errors) {
     }
     return image;
 }
+/**
+ * @brief
+ * @param pixel_RGB
+ * @param col
+ * @param row
+ */
+void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) {
+    pixel_RGB.red = get_red(col, row);
+    pixel_RGB.red = get_green(col, row);
+    pixel_RGB.red = get_blue(col, row);
+}
+/**
+ * @brief
+ * @param point
+ * @param col
+ * @param row
+ */
+void Image::to_point(Point &point, int col, int row) const { image_header.to_point(point, col, row); }
+/**
+ * @brief
+ * @param point
+ * @param pixel
+ */
+void Image::to_point(Point &point, Pixel &pixel) const { image_header.to_point(point, pixel); }
 /**
  * @brief for read_jpeg()
  */
@@ -1060,22 +1068,6 @@ Image *Image::resize(const Image *image, int area_ncols, int area_nrows, WB_resi
     }
     return resize_image;
 }
-/**
- * @brief
- * @param col
- * @param row
- * @param component
- * @return
- */
-int Image::col_row_to_index(int col, int row, int component) const {
-#ifdef IMAGE_COMPONENT_CHECK
-    assert(component <= get_ncomponents());
-    if (!is_pixel_valid(col, row))
-        int i = 0;
-    assert(is_pixel_valid(col, row));
-#endif
-    return row * get_row_stride() + col * image_header.ncomponents + component;
-}
 /***
  * @brief
  * preconditions not checked:
@@ -1154,45 +1146,6 @@ void Image::set(int col, int row, double value, int component) const {
             break;
     }
 }
-// subtracts image without underflow checking for CV_8U images
-Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
-    if (src_image->get_npixels() != subtract_image->get_npixels()) {
-        errors.add("Image::subtract", "", "images not the same size ");
-        return nullptr;
-    }
-    if (src_image->get_depth() != subtract_image->get_depth()) {
-        errors.add("Image::subtract", "", "images not the same depth ");
-        return nullptr;
-    }
-    //  if (src_image->get_depth() == Image_depth::CV_8U) {
-    //    errors.add("Image::subtract", "", "cannot subtract CV_8U images");
-    //    return nullptr;
-    //  }
-
-    auto *out_image = new Image(src_image->image_header);
-
-    int size = src_image->get_npixels();
-    switch (src_image->get_depth()) {
-        case Image_depth::CV_8U:
-            for (int i = 0; i < size; i++)
-                out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
-            break;
-
-        case Image_depth::CV_32S:
-            for (int i = 0; i < size; i++)
-                out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
-            break;
-
-        case Image_depth::CV_32F:
-            for (int i = 0; i < size; i++)
-                out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
-            break;
-
-        default:
-            break;
-    }
-    return out_image;
-}
 /**
  * @brief
  * @param pixel
@@ -1244,6 +1197,45 @@ void Image::set_32S(int col, int row, pixel_32S value, int component) const {
 #endif
     buf_32S[col_row_to_index(col, row, component)] = value;
 }
+// subtracts image without underflow checking for CV_8U images
+Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
+    if (src_image->get_npixels() != subtract_image->get_npixels()) {
+        errors.add("Image::subtract", "", "images not the same size ");
+        return nullptr;
+    }
+    if (src_image->get_depth() != subtract_image->get_depth()) {
+        errors.add("Image::subtract", "", "images not the same depth ");
+        return nullptr;
+    }
+    //  if (src_image->get_depth() == Image_depth::CV_8U) {
+    //    errors.add("Image::subtract", "", "cannot subtract CV_8U images");
+    //    return nullptr;
+    //  }
+
+    auto *out_image = new Image(src_image->image_header);
+
+    int size = src_image->get_npixels();
+    switch (src_image->get_depth()) {
+        case Image_depth::CV_8U:
+            for (int i = 0; i < size; i++)
+                out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
+            break;
+
+        case Image_depth::CV_32S:
+            for (int i = 0; i < size; i++)
+                out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
+            break;
+
+        case Image_depth::CV_32F:
+            for (int i = 0; i < size; i++)
+                out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
+            break;
+
+        default:
+            break;
+    }
+    return out_image;
+}
 /**
  * @brief
  * @param prefix
@@ -1254,6 +1246,32 @@ std::string Image::to_string(const std::string &prefix) const {
     os << prefix << image_header.to_string(prefix + "    ");
     return os.str();
 }
+/**
+ * @brief
+ * @param col
+ * @return
+ */
+double Image::to_x(int col) const { return image_header.to_y(col); }
+/**
+ * @brief
+ * @param col
+ * @param ncols
+ * @return
+ */
+double Image::to_x(int col, int ncols) { return Image_header::to_y(col, ncols); }
+/**
+ * @brief
+ * @param row
+ * @return
+ */
+double Image::to_y(int row) const { return image_header.to_y(row); }
+/**
+ * @brief
+ * @param row
+ * @param nrows
+ * @return
+ */
+double Image::to_y(int row, int nrows) { return Image_header::to_y(row, nrows); }
 /**
  * @brief
  * @param path

@@ -22,8 +22,6 @@ add_library(cv-lib STATIC
         image.cpp
         image_depth.cpp
         image_depth.hpp
-        image_frame.cpp
-        image_frame.hpp
         image_header.cpp
         image_header.hpp
         image.hpp

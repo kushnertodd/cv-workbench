@@ -19,7 +19,7 @@ Kernel::Kernel() = default;
  * @param nrows
  * @param depth
  */
-Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(ncols, nrows, 1, depth) { init(); }
+Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(ncols, nrows, 1, depth) { initialize(); }
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 
 /**
@@ -199,8 +199,8 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
                     break;
                 case WB_morphology_types::Structuring_element_type::CROSS: {
                     // TODO: check ncols, nrows
-                    // double Image_frame::to_x(int col) const { return col - col_offset; }
-                    // double Image_frame::to_y(int row) const { return row_offset - row; }
+                    // double Image_header::to_x(int col) const { return col - col_offset; }
+                    // double Image_header::to_y(int row) const { return row_offset - row; }
                     double x = col - ncols / 2.0;
                     double y = nrows / 2.0 - row;
                     if (std::abs(x) <= thickness / 2.0 || std::abs(y) <= thickness / 2.0)
@@ -226,7 +226,7 @@ Kernel *Kernel::create_structuring_element(WB_morphology_types::Structuring_elem
  * @param sigma_y
  * @return
  */
-// double Image_frame::to_y(int row) const { return row_offset - row; }
+// double Image_header::to_y(int row) const { return row_offset - row; }
 // double y = nrows / 2.0 - row;
 Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
     auto *gaussian_y = new Kernel(nrows, 1, Image_depth::CV_32F);
@@ -251,7 +251,7 @@ Kernel *Kernel::create_gaussian_y(int nrows, double sigma_y) {
  * @param sigma_x
  * @return
  */
-// double Image_frame::to_x(int col) const { return col - col_offset; }
+// double Image_header::to_x(int col) const { return col - col_offset; }
 // double x = col - ncols / 2.0;
 Kernel *Kernel::create_gaussian_x(int ncols, double sigma_x) {
     auto *gaussian_x = new Kernel(1, ncols, Image_depth::CV_32F);

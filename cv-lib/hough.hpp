@@ -8,9 +8,8 @@
 #include "bounds.hpp"
 #include "errors.hpp"
 #include "file_utils.hpp"
-#include "hough_accum.hpp"
 #include "image.hpp"
-#include "line_segment.hpp"
+#include "image_line_segment.hpp"
 #include "pixel.hpp"
 #include "polar_line.hpp"
 #include "polar_trig.hpp"
@@ -24,16 +23,17 @@ class Hough {
 public:
     std::unique_ptr<Polar_trig> polar_trig;
     int nbins{};
+    int ncols;
+    int nrows;
     int pixel_threshold{};
     std::unique_ptr<int[]> accumulator;
-    std::unique_ptr<Image_frame> image_frame;
     Variance_stats accumulator_stats;
     std::list<Polar_line> lines;
     std::list<Image_line_segment> image_line_segments;
 
     ~Hough();
-    Hough(Image *image, int rho_inc, int theta_inc, int pixel_threshold = 0);
-    Hough(int ncols, int nrows, int rho_inc, int theta_inc, int pixel_threshold = 0);
+    Hough(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
+    Hough(Image *m_image, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
     void clear();
     void find_peaks(std::list<Polar_line> &lines, double threshold);
     int get(int rho_index, int theta_index);
@@ -44,7 +44,7 @@ public:
     int get_rho_inc() const;
     int get_theta_inc() const;
     void initialize(Image *image, int image_theshold);
-    int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
+    // int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
     Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);

@@ -33,7 +33,6 @@ SRCOBJS :=  \
   hough.o \
   image.o \
   image_depth.o \
-  image_frame.o \
   image_header.o \
   image_line_segment.o \
   internet_data_source_descriptor.o \

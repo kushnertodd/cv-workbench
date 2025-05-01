@@ -4,7 +4,7 @@
 #include <string>
 #include "errors.hpp"
 #include "image_header.hpp"
-#include "line_segment.hpp"
+#include "image_line_segment.hpp"
 #include "pixel.hpp"
 #include "variance_stats.hpp"
 #include "wb_defs.hpp"
@@ -28,10 +28,7 @@ class Pixel_RGB {
 
 public:
     Pixel_RGB();
-
     Pixel_RGB(double m_red, double m_green, double m_blue);
-
-
     double diff(const Pixel_RGB &other) const;
 };
 
@@ -47,7 +44,7 @@ class Image {
 public:
     virtual ~Image();
     Image();
-    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double value = 0.0);
+    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value = 0.0);
     Image(const Image &image);
     explicit Image(const Image_header &image_header, double value = 0.0);
     void add_8U(const pixel_8U *src, int count, Errors &errors);
@@ -58,6 +55,7 @@ public:
     void check_pixel_valid(int col, int row) const;
     void clear(double value = 0.0);
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
+    int col_row_to_index(int col, int row, int component = 0) const;
     Image *color_edge(Errors &errors);
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
@@ -74,8 +72,8 @@ public:
     pixel_32F get_32F(int col, int row, int component = 0) const;
     pixel_32S get_32S(int col, int row, int component = 0) const;
     double get_blue(const int col, const int row) const;
-    int get_ncomponents() const;
     Image_depth get_depth() const;
+    int get_ncomponents() const;
     double get_green(const int col, const int row) const;
     int get_ncols() const;
     int get_npixels() const;
@@ -86,7 +84,7 @@ public:
                       int component = 0) const;
     void get_stats(Variance_stats &stats) const;
     bool in_ellipse(int col, int row) const;
-    void init(double value = 0.0);
+    void initialize(double value = 0.0);
     bool is_color() const;
     bool is_pixel_valid(int col, int row) const;
     bool is_grayscale() const;
@@ -97,22 +95,23 @@ public:
     static Image *read_text(std::ifstream &ifs, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);
     static Image *resize(const Image *image, int area_ncols, int area_nrows, WB_resize_types::Resize_type resize_type);
-    int col_row_to_index(int col, int row, int component = 0) const;
     static Image *scale_image(const Image *image, double lower_in, double upper_in, double lower_out, double upper_out,
                               Image_depth depth, int component = 0);
     static double scale_pixel(double in_value, double lower_in, double upper_in, double lower_out, double upper_out);
-    static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
     void set(int col, int row, double value, int component = 0) const;
     void set(const Pixel &pixel, double value, int component = 0) const;
     void set_8U(int col, int row, pixel_8U value, int component = 0) const;
     void set_32F(int col, int row, pixel_32F value, int component = 0) const;
     void set_32S(int col, int row, pixel_32S value, int component = 0) const;
+    static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
     void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row);
     void to_point(Point &point, int col, int row) const;
     void to_point(Point &point, Pixel &pixel) const;
     std::string to_string(const std::string &prefix = "") const;
     double to_x(int col) const;
+    static double to_x(int col, int ncols);
     double to_y(int row) const;
+    static double to_y(int row, int nrows);
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;
     void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
