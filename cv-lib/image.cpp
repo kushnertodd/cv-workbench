@@ -1214,6 +1214,30 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
 }
 /**
  * @brief
+ * @param image_line_segment
+ * @param line_segment
+ */
+void Image::to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment) {
+    Pixel pixel1;
+    Pixel pixel2;
+    to_pixel(pixel1, line_segment.point1);
+    to_pixel(pixel2, line_segment.point2);
+    image_line_segment.init(pixel1, pixel2);
+}
+/**
+ * @brief
+ * @param line_segment
+ * @param image_line_segment
+ */
+void Image::to_line_segment(Line_segment &line_segment, Image_line_segment &image_line_segment) {
+    Point point1;
+    Point point2;
+    to_point(point1, image_line_segment.pixel1);
+    to_point(point2, image_line_segment.pixel2);
+    line_segment.init(point1, point2);
+}
+/**
+ * @brief
  * @param pixel_RGB
  * @param col
  * @param row
@@ -1223,6 +1247,8 @@ void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const {
     pixel_RGB.red = get_green(col, row);
     pixel_RGB.red = get_blue(col, row);
 }
+void Image::to_pixel(Pixel &pixel, double x, double y) { image_header.to_pixel(pixel, x, y); }
+void Image::to_pixel(Pixel &pixel, Point &point) { image_header.to_pixel(pixel, point); }
 /**
  * @brief
  * @param point

@@ -4,6 +4,9 @@
 #include <fstream>
 #include "errors.hpp"
 
+/**
+ * @brief 
+ */
 class Polar_line {
     double rho{};
     int theta{};

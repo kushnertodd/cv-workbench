@@ -30,18 +30,12 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
         errors.add("Operator_hough_draw_line::run", "", "output data source required");
     else if (output_data_stores.size() > 1)
         errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
-    int rho_inc;
-    Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "rho-inc", rho_inc,
-                                      errors);
-    int theta_inc;
-    Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "theta-inc",
-                                      theta_inc, errors);
     double rho;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters, "rho", rho, errors);
-    int theta_index;
-    Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "theta-index",
-                                      theta_index, errors);
-    double pixel_value;
+    int theta;
+    Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "theta", theta,
+                                      errors);
+    double pixel_value = 255.0;
     Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters, "pixel-value",
                                        pixel_value, errors);
     int out_component;
@@ -59,17 +53,18 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     if (!errors.has_error() && input != nullptr) {
         int ncols = input->get_ncols();
         int nrows = input->get_nrows();
-        Polar_trig polar_trig(ncols, nrows, rho_inc, theta_inc);
-        int nthetas = 0;
-        auto *hough = new Hough(rho_inc, theta_inc, ncols, nrows);
-        int rho_index = hough->to_rho_index(rho);
-        Polar_line polar_line(rho_index, theta_index);
-        Image_line_segment image_line_segment;
-        // TODO: fix
-        if (0) { // !WB_window::clip_window(ncols, nrows, hough->get_nrhos(), nthetas, image_line_segment, polar_trig,
-                 // polar_line)) {
+        double x_min = input->to_x(0);
+        double y_min = input->to_x(nrows - 1);
+        double x_max = input->to_x(ncols - 1);
+        double y_max = input->to_y(0);
+        WB_window window(x_min, y_min, x_max, y_max);
+        Polar_line polar_line(rho, theta);
+        Line_segment line_segment;
+        if (!window.clip_window(polar_line, line_segment))
             errors.add("Operator_hough_draw_line::run", "", "failed clipping (rho, theta_index) against image ");
-        } else {
+        else {
+            Image_line_segment image_line_segment;
+            input->to_image_line_segment(image_line_segment, line_segment);
             input->draw_line_segment(image_line_segment, pixel_value);
             if (input_data_source->data_format == WB_data_format::Data_format::JPEG) {
                 hough_line_output_data_store->write_image_jpeg(input, errors);

@@ -104,6 +104,10 @@ public:
     void set_32F(int col, int row, pixel_32F value, int component = 0) const;
     void set_32S(int col, int row, pixel_32S value, int component = 0) const;
     static Image *subtract(const Image *src_image, const Image *subtract_image, Errors &errors);
+    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
+    void to_line_segment(Line_segment &line_segment, Image_line_segment &image_line_segment);
+    void to_pixel(Pixel &pixel, double x, double y);
+    void to_pixel(Pixel &pixel, Point &point);
     void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const;
     void to_point(Point &point, int col, int row);
     void to_point(Point &point, Pixel &pixel);

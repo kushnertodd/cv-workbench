@@ -78,30 +78,6 @@ void Image_header::read(FILE *fp, Errors &errors) {
 }
 /**
  * @brief
- * @param image_line_segment
- * @param line_segment
- */
-void Image_header::to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment) {
-    Pixel pixel1;
-    Pixel pixel2;
-    to_pixel(pixel1, line_segment.point1);
-    to_pixel(pixel2, line_segment.point2);
-    image_line_segment.init(pixel1, pixel2);
-}
-/**
- * @brief
- * @param line_segment
- * @param image_line_segment
- */
-void Image_header::to_line_segment(Line_segment &line_segment, Image_line_segment &image_line_segment) {
-    Point point1;
-    Point point2;
-    to_point(point1, image_line_segment.pixel1);
-    to_point(point2, image_line_segment.pixel2);
-    line_segment.init(point1, point2);
-}
-/**
- * @brief
  * @param x
  * @return
  */

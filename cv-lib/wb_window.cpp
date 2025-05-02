@@ -6,13 +6,20 @@ extern bool debug;
 
 /**
  * @brief
- * @param m_x_max
- * @param m_x_min
- * @param m_y_max
- * @param m_y_min
+ * @param point_min
+ * @param point_max
  */
-WB_window::WB_window(double m_x_max, double m_x_min, double m_y_max, double m_y_min) :
-    x_max(m_x_max), x_min(m_x_min), y_max(m_y_max), y_min(m_y_min) {}
+WB_window::WB_window(Point &point_min, Point &point_max) :
+    WB_window(point_min.x, point_min.y, point_max.x, point_max.y) {}
+/**
+ * @brief
+ * @param m_x_min
+ * @param m_y_min
+ * @param m_x_max
+ * @param m_y_max
+ */
+WB_window::WB_window(double m_x_min, double m_y_min, double m_x_max, double m_y_max) :
+    x_min(m_x_min), y_min(m_y_min), x_max(m_x_max), y_max(m_y_max) {}
 /**
  * @brief
  * @param point
@@ -43,32 +50,32 @@ void WB_window::add(Point &point) {
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
-bool WB_window::clip_window(Polar_trig &polar_trig, Polar_line &polar_line, Line_segment &line_segment) {
+bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) {
     // clip left: x_min
     double y_left;
     if (!Polar_trig::singular_sin(polar_line.theta)) {
-        y_left = polar_trig->rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_min);
+        y_left = Polar_trig::rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_min);
         Point left_point(x_min, y_left);
-        add(left_point);
+        ccc add(left_point);
     }
     // clip right: x_max
     double y_right;
     if (!Polar_trig::singular_sin(polar_line.theta)) {
-        y_right = polar_trig->rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_max);
+        y_right = Polar_trig::rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_max);
         Point right_point(x_max, y_right);
         add(right_point);
     }
     // clip top: y_min
     double x_top;
     if (!Polar_trig::singular_cos(polar_line.theta)) {
-        x_top = polar_trig->rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
+        x_top = Polar_trig::rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
         Point top_point(x_top, y_min);
         add(top_point);
     }
     // clip bottom: y_max
     double x_bottom;
     if (!Polar_trig::singular_cos(polar_line.theta)) {
-        x_bottom = polar_trig->rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
+        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
         Point bottom_point(x_bottom, y_min);
         add(bottom_point);
     }

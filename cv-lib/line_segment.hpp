@@ -8,7 +8,7 @@
  * @brief
  */
 class Line_segment {
-    friend class Image_header;
+    friend class Image;
     Point point1;
     Point point2;
 
