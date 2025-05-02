@@ -22,7 +22,7 @@ Point::Point(const Point &point) : Point::Point(point.x, point.y) {}
  * @param point
  * @return
  */
-bool Point::close(const Point &point) const { distance(point) <= close_distance; }
+bool Point::close(const Point &point) const { return distance(point) <= close_distance; }
 /**
  * @brief
  * @param point

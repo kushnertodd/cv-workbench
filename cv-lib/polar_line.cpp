@@ -13,6 +13,16 @@
 Polar_line::Polar_line(double m_rho, int m_theta) { init(m_rho, m_theta); }
 /**
  * @brief
+ * @return
+ */
+double Polar_line::get_rho() const { return rho; }
+/**
+ * @brief
+ * @return
+ */
+double Polar_line::get_theta() const { return theta; }
+/**
+ * @brief
  * @param m_rho
  * @param m_theta
  */

@@ -1,16 +1,16 @@
 #ifndef SRC__WB_WINDOW_HPP_
 #define SRC__WB_WINDOW_HPP_
 
-#include <list>
+#include <vector>
 #include "line_segment.hpp"
 #include "polar_line.hpp"
 #include "polar_trig.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 class WB_window {
-    std::list<Point> intersections;
+    std::vector<Point> intersections;
     double x_min;
     double y_min;
     double x_max;

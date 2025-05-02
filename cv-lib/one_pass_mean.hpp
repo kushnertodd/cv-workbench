@@ -56,7 +56,9 @@ class One_pass_mean {
 public:
     One_pass_mean(Image *m_image, int m_window_ncols, int m_window_nrows);
     void col_right();
+    int get_col_delta();
     double get_mean() const;
+    int get_row_delta();
     void init();
     void row_down();
     double sum_col(int col, int row) const;

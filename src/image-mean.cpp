@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     One_pass_mean opm(test, window_nrows, window_ncols);
     for (int col = 0; col <= ncols - window_ncols; col++) {
         for (int row = 0; row <= nrows - window_nrows; row++) {
-            out->set(col + opm.col_delta, row + opm.row_delta, opm.get_mean());
+            out->set(col + opm.get_col_delta(), row + opm.get_row_delta(), opm.get_mean());
             opm.col_right();
         }
         opm.row_down();

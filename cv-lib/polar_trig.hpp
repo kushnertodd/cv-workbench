@@ -6,8 +6,6 @@
 
 const int default_rho_inc = 1;
 const int default_theta_inc = 3;
-int rho_inc{};
-int theta_inc{};
 const int theta_max = 180;
 const int rho_pad = 2;
 /**

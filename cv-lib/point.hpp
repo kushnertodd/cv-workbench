@@ -5,6 +5,8 @@
 class Point {
     friend class Polar_trig;
     friend class Image_header;
+    friend class Line_segment;
+    friend class WB_window;
     const double close_distance = 1.0;
     double x{};
     double y{};

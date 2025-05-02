@@ -53,34 +53,34 @@ void WB_window::add(Point &point) {
 bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) {
     // clip left: x_min
     double y_left;
-    if (!Polar_trig::singular_sin(polar_line.theta)) {
-        y_left = Polar_trig::rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_min);
+    if (!Polar_trig::singular_sin(polar_line.get_theta())) {
+        y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_min);
         Point left_point(x_min, y_left);
-        ccc add(left_point);
+        add(left_point);
     }
     // clip right: x_max
     double y_right;
-    if (!Polar_trig::singular_sin(polar_line.theta)) {
-        y_right = Polar_trig::rho_theta_x_to_y(polar_line.rho, polar_line.theta, x_max);
+    if (!Polar_trig::singular_sin(polar_line.get_theta())) {
+        y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_max);
         Point right_point(x_max, y_right);
         add(right_point);
     }
     // clip top: y_min
     double x_top;
-    if (!Polar_trig::singular_cos(polar_line.theta)) {
-        x_top = Polar_trig::rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
+    if (!Polar_trig::singular_cos(polar_line.get_theta())) {
+        x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_min);
         Point top_point(x_top, y_min);
         add(top_point);
     }
     // clip bottom: y_max
     double x_bottom;
-    if (!Polar_trig::singular_cos(polar_line.theta)) {
-        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.rho, polar_line.theta, y_min);
+    if (!Polar_trig::singular_cos(polar_line.get_theta())) {
+        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_min);
         Point bottom_point(x_bottom, y_min);
         add(bottom_point);
     }
     // check that exactly two points found
-    if (intersections.size == 2) {
+    if (intersections.size() == 2) {
         line_segment.init(intersections[0], intersections[1]);
         return true;
     } else

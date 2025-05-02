@@ -5,7 +5,7 @@
 #include "errors.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 class Polar_line {
     double rho{};
@@ -15,6 +15,8 @@ class Polar_line {
 
 public:
     Polar_line(double m_rho, int m_theta);
+    double get_rho() const;
+    double get_theta() const;
     void init(double m_rho, int m_theta);
     std::string to_string() const;
     void write(FILE *fp, Errors &errors) const;

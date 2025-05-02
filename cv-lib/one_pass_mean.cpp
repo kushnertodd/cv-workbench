@@ -30,7 +30,17 @@ void One_pass_mean::col_right() {
  * @brief
  * @return
  */
+int One_pass_mean::get_col_delta() { return col_delta; }
+/**
+ * @brief
+ * @return
+ */
 double One_pass_mean::get_mean() const { return window_sum / n_window_pixels; }
+/**
+ * @brief
+ * @return
+ */
+int One_pass_mean::get_row_delta() { return row_delta; }
 /**
  * @brief
  */

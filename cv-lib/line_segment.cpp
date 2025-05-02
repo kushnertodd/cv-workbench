@@ -1,6 +1,7 @@
 #include "line_segment.hpp"
 #include <iostream>
 #include <sstream>
+#include "wb_utils.hpp"
 
 extern bool debug;
 /**
@@ -13,7 +14,7 @@ Line_segment::Line_segment() = default;
  * @param m_point2
  */
 Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
-    Line_segment(m_point1.col, m_point1.row, m_point2.col, m_point1.row) {}
+    Line_segment(m_point1.x, m_point1.y, m_point2.x, m_point1.y) {}
 /**
  * @brief
  * @param x1
@@ -21,19 +22,15 @@ Line_segment::Line_segment(const Point &m_point1, const Point &m_point2) :
  * @param x2
  * @param y2
  */
-Line_segment::Line_segment(const double x1, double y1, double x2, double y2) {
-    point1.init(x1, y1);
-    point2.init(x2, y2);
-    init(point1, point2);
-}
+Line_segment::Line_segment(const double x1, double y1, double x2, double y2) : point1(x1, y1), point2(x2, y2) {}
 /**
  * @brief
  * @param m_point1
  * @param m_point2
  */
 void Line_segment::init(const Point &m_point1, const Point &m_point2) {
-    point1 = m_point1;
-    point2 = m_point2;
+    // point1 = m_point1;
+    // point2 = m_point2;
 }
 /**
  * @brief
