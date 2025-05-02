@@ -56,7 +56,7 @@ public:
     void clear(double value = 0.0);
     static Image *clone(const Image *image, Image_depth depth, Errors &errors);
     int col_row_to_index(int col, int row, int component = 0) const;
-    Image *color_edge(Errors &errors);
+    Image *color_edge(Errors &errors) const;
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
     void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;

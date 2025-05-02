@@ -9,26 +9,63 @@
 
 extern bool debug;
 
+/**
+ * @brief
+ */
 Histogram::~Histogram() { delete bins; }
+/**
+ * @brief
+ */
 Histogram::Histogram() = default;
+/**
+ * @brief
+ * @param m_nbins
+ * @param m_lower_value
+ * @param m_upper_value
+ */
 Histogram::Histogram(int m_nbins, double m_lower_value, double m_upper_value) :
     nbins(m_nbins), lower_value(m_lower_value), upper_value(m_upper_value) {
     bins = new int[nbins];
     for (int i = 0; i < nbins; i++)
         bins[i] = 0;
 }
+/**
+ * @brief
+ * @param image
+ * @param nbins
+ * @param lower_value
+ * @param upper_value
+ * @param saw_lower_value
+ * @param saw_upper_value
+ * @return
+ */
 Histogram *Histogram::create_image(Image *image, int nbins, double lower_value, double upper_value,
                                    bool saw_lower_value, bool saw_upper_value) {
     auto *histogram = new Histogram(nbins, lower_value, upper_value);
     histogram->initialize_image(image, saw_lower_value, saw_upper_value);
     return histogram;
 }
+/**
+ * @brief
+ * @param hough
+ * @param nbins
+ * @param lower_value
+ * @param upper_value
+ * @param saw_lower_value
+ * @param saw_upper_value
+ * @return
+ */
 Histogram *Histogram::create_hough(Hough *hough, int nbins, double lower_value, double upper_value,
                                    bool saw_lower_value, bool saw_upper_value) {
     auto *histogram = new Histogram(nbins, lower_value, upper_value);
     histogram->initialize_hough(hough, saw_lower_value, saw_upper_value);
     return histogram;
 }
+/**
+ * @brief
+ * @param hough
+ * @param npeaks
+ */
 void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
     const int nbins = 1000;
     Histogram *histogram = create_hough(hough, nbins, 0, 0, false, false);
@@ -42,6 +79,11 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
     }
     hough->find_peaks(hough->lines, threshold);
 }
+/**
+ * @brief
+ * @param value
+ * @return
+ */
 int Histogram::get_bin(double value) const {
     if (value < lower_value)
         return 0;
@@ -50,13 +92,40 @@ int Histogram::get_bin(double value) const {
     else
         return wb_utils::double_to_int_round((nbins - 1) * (value - lower_value) / (upper_value - lower_value));
 }
+/**
+ * @brief
+ * @param bin
+ * @return
+ */
 float Histogram::get_value(int bin) const {
     return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
 }
+/**
+ * @brief
+ * @return
+ */
 double Histogram::get_lower_value() const { return lower_value; }
+/**
+ * @brief
+ * @return
+ */
 double Histogram::get_max_value() const { return input_value_stats.get_max_value(); }
+/**
+ * @brief
+ * @return
+ */
 double Histogram::get_min_value() const { return input_value_stats.get_min_value(); }
+/**
+ * @brief
+ * @return
+ */
 double Histogram::get_upper_value() const { return upper_value; }
+/**
+ * @brief
+ * @param hough
+ * @param saw_lower_value
+ * @param saw_upper_value
+ */
 void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
     for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
@@ -77,6 +146,12 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     }
     update_bin_count_bounds();
 }
+/**
+ * @brief
+ * @param image
+ * @param saw_lower_value
+ * @param saw_upper_value
+ */
 void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
     for (int col = 0; col < image->get_ncols(); col++) {
         for (int row = 0; row < image->get_nrows(); row++) {
@@ -97,6 +172,10 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
     }
     update_bin_count_bounds();
 }
+/**
+ * @brief
+ * @param log_entries
+ */
 void Histogram::log(std::list<WB_log_entry> &log_entries) {
     WB_log_entry log_entry_lower_value("lower-value", wb_utils::double_to_string(lower_value));
     log_entries.push_back(log_entry_lower_value);
@@ -122,6 +201,12 @@ void Histogram::log(std::list<WB_log_entry> &log_entries) {
             "max bin count", wb_utils::int_to_string(wb_utils::double_to_int_round(bin_count_bounds.get_max_value())));
     log_entries.push_back(log_entry_bin_max_count);
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read(std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
     Histogram *histogram = nullptr;
@@ -131,17 +216,21 @@ Histogram *Histogram::read(std::string &path, Errors &errors) {
     }
     return histogram;
 }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read(FILE *fp, Errors &errors) {
     auto *histogram = new Histogram();
     if (fp == nullptr)
         return nullptr;
-
     wb_utils::read_int(fp, histogram->nbins, "Histogram::read", "", "missing nbins", errors);
     if (errors.has_error()) {
         delete histogram;
         return nullptr;
     }
-
     float lower_value_float = 0.0;
     wb_utils::read_float(fp, lower_value_float, "Histogram::read", "", "missing lower_value", errors);
     if (errors.has_error()) {
@@ -149,7 +238,6 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
         return nullptr;
     }
     histogram->lower_value = lower_value_float;
-
     float upper_value_float = 0.0;
     wb_utils::read_float(fp, upper_value_float, "Histogram::read", "", "missing upper_value", errors);
     if (errors.has_error()) {
@@ -157,7 +245,6 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
         return nullptr;
     }
     histogram->upper_value = upper_value_float;
-
     histogram->bins = new int[histogram->nbins];
     wb_utils::read_int_buffer(fp, histogram->bins, histogram->nbins, "Histogram::read", "", "cannot read data", errors);
     if (errors.has_error()) {
@@ -167,8 +254,25 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
     histogram->update_bin_count_bounds();
     return histogram;
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read_text(const std::string &path, Errors &errors) { return nullptr; }
+/**
+ * @brief
+ * @param ifs
+ * @param errors
+ * @return
+ */
 Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) { return nullptr; }
+/**
+ * @brief
+ * @param prefix
+ * @return
+ */
 std::string Histogram::to_string(const std::string &prefix) {
     std::ostringstream os;
     os << "histogram:" << std::endl
@@ -179,15 +283,32 @@ std::string Histogram::to_string(const std::string &prefix) {
        << input_value_stats.to_string(prefix + "    ");
     return os.str();
 }
+/**
+ * @brief
+ * @param value
+ */
 void Histogram::update_input_value(double value) const {
     int bin = get_bin(value);
     bins[bin]++;
 }
+/**
+ * @brief
+ */
 void Histogram::update_bin_count_bounds() {
     for (int i = 0; i < nbins; i++)
         bin_count_bounds.update(bins[i]);
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ */
 void Histogram::write(std::string &path, Errors &errors) const {}
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
 void Histogram::write(FILE *fp, Errors &errors) const {
     wb_utils::write_int(fp, nbins, "Histogram::write", "", "cannot write nbins", errors);
     if (!errors.has_error())
@@ -201,6 +322,10 @@ void Histogram::write(FILE *fp, Errors &errors) const {
     if (!errors.has_error())
         wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins'", errors);
 }
+/**
+ * @brief
+ * @param wb_filename
+ */
 void Histogram::write_gp_script(const Wb_filename &wb_filename) {
     std::string script_filename = wb_filename.to_hist_script();
     std::string data_filename = wb_filename.to_hist_text();
@@ -210,7 +335,13 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
     ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
     ofs.close();
 }
-// path excludes extension, so write_text() can add .txt for text and .gp for gnuplot script
+/**
+ * @brief
+ * path excludes extension, so write_text() can add .txt for text and .gp for gnuplot script
+ * @param path
+ * @param delim
+ * @param errors
+ */
 void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
     std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);

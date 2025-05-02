@@ -164,15 +164,17 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
  * @return
  */
 Hough *Hough::read(FILE *fp, Errors &errors) {
-    int rho_inc = 0; // TODO: define
-    int theta_inc = 0; // TODO: define
-    wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough accumulator theta_inc", errors);
-    int nrows;
+    int ncols{};
+    int nrows{};
+    int rho_inc{};
+    int theta_inc{};
+    wb_utils::read_int(fp, ncols, "Hough::read", "", "missing hough accumulator ncols", errors);
     if (!errors.has_error())
-        wb_utils::read_int(fp, nrows, "Hough::read", "", "missing hough accumulator get_nrows()", errors);
-    int ncols;
+        wb_utils::read_int(fp, nrows, "Hough::read", "", "missing hough accumulator nrows", errors);
     if (!errors.has_error())
-        wb_utils::read_int(fp, ncols, "Hough::read", "", "missing hough accumulator get_ncols()", errors);
+        wb_utils::read_int(fp, rho_inc, "Hough::read", "", "missing hough accumulator rho_inc", errors);
+    if (!errors.has_error())
+        wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough accumulator theta_inc", errors);
     if (errors.has_error())
         return nullptr;
     else {
@@ -189,6 +191,7 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
 }
 /**
  * @brief
+ * TODO: not functional, cannot create Hough without ncols, nrows, rho_inc, theta_inc
  * @param ifs
  * @param errors
  * @return
@@ -270,10 +273,10 @@ void Hough::write(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Hough::write(FILE *fp, Errors &errors) const {
-    int theta_inc = get_theta_inc();
-    fwrite(&theta_inc, sizeof(int), 1, fp);
+    int ncols = get_ncols();
+    fwrite(&ncols, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
+        errors.add("Hough::write", "", "cannot write Hough accumulator get_ncols()");
         return;
     }
     int nrows = get_nrows();
@@ -282,10 +285,16 @@ void Hough::write(FILE *fp, Errors &errors) const {
         errors.add("Hough::write", "", "cannot write Hough accumulator get_nrows()");
         return;
     }
-    int ncols = get_ncols();
-    fwrite(&ncols, sizeof(int), 1, fp);
+    int theta_inc = get_theta_inc();
+    fwrite(&theta_inc, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator get_ncols()");
+        errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
+        return;
+    }
+    int rho_inc = get_rho_inc();
+    fwrite(&rho_inc, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator rho_inc");
         return;
     }
     size_t newLen;

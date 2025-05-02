@@ -6,17 +6,15 @@
 
 class Polar_line {
     double rho{};
-    int rho_index{};
     int theta{};
-    int theta_index{};
     double cos_t{};
     double sin_t{};
 
 public:
-    Polar_line(int m_rho_index, int m_theta_index);
-    void init(int m_rho_index, int m_theta_index);
+    Polar_line(double m_rho, int m_theta);
+    void init(double m_rho, int m_theta);
     std::string to_string() const;
-    void write(FILE *fp, Errors &errors);
+    void write(FILE *fp, Errors &errors) const;
     void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
 };
 #endif // SRC__POLAR_LINE_HPP_

@@ -5,6 +5,7 @@
 class Point {
     friend class Polar_trig;
     friend class Image_header;
+    const double close_distance = 1.0;
     double x{};
     double y{};
 
@@ -12,6 +13,8 @@ public:
     Point();
     Point(double m_x, double m_y);
     Point(const Point &point);
+    bool close(const Point &point) const;
+    double distance(const Point &point) const;
     void init(int m_x, int m_y);
     std::string to_string() const;
 };

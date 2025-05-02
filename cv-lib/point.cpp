@@ -1,9 +1,38 @@
 #include "point.hpp"
+#include <cmath>
 #include <sstream>
 
+/**
+ * @brief
+ */
 Point::Point() = default;
+/**
+ * @brief
+ * @param m_x
+ * @param m_y
+ */
 Point::Point(double m_x, double m_y) : x(m_x), y(m_y) {}
+/**
+ * @brief
+ * @param point
+ */
 Point::Point(const Point &point) : Point::Point(point.x, point.y) {}
+/**
+ * @brief
+ * @param point
+ * @return
+ */
+bool Point::close(const Point &point) const { distance(point) <= close_distance; }
+/**
+ * @brief
+ * @param point
+ * @return
+ */
+double Point::distance(const Point &point) const {
+    double dx = x - point.x;
+    double dy = x - point.y;
+    return sqrt(dx * dx + dy * dy);
+}
 /**
  * @brief
  * @param m_x

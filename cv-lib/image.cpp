@@ -286,7 +286,7 @@ int Image::col_row_to_index(int col, int row, int component) const {
  * @param errors
  * @return
  */
-Image *Image::color_edge(Errors &errors) {
+Image *Image::color_edge(Errors &errors) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(is_color());
 #endif
@@ -870,30 +870,6 @@ Image *Image::read(FILE *fp, Errors &errors) {
     return image;
 }
 /**
- * @brief
- * @param pixel_RGB
- * @param col
- * @param row
- */
-void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const {
-    pixel_RGB.red = get_red(col, row);
-    pixel_RGB.red = get_green(col, row);
-    pixel_RGB.red = get_blue(col, row);
-}
-/**
- * @brief
- * @param point
- * @param col
- * @param row
- */
-void Image::to_point(Point &point, int col, int row) { image_header.to_point(point, col, row); }
-/**
- * @brief
- * @param point
- * @param pixel
- */
-void Image::to_point(Point &point, Pixel &pixel) { image_header.to_point(point, pixel); }
-/**
  * @brief for read_jpeg()
  */
 struct my_error_mgr {
@@ -1236,6 +1212,30 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
     }
     return out_image;
 }
+/**
+ * @brief
+ * @param pixel_RGB
+ * @param col
+ * @param row
+ */
+void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const {
+    pixel_RGB.red = get_red(col, row);
+    pixel_RGB.red = get_green(col, row);
+    pixel_RGB.red = get_blue(col, row);
+}
+/**
+ * @brief
+ * @param point
+ * @param col
+ * @param row
+ */
+void Image::to_point(Point &point, int col, int row) { image_header.to_point(point, col, row); }
+/**
+ * @brief
+ * @param point
+ * @param pixel
+ */
+void Image::to_point(Point &point, Pixel &pixel) { image_header.to_point(point, pixel); }
 /**
  * @brief
  * @param prefix
