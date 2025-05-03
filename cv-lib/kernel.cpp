@@ -19,7 +19,7 @@ Kernel::Kernel() = default;
  * @param nrows
  * @param depth
  */
-Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(ncols, nrows, 1, depth) { initialize(); }
+Kernel::Kernel(int ncols, int nrows, Image_depth depth) : Image(ncols, nrows, 1, depth) {  }
 // numeric convolution, depth defaults to CV_32S, or CV_32F if either the kernel or image is CV_32F
 
 /**

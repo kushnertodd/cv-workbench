@@ -52,7 +52,7 @@ Image::Image() = default;
  * @param value
  */
 Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
-    image_header(m_ncols, m_nrows, m_components, m_depth) {
+    image_header(m_ncols, m_nrows, m_components, m_depth), buf_8U{}, buf_32F{}, buf_32S{}, next_pixel(0) {
     initialize(m_value);
 }
 /**
@@ -60,7 +60,11 @@ Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, do
  * @param image
  */
 Image::Image(const Image &image) :
-    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth()) {
+    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth()),
+    buf_8U{},
+    buf_32F{},
+    buf_32S{},
+    next_pixel(0) {
     int size = get_npixels();
     switch (get_depth()) {
         case Image_depth::CV_8U:
@@ -90,7 +94,11 @@ Image::Image(const Image &image) :
  * @param m_image_header
  * @param value
  */
-Image::Image(const Image_header &m_image_header, double m_value) : image_header(m_image_header) {
+Image::Image(const Image_header &m_image_header, double m_value) : image_header(m_image_header) ,
+    buf_8U(nullptr),
+    buf_32F(nullptr),
+    buf_32S(nullptr),
+    next_pixel(0){
     if (debug)
         std::cout << "Image::Image: " << to_string() << std::endl;
     initialize(m_value);
@@ -732,7 +740,6 @@ bool Image::in_ellipse(int col, int row) const {
  */
 void Image::initialize(double value) {
     int size = get_npixels();
-    ;
     switch (get_depth()) {
         case Image_depth::CV_8U: {
             int int_value = wb_utils::double_to_int(value);
