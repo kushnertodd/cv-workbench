@@ -2,6 +2,12 @@
 #include <iostream>
 #include <sstream>
 
+/**
+ * @brief
+ * @param module
+ * @param id
+ * @param error
+ */
 void Errors::add(const std::string &module, const std::string &id, const std::string &error) {
     error_ct++;
     std::string message;
@@ -13,6 +19,10 @@ void Errors::add(const std::string &module, const std::string &id, const std::st
         message = module + " " + id + ": " + error;
     error_list.push_back(message);
 }
+/**
+ * @brief
+ * @param message
+ */
 void Errors::check_exit(const std::string &message) {
     if (error_ct > 0) {
         if (!message.empty())
@@ -21,7 +31,15 @@ void Errors::check_exit(const std::string &message) {
         exit(1);
     }
 }
+/**
+ * @brief
+ * @return
+ */
 bool Errors::has_error() const { return error_ct != 0; }
+/**
+ * @brief
+ * @return
+ */
 std::string Errors::to_string() {
     std::ostringstream os;
     for (const std::string &error: error_list) {

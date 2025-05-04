@@ -6,7 +6,7 @@
 #include <string>
 
 /**
- * returns size of file in bytes
+ * @brief returns size of file in bytes
  * @param fp file pointer
  * @return long byte count
  */
@@ -15,6 +15,12 @@ long file_utils::file_size(std::ifstream &in) {
     in.seekg(0, std::ios::end);
     return in.tellg();
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
     FILE *fp = fopen(path.c_str(), "r");
     if (fp == nullptr) {
@@ -22,6 +28,12 @@ FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
     }
     return fp;
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &errors) {
     std::ifstream ifs(path, std::ifstream::in);
     if (!ifs) {
@@ -29,6 +41,12 @@ std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &e
     }
     return ifs;
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
     FILE *fp = fopen(path.c_str(), "w");
     if (fp == nullptr) {
@@ -36,6 +54,12 @@ FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
     }
     return fp;
 }
+/**
+ * @brief
+ * @param path
+ * @param errors
+ * @return
+ */
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
     std::ofstream ofs(path, std::ofstream::out);
     if (!ofs) {
@@ -50,6 +74,13 @@ std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &
  * @return file contents
  * @throws errno on open error
  */
+
+/**
+ * @brief
+ * @param filename
+ * @param contents
+ * @return
+ */
 bool file_utils::read_file(const std::string &filename, std::string &contents) {
     std::ifstream in(filename, std::ios::in | std::ios::binary);
     if (in) {
@@ -61,14 +92,32 @@ bool file_utils::read_file(const std::string &filename, std::string &contents) {
     }
     return false;
 }
+/**
+ * @brief
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_double(FILE *fp, double &var) {
     size_t newLen = fread(&var, sizeof(double), 1, fp);
     return (ferror(fp) == 0 && newLen == 1);
 }
+/**
+ * @brief
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_float(FILE *fp, float &var) {
     size_t newLen = fread(&var, sizeof(float), 1, fp);
     return (ferror(fp) == 0 && newLen == 1);
 }
+/**
+ * @brief
+ * @param fp
+ * @param var
+ * @return
+ */
 bool file_utils::read_int(FILE *fp, int &var) {
     size_t newLen = fread(&var, sizeof(int), 1, fp);
     return (ferror(fp) == 0 && newLen == 1);

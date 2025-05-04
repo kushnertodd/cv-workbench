@@ -175,7 +175,7 @@ double Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
  * @param x
  * @return
  */
-double Polar_trig::rho_theta_x_to_y(double rho, int theta, double x)  {
+double Polar_trig::rho_theta_x_to_y(double rho, int theta, double x) {
     assert(!singular_sin(theta));
     double cos_t = Polar_trig::to_cos(theta);
     double sin_t = Polar_trig::to_sin(theta);
@@ -191,7 +191,7 @@ double Polar_trig::rho_theta_x_to_y(double rho, int theta, double x)  {
  * @param y
  * @return
  */
-double Polar_trig::rho_theta_y_to_x(double rho, int theta, double y)  {
+double Polar_trig::rho_theta_y_to_x(double rho, int theta, double y) {
     assert(!singular_cos(theta));
     double cos_t = Polar_trig::to_cos(theta);
     double sin_t = Polar_trig::to_sin(theta);

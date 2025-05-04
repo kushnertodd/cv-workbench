@@ -50,7 +50,9 @@ Image::Image() = default;
  * @param value
  */
 Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
-    image_header(m_ncols, m_nrows, m_components, m_depth), buf_8U{}, buf_32F{}, buf_32S{}, next_pixel(0) {
+    image_header(m_ncols, m_nrows, m_components, m_depth)
+//, buf_8U{}, buf_32F{}, buf_32S{}, next_pixel(0)
+{
     allocate();
     initialize(m_value);
 }
@@ -68,7 +70,7 @@ Image::Image(const Image &image) :
 {
     Errors errors;
     allocate();
-    copy_data(&image, errors);
+    copy(&image, errors);
 }
 /**
  * @brief
@@ -361,39 +363,11 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
     return output;
 }
 /**
- * @brief copies CV_32S and CV_32F to CV_8U with truncation to 0..255
- * @param image
- * @param errors
- */
-void Image::copy(const Image *image, Errors &errors) const {
-    if (get_npixels() != image->get_npixels()) {
-        errors.add("Image::copy", "", "images not the same size ");
-        return;
-    }
-    if (get_depth() != image->get_depth()) {
-        errors.add("Image::copy", "", "images not the same depth ");
-        return;
-    }
-    if (get_depth() == Image_depth::CV_8U && image->get_depth() == Image_depth::CV_32S) {
-        errors.add("Image::copy", "", "cannot copy CV_32S image to CV_8U image ");
-        return;
-    }
-    if (get_depth() == Image_depth::CV_8U && image->get_depth() == Image_depth::CV_32F) {
-        errors.add("Image::copy", "", "cannot copy CV_32F image to CV_8U image ");
-        return;
-    }
-    if (get_depth() == Image_depth::UNDEFINED || image->get_depth() == Image_depth::UNDEFINED) {
-        errors.add("Image::copy", "", "cannot copy images of undefined depth ");
-        return;
-    }
-    copy_data(image, errors);
-}
-/**
  * @brief
  * @param image
  * @param errors
  */
-void Image::copy_data(const Image *image, Errors &errors) const {
+void Image::copy(const Image *image, Errors &errors) const {
     if (get_npixels() != image->get_npixels()) {
         errors.add("Image::copy", "", "images not the same size ");
         return;

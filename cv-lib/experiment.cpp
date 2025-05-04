@@ -4,12 +4,22 @@
 #include "runtime.hpp"
 #include "wb_defs.hpp"
 
+/**
+ * @brief
+ */
 Experiment::~Experiment() {
     for (Experiment_step *step: experiment_steps) {
         delete step;
     }
 }
+/**
+ * @brief
+ */
 Experiment::Experiment() = default;
+/**
+ * @brief
+ * @param m_path
+ */
 Experiment::Experiment(std::string m_path) : path(std::move(m_path)) {}
 /**
  * Parse experiment json
@@ -41,10 +51,18 @@ Experiment *Experiment::from_json(json_object *jobj, std::string path, Errors &e
     }
     return experiment;
 }
+/**
+ * @brief
+ * @param json_experiment
+ */
 void Experiment::log_experiment(json_object *json_experiment) {
     json_object *run = Runtime::to_log();
     json_object_object_add(json_experiment, "run", run);
 }
+/**
+ * @brief
+ * @param errors
+ */
 void Experiment::run(Errors &errors) {
     for (Experiment_step *step: experiment_steps) {
         step->run(errors);

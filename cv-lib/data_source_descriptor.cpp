@@ -4,11 +4,27 @@
 #include "internet_data_source_descriptor.hpp"
 #include "wb_json_utils.hpp"
 
+/**
+ * @brief
+ */
 Data_source_descriptor::~Data_source_descriptor() = default;
+/**
+ * @brief
+ * @param m_id
+ * @param m_data_type
+ * @param m_data_format
+ * @param m_repository_type
+ */
 Data_source_descriptor::Data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                                WB_data_format::Data_format m_data_format,
                                                WB_repository_types::Repository_type m_repository_type) :
     id(m_id), data_type(m_data_type), data_format(m_data_format), repository_type(m_repository_type) {}
+/**
+ * @brief
+ * @param json_data_source_descriptor
+ * @param errors
+ * @return
+ */
 Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data_source_descriptor, Errors &errors) {
     Data_source_descriptor *data_source_descriptor = nullptr;
 
@@ -61,6 +77,10 @@ Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data
     }
     return data_source_descriptor;
 }
+/**
+ * @brief
+ * @return
+ */
 std::string Data_source_descriptor::to_string() {
     std::ostringstream os;
     os << "id " << id << "' data format '" << WB_data_type::to_string(data_type) << "' data type '"
@@ -68,6 +88,12 @@ std::string Data_source_descriptor::to_string() {
        << "'";
     return os.str();
 }
+/**
+ * @brief
+ * @param module
+ * @param errors
+ * @return
+ */
 Histogram *Data_source_descriptor::read_operator_histogram(const std::string &module, Errors &errors) {
     Histogram *input = nullptr;
     if (data_format == WB_data_format::Data_format::BINARY)
@@ -76,6 +102,12 @@ Histogram *Data_source_descriptor::read_operator_histogram(const std::string &mo
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
     return input;
 }
+/**
+ * @brief
+ * @param module
+ * @param errors
+ * @return
+ */
 Hough *Data_source_descriptor::read_operator_hough(const std::string &module, Errors &errors) {
     Hough *input = nullptr;
     if (data_format == WB_data_format::Data_format::BINARY)
@@ -84,6 +116,12 @@ Hough *Data_source_descriptor::read_operator_hough(const std::string &module, Er
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
     return input;
 }
+/**
+ * @brief
+ * @param module
+ * @param errors
+ * @return
+ */
 Image *Data_source_descriptor::read_operator_image(const std::string &module, Errors &errors) {
     Image *input = nullptr;
     if (data_format == WB_data_format::Data_format::BINARY)
@@ -96,6 +134,12 @@ Image *Data_source_descriptor::read_operator_image(const std::string &module, Er
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
     return input;
 }
+/**
+ * @brief
+ * @param output
+ * @param module
+ * @param errors
+ */
 void Data_source_descriptor::write_operator_histogram(Histogram *output, const std::string &module, Errors &errors) {
     if (data_format == WB_data_format::Data_format::BINARY)
         write_histogram(output, errors);
@@ -104,6 +148,12 @@ void Data_source_descriptor::write_operator_histogram(Histogram *output, const s
     else
         errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
+/**
+ * @brief
+ * @param output
+ * @param module
+ * @param errors
+ */
 void Data_source_descriptor::write_operator_hough(Hough *output, const std::string &module, Errors &errors) {
     if (data_format == WB_data_format::Data_format::BINARY)
         write_hough(output, errors);
@@ -112,6 +162,12 @@ void Data_source_descriptor::write_operator_hough(Hough *output, const std::stri
     else
         errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
+/**
+ * @brief
+ * @param output
+ * @param module
+ * @param errors
+ */
 void Data_source_descriptor::write_operator_image(Image *output, const std::string &module, Errors &errors) {
     if (data_format == WB_data_format::Data_format::BINARY)
         write_image(output, errors);

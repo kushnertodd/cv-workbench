@@ -33,20 +33,6 @@ void WB_window::add(Point &point) {
 }
 /**
  * Clips a polar line against a window and returns a line segment from the endpoints
- * There are two main cases based on the angle of the line, because there is a potential
- * singularity clipping the other way:
- *
- * - case 1: 0 < theta < pi/4 and 3*pi/4 < theta < pi
- *   must clip against the window top and bottom first
- *
- *   In case 1, there are 7 subcases where clip points are to the left, inside,
- *   or to the right of the window:
- *
- *
- * - case 2: pi/4 < theta < 3*pi/4
- *   must clip against the window left and right first
- *
- *
  * @param line Polar line to clip against window
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */

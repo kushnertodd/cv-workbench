@@ -23,6 +23,11 @@
 
 extern bool debug;
 
+/**
+ * @brief
+ * @param operator_name
+ * @return
+ */
 Operator *Operator_dispatcher::create_operator(const std::string &operator_name) {
     Operator *pOperator = nullptr;
     if (debug)
