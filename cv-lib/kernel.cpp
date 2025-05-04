@@ -44,7 +44,7 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
         int nrows = get_nrows();
         // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is
         // Image_depth::CV_32S
-        auto *out = new Image(src_ncols, src_nrows, src_components, out_depth);
+        auto *convolve_image = new Image(src_ncols, src_nrows, src_components, out_depth);
         int ncols_half = (ncols + 1) / 2;
         int nrows_half = (nrows + 1) / 2;
         int col_lower = 0;
@@ -116,10 +116,10 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
                 }
                 if (debug)
                     std::cout << "buf[" << col_center << "," << row_center << "] = " << sum << std::endl;
-                out->set(col_center, row_center, sum);
+                convolve_image->set(col_center, row_center, sum);
             }
         }
-        return out;
+        return convolve_image;
     }
 }
 /**
@@ -172,7 +172,8 @@ Kernel *Kernel::create_32S(int ncols, int nrows, const pixel_32S *buf_32S) {
  */
 Kernel *Kernel::create_32F(int ncols, int nrows, const pixel_32F *buf_32F) {
     auto *kernel = new Kernel(ncols, nrows, Image_depth::CV_32F);
-    for (int i = 0; i < kernel->get_npixels(); i++) {
+    int size = kernel->get_npixels();
+    for (int i = 0; i < size; i++) {
         kernel->buf_32F[i] = buf_32F[i];
     }
     return kernel;

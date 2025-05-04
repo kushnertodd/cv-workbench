@@ -45,7 +45,8 @@ class Image {
 public:
     virtual ~Image();
     Image();
-    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value = 0.0);
+    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth);
+    Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value);
     Image(const Image &image);
     explicit Image(const Image_header &image_header, double value = 0.0);
     void add_8U(const pixel_8U *src, int count, Errors &errors);

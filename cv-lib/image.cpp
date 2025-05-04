@@ -49,11 +49,20 @@ Image::Image() = default;
  * @param m_depth
  * @param value
  */
-Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
-    image_header(m_ncols, m_nrows, m_components, m_depth)
-//, buf_8U{}, buf_32F{}, buf_32S{}, next_pixel(0)
-{
+Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth) :
+    image_header(m_ncols, m_nrows, m_components, m_depth) {
     allocate();
+}
+/**
+ * @brief
+ * @param m_ncols
+ * @param m_nrows
+ * @param m_components
+ * @param m_depth
+ * @param value
+ */
+Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
+    Image(m_ncols, m_nrows, m_components, m_depth) {
     initialize(m_value);
 }
 /**
@@ -97,11 +106,7 @@ Image::Image(const Image_header &m_image_header, double m_value) :
  * @param errors
  */
 void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
-    if (next_pixel + count > get_npixels())
-        errors.add("Image::add_8U", "",
-                   "adding " + wb_utils::int_to_string(count) + " pixels at position " +
-                           wb_utils::int_to_string(next_pixel) + " too large for buffer length " +
-                           wb_utils::int_to_string(get_npixels()));
+    assert(next_pixel + count <= get_npixels());
     for (int i = 0; i < count; i++) {
         switch (get_depth()) {
             case Image_depth::CV_8U:
@@ -128,11 +133,7 @@ void Image::add_8U(const pixel_8U *src, int count, Errors &errors) {
  * @param errors
  */
 void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
-    if (next_pixel + count > get_npixels())
-        errors.add("Image::add_32F", "",
-                   "adding " + wb_utils::int_to_string(count) + " pixels at position " +
-                           wb_utils::int_to_string(next_pixel) + " too large for buffer length " +
-                           wb_utils::int_to_string(get_npixels()));
+    assert(next_pixel + count <= get_npixels());
     for (int i = 0; i < count; i++) {
         switch (get_depth()) {
             case Image_depth::CV_8U:
@@ -159,15 +160,7 @@ void Image::add_32F(const pixel_32F *src, int count, Errors &errors) {
  * @param errors
  */
 void Image::add_32S(const pixel_32S *src, int count, Errors &errors) {
-    if (debug)
-        std::cout << "Image::add_32S src " << src << " count " << count << " " << to_string() << std::endl;
-    if (next_pixel + count > get_npixels()) {
-        errors.add("Image::add_32S", "",
-                   "adding " + wb_utils::int_to_string(count) + " pixels at position " +
-                           wb_utils::int_to_string(next_pixel) + " too large for buffer length " +
-                           wb_utils::int_to_string(get_npixels()));
-        return;
-    }
+    assert(next_pixel + count <= get_npixels());
     if (get_depth() == Image_depth::CV_8U) {
         errors.add("Image::add_32S", "", "cannot update_input_value to 8U buffer");
         return;
@@ -198,15 +191,18 @@ void Image::allocate() {
     int size = get_npixels();
     switch (get_depth()) {
         case Image_depth::CV_8U: {
-            buf_8U = std::unique_ptr<pixel_8U[]>(new pixel_8U[size]);
+            //buf_8U = std::unique_ptr<pixel_8U[]>(new pixel_8U[size]);
+            buf_8U = std::make_unique<pixel_8U[]>(size);
             break;
         }
         case Image_depth::CV_32S: {
-            buf_32S = std::unique_ptr<pixel_32S[]>(new pixel_32S[size]);
+            //buf_32S = std::unique_ptr<pixel_32S[]>(new pixel_32S[size]);
+            buf_32S = std::make_unique<pixel_32S[]>(size);
             break;
         }
         case Image_depth::CV_32F: {
             buf_32F = std::unique_ptr<pixel_32F[]>(new pixel_32F[size]);
+            //buf_32F = std::make_unique<pixel_32F[]>(size);
             break;
         }
         default:
@@ -293,7 +289,7 @@ Image *Image::color_edge(Errors &errors) const {
     int row_upper = nrows - 2;
     int col_lower = 1;
     int col_upper = ncols - 2;
-    auto *out = new Image(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    auto *out = new Image(ncols, nrows, COMPONENTS_RGB, Image_depth::CV_32F);
     out->clear(0.0);
     if (debug)
         std::cout << "col_lower " << col_lower << " col_upper " << col_upper << " row_lower " << row_lower
@@ -348,19 +344,16 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
            << nrows2 << ")";
         errors.add("Operator_transform_image_combine::run", "", os.str());
     }
-    Image *output = nullptr;
-    if (!errors.has_error()) {
-        output = new Image(ncols1, nrows1, 1, Image_depth::CV_32F);
-        for (int col = 0; col < ncols1; col++) {
-            for (int row = 0; row < nrows1; row++) {
-                double pixel1 = input1->get(col, row);
-                double pixel2 = input2->get(col, row);
-                double value = pixel1 * scale1 + pixel2 * scale2 + offset;
-                output->set(col, row, value);
-            }
+    auto combine_image = new Image(ncols1, nrows1, 1, Image_depth::CV_32F);
+    for (int col = 0; col < ncols1; col++) {
+        for (int row = 0; row < nrows1; row++) {
+            double pixel1 = input1->get(col, row);
+            double pixel2 = input2->get(col, row);
+            double value = pixel1 * scale1 + pixel2 * scale2 + offset;
+            combine_image->set(col, row, value);
         }
     }
-    return output;
+    return combine_image;
 }
 /**
  * @brief
@@ -915,7 +908,7 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     /* Step 5: Start decompressor */
     (void) jpeg_start_decompress(&cinfo);
     /* JSAMPLEs per row in output buffer */
-    auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U);
+    auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
     /* Make a one-row-high sample array that will go away when done with image */
     buffer =
             (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE, image->get_row_stride(), 1);
@@ -1100,9 +1093,13 @@ void Image::set(int col, int row, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
+    assert(col <= get_ncols());
+    assert(row <= get_nrows());
+    int index = col_row_to_index(col, row, component);
+    assert(index <= get_npixels());
     switch (get_depth()) {
         case Image_depth::CV_8U:
-            buf_8U[col_row_to_index(col, row, component)] = wb_utils::double_to_int_round(value);
+            buf_8U[index] = wb_utils::double_to_int_round(value);
             break;
 
         case Image_depth::CV_32S:
@@ -1140,7 +1137,11 @@ void Image::set_8U(int col, int row, pixel_8U value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_8U[col_row_to_index(col, row, component)] = value;
+    assert(col <= get_ncols());
+    assert(row <= get_nrows());
+    int index = col_row_to_index(col, row, component);
+    assert(index <= get_npixels());
+    buf_8U[index] = value;
 }
 /**
  * @brief
@@ -1153,7 +1154,11 @@ void Image::set_32F(int col, int row, pixel_32F value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_32F[col_row_to_index(col, row, component)] = value;
+    assert(col <= get_ncols());
+    assert(row <= get_nrows());
+    int index = col_row_to_index(col, row, component);
+    assert(index <= get_npixels());
+    buf_32F[index] = value;
 }
 /**
  * @brief
@@ -1166,7 +1171,11 @@ void Image::set_32S(int col, int row, pixel_32S value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    buf_32S[col_row_to_index(col, row, component)] = value;
+    assert(col <= get_ncols());
+    assert(row <= get_nrows());
+    int index = col_row_to_index(col, row, component);
+    assert(index <= get_npixels());
+    buf_32S[index] = value;
 }
 // subtracts image without underflow checking for CV_8U images
 Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
@@ -1335,13 +1344,13 @@ void Image::write(FILE *fp, Errors &errors) const {
             }
             break;
         case Image_depth::CV_32S:
-            newLen = fwrite(buf_32S.get(), sizeof(pixel_32S), get_npixels(), fp);
+            newLen = fwrite(buf_32S.get(), sizeof(pixel_32S), size, fp);
             if (ferror(fp) != 0 || newLen != size) {
                 errors.add("Image::write", "", "cannot write 32S image data");
             }
             break;
         case Image_depth::CV_32F:
-            newLen = fwrite(buf_32F.get(), sizeof(pixel_32F), get_npixels(), fp);
+            newLen = fwrite(buf_32F.get(), sizeof(pixel_32F), size, fp);
             if (ferror(fp) != 0 || newLen != size) {
                 errors.add("Image::write", "", "cannot write 32F image data");
             }
