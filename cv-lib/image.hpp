@@ -1,6 +1,7 @@
 #ifndef CV_WORKBENCH_SRC_IMAGE_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HPP_
 
+#include <memory>
 #include <string>
 #include "errors.hpp"
 #include "image_header.hpp"
@@ -37,9 +38,9 @@ class Image {
     Image_header image_header;
     int next_pixel{};
     // image stores one buffer per image_header->depth
-    pixel_8U *buf_8U{};
-    pixel_32F *buf_32F{};
-    pixel_32S *buf_32S{};
+    std::unique_ptr<pixel_8U[]> buf_8U;
+    std::unique_ptr<pixel_32F[]> buf_32F;
+    std::unique_ptr<pixel_32S[]> buf_32S;
 
 public:
     virtual ~Image();
@@ -50,6 +51,7 @@ public:
     void add_8U(const pixel_8U *src, int count, Errors &errors);
     void add_32F(const pixel_32F *src, int count, Errors &errors);
     void add_32S(const pixel_32S *src, int count, Errors &errors);
+    void allocate();
     bool check_color(const std::string &module, Errors &errors) const;
     bool check_grayscale(const std::string &module, Errors &errors) const;
     void check_pixel_valid(int col, int row) const;
@@ -59,6 +61,7 @@ public:
     Image *color_edge(Errors &errors) const;
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
+    void copy_data(const Image *image, Errors &errors) const;
     void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;
     void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     void draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
@@ -73,9 +76,9 @@ public:
     pixel_32S get_32S(int col, int row, int component = 0) const;
     double get_blue(const int col, const int row) const;
     Image_depth get_depth() const;
-    int get_ncomponents() const;
     double get_green(const int col, const int row) const;
     int get_ncols() const;
+    int get_ncomponents() const;
     int get_npixels() const;
     int get_nrows() const;
     double get_red(const int col, const int row) const;
@@ -86,14 +89,14 @@ public:
     bool in_ellipse(int col, int row) const;
     void initialize(double value = 0.0);
     bool is_color() const;
-    bool is_pixel_valid(int col, int row) const;
     bool is_grayscale() const;
+    bool is_pixel_valid(int col, int row) const;
     void log(std::list<WB_log_entry> &log_entries) const;
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
+    static Image *read_jpeg(const std::string &path, Errors &errors);
     static Image *read_text(const std::string &path, Errors &errors);
     static Image *read_text(std::ifstream &ifs, Errors &errors);
-    static Image *read_jpeg(const std::string &path, Errors &errors);
     static Image *resize(const Image *image, int area_ncols, int area_nrows, WB_resize_types::Resize_type resize_type);
     static Image *scale_image(const Image *image, double lower_in, double upper_in, double lower_out, double upper_out,
                               Image_depth depth, int component = 0);
@@ -118,9 +121,9 @@ public:
     static double to_y(int row, int nrows);
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;
+    void write_jpeg(const std::string &path, Errors &errors) const;
     void write_text(const std::string &path, const std::string &delim, Errors &errors) const;
     void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
-    void write_jpeg(const std::string &path, Errors &errors) const;
 };
 
 #endif // CV_WORKBENCH_SRC_IMAGE_HPP_

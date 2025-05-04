@@ -13,7 +13,9 @@
 
 extern bool debug;
 
-/**/
+/**
+ * @brief
+ */
 Pixel_RGB::Pixel_RGB() {}
 /**
  * @brief
@@ -34,11 +36,7 @@ double Pixel_RGB::diff(const Pixel_RGB &other) const {
 /**
  * @brief
  */
-Image::~Image() {
-    delete[] buf_8U;
-    delete[] buf_32S;
-    delete[] buf_32F;
-}
+Image::~Image() {}
 /**
  * @brief
  */
@@ -53,6 +51,7 @@ Image::Image() = default;
  */
 Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
     image_header(m_ncols, m_nrows, m_components, m_depth), buf_8U{}, buf_32F{}, buf_32S{}, next_pixel(0) {
+    allocate();
     initialize(m_value);
 }
 /**
@@ -60,47 +59,33 @@ Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, do
  * @param image
  */
 Image::Image(const Image &image) :
-    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth()),
-    buf_8U{},
-    buf_32F{},
-    buf_32S{},
-    next_pixel(0) {
-    int size = get_npixels();
-    switch (get_depth()) {
-        case Image_depth::CV_8U:
-            buf_8U = new pixel_8U[size];
-            for (int i = 0; i < size; i++)
-                buf_8U[i] = image.buf_8U[i];
-            break;
-
-        case Image_depth::CV_32S:
-            buf_32S = new pixel_32S[size];
-            for (int i = 0; i < size; i++)
-                buf_32S[i] = image.buf_32S[i];
-            break;
-
-        case Image_depth::CV_32F:
-            buf_32F = new pixel_32F[size];
-            for (int i = 0; i < size; i++)
-                buf_32F[i] = image.buf_32F[i];
-            break;
-
-        default:
-            break;
-    }
+    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth())
+//,
+// buf_8U{},
+// buf_32F{},
+// buf_32S{},
+// next_pixel(0)
+{
+    Errors errors;
+    allocate();
+    copy_data(&image, errors);
 }
 /**
  * @brief
  * @param m_image_header
  * @param value
  */
-Image::Image(const Image_header &m_image_header, double m_value) : image_header(m_image_header) ,
-    buf_8U(nullptr),
-    buf_32F(nullptr),
-    buf_32S(nullptr),
-    next_pixel(0){
+Image::Image(const Image_header &m_image_header, double m_value) :
+    image_header(m_image_header)
+//,
+//    buf_8U(nullptr),
+//    buf_32F(nullptr),
+//    buf_32S(nullptr),
+//    next_pixel(0)
+{
     if (debug)
         std::cout << "Image::Image: " << to_string() << std::endl;
+    allocate();
     initialize(m_value);
 }
 /**
@@ -205,6 +190,29 @@ void Image::add_32S(const pixel_32S *src, int count, Errors &errors) {
 }
 /**
  * @brief
+ * @param value
+ */
+void Image::allocate() {
+    int size = get_npixels();
+    switch (get_depth()) {
+        case Image_depth::CV_8U: {
+            buf_8U = std::unique_ptr<pixel_8U[]>(new pixel_8U[size]);
+            break;
+        }
+        case Image_depth::CV_32S: {
+            buf_32S = std::unique_ptr<pixel_32S[]>(new pixel_32S[size]);
+            break;
+        }
+        case Image_depth::CV_32F: {
+            buf_32F = std::unique_ptr<pixel_32F[]>(new pixel_32F[size]);
+            break;
+        }
+        default:
+            break;
+    }
+}
+/**
+ * @brief
  * @param module
  * @param errors
  * @return
@@ -239,28 +247,7 @@ void Image::check_pixel_valid(int col, int row) const { assert(!is_pixel_valid(c
  * @brief
  * @param value
  */
-void Image::clear(double value) {
-    int size = get_npixels();
-    switch (get_depth()) {
-        case Image_depth::CV_8U:
-            for (int i = 0; i < size; i++)
-                buf_8U[i] = value;
-            break;
-
-        case Image_depth::CV_32S:
-            for (int i = 0; i < size; i++)
-                buf_32S[i] = value;
-            break;
-
-        case Image_depth::CV_32F:
-            for (int i = 0; i < size; i++)
-                buf_32F[i] = value;
-            break;
-
-        default:
-            break;
-    }
-}
+void Image::clear(double value) { initialize(0.0); }
 /***
  * Not really what want. Doesn't copy contents.
  * @param image
@@ -399,9 +386,38 @@ void Image::copy(const Image *image, Errors &errors) const {
         errors.add("Image::copy", "", "cannot copy images of undefined depth ");
         return;
     }
+    copy_data(image, errors);
+}
+/**
+ * @brief
+ * @param image
+ * @param errors
+ */
+void Image::copy_data(const Image *image, Errors &errors) const {
+    if (get_npixels() != image->get_npixels()) {
+        errors.add("Image::copy", "", "images not the same size ");
+        return;
+    }
+    if (get_depth() != image->get_depth()) {
+        errors.add("Image::copy", "", "images not the same depth ");
+        return;
+    }
+    if (get_depth() == Image_depth::CV_8U && image->get_depth() == Image_depth::CV_32S) {
+        errors.add("Image::copy", "", "cannot copy CV_32S image to CV_8U image ");
+        return;
+    }
+    if (get_depth() == Image_depth::CV_8U && image->get_depth() == Image_depth::CV_32F) {
+        errors.add("Image::copy", "", "cannot copy CV_32F image to CV_8U image ");
+        return;
+    }
+    if (get_depth() == Image_depth::UNDEFINED || image->get_depth() == Image_depth::UNDEFINED) {
+        errors.add("Image::copy", "", "cannot copy images of undefined depth ");
+        return;
+    }
+    int size = get_npixels();
     switch (get_depth()) {
         case Image_depth::CV_8U:
-            for (int i = 0; i < get_npixels(); i++) {
+            for (int i = 0; i < size; i++) {
                 buf_8U[i] = image->buf_8U[i];
             }
             break;
@@ -409,17 +425,17 @@ void Image::copy(const Image *image, Errors &errors) const {
         case Image_depth::CV_32S:
             switch (image->get_depth()) {
                 case Image_depth::CV_8U:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32S[i] = image->buf_8U[i];
                     }
                     break;
                 case Image_depth::CV_32S:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32S[i] = image->buf_32S[i];
                     }
                     break;
                 case Image_depth::CV_32F:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32S[i] = wb_utils::float_to_int_round(image->buf_32F[i]);
                     }
                     break;
@@ -431,17 +447,17 @@ void Image::copy(const Image *image, Errors &errors) const {
         case Image_depth::CV_32F:
             switch (image->get_depth()) {
                 case Image_depth::CV_8U:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32F[i] = image->buf_8U[i];
                     }
                     break;
                 case Image_depth::CV_32S:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32F[i] = wb_utils::int_to_float(image->buf_32S[i]);
                     }
                     break;
                 case Image_depth::CV_32F:
-                    for (int i = 0; i < get_npixels(); i++) {
+                    for (int i = 0; i < size; i++) {
                         buf_32F[i] = image->buf_32F[i];
                     }
                     break;
@@ -652,11 +668,6 @@ double Image::get_blue(const int col, const int row) const { return get(col, row
  * @brief
  * @return
  */
-int Image::get_ncomponents() const { return image_header.get_ncomponents(); }
-/**
- * @brief
- * @return
- */
 Image_depth Image::get_depth() const { return image_header.get_depth(); }
 /**
  * @brief
@@ -670,6 +681,11 @@ double Image::get_green(const int col, const int row) const { return get(col, ro
  * @return
  */
 int Image::get_ncols() const { return image_header.get_ncols(); }
+/**
+ * @brief
+ * @return
+ */
+int Image::get_ncomponents() const { return image_header.get_ncomponents(); }
 /**
  * @brief
  * @return
@@ -743,21 +759,18 @@ void Image::initialize(double value) {
     switch (get_depth()) {
         case Image_depth::CV_8U: {
             int int_value = wb_utils::double_to_int(value);
-            buf_8U = new pixel_8U[size];
             for (int i = 0; i < size; i++)
                 buf_8U[i] = int_value;
             break;
         }
         case Image_depth::CV_32S: {
             int int_value = wb_utils::double_to_int(value);
-            buf_32S = new pixel_32S[size];
             for (int i = 0; i < size; i++)
                 buf_32S[i] = int_value;
             break;
         }
         case Image_depth::CV_32F: {
             float float_value = wb_utils::double_to_float(value);
-            buf_32F = new pixel_32F[size];
             for (int i = 0; i < size; i++)
                 buf_32F[i] = float_value;
             break;
@@ -843,10 +856,11 @@ Image *Image::read(FILE *fp, Errors &errors) {
     auto *image = new Image(image_header);
 
     // Read the data into buffer.
+    int size = image->get_npixels();
     switch (image_header.get_depth()) {
         case Image_depth::CV_8U:
-            wb_utils::read_byte_buffer(fp, image->buf_8U, image->get_npixels(), "Image::read", "",
-                                       "cannot read 8U image data", errors);
+            wb_utils::read_byte_buffer(fp, image->buf_8U.get(), size, "Image::read", "", "cannot read 8U image data",
+                                       errors);
             if (errors.has_error()) {
                 delete image;
                 return nullptr;
@@ -854,8 +868,8 @@ Image *Image::read(FILE *fp, Errors &errors) {
             break;
 
         case Image_depth::CV_32S:
-            wb_utils::read_int_buffer(fp, image->buf_32S, image->get_npixels(), "Image::read", "",
-                                      "cannot read 32S image data", errors);
+            wb_utils::read_int_buffer(fp, image->buf_32S.get(), size, "Image::read", "", "cannot read 32S image data",
+                                      errors);
             if (errors.has_error()) {
                 delete image;
                 return nullptr;
@@ -863,8 +877,8 @@ Image *Image::read(FILE *fp, Errors &errors) {
             break;
 
         case Image_depth::CV_32F:
-            wb_utils::read_float_buffer(fp, image->buf_32F, image->get_npixels(), "Image::read", "",
-                                        "cannot read 32F image data", errors);
+            wb_utils::read_float_buffer(fp, image->buf_32F.get(), size, "Image::read", "", "cannot read 32F image data",
+                                        errors);
             if (errors.has_error()) {
                 delete image;
                 return nullptr;
@@ -989,7 +1003,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
         nrows++;
     }
     auto *image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
-    pixel_32S *buf_ptr = image->buf_32S;
+    pixel_32S *buf_ptr = image->buf_32S.get();
     for (const std::vector<std::string> &row_values: lines) {
         for (const std::string &value_str: row_values) {
             int value;
@@ -1245,6 +1259,19 @@ void Image::to_line_segment(Line_segment &line_segment, Image_line_segment &imag
 }
 /**
  * @brief
+ * @param pixel
+ * @param x
+ * @param y
+ */
+void Image::to_pixel(Pixel &pixel, double x, double y) { image_header.to_pixel(pixel, x, y); }
+/**
+ * @brief
+ * @param pixel
+ * @param point
+ */
+void Image::to_pixel(Pixel &pixel, Point &point) { image_header.to_pixel(pixel, point); }
+/**
+ * @brief
  * @param pixel_RGB
  * @param col
  * @param row
@@ -1254,8 +1281,6 @@ void Image::to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const {
     pixel_RGB.red = get_green(col, row);
     pixel_RGB.red = get_blue(col, row);
 }
-void Image::to_pixel(Pixel &pixel, double x, double y) { image_header.to_pixel(pixel, x, y); }
-void Image::to_pixel(Pixel &pixel, Point &point) { image_header.to_pixel(pixel, point); }
 /**
  * @brief
  * @param point
@@ -1327,22 +1352,23 @@ void Image::write(FILE *fp, Errors &errors) const {
         return;
     // Write the data from the buffer.
     size_t newLen;
+    int size = get_npixels();
     switch (get_depth()) {
         case Image_depth::CV_8U:
-            newLen = fwrite(buf_8U, sizeof(pixel_8U), get_npixels(), fp);
-            if (ferror(fp) != 0 || newLen != get_npixels()) {
+            newLen = fwrite(buf_8U.get(), sizeof(pixel_8U), size, fp);
+            if (ferror(fp) != 0 || newLen != size) {
                 errors.add("Image::write", "", "cannot write 8U image data");
             }
             break;
         case Image_depth::CV_32S:
-            newLen = fwrite(buf_32S, sizeof(pixel_32S), get_npixels(), fp);
-            if (ferror(fp) != 0 || newLen != get_npixels()) {
+            newLen = fwrite(buf_32S.get(), sizeof(pixel_32S), get_npixels(), fp);
+            if (ferror(fp) != 0 || newLen != size) {
                 errors.add("Image::write", "", "cannot write 32S image data");
             }
             break;
         case Image_depth::CV_32F:
-            newLen = fwrite(buf_32F, sizeof(pixel_32F), get_npixels(), fp);
-            if (ferror(fp) != 0 || newLen != get_npixels()) {
+            newLen = fwrite(buf_32F.get(), sizeof(pixel_32F), get_npixels(), fp);
+            if (ferror(fp) != 0 || newLen != size) {
                 errors.add("Image::write", "", "cannot write 32F image data");
             }
             break;

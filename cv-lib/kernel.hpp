@@ -46,20 +46,19 @@ public:
     ~Kernel() override;
     Kernel();
     Kernel(int m_ncols, int m_nrows, Image_depth m_depth);
-    Image *convolve_numeric(Image *src, Errors &errors) const;
-    Image *convolve_morphological(Image *src, WB_morphology_types::Convolution_type convolution_type,
-                                  Errors &errors) const;
-
     Image *convolve(Image *src, Image_depth out_depth, WB_morphology_types::Convolution_type convolution_type,
                     Errors &errors) const;
+    Image *convolve_morphological(Image *src, WB_morphology_types::Convolution_type convolution_type,
+                                  Errors &errors) const;
+    Image *convolve_numeric(Image *src, Errors &errors) const;
     static Kernel *create_32S(int ncols, int nrows, const pixel_32S *buf_32S);
     static Kernel *create_32F(int ncols, int nrows, const pixel_32F *buf_32F);
-    static Kernel *create_gaussian_y(int nrows, double sigma_y);
     static Kernel *create_gaussian_x(int ncols, double sigma_x);
+    static Kernel *create_gaussian_y(int nrows, double sigma_y);
     static Kernel *create_structuring_element(WB_morphology_types::Structuring_element_type structuring_element_type,
                                               int ncols, int nrows, int thickness = 0);
-    static void gaussian_kernel(ntuple_list kernel, double sigma, double mean);
     static void enlarge_ntuple_list(ntuple_list n_tuple);
+    static void gaussian_kernel(ntuple_list kernel, double sigma, double mean);
 };
 
 #endif // CV_WORKBENCH_SRC_KERNEL_HPP_

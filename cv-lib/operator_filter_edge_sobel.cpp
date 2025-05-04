@@ -54,7 +54,7 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
             pixel_32F coeffs_32F_row[] = {0.25, 0.5, 0.25};
             sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
             // this is reversed from the separable filter reference
-            pixel_32F coeffs_32F_col[] = {-1, 0, 1};
+            pixel_32F coeffs_32F_col[] = {-1.0, 0, 1.0};
             sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
         }
         std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
