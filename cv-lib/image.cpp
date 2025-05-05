@@ -70,13 +70,7 @@ Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, do
  * @param image
  */
 Image::Image(const Image &image) :
-    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth())
-//,
-// buf_8U{},
-// buf_32F{},
-// buf_32S{},
-// next_pixel(0)
-{
+    image_header(image.get_ncols(), image.get_nrows(), image.get_ncomponents(), image.get_depth()) {
     Errors errors;
     allocate();
     copy(&image, errors);
@@ -86,17 +80,19 @@ Image::Image(const Image &image) :
  * @param m_image_header
  * @param value
  */
-Image::Image(const Image_header &m_image_header, double m_value) :
-    image_header(m_image_header)
-//,
-//    buf_8U(nullptr),
-//    buf_32F(nullptr),
-//    buf_32S(nullptr),
-//    next_pixel(0)
-{
+Image::Image(const Image_header &m_image_header) : image_header(m_image_header) {
     if (debug)
         std::cout << "Image::Image: " << to_string() << std::endl;
     allocate();
+}
+/**
+ * @brief
+ * @param m_image_header
+ * @param value
+ */
+Image::Image(const Image_header &m_image_header, double m_value) : Image(m_image_header) {
+    if (debug)
+        std::cout << "Image::Image: " << to_string() << std::endl;
     initialize(m_value);
 }
 /**
@@ -191,18 +187,15 @@ void Image::allocate() {
     int size = get_npixels();
     switch (get_depth()) {
         case Image_depth::CV_8U: {
-            //buf_8U = std::unique_ptr<pixel_8U[]>(new pixel_8U[size]);
             buf_8U = std::make_unique<pixel_8U[]>(size);
             break;
         }
         case Image_depth::CV_32S: {
-            //buf_32S = std::unique_ptr<pixel_32S[]>(new pixel_32S[size]);
             buf_32S = std::make_unique<pixel_32S[]>(size);
             break;
         }
         case Image_depth::CV_32F: {
-            buf_32F = std::unique_ptr<pixel_32F[]>(new pixel_32F[size]);
-            //buf_32F = std::make_unique<pixel_32F[]>(size);
+            buf_32F = std::make_unique<pixel_32F[]>(size);
             break;
         }
         default:
@@ -908,7 +901,8 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     /* Step 5: Start decompressor */
     (void) jpeg_start_decompress(&cinfo);
     /* JSAMPLEs per row in output buffer */
-    auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
+    // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
+    auto *image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
     /* Make a one-row-high sample array that will go away when done with image */
     buffer =
             (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE, image->get_row_stride(), 1);

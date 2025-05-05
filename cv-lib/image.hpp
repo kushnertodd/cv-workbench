@@ -48,7 +48,8 @@ public:
     Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth);
     Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value);
     Image(const Image &image);
-    explicit Image(const Image_header &image_header, double value = 0.0);
+    Image(const Image_header &image_header);
+    Image(const Image_header &image_header, double value);
     void add_8U(const pixel_8U *src, int count, Errors &errors);
     void add_32F(const pixel_32F *src, int count, Errors &errors);
     void add_32S(const pixel_32S *src, int count, Errors &errors);

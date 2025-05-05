@@ -88,10 +88,10 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
                         sum = 0.0;
                         break;
                 }
-                for (int j = kernel_col_lower; j <= kernel_col_upper; j++) {
-                    for (int i = kernel_row_lower; i <= kernel_row_upper; i++) {
+                for (int i = kernel_col_lower; i <= kernel_col_upper; i++) {
+                    for (int j = kernel_row_lower; j <= kernel_row_upper; j++) {
                         double kernel_val = get(i, j);
-                        double image_val = src->get(col + j, row + i);
+                        double image_val = src->get(col + i, row + j);
                         switch (convolution_type) {
                             case WB_morphology_types::Convolution_type::NUMERIC:
                                 sum += kernel_val * image_val;
@@ -109,7 +109,7 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
                         }
                         if (debug)
                             std::cout << "sum += kernel[" << i << "," << j << "] " << kernel_val << " * image["
-                                      << col + j << "," << row + i << "] " << image_val << " = " << sum << std::endl;
+                                      << col + i << "," << row + j << "] " << image_val << " = " << sum << std::endl;
                     }
                     if (debug)
                         std::cout << std::endl;
