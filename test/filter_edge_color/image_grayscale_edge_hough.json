@@ -17,19 +17,8 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge",
+            "filename": "image_grayscale_edge_threshold",
             "ext": "jpg"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "text",
-            "directory": ".",
-            "filename": "image_grayscale_edge_hough",
-            "ext": "txt"
           }
         ],
         "output-data": [
@@ -41,6 +30,15 @@
             "directory": ".",
             "filename": "image_grayscale_edge_hough",
             "ext": "bin"
+          },
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": ".",
+            "filename": "image_grayscale_edge_hough",
+            "ext": "txt"
           }
         ],
         "parameters": {

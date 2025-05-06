@@ -29,7 +29,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         errors.add("Operator_hough_image_create::run", "", "output data source required");
     int rho_inc = 0;
     int theta_inc = 0;
-    int threshold = 0;
+    int pixel_threshold = 0;
     int ulc_row = 0;
     int ulc_col = 0;
     int lrc_row = 0;
@@ -52,7 +52,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     if (Operator_utils::has_parameter(operator_parameters, "pixel-threshold")) {
         saw_threshold = true;
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "pixel-threshold",
-                                          threshold, errors);
+                                          pixel_threshold, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "ulc-row")) {
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "ulc-row", ulc_row,
@@ -83,7 +83,8 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         // errors.add("Operator_hough_image_create::run", "", "missing 'theta-inc' parameter");
     }
     if (!saw_threshold) {
-        errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
+        pixel_threshold = 0;
+        //errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
     }
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Image *input_ptr = nullptr;
@@ -98,7 +99,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
             lrc_col = input->get_ncols() - 1;
         if (!saw_lrc_row)
             lrc_row = input->get_nrows() - 1;
-        hough_ptr = new Hough(input.get(), rho_inc, theta_inc, threshold);
+        hough_ptr = new Hough(input.get(), rho_inc, theta_inc, pixel_threshold);
     }
     std::unique_ptr<Hough> output(hough_ptr);
     if (!errors.has_error() && hough_ptr != nullptr)

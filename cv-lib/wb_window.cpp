@@ -42,28 +42,32 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
         y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_min);
         Point left_point(x_min, y_left);
-        add(left_point);
+        if (inside(left_point))
+            add(left_point);
     }
     // clip right: x_max
     double y_right;
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
         y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_max);
         Point right_point(x_max, y_right);
-        add(right_point);
+        if (inside(right_point))
+            add(right_point);
     }
     // clip top: y_min
     double x_top;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
         x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_min);
         Point top_point(x_top, y_min);
-        add(top_point);
+        if (inside(top_point))
+            add(top_point);
     }
     // clip bottom: y_max
     double x_bottom;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_min);
+        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_max);
         Point bottom_point(x_bottom, y_min);
-        add(bottom_point);
+        if (inside(bottom_point))
+            add(bottom_point);
     }
     // check that exactly two points found
     if (intersections.size() == 2) {
@@ -71,4 +75,12 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
         return true;
     } else
         return false;
+}
+
+bool WB_window::inside(Point &point) const {
+    if (point.x < x_min || point.x > x_max)
+        return false;
+    if (point.y < y_min || point.y > y_max)
+        return false;
+    return true;
 }

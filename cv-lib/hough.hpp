@@ -43,12 +43,12 @@ public:
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
-    void initialize(Image *image, int image_theshold);
+    void initialize(Image *image, int pixel_threshold);
     // int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
     Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);
-    int rho_theta_to_index(int rho_index, int theta_index) const;
+    int rho_index_theta_index_to_index(int rho_index, int theta_index) const;
     void set(int rho_index, int theta_index, int value);
     int to_rho_index(double rho) const;
     void update(int rho_index, int theta_index, int value) const;

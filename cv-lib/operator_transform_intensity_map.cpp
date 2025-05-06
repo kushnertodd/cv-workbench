@@ -128,16 +128,18 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
                 upper_in = stats.get_max_value();
             }
         }
+        Image *output_image;
         if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-            Image *output_image =
-                    Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, Image_depth::CV_8U);
+            output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, Image_depth::CV_8U);
             output_data_store->write_image_jpeg(output_image, errors);
         } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            Image *output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, depth);
+            output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, depth);
             output_data_store->write_image(output_image, errors);
         } else {
             errors.add("Operator_transform_intensity_map::run", "",
                        "invalid data format '" + WB_data_format::to_string(output_data_store->data_format) + "'");
         }
+        if (!errors.has_error() && output_image != nullptr)
+            output_image->log(log_entries);
     }
 }

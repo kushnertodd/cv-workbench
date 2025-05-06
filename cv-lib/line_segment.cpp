@@ -29,8 +29,8 @@ Line_segment::Line_segment(const double x1, double y1, double x2, double y2) : p
  * @param m_point2
  */
 void Line_segment::init(const Point &m_point1, const Point &m_point2) {
-    // point1 = m_point1;
-    // point2 = m_point2;
+    point1.copy(m_point1);
+    point2.copy(m_point2);
 }
 /**
  * @brief

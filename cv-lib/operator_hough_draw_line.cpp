@@ -54,9 +54,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
         int ncols = input->get_ncols();
         int nrows = input->get_nrows();
         double x_min = input->to_x(0);
-        double y_min = input->to_x(nrows - 1);
-        double x_max = input->to_x(ncols - 1);
         double y_max = input->to_y(0);
+        double x_max = input->to_x(ncols - 1);
+        double y_min = input->to_y(nrows - 1);
         WB_window window(x_min, y_min, x_max, y_max);
         Polar_line polar_line(rho, theta);
         Line_segment line_segment;

@@ -21,6 +21,7 @@ public:
     WB_window(double m_x_min, double m_y_min, double m_x_max, double m_y_max);
     void add(Point &point);
     bool clip_window(Polar_line &polar_line, Line_segment &line_segment);
+    bool inside(Point &point) const;
 };
 
 #endif // SRC__WB_WINDOW_HPP_

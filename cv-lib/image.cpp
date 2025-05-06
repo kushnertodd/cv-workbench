@@ -1286,14 +1286,14 @@ std::string Image::to_string(const std::string &prefix) const {
  * @param col
  * @return
  */
-double Image::to_x(int col) const { return image_header.to_y(col); }
+double Image::to_x(int col) const { return image_header.to_x(col); }
 /**
  * @brief
  * @param col
  * @param ncols
  * @return
  */
-double Image::to_x(int col, int ncols) { return Image_header::to_y(col, ncols); }
+double Image::to_x(int col, int ncols) { return Image_header::to_x(col, ncols); }
 /**
  * @brief
  * @param row

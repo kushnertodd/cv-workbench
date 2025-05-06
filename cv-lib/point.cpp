@@ -26,6 +26,11 @@ bool Point::close(const Point &point) const { return distance(point) <= close_di
 /**
  * @brief
  * @param point
+ */
+void Point::copy(const Point &point) { init(point.x, point.y); }
+/**
+ * @brief
+ * @param point
  * @return
  */
 double Point::distance(const Point &point) const {

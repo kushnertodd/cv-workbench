@@ -63,12 +63,12 @@ public:
     void init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
     double point_theta_index_to_rho(Point &point, int theta_index);
     double point_theta_index_to_rho(double x, double y, int theta_index);
-    double point_theta_index_to_rho_index(Point &point, int theta_index);
-    double point_theta_index_to_rho_index(double x, double y, int theta_index);
+    int point_theta_index_to_rho_index(Point &point, int theta_index);
+    int point_theta_index_to_rho_index(double x, double y, int theta_index);
     static double point_theta_to_rho(Point &point, int theta);
     static double point_theta_to_rho(double x, double y, int theta);
-    double point_theta_to_rho_index(Point &point, int theta);
-    double point_theta_to_rho_index(double x, double y, int theta);
+    int point_theta_to_rho_index(Point &point, int theta);
+    int point_theta_to_rho_index(double x, double y, int theta);
     static double rho_theta_x_to_y(double rho, int theta, double x);
     static double rho_theta_y_to_x(double rho, int theta, double y);
     static bool singular_cos(int theta);

@@ -81,13 +81,13 @@ void Polar_trig::init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) 
     y_max = m_y_max;
     rho_inc = m_rho_inc;
     theta_inc = m_theta_inc;
-    rho_range = 2 * rho_max;
-    nrhos = rho_range / rho_inc + rho_pad;
-    nthetas = theta_max / theta_inc;
     x_offset = x_max / 2.0;
     y_offset = y_max / 2.0;
     rho_max = sqrt(x_offset * x_offset + y_offset * y_offset);
     rho_min = -rho_max;
+    rho_range = 2 * rho_max;
+    nrhos = rho_range / rho_inc + rho_pad;
+    nthetas = theta_max / theta_inc;
 }
 /**
  * @brief
@@ -106,7 +106,8 @@ double Polar_trig::point_theta_index_to_rho(Point &point, int theta_index) {
  * @return
  */
 double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index) {
-    return point_theta_index_to_rho(x, y, to_theta(theta_index));
+    double rho = point_theta_to_rho(x, y, to_theta(theta_index));
+    return rho;
 }
 /**
  * @brief
@@ -114,7 +115,7 @@ double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index)
  * @param theta_index
  * @return
  */
-double Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index) {
+int Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index) {
     return point_theta_index_to_rho_index(point.x, point.y, theta_index);
 }
 /**
@@ -124,8 +125,9 @@ double Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index)
  * @param theta_index
  * @return
  */
-double Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_index) {
-    return to_rho_index(point_theta_index_to_rho(x, y, theta_index));
+int Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_index) {
+    int rho_index = to_rho_index(point_theta_to_rho(x, y, to_theta(theta_index)));
+    return rho_index;
 }
 /**
  * @brief
@@ -134,7 +136,10 @@ double Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_
  * @param theta
  * @return
  */
-double Polar_trig::point_theta_to_rho(Point &point, int theta) { return point_theta_to_rho(point.x, point.y, theta); }
+double Polar_trig::point_theta_to_rho(Point &point, int theta) {
+    double rho = point_theta_to_rho(point.x, point.y, theta);
+    return rho;
+}
 /**
  * @brief
  * @param x
@@ -154,8 +159,9 @@ double Polar_trig::point_theta_to_rho(double x, double y, int theta) {
  * @param theta
  * @return
  */
-double Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
-    return point_theta_to_rho_index(point.x, point.y, theta);
+int Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
+    int rho_index = point_theta_to_rho_index(point.x, point.y, theta);
+    return rho_index;
 }
 /**
  * @brief
@@ -164,8 +170,9 @@ double Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
  * @param theta
  * @return
  */
-double Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
-    return to_rho_index(point_theta_to_rho(x, y, theta));
+int Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
+    int rho_index = to_rho_index(point_theta_to_rho(x, y, theta));
+    return rho_index;
 }
 /**
  * can have a singularity if theta ~= 180, sin ~= 0

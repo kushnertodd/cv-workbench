@@ -16,6 +16,7 @@ public:
     Point(double m_x, double m_y);
     Point(const Point &point);
     bool close(const Point &point) const;
+    void copy(const Point &point);
     double distance(const Point &point) const;
     void init(int m_x, int m_y);
     std::string to_string() const;

@@ -70,7 +70,7 @@ void Hough::find_peaks(std::list<Polar_line> &lines, double threshold) const {
  * @return
  */
 int Hough::get(int rho_index, int theta_index) const {
-    int index = rho_theta_to_index(rho_index, theta_index);
+    int index = rho_index_theta_index_to_index(rho_index, theta_index);
     return accumulator[index];
 }
 /**
@@ -107,16 +107,16 @@ int Hough::get_theta_inc() const { return polar_trig.get_theta_inc(); }
  * @brief
  * @param image_theshold
  */
-void Hough::initialize(Image *image, int image_theshold) {
+void Hough::initialize(Image *image, int pixel_threshold) {
     clear();
     for (int col = 0; col < ncols; col++) {
         for (int row = 0; row < nrows; row++) {
             double value = std::abs(image->get(col, row));
-            if (value > image_theshold) {
+            if (value > pixel_threshold) {
                 for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
                     Point point;
                     image->to_point(point, col, row);
-                    int rho_index = polar_trig.point_theta_to_rho(point, theta_index);
+                    int rho_index = polar_trig.point_theta_index_to_rho_index(point, theta_index);
                     update(rho_index, theta_index, wb_utils::double_to_int_round(value));
                 }
             }
@@ -218,7 +218,11 @@ Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
  * @param theta_index
  * @return
  */
-int Hough::rho_theta_to_index(int rho_index, int theta_index) const { return rho_index * get_nthetas() + theta_index; }
+int Hough::rho_index_theta_index_to_index(int rho_index, int theta_index) const {
+    int index = rho_index * get_nthetas() + theta_index;
+    assert(index < nbins);
+    return index;
+}
 /**
  * @brief
  * @param rho_index
@@ -226,7 +230,7 @@ int Hough::rho_theta_to_index(int rho_index, int theta_index) const { return rho
  * @param value
  */
 void Hough::set(int rho_index, int theta_index, int value) {
-    int index = rho_theta_to_index(rho_index, theta_index);
+    int index = rho_index_theta_index_to_index(rho_index, theta_index);
     accumulator[index] = value;
 }
 /**
@@ -242,7 +246,7 @@ int Hough::to_rho_index(double rho) const { return polar_trig.to_rho_index(rho);
  * @param value
  */
 void Hough::update(int rho_index, int theta_index, int value) const {
-    int index = rho_theta_to_index(rho_index, theta_index);
+    int index = rho_index_theta_index_to_index(rho_index, theta_index);
     accumulator[index] += value;
 }
 /**
