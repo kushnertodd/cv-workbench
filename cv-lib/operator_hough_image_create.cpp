@@ -71,11 +71,16 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     }
     if (Operator_utils::has_parameter(operator_parameters, "lrc-col")) {
         saw_lrc_col = true;
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "lrc_col", lrc_col,
+        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "lrc-col", lrc_col,
                                           errors);
     }
+    if (!saw_rho_inc) {
+        rho_inc = 1;
+        // errors.add("Operator_hough_image_create::run", "", "missing 'rho-inc' parameter");
+    }
     if (!saw_theta_inc) {
-        errors.add("Operator_hough_image_create::run", "", "missing 'theta_inc' parameter");
+        theta_inc = 3;
+        // errors.add("Operator_hough_image_create::run", "", "missing 'theta-inc' parameter");
     }
     if (!saw_threshold) {
         errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
