@@ -9,24 +9,15 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-image-create",
+                "operator": "transform-image-create",
                 "input-data": [
                     {
                         "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "hough_test_grayscale",
-                        "ext": "jpg"
-                    },
-                    {
-                        "id": 2,
                         "type": "data",
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_grayscale",
+                        "filename": "draw",
                         "ext": "txt"
                     }
                 ],
@@ -35,25 +26,15 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_hough1",
-                        "ext": "bin"
-                    },
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "text",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_hough1",
-                        "ext": "txt"
+                        "filename": "hough_test_grayscale",
+                        "ext": "jpg"
                     }
                 ],
                 "parameters": {
-                    "rho-inc": "45",
-                    "theta-inc": "45",
-                    "pixel-threshold": "10"
+                    "ncols": "20",
+                    "nrows": "20"
                 }
             }
         ]

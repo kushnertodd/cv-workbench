@@ -97,7 +97,7 @@ std::string Data_source_descriptor::to_string() {
 Data *Data_source_descriptor::read_operator_data(const std::string &module, Errors &errors) {
     Data *input = nullptr;
     if (data_format == WB_data_format::Data_format::TEXT)
-        read_data(errors);
+        input = read_data(errors);
     else
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
     return input;

@@ -59,7 +59,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
             image = new Image(ncols, nrows, 1, Image_depth::CV_8U, background);
             for (std::string line: input_ptr->lines) {
                 std::vector<std::string> tokens = wb_utils::tokenize(line, " ");
-                if (tokens.empty())
+                if (tokens.size() < 2)
                     errors.add("Operator_transform_image_create::run", "", "invalid draw command: '" + line + "'");
                 if (!errors.has_error()) {
                     if (tokens[0] == "P") {
@@ -161,5 +161,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         if (!errors.has_error())
             for (Data_source_descriptor *output_data_store: output_data_stores)
                 output_data_store->write_operator_image(image, "Operator_transform_image_create::run", errors);
+        if (!errors.has_error() && image != nullptr)
+            image->log(log_entries);
     }
 }
