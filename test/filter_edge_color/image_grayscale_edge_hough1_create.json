@@ -33,6 +33,8 @@
                     }
                 ],
                 "parameters": {
+                    "foreground": "1",
+                    "background": "0",
                     "ncols": "8",
                     "nrows": "8"
                 }

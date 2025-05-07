@@ -1426,8 +1426,8 @@ void Image::write_text(const std::string &path, const std::string &delim, Errors
  * @param errors
  */
 void Image::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    for (int col = 0; col < get_ncols(); col++) {
-        for (int row = 0; row < get_nrows(); row++) {
+    for (int row = 0; row < get_nrows(); row++) {
+        for (int col = 0; col < get_ncols(); col++) {
             for (int component = 0; component < get_ncomponents(); component++) {
                 double value = get(col, row, component);
                 ofs << value << delim;
