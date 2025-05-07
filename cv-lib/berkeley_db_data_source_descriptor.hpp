@@ -3,6 +3,7 @@
 
 #include <json-c/json.h>
 #include <string>
+#include "data.hpp"
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"
@@ -19,6 +20,7 @@ public:
     static Berkeley_db_data_source_descriptor *from_json(json_object *json_data_source_descriptor, int id,
                                                          WB_data_type::Data_type data_type,
                                                          WB_data_format::Data_format data_format, Errors &errors);
+    Data *read_data(Errors &errors) override;
     Histogram *read_histogram(Errors &errors) override;
     Hough *read_hough(Errors &errors) override;
     Image *read_image(Errors &errors) override;

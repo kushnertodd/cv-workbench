@@ -15,6 +15,7 @@ public:
         CONVOLUTION_KERNEL,
         CONVOLVED_IMAGE, // CV_32F, maybe e.g. FLOAT_IMAGE instead
         CORRELATED_IMAGE, // probably CV_32S/F, image correlated with patter
+        DATA, // raw binary or text lines
         IMAGE, // pixels, size, depth is CV_8U, CV_32S, or CV_32F images initially
         JSON_EXPERIMENT, // experiment definition
         JSON_EXPERIMENT_RESULTS, // result of experiment run

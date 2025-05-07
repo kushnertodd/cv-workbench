@@ -19,6 +19,12 @@ Internet_data_source_descriptor::Internet_data_source_descriptor(int m_id, WB_da
  * @param errors
  * @return
  */
+Data *Internet_data_source_descriptor::read_data(Errors &errors) { return nullptr; }
+/**
+ * @brief
+ * @param errors
+ * @return
+ */
 Histogram *Internet_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 /**
  * @brief

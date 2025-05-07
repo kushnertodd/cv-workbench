@@ -77,6 +77,17 @@ Filesystem_data_source_descriptor::from_json(json_object *json_data_source_descr
  * @param errors
  * @return
  */
+Data *Filesystem_data_source_descriptor::read_data(Errors &errors) {
+    std::string path = to_path_noext();
+    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
+    std::string data_filename = wb_filename.to_text();
+    return Data::read_text(data_filename, errors);
+}
+/**
+ * @brief
+ * @param errors
+ * @return
+ */
 Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 /**
  * @brief

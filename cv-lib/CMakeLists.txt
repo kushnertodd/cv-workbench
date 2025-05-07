@@ -5,6 +5,8 @@ add_library(cv-lib STATIC
         bounds.hpp
         data_source_descriptor.cpp
         data_source_descriptor.hpp
+        data.cpp
+        data.hpp
         errors.cpp
         errors.hpp
         experiment.cpp

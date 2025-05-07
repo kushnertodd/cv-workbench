@@ -3,6 +3,7 @@
 
 #include <json-c/json.h>
 #include <string>
+#include "data.hpp"
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"
 #include "histogram.hpp"
@@ -25,6 +26,7 @@ class Internet_data_source_descriptor : public Data_source_descriptor {
 public:
     Internet_data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                     WB_data_format::Data_format data_format);
+    Data *read_data(Errors &errors) override;
     Histogram *read_histogram(Errors &errors) override;
     Hough *read_hough(Errors &errors) override;
     Image *read_image(Errors &errors) override;

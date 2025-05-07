@@ -3,6 +3,7 @@
 
 #include <json-c/json.h>
 #include <string>
+#include "data.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
 #include "image.hpp"
@@ -22,11 +23,13 @@ public:
                            WB_repository_types::Repository_type m_repository_type);
     constexpr int get_id() const { return id; }
     static Data_source_descriptor *from_json(json_object *json_data_source_descriptor, Errors &errors);
+    virtual Data *read_data(Errors &errors) = 0;
     virtual Histogram *read_histogram(Errors &errors) = 0;
     //  virtual Histogram *read_histogram_text(Errors &errors) = 0;
     virtual Hough *read_hough(Errors &errors) = 0;
     //  virtual Hough *read_hough_text(Errors &errors) = 0;
     virtual Image *read_image(Errors &errors) = 0;
+    virtual Data *read_operator_data(const std::string &module, Errors &errors);
     virtual Image *read_image_jpeg(Errors &errors) = 0;
     virtual Image *read_image_text(Errors &errors) = 0;
     virtual std::string read_json(Errors &errors) = 0;

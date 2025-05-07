@@ -27,6 +27,7 @@ Berkeley_db_data_source_descriptor::from_json(json_object *json_data_source_desc
     }
     return berkeley_db_data_source_descriptor;
 }
+Data *Berkeley_db_data_source_descriptor::read_data(Errors &errors) { return nullptr; }
 Histogram *Berkeley_db_data_source_descriptor::read_histogram(Errors &errors) { return nullptr; }
 Hough *Berkeley_db_data_source_descriptor::read_hough(Errors &errors) { return nullptr; }
 Image *Berkeley_db_data_source_descriptor::read_image(Errors &errors) { return nullptr; }
