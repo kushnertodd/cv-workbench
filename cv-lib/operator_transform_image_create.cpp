@@ -46,26 +46,19 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         if (Operator_utils::has_parameter(operator_parameters, "foreground"))
             Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters,
                                                "foreground", foreground, errors);
-
-        std::string param_point_str;
-        std::string param_line_str;
-        std::string param_rectangle_str;
-        std::string param_rectangle_filled_str;
-        bool saw_point = false;
-        bool saw_line = false;
-        bool saw_rectangle = false;
-        bool saw_rectangle_filled = false;
-
+        if (!saw_ncols)
+            errors.add("Operator_transform_image_create::run", "", "missing ncols parameter");
+        if (!saw_nrows)
+            errors.add("Operator_transform_image_create::run", "", "missing nrows parameter");
         Data_source_descriptor *input_data_source = input_data_sources.front();
         Data *input_ptr = nullptr;
         if (!errors.has_error())
             input_ptr = input_data_source->read_operator_data("Operator_transform_image_create::run", errors);
-
         Image *image = nullptr;
         if (!errors.has_error()) {
             image = new Image(ncols, nrows, 1, Image_depth::CV_8U, background);
             for (std::string line: input_ptr->lines) {
-                std::vector<std::string> tokens = wb_utils::tokenize(param_point_str, " ");
+                std::vector<std::string> tokens = wb_utils::tokenize(line, " ");
                 if (tokens.empty())
                     errors.add("Operator_transform_image_create::run", "", "invalid draw command: '" + line + "'");
                 if (!errors.has_error()) {
