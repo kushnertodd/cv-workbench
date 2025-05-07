@@ -33,8 +33,8 @@
                     }
                 ],
                 "parameters": {
-                    "ncols": "20",
-                    "nrows": "20"
+                    "ncols": "8",
+                    "nrows": "8"
                 }
             }
         ]
