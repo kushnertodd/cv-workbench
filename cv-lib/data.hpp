@@ -8,9 +8,9 @@
 #include "wb_log.hpp"
 
 class Data {
-    std::list<std::string> lines;
 
 public:
+    std::list<std::string> lines;
     virtual ~Data();
     Data();
     static Data *read_text(const std::string &path, Errors &errors);
