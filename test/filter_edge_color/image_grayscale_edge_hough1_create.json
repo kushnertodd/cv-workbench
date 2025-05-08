@@ -1,0 +1,44 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "transform-image-create",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "data",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "draw",
+                        "ext": "txt"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "hough_test_grayscale",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "foreground": "1",
+                    "background": "0",
+                    "ncols": "8",
+                    "nrows": "8"
+                }
+            }
+        ]
+    }
+}

@@ -1,33 +1,49 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
 #ifndef CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 
 #include <cstdio>
-#include "wb_data_format.hpp"
-#include "wb_data_type.hpp"
-#include "wb_image_depth.hpp"
-#include "wb_repository_type.hpp"
 #include "errors.hpp"
-#include "wb_defs.hpp"
+#include "image_depth.hpp"
+#include "image_line_segment.hpp"
+#include "line_segment.hpp"
+#include "pixel.hpp"
+#include "point.hpp"
 
 class Image_header {
- public:
-  int rows{};
-  int cols{};
-  int components{}; // we're only supported 1 grayscale component now
-  int row_stride{}; // for jpeg
-  int npixels{};
-  WB_image_depth::Image_depth depth{};
-  Image_header();
-  Image_header(int m_rows, int m_cols, int m_components,
-               WB_image_depth::Image_depth m_depth);
-  Image_header(Image_header &image_header);
-  void read(FILE *fp, Errors &errors);
-  void write(FILE *fp, Errors &errors) const;
-  std::string to_string(const std::string &prefix = "") const;
+    int ncomponents{}; // we're only supported 1 grayscale component or 3 color components
+    Image_depth depth{};
+    int ncols{};
+    int nrows{};
+    int row_stride{}; // for jpeg
+    int npixels{};
+    double col_offset{};
+    double row_offset{};
+
+public:
+    Image_header();
+    Image_header(const int m_ncols, const int m_nrows, const int m_ncomponents, const Image_depth m_depth);
+    Image_header(const Image_header &image_header);
+    Image_depth get_depth() const;
+    int get_ncols() const;
+    int get_ncomponents() const;
+    int get_npixels() const;
+    int get_nrows() const;
+    int get_row_stride() const;
+    void read(FILE *fp, Errors &errors);
+    double to_col(double x) const;
+    static double to_col(double x, int ncols);
+    void to_pixel(Pixel &pixel, double x, double y);
+    void to_pixel(Pixel &pixel, Point &point);
+    void to_point(Point &point, int col, int row);
+    void to_point(Point &point, Pixel &pixel);
+    double to_row(double y) const;
+    static double to_row(double y, int nrows);
+    std::string to_string(const std::string &prefix = "") const;
+    double to_x(int col) const;
+    static double to_x(int col, int ncols);
+    double to_y(int row) const;
+    static double to_y(int row, int nrows);
+    void write(FILE *fp, Errors &errors) const;
 };
 
-#endif //CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
+#endif // CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_

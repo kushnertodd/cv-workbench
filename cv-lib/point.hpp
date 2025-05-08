@@ -1,33 +1,25 @@
-//
-// Created by kushn on 6/27/2022.
-//
-
 #ifndef SRC__POINT_HPP_
 #define SRC__POINT_HPP_
 #include <string>
 
 class Point {
- public:
-  int row{};
-  int col{};
-  Point();
-  Point(int m_row, int m_col);
-  Point(const Point &point);
-  Point(double x, double y, int cols, int rows);
-  void check_point_valid(int rows, int cols) const;
-  static double col_to_x(int col, int cols);
-  double ellipse_dist(int rows, int cols) const;
-  static double ellipse_dist(int row, int col, int rows, int cols);
-  bool in_ellipse(int rows, int cols) const;
-  static bool in_ellipse(int row, int col, int rows, int cols);
-  static bool is_valid(int row, int col, int rows, int cols);
-  static double row_to_y(int row, int rows);
-  void set(int m_row, int m_col);
-  std::string to_string() const;
-  double to_x(int cols) const;
-  double to_y(int rows) const;
-  static int x_to_col(double x, int cols);
-  static int y_to_row(double y, int rows);
+    friend class Polar_trig;
+    friend class Image_header;
+    friend class Line_segment;
+    friend class WB_window;
+    const double close_distance = 1.0;
+    double x{};
+    double y{};
+
+public:
+    Point();
+    Point(double m_x, double m_y);
+    Point(const Point &point);
+    bool close(const Point &point) const;
+    void copy(const Point &point);
+    double distance(const Point &point) const;
+    void init(int m_x, int m_y);
+    std::string to_string() const;
 };
 
-#endif //SRC__POINT_HPP_
+#endif // SRC__POINT_HPP_

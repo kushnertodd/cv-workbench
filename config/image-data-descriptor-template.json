@@ -1,56 +1,56 @@
 {
-  "input-data": [
-    {
-      "id": "int",
-      "__comment": "image depth, size obtained from berkeley db",
-      "type": "image",
-      "repository": "berkeley_db",
-      "ref-id": "int"
-    },
-    {
-      "id": "int",
-      "type": "image",
-      "repository": "filesystem",
-      "format": "BINARY|JPEG|default=JPEG",
-      "__comment": "path = [directory/]filename.ext",
-      "directory": "string|default='.'",
-      "filename": "string",
-      "ext": "string|default='jpg'"
-    },
-    {
-      "id": "int",
-      "type": "image",
-      "repository": "internet",
-      "__comment": "format is raw binary",
-      "url": "string",
-      "depth": "string",
-      "rows": "int",
-      "columns": "int"
-    },
-    {
-      "id": "int",
-      "type": "image",
-      "repository": "step-output",
-      "step-id": 1,
-      "ref-id": 1
-    }
-  ],
-  "output-data": [
-    {
-      "id": "int",
-      "type": "image",
-      "repository": "berkeley_db",
-      "ref-id": "generate"
-    },
-    {
-      "id": "int",
-      "type": "image",
-      "repository": "filesystem",
-      "format": "BINARY|JPEG|default=JPEG",
-      "__comment": "path = [directory/]filename.ext",
-      "directory": "string|default=''",
-      "filename": "string",
-      "ext": "string|default='jpg'"
-    }
-  ]
+    "input-data": [
+        {
+            "id": "int",
+            "__comment": "image depth, size obtained from berkeley db",
+            "type": "image",
+            "repository": "berkeley_db",
+            "ref-id": "int"
+        },
+        {
+            "id": "int",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "BINARY|JPEG|default=JPEG",
+            "__comment": "path = [directory/]filename.ext",
+            "directory": "string|default='.'",
+            "filename": "string",
+            "ext": "string|default='jpg'"
+        },
+        {
+            "id": "int",
+            "type": "image",
+            "repository": "internet",
+            "__comment": "format is raw binary",
+            "url": "string",
+            "depth": "string",
+            "nrows": "int",
+            "ncols": "int"
+        },
+        {
+            "id": "int",
+            "type": "image",
+            "repository": "step-output",
+            "step-id": 1,
+            "ref-id": 1
+        }
+    ],
+    "output-data": [
+        {
+            "id": "int",
+            "type": "image",
+            "repository": "berkeley_db",
+            "ref-id": "generate"
+        },
+        {
+            "id": "int",
+            "type": "image",
+            "repository": "filesystem",
+            "format": "BINARY|JPEG|default=JPEG",
+            "__comment": "path = [directory/]filename.ext",
+            "directory": "string|default=''",
+            "filename": "string",
+            "ext": "string|default='jpg'"
+        }
+    ]
 }

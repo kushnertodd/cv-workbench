@@ -1,88 +1,198 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
+#include "image_header.hpp"
 #include <iomanip>
 #include <iostream>
 #include "wb_utils.hpp"
-#include "image_header.hpp"
 
 extern bool debug;
 
 Image_header::Image_header() = default;
-
-Image_header::Image_header(int m_rows, int m_cols, int m_components, WB_image_depth::Image_depth m_depth) :
-    rows(m_rows),
-    cols(m_cols),
-    components(m_components),
-    depth(m_depth),
-    row_stride(cols * components),
-    npixels(rows * row_stride) {
-  if (debug)
-    std::cout << "Image_header::Image_header: " << to_string() << std::endl;
+/*
+ * @brief
+ * @param m_ncols
+ * @param m_nrows
+ * @param m_ncomponents
+ * @param m_depth
+ */
+Image_header::Image_header(const int m_ncols, const int m_nrows, const int m_ncomponents, const Image_depth m_depth) :
+    ncomponents(m_ncomponents), depth(m_depth), ncols(m_ncols), nrows(m_nrows), row_stride(ncols * ncomponents),
+    npixels(nrows * row_stride) {
+    if (debug)
+        std::cout << "Image_header::Image_header: " << to_string() << std::endl;
+    col_offset = ncols / 2.0;
+    row_offset = nrows / 2.0;
 }
 
-Image_header::Image_header(Image_header &image_header) :
-    Image_header(image_header.rows,
-                 image_header.cols,
-                 image_header.components,
-                 image_header.depth) {
-}
-
+/**
+ * @brief
+ * @param image_header
+ */
+Image_header::Image_header(const Image_header &image_header) :
+    Image_header(image_header.ncols, image_header.nrows, image_header.ncomponents, image_header.depth) {}
+/**
+ * @brief
+ * @return
+ */
+Image_depth Image_header::get_depth() const { return depth; }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_ncols() const { return ncols; }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_ncomponents() const { return ncomponents; }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_npixels() const { return npixels; }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_nrows() const { return nrows; }
+/**
+ * @brief
+ * @return
+ */
+int Image_header::get_row_stride() const { return row_stride; }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
 void Image_header::read(FILE *fp, Errors &errors) {
-  wb_utils::read_int(fp, rows, "Image_header::read_header", "", "missing image rows", errors);
-  if (!errors.has_error())
-    wb_utils::read_int(fp, cols, "Image_header::read_header", "", "missing image cols", errors);
-  if (!errors.has_error())
-    wb_utils::read_int(fp,
-                       components,
-                       "Image_header::read_header",
-                       "",
-                       "missing image components",
-                       errors);
-  if (!errors.has_error()) {
-    int depth_int;
-    wb_utils::read_int(fp,
-                       depth_int,
-                       "Image_header::read_header",
-                       "",
-                       "missing image depth",
-                       errors);
+    wb_utils::read_int(fp, ncols, "Image_header::read_header", "", "missing image ncols", errors);
     if (!errors.has_error())
-      depth = static_cast<WB_image_depth::Image_depth>(depth_int);
-  }
+        wb_utils::read_int(fp, nrows, "Image_header::read_header", "", "missing image nrows", errors);
+    if (!errors.has_error())
+        wb_utils::read_int(fp, ncomponents, "Image_header::read_header", "", "missing image ncomponents", errors);
+    if (!errors.has_error()) {
+        int depth_int;
+        wb_utils::read_int(fp, depth_int, "Image_header::read_header", "", "missing image depth", errors);
+        if (!errors.has_error())
+            depth = static_cast<Image_depth>(depth_int);
+    }
 }
-
-void Image_header::write(FILE *fp, Errors &errors) const {
-  fwrite(&rows, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image rows");
-    return;
-  }
-  fwrite(&cols, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image cols");
-    return;
-  }
-  fwrite(&components, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_header::write_header", "", "cannot write image components");
-    return;
-  }
-  fwrite(&depth, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Image_headerZZ::write_header", "", "cannot write image depth");
-    return;
-  }
-}
-
+/**
+ * @brief
+ * @param x
+ * @return
+ */
+double Image_header::to_col(double x) const { return x + col_offset; }
+/**
+ * @brief
+ * @param x
+ * @param ncols
+ * @return
+ */
+double Image_header::to_col(double x, int ncols) { return x + ncols / 2.0; }
+/**
+ * @brief
+ * @param pixel
+ * @param x
+ * @param y
+ */
+void Image_header::to_pixel(Pixel &pixel, double x, double y) { pixel.init(to_col(x), to_row(y)); }
+/**
+ * @brief
+ * @param pixel
+ * @param point
+ */
+void Image_header::to_pixel(Pixel &pixel, Point &point) { to_pixel(pixel, point.x, point.y); }
+/**
+ * @brief
+ * @param point
+ * @param col
+ * @param row
+ */
+void Image_header::to_point(Point &point, int col, int row) { point.init(to_x(col), to_y(row)); }
+/**
+ * @brief
+ * @param point
+ * @param pixel
+ */
+void Image_header::to_point(Point &point, Pixel &pixel) { to_point(point, pixel.col, pixel.row); }
+/**
+ * @brief
+ * @param y
+ * @return
+ */
+double Image_header::to_row(double y) const { return row_offset - y; }
+/**
+ * @brief
+ * @param y
+ * @param nrows
+ * @return
+ */
+double Image_header::to_row(double y, int nrows) { return nrows / 2.0 - y; }
+/**
+ * @brief
+ * @param prefix
+ * @return
+ */
 std::string Image_header::to_string(const std::string &prefix) const {
-  std::ostringstream os;
-  os << prefix << std::setw(20) << std::left << "rows " << rows << std::endl
-     << prefix << std::setw(20) << std::left << "cols " << cols << std::endl
-     << prefix << std::setw(20) << std::left << "components " << components << std::endl
-     << prefix << std::setw(20) << std::left << "depth " << WB_image_depth::to_string(depth) << std::endl
-     << prefix << std::setw(20) << std::left << "row_stride " << row_stride << std::endl
-     << prefix << std::setw(20) << std::left << "npixels " << npixels << std::endl;
-  return os.str();
+    std::ostringstream os;
+    os << prefix << std::setw(20) << std::left << "ncols " << get_ncols() << std::endl
+       << prefix << std::setw(20) << std::left << "nrows " << get_nrows() << std::endl
+       << prefix << std::setw(20) << std::left << "ncomponents " << ncomponents << std::endl
+       << prefix << std::setw(20) << std::left << "depth " << WB_image_depth::to_string(depth) << std::endl
+       << prefix << std::setw(20) << std::left << "row_stride " << row_stride << std::endl
+       << prefix << std::setw(20) << std::left << "npixels " << npixels << std::endl;
+    return os.str();
+}
+/**
+ * @brief
+ * @param col
+ * @return
+ */
+double Image_header::to_x(int col) const { return col - col_offset; }
+/**
+ * @brief
+ * @param col
+ * @param ncols
+ * @return
+ */
+double Image_header::to_x(int col, int ncols) { return col - ncols / 2.0; }
+/**
+ * @brief
+ * @param row
+ * @return
+ */
+double Image_header::to_y(int row) const { return row_offset - row; }
+/**
+ * @brief
+ * @param row
+ * @param nrows
+ * @return
+ */
+double Image_header::to_y(int row, int nrows) { return nrows / 2.0 - row; }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
+void Image_header::write(FILE *fp, Errors &errors) const {
+    fwrite(&ncols, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Image_header::write_header", "", "cannot write image nrows");
+        return;
+    }
+    fwrite(&nrows, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Image_header::write_header", "", "cannot write image ncols");
+        return;
+    }
+    fwrite(&ncomponents, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Image_header::write_header", "", "cannot write image ncomponents");
+        return;
+    }
+    fwrite(&depth, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Image_header::write_header", "", "cannot write image depth");
+        return;
+    }
 }

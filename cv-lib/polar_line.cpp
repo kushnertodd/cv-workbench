@@ -1,71 +1,69 @@
-//
-// Created by kushn on 6/27/2022.
-//
-
+#include "polar_line.hpp"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
-#include "errors.hpp"
-#include "polar_line.hpp"
-
-extern bool debug;
+#include "point.hpp"
+#include "polar_trig.hpp"
 
 /**
  * initialize_image (rho, theta) line
  * @param m_rho
- * @param m_theta_index
+ * @param m_theta
  */
-
-Polar_line::Polar_line(int m_rho_index, double m_rho, int m_theta_index,
-                       double m_cos_theta, double m_sin_theta, int m_count)
-    :
-    rho_index(m_rho_index),
-    rho(m_rho),
-    theta_index(m_theta_index),
-    cos_theta(m_cos_theta),
-    sin_theta(m_sin_theta),
-    count(m_count) {
+Polar_line::Polar_line(double m_rho, int m_theta) { init(m_rho, m_theta); }
+/**
+ * @brief
+ * @return
+ */
+double Polar_line::get_rho() const { return rho; }
+/**
+ * @brief
+ * @return
+ */
+double Polar_line::get_theta() const { return theta; }
+/**
+ * @brief
+ * @param m_rho
+ * @param m_theta
+ */
+void Polar_line::init(double m_rho, int m_theta) {
+    rho = m_rho;
+    theta = m_theta;
+    cos_t = Polar_trig::to_cos(theta);
+    sin_t = Polar_trig::to_sin(theta);
 }
-
-void Polar_line::set(int m_rho_index, double m_rho, int m_theta_index,
-                     double m_cos_theta, double m_sin_theta, int m_count) {
-  rho_index = m_rho_index;
-  rho = m_rho;
-  theta_index = m_theta_index;
-  cos_theta = m_cos_theta;
-  sin_theta = m_sin_theta;
-  count = m_count;
-}
-
+/**
+ * @brief
+ * @return
+ */
 std::string Polar_line::to_string() const {
-  std::ostringstream os;
-  os << " rho_index " << rho_index
-     << " rho " << rho
-     << " theta_index " << theta_index
-     << " count " << count
-     << " cos_theta " << cos_theta
-     << " sin_theta " << sin_theta
-     << " count " << count;
-  return os.str();
+    std::ostringstream os;
+    os << " rho " << rho << " theta " << theta << " cos_t " << cos_t << " sin_t " << sin_t;
+    return os.str();
 }
-
-void Polar_line::write(FILE *fp, Errors &errors) {
-  fwrite(&rho_index, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Polar_line::write", "", "cannot write Hough rho_index");
-    return;
-  }
-  fwrite(&theta_index, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Polar_line::write", "", "cannot write Hough theta_index");
-    return;
-  }
-  fwrite(&count, sizeof(int), 1, fp);
-  if (ferror(fp) != 0) {
-    errors.add("Polar_line::write", "", "cannot write Hough count");
-  }
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
+void Polar_line::write(FILE *fp, Errors &errors) const {
+    fwrite(&rho, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Polar_line::write", "", "cannot write Hough rho");
+        return;
+    }
+    fwrite(&theta, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Polar_line::write", "", "cannot write Hough theta");
+        return;
+    }
 }
-
+/**
+ * @brief
+ * @param ofs
+ * @param delim
+ * @param errors
+ */
 void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << rho_index << delim << theta_index << delim << count<< std::endl;
+    ofs << theta << delim << rho << delim << rho << std::endl;
 }

@@ -1,58 +1,89 @@
-//
-// Created by kushn on 6/27/2022.
-//
-
 #ifndef SRC__POLAR_TRIG_HPP_
 #define SRC__POLAR_TRIG_HPP_
 
 #include <cassert>
+#include "point.hpp"
 
-const int max_thetas = 180;
+const int default_rho_inc = 1;
+const int default_theta_inc = 3;
+const int theta_max = 180;
 const int rho_pad = 2;
+/**
+ * @brief
+ */
+class Polar_index {
+    friend class Polar_trig;
+    int rho_index{};
+    int theta_index{};
 
-class Polar_trig {
- public:
-  static int theta_inc;
-  static const double polar_cos[max_thetas];
-  static const double polar_sin[max_thetas];
-  int rows{};
-  int cols{};
-  int nrhos{};
-
-  Polar_trig();
-  Polar_trig(int n_rows, int m_cols);
-  int get_cols() const;
-  int get_nrhos() const;
-  int get_rows() const;
-  static int get_theta_inc();
-  static int get_nthetas();
-  static void init(int m_theta_inc);
-
-  double rho_index_to_rho(int rho_index) const;
-  static double rho_index_to_rho(int rho_index, int nrhos);
-
-  int rho_theta_col_to_row(int rho_index, int theta_index, int col) const;
-  static int rho_theta_col_to_row(int rho_index, int theta_index, int col, int rows, int cols, int nrhos);
-
-  int rho_theta_row_to_col(int rho_index, int theta_index, int row) const;
-  static int rho_theta_row_to_col(int rho_index, int theta_index, int row, int rows, int cols, int nrhos);
-
-  int rho_theta_to_index(int rho_index, int theta_index) const;
-  static int rho_theta_to_index(int rho_index, int theta_index, int nrhos);
-
-  int rho_to_index(double rho) const;
-  static int rho_to_index(double rho, int nrhos);
-
-  double row_col_theta_to_rho(int row, int col, int theta_index) const;
-  static double row_col_theta_to_rho(int row, int col, int theta_index, int rows, int cols);
-
-  int row_col_theta_to_rho_index(int row, int col, int theta_index) const;
-  static int row_col_theta_to_rho_index(int row, int col, int theta_index, int nrhos, int rows, int cols);
-
-  static void set_theta_inc(int theta_inc);
-  static int theta_index_to_theta(int index);
-  static double to_cos(int theta_index);
-  static double to_sin(int theta_index);
-
+public:
+    Polar_index();
+    Polar_index(int m_rho_index, int m_theta_index);
+    void init(int m_rho_index, int m_theta_index);
 };
-#endif //SRC__POLAR_TRIG_HPP_
+/**
+ * @brief
+ */
+class Polar_point {
+    friend class Polar_trig;
+    double rho{};
+    double theta{};
+
+public:
+    Polar_point();
+    Polar_point(double m_rho, double m_theta);
+    void init(double m_rho, double m_theta);
+};
+/**
+ * @brief
+ */
+class Polar_trig {
+    double x_max{};
+    double y_max{};
+    int rho_inc{};
+    int theta_inc{};
+    double rho_range{};
+    int nrhos{};
+    int nthetas{};
+    double x_offset{};
+    double y_offset{};
+    double rho_max{};
+    double rho_min{};
+    const int rho_pad = 5;
+    static const double polar_cos[theta_max];
+    static const double polar_sin[theta_max];
+
+public:
+    Polar_trig();
+    Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
+    int get_nrhos() const;
+    int get_nthetas() const;
+    int get_rho_inc() const;
+    int get_theta_inc() const;
+    void init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc);
+    double point_theta_index_to_rho(Point &point, int theta_index);
+    double point_theta_index_to_rho(double x, double y, int theta_index);
+    int point_theta_index_to_rho_index(Point &point, int theta_index);
+    int point_theta_index_to_rho_index(double x, double y, int theta_index);
+    static double point_theta_to_rho(Point &point, int theta);
+    static double point_theta_to_rho(double x, double y, int theta);
+    int point_theta_to_rho_index(Point &point, int theta);
+    int point_theta_to_rho_index(double x, double y, int theta);
+    static double rho_theta_x_to_y(double rho, int theta, double x);
+    static double rho_theta_y_to_x(double rho, int theta, double y);
+    static bool singular_cos(int theta);
+    bool singular_cos_index(int theta_index) const;
+    static bool singular_sin(int theta);
+    bool singular_sin_index(int theta_index) const;
+    double to_cos_index(int theta_index) const;
+    static double to_cos(int theta);
+    void to_index(Polar_index &polar_index, Polar_point &polar_point) const;
+    void to_point(Polar_point &polar_point, Polar_index &polar_index) const;
+    double to_rho(int rho_index) const;
+    int to_rho_index(double rho) const;
+    static double to_sin(int theta);
+    double to_sin_index(int theta_index) const;
+    int to_theta(int theta_index) const;
+    int to_theta_index(int theta) const;
+};
+#endif // SRC__POLAR_TRIG_HPP_

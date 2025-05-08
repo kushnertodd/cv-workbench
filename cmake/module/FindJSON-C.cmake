@@ -1,6 +1,7 @@
 # JSON-C_FOUND - true if library and headers were found
 # JSON-C_INCLUDE_DIRS - include directories
 # JSON-C_LIBRARIES - library directories
+# https://github.com/cloudshark/cshark/blob/master/build/modules/FindJSON-C.cmake
 
 find_package(PkgConfig)
 pkg_check_modules(PC_JSON-C QUIET json-c)

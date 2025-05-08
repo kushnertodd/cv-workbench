@@ -1,10 +1,6 @@
-//
-// Created by kushn on 6/14/2022.
-//
-
+#include "operator_transform_image_create.hpp"
 #include <iostream>
 #include <regex>
-#include "operator_transform_image_create.hpp"
 #include "operator_utils.hpp"
 
 extern bool debug;
@@ -19,231 +15,173 @@ extern bool debug;
  */
 void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &input_data_sources,
                                           std::list<Data_source_descriptor *> &output_data_stores,
-                                          String_map &operator_parameters,
-                                          std::list<WB_log_entry> &log_entries,
+                                          String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
                                           Errors &errors) {
-
-  bool input_data_sources_missing = input_data_sources.empty();
-  if (output_data_stores.empty())
-    errors.add("Operator_transform_image_create::run", "", "output data source required");
-  else {
-    int rows;
-    int cols;
-    double background;
-    double foreground;
-    std::string param_point_str;
-    std::string param_line_str;
-    std::string param_rectangle_str;
-    std::string param_rectangle_filled_str;
-    bool saw_rows = false;
-    bool saw_cols = false;
-    bool saw_point = false;
-    bool saw_line = false;
-    bool saw_rectangle = false;
-    bool saw_rectangle_filled = false;
-    if (Operator_utils::has_parameter(operator_parameters, "rows")) {
-      saw_rows = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                        operator_parameters, "rows", rows, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "cols")) {
-      saw_cols = true;
-      Operator_utils::get_int_parameter("Operator_transform_image_create::run",
-                                        operator_parameters, "cols", cols, errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "background"))
-      Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                         operator_parameters, "background", background, errors);
-    else
-      background = 0.0;
-    if (Operator_utils::has_parameter(operator_parameters, "foreground"))
-      Operator_utils::get_real_parameter("Operator_transform_image_create::run",
-                                         operator_parameters, "foreground", foreground, errors);
-    else
-      foreground = 255;
-    if (Operator_utils::has_parameter(operator_parameters, "point")) {
-      saw_point = true;
-      param_point_str = Operator_utils::get_parameter(operator_parameters, "point");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "line")) {
-      saw_line = true;
-      param_line_str = Operator_utils::get_parameter(operator_parameters, "line");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle")) {
-      saw_rectangle = true;
-      param_rectangle_str = Operator_utils::get_parameter(operator_parameters, "rectangle");
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "rectangle-filled")) {
-      saw_rectangle_filled = true;
-      param_rectangle_filled_str = Operator_utils::get_parameter(operator_parameters, "rectangle-filled");
-    }
-    Image *image = nullptr;
-    Data_source_descriptor *input_data_source;
-    if (input_data_sources_missing && (!saw_rows || !saw_cols))
-      errors.add("Operator_transform_image_create::run",
-                 "",
-                 "'rows' and 'cols' parameters required if no input data source");
-    if (!errors.has_error()) {
-      if (input_data_sources_missing)
-        image = new Image(rows, cols, 1, WB_image_depth::Image_depth::CV_32S, background);
-      else {
-        input_data_source = input_data_sources.front();
-        image = input_data_source->read_operator_image("Operator_transform_image_create::run", errors);
-        if (image != nullptr && !errors.has_error())
-          image->check_grayscale("Operator_transform_image_create::run", errors);
-      }
-    }
-    if (!errors.has_error() && saw_point) {
-      std::vector<std::string> points = wb_utils::tokenize(param_point_str, "|");
-      if (points.empty())
-        errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
-      if (!errors.has_error()) {
-        std::regex point_pat("\\(([0-9]+),([0-9]+)\\)");
-        for (const std::string &point_str: points) {
-          std::smatch msm;
-          if (!std::regex_match(point_str, msm, point_pat) || msm.size() != 3)
-            errors.add("Operator_transform_image_create::run", "", "invalid point parameter value");
-          else {
-            std::string row_str = msm[1];
-            std::string col_str = msm[2];
-            int row;
-            int col;
-            if (!wb_utils::string_to_int(row_str, row))
-              errors.add("Operator_transform_image_create::run", "", "invalid point parameter row value");
-            if (!wb_utils::string_to_int(col_str, col))
-              errors.add("Operator_transform_image_create::run", "", "invalid point parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->set(row, col, foreground);
+    if (input_data_sources.empty())
+        errors.add("Operator_transform_image_create::run", "", "input data source required");
+    else if (input_data_sources.size() > 1)
+        errors.add("Operator_transform_image_create::run", "", "too many input data sources");
+    else if (output_data_stores.empty())
+        errors.add("Operator_transform_image_create::run", "", "output data source required");
+    else {
+        int ncols;
+        int nrows;
+        double background = 0;
+        double foreground = 255;
+        bool saw_ncols = false;
+        bool saw_nrows = false;
+        if (Operator_utils::has_parameter(operator_parameters, "ncols")) {
+            saw_ncols = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "ncols",
+                                              ncols, errors);
+        }
+        if (Operator_utils::has_parameter(operator_parameters, "nrows")) {
+            saw_nrows = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "nrows",
+                                              nrows, errors);
+        }
+        if (Operator_utils::has_parameter(operator_parameters, "background"))
+            Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters,
+                                               "background", background, errors);
+        if (Operator_utils::has_parameter(operator_parameters, "foreground"))
+            Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters,
+                                               "foreground", foreground, errors);
+        if (!saw_ncols)
+            errors.add("Operator_transform_image_create::run", "", "missing ncols parameter");
+        if (!saw_nrows)
+            errors.add("Operator_transform_image_create::run", "", "missing nrows parameter");
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data *input_ptr = nullptr;
+        if (!errors.has_error())
+            input_ptr = input_data_source->read_operator_data("Operator_transform_image_create::run", errors);
+        Image *image = nullptr;
+        if (!errors.has_error()) {
+            image = new Image(ncols, nrows, 1, Image_depth::CV_8U, background);
+            for (std::string line: input_ptr->lines) {
+                std::vector<std::string> tokens = wb_utils::tokenize(line, " ");
+                if (tokens.size() < 2)
+                    errors.add("Operator_transform_image_create::run", "", "invalid draw command: '" + line + "'");
+                if (!errors.has_error()) {
+                    if (tokens[0] == "P") {
+                        std::vector<std::string> params = wb_utils::tokenize(tokens[1], ",");
+                        if (params.size() != 2)
+                            errors.add("Operator_transform_image_create::run", "", "invalid point command argument");
+                        else {
+                            int col;
+                            int row;
+                            if (!wb_utils::string_to_int(params[0], col))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid point parameter col value");
+                            if (!wb_utils::string_to_int(params[1], row))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid point parameter row value");
+                            if (!errors.has_error()) {
+                                image->set(col, row, foreground);
+                            }
+                        }
+                    } else if (tokens[0] == "L") {
+                        if (tokens.size() < 3)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid line draw command: '" + line + "'");
+                        std::vector<std::string> params1 = wb_utils::tokenize(tokens[1], ",");
+                        std::vector<std::string> params2 = wb_utils::tokenize(tokens[2], ",");
+                        if (params1.size() != 2)
+                            errors.add("Operator_transform_image_create::run", "", "invalid line command argument");
+                        if (params2.size() != 2)
+                            errors.add("Operator_transform_image_create::run", "", "invalid line command argument");
+                        if (!errors.has_error()) {
+                            int col1;
+                            int row1;
+                            int col2;
+                            int row2;
+                            if (!wb_utils::string_to_int(params1[0], col1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid line parameter col1 value");
+                            if (!wb_utils::string_to_int(params1[1], row1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid line parameter row1 value");
+                            if (!wb_utils::string_to_int(params2[0], col2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid line parameter col2 value");
+                            if (!wb_utils::string_to_int(params2[1], row2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid line parameter row2 value");
+                            if (!errors.has_error())
+                                image->draw_line_segment(col1, row1, col2, row2, foreground);
+                        }
+                    } else if (tokens[0] == "R") {
+                        if (tokens.size() < 3)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle draw command: '" + line + "'");
+                        std::vector<std::string> params1 = wb_utils::tokenize(tokens[1], ",");
+                        std::vector<std::string> params2 = wb_utils::tokenize(tokens[2], ",");
+                        if (params1.size() != 4)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle command argument");
+                        if (params2.size() != 4)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle command argument");
+                        if (!errors.has_error()) {
+                            int col1;
+                            int row1;
+                            int col2;
+                            int row2;
+                            if (!wb_utils::string_to_int(params1[0], col1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter col1 value");
+                            if (!wb_utils::string_to_int(params1[1], row1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter row1 value");
+                            if (!wb_utils::string_to_int(params2[0], col2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter col2 value");
+                            if (!wb_utils::string_to_int(params2[1], row2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter row2 value");
+                            if (!errors.has_error())
+                                image->draw_rectangle(col1, row1, col2, row2, foreground);
+                        }
+                    } else if (tokens[0] == "F") {
+                        if (tokens.size() < 3)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle draw command: '" + line + "'");
+                        std::vector<std::string> params1 = wb_utils::tokenize(tokens[1], ",");
+                        std::vector<std::string> params2 = wb_utils::tokenize(tokens[2], ",");
+                        if (params1.size() != 4)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle command argument");
+                        if (params2.size() != 4)
+                            errors.add("Operator_transform_image_create::run", "",
+                                       "invalid rectangle command argument");
+                        if (!errors.has_error()) {
+                            int col1;
+                            int row1;
+                            int col2;
+                            int row2;
+                            if (!wb_utils::string_to_int(params1[0], col1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter col1 value");
+                            if (!wb_utils::string_to_int(params1[1], row1))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter row1 value");
+                            if (!wb_utils::string_to_int(params2[0], col2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter col2 value");
+                            if (!wb_utils::string_to_int(params2[1], row2))
+                                errors.add("Operator_transform_image_create::run", "",
+                                           "invalid rectangle parameter row2 value");
+                            if (!errors.has_error())
+                                image->draw_rectangle_filled(col1, row1, col2, row2, foreground);
+                        }
+                    } else
+                        errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter value");
+                }
             }
-          }
         }
-      }
+        if (!errors.has_error())
+            for (Data_source_descriptor *output_data_store: output_data_stores)
+                output_data_store->write_operator_image(image, "Operator_transform_image_create::run", errors);
+        if (!errors.has_error() && image != nullptr)
+            image->log(log_entries);
     }
-    if (!errors.has_error() && saw_line) {
-      std::vector<std::string> lines = wb_utils::tokenize(param_line_str, "|");
-      if (lines.empty())
-        errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &line_str: lines) {
-          std::smatch msm;
-          if (!std::regex_match(line_str, msm, line_pat))
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->draw_line_segment(row1, col1, row2, col2, foreground);
-            }
-          }
-        }
-      }
-    }
-    if (!errors.has_error() && saw_rectangle) {
-      std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_str, "|");
-      if (rect_lines.empty())
-        errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &rect_line_str: rect_lines) {
-          std::smatch msm;
-          if (!std::regex_match(rect_line_str, msm, line_pat))
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr) {
-              image->draw_rectangle(row1, col1, row2, col2, foreground);
-            }
-          }
-        }
-      }
-    }
-    if (!errors.has_error() && saw_rectangle_filled) {
-      std::vector<std::string> rect_lines = wb_utils::tokenize(param_rectangle_filled_str, "|");
-      if (rect_lines.empty())
-        errors.add("Operator_transform_image_create::run", "", "invalid line parameter value");
-      if (!errors.has_error()) {
-        std::regex line_pat(R"(\(([0-9]+),([0-9]+)\):\(([0-9]+),([0-9]+)\))");
-        for (const std::string &rect_line_str: rect_lines) {
-          std::smatch msm;
-          if (!std::regex_match(rect_line_str, msm, line_pat))
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else if (msm.size() != 5)
-            errors.add("Operator_transform_image_create::run",
-                       "",
-                       "invalid line parameter value");
-          else {
-            std::string row1_str = msm[1];
-            std::string col1_str = msm[2];
-            std::string row2_str = msm[3];
-            std::string col2_str = msm[4];
-            int row1;
-            int col1;
-            int row2;
-            int col2;
-            if (!wb_utils::string_to_int(row1_str, row1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col1_str, col1))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!wb_utils::string_to_int(row2_str, row2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter row value");
-            if (!wb_utils::string_to_int(col2_str, col2))
-              errors.add("Operator_transform_image_create::run", "", "invalid line parameter col value");
-            if (!errors.has_error() && image != nullptr)
-              image->draw_rectangle_filled(row1,
-                                           col1,
-                                           row2,
-                                           col2,
-                                           foreground);
-          }
-        }
-      }
-    }
-    if (!errors.has_error())
-      for (Data_source_descriptor *output_data_store: output_data_stores)
-        output_data_store->write_operator_image(image, "Operator_hough_image_create::run", errors);
-  }
 }

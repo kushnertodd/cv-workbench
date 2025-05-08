@@ -178,6 +178,14 @@ $ cmake ../json-c
 $ cmake --build .
 $ sudo cmake --install . 
 ```
+[Install](https://learn.microsoft.com/en-us/vcpkg/users/buildsystems/cmake-integration) in Windows with [this](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vs?pivots=shell-powershell)
+and [this](https://github.com/json-c/json-c/blob/master/README.md):
+```
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg; .\bootstrap-vcpkg.bat
+vcpkg integrate install
+vcpkg install json-c
+```
 ### Berekley DB Library <a id="linux-berkeley-db-library"/>
 The [Berkeley DB](https://www.oracle.com/database/technologies/related/berkeleydb.html) library
 is an efficient, embedded non-SQL key-indexed database used by`cv-workbench` for image storage.

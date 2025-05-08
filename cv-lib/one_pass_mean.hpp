@@ -1,7 +1,3 @@
-//
-// Created by kushn on 8/23/2022.
-//
-
 #ifndef SRC__ONE_PASS_MEAN_H_
 #define SRC__ONE_PASS_MEAN_H_
 
@@ -17,9 +13,9 @@
  * right and down during a convolution.
  *
  * Initialization:
- * - compute the initial window sum (row = col = 0)
- * - compute the top row sum
+ * - compute the initial window sum (col = row= 0)
  * - compute the left column sum
+ * - compute the top row sum
  *
  *  @image html cv-workbench_one_pass_mean_init.jpg
  *
@@ -39,33 +35,35 @@
  * At any time, get_mean() can give the current running mean.
  */
 class One_pass_mean {
- public:
-  Image *image{};
-  int window_rows{};
-  int window_cols{};
-  int image_rows{};
-  int image_cols{};
-  int n_image_pixels{};
-  int n_window_pixels{};
-  int row_delta{};
-  int col_delta{};
-  double left_window_sum{};
-  double window_sum{};
-  int top_row{};
-  int left_col{};
-  double top_row_sum{};
-  double left_col_sum{};
-  double far_left_col_sum{};
+    friend class Pearsons_correlation;
+    Image *image{};
+    int window_ncols{};
+    int window_nrows{};
+    int image_ncols{};
+    int image_nrows{};
+    int n_image_pixels{};
+    int n_window_pixels{};
+    int col_delta{};
+    int row_delta{};
+    double left_window_sum{};
+    double window_sum{};
+    int left_col{};
+    int top_row{};
+    double left_col_sum{};
+    double far_left_col_sum{};
+    double top_row_sum{};
 
-  One_pass_mean(Image *m_image, int m_window_rows, int m_window_cols);
-
-  void col_right();
-  double get_mean();
-  void init();
-  void row_down();
-  double sum_col(int row, int col);
-  double sum_row(int row, int col);
-  double sum_window(int row, int col);
+public:
+    One_pass_mean(Image *m_image, int m_window_ncols, int m_window_nrows);
+    void col_right();
+    int get_col_delta();
+    double get_mean() const;
+    int get_row_delta();
+    void init();
+    void row_down();
+    double sum_col(int col, int row) const;
+    double sum_row(int col, int row) const;
+    double sum_window(int col, int row) const;
 };
 
-#endif //SRC__ONE_PASS_MEAN_H_
+#endif // SRC__ONE_PASS_MEAN_H_

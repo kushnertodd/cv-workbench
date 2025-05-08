@@ -48,7 +48,7 @@ though it could be rewritten to do everything in OpenCV if that is useful.
 It is something I have needed/would have found useful in the past, and I now have time to write it.
 We'll talk when you get back if this is something interesting to you.
 
-![Workbench overview](workbench_overview.jpeg)
+![Workbench overview](workbench_overview.jpg)
 
 Image and other data may reside in different data stores. 
 Each data store is accessed by a different method.
@@ -58,7 +58,7 @@ stored in a *binary large object* (BLOB) associated with the key.
 - Data can reside in files on the filesystem, where the filename identifies where to access the data.
 - The Internet can provide data via a *URL* that sends data. This usually is a read-only access.  
 
-![Workbench data store](workbench_data_store.jpeg)
+![Workbench data store](workbench_data_store.jpg)
 
 Each data item consists of various components.
 - The type of data being stored, e.g., images, histograms, etc.
@@ -517,7 +517,7 @@ This shows the pixel intensity mapping.
 - Else, the output pixel value is:  
 `lower_out + (pixel in - lower_in) * (upper_out - lower_out) / (upper_in - lower_in)`
 
-![Operator_transform_intensity-map](readme-operator-transform-map.jpeg)
+![Operator_transform_intensity-map](readme-operator-transform-map.jpg)
 
 That is, all pixel values less than lower_in are *clipped* to lower_out, 
 all pixel values greater than upper_in are *clipped* to upper_out,
