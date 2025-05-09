@@ -1,5 +1,6 @@
 #include "hough.hpp"
 #include <cstring>
+#include <iomanip>
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "wb_window.hpp"
@@ -137,11 +138,33 @@ void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas)
   }
 }
 */
-// int Hough::pixel_theta_index_to_rho_index(int col, int row, int theta_index) const {
-//     Point point;
-//     image->to_point(point, col, row);
-//     return polar_trig.point_theta_index_to_rho(point, theta_index);
-// }
+/**
+ * @brief
+ * @param log_entries
+ */
+void Hough::log(std::list<WB_log_entry> &log_entries) {
+    WB_log_entry log_entry_ncols("ncols", wb_utils::int_to_string(get_ncols()));
+    log_entries.push_back(log_entry_ncols);
+    WB_log_entry log_entry_nrows("nrows", wb_utils::int_to_string(get_nrows()));
+    log_entries.push_back(log_entry_nrows);
+    WB_log_entry log_entry_rho_inc("rho inc", wb_utils::int_to_string(get_rho_inc()));
+    log_entries.push_back(log_entry_rho_inc);
+    WB_log_entry log_entry_theta_inc("theta inc", wb_utils::int_to_string(get_theta_inc()));
+    log_entries.push_back(log_entry_theta_inc);
+    WB_log_entry log_entry_nrhos("nrhos", wb_utils::int_to_string(get_nrhos()));
+    log_entries.push_back(log_entry_nrhos);
+    WB_log_entry log_entry_nthetas("nthetas", wb_utils::int_to_string(get_nthetas()));
+    log_entries.push_back(log_entry_nthetas);
+    WB_log_entry log_entry_mean("pixel mean", wb_utils::double_to_string(accumulator_stats.get_mean()));
+    log_entries.push_back(log_entry_mean);
+    WB_log_entry log_entry_standard_deviation("pixel standard deviation",
+                                              wb_utils::double_to_string(accumulator_stats.get_standard_deviation()));
+    log_entries.push_back(log_entry_standard_deviation);
+    WB_log_entry log_entry_min_value("min pixel value", wb_utils::double_to_string(accumulator_stats.bounds.min_value));
+    log_entries.push_back(log_entry_min_value);
+    WB_log_entry log_entry_max_value("max pixel value", wb_utils::double_to_string(accumulator_stats.bounds.max_value));
+    log_entries.push_back(log_entry_max_value);
+}
 /**
  * @brief
  * @param path
@@ -328,8 +351,11 @@ void Hough::write_text(const std::string &path, const std::string &delim, Errors
  * @param errors
  */
 void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) {
-    for (int rho_index = 0; rho_index <= get_nrhos(); rho_index++)
-        ofs << polar_trig.to_rho(rho_index) << delim;
+    ofs << delim << std::fixed;
+    for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+        double rho = polar_trig.to_rho(rho_index);
+        ofs << std::setprecision(2) << rho << delim;
+    }
     ofs << std::endl;
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         ofs << polar_trig.to_theta(theta_index) << delim;

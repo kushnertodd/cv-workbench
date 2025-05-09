@@ -11,6 +11,7 @@
  * https://dbs.ifi.uni-heidelberg.de/files/Team/eschubert/publications/SSDBM18-covariance-authorcopy.pdf
  */
 class Variance_stats {
+    friend class Hough;
     friend class Image;
     int count{};
     double mean{};

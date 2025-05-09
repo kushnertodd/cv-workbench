@@ -4,6 +4,7 @@
 #include <string>
 
 class Bounds {
+    friend class Hough;
     friend class Image;
     friend class Variance_stats;
     double max_value;

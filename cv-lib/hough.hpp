@@ -44,7 +44,7 @@ public:
     int get_rho_inc() const;
     int get_theta_inc() const;
     void initialize(Image *image, int pixel_threshold);
-    // int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
+    void log(std::list<WB_log_entry> &log_entries);
     Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);

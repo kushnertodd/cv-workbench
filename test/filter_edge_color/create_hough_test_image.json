@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "draw",
+                        "filename": "create_hough_test_image",
                         "ext": "txt"
                     }
                 ],
@@ -28,8 +28,17 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "hough_test_grayscale",
+                        "filename": "hough_test_image_grayscale",
                         "ext": "jpg"
+                    },
+                    {
+                        "id": 2,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale",
+                        "ext": "txt"
                     }
                 ],
                 "parameters": {

@@ -84,7 +84,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     }
     if (!saw_threshold) {
         pixel_threshold = 0;
-        //errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
+        // errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
     }
     Data_source_descriptor *input_data_source = input_data_sources.front();
     Image *input_ptr = nullptr;
@@ -105,6 +105,6 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     if (!errors.has_error() && hough_ptr != nullptr)
         for (Data_source_descriptor *hough_output_data_store: output_data_stores)
             hough_output_data_store->write_operator_hough(output.get(), "Operator_hough_image_create::run", errors);
-    // if (!errors.has_error() && hough_ptr != nullptr)
-    //     hough_ptr->log(log_entries);
+    if (!errors.has_error() && hough_ptr != nullptr)
+        hough_ptr->log(log_entries);
 }
