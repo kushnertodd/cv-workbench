@@ -32,7 +32,7 @@ public:
     void read(FILE *fp, Errors &errors);
     double to_col(double x) const;
     static double to_col(double x, int ncols);
-    void to_pixel(Pixel &pixel, double x, double y);
+    void to_pixel(Pixel &pixel, double x, double y) const;
     void to_pixel(Pixel &pixel, Point &point);
     void to_point(Point &point, int col, int row);
     void to_point(Point &point, Pixel &pixel);

@@ -86,7 +86,7 @@ void Polar_trig::init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) 
     rho_max = sqrt(x_offset * x_offset + y_offset * y_offset);
     rho_min = -rho_max;
     rho_range = 2 * rho_max;
-    nrhos = rho_range / rho_inc + rho_pad;
+    nrhos = rho_range / rho_inc;
     nthetas = theta_max / theta_inc;
 }
 /**

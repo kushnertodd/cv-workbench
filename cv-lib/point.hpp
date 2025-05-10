@@ -18,7 +18,9 @@ public:
     bool close(const Point &point) const;
     void copy(const Point &point);
     double distance(const Point &point) const;
-    void init(int m_x, int m_y);
+    double get_x() const;
+    double get_y() const;
+    void init(double m_x, double m_y);
     std::string to_string() const;
 };
 
