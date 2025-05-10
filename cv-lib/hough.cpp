@@ -27,7 +27,7 @@ Hough::Hough() = default;
 Hough::Hough(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold) :
     ncols(m_ncols), nrows(m_nrows), pixel_threshold(m_pixel_threshold) {
     polar_trig.init(ncols, nrows, m_rho_inc, m_theta_inc);
-    nbins = get_nrhos() * get_nthetas();
+    nbins = get_nrhos() * get_nthetas() + polar_trig.rho_pad;
     accumulator = std::unique_ptr<int[]>(new int[nbins]);
 }
 /**

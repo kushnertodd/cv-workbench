@@ -37,6 +37,7 @@ public:
  * @brief
  */
 class Polar_trig {
+    friend class Hough;
     double x_max{};
     double y_max{};
     int rho_inc{};
@@ -48,7 +49,7 @@ class Polar_trig {
     double y_offset{};
     double rho_max{};
     double rho_min{};
-    const int rho_pad = 5;
+    const int rho_pad = 10;
     static const double polar_cos[theta_max];
     static const double polar_sin[theta_max];
 

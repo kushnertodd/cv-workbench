@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "create_hough_test_image3",
+                        "filename": "create_hough_test_image4-16x16",
                         "ext": "txt"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale3",
+                        "filename": "hough_test_image_grayscale4-16x16",
                         "ext": "jpg"
                     },
                     {
@@ -37,15 +37,15 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale3",
+                        "filename": "hough_test_image_grayscale4-16x16",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
                     "foreground": "1",
                     "background": "0",
-                    "ncols": "8",
-                    "nrows": "8"
+                    "ncols": "16",
+                    "nrows": "16"
                 }
             }
         ]
