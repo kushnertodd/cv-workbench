@@ -23,6 +23,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         errors.add("Operator_transform_image_create::run", "", "too many input data sources");
     else if (output_data_stores.empty())
         errors.add("Operator_transform_image_create::run", "", "output data source required");
+    else if (output_data_stores.size() > 1)
+        errors.add("Operator_hough_draw_line::run", "", "too many output data sources");
     else {
         int ncols;
         int nrows;

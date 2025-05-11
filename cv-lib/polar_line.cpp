@@ -38,7 +38,7 @@ void Polar_line::init(double m_rho, int m_theta) {
  */
 std::string Polar_line::to_string() const {
     std::ostringstream os;
-    os << " rho " << rho << " theta " << theta << " cos_t " << cos_t << " sin_t " << sin_t;
+    os << "rho=" << rho << " theta=" << theta << " cos_t=" << cos_t << " sin_t=" << sin_t;
     return os.str();
 }
 /**

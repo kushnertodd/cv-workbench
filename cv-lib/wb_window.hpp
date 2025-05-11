@@ -22,6 +22,7 @@ public:
     void add(Point &point);
     bool clip_window(Polar_line &polar_line, Line_segment &line_segment);
     bool inside(Point &point) const;
+    std::string to_string() const;
 };
 
 #endif // SRC__WB_WINDOW_HPP_
