@@ -111,21 +111,24 @@ int Hough::get_theta_inc() const { return polar_trig.get_theta_inc(); }
  */
 void Hough::initialize(Image *image, int pixel_threshold) {
     clear();
-    //std::cout << "ncols " << ncols << " nrows " << nrows << std::endl;
+    // std::cout << "ncols " << ncols << " nrows " << nrows << std::endl;
     for (int col = 0; col < ncols; col++) {
         for (int row = 0; row < nrows; row++) {
             Point point;
             image->to_point(point, col, row);
             double value = std::abs(image->get(col, row));
             if (value > pixel_threshold) {
-                //std::cout << "(" << col << "/" << image->to_x(col) << ", " << row << "/" << image->to_y(row) << ") -> "
-                //          << "(" << std::setprecision(1) << point.get_x() << ", " << point.get_y() << ")" << std::endl;
+                // std::cout << "(" << col << "/" << image->to_x(col) << ", " << row << "/" << image->to_y(row) << ") ->
+                // "
+                //           << "(" << std::setprecision(1) << point.get_x() << ", " << point.get_y() << ")" <<
+                //           std::endl;
                 for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
                     int rho_index = polar_trig.point_theta_index_to_rho_index(point, theta_index);
-                    //std::cout << "    "
-                    //          << "(" << theta_index << ", " << rho_index << "): "
-                    //          << "(" << polar_trig.to_theta(theta_index) << ", " << polar_trig.to_rho(rho_index) << ") "
-                    //          << std::endl;
+                    // std::cout << "    "
+                    //           << "(" << theta_index << ", " << rho_index << "): "
+                    //           << "(" << polar_trig.to_theta(theta_index) << ", " << polar_trig.to_rho(rho_index) <<
+                    //           ") "
+                    //           << std::endl;
                     update(rho_index, theta_index, wb_utils::double_to_int_round(value));
                 }
             }
