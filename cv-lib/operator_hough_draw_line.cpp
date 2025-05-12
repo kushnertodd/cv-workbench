@@ -54,17 +54,20 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     std::unique_ptr<Image> input_image(input_image_ptr);
     if (!errors.has_error())
         input_image->check_grayscale("Operator_hough_draw_line::run", errors);
-    WB_window *window_ptr = nullptr;
+    int ncols;
+    int nrows;
+    double x_min{};
+    double y_max{};
+    double x_max{};
+    double y_min{};
     if (!errors.has_error()) {
-        int ncols = input_image->get_ncols();
-        int nrows = input_image->get_nrows();
-        double x_min = input_image->to_x(0);
-        double y_max = input_image->to_y(0);
-        double x_max = input_image->to_x(ncols - 1);
-        double y_min = input_image->to_y(nrows - 1);
-        window_ptr = new WB_window(x_min, y_min, x_max, y_max);
+        ncols = input_image->get_ncols();
+        nrows = input_image->get_nrows();
+        x_min = input_image->to_x(0);
+        y_max = input_image->to_y(0);
+        x_max = input_image->to_x(ncols - 1);
+        y_min = input_image->to_y(nrows - 1);
     }
-    std::unique_ptr<WB_window> window(window_ptr);
     if (!errors.has_error())
         for (std::string line: input_data->lines) {
             std::vector<std::string> params = wb_utils::tokenize(line, " ");
@@ -79,14 +82,15 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                 if (!wb_utils::string_to_int(params[1], theta))
                     errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
             if (!errors.has_error()) {
+                WB_window window(x_min, y_min, x_max, y_max);
                 Polar_line polar_line(rho, theta);
                 Line_segment line_segment;
-                if (!window->clip_window(polar_line, line_segment))
+                if (!window.clip_window(polar_line, line_segment))
                     // errors.add("Operator_hough_draw_line::run", "",
                     //            "failed clipping polar line (" + polar_line.to_string() + ") against window " +
                     //                    window->to_string());
                     std::cout << "Operator_hough_draw_line::run: failed clipping polar line (" +
-                                         polar_line.to_string() + ") against window " + window->to_string()
+                                         polar_line.to_string() + ") against window " + window.to_string()
                               << std::endl;
                 else {
                     Image_line_segment image_line_segment;
