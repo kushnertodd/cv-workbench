@@ -53,21 +53,13 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                     input_image_source->read_operator_image("Operator_hough_draw_line::run", errors));
             if (!errors.has_error())
                 input_image->check_grayscale("Operator_hough_draw_line::run", errors);
-            int ncols;
-            int nrows;
-            double x_min{};
-            double y_max{};
-            double x_max{};
-            double y_min{};
             if (!errors.has_error()) {
-                ncols = input_image->get_ncols();
-                nrows = input_image->get_nrows();
-                x_min = input_image->to_x(0);
-                y_max = input_image->to_y(0);
-                x_max = input_image->to_x(ncols - 1);
-                y_min = input_image->to_y(nrows - 1);
-            }
-            if (!errors.has_error())
+                int ncols = input_image->get_ncols();
+                int nrows = input_image->get_nrows();
+                double x_min = input_image->to_x(0);
+                double y_max = input_image->to_y(0);
+                double x_max = input_image->to_x(ncols - 1);
+                double y_min = input_image->to_y(nrows - 1);
                 for (std::string line: input_data->lines) {
                     std::vector<std::string> params = wb_utils::tokenize(line, " ");
                     if (params.size() != 2)
@@ -99,16 +91,17 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                         }
                     }
                 }
-            if (!errors.has_error())
-                if (input_image_source->data_format == WB_data_format::Data_format::JPEG) {
-                    output_image_store->write_image_jpeg(input_image.get(), errors);
-                } else if (input_image_source->data_format == WB_data_format::Data_format::BINARY) {
-                    output_image_store->write_image(input_image.get(), errors);
-                } else {
-                    errors.add("Operator_hough_draw_line::run", "",
-                               "invalid data format '" + WB_data_format::to_string(output_image_store->data_format) +
-                                       "'");
-                }
+                if (!errors.has_error())
+                    if (input_image_source->data_format == WB_data_format::Data_format::JPEG) {
+                        output_image_store->write_image_jpeg(input_image.get(), errors);
+                    } else if (input_image_source->data_format == WB_data_format::Data_format::BINARY) {
+                        output_image_store->write_image(input_image.get(), errors);
+                    } else {
+                        errors.add("Operator_hough_draw_line::run", "",
+                                   "invalid data format '" +
+                                           WB_data_format::to_string(output_image_store->data_format) + "'");
+                    }
+            }
         }
     }
 }

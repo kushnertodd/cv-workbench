@@ -185,7 +185,7 @@ double Polar_trig::rho_theta_x_to_y(double rho, int theta, double x) {
     assert(!singular_sin(theta));
     double cos_t = Polar_trig::to_cos(theta);
     double sin_t = Polar_trig::to_sin(theta);
-    double y = (x * cos_t - rho) / sin_t;
+    double y = (rho - x * cos_t) / sin_t;
     return y;
 }
 
