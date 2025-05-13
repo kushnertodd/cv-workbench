@@ -21,24 +21,16 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         std::cout << "Operator_hough_image_create::run parameters: "
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
-    if (input_data_sources.empty())
-        errors.add("Operator_hough_image_create::run", "", "input data source required");
-    else if (input_data_sources.size() > 1)
-        errors.add("Operator_hough_image_create::run", "", "too many input data sources");
+    if (input_data_sources.size() != 1)
+        errors.add("Operator_hough_image_create::run", "", "one input data source required");
     else if (output_data_stores.empty())
         errors.add("Operator_hough_image_create::run", "", "output data source required");
     int rho_inc = 0;
     int theta_inc = 0;
     int pixel_threshold = 0;
-    int ulc_row = 0;
-    int ulc_col = 0;
-    int lrc_row = 0;
-    int lrc_col = 0;
     bool saw_rho_inc = false;
     bool saw_theta_inc = false;
     bool saw_threshold = false;
-    bool saw_lrc_row = false;
-    bool saw_lrc_col = false;
     if (Operator_utils::has_parameter(operator_parameters, "rho-inc")) {
         saw_rho_inc = true;
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "rho-inc", rho_inc,
@@ -54,26 +46,6 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "pixel-threshold",
                                           pixel_threshold, errors);
     }
-    if (Operator_utils::has_parameter(operator_parameters, "ulc-row")) {
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "ulc-row", ulc_row,
-                                          errors);
-    } else
-        ulc_row = 0;
-    if (Operator_utils::has_parameter(operator_parameters, "ulc-col")) {
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "ulc-col", ulc_col,
-                                          errors);
-    } else
-        ulc_col = 0;
-    if (Operator_utils::has_parameter(operator_parameters, "lrc-row")) {
-        saw_lrc_row = true;
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "lrc-row", lrc_row,
-                                          errors);
-    }
-    if (Operator_utils::has_parameter(operator_parameters, "lrc-col")) {
-        saw_lrc_col = true;
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "lrc-col", lrc_col,
-                                          errors);
-    }
     if (!saw_rho_inc) {
         rho_inc = 1;
         // errors.add("Operator_hough_image_create::run", "", "missing 'rho-inc' parameter");
@@ -87,28 +59,22 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         // errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
     }
     Data_source_descriptor *input_data_source = input_data_sources.front();
-    Image *input_image_ptr = nullptr;
-    Hough *hough_ptr = nullptr;
-    if (!errors.has_error())
-        input_image_ptr = input_data_source->read_operator_image("Operator_hough_image_create::run", errors);
-    std::unique_ptr<Image> input_image(input_image_ptr);
-    if (!errors.has_error() && input_image_ptr != nullptr)
-        input_image->check_grayscale("Operator_hough_image_create::run", errors);
     if (!errors.has_error()) {
-        if (!saw_lrc_col)
-            lrc_col = input_image->get_ncols() - 1;
-        if (!saw_lrc_row)
-            lrc_row = input_image->get_nrows() - 1;
-        std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
-                new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()), input_image->to_y(0),
-                          input_image->to_y(input_image->get_ncols()), rho_inc, theta_inc, pixel_threshold));
-        hough->initialize(input_image.get(), pixel_threshold);
-        std::unique_ptr<Hough> output_hough(hough.get());
+        std::unique_ptr<Image> input_image(
+                input_data_source->read_operator_image("Operator_hough_image_create::run", errors));
         if (!errors.has_error())
-            for (Data_source_descriptor *hough_output_data_store: output_data_stores)
-                hough_output_data_store->write_operator_hough(output_hough.get(), "Operator_hough_image_create::run",
-                                                              errors);
-        if (!errors.has_error())
-            hough->log(log_entries);
+            input_image->check_grayscale("Operator_hough_image_create::run", errors);
+        if (!errors.has_error()) {
+            std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
+                    new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()), input_image->to_y(0),
+                              input_image->to_y(input_image->get_ncols()), rho_inc, theta_inc, pixel_threshold));
+            hough->initialize(input_image.get(), pixel_threshold);
+            if (!errors.has_error())
+                for (Data_source_descriptor *hough_output_data_store: output_data_stores)
+                    hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run",
+                                                                  errors);
+            if (!errors.has_error())
+                hough->log(log_entries);
+        }
     }
 }
