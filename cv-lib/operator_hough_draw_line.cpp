@@ -44,68 +44,71 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
             Operator_utils::get_int_parameter("Operator_hough_draw_line::run", operator_parameters, "out-component",
                                               out_component, errors);
     }
-    Data *input_data_ptr = nullptr;
-    if (!errors.has_error())
-        input_data_ptr = input_data_source->read_operator_data("Operator_transform_image_create::run", errors);
-    std::unique_ptr<Data> input_data(input_data_ptr);
-    Image *input_image_ptr = nullptr;
-    if (!errors.has_error())
-        input_image_ptr = input_image_source->read_operator_image("Operator_hough_draw_line::run", errors);
-    std::unique_ptr<Image> input_image(input_image_ptr);
-    if (!errors.has_error())
-        input_image->check_grayscale("Operator_hough_draw_line::run", errors);
-    int ncols;
-    int nrows;
-    double x_min{};
-    double y_max{};
-    double x_max{};
-    double y_min{};
     if (!errors.has_error()) {
-        ncols = input_image->get_ncols();
-        nrows = input_image->get_nrows();
-        x_min = input_image->to_x(0);
-        y_max = input_image->to_y(0);
-        x_max = input_image->to_x(ncols - 1);
-        y_min = input_image->to_y(nrows - 1);
-    }
-    if (!errors.has_error())
-        for (std::string line: input_data->lines) {
-            std::vector<std::string> params = wb_utils::tokenize(line, " ");
-            if (params.size() != 2)
-                errors.add("Operator_hough_draw_line::run", "", "invalid draw command: '" + line + "'");
-            double rho{};
-            int theta{};
+        std::unique_ptr<Data> input_data(
+                input_data_source->read_operator_data("Operator_transform_image_create::run", errors));
+        Image *input_image_ptr = nullptr;
+        if (!errors.has_error()) {
+            std::unique_ptr<Image> input_image(
+                    input_image_source->read_operator_image("Operator_hough_draw_line::run", errors));
             if (!errors.has_error())
-                if (!wb_utils::string_to_double(params[0], rho))
-                    errors.add("Operator_hough_draw_line::run", "", "invalid point parameter rho value");
-            if (!errors.has_error())
-                if (!wb_utils::string_to_int(params[1], theta))
-                    errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
+                input_image->check_grayscale("Operator_hough_draw_line::run", errors);
+            int ncols;
+            int nrows;
+            double x_min{};
+            double y_max{};
+            double x_max{};
+            double y_min{};
             if (!errors.has_error()) {
-                WB_window window(x_min, y_min, x_max, y_max);
-                Polar_line polar_line(rho, theta);
-                Line_segment line_segment;
-                if (!window.clip_window(polar_line, line_segment))
-                    // errors.add("Operator_hough_draw_line::run", "",
-                    //            "failed clipping polar line (" + polar_line.to_string() + ") against window " +
-                    //                    window->to_string());
-                    std::cout << "Operator_hough_draw_line::run: failed clipping polar line (" +
-                                         polar_line.to_string() + ") against window " + window.to_string()
-                              << std::endl;
-                else {
-                    Image_line_segment image_line_segment;
-                    input_image->to_image_line_segment(image_line_segment, line_segment);
-                    input_image->draw_line_segment(image_line_segment, pixel_value);
-                }
+                ncols = input_image->get_ncols();
+                nrows = input_image->get_nrows();
+                x_min = input_image->to_x(0);
+                y_max = input_image->to_y(0);
+                x_max = input_image->to_x(ncols - 1);
+                y_min = input_image->to_y(nrows - 1);
             }
+            if (!errors.has_error())
+                for (std::string line: input_data->lines) {
+                    std::vector<std::string> params = wb_utils::tokenize(line, " ");
+                    if (params.size() != 2)
+                        errors.add("Operator_hough_draw_line::run", "", "invalid draw command: '" + line + "'");
+                    double rho{};
+                    int theta{};
+                    if (!errors.has_error())
+                        if (!wb_utils::string_to_double(params[0], rho))
+                            errors.add("Operator_hough_draw_line::run", "", "invalid point parameter rho value");
+                    if (!errors.has_error())
+                        if (!wb_utils::string_to_int(params[1], theta))
+                            errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
+                    if (!errors.has_error()) {
+                        WB_window window(x_min, y_min, x_max, y_max);
+                        Polar_line polar_line(rho, theta);
+                        Line_segment line_segment;
+                        if (!window.clip_window(polar_line, line_segment))
+                            // errors.add("Operator_hough_draw_line::run", "",
+                            //            "failed clipping polar line (" + polar_line.to_string() + ") against window "
+                            //            +
+                            //                    window->to_string());
+                            std::cout << "Operator_hough_draw_line::run: failed clipping polar line (" +
+                                                 polar_line.to_string() + ") against window " + window.to_string()
+                                      << std::endl;
+                        else {
+                            Image_line_segment image_line_segment;
+                            input_image->to_image_line_segment(image_line_segment, line_segment);
+                            input_image->draw_line_segment(image_line_segment, pixel_value);
+                        }
+                    }
+                }
+            if (!errors.has_error())
+                if (input_image_source->data_format == WB_data_format::Data_format::JPEG) {
+                    output_image_store->write_image_jpeg(input_image.get(), errors);
+                } else if (input_image_source->data_format == WB_data_format::Data_format::BINARY) {
+                    output_image_store->write_image(input_image.get(), errors);
+                } else {
+                    errors.add("Operator_hough_draw_line::run", "",
+                               "invalid data format '" + WB_data_format::to_string(output_image_store->data_format) +
+                                       "'");
+                }
         }
-    if (!errors.has_error())
-        if (input_image_source->data_format == WB_data_format::Data_format::JPEG) {
-            output_image_store->write_image_jpeg(input_image.get(), errors);
-        } else if (input_image_source->data_format == WB_data_format::Data_format::BINARY) {
-            output_image_store->write_image(input_image.get(), errors);
-        } else {
-            errors.add("Operator_hough_draw_line::run", "",
-                       "invalid data format '" + WB_data_format::to_string(output_image_store->data_format) + "'");
-        }
+    }
 }

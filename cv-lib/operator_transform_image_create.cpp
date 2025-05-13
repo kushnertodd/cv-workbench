@@ -53,7 +53,8 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
             std::unique_ptr<Data> input_data(
                     input_data_source->read_operator_data("Operator_transform_image_create::run", errors));
             if (!errors.has_error()) {
-                std::unique_ptr<Image> input_image(new Image(ncols, nrows, 1, Image_depth::CV_8U, background));
+                std::unique_ptr<Image> input_image =
+                        std::make_unique<Image>(ncols, nrows, 1, Image_depth::CV_8U, background);
                 for (std::string line: input_data->lines) {
                     std::vector<std::string> tokens = wb_utils::tokenize(line, " ");
                     if (tokens.size() < 2)
