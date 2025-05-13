@@ -42,7 +42,7 @@
           }
         ],
         "parameters": {
-          "rho-inc": "4",
+          "rho-inc": "8",
           "theta-inc": "3",
           "pixel-threshold": "0"
         }
