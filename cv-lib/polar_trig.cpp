@@ -53,8 +53,20 @@ Polar_trig::Polar_trig() = default;
  * @param m_rho_inc
  * @param m_theta_inc
  */
-Polar_trig::Polar_trig(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) {
-    init(m_x_max, m_y_max, m_rho_inc, m_theta_inc);
+Polar_trig::Polar_trig(double m_x_min, double m_y_min, double m_x_max, double m_y_max, int m_rho_inc, int m_theta_inc) {
+    x_min = m_x_min;
+    x_max = m_x_max;
+    y_min = m_y_min;
+    y_max = m_y_max;
+    rho_inc = m_rho_inc;
+    theta_inc = m_theta_inc;
+    x_range = x_max - x_min;
+    y_range = y_max - y_min;
+    rho_range = sqrt(x_range * x_range + y_range * y_range) + rho_pad;
+    rho_max = rho_range / 2.0;
+    rho_min = -rho_max;
+    nrhos = rho_range / rho_inc;
+    nthetas = theta_max / theta_inc;
 }
 /**
  * @brief
@@ -76,19 +88,6 @@ int Polar_trig::get_rho_inc() const { return rho_inc; }
  * @return
  */
 int Polar_trig::get_theta_inc() const { return theta_inc; }
-void Polar_trig::init(int m_x_max, int m_y_max, int m_rho_inc, int m_theta_inc) {
-    x_max = m_x_max;
-    y_max = m_y_max;
-    rho_inc = m_rho_inc;
-    theta_inc = m_theta_inc;
-    x_offset = x_max / 2.0;
-    y_offset = y_max / 2.0;
-    rho_max = sqrt(x_offset * x_offset + y_offset * y_offset);
-    rho_min = -rho_max;
-    rho_range = 2 * rho_max;
-    nrhos = rho_range / rho_inc;
-    nthetas = theta_max / theta_inc;
-}
 /**
  * @brief
  * @param point
@@ -303,5 +302,6 @@ int Polar_trig::to_theta(int theta_index) const {
  */
 int Polar_trig::to_theta_index(int theta) const {
     int theta_index = theta / theta_inc;
+    wb_utils::double_to_int_round(theta / theta_inc);
     return theta_index;
 }
