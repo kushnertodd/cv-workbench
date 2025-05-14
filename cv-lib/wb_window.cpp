@@ -1,5 +1,6 @@
 #include "wb_window.hpp"
 #include <iostream>
+#include <sstream>
 #include "polar_trig.hpp"
 
 extern bool debug;
@@ -83,4 +84,13 @@ bool WB_window::inside(Point &point) const {
     if (point.y < y_min || point.y > y_max)
         return false;
     return true;
+}
+/**
+ * @brief
+ * @return
+ */
+std::string WB_window::to_string() const {
+    std::ostringstream os;
+    os << "(" << x_min << ", " << y_min << ") - (" << x_max << ", " << y_max << ")";
+    return os.str();
 }

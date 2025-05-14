@@ -19,11 +19,11 @@
 
 class Hough {
     friend class Histogram;
-    int ncols{};
-    int nrows{};
+    // int ncols{};
+    // int nrows{};
     int pixel_threshold{};
     int nbins{};
-    Polar_trig polar_trig;
+    std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;
     Variance_stats accumulator_stats;
     std::list<Polar_line> lines;
@@ -32,19 +32,17 @@ class Hough {
 public:
     ~Hough();
     Hough();
-    Hough(int m_ncols, int m_nrows, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
-    Hough(Image *m_image, int m_rho_inc, int m_theta_inc, int m_pixel_threshold = 0);
+    Hough(double m_x_min, double x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
+          int m_pixel_threshold = 0);
     void clear();
     void find_peaks(std::list<Polar_line> &lines, double threshold) const;
     int get(int rho_index, int theta_index) const;
-    int get_ncols() const;
     int get_nrhos() const;
-    int get_nrows() const;
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
     void initialize(Image *image, int pixel_threshold);
-    // int pixel_theta_index_to_rho_index(int col, int row, int theta_index) const;
+    void log(std::list<WB_log_entry> &log_entries);
     Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);

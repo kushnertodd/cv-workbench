@@ -38,12 +38,14 @@ double Point::distance(const Point &point) const {
     double dy = x - point.y;
     return sqrt(dx * dx + dy * dy);
 }
+double Point::get_x() const { return x; }
+double Point::get_y() const { return y; }
 /**
  * @brief
  * @param m_x
  * @param m_y
  */
-void Point::init(int m_x, int m_y) {
+void Point::init(double m_x, double m_y) {
     x = m_x;
     y = m_y;
 }

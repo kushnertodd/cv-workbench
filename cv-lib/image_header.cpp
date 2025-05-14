@@ -81,21 +81,21 @@ void Image_header::read(FILE *fp, Errors &errors) {
  * @param x
  * @return
  */
-double Image_header::to_col(double x) const { return x + col_offset; }
+double Image_header::to_col(double x) const { return x + col_offset - 0.5; }
 /**
  * @brief
  * @param x
  * @param ncols
  * @return
  */
-double Image_header::to_col(double x, int ncols) { return x + ncols / 2.0; }
+double Image_header::to_col(double x, int ncols) { return x + ncols / 2.0 - 0.5; }
 /**
  * @brief
  * @param pixel
  * @param x
  * @param y
  */
-void Image_header::to_pixel(Pixel &pixel, double x, double y) { pixel.init(to_col(x), to_row(y)); }
+void Image_header::to_pixel(Pixel &pixel, double x, double y) const { pixel.init(to_col(x), to_row(y)); }
 /**
  * @brief
  * @param pixel
@@ -120,14 +120,14 @@ void Image_header::to_point(Point &point, Pixel &pixel) { to_point(point, pixel.
  * @param y
  * @return
  */
-double Image_header::to_row(double y) const { return row_offset - y; }
+double Image_header::to_row(double y) const { return row_offset - y - 0.5; }
 /**
  * @brief
  * @param y
  * @param nrows
  * @return
  */
-double Image_header::to_row(double y, int nrows) { return nrows / 2.0 - y; }
+double Image_header::to_row(double y, int nrows) { return nrows / 2.0 - y - 0.5; }
 /**
  * @brief
  * @param prefix
@@ -148,27 +148,39 @@ std::string Image_header::to_string(const std::string &prefix) const {
  * @param col
  * @return
  */
-double Image_header::to_x(int col) const { return col - col_offset; }
+double Image_header::to_x(int col) const {
+    double x = col - col_offset + 0.5;
+    return x;
+}
 /**
  * @brief
  * @param col
  * @param ncols
  * @return
  */
-double Image_header::to_x(int col, int ncols) { return col - ncols / 2.0; }
+double Image_header::to_x(int col, int ncols) {
+    double x = col - ncols / 2.0 + 0.5;
+    return x;
+}
 /**
  * @brief
  * @param row
  * @return
  */
-double Image_header::to_y(int row) const { return row_offset - row; }
+double Image_header::to_y(int row) const {
+    double y = row_offset - row - 0.5;
+    return y;
+}
 /**
  * @brief
  * @param row
  * @param nrows
  * @return
  */
-double Image_header::to_y(int row, int nrows) { return nrows / 2.0 - row; }
+double Image_header::to_y(int row, int nrows) {
+    double y = nrows / 2.0 - row - 0.5;
+    return y;
+}
 /**
  * @brief
  * @param fp
