@@ -39,14 +39,11 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
         std::cout << "Operator_transform_intensity_map::run:parameters: "
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
-    if (input_data_sources.empty())
-        errors.add("Operator_transform_intensity_map::run", "", "input data source required");
-    else if (input_data_sources.size() > 1)
-        errors.add("Operator_transform_intensity_map::run", "", "too many input data sources");
+    if (input_data_sources.size() != 1)
+        errors.add("Operator_transform_intensity_map::run", "", "one input data source required");
     else if (output_data_stores.empty())
-        errors.add("Operator_transform_intensity_map::run", "", "output data source required");
-    else if (output_data_stores.size() > 1)
-        errors.add("Operator_transform_intensity_map::run", "", "too many output data sources");
+        errors.add("Operator_transform_intensity_map::run", "", "at least one output data source required");
+
     Image_depth depth;
     double lower_in;
     double upper_in;
@@ -92,54 +89,48 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
         Operator_utils::get_real_parameter("Operator_transform_intensity_map::run", operator_parameters, "upper-out",
                                            upper_out, errors);
     }
-    Image *input;
-    Data_source_descriptor *input_data_source;
-    Data_source_descriptor *output_data_store;
     if (!errors.has_error()) {
-        input_data_source = input_data_sources.front();
-        output_data_store = output_data_stores.front();
-        input = input_data_source->read_image(errors);
-        if (input != nullptr) {
-            input->check_grayscale("Operator_transform_intensity_map::run", errors);
-        }
-        if (!saw_lower_out) {
-            lower_out = 0;
-        }
-        if (!saw_upper_out) {
-            upper_out = 255;
-        }
-    }
-    if (!errors.has_error()) {
-        if (!saw_depth) {
-            depth = input->get_depth();
-        }
-        Variance_stats stats;
-        input->get_stats(stats);
-        if (saw_standard_deviations) {
-            lower_in = std::max(stats.get_mean() - standard_deviations * stats.get_standard_deviation(),
-                                stats.get_min_value());
-            upper_in = std::min(stats.get_mean() + standard_deviations * stats.get_standard_deviation(),
-                                stats.get_max_value());
-        } else {
-            if (!saw_lower_in) {
-                lower_in = stats.get_min_value();
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        std::unique_ptr<Image> input_image(input_data_source->read_image(errors));
+        if (!errors.has_error())
+            input_image->check_grayscale("Operator_transform_intensity_map::run", errors);
+        if (!errors.has_error()) {
+            if (!saw_lower_out)
+                lower_out = 0;
+            if (!saw_upper_out)
+                upper_out = 255;
+            if (!saw_depth)
+                depth = input_image->get_depth();
+            Variance_stats stats;
+            input_image->get_stats(stats);
+            if (saw_standard_deviations) {
+                lower_in = std::max(stats.get_mean() - standard_deviations * stats.get_standard_deviation(),
+                                    stats.get_min_value());
+                upper_in = std::min(stats.get_mean() + standard_deviations * stats.get_standard_deviation(),
+                                    stats.get_max_value());
+            } else {
+                if (!saw_lower_in)
+                    lower_in = stats.get_min_value();
+                if (!saw_upper_in)
+                    upper_in = stats.get_max_value();
             }
-            if (!saw_upper_in) {
-                upper_in = stats.get_max_value();
+            Data_source_descriptor *output_data_store = output_data_stores.front();
+            if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
+                std::unique_ptr<Image> output_image(Image::scale_image(input_image.get(), lower_in, upper_in, lower_out,
+                                                                       upper_out, Image_depth::CV_8U));
+                output_data_store->write_image_jpeg(output_image.get(), errors);
+                if (!errors.has_error())
+                    output_image->log(log_entries);
+            } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
+                std::unique_ptr<Image> output_image(
+                        Image::scale_image(input_image.get(), lower_in, upper_in, lower_out, upper_out, depth));
+                output_data_store->write_image(output_image.get(), errors);
+                if (!errors.has_error())
+                    output_image->log(log_entries);
+            } else {
+                errors.add("Operator_transform_intensity_map::run", "",
+                           "invalid data format '" + WB_data_format::to_string(output_data_store->data_format) + "'");
             }
         }
-        Image *output_image;
-        if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
-            output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, Image_depth::CV_8U);
-            output_data_store->write_image_jpeg(output_image, errors);
-        } else if (output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-            output_image = Image::scale_image(input, lower_in, upper_in, lower_out, upper_out, depth);
-            output_data_store->write_image(output_image, errors);
-        } else {
-            errors.add("Operator_transform_intensity_map::run", "",
-                       "invalid data format '" + WB_data_format::to_string(output_data_store->data_format) + "'");
-        }
-        if (!errors.has_error() && output_image != nullptr)
-            output_image->log(log_entries);
     }
 }

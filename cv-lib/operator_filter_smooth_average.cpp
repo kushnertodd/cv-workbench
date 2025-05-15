@@ -9,9 +9,9 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
                                          String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
                                          Errors &errors) {
     if (input_data_sources.size() != 1)
-        errors.add("Operator_filter_edge_sobel::run", "", "one input data source required");
+        errors.add("Operator_filter_smooth_average::run", "", "one input data source required");
     if (output_data_stores.empty())
-        errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
+        errors.add("Operator_filter_smooth_average::run", "", "output data source required");
     int ncols{};
     Operator_utils::get_int_parameter("Operator_filter_smooth_average::run", operator_parameters, "ncols", ncols,
                                       errors);
