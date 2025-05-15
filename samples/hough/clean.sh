@@ -1,0 +1,6 @@
+rm hough_test_image_grayscale.jpg
+rm hough_test_image_grayscale.txt
+rm create_hough_test_image.log
+rm hough_test_image_grayscale_accumulator.bin
+rm run_hough_test_image.log
+rm hough_test_image_grayscale_accumulator.txt
