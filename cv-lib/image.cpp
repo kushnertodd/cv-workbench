@@ -282,7 +282,7 @@ Image *Image::color_edge(Errors &errors) const {
     int row_upper = nrows - 2;
     int col_lower = 1;
     int col_upper = ncols - 2;
-    auto *out = new Image(ncols, nrows, COMPONENTS_RGB, Image_depth::CV_32F);
+    auto *out = new Image(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
     out->clear(0.0);
     if (debug)
         std::cout << "col_lower " << col_lower << " col_upper " << col_upper << " row_lower " << row_lower
