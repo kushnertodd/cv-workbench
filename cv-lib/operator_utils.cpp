@@ -72,12 +72,11 @@ bool Operator_utils::get_real_parameter(const std::string &module, String_map &p
 bool Operator_utils::get_string_parameter(const std::string &module, String_map &parameters,
                                           const std::string &parameter, std::string &string_value, Errors &errors,
                                           bool optional) {
-    if (!has_parameter(parameters, parameter)) {
-        if (!optional)
-            errors.add(module, "", parameter + " required " + parameter);
+    if (!has_parameter(parameters, parameter) && !optional) {
+        errors.add(module, "", parameter + " required " + parameter);
         return false;
-    } else
-        string_value = get_parameter(parameters, parameter);
+    }
+    string_value = get_parameter(parameters, parameter);
     return true;
 }
 /**

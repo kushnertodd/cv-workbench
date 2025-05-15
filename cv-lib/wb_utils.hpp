@@ -55,7 +55,7 @@ namespace wb_utils {
     std::string real_to_string(double i, int width = -1);
     bool string_find(const std::string &text, std::string &prefix, std::string &suffix, const std::string &pat,
                      bool &at_beginning, bool &at_end);
-
+    bool string_in_list(const std::string string, const std::list<std::string> string_list);
     std::vector<std::string> string_split(const std::string &str);
     bool string_to_bool(const std::string &str, bool &bvalue);
     bool string_to_double(const std::string &text, double &value);
