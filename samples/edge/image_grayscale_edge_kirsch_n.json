@@ -9,7 +9,7 @@
     "steps": [
       {
         "id": 1,
-        "operator": "filter-edge-sobel",
+        "operator": "filter-edge-kirsch",
          "input-data": [
           {
             "id": 1,
@@ -28,12 +28,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_sobel",
+            "filename": "image_grayscale_edge_kirsch_n",
             "ext": "bin"
           }
         ],
         "parameters": {
-          "orientation": "0"
+          "orientation": "N"
         }
       },
       {
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_sobel",
+            "filename": "image_grayscale_edge_kirsch_n",
             "ext": "bin"
           }
         ],
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_sobel",
+            "filename": "image_grayscale_edge_kirsch_n",
             "ext": "jpg"
           }
         ],
@@ -76,7 +76,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_sobel",
+            "filename": "image_grayscale_edge_kirsch_n",
             "ext": "jpg"
           }
         ],
@@ -87,7 +87,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_sobel_threshold",
+            "filename": "image_grayscale_edge_kirsch_n_threshold",
             "ext": "jpg"
           }
         ],

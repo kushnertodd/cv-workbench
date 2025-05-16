@@ -28,12 +28,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_prewitt",
+            "filename": "image_grayscale_edge_prewitt_90",
             "ext": "bin"
           }
         ],
         "parameters": {
-          "orientation": "0"
+          "orientation": "90"
         }
       },
       {
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_prewitt",
+            "filename": "image_grayscale_edge_prewitt_90",
             "ext": "bin"
           }
         ],
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_prewitt",
+            "filename": "image_grayscale_edge_prewitt_90",
             "ext": "jpg"
           }
         ],
@@ -76,7 +76,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_prewitt",
+            "filename": "image_grayscale_edge_prewitt_90",
             "ext": "jpg"
           }
         ],

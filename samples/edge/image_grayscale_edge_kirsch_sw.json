@@ -28,12 +28,12 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_kirsch",
+            "filename": "image_grayscale_edge_kirsch_sw",
             "ext": "bin"
           }
         ],
         "parameters": {
-          "orientation": "N"
+          "orientation": "SW"
         }
       },
       {
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge_kirsch",
+            "filename": "image_grayscale_edge_kirsch_sw",
             "ext": "bin"
           }
         ],
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_kirsch",
+            "filename": "image_grayscale_edge_kirsch_sw",
             "ext": "jpg"
           }
         ],
@@ -76,7 +76,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_kirsch",
+            "filename": "image_grayscale_edge_kirsch_sw",
             "ext": "jpg"
           }
         ],
@@ -87,7 +87,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_kirsch_threshold",
+            "filename": "image_grayscale_edge_kirsch_sw_threshold",
             "ext": "jpg"
           }
         ],

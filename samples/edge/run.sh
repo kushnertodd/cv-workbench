@@ -1,5 +1,4 @@
-cv-workbench image_color_edge.json
-cv-workbench image_grayscale_edge_kirsch.json
-cv-workbench image_grayscale_edge_prewitt.json
-cv-workbench image_grayscale_edge_roberts.json
-cv-workbench image_grayscale_edge_sobel.json
+for f in `cat run.txt`; do
+  echo cv-workbench $f
+  cv-workbench $f
+done
