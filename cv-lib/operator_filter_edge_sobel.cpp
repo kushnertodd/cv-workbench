@@ -56,7 +56,7 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
             }
             std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
             std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
-            std::unique_ptr<Image> output1_image(sobel_kernel_col->convolve_numeric(input_image.get(), errors));
+            std::unique_ptr<Image> output1_image(sobel_kernel_row->convolve_numeric(input_image.get(), errors));
             if (!errors.has_error()) {
                 std::unique_ptr<Image> output2_image(sobel_kernel_col->convolve_numeric(output1_image.get(), errors));
                 if (!errors.has_error())

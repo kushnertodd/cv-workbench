@@ -51,7 +51,7 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
                 pixel_32F coeffs_32F_row[] = {0.33, 0.33, 0.33};
                 prewitt_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
                 // this is reversed from the separable filter reference
-                pixel_32F coeffs_32F_col[] = {-1, 0, 1};
+                pixel_32F coeffs_32F_col[] = {-1.0, 0, 1.0};
                 prewitt_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
             }
             std::unique_ptr<Kernel> prewitt_kernel_row(prewitt_kernel_row_ptr);
