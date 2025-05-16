@@ -22,6 +22,7 @@ Successful building verifies that the installation of the system is correct.
   - [json-c Library](#linux-json-c-library)
   - [Berekley DB Library](#linux-berkeley-db-library)
   - [JPEG library](#jpeg-library)
+  - [gnuplot](#gnuplot)
   - [OpenCV](#opencv-library)
 ## Windows build tools <a id="windows-build-tools"/>
 The following are Windows tools to install for building the system.
@@ -249,6 +250,13 @@ $ make
 $ make test
 $ sudo make install
 ```
+
+### gnuplot <a id="gnuplot"/>
+`gnuplot` plots data from the histogram operation. 
+- download the file *version*`/gp602-win64-mingw.zip` from the
+[gnuplot download site](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
+- unpack the archive into a directory
+- add the `gnuplot/bin` directory to the `PATH` environment variable
 
 ### OpenCV <a id="opencv-library"/>
 Optionally install the [OpenCV](https://docs.opencv.org/)
