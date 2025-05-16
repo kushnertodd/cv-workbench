@@ -13,9 +13,9 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
     if (output_data_stores.empty())
         errors.add("Operator_filter_smooth_average::run", "", "output data source required");
     int ncols{};
+    int nrows{};
     Operator_utils::get_int_parameter("Operator_filter_smooth_average::run", operator_parameters, "ncols", ncols,
                                       errors);
-    int nrows{};
     Operator_utils::get_int_parameter("Operator_filter_smooth_average::run", operator_parameters, "nrows", nrows,
                                       errors);
     Data_source_descriptor *input_data_source = input_data_sources.front();

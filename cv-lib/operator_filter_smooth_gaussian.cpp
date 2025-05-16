@@ -13,13 +13,13 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
     if (output_data_stores.empty())
         errors.add("Operator_filter_smooth_gaussian::run", "", "output data source required");
 
-    int nrows{};
     int ncols{};
+    int nrows{};
     double sigma_x{};
     double sigma_y{};
-    Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run", operator_parameters, "nrows", nrows,
-                                      errors);
     Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run", operator_parameters, "ncols", ncols,
+                                      errors);
+    Operator_utils::get_int_parameter("Operator_filter_smooth_gaussian::run", operator_parameters, "nrows", nrows,
                                       errors);
     Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run", operator_parameters, "sigma-x", sigma_x,
                                        errors);
