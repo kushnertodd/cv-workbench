@@ -28,7 +28,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge",
+            "filename": "image_grayscale_edge_sobel",
             "ext": "bin"
           }
         ],
@@ -46,7 +46,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge",
+            "filename": "image_grayscale_edge_sobel",
             "ext": "bin"
           }
         ],
@@ -57,7 +57,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge",
+            "filename": "image_grayscale_edge_sobel",
             "ext": "jpg"
           }
         ],
@@ -76,7 +76,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge",
+            "filename": "image_grayscale_edge_sobel",
             "ext": "jpg"
           }
         ],
@@ -87,19 +87,18 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_threshold",
+            "filename": "image_grayscale_edge_sobel_threshold",
             "ext": "jpg"
           }
         ],
         "parameters": {
           "depth": "CV_8U",
-          "lower-in": "40",
-          "upper-in": "40",
+          "lower-in": "60",
+          "upper-in": "60",
           "lower-out": "0",
-          "upper-out": "255",
+          "upper-out": "255"
         }
       }
-
     ]
   }
 }

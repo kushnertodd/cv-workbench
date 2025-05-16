@@ -1,0 +1,7 @@
+clean.sh
+files.txt
+image_color_edge.json
+image_color.jpg
+image_grayscale_edge.json
+image_grayscale.jpg
+run.sh
