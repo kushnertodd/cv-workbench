@@ -1,1 +1,1 @@
-rm -f `cat clean.txt`
+rm `cat clean.txt`
