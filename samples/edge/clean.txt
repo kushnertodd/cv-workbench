@@ -1,0 +1,7 @@
+image_color_edge.bin
+image_color_edge.jpg
+image_color_edge.log
+image_grayscale_edge_sobel.bin
+image_grayscale_edge_sobel.jpg
+image_grayscale_edge_sobel.log
+image_grayscale_edge_sobel_threshold.jpg
