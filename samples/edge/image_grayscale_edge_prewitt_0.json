@@ -87,7 +87,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_prewitt_threshold",
+            "filename": "image_grayscale_edge_prewitt_0_threshold",
             "ext": "jpg"
           }
         ],

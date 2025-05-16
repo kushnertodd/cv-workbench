@@ -87,7 +87,7 @@
             "repository": "filesystem",
             "format": "jpeg",
             "directory": ".",
-            "filename": "image_grayscale_edge_roberts_threshold",
+            "filename": "image_grayscale_edge_roberts_90_threshold",
             "ext": "jpg"
           }
         ],
