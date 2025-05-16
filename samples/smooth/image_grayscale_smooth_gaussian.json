@@ -33,10 +33,10 @@
                     }
                 ],
                 "parameters": {
-                    "ncols": "5",
-                    "nrows": "5",
-                    "sigma-x": "2.0",
-                    "sigma-y": "2.0"
+                    "ncols": "7",
+                    "nrows": "7",
+                    "sigma-x": "3.0",
+                    "sigma-y": "3.0"
                 }
             },
             {
