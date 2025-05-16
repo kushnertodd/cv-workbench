@@ -33,8 +33,9 @@ void Operator_filter_smooth_average::run(std::list<Data_source_descriptor *> &in
             std::unique_ptr<Kernel> average_kernel(Kernel::create_32F(ncols, nrows, coeffs_32F.get()));
             std::unique_ptr<Image> output_image(average_kernel->convolve_numeric(input_image.get(), errors));
             if (!errors.has_error())
-                output_data_stores.front()->write_operator_image(output_image.get(),
-                                                                 "Operator_filter_smooth_average::run", errors);
+                for (Data_source_descriptor *output_data_store: output_data_stores)
+                    output_data_store->write_operator_image(output_image.get(), "Operator_filter_smooth_average::run",
+                                                            errors);
             if (!errors.has_error())
                 output_image->log(log_entries);
         }

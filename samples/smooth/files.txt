@@ -1,0 +1,7 @@
+clean.sh
+clean.txt
+files.txt
+image_grayscale_smooth_average.json
+image_grayscale.jpg
+run.sh
+run.txt

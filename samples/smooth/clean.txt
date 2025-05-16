@@ -1,0 +1,3 @@
+image_grayscale_smooth_average.bin
+image_grayscale_smooth_average.jpg
+image_grayscale_smooth_average.log

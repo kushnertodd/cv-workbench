@@ -1,71 +1,71 @@
 {
-  "experiment": {
-    "run": {
-      "script-path": "script-path",
-      "run-time": "timestamp",
-      "username": "username",
-      "version": "program-version"
-    },
-    "steps": [
-      {
-        "id": 1,
-        "operator": "filter-edge-color",
-         "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": ".",
-            "filename": "image_color",
-            "ext": "jpg"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "binary",
-            "directory": ".",
-            "filename": "image_color_edge",
-            "ext": "bin"
-          }
-        ],
-        "parameters": {
-          "extent": "adjacent"
-        }
-      },
-      {
-        "id": 2,
-        "operator": "transform-intensity-map",
-        "input-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "binary",
-            "directory": ".",
-            "filename": "image_color_edge",
-            "ext": "bin"
-          }
-        ],
-        "output-data": [
-          {
-            "id": 1,
-            "type": "image",
-            "repository": "filesystem",
-            "format": "jpeg",
-            "directory": ".",
-            "filename": "image_color_edge",
-            "ext": "jpg"
-          }
-        ],
-        "parameters": {
-          "depth": "CV_8U",
-          "standard-deviations": "2.0"
-        }
-      }
-    ]
-  }
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "filter-edge-color",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_color",
+                        "ext": "jpg"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_color_edge",
+                        "ext": "bin"
+                    }
+                ],
+                "parameters": {
+                    "extent": "adjacent"
+                }
+            },
+            {
+                "id": 2,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_color_edge",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_color_edge",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "standard-deviations": "2.0"
+                }
+            }
+        ]
+    }
 }
