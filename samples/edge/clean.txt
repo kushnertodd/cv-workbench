@@ -57,6 +57,8 @@ image_grayscale_edge_prewitt_threshold.jpg
 image_grayscale_edge_roberts_0.bin
 image_grayscale_edge_roberts_0.jpg
 image_grayscale_edge_roberts_0.log
+image_grayscale_edge_roberts_90.bin
+image_grayscale_edge_roberts_90.jpg
 image_grayscale_edge_roberts_90.log
 image_grayscale_edge_roberts.bin
 image_grayscale_edge_roberts.bin
