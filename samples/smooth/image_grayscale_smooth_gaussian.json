@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "filter-edge-kirsch",
+                "operator": "filter-smooth-gaussian",
                 "input-data": [
                     {
                         "id": 1,
@@ -28,12 +28,15 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_kirsch_w",
+                        "filename": "image_grayscale_smooth_gaussian",
                         "ext": "bin"
                     }
                 ],
                 "parameters": {
-                    "orientation": "W"
+                    "ncols": "5",
+                    "nrows": "5",
+                    "sigma-x": "2.0",
+                    "sigma-y": "2.0"
                 }
             },
             {
@@ -46,7 +49,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_kirsch_w",
+                        "filename": "image_grayscale_smooth_gaussian",
                         "ext": "bin"
                     }
                 ],
@@ -57,46 +60,13 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_kirsch_w",
+                        "filename": "image_grayscale_smooth_gaussian",
                         "ext": "jpg"
                     }
                 ],
                 "parameters": {
                     "depth": "CV_8U",
                     "standard-deviations": "2.0"
-                }
-            },
-            {
-                "id": 3,
-                "operator": "transform-intensity-map",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_kirsch_w",
-                        "ext": "jpg"
-                    }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_kirsch_w_threshold",
-                        "ext": "jpg"
-                    }
-                ],
-                "parameters": {
-                    "depth": "CV_8U",
-                    "lower-in": "60",
-                    "upper-in": "60",
-                    "lower-out": "0",
-                    "upper-out": "255"
                 }
             }
         ]
