@@ -1,0 +1,4 @@
+histogram_image_grayscale.hist.bin
+histogram_image_grayscale.hist.txt
+histogram_image_grayscale.hist.gp
+run_histogram_test_image.log
