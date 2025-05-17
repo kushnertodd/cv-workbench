@@ -203,10 +203,10 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         Hough *hough = new Hough(x_min, x_max, y_min, y_max, rho_inc, theta_inc);
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
-    }
-    if (!errors.has_error()) {
-        hough->update_accumulator_stats();
-        return hough;
+        if (!errors.has_error()) {
+            hough->update_accumulator_stats();
+            return hough;
+        }
     }
     delete hough;
     return nullptr;

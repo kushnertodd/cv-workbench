@@ -9,40 +9,42 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "histogram-image-create",
+                "operator": "histogram-hough-create",
                 "input-data": [
                     {
                         "id": 1,
-                        "type": "image",
+                        "type": "hough",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale",
-                        "ext": "jpg"
+                        "filename": "hough_test_image_grayscale_accumulator",
+                        "ext": "bin"
                     }
                 ],
                 "output-data": [
                     {
                         "id": 1,
-                        "type": "image",
+                        "type": "hough",
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "histogram_image_grayscale",
+                        "filename": "histogram_hough_test_image_grayscale",
                         "ext": "bin"
                     },
                     {
                         "id": 1,
-                        "type": "image",
+                        "type": "hough",
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "histogram_image_grayscale",
+                        "filename": "histogram_hough_test_image_grayscale",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "nbins": "255"
+                    "nbins": "20",
+                    "lower-value": "0",
+                    "upper-value": "20"
                 }
             }
         ]

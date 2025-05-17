@@ -1,1 +1,3 @@
 run_histogram_test_image.json
+run_histogram_sample_hough.json
+run_histogram_test_hough.json

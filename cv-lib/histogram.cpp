@@ -12,7 +12,7 @@ extern bool debug;
 /**
  * @brief
  */
-Histogram::~Histogram() { delete bins; }
+Histogram::~Histogram() {}
 /**
  * @brief
  */
@@ -25,7 +25,7 @@ Histogram::Histogram() = default;
  */
 Histogram::Histogram(int m_nbins, double m_lower_value, double m_upper_value) :
     nbins(m_nbins), lower_value(m_lower_value), upper_value(m_upper_value) {
-    bins = new int[nbins];
+    bins = std::make_unique<int[]>(nbins);
     for (int i = 0; i < nbins; i++)
         bins[i] = 0;
 }
@@ -245,8 +245,9 @@ Histogram *Histogram::read(FILE *fp, Errors &errors) {
         return nullptr;
     }
     histogram->upper_value = upper_value_float;
-    histogram->bins = new int[histogram->nbins];
-    wb_utils::read_int_buffer(fp, histogram->bins, histogram->nbins, "Histogram::read", "", "cannot read data", errors);
+    histogram->bins = std::make_unique<int[]>(histogram->nbins);
+    wb_utils::read_int_buffer(fp, histogram->bins.get(), histogram->nbins, "Histogram::read", "", "cannot read data",
+                              errors);
     if (errors.has_error()) {
         delete histogram;
         return nullptr;
@@ -320,7 +321,7 @@ void Histogram::write(FILE *fp, Errors &errors) const {
     if (!errors.has_error())
         input_value_stats.write(fp, errors);
     if (!errors.has_error())
-        wb_utils::write_int_buffer(fp, bins, nbins, "Histogram::write", "", "cannot write bins'", errors);
+        wb_utils::write_int_buffer(fp, bins.get(), nbins, "Histogram::write", "", "cannot write bins'", errors);
 }
 /**
  * @brief

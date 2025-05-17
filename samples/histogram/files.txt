@@ -1,7 +1,11 @@
 clean.sh
 clean.txt
 files.txt
+hough_sample_image_grayscale_accumulator.bin
+hough_test_image_grayscale_accumulator.bin
 image_grayscale.jpg
+run_histogram_sample_hough.json
+run_histogram_test_hough.json
 run_histogram_test_image.json
 run.sh
 run.txt

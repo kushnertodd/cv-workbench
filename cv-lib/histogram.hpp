@@ -1,6 +1,7 @@
 #ifndef CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 #define CV_WORKBENCH_SRC_HISTOGRAM_HPP_
 
+#include <memory>
 #include "errors.hpp"
 #include "hough.hpp"
 #include "image.hpp"
@@ -21,7 +22,7 @@
  * max_value           stats.bounds.max_value    The overall maximum input value
  */
 class Histogram {
-    int *bins{};
+    std::unique_ptr<int[]> bins;
     int nbins{};
     double lower_value{};
     double upper_value{};
