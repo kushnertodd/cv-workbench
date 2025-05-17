@@ -1,2 +1,3 @@
 create_hough_test_image.json
+run_hough_grayscale_image.json
 run_hough_test_image.json

@@ -88,6 +88,10 @@ int Polar_trig::get_rho_inc() const { return rho_inc; }
  * @return
  */
 int Polar_trig::get_theta_inc() const { return theta_inc; }
+double Polar_trig::get_x_min() const { return x_min; }
+double Polar_trig::get_x_max() const { return x_max; }
+double Polar_trig::get_y_min() const { return y_min; }
+double Polar_trig::get_y_max() const { return y_max; }
 /**
  * @brief
  * @param point

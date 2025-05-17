@@ -3,6 +3,8 @@ clean.txt
 create_hough_test_image.json
 create_hough_test_image.txt
 files.txt
+hough_sample_image_grayscale.jpg
+run_hough_grayscale_image.json
 run_hough_test_image.json
 run.sh
 run.txt
