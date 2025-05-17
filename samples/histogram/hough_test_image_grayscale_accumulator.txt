@@ -1,4 +1,4 @@
-	rho_inc	1
+rho_inc	1
 theta_inc	15
 x_min	15.0
 x_max	15.0

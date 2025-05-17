@@ -44,7 +44,7 @@
                 "parameters": {
                     "nbins": "1024",
                     "lower-value": "0",
-                    "upper-value": "10000"
+                    "upper-value": "40000"
                 }
             }
         ]
