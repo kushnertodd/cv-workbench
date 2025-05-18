@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         else {
             std::string log_filename = wb_in_filename->to_log();
             errors.check_exit();
-            Experiment *experiment = Experiment::from_json(jobj, path, errors);
+            std::unique_ptr<Experiment> experiment(Experiment::from_json(jobj, path, errors));
             errors.check_exit();
             experiment->run(errors);
             WB_log::log_to_file(

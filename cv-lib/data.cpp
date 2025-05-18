@@ -24,7 +24,7 @@ Data::Data() = default;
  */
 Data *Data::read(const std::string &path, Errors &errors) {
     int length{};
-    Data *data = new Data();
+    auto data = new Data();
     data->binary_data = std::make_unique<char *>(file_utils::read_file_binary(path, data->length, errors));
     if (!errors.has_error())
         data->format = WB_data_format::Data_format::BINARY;
@@ -52,7 +52,7 @@ Data *Data::read_text(const std::string &path, Errors &errors) {
  * @return
  */
 Data *Data::read_text(std::ifstream &ifs, Errors &errors) {
-    Data *data = new Data();
+    auto data = new Data();
     std::string line;
     while (getline(ifs, line)) {
         data->lines.push_back(line);

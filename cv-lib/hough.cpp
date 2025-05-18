@@ -200,7 +200,7 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         wb_utils::read_double(fp, y_max, "Hough::read", "", "missing hough y_max", errors);
     Hough *hough = nullptr;
     if (!errors.has_error()) {
-        Hough *hough = new Hough(x_min, x_max, y_min, y_max, rho_inc, theta_inc);
+        auto hough = new Hough(x_min, x_max, y_min, y_max, rho_inc, theta_inc);
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
         if (!errors.has_error()) {
