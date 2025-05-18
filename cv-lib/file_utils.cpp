@@ -49,7 +49,8 @@ std::ifstream file_utils::open_file_read_binary(const std::string &path, Errors 
 std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &errors) {
     std::ifstream ifs(path, std::ifstream::in);
     if (!ifs.is_open()) {
-        errors.add("file_utils::open_file_read_text", "", "cannot open file " + path + " for reading: " + strerror(errno));
+        errors.add("file_utils::open_file_read_text", "",
+                   "cannot open file " + path + " for reading: " + strerror(errno));
     }
     return ifs;
 }
@@ -87,7 +88,8 @@ std::ofstream file_utils::open_file_write_binary(const std::string &path, Errors
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
     std::ofstream ofs(path, std::ofstream::out);
     if (!ofs.is_open())
-        errors.add("file_utils::open_file_write_text", "", "cannot open file " + path + " for reading: " + strerror(errno));
+        errors.add("file_utils::open_file_write_text", "",
+                   "cannot open file " + path + " for reading: " + strerror(errno));
     return ofs;
 }
 /**
