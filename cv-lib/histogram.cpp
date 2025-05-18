@@ -346,10 +346,8 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
 void Histogram::write_text(std::string &path, const std::string &delim, Errors &errors) const {
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
     std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
-    if (!ofs) {
-        errors.add("Histogram::write_text", "", "invalid file '" + path + "'");
+    if (errors.has_error())
         return;
-    }
     ofs << "bin" << delim << "count" << std::endl;
     for (int i = 0; i < nbins; i++)
         ofs << get_value(i) << delim << bins[i] << std::endl;

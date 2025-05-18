@@ -392,7 +392,8 @@ void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, 
  * @param errors
  */
 void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) {
-    if (std::ofstream ofs = file_utils::open_file_write_text(path, errors)) {
+    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+    if (!errors.has_error()) {
         write_text(ofs, "\t", errors);
         ofs.close();
     }

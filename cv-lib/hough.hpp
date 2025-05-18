@@ -45,7 +45,7 @@ public:
     double get_y_max() const;
     void initialize(Image *image, int pixel_threshold);
     void log(std::list<WB_log_entry> &log_entries);
-    Hough *read(const std::string &path, Errors &errors);
+    static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);
     int rho_index_theta_index_to_index(int rho_index, int theta_index) const;

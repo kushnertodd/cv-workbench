@@ -12,8 +12,8 @@ WB_log_entry::WB_log_entry(std::string m_item, std::string m_value) :
 
 void WB_log::log_to_file(const std::string &filename, const std::string &text, Errors &errors) {
     std::ofstream ofs(filename, std::ofstream::out);
-    if (!ofs) {
-        errors.add("Histogram::write_text", "", "invalid file '" + filename + "'");
+    if (!ofs.is_open()) {
+        errors.add("WB_log::log_to_file", "", "invalid file '" + filename + "'");
         return;
     }
     ofs << text << std::endl;

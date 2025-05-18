@@ -793,8 +793,6 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
  */
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
-    if (errors.has_error())
-        return nullptr;
     Image *image = nullptr;
     if (fp) {
         image = Image::read(fp, errors);
@@ -926,9 +924,9 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
  * @return
  */
 Image *Image::read_text(const std::string &path, Errors &errors) {
-    std::ifstream ifs = file_utils::open_file_read_text(path, errors);
     Image *image = nullptr;
-    if (ifs) {
+    std::ifstream ifs = file_utils::open_file_read_text(path, errors);
+    if (!errors.has_error()) {
         image = read_text(ifs, errors);
         ifs.close();
     }
@@ -1414,7 +1412,8 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
-    if (std::ofstream ofs = file_utils::open_file_write_text(path, errors)) {
+    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+    if (!errors.has_error()) {
         write_text(ofs, "\t", errors);
         ofs.close();
     }
