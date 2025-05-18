@@ -96,7 +96,9 @@ Histogram *Filesystem_data_source_descriptor::read_histogram(Errors &errors) { r
  */
 Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
     std::string path = to_path_noext();
-    Hough *hough = Hough::read(path, errors);
+    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+    std::string data_filename = wb_filename.to_hough();
+    Hough *hough = Hough::read(data_filename, errors);
     return hough;
 }
 /**
@@ -106,7 +108,9 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
  */
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
     std::string path = to_path_noext();
-    Image *image = Image::read(path, errors);
+    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+    std::string data_filename = wb_filename.to_bin();
+    Image *image = Image::read(data_filename, errors);
     return image;
 }
 /**

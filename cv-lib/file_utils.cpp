@@ -24,7 +24,7 @@ long file_utils::file_size(std::ifstream &in) {
 FILE *file_utils::open_file_read(const std::string &path, Errors &errors) {
     FILE *fp = fopen(path.c_str(), "r");
     if (fp == nullptr)
-        errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+        errors.add("file_utils::open_file_read", "", "cannot open file " + path + " for reading: " + strerror(errno));
     return fp;
 }
 /**
@@ -49,7 +49,7 @@ std::ifstream file_utils::open_file_read_binary(const std::string &path, Errors 
 std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &errors) {
     std::ifstream ifs(path, std::ifstream::in);
     if (!ifs.is_open()) {
-        errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+        errors.add("file_utils::open_file_read_text", "", "cannot open file " + path + " for reading: " + strerror(errno));
     }
     return ifs;
 }
@@ -62,7 +62,7 @@ std::ifstream file_utils::open_file_read_text(const std::string &path, Errors &e
 FILE *file_utils::open_file_write(const std::string &path, Errors &errors) {
     FILE *fp = fopen(path.c_str(), "w");
     if (fp == nullptr)
-        errors.add("file_utils::open_file", "", "cannot open file " + path + " for writing: " + strerror(errno));
+        errors.add("file_utils::open_file_write", "", "cannot open file " + path + " for writing: " + strerror(errno));
     return fp;
 }
 /**
@@ -87,36 +87,11 @@ std::ofstream file_utils::open_file_write_binary(const std::string &path, Errors
 std::ofstream file_utils::open_file_write_text(const std::string &path, Errors &errors) {
     std::ofstream ofs(path, std::ofstream::out);
     if (!ofs.is_open())
-        errors.add("file_utils::open_file", "", "cannot open file " + path + " for reading: " + strerror(errno));
+        errors.add("file_utils::open_file_write_text", "", "cannot open file " + path + " for reading: " + strerror(errno));
     return ofs;
 }
 /**
- * reads all characters in filename and returns length in file_bytes
- * (m)allocates buffer and fills with file contents
- * be sure to free()
- * @return file contents
- * @throws errno on open error
- */
-
-/**
- * @brief
- * @param filename
- * @param contents
- * @return
- */
-bool file_utils::read_file(const std::string &filename, std::string &contents) {
-    std::ifstream in(filename, std::ios::in | std::ios::binary);
-    if (in) {
-        contents.resize(file_size(in));
-        in.seekg(0, std::ios::beg);
-        in.read(&contents[0], contents.size());
-        in.close();
-        return true;
-    }
-    return false;
-}
-/**
- * @brief
+ * @brief read entire binary file
  * @param filename
  * @param contents
  * @return
@@ -124,18 +99,37 @@ bool file_utils::read_file(const std::string &filename, std::string &contents) {
 char *file_utils::read_file_binary(const std::string &filename, int &length, Errors &errors) {
     char *buffer = nullptr;
     std::ifstream in(filename, std::ios::in | std::ios::binary);
-    if (!in) {
+    if (!in.is_open()) {
         errors.add("file_utils::read_file_binary", "",
                    "cannot open file " + filename + " for reading: " + strerror(errno));
     } else {
-        in.seekg(0, in.end);
-        length = in.tellg();
+        length = file_size(in);
         in.seekg(0, std::ios::beg);
         buffer = new char[length];
         in.read(buffer, length);
         in.close();
     }
     return buffer;
+}
+/**
+ * @brief read entire text file as string
+ * @param filename
+ * @param file contents
+ * @return
+ */
+bool file_utils::read_file_text(const std::string &filename, std::string &contents, Errors &errors) {
+    std::ifstream in(filename, std::ios::in | std::ios::binary);
+    if (!in.is_open()) {
+        errors.add("file_utils::read_file_text", "",
+                   "cannot open file " + filename + " for reading: " + strerror(errno));
+        return false;
+    } else {
+        contents.resize(file_size(in));
+        in.seekg(0, std::ios::beg);
+        in.read(&contents[0], contents.size());
+        in.close();
+        return true;
+    }
 }
 /**
  * @brief

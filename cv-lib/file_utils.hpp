@@ -12,8 +12,8 @@ namespace file_utils {
     FILE *open_file_write(const std::string &path, Errors &errors);
     std::ofstream open_file_write_binary(const std::string &path, Errors &errors);
     std::ofstream open_file_write_text(const std::string &path, Errors &errors);
-    bool read_file(const std::string &filename, std::string &contents);
     char *read_file_binary(const std::string &filename, int &length, Errors &errors);
+    bool read_file_text(const std::string &filename, std::string &contents, Errors &errors);
     bool read_double(FILE *fp, double &var);
     bool read_float(FILE *fp, float &var);
     bool read_int(FILE *fp, int &var);

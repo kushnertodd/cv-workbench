@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     Runtime::init(path);
     Errors errors;
     std::string contents;
-    if (!file_utils::read_file(path, contents))
+    if (!file_utils::read_file_text(path, contents, errors))
       errors.add("", "", "cannot read in-filename");
     errors.check_exit("");
     std::unique_ptr<Wb_filename> wb_in_filename(Wb_filename::create_wb_filename(path, errors));
