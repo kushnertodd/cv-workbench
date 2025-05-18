@@ -26,9 +26,8 @@ Data *Data::read(const std::string &path, Errors &errors) {
     int length{};
     Data *data = new Data();
     data->binary_data = std::make_unique<char *>(file_utils::read_file_binary(path, data->length, errors));
-    if (errors.has_error())
-        return nullptr;
-    data->format = WB_data_format::Data_format::BINARY;
+    if (!errors.has_error())
+        data->format = WB_data_format::Data_format::BINARY;
     return data;
 }
 /**
@@ -84,10 +83,8 @@ void Data::write(const std::string &path, Errors &errors) const {
 void Data::write_text(const std::string &path, Errors &errors) const {
     assert(format == WB_data_format::Data_format::TEXT);
     std::ofstream ofs = file_utils::open_file_write_text(path, errors);
-    if (!errors.has_error()) {
+    if (!errors.has_error())
         write_text(ofs, errors);
-        ofs.close();
-    }
 }
 /**
  * @brief
