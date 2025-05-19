@@ -66,7 +66,7 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
     double x_bottom;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
         x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_max);
-        Point bottom_point(x_bottom, y_min);
+        Point bottom_point(x_bottom, y_max);
         if (inside(bottom_point))
             add(bottom_point);
     }
