@@ -192,9 +192,7 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
  */
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
     std::string path = to_path_noext();
-    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
-    std::string data_filename = wb_filename.to_hist_text();
-    histogram->write_text(data_filename, "\t", errors);
+    histogram->write_text(path, "\t", errors);
 }
 /**
  * @brief
