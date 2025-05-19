@@ -414,6 +414,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     ofs << "x_max" << delim << std::setprecision(1) << get_x_max() << std::endl;
     ofs << "y_min" << delim << std::setprecision(1) << get_y_min() << std::endl;
     ofs << "y_max" << delim << std::setprecision(1) << get_y_max() << std::endl;
+    ofs << delim;
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
         double rho = polar_trig->to_rho(rho_index);
         ofs << std::setprecision(1) << rho << delim;

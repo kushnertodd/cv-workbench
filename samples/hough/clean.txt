@@ -1,9 +1,11 @@
 create_hough_test_image.log
 hough_sample_image_grayscale_accumulator.bin
 hough_sample_image_grayscale_accumulator.txt
+hough_sample_image_grayscale_draw_line.jpg
 hough_test_image_grayscale_accumulator.bin
 hough_test_image_grayscale_accumulator.txt
 hough_test_image_grayscale.jpg
 hough_test_image_grayscale.txt
+image_grayscale_edge_threshold_draw_line.log
 run_hough_grayscale_image.log
 run_hough_test_image.log

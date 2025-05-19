@@ -3,8 +3,15 @@ clean.txt
 create_hough_test_image.json
 create_hough_test_image.txt
 files.txt
+hough_sample_image_grayscale_accumulator.bin
+hough_sample_image_grayscale_accumulator.txt
+hough_sample_image_grayscale_accumulator.xlsx*
+hough_sample_image_grayscale_draw_line.jpg
 hough_sample_image_grayscale.jpg
+image_grayscale_edge_threshold_draw_line.json
+image_grayscale_edge_threshold.txt
 run_hough_grayscale_image.json
+run_hough_grayscale_image.log
 run_hough_test_image.json
 run.sh
 run.txt
