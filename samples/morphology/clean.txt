@@ -1,4 +1,3 @@
-image_grayscale_edge_threshold_erode.bin
 image_grayscale_edge_threshold_erode_out.bin
 image_grayscale_edge_threshold_erode_out.jpg
 image_grayscale_morphology_black_hat.bin
@@ -10,8 +9,6 @@ image_grayscale_morphology_close.log
 image_grayscale_morphology_dilate.bin
 image_grayscale_morphology_dilate.jpg
 image_grayscale_morphology_dilate.log
-image_grayscale_morphology_erode.bin
-image_grayscale_morphology_erode.jpg
 image_grayscale_morphology_erode.log
 image_grayscale_morphology_erode.log
 image_grayscale_morphology_gradient.bin
