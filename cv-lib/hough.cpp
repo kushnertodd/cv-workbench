@@ -85,22 +85,22 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
  * @brief
  * @return
  */
-double Hough::get_x_min() const { return polar_trig->get_theta_inc(); }
+double Hough::get_x_min() const { return polar_trig->get_x_min(); }
 /**
  * @brief
  * @return
  */
-double Hough::get_x_max() const { return polar_trig->get_theta_inc(); }
+double Hough::get_x_max() const { return polar_trig->get_x_max(); }
 /**
  * @brief
  * @return
  */
-double Hough::get_y_min() const { return polar_trig->get_theta_inc(); }
+double Hough::get_y_min() const { return polar_trig->get_y_min(); }
 /**
  * @brief
  * @return
  */
-double Hough::get_y_max() const { return polar_trig->get_theta_inc(); }
+double Hough::get_y_max() const { return polar_trig->get_y_max(); }
 /**
  * @brief
  * @param image_theshold
@@ -408,6 +408,8 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     ofs << std::fixed;
     ofs << "rho_inc" << delim << get_rho_inc() << std::endl;
     ofs << "theta_inc" << delim << get_theta_inc() << std::endl;
+    ofs << "nrhos" << delim << std::setprecision(1) << get_nrhos() << std::endl;
+    ofs << "nthetas" << delim << std::setprecision(1) << get_nthetas() << std::endl;
     ofs << "x_min" << delim << std::setprecision(1) << get_x_min() << std::endl;
     ofs << "x_max" << delim << std::setprecision(1) << get_x_max() << std::endl;
     ofs << "y_min" << delim << std::setprecision(1) << get_y_min() << std::endl;

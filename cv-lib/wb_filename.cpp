@@ -91,17 +91,17 @@ std::string Wb_filename::to_bin() const { return root + ".bin"; }
  * @brief
  * @return
  */
-std::string Wb_filename::to_hist() const { return root + ".hist.bin"; }
+std::string Wb_filename::to_hist() const { return root + ".bin"; }
 /**
  * @brief
  * @return
  */
-std::string Wb_filename::to_hist_script() const { return root + ".hist.gp"; }
+std::string Wb_filename::to_hist_script() const { return root + ".gp"; }
 /**
  * @brief
  * @return
  */
-std::string Wb_filename::to_hist_text() const { return root + ".hist.txt"; }
+std::string Wb_filename::to_hist_text() const { return root + ".txt"; }
 /**
  * @brief
  * @return
