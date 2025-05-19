@@ -2,6 +2,7 @@ clean.sh
 clean.txt
 files.txt
 image_grayscale.jpg
+image_grayscale_edge_threshold_erode.jpg
 image_grayscale_morphology_black_hat.json
 image_grayscale_morphology_close.json
 image_grayscale_morphology_dilate.json

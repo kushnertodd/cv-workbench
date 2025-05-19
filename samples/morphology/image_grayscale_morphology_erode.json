@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold",
+                        "filename": "image_grayscale_edge_threshold_erode",
                         "ext": "jpg"
                     }
                 ],
@@ -28,14 +28,14 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_morphology_erode",
+                        "filename": "image_grayscale_edge_threshold_erode_out",
                         "ext": "bin"
                     }
                 ],
                 "parameters": {
                     "operation": "erode",
-                    "height": "5",
-                    "width": "5",
+                    "height": "3",
+                    "width": "3",
                     "structuring-element" : "cross",
                     "thickness" : "3"
                 }
@@ -50,7 +50,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_morphology_erode",
+                        "filename": "image_grayscale_edge_threshold_erode_out",
                         "ext": "bin"
                     }
                 ],
@@ -61,7 +61,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_morphology_erode",
+                        "filename": "image_grayscale_edge_threshold_erode_out",
                         "ext": "jpg"
                     }
                 ],
