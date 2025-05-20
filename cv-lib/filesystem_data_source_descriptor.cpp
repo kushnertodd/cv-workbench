@@ -110,8 +110,7 @@ Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
     std::string path = to_path_noext();
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
     std::string data_filename = wb_filename.to_bin();
-    Image *image = Image::read(data_filename, errors);
-    return image;
+    return Image::read(data_filename, errors);
 }
 /**
  * @brief

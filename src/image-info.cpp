@@ -15,19 +15,19 @@ int main(int argc, char **argv) {
     Errors errors;
     std::unique_ptr<Wb_filename> wb_filename(Wb_filename::create_wb_filename(in_filename, errors));
     errors.check_exit("invalid in-filename " + in_filename);
-    Image *image = nullptr;
+    Image *input_image = nullptr;
     if (wb_filename->is_jpeg()) {
-        image = Image::read_jpeg(in_filename, errors);
+        input_image = Image::read_jpeg(in_filename, errors);
     } else if (wb_filename->is_bin()) {
-        image = Image::read(in_filename, errors);
+        input_image = Image::read(in_filename, errors);
     } else {
         errors.add("", "", "invalid filename ext " + in_filename);
     }
     errors.check_exit("read error filename " + in_filename);
-    if (image != nullptr) {
-        Histogram *histogram = Histogram::create_image(image, 100, 0.0, 0.0, false, false);
+    if (input_image != nullptr) {
+        Histogram *histogram = Histogram::create_image(input_image, 100, 0.0, 0.0, false, false);
         std::cout << "filename " << std::setw(20) << std::left << in_filename << std::endl;
-        std::cout << image->to_string();
+        std::cout << input_image->to_string();
         std::cout << histogram->to_string();
         if (errors.has_error())
             std::cout << errors.to_string() << std::endl;

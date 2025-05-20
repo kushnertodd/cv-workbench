@@ -793,12 +793,12 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
  */
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
-    Image *image = nullptr;
+    Image *input_image = nullptr;
     if (fp) {
-        image = Image::read(fp, errors);
+        input_image = Image::read(fp, errors);
         fclose(fp);
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -811,34 +811,34 @@ Image *Image::read(FILE *fp, Errors &errors) {
     image_header.read(fp, errors);
     if (errors.has_error())
         return nullptr;
-    auto *image = new Image(image_header);
+    auto *input_image = new Image(image_header);
 
     // Read the data into buffer.
-    int size = image->get_npixels();
+    int size = input_image->get_npixels();
     switch (image_header.get_depth()) {
         case Image_depth::CV_8U:
-            wb_utils::read_byte_buffer(fp, image->buf_8U.get(), size, "Image::read", "", "cannot read 8U image data",
-                                       errors);
+            wb_utils::read_byte_buffer(fp, input_image->buf_8U.get(), size, "Image::read", "",
+                                       "cannot read 8U image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
 
         case Image_depth::CV_32S:
-            wb_utils::read_int_buffer(fp, image->buf_32S.get(), size, "Image::read", "", "cannot read 32S image data",
-                                      errors);
+            wb_utils::read_int_buffer(fp, input_image->buf_32S.get(), size, "Image::read", "",
+                                      "cannot read 32S image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
 
         case Image_depth::CV_32F:
-            wb_utils::read_float_buffer(fp, image->buf_32F.get(), size, "Image::read", "", "cannot read 32F image data",
-                                        errors);
+            wb_utils::read_float_buffer(fp, input_image->buf_32F.get(), size, "Image::read", "",
+                                        "cannot read 32F image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
@@ -846,7 +846,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
         default:
             break;
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief for read_jpeg()
@@ -900,22 +900,22 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     (void) jpeg_start_decompress(&cinfo);
     /* JSAMPLEs per row in output buffer */
     // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
-    auto *image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
+    auto *input_image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
     /* Make a one-row-high sample array that will go away when done with image */
-    buffer =
-            (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE, image->get_row_stride(), 1);
+    buffer = (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+                                        input_image->get_row_stride(), 1);
     /* Step 6: while (scan lines remain to be read) */
     while (cinfo.output_scanline < cinfo.output_height) {
         (void) jpeg_read_scanlines(&cinfo, buffer, 1);
         /* Assume put_scanline_someplace wants a pointer and sample count. */
-        image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
+        input_image->add_8U((pixel_8U *) buffer[0], input_image->get_row_stride(), errors);
     }
     /* Step 7: Finish decompression */
     (void) jpeg_finish_decompress(&cinfo);
     /* Step 8: Release JPEG decompression object */
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -924,13 +924,13 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
  * @return
  */
 Image *Image::read_text(const std::string &path, Errors &errors) {
-    Image *image = nullptr;
+    Image *input_image = nullptr;
     std::ifstream ifs = file_utils::open_file_read_text(path, errors);
     if (!errors.has_error()) {
-        image = read_text(ifs, errors);
+        input_image = read_text(ifs, errors);
         ifs.close();
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -961,8 +961,8 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
         }
         nrows++;
     }
-    auto *image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
-    pixel_32S *buf_ptr = image->buf_32S.get();
+    auto *input_image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
+    pixel_32S *buf_ptr = input_image->buf_32S.get();
     for (const std::vector<std::string> &row_values: lines) {
         for (const std::string &value_str: row_values) {
             int value;
@@ -970,12 +970,12 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
                 *buf_ptr++ = value;
             } else {
                 errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
-                delete image;
+                delete input_image;
                 return nullptr;
             }
         }
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief

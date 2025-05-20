@@ -30,29 +30,29 @@ int main(int argc, char **argv) {
     int nrows = 4;
     int window_ncols = 3;
     int window_nrows = 3;
-    Image *test = new Image(ncols, nrows, 1, Image_depth::CV_32F);
-    Image *out = new Image(ncols, nrows, 1, Image_depth::CV_32F);
+    Image *test_image = new Image(ncols, nrows, 1, Image_depth::CV_32F);
+    Image *output_image = new Image(ncols, nrows, 1, Image_depth::CV_32F);
     for (int col = 0; col < ncols; col++) {
         for (int row = 0; row < nrows; row++) {
-            test->set(col, row, row * ncols + col);
+            test_image->set(col, row, row * ncols + col);
         }
     }
-    One_pass_mean opm(test, window_nrows, window_ncols);
+    One_pass_mean opm(test_image, window_nrows, window_ncols);
     for (int col = 0; col <= ncols - window_ncols; col++) {
         for (int row = 0; row <= nrows - window_nrows; row++) {
-            out->set(col + opm.get_col_delta(), row + opm.get_row_delta(), opm.get_mean());
+            output_image->set(col + opm.get_col_delta(), row + opm.get_row_delta(), opm.get_mean());
             opm.col_right();
         }
         opm.row_down();
     }
     std::cout << "test image: " << std::endl << std::endl;
-    std::cout << test->to_string() << std::endl;
+    std::cout << test_image->to_string() << std::endl;
     std::cout << std::endl;
     std::cout << "mean image: " << std::endl << std::endl;
-    std::cout << out->to_string() << std::endl;
+    std::cout << output_image->to_string() << std::endl;
     Errors errors;
-    test->write_text("image-mean-test.txt", "\t", errors);
+    test_image->write_text("image-mean-test.txt", "\t", errors);
     errors.check_exit("test image text write failed");
-    out->write_text("image-mean-out.txt", "\t", errors);
+    output_image->write_text("image-mean-out.txt", "\t", errors);
     errors.check_exit("output image text write failed");
 }

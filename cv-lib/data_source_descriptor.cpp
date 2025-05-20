@@ -137,16 +137,16 @@ Hough *Data_source_descriptor::read_operator_hough(const std::string &module, Er
  * @return
  */
 Image *Data_source_descriptor::read_operator_image(const std::string &module, Errors &errors) {
-    Image *input = nullptr;
+    Image *input_image = nullptr;
     if (data_format == WB_data_format::Data_format::BINARY)
-        input = read_image(errors);
+        input_image = read_image(errors);
     else if (data_format == WB_data_format::Data_format::JPEG)
-        input = read_image_jpeg(errors);
+        input_image = read_image_jpeg(errors);
     else if (data_format == WB_data_format::Data_format::TEXT)
         read_image_text(errors);
     else
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
-    return input;
+    return input_image;
 }
 /**
  * @brief

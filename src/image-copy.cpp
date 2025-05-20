@@ -16,20 +16,20 @@ int main(int argc, char **argv) {
     errors.check_exit("invalid in-filename");
     std::unique_ptr<Wb_filename> wb_out_filename(Wb_filename::create_wb_filename(out_filename, errors));
     errors.check_exit("invalid out-filename");
-    Image *in_image = nullptr;
+    Image *input_image = nullptr;
     if (wb_in_filename->is_jpeg()) {
-        in_image = Image::read_jpeg(in_filename, errors);
+        input_image = Image::read_jpeg(in_filename, errors);
     } else if (wb_in_filename->is_bin()) {
-        in_image = Image::read(in_filename, errors);
+        input_image = Image::read(in_filename, errors);
     } else {
         errors.add("", "", "invalid in-filename");
     }
     errors.check_exit("invalid filename");
-    if (in_image != nullptr) {
+    if (input_image != nullptr) {
         if (wb_out_filename->is_jpeg()) {
-            in_image->write_jpeg(out_filename, errors);
+            input_image->write_jpeg(out_filename, errors);
         } else if (wb_out_filename->is_bin()) {
-            in_image->write(out_filename, errors);
+            input_image->write(out_filename, errors);
         } else {
             errors.add("", "", "invalid out-filename");
         }
