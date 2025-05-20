@@ -11,19 +11,20 @@ extern bool debug;
 
 /**
  * @brief
- * @param m_id
- * @param m_data_type
- * @param m_data_format
+ * @param m_id json file descriptor id
+ * @param m_data_type type of repository data stored
+ * @param m_data_format format of repository data
+ * @param m_repository_type storage medium
  */
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                                                      WB_data_format::Data_format m_data_format) :
     Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_types::Repository_type::FILESYSTEM) {}
 /**
  * @brief
- * @param json_data_source_descriptor
- * @param id
- * @param data_type
- * @param data_format
+ * @param json_data_source_descriptor data source descriptor json
+ * @param id json file descriptor id
+ * @param data_type type of repository data stored
+ * @param data_format format of repository data
  * @param errors
  * @return
  */
@@ -160,7 +161,7 @@ std::string Filesystem_data_source_descriptor::to_path_noext() const {
     return (directory.empty() ? "" : directory + "/") + filename;
 }
 /**
- * @brief
+ * @brief string description of data source descriptor
  * @return
  */
 std::string Filesystem_data_source_descriptor::to_string() {
@@ -171,7 +172,7 @@ std::string Filesystem_data_source_descriptor::to_string() {
 }
 /**
  * @brief
- * @param histogram
+ * @param histogram for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
@@ -186,7 +187,7 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
 }
 /**
  * @brief
- * @param histogram
+ * @param histogram for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
@@ -195,7 +196,7 @@ void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogra
 }
 /**
  * @brief
- * @param hough
+ * @param hough for output for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
@@ -210,7 +211,7 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
 }
 /**
  * @brief
- * @param hough
+ * @param hough for output for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
