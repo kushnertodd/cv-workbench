@@ -3,6 +3,10 @@
 #include <memory>
 #include "kernel.hpp"
 #include "operator_utils.hpp"
+
+/**
+ * @brief 
+ */
 Operator_filter_edge_kirsch::~Operator_filter_edge_kirsch() = default;
 
 /**

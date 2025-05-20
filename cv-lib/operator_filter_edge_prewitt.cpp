@@ -4,6 +4,9 @@
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 
+/**
+ * @brief 
+ */
 Operator_filter_edge_prewitt::~Operator_filter_edge_prewitt() = default;
 
 /**

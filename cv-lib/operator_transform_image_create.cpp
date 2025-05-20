@@ -6,6 +6,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_transform_image_create::~Operator_transform_image_create() = default;
+/**
    create new image from an existing image
 
  * @param input_data_source

@@ -6,6 +6,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_hough_image_create::~Operator_hough_image_create() = default;
+/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source

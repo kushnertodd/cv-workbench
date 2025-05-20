@@ -59,10 +59,6 @@ public:
     void write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
     void write_text(const std::string &path, const std::string &delim, Errors &errors);
     void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors);
-
-    // void find_lines(int ncols, int nrows, int nrhos, int nthetas);
-    // void find_peaks(int npeaks);
-    // void lines_to_line_segments(int ncols, int nrows, int nrhos, int nthetas);
 };
 
 #endif // CV_WORKBENCH_SRC_HOUGH_HPP_

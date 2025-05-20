@@ -4,6 +4,9 @@
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 
+/**
+ * @brief 
+ */
 Operator_filter_edge_sobel::~Operator_filter_edge_sobel() = default;
 
 /**

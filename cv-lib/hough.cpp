@@ -122,19 +122,6 @@ void Hough::initialize(Image *image, int pixel_threshold) {
     }
     update_accumulator_stats();
 }
-/*
-void Hough::find_lines(int ncols, int nrows, int nrhos, int nthetas) {
-  lines_to_line_segments(ncols, nrows, nrhos, nthetas);
-}
-
-void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas) {
-  for (Polar_line line: lines) {
-    Line_segment line_segment;
-      if (WB_window::clip_window(nrows, ncols, nrhos, nthetas,line_segment, line))
-      line_segments.push_back(line_segment);
-  }
-}
-*/
 /**
  * @brief
  * @param log_entries

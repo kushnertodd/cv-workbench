@@ -25,6 +25,10 @@ extern bool debug;
 
 /**
  * @brief
+ */
+Operator_dispatcher::~Operator_dispatcher() = default;
+/**
+ * @brief
  * @param operator_name
  * @return
  */

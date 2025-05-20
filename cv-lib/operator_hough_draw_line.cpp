@@ -7,6 +7,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_hough_draw_line::~Operator_hough_draw_line() = default;
+/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source

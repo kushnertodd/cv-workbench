@@ -8,6 +8,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_transform_intensity_map::~Operator_transform_intensity_map() = default;
+/**
    create new image from an existing image
    parameters:
      depth_enum depth

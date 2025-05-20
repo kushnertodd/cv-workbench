@@ -4,6 +4,9 @@
 #include "kernel.hpp"
 #include "operator_utils.hpp"
 
+/**
+ * @brief 
+ */
 Operator_filter_edge_color::~Operator_filter_edge_color() = default;
 /**
  * @param input_data_sources
