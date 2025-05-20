@@ -26,9 +26,9 @@ Experiment::Experiment(std::string m_path) : path(std::move(m_path)) {}
  * @param jobj  json-c parsed json
  * @param errors experiment parse errors
  */
-Experiment *Experiment::from_json(json_object *jobj, std::string path, Errors &errors) {
+std::unique_ptr<Experiment> Experiment::from_json(json_object *jobj, std::string path, Errors &errors) {
     // parse: ' "experiment": { ... `
-    auto *experiment = new Experiment(std::move(path));
+    std::unique_ptr<Experiment> experiment = std::make_unique<Experiment>(std::move(path));
     json_object *json_experiment =
             get_json_object("Experiment::from_json", jobj, "experiment", json_type_object, errors);
     if (json_experiment != nullptr) {
