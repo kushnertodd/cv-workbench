@@ -11,18 +11,18 @@
 Bounds::Bounds() : Bounds(DBL_MAX, -DBL_MAX) {}
 /**
  * @brief
- * @param m_min_value
- * @param m_max_value
+ * @param m_min_value lower bound
+ * @param m_max_value upper bound
  */
 Bounds::Bounds(double m_min_value, double m_max_value) : min_value(m_min_value), max_value(m_max_value) {}
 /**
  * @brief
- * @return
+ * @return upper bound
  */
 double Bounds::get_max_value() const { return max_value; }
 /**
  * @brief
- * @return
+ * @return lower bound
  */
 double Bounds::get_min_value() const { return min_value; }
 /**
@@ -55,7 +55,7 @@ std::string Bounds::to_string(const std::string &prefix) const {
     return os.str();
 }
 /**
- * @brief
+ * @brief update bounds with new value
  * @param value
  */
 void Bounds::update(double value) {

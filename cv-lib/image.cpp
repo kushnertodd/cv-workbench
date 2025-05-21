@@ -42,6 +42,7 @@ Image::~Image() {}
  */
 Image::Image() = default;
 /**
+ * kludgy, any bool argument invokes. needed to honor legacy calls.
  * @brief
  * @param m_ncols
  * @param m_nrows
@@ -49,7 +50,7 @@ Image::Image() = default;
  * @param m_depth
  * @param value
  */
-Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth) :
+Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, bool no_init) :
     image_header(m_ncols, m_nrows, m_components, m_depth) {
     allocate();
 }
@@ -62,7 +63,7 @@ Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth) :
  * @param value
  */
 Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
-    Image(m_ncols, m_nrows, m_components, m_depth) {
+    Image(m_ncols, m_nrows, m_components, m_depth, true) {
     initialize(m_value);
 }
 /**
@@ -432,6 +433,39 @@ void Image::copy(const Image *image, Errors &errors) const {
 }
 /**
  * @brief
+ * @param image
+ * @param errors
+ */
+Image *Image::copy(int min_col, int min_row, int max_col, int max_row, Errors &errors) const {
+    int in_ncols = get_ncols();
+    int in_nrows = get_nrows();
+    if (min_col < 0)
+        errors.add("Image::copy", "", "invalid min_col");
+    if (min_row < 0)
+        errors.add("Image::copy", "", "invalid min_row");
+    if (max_col >= in_ncols)
+        errors.add("Image::copy", "", "invalid max_col");
+    if (min_row >= in_nrows)
+        errors.add("Image::copy", "", "invalid max_row");
+    if (max_col < min_col)
+        errors.add("Image::copy", "", "invalid min_col, max_col");
+    if (max_row < min_row)
+        errors.add("Image::copy", "", "invalid min_row, max_row");
+    Image *output_image = nullptr;
+    if (!errors.has_error()) {
+        int out_ncols = max_col - min_col - 1;
+        int out_nrows = max_row - min_row - 1;
+        output_image = new Image(out_ncols, out_nrows, get_ncomponents(), get_depth());
+        for (int col = min_col; col <= max_col; col++)
+            for (int row = min_row; row <= max_row; row++) {
+                double value = get(col, row);
+                output_image->set(col - min_col, row - min_row, value);
+            }
+    }
+    return output_image;
+}
+/**
+ * @brief
  * @param line_segment
  * @param value
  * @param component
@@ -512,12 +546,12 @@ void Image::draw_rectangle_filled(int col1, int row1, int col2, int row2, double
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    int col_min = std::min(col1, col2);
-    int row_min = std::min(row1, row2);
-    int col_max = std::max(col1, col2);
-    int row_max = std::max(row1, row2);
-    for (int col = col_min; col <= col_max; col++)
-        for (int row = row_min; row <= row_max; row++)
+    int min_col = std::min(col1, col2);
+    int min_row = std::min(row1, row2);
+    int max_col = std::max(col1, col2);
+    int max_row = std::max(row1, row2);
+    for (int col = min_col; col <= max_col; col++)
+        for (int row = min_row; row <= max_row; row++)
             set(col, row, value, component);
 }
 /**
@@ -1184,29 +1218,29 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
     //    return nullptr;
     //  }
 
-    auto *out_image = new Image(src_image->image_header);
+    auto *output_image = new Image(src_image->image_header);
 
     int size = src_image->get_npixels();
     switch (src_image->get_depth()) {
         case Image_depth::CV_8U:
             for (int i = 0; i < size; i++)
-                out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
+                output_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
             break;
 
         case Image_depth::CV_32S:
             for (int i = 0; i < size; i++)
-                out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
+                output_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
             break;
 
         case Image_depth::CV_32F:
             for (int i = 0; i < size; i++)
-                out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
+                output_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
             break;
 
         default:
             break;
     }
-    return out_image;
+    return output_image;
 }
 /**
  * @brief
