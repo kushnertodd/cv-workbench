@@ -8,6 +8,7 @@
 #include "image_line_segment.hpp"
 #include "pixel.hpp"
 #include "variance_stats.hpp"
+#include "wb_convert_types.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
 #include "wb_resize_types.hpp"
@@ -62,6 +63,7 @@ public:
     int col_row_to_index(int col, int row, int component = 0) const;
     Image *color_edge(Errors &errors) const;
     static Image *combine(Image *image1, Image *image2, double scale1, double scale2, double offset, Errors &errors);
+    static Image *convert(const Image *image, WB_convert_types::Convert_type convert_type, Errors &errors);
     void copy(const Image *image, Errors &errors) const;
     Image *copy(int min_col, int min_row, int max_col, int max_row, Errors &errors) const;
     void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;

@@ -352,6 +352,37 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
 /**
  * @brief
  * @param image
+ * @param convert_type
+ * @return
+ */
+Image *Image::convert(const Image *image, WB_convert_types::Convert_type convert_type, Errors &errors) {
+    int ncols = image->get_ncols();
+    int nrows = image->get_nrows();
+    auto *convert_image = new Image(ncols, nrows, 1, image->get_depth());
+    for (int col = 0; col < ncols && !errors.has_error(); col++) {
+        for (int row = 0; row < nrows && !errors.has_error(); row++) {
+            double value = 0.0;
+            switch (convert_type) {
+                case WB_convert_types::Convert_type::ABS:
+                    value = std::abs(image->get(col, row));
+                    break;
+                case WB_convert_types::Convert_type::LOG:
+                    double in_value = image->get(col, row);
+                    if (in_value >= 0.0)
+                        value = std::log(in_value);
+                    else
+                        errors.add("Image::convert", "", "cannot convert log of negative value");
+                    break;
+            }
+            if (!errors.has_error())
+                convert_image->set(col, row, value, 0);
+        }
+    }
+    return convert_image;
+}
+/**
+ * @brief
+ * @param image
  * @param errors
  */
 void Image::copy(const Image *image, Errors &errors) const {
@@ -453,8 +484,8 @@ Image *Image::copy(int min_col, int min_row, int max_col, int max_row, Errors &e
         errors.add("Image::copy", "", "invalid min_row, max_row");
     Image *output_image = nullptr;
     if (!errors.has_error()) {
-        int out_ncols = max_col - min_col - 1;
-        int out_nrows = max_row - min_row - 1;
+        int out_ncols = max_col - min_col + 1;
+        int out_nrows = max_row - min_row + 1;
         output_image = new Image(out_ncols, out_nrows, get_ncomponents(), get_depth());
         for (int col = min_col; col <= max_col; col++)
             for (int row = min_row; row <= max_row; row++) {
@@ -933,7 +964,8 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     /* Step 5: Start decompressor */
     (void) jpeg_start_decompress(&cinfo);
     /* JSAMPLEs per row in output buffer */
-    // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
+    // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components,
+    // Image_depth::CV_8U, 0.0);
     auto *input_image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
     /* Make a one-row-high sample array that will go away when done with image */
     buffer = (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,

@@ -25,29 +25,27 @@ void Operator_transform_image_copy::run(std::list<Data_source_descriptor *> &inp
     int min_row{};
     int max_col{};
     int max_row{};
-    bool saw_ncols = false;
-    bool saw_nrows = false;
     bool saw_min_col{};
     bool saw_min_row{};
     bool saw_max_col{};
     bool saw_max_row{};
     if (Operator_utils::has_parameter(operator_parameters, "min-col")) {
-        saw_ncols = true;
+        saw_min_col = true;
         Operator_utils::get_int_parameter("Operator_transform_image_copy::run", operator_parameters, "min-col", min_col,
                                           errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "min-row")) {
-        saw_ncols = true;
+        saw_min_row = true;
         Operator_utils::get_int_parameter("Operator_transform_image_copy::run", operator_parameters, "min-row", min_row,
                                           errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "max-col")) {
-        saw_ncols = true;
+        saw_max_col = true;
         Operator_utils::get_int_parameter("Operator_transform_image_copy::run", operator_parameters, "max-col", max_col,
                                           errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "max-row")) {
-        saw_ncols = true;
+        saw_max_row = true;
         Operator_utils::get_int_parameter("Operator_transform_image_copy::run", operator_parameters, "max-row", max_row,
                                           errors);
     }
