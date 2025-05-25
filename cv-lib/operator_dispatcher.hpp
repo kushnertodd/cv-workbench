@@ -6,6 +6,7 @@
 
 class Operator_dispatcher : public Operator {
 public:
+    ~Operator_dispatcher() override;
     static Operator *create_operator(const std::string &operator_name);
 };
 

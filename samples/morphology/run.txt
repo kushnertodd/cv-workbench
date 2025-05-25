@@ -1,0 +1,7 @@
+image_grayscale_morphology_black_hat.json
+image_grayscale_morphology_close.json
+image_grayscale_morphology_dilate.json
+image_grayscale_morphology_erode.json
+image_grayscale_morphology_gradient.json
+image_grayscale_morphology_open.json
+image_grayscale_morphology_top_hat.json

@@ -10,10 +10,10 @@
 Data_source_descriptor::~Data_source_descriptor() = default;
 /**
  * @brief
- * @param m_id
- * @param m_data_type
- * @param m_data_format
- * @param m_repository_type
+ * @param m_id json file descriptor id
+ * @param m_data_type type of repository data stored
+ * @param m_data_format format of repository data
+ * @param m_repository_type storage medium
  */
 Data_source_descriptor::Data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                                WB_data_format::Data_format m_data_format,
@@ -21,7 +21,10 @@ Data_source_descriptor::Data_source_descriptor(int m_id, WB_data_type::Data_type
     id(m_id), data_type(m_data_type), data_format(m_data_format), repository_type(m_repository_type) {}
 /**
  * @brief
- * @param json_data_source_descriptor
+ * @param json_data_source_descriptor data source descriptor json
+ * @param id json file descriptor id
+ * @param data_type type of repository data stored
+ * @param data_format format of repository data
  * @param errors
  * @return
  */
@@ -78,7 +81,7 @@ Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data
     return data_source_descriptor;
 }
 /**
- * @brief
+ * @brief string description of data source descriptor
  * @return
  */
 std::string Data_source_descriptor::to_string() {
@@ -137,16 +140,16 @@ Hough *Data_source_descriptor::read_operator_hough(const std::string &module, Er
  * @return
  */
 Image *Data_source_descriptor::read_operator_image(const std::string &module, Errors &errors) {
-    Image *input = nullptr;
+    Image *input_image = nullptr;
     if (data_format == WB_data_format::Data_format::BINARY)
-        input = read_image(errors);
+        input_image = read_image(errors);
     else if (data_format == WB_data_format::Data_format::JPEG)
-        input = read_image_jpeg(errors);
+        input_image = read_image_jpeg(errors);
     else if (data_format == WB_data_format::Data_format::TEXT)
         read_image_text(errors);
     else
         errors.add(module, "", "invalid input data format " + WB_data_format::to_string(data_format));
-    return input;
+    return input_image;
 }
 /**
  * @brief

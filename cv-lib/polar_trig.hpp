@@ -62,6 +62,10 @@ public:
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
+    double get_x_min() const;
+    double get_x_max() const;
+    double get_y_min() const;
+    double get_y_max() const;
     double point_theta_index_to_rho(Point &point, int theta_index);
     double point_theta_index_to_rho(double x, double y, int theta_index);
     int point_theta_index_to_rho_index(Point &point, int theta_index);

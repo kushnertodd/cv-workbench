@@ -1,0 +1,74 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "filter-smooth-gaussian",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale",
+                        "ext": "jpg"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_smooth_gaussian",
+                        "ext": "bin"
+                    }
+                ],
+                "parameters": {
+                    "ncols": "7",
+                    "nrows": "7",
+                    "sigma-x": "3.0",
+                    "sigma-y": "3.0"
+                }
+            },
+            {
+                "id": 2,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_smooth_gaussian",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_smooth_gaussian",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "standard-deviations": "2.0"
+                }
+            }
+        ]
+    }
+}

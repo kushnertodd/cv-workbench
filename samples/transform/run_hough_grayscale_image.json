@@ -1,0 +1,52 @@
+{
+  "experiment": {
+    "run": {
+      "script-path": "script-path",
+      "run-time": "timestamp",
+      "username": "username",
+      "version": "program-version"
+    },
+    "steps": [
+      {
+        "id": 1,
+        "operator": "hough-image-create",
+         "input-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "jpeg",
+            "directory": ".",
+            "filename": "image_grayscale_edge",
+            "ext": "jpg"
+          }
+        ],
+        "output-data": [
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "binary", 
+            "directory": ".",
+            "filename": "hough_image_grayscale_accumulator",
+            "ext": "bin"
+          },
+          {
+            "id": 1,
+            "type": "image",
+            "repository": "filesystem",
+            "format": "text",
+            "directory": ".",
+            "filename": "hough_image_grayscale_accumulator",
+            "ext": "txt"
+          }
+        ],
+        "parameters": {
+          "rho-inc": "1",
+          "theta-inc": "5",
+          "pixel-threshold": "0"
+        }
+      }
+    ]
+  }
+}

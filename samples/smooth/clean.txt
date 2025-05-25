@@ -1,0 +1,6 @@
+image_grayscale_smooth_average.bin
+image_grayscale_smooth_average.jpg
+image_grayscale_smooth_average.log
+image_grayscale_smooth_gaussian.bin
+image_grayscale_smooth_gaussian.jpg
+image_grayscale_smooth_gaussian.log

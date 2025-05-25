@@ -1,0 +1,2 @@
+image_grayscale_smooth_average.json
+image_grayscale_smooth_gaussian.json

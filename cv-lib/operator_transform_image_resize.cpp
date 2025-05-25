@@ -8,6 +8,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_transform_image_resize::~Operator_transform_image_resize() = default;
+/**
  * create new image from an existing image
  *
  * @param input_data_source
@@ -23,14 +27,11 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         std::cout << "Operator_transform_image_resize::run:parameters: "
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
-    if (input_data_sources.empty())
-        errors.add("Operator_transform_image_resize::run", "", "input data source required");
-    else if (input_data_sources.size() > 1)
-        errors.add("Operator_transform_image_resize::run", "", "too many input data sources");
+    if (input_data_sources.size() != 1)
+        errors.add("Operator_transform_image_resize::run", "", "one input data source required");
     else if (output_data_stores.empty())
-        errors.add("Operator_transform_image_resize::run", "", "output data source required");
-    else if (output_data_stores.size() > 1)
-        errors.add("Operator_transform_image_resize::run", "", "too many output data sources");
+        errors.add("Operator_transform_image_resize::run", "", "at least one output data source required");
+
     int area_ncols;
     int area_nrows;
 
@@ -54,28 +55,24 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
     }
 
     if (!Operator_utils::has_parameter(operator_parameters, "resize-type"))
-        errors.add("Operator_filter_image_morphology::run", "", "resize-type parameter required");
+        errors.add("Operator_transform_image_resize::run", "", "resize-type parameter required");
     WB_resize_types::Resize_type resize_type;
     if (!errors.has_error()) {
         std::string resize_type_str = Operator_utils::get_parameter(operator_parameters, "resize-type");
         resize_type = WB_resize_types::from_string(resize_type_str);
         if (resize_type == WB_resize_types::Resize_type::UNDEFINED)
-            errors.add("Operator_filter_image_morphology::run", "", "invalid 'resize-type' parameter");
+            errors.add("Operator_transform_image_resize::run", "", "invalid 'resize-type' parameter");
     }
-
-    Image *input;
-    Data_source_descriptor *input_data_source;
-    Data_source_descriptor *output_data_store;
     if (!errors.has_error()) {
-        input_data_source = input_data_sources.front();
-        output_data_store = output_data_stores.front();
-        input = input_data_source->read_image(errors);
-        if (input != nullptr) {
-            input->check_grayscale("Operator_transform_image_resize::run", errors);
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        std::unique_ptr<Image> input_image(
+                input_data_source->read_operator_image("Operator_transform_image_resize::run", errors));
+        if (!errors.has_error())
+            input_image->check_grayscale("Operator_transform_image_resize::run", errors);
+        if (!errors.has_error()) {
+            std::unique_ptr<Image> output_image(
+                    Image::resize(input_image.get(), area_ncols, area_nrows, WB_resize_types::Resize_type::MAX));
+            output_data_stores.front()->write_image(output_image.get(), errors);
         }
-    }
-    if (!errors.has_error()) {
-        Image *output_image = Image::resize(input, area_ncols, area_nrows, WB_resize_types::Resize_type::MAX);
-        output_data_store->write_image(output_image, errors);
     }
 }

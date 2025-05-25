@@ -85,6 +85,8 @@ add_library(cv-lib STATIC
         operator_transform_image_resize.hpp
         operator_transform_intensity_map.cpp
         operator_transform_intensity_map.hpp
+        operator_transform_intensity_convert.cpp
+        operator_transform_intensity_convert.hpp
         operator_utils.cpp
         operator_utils.hpp
         pearsons_correlation.cpp
@@ -102,6 +104,8 @@ add_library(cv-lib STATIC
         runtime.hpp
         variance_stats.cpp
         variance_stats.hpp
+        wb_convert_types.cpp
+        wb_convert_types.hpp
         wb_data_format.cpp
         wb_data_format.hpp
         wb_data_type.cpp

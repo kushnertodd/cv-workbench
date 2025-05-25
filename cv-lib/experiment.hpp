@@ -20,7 +20,7 @@ public:
     virtual ~Experiment();
     Experiment();
     explicit Experiment(std::string m_path);
-    static Experiment *from_json(json_object *jobj, std::string path, Errors &errors);
+    static std::unique_ptr<Experiment> from_json(json_object *jobj, std::string path, Errors &errors);
     static void log_experiment(json_object *json_experiment);
     void run(Errors &errors);
 };

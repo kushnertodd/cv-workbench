@@ -6,6 +6,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_hough_image_create::~Operator_hough_image_create() = default;
+/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source
@@ -58,8 +62,8 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         pixel_threshold = 0;
         // errors.add("Operator_hough_image_create::run", "", "missing 'threshold' parameter");
     }
-    Data_source_descriptor *input_data_source = input_data_sources.front();
     if (!errors.has_error()) {
+        Data_source_descriptor *input_data_source = input_data_sources.front();
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_hough_image_create::run", errors));
         if (!errors.has_error())

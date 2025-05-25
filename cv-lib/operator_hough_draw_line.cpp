@@ -7,6 +7,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_hough_draw_line::~Operator_hough_draw_line() = default;
+/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source
@@ -46,7 +50,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     }
     if (!errors.has_error()) {
         std::unique_ptr<Data> input_data(
-                input_data_source->read_operator_data("Operator_transform_image_create::run", errors));
+                input_data_source->read_operator_data("Operator_hough_draw_line::run", errors));
         Image *input_image_ptr = nullptr;
         if (!errors.has_error()) {
             std::unique_ptr<Image> input_image(

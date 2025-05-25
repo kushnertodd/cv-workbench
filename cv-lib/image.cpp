@@ -42,6 +42,7 @@ Image::~Image() {}
  */
 Image::Image() = default;
 /**
+ * kludgy, any bool argument invokes. needed to honor legacy calls.
  * @brief
  * @param m_ncols
  * @param m_nrows
@@ -49,7 +50,7 @@ Image::Image() = default;
  * @param m_depth
  * @param value
  */
-Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth) :
+Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, bool no_init) :
     image_header(m_ncols, m_nrows, m_components, m_depth) {
     allocate();
 }
@@ -62,7 +63,7 @@ Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth) :
  * @param value
  */
 Image::Image(int m_ncols, int m_nrows, int m_components, Image_depth m_depth, double m_value) :
-    Image(m_ncols, m_nrows, m_components, m_depth) {
+    Image(m_ncols, m_nrows, m_components, m_depth, true) {
     initialize(m_value);
 }
 /**
@@ -282,7 +283,7 @@ Image *Image::color_edge(Errors &errors) const {
     int row_upper = nrows - 2;
     int col_lower = 1;
     int col_upper = ncols - 2;
-    auto *out = new Image(ncols, nrows, COMPONENTS_RGB, Image_depth::CV_32F);
+    auto *out = new Image(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
     out->clear(0.0);
     if (debug)
         std::cout << "col_lower " << col_lower << " col_upper " << col_upper << " row_lower " << row_lower
@@ -347,6 +348,58 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
         }
     }
     return combine_image;
+}
+/**
+ * @brief
+ * @param image
+ * @param convert_type
+ * @return
+ */
+Image *Image::convert(const Image *image, WB_convert_types::Convert_type convert_type, Errors &errors) {
+    int ncols = image->get_ncols();
+    int nrows = image->get_nrows();
+    auto *convert_image = new Image(ncols, nrows, 1, image->get_depth());
+    for (int col = 0; col < ncols && !errors.has_error(); col++) {
+        for (int row = 0; row < nrows && !errors.has_error(); row++) {
+            double value = 0.0;
+            switch (convert_type) {
+                case WB_convert_types::Convert_type::ABS: {
+                    value = std::abs(image->get(col, row));
+                    break;
+                }
+                case WB_convert_types::Convert_type::LOG: {
+                    double in_value = image->get(col, row);
+                    if (in_value >= 1.0)
+                        value = std::log(in_value);
+                    else if (in_value < 1.0)
+                        value = 0.0;
+                    else
+                        errors.add("Image::convert", "",
+                                   "cannot convert log of negative value at (" + wb_utils::int_to_string(col) + ", " +
+                                           wb_utils::int_to_string(row) + ")");
+                    break;
+                }
+                case WB_convert_types::Convert_type::SQR: {
+                    double sqr_value = std::abs(image->get(col, row));
+                    value = sqr_value * sqr_value;
+                    break;
+                }
+                case WB_convert_types::Convert_type::SQRT: {
+                    double in_value = image->get(col, row);
+                    if (in_value >= 0.0)
+                        value = std::sqrt(in_value);
+                    else
+                        errors.add("Image::convert", "",
+                                   "cannot convert square root of negative value at (" + wb_utils::int_to_string(col) +
+                                           ", " + wb_utils::int_to_string(row) + ")");
+                    break;
+                }
+            }
+            if (!errors.has_error())
+                convert_image->set(col, row, value, 0);
+        }
+    }
+    return convert_image;
 }
 /**
  * @brief
@@ -432,6 +485,39 @@ void Image::copy(const Image *image, Errors &errors) const {
 }
 /**
  * @brief
+ * @param image
+ * @param errors
+ */
+Image *Image::copy(int min_col, int min_row, int max_col, int max_row, Errors &errors) const {
+    int in_ncols = get_ncols();
+    int in_nrows = get_nrows();
+    if (min_col < 0)
+        errors.add("Image::copy", "", "invalid min_col");
+    if (min_row < 0)
+        errors.add("Image::copy", "", "invalid min_row");
+    if (max_col >= in_ncols)
+        errors.add("Image::copy", "", "invalid max_col");
+    if (min_row >= in_nrows)
+        errors.add("Image::copy", "", "invalid max_row");
+    if (max_col < min_col)
+        errors.add("Image::copy", "", "invalid min_col, max_col");
+    if (max_row < min_row)
+        errors.add("Image::copy", "", "invalid min_row, max_row");
+    Image *output_image = nullptr;
+    if (!errors.has_error()) {
+        int out_ncols = max_col - min_col + 1;
+        int out_nrows = max_row - min_row + 1;
+        output_image = new Image(out_ncols, out_nrows, get_ncomponents(), get_depth());
+        for (int col = min_col; col <= max_col; col++)
+            for (int row = min_row; row <= max_row; row++) {
+                double value = get(col, row);
+                output_image->set(col - min_col, row - min_row, value);
+            }
+    }
+    return output_image;
+}
+/**
+ * @brief
  * @param line_segment
  * @param value
  * @param component
@@ -512,12 +598,12 @@ void Image::draw_rectangle_filled(int col1, int row1, int col2, int row2, double
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    int col_min = std::min(col1, col2);
-    int row_min = std::min(row1, row2);
-    int col_max = std::max(col1, col2);
-    int row_max = std::max(row1, row2);
-    for (int col = col_min; col <= col_max; col++)
-        for (int row = row_min; row <= row_max; row++)
+    int min_col = std::min(col1, col2);
+    int min_row = std::min(row1, row2);
+    int max_col = std::max(col1, col2);
+    int max_row = std::max(row1, row2);
+    for (int col = min_col; col <= max_col; col++)
+        for (int row = min_row; row <= max_row; row++)
             set(col, row, value, component);
 }
 /**
@@ -793,14 +879,12 @@ void Image::log(std::list<WB_log_entry> &log_entries) const {
  */
 Image *Image::read(const std::string &path, Errors &errors) {
     FILE *fp = file_utils::open_file_read(path, errors);
-    if (errors.has_error())
-        return nullptr;
-    Image *image = nullptr;
+    Image *input_image = nullptr;
     if (fp) {
-        image = Image::read(fp, errors);
+        input_image = Image::read(fp, errors);
         fclose(fp);
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -813,34 +897,34 @@ Image *Image::read(FILE *fp, Errors &errors) {
     image_header.read(fp, errors);
     if (errors.has_error())
         return nullptr;
-    auto *image = new Image(image_header);
+    auto *input_image = new Image(image_header);
 
     // Read the data into buffer.
-    int size = image->get_npixels();
+    int size = input_image->get_npixels();
     switch (image_header.get_depth()) {
         case Image_depth::CV_8U:
-            wb_utils::read_byte_buffer(fp, image->buf_8U.get(), size, "Image::read", "", "cannot read 8U image data",
-                                       errors);
+            wb_utils::read_byte_buffer(fp, input_image->buf_8U.get(), size, "Image::read", "",
+                                       "cannot read 8U image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
 
         case Image_depth::CV_32S:
-            wb_utils::read_int_buffer(fp, image->buf_32S.get(), size, "Image::read", "", "cannot read 32S image data",
-                                      errors);
+            wb_utils::read_int_buffer(fp, input_image->buf_32S.get(), size, "Image::read", "",
+                                      "cannot read 32S image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
 
         case Image_depth::CV_32F:
-            wb_utils::read_float_buffer(fp, image->buf_32F.get(), size, "Image::read", "", "cannot read 32F image data",
-                                        errors);
+            wb_utils::read_float_buffer(fp, input_image->buf_32F.get(), size, "Image::read", "",
+                                        "cannot read 32F image data", errors);
             if (errors.has_error()) {
-                delete image;
+                delete input_image;
                 return nullptr;
             }
             break;
@@ -848,7 +932,7 @@ Image *Image::read(FILE *fp, Errors &errors) {
         default:
             break;
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief for read_jpeg()
@@ -901,23 +985,24 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
     /* Step 5: Start decompressor */
     (void) jpeg_start_decompress(&cinfo);
     /* JSAMPLEs per row in output buffer */
-    // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components, Image_depth::CV_8U, 0.0);
-    auto *image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
+    // auto *image = new Image(cinfo.output_height, cinfo.output_width, cinfo.num_components,
+    // Image_depth::CV_8U, 0.0);
+    auto *input_image = new Image(cinfo.output_width, cinfo.output_height, cinfo.num_components, Image_depth::CV_8U);
     /* Make a one-row-high sample array that will go away when done with image */
-    buffer =
-            (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE, image->get_row_stride(), 1);
+    buffer = (*cinfo.mem->alloc_sarray)(reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+                                        input_image->get_row_stride(), 1);
     /* Step 6: while (scan lines remain to be read) */
     while (cinfo.output_scanline < cinfo.output_height) {
         (void) jpeg_read_scanlines(&cinfo, buffer, 1);
         /* Assume put_scanline_someplace wants a pointer and sample count. */
-        image->add_8U((pixel_8U *) buffer[0], image->get_row_stride(), errors);
+        input_image->add_8U((pixel_8U *) buffer[0], input_image->get_row_stride(), errors);
     }
     /* Step 7: Finish decompression */
     (void) jpeg_finish_decompress(&cinfo);
     /* Step 8: Release JPEG decompression object */
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -926,13 +1011,13 @@ Image *Image::read_jpeg(const std::string &path, Errors &errors) {
  * @return
  */
 Image *Image::read_text(const std::string &path, Errors &errors) {
+    Image *input_image = nullptr;
     std::ifstream ifs = file_utils::open_file_read_text(path, errors);
-    Image *image = nullptr;
-    if (ifs) {
-        image = read_text(ifs, errors);
+    if (!errors.has_error()) {
+        input_image = read_text(ifs, errors);
         ifs.close();
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -963,8 +1048,8 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
         }
         nrows++;
     }
-    auto *image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
-    pixel_32S *buf_ptr = image->buf_32S.get();
+    auto *input_image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
+    pixel_32S *buf_ptr = input_image->buf_32S.get();
     for (const std::vector<std::string> &row_values: lines) {
         for (const std::string &value_str: row_values) {
             int value;
@@ -972,12 +1057,12 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
                 *buf_ptr++ = value;
             } else {
                 errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
-                delete image;
+                delete input_image;
                 return nullptr;
             }
         }
     }
-    return image;
+    return input_image;
 }
 /**
  * @brief
@@ -1186,29 +1271,29 @@ Image *Image::subtract(const Image *src_image, const Image *subtract_image, Erro
     //    return nullptr;
     //  }
 
-    auto *out_image = new Image(src_image->image_header);
+    auto *output_image = new Image(src_image->image_header);
 
     int size = src_image->get_npixels();
     switch (src_image->get_depth()) {
         case Image_depth::CV_8U:
             for (int i = 0; i < size; i++)
-                out_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
+                output_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
             break;
 
         case Image_depth::CV_32S:
             for (int i = 0; i < size; i++)
-                out_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
+                output_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
             break;
 
         case Image_depth::CV_32F:
             for (int i = 0; i < size; i++)
-                out_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
+                output_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
             break;
 
         default:
             break;
     }
-    return out_image;
+    return output_image;
 }
 /**
  * @brief
@@ -1414,7 +1499,8 @@ void Image::write_jpeg(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Image::write_text(const std::string &path, const std::string &delim, Errors &errors) const {
-    if (std::ofstream ofs = file_utils::open_file_write_text(path, errors)) {
+    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+    if (!errors.has_error()) {
         write_text(ofs, "\t", errors);
         ofs.close();
     }

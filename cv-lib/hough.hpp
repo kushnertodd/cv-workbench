@@ -19,8 +19,6 @@
 
 class Hough {
     friend class Histogram;
-    // int ncols{};
-    // int nrows{};
     int pixel_threshold{};
     int nbins{};
     std::unique_ptr<Polar_trig> polar_trig;
@@ -32,7 +30,7 @@ class Hough {
 public:
     ~Hough();
     Hough();
-    Hough(double m_x_min, double x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
+    Hough(double m_x_min, double m_x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
           int m_pixel_threshold = 0);
     void clear();
     void find_peaks(std::list<Polar_line> &lines, double threshold) const;
@@ -41,9 +39,13 @@ public:
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
+    double get_x_min() const;
+    double get_x_max() const;
+    double get_y_min() const;
+    double get_y_max() const;
     void initialize(Image *image, int pixel_threshold);
     void log(std::list<WB_log_entry> &log_entries);
-    Hough *read(const std::string &path, Errors &errors);
+    static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);
     int rho_index_theta_index_to_index(int rho_index, int theta_index) const;
@@ -53,14 +55,10 @@ public:
     void update_accumulator_stats();
     void write(const std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;
-    void write_text(const std::string &path, const std::string &delim, Errors &errors);
-    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors);
     void write_peak_lines(FILE *fp, Errors &errors) const;
     void write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
-
-    // void find_lines(int ncols, int nrows, int nrhos, int nthetas);
-    // void find_peaks(int npeaks);
-    // void lines_to_line_segments(int ncols, int nrows, int nrhos, int nthetas);
+    void write_text(const std::string &path, const std::string &delim, Errors &errors);
+    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors);
 };
 
 #endif // CV_WORKBENCH_SRC_HOUGH_HPP_

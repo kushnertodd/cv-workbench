@@ -11,19 +11,20 @@ extern bool debug;
 
 /**
  * @brief
- * @param m_id
- * @param m_data_type
- * @param m_data_format
+ * @param m_id json file descriptor id
+ * @param m_data_type type of repository data stored
+ * @param m_data_format format of repository data
+ * @param m_repository_type storage medium
  */
 Filesystem_data_source_descriptor::Filesystem_data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                                                      WB_data_format::Data_format m_data_format) :
     Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_types::Repository_type::FILESYSTEM) {}
 /**
  * @brief
- * @param json_data_source_descriptor
- * @param id
- * @param data_type
- * @param data_format
+ * @param json_data_source_descriptor data source descriptor json
+ * @param id json file descriptor id
+ * @param data_type type of repository data stored
+ * @param data_format format of repository data
  * @param errors
  * @return
  */
@@ -98,12 +99,7 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
     std::string path = to_path_noext();
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
     std::string data_filename = wb_filename.to_hough();
-    FILE *fp = file_utils::open_file_read(data_filename, errors);
-    Hough *hough = nullptr;
-    if (fp) {
-        hough = Hough::read(fp, errors);
-        fclose(fp);
-    }
+    Hough *hough = Hough::read(data_filename, errors);
     return hough;
 }
 /**
@@ -112,16 +108,10 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
  * @return
  */
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
-    std::string path = to_path_noext();
-    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
-    std::string data_filename = wb_filename.to_bin();
-    FILE *fp = file_utils::open_file_read(data_filename, errors);
-    Image *image = nullptr;
-    if (fp) {
-        image = Image::read(fp, errors);
-        fclose(fp);
-    }
-    return image;
+    std::string path = to_path();
+    // Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+    // std::string data_filename = wb_filename.to_bin();
+    return Image::read(path, errors);
 }
 /**
  * @brief
@@ -171,7 +161,7 @@ std::string Filesystem_data_source_descriptor::to_path_noext() const {
     return (directory.empty() ? "" : directory + "/") + filename;
 }
 /**
- * @brief
+ * @brief string description of data source descriptor
  * @return
  */
 std::string Filesystem_data_source_descriptor::to_string() {
@@ -182,7 +172,7 @@ std::string Filesystem_data_source_descriptor::to_string() {
 }
 /**
  * @brief
- * @param histogram
+ * @param histogram for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Errors &errors) {
@@ -197,19 +187,16 @@ void Filesystem_data_source_descriptor::write_histogram(Histogram *histogram, Er
 }
 /**
  * @brief
- * @param histogram
+ * @param histogram for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_histogram_text(Histogram *histogram, Errors &errors) {
     std::string path = to_path_noext();
-    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
-    std::string data_filename = wb_filename.to_hist_text();
-    std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
     histogram->write_text(path, "\t", errors);
 }
 /**
  * @brief
- * @param hough
+ * @param hough for output for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors) {
@@ -224,7 +211,7 @@ void Filesystem_data_source_descriptor::write_hough(Hough *hough, Errors &errors
 }
 /**
  * @brief
- * @param hough
+ * @param hough for output for output
  * @param errors
  */
 void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &errors) {
@@ -232,7 +219,7 @@ void Filesystem_data_source_descriptor::write_hough_text(Hough *hough, Errors &e
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
     std::string data_filename = wb_filename.to_hough_text();
     std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
-    if (ofs) {
+    if (!errors.has_error()) {
         hough->write_text(ofs, "\t", errors);
         ofs.close();
     }
@@ -262,7 +249,7 @@ void Filesystem_data_source_descriptor::write_hough_peaks_text(Hough *hough, Err
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
     std::string data_filename = wb_filename.to_peaks_text();
     std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
-    if (ofs) {
+    if (!errors.has_error()) {
         hough->write_peak_lines_text(ofs, "\t", errors);
         ofs.close();
     }
@@ -292,7 +279,7 @@ void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &e
     Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
     std::string data_filename = wb_filename.to_text();
     std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
-    if (ofs) {
+    if (!errors.has_error()) {
         image->write_text(ofs, "\t", errors);
         ofs.close();
     }

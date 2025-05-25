@@ -6,6 +6,10 @@
 extern bool debug;
 
 /**
+ * @brief
+ */
+Operator_transform_image_combine::~Operator_transform_image_combine() = default;
+/**
    combine new image from an existing image
 
  * @param input_data_source
@@ -48,33 +52,37 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
                                                offset, errors);
         else
             offset = 0.0;
-        Image *image1 = nullptr;
-        Image *image2 = nullptr;
+        Image *input_image1_ptr = nullptr;
+        Image *input_image2_ptr = nullptr;
         bool read_image1 = false;
         bool read_image2 = false;
         for (Data_source_descriptor *input_data_source: input_data_sources) {
             if (input_data_source->get_id() == 1) {
                 read_image1 = true;
-                image1 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
+                input_image1_ptr =
+                        input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
             } else if (input_data_source->get_id() == 2) {
                 read_image2 = true;
-                image2 = input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
+                input_image2_ptr =
+                        input_data_source->read_operator_image("Operator_transform_image_combine::run", errors);
             }
         }
         if (!read_image1)
             errors.add("Operator_transform_image_combine::run", "", "missing input image id 1");
         if (!read_image2)
             errors.add("Operator_transform_image_combine::run", "", "missing input image id 2");
-        if (image1 != nullptr)
-            image1->check_grayscale("Operator_transform_image_combine::run image 1", errors);
-        if (image2 != nullptr)
-            image2->check_grayscale("Operator_transform_image_combine::run image 2", errors);
-        Image *output = nullptr;
-        if (!errors.has_error() && image1 != nullptr && image2 != nullptr)
-            output = Image::combine(image1, image2, scale1, scale2, offset, errors);
-        if (!errors.has_error() && output != nullptr) {
+        if (input_image1_ptr != nullptr)
+            input_image1_ptr->check_grayscale("Operator_transform_image_combine::run image 1", errors);
+        if (input_image2_ptr != nullptr)
+            input_image2_ptr->check_grayscale("Operator_transform_image_combine::run image 2", errors);
+        Image *output_image = nullptr;
+        if (!errors.has_error() && input_image1_ptr != nullptr && input_image2_ptr != nullptr)
+            output_image = Image::combine(input_image1_ptr, input_image2_ptr, scale1, scale2, offset, errors);
+        if (!errors.has_error() && output_image != nullptr) {
             Data_source_descriptor *output_data_store = output_data_stores.front();
-            output_data_store->write_operator_image(output, "Operator_transform_image_combine::run", errors);
+            output_data_store->write_operator_image(output_image, "Operator_transform_image_combine::run", errors);
         }
+        delete input_image1_ptr;
+        delete input_image2_ptr;
     }
 }

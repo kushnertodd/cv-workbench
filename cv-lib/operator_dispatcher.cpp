@@ -19,10 +19,15 @@
 #include "operator_transform_image_copy.hpp"
 #include "operator_transform_image_create.hpp"
 #include "operator_transform_image_resize.hpp"
+#include "operator_transform_intensity_convert.hpp"
 #include "operator_transform_intensity_map.hpp"
 
 extern bool debug;
 
+/**
+ * @brief
+ */
+Operator_dispatcher::~Operator_dispatcher() = default;
 /**
  * @brief
  * @param operator_name
@@ -73,6 +78,8 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
         pOperator = new Operator_transform_image_create();
     else if (operator_name == "transform-intensity-map")
         pOperator = new Operator_transform_intensity_map();
+    else if (operator_name == "transform-intensity-convert")
+        pOperator = new Operator_transform_intensity_convert();
     else if (operator_name == "transform-image-resize")
         pOperator = new Operator_transform_image_resize();
     return pOperator;

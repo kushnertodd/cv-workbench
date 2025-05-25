@@ -83,6 +83,26 @@ int Hough::get_rho_inc() const { return polar_trig->get_rho_inc(); }
 int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
 /**
  * @brief
+ * @return
+ */
+double Hough::get_x_min() const { return polar_trig->get_x_min(); }
+/**
+ * @brief
+ * @return
+ */
+double Hough::get_x_max() const { return polar_trig->get_x_max(); }
+/**
+ * @brief
+ * @return
+ */
+double Hough::get_y_min() const { return polar_trig->get_y_min(); }
+/**
+ * @brief
+ * @return
+ */
+double Hough::get_y_max() const { return polar_trig->get_y_max(); }
+/**
+ * @brief
  * @param image_theshold
  */
 void Hough::initialize(Image *image, int pixel_threshold) {
@@ -102,19 +122,6 @@ void Hough::initialize(Image *image, int pixel_threshold) {
     }
     update_accumulator_stats();
 }
-/*
-void Hough::find_lines(int ncols, int nrows, int nrhos, int nthetas) {
-  lines_to_line_segments(ncols, nrows, nrhos, nthetas);
-}
-
-void Hough::lines_to_line_segments(int nrows, int ncols, int nrhos, int nthetas) {
-  for (Polar_line line: lines) {
-    Line_segment line_segment;
-      if (WB_window::clip_window(nrows, ncols, nrhos, nthetas,line_segment, line))
-      line_segments.push_back(line_segment);
-  }
-}
-*/
 /**
  * @brief
  * @param log_entries
@@ -160,32 +167,36 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
  * @return
  */
 Hough *Hough::read(FILE *fp, Errors &errors) {
-    int ncols{};
-    int nrows{};
-    int rho_inc{};
-    int theta_inc{};
-    wb_utils::read_int(fp, ncols, "Hough::read", "", "missing hough ncols", errors);
+    int rho_inc;
     if (!errors.has_error())
-        wb_utils::read_int(fp, nrows, "Hough::read", "", "missing hough nrows", errors);
+        wb_utils::read_int(fp, rho_inc, "Hough::read", "", "missing hough rho_inc", errors);
+    int theta_inc;
     if (!errors.has_error())
-        wb_utils::read_int(fp, rho_inc, "Hough::read", "", "missing hough accumulator rho_inc", errors);
+        wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough theta_inc", errors);
+    double x_min;
     if (!errors.has_error())
-        wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough accumulator theta_inc", errors);
-    if (errors.has_error())
-        return nullptr;
-    else {
-        // TODO: not right
-        Image *image = new Image();
-        Hough *hough = new Hough(image->to_x(0), image->to_x(image->get_ncols()), image->to_y(0),
-                                 image->to_y(image->get_nrows()), rho_inc, theta_inc);
+        wb_utils::read_double(fp, x_min, "Hough::read", "", "missing hough x_min", errors);
+    double x_max;
+    if (!errors.has_error())
+        wb_utils::read_double(fp, x_max, "Hough::read", "", "missing hough x_max", errors);
+    double y_min;
+    if (!errors.has_error())
+        wb_utils::read_double(fp, y_min, "Hough::read", "", "missing hough y_min", errors);
+    double y_max;
+    if (!errors.has_error())
+        wb_utils::read_double(fp, y_max, "Hough::read", "", "missing hough y_max", errors);
+    Hough *hough = nullptr;
+    if (!errors.has_error()) {
+        auto hough = new Hough(x_min, x_max, y_min, y_max, rho_inc, theta_inc);
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
-        if (errors.has_error()) {
-            return nullptr;
+        if (!errors.has_error()) {
+            hough->update_accumulator_stats();
+            return hough;
         }
-        hough->update_accumulator_stats();
-        return hough;
     }
+    delete hough;
+    return nullptr;
 }
 /**
  * @brief
@@ -275,17 +286,10 @@ void Hough::write(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Hough::write(FILE *fp, Errors &errors) const {
-    // TODO: fix
-    int ncols{}; //    = get_ncols();
-    fwrite(&ncols, sizeof(int), 1, fp);
+    int rho_inc = get_rho_inc();
+    fwrite(&rho_inc, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator get_ncols()");
-        return;
-    }
-    int nrows{}; //    = get_nrows();
-    fwrite(&nrows, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator get_nrows()");
+        errors.add("Hough::write", "", "cannot write Hough accumulator rho_inc");
         return;
     }
     int theta_inc = get_theta_inc();
@@ -294,10 +298,28 @@ void Hough::write(FILE *fp, Errors &errors) const {
         errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
         return;
     }
-    int rho_inc = get_rho_inc();
-    fwrite(&rho_inc, sizeof(int), 1, fp);
+    double x_min = get_x_min();
+    fwrite(&x_min, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator rho_inc");
+        errors.add("Hough::write", "", "cannot write Hough accumulator x_min");
+        return;
+    }
+    double x_max = get_x_max();
+    fwrite(&x_max, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator get_x_max");
+        return;
+    }
+    double y_min = get_y_min();
+    fwrite(&y_min, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator y_min");
+        return;
+    }
+    double y_max = get_y_max();
+    fwrite(&y_max, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator y_max");
         return;
     }
     size_t newLen;
@@ -305,40 +327,6 @@ void Hough::write(FILE *fp, Errors &errors) const {
     if (ferror(fp) != 0 || newLen != nbins) {
         errors.add("Hough::write", "", "cannot write Hough accumulator data ");
         return;
-    }
-}
-/**
- * @brief
- * @param path
- * @param delim
- * @param errors
- */
-void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) {
-    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
-    if (ofs) {
-        write_text(ofs, "\t", errors);
-        ofs.close();
-    }
-}
-/**
- * @brief
- * @param ofs
- * @param delim
- * @param errors
- */
-void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) {
-    ofs << delim << std::fixed;
-    for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-        double rho = polar_trig->to_rho(rho_index);
-        ofs << std::setprecision(1) << rho << delim;
-    }
-    ofs << std::endl;
-    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
-        ofs << polar_trig->to_theta(theta_index) << delim;
-        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-            ofs << get(rho_index, theta_index) << delim;
-        }
-        ofs << std::endl;
     }
 }
 /**
@@ -382,5 +370,48 @@ void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, 
         line.write_text(ofs, delim, errors);
         if (errors.has_error())
             break;
+    }
+}
+/**
+ * @brief
+ * @param path
+ * @param delim
+ * @param errors
+ */
+void Hough::write_text(const std::string &path, const std::string &delim, Errors &errors) {
+    std::ofstream ofs = file_utils::open_file_write_text(path, errors);
+    if (!errors.has_error()) {
+        write_text(ofs, "\t", errors);
+        ofs.close();
+    }
+}
+/**
+ * @brief
+ * @param ofs
+ * @param delim
+ * @param errors
+ */
+void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) {
+    ofs << std::fixed;
+    ofs << "rho_inc" << delim << get_rho_inc() << std::endl;
+    ofs << "theta_inc" << delim << get_theta_inc() << std::endl;
+    ofs << "nrhos" << delim << std::setprecision(1) << get_nrhos() << std::endl;
+    ofs << "nthetas" << delim << std::setprecision(1) << get_nthetas() << std::endl;
+    ofs << "x_min" << delim << std::setprecision(1) << get_x_min() << std::endl;
+    ofs << "x_max" << delim << std::setprecision(1) << get_x_max() << std::endl;
+    ofs << "y_min" << delim << std::setprecision(1) << get_y_min() << std::endl;
+    ofs << "y_max" << delim << std::setprecision(1) << get_y_max() << std::endl;
+    ofs << delim;
+    for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+        double rho = polar_trig->to_rho(rho_index);
+        ofs << std::setprecision(1) << rho << delim;
+    }
+    ofs << std::endl;
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+        ofs << polar_trig->to_theta(theta_index) << delim;
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+            ofs << get(rho_index, theta_index) << delim;
+        }
+        ofs << std::endl;
     }
 }

@@ -1,0 +1,52 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "histogram-hough-create",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "hough",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "hough_sample_image_grayscale_accumulator",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "hough",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "histogram_hough_sample_image_grayscale",
+                        "ext": "bin"
+                    },
+                    {
+                        "id": 1,
+                        "type": "hough",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "histogram_hough_sample_image_grayscale",
+                        "ext": "txt"
+                    }
+                ],
+                "parameters": {
+                    "nbins": "1024",
+                    "lower-value": "0",
+                    "upper-value": "40000"
+                }
+            }
+        ]
+    }
+}

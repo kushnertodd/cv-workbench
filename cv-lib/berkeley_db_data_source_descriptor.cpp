@@ -9,10 +9,26 @@
 
 extern bool debug;
 
+/**
+ * @brief
+ * @param m_id json file descriptor id
+ * @param m_data_type type of repository data stored
+ * @param m_data_format format of repository data
+ * @param m_repository_type storage medium
+ */
 Berkeley_db_data_source_descriptor::Berkeley_db_data_source_descriptor(int m_id, WB_data_type::Data_type m_data_type,
                                                                        WB_data_format::Data_format m_data_format) :
     Data_source_descriptor(m_id, m_data_type, m_data_format, WB_repository_types::Repository_type::BERKELEY_DB),
     ref_id(0) {}
+/**
+ * @brief
+ * @param json_data_source_descriptor data source descriptor json
+ * @param id json file descriptor id
+ * @param data_type type of repository data stored
+ * @param data_format format of repository data
+ * @param errors
+ * @return
+ */
 Berkeley_db_data_source_descriptor *
 Berkeley_db_data_source_descriptor::from_json(json_object *json_data_source_descriptor, int id,
                                               WB_data_type::Data_type data_type,
@@ -44,6 +60,10 @@ void Berkeley_db_data_source_descriptor::write_image(Image *image, Errors &error
 void Berkeley_db_data_source_descriptor::write_image_jpeg(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_image_text(Image *image, Errors &errors) {}
 void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &errors) {}
+/**
+ * @brief string description of data source descriptor
+ * @return
+ */
 std::string Berkeley_db_data_source_descriptor::to_string() {
     std::ostringstream os;
     os << Data_source_descriptor::to_string() << " ref id " << ref_id;

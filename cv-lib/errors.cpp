@@ -37,7 +37,7 @@ void Errors::check_exit(const std::string &message) {
  */
 bool Errors::has_error() const { return error_ct != 0; }
 /**
- * @brief
+ * @brief string list of errors
  * @return
  */
 std::string Errors::to_string() {
