@@ -38,14 +38,16 @@ void Operator_transform_intensity_convert::run(std::list<Data_source_descriptor 
         std::string convert_type_str = Operator_utils::get_parameter(operator_parameters, "function");
         convert_type = WB_convert_types::from_string(convert_type_str);
         if (convert_type == WB_convert_types::Convert_type::UNDEFINED)
-            errors.add("Operator_transform_image_convert::run", "", "invalid 'function' parameter");
+            errors.add("Operator_transform_intensity_convert::run", "", "invalid 'function' parameter");
     }
     if (!saw_function)
-        errors.add("Operator_transform_image_convert::run", "", "missing 'function' parameter");
+        errors.add("Operator_transform_intensity_convert::run", "", "missing 'function' parameter");
     if (!errors.has_error()) {
-        std::unique_ptr<Image> input_image(input_data_sources.front()->read_image(errors));
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        std::unique_ptr<Image> input_image(
+                input_data_source->read_operator_image("Operator_transform_intensity_convert::run", errors));
         if (!errors.has_error())
-            input_image->check_grayscale("Operator_transform_image_resize::run", errors);
+            input_image->check_grayscale("Operator_transform_intensity_convert::run", errors);
         if (!errors.has_error()) {
             std::unique_ptr<Image> output_image(Image::convert(input_image.get(), convert_type, errors));
             output_data_stores.front()->write_image(output_image.get(), errors);

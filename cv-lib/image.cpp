@@ -363,16 +363,37 @@ Image *Image::convert(const Image *image, WB_convert_types::Convert_type convert
         for (int row = 0; row < nrows && !errors.has_error(); row++) {
             double value = 0.0;
             switch (convert_type) {
-                case WB_convert_types::Convert_type::ABS:
+                case WB_convert_types::Convert_type::ABS: {
                     value = std::abs(image->get(col, row));
                     break;
-                case WB_convert_types::Convert_type::LOG:
+                }
+                case WB_convert_types::Convert_type::LOG: {
+                    double in_value = image->get(col, row);
+                    if (in_value >= 1.0)
+                        value = std::log(in_value);
+                    else if (in_value < 1.0)
+                        value = 0.0;
+                    else
+                        errors.add("Image::convert", "",
+                                   "cannot convert log of negative value at (" + wb_utils::int_to_string(col) + ", " +
+                                           wb_utils::int_to_string(row) + ")");
+                    break;
+                }
+                case WB_convert_types::Convert_type::SQR: {
+                    double sqr_value = std::abs(image->get(col, row));
+                    value = sqr_value * sqr_value;
+                    break;
+                }
+                case WB_convert_types::Convert_type::SQRT: {
                     double in_value = image->get(col, row);
                     if (in_value >= 0.0)
-                        value = std::log(in_value);
+                        value = std::sqrt(in_value);
                     else
-                        errors.add("Image::convert", "", "cannot convert log of negative value");
+                        errors.add("Image::convert", "",
+                                   "cannot convert square root of negative value at (" + wb_utils::int_to_string(col) +
+                                           ", " + wb_utils::int_to_string(row) + ")");
                     break;
+                }
             }
             if (!errors.has_error())
                 convert_image->set(col, row, value, 0);

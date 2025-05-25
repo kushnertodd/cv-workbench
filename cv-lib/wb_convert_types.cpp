@@ -4,12 +4,18 @@
  * @brief
  */
 const std::map<WB_convert_types::Convert_type, std::string> WB_convert_types::to_strings = {
-        {WB_convert_types::Convert_type::ABS, "abs"}, {WB_convert_types::Convert_type::LOG, "log"}};
+        {WB_convert_types::Convert_type::ABS, "abs"},
+        {WB_convert_types::Convert_type::LOG, "log"},
+        {WB_convert_types::Convert_type::SQR, "sqr"},
+        {WB_convert_types::Convert_type::SQRT, "sqrt"}};
 /**
  * @brief
  */
 const std::map<std::string, WB_convert_types::Convert_type> WB_convert_types::from_strings = {
-        {"abs", WB_convert_types::Convert_type::ABS}, {"log", WB_convert_types::Convert_type::LOG}};
+        {"abs", WB_convert_types::Convert_type::ABS},
+        {"log", WB_convert_types::Convert_type::LOG},
+        {"sqr", WB_convert_types::Convert_type::SQR},
+        {"sqrt", WB_convert_types::Convert_type::SQRT}};
 /**
  * @brief
  * @param convert_type

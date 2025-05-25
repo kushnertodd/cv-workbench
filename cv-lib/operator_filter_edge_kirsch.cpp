@@ -5,7 +5,7 @@
 #include "operator_utils.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 Operator_filter_edge_kirsch::~Operator_filter_edge_kirsch() = default;
 
@@ -40,7 +40,7 @@ void Operator_filter_edge_kirsch::run(std::list<Data_source_descriptor *> &input
     bool have_orientation = Operator_utils::get_string_parameter(
             "Operator_filter_edge_kirsch::run", operator_parameters, "orientation", orientation_str, errors);
     if (have_orientation && !wb_utils::string_in_list(orientation_str, {"E", "N", "NE", "NW", "S", "SE", "SW", "W"}))
-        errors.add("Operator_filter_edge_kirsch", "", "orientation not E, N, NE, NW, S, SE, SW, or W");
+        errors.add("Operator_filter_edge_kirsch::run", "", "orientation not E, N, NE, NW, S, SE, SW, or W");
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources.front();
         std::unique_ptr<Image> input_image(

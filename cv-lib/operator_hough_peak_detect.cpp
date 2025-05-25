@@ -33,7 +33,7 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
     Operator_utils::get_int_parameter("Operator_hough_peak_detect::run", operator_parameters, "npeaks", npeaks, errors);
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        std::unique_ptr<Hough> hough(input_data_source->read_hough(errors));
+        std::unique_ptr<Hough> hough(input_data_source->read_operator_hough("Operator_hough_peak_detect::run", errors));
         if (!errors.has_error()) {
             Histogram::find_hough_peaks(hough.get(), npeaks);
             if (!errors.has_error())

@@ -36,8 +36,8 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
                                        errors);
     Operator_utils::get_real_parameter("Operator_filter_smooth_gaussian::run", operator_parameters, "sigma-y", sigma_y,
                                        errors);
-    Data_source_descriptor *input_data_source = input_data_sources.front();
     if (!errors.has_error()) {
+        Data_source_descriptor *input_data_source = input_data_sources.front();
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_filter_smooth_gaussian::run", errors));
         if (!errors.has_error())

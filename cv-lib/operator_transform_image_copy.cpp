@@ -49,12 +49,12 @@ void Operator_transform_image_copy::run(std::list<Data_source_descriptor *> &inp
         Operator_utils::get_int_parameter("Operator_transform_image_copy::run", operator_parameters, "max-row", max_row,
                                           errors);
     }
-    Data_source_descriptor *input_data_source = input_data_sources.front();
     if (!errors.has_error()) {
+        Data_source_descriptor *input_data_source = input_data_sources.front();
         std::unique_ptr<Image> input_image(
-                input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors));
+                input_data_source->read_operator_image("Operator_transform_image_copy::run", errors));
         if (!errors.has_error())
-            input_image->check_grayscale("Operator_filter_edge_prewitt::run", errors);
+            input_image->check_grayscale("Operator_transform_image_copy::run", errors);
         if (!errors.has_error()) {
             int in_ncols = input_image->get_ncols();
             int in_nrows = input_image->get_nrows();

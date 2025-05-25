@@ -63,9 +63,10 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         if (resize_type == WB_resize_types::Resize_type::UNDEFINED)
             errors.add("Operator_transform_image_resize::run", "", "invalid 'resize-type' parameter");
     }
-
     if (!errors.has_error()) {
-        std::unique_ptr<Image> input_image(input_data_sources.front()->read_image(errors));
+        Data_source_descriptor *input_data_source = input_data_sources.front();
+        std::unique_ptr<Image> input_image(
+                input_data_source->read_operator_image("Operator_transform_image_resize::run", errors));
         if (!errors.has_error())
             input_image->check_grayscale("Operator_transform_image_resize::run", errors);
         if (!errors.has_error()) {

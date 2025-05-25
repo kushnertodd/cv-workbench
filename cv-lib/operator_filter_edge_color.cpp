@@ -5,7 +5,7 @@
 #include "operator_utils.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 Operator_filter_edge_color::~Operator_filter_edge_color() = default;
 /**

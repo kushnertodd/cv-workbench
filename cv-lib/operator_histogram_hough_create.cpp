@@ -49,7 +49,8 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
     }
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        std::unique_ptr<Hough> input(input_data_source->read_hough(errors));
+        std::unique_ptr<Hough> input(
+                input_data_source->read_operator_hough("Operator_histogram_hough_create::run", errors));
         if (!errors.has_error()) {
             std::unique_ptr<Histogram> histogram(Histogram::create_hough(input.get(), nbins, lower_value, upper_value,
                                                                          saw_lower_value, saw_upper_value));
