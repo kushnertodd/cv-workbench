@@ -7,6 +7,7 @@ image_grayscale_edge_kirsch_se.json
 image_grayscale_edge_kirsch_s.json
 image_grayscale_edge_kirsch_sw.json
 image_grayscale_edge_kirsch_w.json
+image_grayscale_edge_laplacian.json
 image_grayscale_edge_prewitt_0.json
 image_grayscale_edge_prewitt_90.json
 image_grayscale_edge_roberts_0.json
