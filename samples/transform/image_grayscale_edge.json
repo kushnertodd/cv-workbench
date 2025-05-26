@@ -4,12 +4,12 @@
             "script-path": "script-path",
             "run-time": "timestamp",
             "username": "username",
-            "version": "program-version"
+            "version": "program-version" 
         },
         "steps": [
             {
                 "id": 1,
-                "operator": "transform-image-copy",
+                "operator": "filter-edge-sobel",
                 "input-data": [
                     {
                         "id": 1,
@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge",
+                        "filename": "image_grayscale_crop",
                         "ext": "jpg"
                     }
                 ],
@@ -26,17 +26,14 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_copy",
-                        "ext": "jpeg"
+                        "filename": "image_grayscale_edge",
+                        "ext": "bin"
                     }
                 ],
                 "parameters": {
-                    "min-col": "100",
-                    "min-row": "135",
-                    "max-col": "240",
-                    "max-row": "239"
+                    "orientation": "0"
                 }
             }
         ]

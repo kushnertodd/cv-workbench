@@ -410,7 +410,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         ofs << polar_trig->to_theta(theta_index) << delim;
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-            ofs << get(rho_index, theta_index) << delim;
+            ofs << std::setprecision(1) << get(rho_index, theta_index) << delim;
         }
         ofs << std::endl;
     }

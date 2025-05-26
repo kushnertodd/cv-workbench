@@ -15,10 +15,10 @@
             "id": 1,
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
+            "format": "binary",
             "directory": ".",
-            "filename": "image_grayscale_edge",
-            "ext": "jpg"
+            "filename": "image_grayscale_edge_sqr",
+            "ext": "bin"
           }
         ],
         "output-data": [
@@ -43,7 +43,7 @@
         ],
         "parameters": {
           "rho-inc": "1",
-          "theta-inc": "5",
+          "theta-inc": "3",
           "pixel-threshold": "0"
         }
       }
