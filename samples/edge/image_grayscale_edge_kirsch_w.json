@@ -74,10 +74,10 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "binary",
                         "directory": ".",
                         "filename": "image_grayscale_edge_kirsch_w",
-                        "ext": "jpg"
+                        "ext": "bin"
                     }
                 ],
                 "output-data": [

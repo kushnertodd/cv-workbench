@@ -95,7 +95,8 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
     }
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources.front();
-        std::unique_ptr<Image> input_image(input_data_source->read_image(errors));
+        std::unique_ptr<Image> input_image(
+                input_data_source->read_operator_image("Operator_transform_intensity_map::run", errors));
         if (!errors.has_error())
             input_image->check_grayscale("Operator_transform_intensity_map::run", errors);
         if (!errors.has_error()) {
