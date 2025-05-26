@@ -33,6 +33,10 @@ image_grayscale_edge_kirsch_w.bin
 image_grayscale_edge_kirsch_w.jpg
 image_grayscale_edge_kirsch_w.log
 image_grayscale_edge_kirsch_w_threshold.jpg
+image_grayscale_edge_laplacian.bin
+image_grayscale_edge_laplacian.jpg
+image_grayscale_edge_laplacian.log
+image_grayscale_edge_laplacian_threshold.jpg
 image_grayscale_edge_prewitt_0.bin
 image_grayscale_edge_prewitt_0.jpg
 image_grayscale_edge_prewitt_0.log
