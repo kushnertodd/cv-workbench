@@ -1,0 +1,44 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "transform-image-copy",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale",
+                        "ext": "jpg"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_crop",
+                        "ext": "jpeg"
+                    }
+                ],
+                "parameters": {
+                    "min-col": "100",
+                    "min-row": "135",
+                    "max-col": "240",
+                    "max-row": "239"
+                }
+            }
+        ]
+    }
+}

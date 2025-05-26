@@ -51,6 +51,8 @@ void Operator_transform_intensity_convert::run(std::list<Data_source_descriptor 
         if (!errors.has_error()) {
             std::unique_ptr<Image> output_image(Image::convert(input_image.get(), convert_type, errors));
             output_data_stores.front()->write_image(output_image.get(), errors);
+            if (!errors.has_error())
+                output_image->log(log_entries);
         }
     }
 }
