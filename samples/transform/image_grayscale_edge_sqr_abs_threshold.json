@@ -7,37 +7,8 @@
             "version": "program-version"
         },
         "steps": [
-            {
-                "id": 1,
-                "operator": "transform-intensity-convert",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_sqr",
-                        "ext": "bin"
-                    }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_abs",
-                        "ext": "bin"
-                    }
-                ],
-                "parameters": {
-                    "function": "abs"
-                }
-            },
-            {
-                "id": 2,
+{
+                "id": 3,
                 "operator": "transform-intensity-map",
                 "input-data": [
                     {
@@ -55,9 +26,42 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr_abs_threshold",
+                        "ext": "bin"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "lower-in": "7000",
+                    "upper-in": "7000",
+                    "lower-out": "0",
+                    "upper-out": "255"
+                }
+            },
+            {
+                "id": 2,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr_abs_threshold",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_abs",
+                        "filename": "image_grayscale_edge_sqr_abs_threshold",
                         "ext": "jpg"
                     }
                 ],
