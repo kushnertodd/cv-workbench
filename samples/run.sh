@@ -3,7 +3,8 @@ edge \
 histogram \
 hough \
 morphology \
-smooth
+smooth \
+transform
 do
   echo $dir
   cd $dir
