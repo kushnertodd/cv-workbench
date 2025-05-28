@@ -234,7 +234,7 @@ bool Image::check_grayscale(const std::string &module, Errors &errors) const {
  * @param col
  * @param row
  */
-void Image::check_pixel_valid(int col, int row) const { assert(!is_pixel_valid(col, row)); }
+void Image::check_pixel_valid(int col, int row) const { assert(is_pixel_valid(col, row)); }
 /**
  * @brief
  * @param value
@@ -262,11 +262,10 @@ Image *Image::clone(const Image *image, Image_depth depth, Errors &errors) {
 int Image::col_row_to_index(int col, int row, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
-    if (!is_pixel_valid(col, row))
-        int i = 0;
-    assert(is_pixel_valid(col, row));
 #endif
-    return row * get_row_stride() + col * get_ncomponents() + component;
+    int index = row * get_row_stride() + col * get_ncomponents() + component;
+    assert(index <= get_npixels());
+    return index;
 }
 /**
  * @brief color edge detection

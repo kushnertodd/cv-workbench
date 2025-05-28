@@ -69,9 +69,10 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
         if (!errors.has_error())
             input_image->check_grayscale("Operator_hough_image_create::run", errors);
         if (!errors.has_error()) {
-            std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
-                    new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()), input_image->to_y(0),
-                              input_image->to_y(input_image->get_ncols()), rho_inc, theta_inc, pixel_threshold));
+            std::unique_ptr<Hough> hough =
+                    std::unique_ptr<Hough>(new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()),
+                                                     input_image->to_y(input_image->get_nrows()), input_image->to_y(0),
+                                                     rho_inc, theta_inc, pixel_threshold));
             hough->initialize(input_image.get(), pixel_threshold);
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)

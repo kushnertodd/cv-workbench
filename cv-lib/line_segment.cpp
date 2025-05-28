@@ -7,6 +7,10 @@ extern bool debug;
 /**
  * @brief
  */
+Line_segment::~Line_segment() = default;
+/**
+ * @brief
+ */
 Line_segment::Line_segment() = default;
 /**
  * @brief

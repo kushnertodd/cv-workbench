@@ -23,7 +23,7 @@ Hough::Hough() = default;
 Hough::Hough(double m_x_min, double m_x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
              int m_pixel_threshold) : pixel_threshold(m_pixel_threshold) {
     polar_trig =
-            std::unique_ptr<Polar_trig>(new Polar_trig(m_x_min, m_x_max, m_y_min, m_y_max, m_rho_inc, m_theta_inc));
+            std::unique_ptr<Polar_trig>(new Polar_trig(m_x_min, m_y_min, m_x_max, m_y_max, m_rho_inc, m_theta_inc));
     nbins = get_nrhos() * get_nthetas();
     accumulator = std::unique_ptr<int[]>(new int[nbins]);
 }
@@ -107,13 +107,16 @@ double Hough::get_y_max() const { return polar_trig->get_y_max(); }
  */
 void Hough::initialize(Image *image, int pixel_threshold) {
     clear();
-    for (int col = 0; col < image->get_ncols(); col++) {
-        for (int row = 0; row < image->get_nrows(); row++) {
+    int ncols = image->get_ncols();
+    int nrows = image->get_nrows();
+    for (int col = 0; col < ncols; col++) {
+        for (int row = 0; row < nrows; row++) {
             Point point;
             image->to_point(point, col, row);
             double value = std::abs(image->get(col, row));
             if (value > pixel_threshold) {
-                for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+                int nthetas = get_nthetas();
+                for (int theta_index = 0; theta_index < nthetas; theta_index++) {
                     int rho_index = polar_trig->point_theta_index_to_rho_index(point, theta_index);
                     update(rho_index, theta_index, wb_utils::double_to_int_round(value));
                 }
@@ -229,7 +232,7 @@ Hough *Hough::read_text(std::ifstream &ifs, Errors &errors) {
  */
 int Hough::rho_index_theta_index_to_index(int rho_index, int theta_index) const {
     int index = rho_index * get_nthetas() + theta_index;
-    assert(index < nbins);
+    assert(index >= 0 && index < nbins);
     return index;
 }
 /**

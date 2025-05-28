@@ -34,8 +34,8 @@
                 ],
                 "parameters": {
                     "min-col": "100",
-                    "min-row": "135",
-                    "max-col": "240",
+                    "min-row": "15",
+                    "max-col": "250",
                     "max-row": "239"
                 }
             }
