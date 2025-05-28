@@ -26,7 +26,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr",
+                        "filename": "image_grayscale_crop",
                         "ext": "jpg"
                     }
                 ],
@@ -42,7 +42,7 @@
                     }
                 ],
                 "parameters": {
-                    "pixel-value": "128",
+                    "pixel-value": "0",
                     "out-component": "1"
                 }
             }
