@@ -35,6 +35,36 @@
                 "parameters": {
                     "function": "sqr"
                 }
+            },
+            {
+                "id": 2,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "standard-deviations": "2.0"
+                }
             }
         ]
     }
