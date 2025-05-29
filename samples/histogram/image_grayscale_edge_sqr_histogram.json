@@ -15,10 +15,10 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale",
-                        "ext": "jpg"
+                        "filename": "image_grayscale_edge_sqr",
+                        "ext": "bin"
                     }
                 ],
                 "output-data": [
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "histogram_image_grayscale",
+                        "filename": "image_grayscale_edge_sqr_histogram",
                         "ext": "bin"
                     },
                     {
@@ -37,7 +37,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "histogram_image_grayscale",
+                        "filename": "image_grayscale_edge_sqr_histogram",
                         "ext": "txt"
                     }
                 ],
