@@ -8,5 +8,5 @@ image_grayscale_edge_sqrt.json
 image_grayscale_edge_sqr_hough.json
 image_grayscale_edge_sqr_hough_draw_line.json
 image_grayscale_edge_sqr_hough_draw_line_thresh.json
-create_hough_test_image.json
-test_image_grayscale_hough.json
+create_hough_test_image_4x4.json
+test_image_grayscale_hough_4x4.json

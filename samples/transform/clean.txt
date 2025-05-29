@@ -1,9 +1,9 @@
-create_hough_test_image.log
-hough_test_image_grayscale_accumulator.bin
-hough_test_image_grayscale_accumulator.txt
-hough_test_image_grayscale.bin
-hough_test_image_grayscale.jpg
-hough_test_image_grayscale.txt
+create_hough_test_image_4x4.log
+hough_test_image_grayscale_accumulator_4x4.bin
+hough_test_image_grayscale_accumulator_4x4.txt
+hough_test_image_grayscale_4x4.bin
+hough_test_image_grayscale_4x4.jpg
+hough_test_image_grayscale_4x4.txt
 image_grayscale_crop.jpg
 image_grayscale_crop.log
 image_grayscale_edge_abs.bin
@@ -28,4 +28,4 @@ image_grayscale_edge_sqr.log
 image_grayscale_edge_sqrt.bin
 image_grayscale_edge_sqrt.jpg
 image_grayscale_edge_sqrt.log
-test_image_grayscale_hough.log
+test_image_grayscale_hough_4x4.log

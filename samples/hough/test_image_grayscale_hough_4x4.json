@@ -17,7 +17,7 @@
             "repository": "filesystem",
             "format": "binary",
             "directory": ".",
-            "filename": "hough_test_image_grayscale",
+            "filename": "hough_test_image_grayscale_4x4",
             "ext": "bin"
           }
         ],
@@ -28,7 +28,7 @@
             "repository": "filesystem",
             "format": "binary", 
             "directory": ".",
-            "filename": "hough_test_image_grayscale_accumulator",
+            "filename": "hough_test_image_grayscale_accumulator_4x4",
             "ext": "bin"
           },
           {
@@ -37,7 +37,7 @@
             "repository": "filesystem",
             "format": "text",
             "directory": ".",
-            "filename": "hough_test_image_grayscale_accumulator",
+            "filename": "hough_test_image_grayscale_accumulator_4x4",
             "ext": "txt"
           }
         ],
