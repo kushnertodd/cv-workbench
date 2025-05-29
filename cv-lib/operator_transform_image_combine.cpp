@@ -78,7 +78,7 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
         Image *output_image = nullptr;
         if (!errors.has_error() && input_image1_ptr != nullptr && input_image2_ptr != nullptr)
             output_image = Image::combine(input_image1_ptr, input_image2_ptr, scale1, scale2, offset, errors);
-        if (!errors.has_error() && output_image != nullptr) {
+        if (!errors.has_error()) {
             Data_source_descriptor *output_data_store = output_data_stores.front();
             output_data_store->write_operator_image(output_image, "Operator_transform_image_combine::run", errors);
         }

@@ -65,7 +65,7 @@ void Operator_histogram_hough_create::run(std::list<Data_source_descriptor *> &i
                                        WB_data_format::to_string(histogram_output_data_store->data_format));
                 }
             }
-            if (!errors.has_error() && histogram != nullptr) {
+            if (!errors.has_error()) {
                 histogram->log(log_entries);
             }
         }
