@@ -25,14 +25,11 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
         std::cout << "Operator_histogram_image_create::run parameters: "
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
-    if (input_data_sources.empty())
-        errors.add("Operator_histogram_image_create::run", "", "input data source required");
-    else if (input_data_sources.size() > 1)
-        errors.add("Operator_histogram_image_create::run", "", "too many input data sources");
-    else if (output_data_stores.empty())
+    if (input_data_sources.size() != 1)
+        errors.add("Operator_histogram_image_create::run", "", "one input data source required");
+    if (output_data_stores.empty())
         errors.add("Operator_histogram_image_create::run", "", "output data source required");
-    else if (output_data_stores.size() > 2)
-        errors.add("Operator_histogram_image_create::run", "", "too many output data sources");
+
     int nbins;
     Operator_utils::get_int_parameter("Operator_histogram_image_create::run", operator_parameters, "nbins", nbins,
                                       errors);
@@ -56,8 +53,8 @@ void Operator_histogram_image_create::run(std::list<Data_source_descriptor *> &i
         if (!errors.has_error() && input_image != nullptr)
             input_image->check_grayscale("Operator_histogram_image_create::run", errors);
         if (!errors.has_error()) {
-            std::unique_ptr<Histogram> histogram(Histogram::create_image(input_image, nbins, lower_value, upper_value,
-                                                                         saw_lower_value, saw_upper_value));
+            std::unique_ptr<Histogram> histogram(Histogram::create_image(input_image, nbins, saw_lower_value,
+                                                                         lower_value, upper_value, saw_upper_value));
             for (Data_source_descriptor *histogram_output_data_store: output_data_stores) {
                 histogram_output_data_store->write_operator_histogram(histogram.get(),
                                                                       "Operator_histogram_image_create::run", errors);

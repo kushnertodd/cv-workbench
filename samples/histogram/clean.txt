@@ -2,11 +2,9 @@ image_grayscale_edge.bin
 image_grayscale_edge.jpg
 image_grayscale_edge.log
 image_grayscale_edge_sqr.bin
-image_grayscale_edge_sqr.jpg
-image_grayscale_edge_sqr.log
 image_grayscale_edge_sqr_histogram.bin
-image_grayscale_edge_sqr_histogram.txt
 image_grayscale_edge_sqr_histogram.gp
 image_grayscale_edge_sqr_histogram.log
-image_grayscale_edge_sqr_threshold.jpg
-image_grayscale_edge_sqr_threshold.log
+image_grayscale_edge_sqr_histogram.txt
+image_grayscale_edge_sqr.jpg
+image_grayscale_edge_sqr.log

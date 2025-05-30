@@ -33,10 +33,10 @@ public:
     ~Histogram();
     Histogram();
     Histogram(int m_nbins, double m_lower_value, double m_upper_value);
-    static Histogram *create_hough(Hough *input, int nbins, double lower_value, double upper_value,
-                                   bool saw_lower_value, bool saw_upper_value);
-    static Histogram *create_image(Image *input, int nbins, double lower_value, double upper_value,
-                                   bool saw_lower_value, bool saw_upper_value);
+    static Histogram *create_hough(Hough *input, int nbins, double in_lower_value, bool saw_lower_value,
+                                   double in_upper_value, bool saw_upper_value);
+    static Histogram *create_image(Image *input, int nbins, double in_lower_value, bool saw_lower_value,
+                                   double in_upper_value, bool saw_upper_value);
     static void find_hough_peaks(Hough *hough, int npeaks);
     int get_bin(double value) const;
     float get_value(int bin) const;
@@ -44,8 +44,10 @@ public:
     double get_max_value() const;
     double get_min_value() const;
     double get_upper_value() const;
-    void initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value);
-    void initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value);
+    void initialize_hough(Hough *hough, double lower_value, bool saw_lower_value, double upper_value,
+                          bool saw_upper_value);
+    void initialize_image(Image *image, double lower_value, bool saw_lower_value, double upper_value,
+                          bool saw_upper_value);
     void log(std::list<WB_log_entry> &log_entries);
     static Histogram *read(std::string &path, Errors &errors);
     static Histogram *read(FILE *fp, Errors &errors);

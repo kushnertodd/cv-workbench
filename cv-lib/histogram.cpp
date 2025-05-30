@@ -39,10 +39,10 @@ Histogram::Histogram(int m_nbins, double m_lower_value, double m_upper_value) :
  * @param saw_upper_value
  * @return
  */
-Histogram *Histogram::create_image(Image *image, int nbins, double lower_value, double upper_value,
-                                   bool saw_lower_value, bool saw_upper_value) {
+Histogram *Histogram::create_image(Image *image, int nbins, double lower_value, bool saw_lower_value,
+                                   double upper_value, bool saw_upper_value) {
     auto *histogram = new Histogram(nbins, lower_value, upper_value);
-    histogram->initialize_image(image, saw_lower_value, saw_upper_value);
+    histogram->initialize_image(image, lower_value, saw_lower_value, upper_value, saw_upper_value);
     return histogram;
 }
 /**
@@ -55,10 +55,10 @@ Histogram *Histogram::create_image(Image *image, int nbins, double lower_value, 
  * @param saw_upper_value
  * @return
  */
-Histogram *Histogram::create_hough(Hough *hough, int nbins, double lower_value, double upper_value,
-                                   bool saw_lower_value, bool saw_upper_value) {
+Histogram *Histogram::create_hough(Hough *hough, int nbins, double lower_value, bool saw_lower_value,
+                                   double upper_value, bool saw_upper_value) {
     auto *histogram = new Histogram(nbins, lower_value, upper_value);
-    histogram->initialize_hough(hough, saw_lower_value, saw_upper_value);
+    histogram->initialize_hough(hough, lower_value, saw_lower_value, upper_value, saw_upper_value);
     return histogram;
 }
 /**
@@ -98,7 +98,8 @@ int Histogram::get_bin(double value) const {
  * @return
  */
 float Histogram::get_value(int bin) const {
-    return wb_utils::double_to_float(bin * (upper_value - lower_value) / (nbins - 1) + lower_value);
+    double frac = (upper_value - lower_value) / (nbins - 1);
+    return wb_utils::double_to_float(bin * frac + lower_value);
 }
 /**
  * @brief
@@ -126,7 +127,8 @@ double Histogram::get_upper_value() const { return upper_value; }
  * @param saw_lower_value
  * @param saw_upper_value
  */
-void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_upper_value) {
+void Histogram::initialize_hough(Hough *hough, double in_lower_value, bool saw_lower_value, double in_upper_value,
+                                 bool saw_upper_value) {
     for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
             double value = hough->get(rho_index, theta_index);
@@ -136,12 +138,17 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
     input_value_stats.finalize();
     if (!saw_lower_value)
         lower_value = input_value_stats.get_min_value();
+    else
+        lower_value = in_lower_value;
     if (!saw_upper_value)
         upper_value = input_value_stats.get_max_value();
+    else
+        upper_value = in_upper_value;
     for (int theta_index = 0; theta_index < hough->get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
             double value = hough->get(rho_index, theta_index);
-            update_input_value(value);
+            if (value >= lower_value && value <= upper_value)
+                update_input_value(value);
         }
     }
     update_bin_count_bounds();
@@ -152,7 +159,8 @@ void Histogram::initialize_hough(Hough *hough, bool saw_lower_value, bool saw_up
  * @param saw_lower_value
  * @param saw_upper_value
  */
-void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_upper_value) {
+void Histogram::initialize_image(Image *image, double in_lower_value, bool saw_lower_value, double in_upper_value,
+                                 bool saw_upper_value) {
     for (int col = 0; col < image->get_ncols(); col++) {
         for (int row = 0; row < image->get_nrows(); row++) {
             double value = image->get(col, row);
@@ -162,12 +170,17 @@ void Histogram::initialize_image(Image *image, bool saw_lower_value, bool saw_up
     input_value_stats.finalize();
     if (!saw_lower_value)
         lower_value = input_value_stats.get_min_value();
+    else
+        lower_value = in_lower_value;
     if (!saw_upper_value)
         upper_value = input_value_stats.get_max_value();
+    else
+        upper_value = in_upper_value;
     for (int col = 0; col < image->get_ncols(); col++) {
         for (int row = 0; row < image->get_nrows(); row++) {
             double value = image->get(col, row);
-            update_input_value(value);
+            if (value >= lower_value && value <= upper_value)
+                update_input_value(value);
         }
     }
     update_bin_count_bounds();
@@ -349,8 +362,11 @@ void Histogram::write_text(std::string &path, const std::string &delim, Errors &
     if (errors.has_error())
         return;
     ofs << "bin" << delim << "count" << std::endl;
-    for (int i = 0; i < nbins; i++)
-        ofs << get_value(i) << delim << bins[i] << std::endl;
+    for (int i = 0; i < nbins; i++) {
+        double value = get_value(i);
+        int count = bins[i];
+        ofs << std::fixed <<  std::setprecision(1) << value << delim << count << std::endl;
+    }
     ofs << std::endl;
     ofs.close();
     write_gp_script(wb_filename);

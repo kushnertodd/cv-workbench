@@ -25,14 +25,11 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
         std::cout << "Operator_transform_image_combine::run:parameters: "
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     }
-    if (input_data_sources.empty())
-        errors.add("Operator_transform_image_combine::run", "", "two input data sources required");
-    if (input_data_sources.size() > 2)
-        errors.add("Operator_transform_image_combine::run", "", "too many input data sources");
-    if (output_data_stores.empty())
+    if (input_data_sources.size() != 1)
+        errors.add("Operator_transform_image_combine::run", "", "one input data source required");
+    else if (output_data_stores.empty())
         errors.add("Operator_transform_image_combine::run", "", "output data source required");
-    else if (output_data_stores.size() > 1)
-        errors.add("Operator_transform_image_combine::run", "", "too many output data sources");
+
     else {
         double scale1;
         double scale2;
