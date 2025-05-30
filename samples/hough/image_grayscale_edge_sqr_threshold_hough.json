@@ -45,7 +45,7 @@
           "accumulate": "unit",
           "rho-inc": "1",
           "theta-inc": "3",
-          "pixel-threshold": "20000"
+          "pixel-threshold": "128"
         }
       }
     ]
