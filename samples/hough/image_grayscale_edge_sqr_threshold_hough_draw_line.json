@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "transform-image-create",
+                "operator": "hough-draw-line",
                 "input-data": [
                     {
                         "id": 1,
@@ -17,8 +17,17 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "create_hough_test_image",
+                        "filename": "image_grayscale_edge_threshold_draw_line",
                         "ext": "txt"
+                    },
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "ext": "jpg"
                     }
                 ],
                 "output-data": [
@@ -28,24 +37,13 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale",
+                        "filename": "image_grayscale_edge_sqr_threshold_draw_line",
                         "ext": "jpg"
-                    },
-                    {
-                        "id": 2,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "text",
-                        "directory": ".",
-                        "filename": "hough_test_image_grayscale",
-                        "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "foreground": "1",
-                    "background": "0",
-                    "ncols": "16",
-                    "nrows": "16"
+                    "pixel-value": "128",
+                    "out-component": "1"
                 }
             }
         ]

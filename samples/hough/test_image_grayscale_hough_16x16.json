@@ -15,10 +15,10 @@
             "id": 1,
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
+            "format": "binary",
             "directory": ".",
-            "filename": "hough_sample_image_grayscale",
-            "ext": "jpg"
+            "filename": "hough_test_image_grayscale_16x16",
+            "ext": "bin"
           }
         ],
         "output-data": [
@@ -28,7 +28,7 @@
             "repository": "filesystem",
             "format": "binary", 
             "directory": ".",
-            "filename": "hough_sample_image_grayscale_accumulator",
+            "filename": "hough_test_image_grayscale_accumulator_16x16",
             "ext": "bin"
           },
           {
@@ -37,15 +37,15 @@
             "repository": "filesystem",
             "format": "text",
             "directory": ".",
-            "filename": "hough_sample_image_grayscale_accumulator",
+            "filename": "hough_test_image_grayscale_accumulator_16x16",
             "ext": "txt"
           }
         ],
         "parameters": {
+          "accumulate": "unit",
           "rho-inc": "1",
-          "theta-inc": "5",
-          "pixel-threshold": "0",
-          "accumulate": "unit"
+          "theta-inc": "45",
+          "pixel-threshold": "0"
         }
       }
     ]

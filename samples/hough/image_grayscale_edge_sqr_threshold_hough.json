@@ -15,10 +15,10 @@
             "id": 1,
             "type": "image",
             "repository": "filesystem",
-            "format": "jpeg",
+            "format": "binary",
             "directory": ".",
-            "filename": "hough_test_image_grayscale",
-            "ext": "jpg"
+            "filename": "image_grayscale_edge_sqr_threshold",
+            "ext": "bin"
           }
         ],
         "output-data": [
@@ -26,9 +26,9 @@
             "id": 1,
             "type": "image",
             "repository": "filesystem",
-            "format": "binary",
+            "format": "binary", 
             "directory": ".",
-            "filename": "hough_test_image_grayscale_accumulator",
+            "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator",
             "ext": "bin"
           },
           {
@@ -37,15 +37,15 @@
             "repository": "filesystem",
             "format": "text",
             "directory": ".",
-            "filename": "hough_test_image_grayscale_accumulator",
+            "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator",
             "ext": "txt"
           }
         ],
         "parameters": {
+          "accumulate": "unit",
           "rho-inc": "1",
-          "theta-inc": "15",
-          "pixel-threshold": "0",
-          "accumulate": "unit"
+          "theta-inc": "3",
+          "pixel-threshold": "20000"
         }
       }
     ]

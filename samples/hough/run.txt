@@ -1,6 +1,9 @@
-create_hough_test_image.json
-image_grayscale_edge_threshold_draw_line.json
-run_hough_grayscale_image.json
-run_hough_test_image.json
 create_hough_test_image_4x4.json
 test_image_grayscale_hough_4x4.json
+create_hough_test_image_16x16.json
+test_image_grayscale_hough_16x16.json
+image_grayscale_edge.json
+image_grayscale_edge_sqr.json
+image_grayscale_edge_sqr_threshold.json
+image_grayscale_edge_sqr_threshold_hough.json
+image_grayscale_edge_sqr_threshold_hough_draw_line.json
