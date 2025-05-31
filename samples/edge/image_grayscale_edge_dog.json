@@ -73,6 +73,39 @@
                     "depth": "CV_8U",
                     "standard-deviations": "2.0"
                 }
+            },
+            {
+                "id": 3,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_dog_3x3_5x5",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_dog_3x3_5x5_threshold",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "lower-in": "10",
+                    "upper-in": "10",
+                    "lower-out": "0",
+                    "upper-out": "255"
+                }
             }
         ]
     }

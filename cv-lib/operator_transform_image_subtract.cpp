@@ -60,6 +60,8 @@ void Operator_transform_image_subtract::run(std::list<Data_source_descriptor *> 
                 Data_source_descriptor *output_data_store = output_data_stores.front();
                 output_data_store->write_operator_image(output_image.get(), "Operator_transform_image_subtract::run",
                                                         errors);
+                if (!errors.has_error())
+                    output_image->log(log_entries);
             }
         }
         delete input_image1_ptr;
