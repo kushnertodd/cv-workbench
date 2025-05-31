@@ -74,7 +74,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
     for (int i = nbins - 1; i >= 0 && peak_ct < npeaks; i--) {
         peak_ct += histogram->bins[i];
         if (peak_ct <= npeaks) {
-            threshold = histogram->get_value(i);
+            threshold = histogram->to_value(i);
         }
     }
     hough->find_peaks(hough->lines, threshold);
@@ -84,7 +84,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
  * @param value
  * @return
  */
-int Histogram::get_bin(double value) const {
+int Histogram::to_bin(double value) const {
     if (value < lower_value)
         return 0;
     else if (value > upper_value)
@@ -97,7 +97,7 @@ int Histogram::get_bin(double value) const {
  * @param bin
  * @return
  */
-float Histogram::get_value(int bin) const {
+float Histogram::to_value(int bin) const {
     double frac = (upper_value - lower_value) / (nbins - 1);
     return wb_utils::double_to_float(bin * frac + lower_value);
 }
@@ -148,7 +148,7 @@ void Histogram::initialize_hough(Hough *hough, double in_lower_value, bool saw_l
         for (int rho_index = 0; rho_index < hough->get_nrhos(); rho_index++) {
             double value = hough->get(rho_index, theta_index);
             if (value >= lower_value && value <= upper_value)
-                update_input_value(value);
+                update(value);
         }
     }
     update_bin_count_bounds();
@@ -168,19 +168,14 @@ void Histogram::initialize_image(Image *image, double in_lower_value, bool saw_l
         }
     }
     input_value_stats.finalize();
-    if (!saw_lower_value)
-        lower_value = input_value_stats.get_min_value();
-    else
-        lower_value = in_lower_value;
-    if (!saw_upper_value)
-        upper_value = input_value_stats.get_max_value();
-    else
-        upper_value = in_upper_value;
+    lower_value = (saw_lower_value ? in_lower_value : input_value_stats.get_min_value());
+    upper_value = (saw_upper_value ? in_upper_value : input_value_stats.get_max_value());
+    bin_count_bounds.set(lower_value, upper_value);
     for (int col = 0; col < image->get_ncols(); col++) {
         for (int row = 0; row < image->get_nrows(); row++) {
             double value = image->get(col, row);
             if (value >= lower_value && value <= upper_value)
-                update_input_value(value);
+                update(value);
         }
     }
     update_bin_count_bounds();
@@ -301,8 +296,8 @@ std::string Histogram::to_string(const std::string &prefix) {
  * @brief
  * @param value
  */
-void Histogram::update_input_value(double value) const {
-    int bin = get_bin(value);
+void Histogram::update(double value) const {
+    int bin = to_bin(value);
     bins[bin]++;
 }
 /**
@@ -361,11 +356,13 @@ void Histogram::write_text(std::string &path, const std::string &delim, Errors &
     std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
     if (errors.has_error())
         return;
-    ofs << "bin" << delim << "count" << std::endl;
-    for (int i = 0; i < nbins; i++) {
-        double value = get_value(i);
+    // ofs << "bin" << delim << "count" << std::endl;
+    int start_bin = to_bin(lower_value);
+    int end_bin = to_bin(upper_value);
+    for (int i = start_bin; i < end_bin; i++) {
+        double value = to_value(i);
         int count = bins[i];
-        ofs << std::fixed <<  std::setprecision(1) << value << delim << count << std::endl;
+        ofs << std::fixed << std::setprecision(1) << value << delim << count << std::endl;
     }
     ofs << std::endl;
     ofs.close();

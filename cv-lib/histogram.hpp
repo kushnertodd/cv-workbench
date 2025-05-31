@@ -38,8 +38,8 @@ public:
     static Histogram *create_image(Image *input, int nbins, double in_lower_value, bool saw_lower_value,
                                    double in_upper_value, bool saw_upper_value);
     static void find_hough_peaks(Hough *hough, int npeaks);
-    int get_bin(double value) const;
-    float get_value(int bin) const;
+    int to_bin(double value) const;
+    float to_value(int bin) const;
     double get_lower_value() const;
     double get_max_value() const;
     double get_min_value() const;
@@ -54,7 +54,7 @@ public:
     static Histogram *read_text(const std::string &path, Errors &errors);
     static Histogram *read_text(std::ifstream &ifs, Errors &errors);
     std::string to_string(const std::string &prefix = "");
-    void update_input_value(double new_value) const;
+    void update(double new_value) const;
     void update_bin_count_bounds();
     void write(std::string &path, Errors &errors) const;
     void write(FILE *fp, Errors &errors) const;

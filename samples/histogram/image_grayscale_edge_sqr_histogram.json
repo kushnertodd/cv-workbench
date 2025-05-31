@@ -42,7 +42,8 @@
                     }
                 ],
                 "parameters": {
-                    "nbins": "255"
+                    "nbins": "255",
+                    "lower-value": "50000"
                 }
             }
         ]
