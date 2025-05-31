@@ -92,6 +92,8 @@ double Polar_trig::get_x_min() const { return x_min; }
 double Polar_trig::get_x_max() const { return x_max; }
 double Polar_trig::get_y_min() const { return y_min; }
 double Polar_trig::get_y_max() const { return y_max; }
+bool Polar_trig::is_rho_index_valid(int rho_index) const { return rho_index >= 0 && rho_index < nrhos; }
+bool Polar_trig::is_theta_index_valid(int theta_index) const { return theta_index >= 0 && theta_index < nthetas; }
 /**
  * @brief
  * @param point
@@ -130,6 +132,7 @@ int Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index) {
  */
 int Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_index) {
     int rho_index = to_rho_index(point_theta_to_rho(x, y, to_theta(theta_index)));
+    assert(is_rho_index_valid(rho_index));
     return rho_index;
 }
 /**
@@ -306,6 +309,7 @@ int Polar_trig::to_theta(int theta_index) const {
  */
 int Polar_trig::to_theta_index(int theta) const {
     int theta_index = theta / theta_inc;
+    assert(is_theta_index_valid(theta_index));
     wb_utils::double_to_int_round(theta / theta_inc);
     return theta_index;
 }

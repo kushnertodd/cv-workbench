@@ -20,6 +20,7 @@
 class Hough {
     friend class Histogram;
     int pixel_threshold{};
+    int unit{};
     int nbins{};
     std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;
@@ -31,7 +32,7 @@ public:
     ~Hough();
     Hough();
     Hough(double m_x_min, double m_x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
-          int m_pixel_threshold = 0);
+          int m_pixel_threshold, bool m_unit);
     void clear();
     void find_peaks(std::list<Polar_line> &lines, double threshold) const;
     int get(int rho_index, int theta_index) const;
@@ -43,7 +44,7 @@ public:
     double get_x_max() const;
     double get_y_min() const;
     double get_y_max() const;
-    void initialize(Image *image, int pixel_threshold);
+    void initialize(Image *image, int pixel_threshold, bool unit);
     void log(std::list<WB_log_entry> &log_entries);
     static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);

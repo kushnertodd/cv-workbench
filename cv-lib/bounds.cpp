@@ -27,6 +27,15 @@ double Bounds::get_max_value() const { return max_value; }
 double Bounds::get_min_value() const { return min_value; }
 /**
  * @brief
+ * @param m_min_value
+ * @param m_max_value
+ */
+void Bounds::set(double m_min_value, double m_max_value) {
+    min_value = m_min_value;
+    max_value = m_max_value;
+}
+/**
+ * @brief
  * @param value
  * @param input_bounds
  * @param output_bounds

@@ -3,12 +3,11 @@ edge \
 histogram \
 hough \
 morphology \
-smooth
+smooth \
+transform
 do
   echo $dir
-  echo cd $dir
   cd $dir
-  echo sh run.sh
   sh run.sh
   cd ..
 done

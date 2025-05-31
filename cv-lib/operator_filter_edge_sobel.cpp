@@ -5,7 +5,7 @@
 #include "operator_utils.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 Operator_filter_edge_sobel::~Operator_filter_edge_sobel() = default;
 
@@ -32,9 +32,9 @@ void Operator_filter_edge_sobel::run(std::list<Data_source_descriptor *> &input_
     if (output_data_stores.empty())
         errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
     std::string orientation_str{};
-    bool orientation_missing = Operator_utils::get_string_parameter(
-            "Operator_filter_edge_sobel::run", operator_parameters, "orientation", orientation_str, errors);
-    if (!orientation_missing && orientation_str != "0" && orientation_str != "90")
+    bool have_orientation = Operator_utils::get_string_parameter("Operator_filter_edge_sobel::run", operator_parameters,
+                                                                 "orientation", orientation_str, errors);
+    if (have_orientation && orientation_str != "0" && orientation_str != "90")
         errors.add("Operator_filter_edge_sobel::run", "", "orientation not 0 or 90");
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources.front();

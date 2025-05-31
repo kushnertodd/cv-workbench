@@ -1,0 +1,62 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "transform-image-create",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "data",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "create_hough_test_image_16x16",
+                        "ext": "txt"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_16x16",
+                        "ext": "bin"
+                    },
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_16x16",
+                        "ext": "jpg"
+                    },
+                    {
+                        "id": 2,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_16x16",
+                        "ext": "txt"
+                    }
+                ],
+                "parameters": {
+                    "foreground": "1",
+                    "background": "0",
+                    "ncols": "16",
+                    "nrows": "16"
+                }
+            }
+        ]
+    }
+}

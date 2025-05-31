@@ -13,6 +13,7 @@ class Line_segment {
     Point point2;
 
 public:
+    ~Line_segment();
     Line_segment();
     Line_segment(const Point &m_point1, const Point &m_point2);
     Line_segment(const double x1, double y1, double x2, double y2);

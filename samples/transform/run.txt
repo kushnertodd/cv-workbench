@@ -5,6 +5,3 @@ image_grayscale_edge_abs.json
 image_grayscale_edge_sqr.json
 image_grayscale_edge_log.json
 image_grayscale_edge_sqrt.json
-image_grayscale_edge_sqr_hough.json
-image_grayscale_edge_sqr_abs.json
-image_grayscale_edge_sqr_hough_draw_line.json

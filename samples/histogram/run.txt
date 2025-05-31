@@ -1,3 +1,4 @@
-run_histogram_test_image.json
-run_histogram_sample_hough.json
-run_histogram_test_hough.json
+image_grayscale_edge.json
+image_grayscale_edge_sqr.json
+image_grayscale_edge_histogram.json
+image_grayscale_edge_sqr_histogram.json

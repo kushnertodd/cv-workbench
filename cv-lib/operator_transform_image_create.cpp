@@ -56,7 +56,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         std::unique_ptr<Data> input_data(
                 input_data_source->read_operator_data("Operator_transform_image_create::run", errors));
         if (!errors.has_error()) {
-            std::unique_ptr<Image> input_image =
+            std::unique_ptr<Image> output_image =
                     std::make_unique<Image>(ncols, nrows, 1, Image_depth::CV_8U, background);
             for (std::string line: input_data->lines) {
                 std::vector<std::string> tokens = wb_utils::tokenize(line, " ");
@@ -77,7 +77,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                 errors.add("Operator_transform_image_create::run", "",
                                            "invalid point parameter row value");
                             if (!errors.has_error()) {
-                                input_image->set(col, row, foreground);
+                                output_image->set(col, row, foreground);
                             }
                         }
                     } else if (tokens[0] == "L") {
@@ -108,7 +108,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                 errors.add("Operator_transform_image_create::run", "",
                                            "invalid line parameter row2 value");
                             if (!errors.has_error())
-                                input_image->draw_line_segment(col1, row1, col2, row2, foreground);
+                                output_image->draw_line_segment(col1, row1, col2, row2, foreground);
                         }
                     } else if (tokens[0] == "R") {
                         if (tokens.size() < 3)
@@ -140,7 +140,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                 errors.add("Operator_transform_image_create::run", "",
                                            "invalid rectangle parameter row2 value");
                             if (!errors.has_error())
-                                input_image->draw_rectangle(col1, row1, col2, row2, foreground);
+                                output_image->draw_rectangle(col1, row1, col2, row2, foreground);
                         }
                     } else if (tokens[0] == "F") {
                         if (tokens.size() < 3)
@@ -172,7 +172,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
                                 errors.add("Operator_transform_image_create::run", "",
                                            "invalid rectangle parameter row2 value");
                             if (!errors.has_error())
-                                input_image->draw_rectangle_filled(col1, row1, col2, row2, foreground);
+                                output_image->draw_rectangle_filled(col1, row1, col2, row2, foreground);
                         }
                     } else
                         errors.add("Operator_transform_image_create::run", "", "invalid pixel parameter value");
@@ -180,10 +180,10 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
             }
             if (!errors.has_error())
                 for (Data_source_descriptor *output_data_store: output_data_stores)
-                    output_data_store->write_operator_image(input_image.get(), "Operator_transform_image_create::run",
+                    output_data_store->write_operator_image(output_image.get(), "Operator_transform_image_create::run",
                                                             errors);
-            if (!errors.has_error() && input_image != nullptr)
-                input_image->log(log_entries);
+            if (!errors.has_error())
+                output_image->log(log_entries);
         }
     }
 }

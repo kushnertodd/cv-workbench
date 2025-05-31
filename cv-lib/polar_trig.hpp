@@ -66,6 +66,8 @@ public:
     double get_x_max() const;
     double get_y_min() const;
     double get_y_max() const;
+    bool is_rho_index_valid(int rho_index) const;
+    bool is_theta_index_valid(int theta_index) const;
     double point_theta_index_to_rho(Point &point, int theta_index);
     double point_theta_index_to_rho(double x, double y, int theta_index);
     int point_theta_index_to_rho_index(Point &point, int theta_index);

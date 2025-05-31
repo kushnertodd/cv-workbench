@@ -1,0 +1,78 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 3,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "ext": "binary"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "lower-in": "3000",
+                    "upper-in": "3000",
+                    "lower-out": "0",
+                    "upper-out": "255"
+                }
+            },
+            {
+                "id": 3,
+                "operator": "transform-intensity-map",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "ext": "jpg"
+                    }
+                ],
+                "parameters": {
+                    "depth": "CV_8U",
+                    "lower-in": "3000",
+                    "upper-in": "3000",
+                    "lower-out": "0",
+                    "upper-out": "255"
+                }
+            }
+        ]
+    }
+}

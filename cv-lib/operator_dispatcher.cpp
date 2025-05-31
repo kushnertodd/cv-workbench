@@ -19,6 +19,7 @@
 #include "operator_transform_image_copy.hpp"
 #include "operator_transform_image_create.hpp"
 #include "operator_transform_image_resize.hpp"
+#include "operator_transform_image_subtract.hpp"
 #include "operator_transform_intensity_convert.hpp"
 #include "operator_transform_intensity_map.hpp"
 
@@ -76,11 +77,13 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
         pOperator = new Operator_transform_image_copy();
     else if (operator_name == "transform-image-create")
         pOperator = new Operator_transform_image_create();
+    else if (operator_name == "transform-image-resize")
+        pOperator = new Operator_transform_image_resize();
+    else if (operator_name == "transform-image-subtract")
+        pOperator = new Operator_transform_image_subtract();
     else if (operator_name == "transform-intensity-map")
         pOperator = new Operator_transform_intensity_map();
     else if (operator_name == "transform-intensity-convert")
         pOperator = new Operator_transform_intensity_convert();
-    else if (operator_name == "transform-image-resize")
-        pOperator = new Operator_transform_image_resize();
     return pOperator;
 }

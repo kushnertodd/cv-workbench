@@ -5,7 +5,7 @@
 #include "operator_utils.hpp"
 
 /**
- * @brief 
+ * @brief
  */
 Operator_filter_edge_roberts::~Operator_filter_edge_roberts() = default;
 
@@ -29,9 +29,9 @@ void Operator_filter_edge_roberts::run(std::list<Data_source_descriptor *> &inpu
     if (output_data_stores.empty())
         errors.add("Operator_filter_edge_roberts::run", "", "output data source required");
     std::string orientation_str;
-    bool orientation_missing = Operator_utils::get_string_parameter(
+    bool have_orientation = Operator_utils::get_string_parameter(
             "Operator_filter_edge_roberts::run", operator_parameters, "orientation", orientation_str, errors);
-    if (!orientation_missing && orientation_str != "0" && orientation_str != "90")
+    if (have_orientation && orientation_str != "0" && orientation_str != "90")
 
         errors.add("Operator_filter_edge_roberts::run", "", "orientation not 0 or 90");
     if (!errors.has_error()) {
