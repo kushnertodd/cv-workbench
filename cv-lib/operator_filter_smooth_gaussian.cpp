@@ -45,7 +45,7 @@ void Operator_filter_smooth_gaussian::run(std::list<Data_source_descriptor *> &i
         if (!errors.has_error()) {
             std::unique_ptr<Kernel> gaussian_kernel_y(Kernel::create_gaussian_y(nrows, sigma_y));
             std::unique_ptr<Kernel> gaussian_kernel_x(Kernel::create_gaussian_x(ncols, sigma_x));
-            std::unique_ptr<Image> output_pass1_image(gaussian_kernel_y->convolve_numeric(input_image.get(), errors));
+            std::unique_ptr<Image> output_pass1_image(gaussian_kernel_x->convolve_numeric(input_image.get(), errors));
             if (!errors.has_error()) {
                 std::unique_ptr<Image> output_pass2_image(
                         gaussian_kernel_y->convolve_numeric(output_pass1_image.get(), errors));

@@ -1,6 +1,9 @@
 image_color_edge.bin
 image_color_edge.jpg
 image_color_edge.log
+image_grayscale_edge_dog_3x3_5x5.bin
+image_grayscale_edge_dog_3x3_5x5.jpg
+image_grayscale_edge_dog.log
 image_grayscale_edge_kirsch_e.bin
 image_grayscale_edge_kirsch_e.jpg
 image_grayscale_edge_kirsch_e.log
@@ -69,3 +72,9 @@ image_grayscale_edge_sobel_90.bin
 image_grayscale_edge_sobel_90.jpg
 image_grayscale_edge_sobel_90.log
 image_grayscale_edge_sobel_90_threshold.jpg
+image_grayscale_smooth_gaussian_3x3.bin
+image_grayscale_smooth_gaussian_3x3.jpg
+image_grayscale_smooth_gaussian_3x3.log
+image_grayscale_smooth_gaussian_5x5.bin
+image_grayscale_smooth_gaussian_5x5.jpg
+image_grayscale_smooth_gaussian_5x5.log

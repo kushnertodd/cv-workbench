@@ -28,15 +28,15 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_smooth_gaussian",
+                        "filename": "image_grayscale_smooth_gaussian_5x5",
                         "ext": "bin"
                     }
                 ],
                 "parameters": {
-                    "ncols": "7",
-                    "nrows": "7",
-                    "sigma-x": "3.0",
-                    "sigma-y": "3.0"
+                    "ncols": "9",
+                    "nrows": "9",
+                    "sigma-x": "5.0",
+                    "sigma-y": "5.0"
                 }
             },
             {
@@ -49,7 +49,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_smooth_gaussian",
+                        "filename": "image_grayscale_smooth_gaussian_5x5",
                         "ext": "bin"
                     }
                 ],
@@ -60,7 +60,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_smooth_gaussian",
+                        "filename": "image_grayscale_smooth_gaussian_5x5",
                         "ext": "jpg"
                     }
                 ],

@@ -1256,37 +1256,34 @@ void Image::set_32S(int col, int row, pixel_32S value, int component) const {
     buf_32S[index] = value;
 }
 // subtracts image without underflow checking for CV_8U images
-Image *Image::subtract(const Image *src_image, const Image *subtract_image, Errors &errors) {
-    if (src_image->get_npixels() != subtract_image->get_npixels()) {
+Image *Image::subtract(const Image *input_image1, const Image *input_image2, Errors &errors) {
+    if (input_image1->get_ncols() != input_image2->get_ncols() ||
+        input_image1->get_nrows() != input_image2->get_nrows()) {
         errors.add("Image::subtract", "", "images not the same size ");
         return nullptr;
     }
-    if (src_image->get_depth() != subtract_image->get_depth()) {
+    if (input_image1->get_depth() != input_image2->get_depth()) {
         errors.add("Image::subtract", "", "images not the same depth ");
         return nullptr;
     }
-    //  if (src_image->get_depth() == Image_depth::CV_8U) {
-    //    errors.add("Image::subtract", "", "cannot subtract CV_8U images");
-    //    return nullptr;
-    //  }
 
-    auto *output_image = new Image(src_image->image_header);
+    auto *output_image = new Image(input_image1->image_header);
 
-    int size = src_image->get_npixels();
-    switch (src_image->get_depth()) {
+    int size = input_image1->get_npixels();
+    switch (input_image1->get_depth()) {
         case Image_depth::CV_8U:
             for (int i = 0; i < size; i++)
-                output_image->buf_8U[i] = src_image->buf_8U[i] - subtract_image->buf_8U[i];
+                output_image->buf_8U[i] = std::abs(input_image1->buf_8U[i] - input_image2->buf_8U[i]);
             break;
 
         case Image_depth::CV_32S:
             for (int i = 0; i < size; i++)
-                output_image->buf_32S[i] = src_image->buf_32S[i] - subtract_image->buf_32S[i];
+                output_image->buf_32S[i] = input_image1->buf_32S[i] - input_image2->buf_32S[i];
             break;
 
         case Image_depth::CV_32F:
             for (int i = 0; i < size; i++)
-                output_image->buf_32F[i] = src_image->buf_32F[i] - subtract_image->buf_32F[i];
+                output_image->buf_32F[i] = input_image1->buf_32F[i] - input_image2->buf_32F[i];
             break;
 
         default:
