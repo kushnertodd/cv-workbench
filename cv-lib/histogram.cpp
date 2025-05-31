@@ -339,8 +339,12 @@ void Histogram::write_gp_script(const Wb_filename &wb_filename) {
     std::string script_filename = wb_filename.to_hist_script();
     std::string data_filename = wb_filename.to_hist_text();
     std::ofstream ofs(script_filename, std::ofstream::out);
-    ofs << "set style data histograms" << std::endl;
-    ofs << "plot './" << data_filename << "' using 2:xtic(10)" << std::endl;
+    ofs << "set style line 1 \\" << std::endl;
+    ofs << "    linecolor rgb '#0060ad' \\" << std::endl;
+    ofs << "    linetype 1 linewidth 2 \\" << std::endl;
+    ofs << "    pointtype 7 pointsize 0" << std::endl;
+    ofs << "plot './" << data_filename << "' with linespoints linestyle 1" << std::endl;
+
     ofs << "pause -1 \"Hit any key to continue\"" << std::endl;
     ofs.close();
 }
