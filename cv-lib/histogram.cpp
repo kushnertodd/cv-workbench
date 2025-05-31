@@ -362,7 +362,7 @@ void Histogram::write_text(std::string &path, const std::string &delim, Errors &
     for (int i = start_bin; i < end_bin; i++) {
         double value = to_value(i);
         int count = bins[i];
-        ofs << std::fixed << std::setprecision(1) << value << delim << count << std::endl;
+        ofs << wb_utils::double_to_int(value) << delim << count << std::endl;
     }
     ofs << std::endl;
     ofs.close();

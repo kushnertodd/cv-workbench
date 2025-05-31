@@ -1,4 +1,8 @@
 image_grayscale_edge.bin
+image_grayscale_edge_histogram.bin
+image_grayscale_edge_histogram.gp
+image_grayscale_edge_histogram.log
+image_grayscale_edge_histogram.txt
 image_grayscale_edge.jpg
 image_grayscale_edge.log
 image_grayscale_edge_sqr.bin

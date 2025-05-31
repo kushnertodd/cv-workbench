@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr",
+                        "filename": "image_grayscale_edge",
                         "ext": "bin"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_histogram",
+                        "filename": "image_grayscale_edge_histogram",
                         "ext": "bin"
                     },
                     {
@@ -37,13 +37,14 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_histogram",
+                        "filename": "image_grayscale_edge_histogram",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "nbins": "255",
-                    "lower-value": "2500"
+                    "lower-value": "-50",
+                    "upper-value": "100",
+                    "nbins": "255"
                 }
             }
         ]
