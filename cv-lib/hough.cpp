@@ -19,11 +19,22 @@ Hough::Hough() = default;
 /**
  * https://stackoverflow.com/questions/21377360/proper-way-to-create-unique-ptr-that-holds-an-allocated-array
  * @brief
+ * @param m_min_x
+ * @param m_max_x
+ * @param m_min_y
+ * @param m_max_y
+ * @param m_rho_inc
+ * @param m_theta_inc
+ * @param m_pixel_threshold
+ * @param m_unit
+ * @param m_min_theta
+ * @param m_max_theta
  */
-Hough::Hough(double m_x_min, double m_x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc,
-             int m_pixel_threshold, bool m_unit) : pixel_threshold(m_pixel_threshold), unit(m_unit) {
-    polar_trig =
-            std::unique_ptr<Polar_trig>(new Polar_trig(m_x_min, m_y_min, m_x_max, m_y_max, m_rho_inc, m_theta_inc));
+Hough::Hough(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
+             int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta) :
+    pixel_threshold(m_pixel_threshold), unit(m_unit) {
+    polar_trig = std::unique_ptr<Polar_trig>(
+            new Polar_trig(m_min_x, m_min_y, m_max_x, m_max_y, m_rho_inc, m_theta_inc, m_min_theta, m_max_theta));
     nbins = get_nrhos() * get_nthetas();
     accumulator = std::unique_ptr<int[]>(new int[nbins]);
 }
@@ -60,46 +71,16 @@ int Hough::get(int rho_index, int theta_index) const {
     int index = rho_index_theta_index_to_index(rho_index, theta_index);
     return accumulator[index];
 }
-/**
- * @brief
- * @return
- */
+int Hough::get_max_theta() const { return polar_trig->get_max_theta(); }
+double Hough::get_max_x() const { return polar_trig->get_max_x(); }
+double Hough::get_max_y() const { return polar_trig->get_max_y(); }
+int Hough::get_min_theta() const { return polar_trig->get_min_theta(); }
+double Hough::get_min_x() const { return polar_trig->get_min_x(); }
+double Hough::get_min_y() const { return polar_trig->get_min_y(); }
 int Hough::get_nrhos() const { return polar_trig->get_nrhos(); }
-/**
- * @brief
- * @return
- */
 int Hough::get_nthetas() const { return polar_trig->get_nthetas(); }
-/**
- * @brief
- * @return
- */
 int Hough::get_rho_inc() const { return polar_trig->get_rho_inc(); }
-/**
- * @brief
- * @return
- */
 int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
-/**
- * @brief
- * @return
- */
-double Hough::get_x_min() const { return polar_trig->get_x_min(); }
-/**
- * @brief
- * @return
- */
-double Hough::get_x_max() const { return polar_trig->get_x_max(); }
-/**
- * @brief
- * @return
- */
-double Hough::get_y_min() const { return polar_trig->get_y_min(); }
-/**
- * @brief
- * @return
- */
-double Hough::get_y_max() const { return polar_trig->get_y_max(); }
 /**
  * @brief
  * @param image_theshold
@@ -115,7 +96,7 @@ void Hough::initialize(Image *image, int pixel_threshold, bool unit) {
                 Point point;
                 image->to_point(point, col, row);
                 int theta_inc = get_theta_inc();
-                for (int theta = 0; theta < theta_max; theta += theta_inc) {
+                for (int theta = get_min_theta(); theta < get_max_theta(); theta += theta_inc) {
                     double rho = polar_trig->point_theta_to_rho(point, theta);
                     int rho_index = polar_trig->to_rho_index(rho);
                     int theta_index = polar_trig->to_theta_index(theta);
@@ -177,18 +158,18 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
     int theta_inc;
     if (!errors.has_error())
         wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough theta_inc", errors);
-    double x_min;
+    double min_x;
     if (!errors.has_error())
-        wb_utils::read_double(fp, x_min, "Hough::read", "", "missing hough x_min", errors);
-    double x_max;
+        wb_utils::read_double(fp, min_x, "Hough::read", "", "missing hough min_x", errors);
+    double max_x;
     if (!errors.has_error())
-        wb_utils::read_double(fp, x_max, "Hough::read", "", "missing hough x_max", errors);
-    double y_min;
+        wb_utils::read_double(fp, max_x, "Hough::read", "", "missing hough max_x", errors);
+    double min_y;
     if (!errors.has_error())
-        wb_utils::read_double(fp, y_min, "Hough::read", "", "missing hough y_min", errors);
-    double y_max;
+        wb_utils::read_double(fp, min_y, "Hough::read", "", "missing hough min_y", errors);
+    double max_y;
     if (!errors.has_error())
-        wb_utils::read_double(fp, y_max, "Hough::read", "", "missing hough y_max", errors);
+        wb_utils::read_double(fp, max_y, "Hough::read", "", "missing hough max_y", errors);
     int pixel_threshold;
     if (!errors.has_error())
         wb_utils::read_int(fp, pixel_threshold, "Hough::read", "", "missing hough pixel_threshold", errors);
@@ -197,7 +178,8 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         wb_utils::read_int(fp, int_unit, "Hough::read", "", "missing hough unit", errors);
     Hough *hough = nullptr;
     if (!errors.has_error()) {
-        hough = new Hough(x_min, x_max, y_min, y_max, rho_inc, theta_inc, pixel_threshold, (int_unit == 1));
+        hough = new Hough(min_x, max_x, min_y, max_y, rho_inc, theta_inc, pixel_threshold, (int_unit == 1),
+                          hough->get_min_theta(), hough->get_max_theta());
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
         if (!errors.has_error())
@@ -307,28 +289,28 @@ void Hough::write(FILE *fp, Errors &errors) const {
         errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
         return;
     }
-    double x_min = get_x_min();
-    fwrite(&x_min, sizeof(double), 1, fp);
+    double min_x = get_min_x();
+    fwrite(&min_x, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator x_min");
+        errors.add("Hough::write", "", "cannot write Hough accumulator min_x");
         return;
     }
-    double x_max = get_x_max();
-    fwrite(&x_max, sizeof(double), 1, fp);
+    double max_x = get_max_x();
+    fwrite(&max_x, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator get_x_max");
+        errors.add("Hough::write", "", "cannot write Hough accumulator get_max_x");
         return;
     }
-    double y_min = get_y_min();
-    fwrite(&y_min, sizeof(double), 1, fp);
+    double min_y = get_min_y();
+    fwrite(&min_y, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator y_min");
+        errors.add("Hough::write", "", "cannot write Hough accumulator min_y");
         return;
     }
-    double y_max = get_y_max();
-    fwrite(&y_max, sizeof(double), 1, fp);
+    double max_y = get_max_y();
+    fwrite(&max_y, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator y_max");
+        errors.add("Hough::write", "", "cannot write Hough accumulator max_y");
         return;
     }
     fwrite(&pixel_threshold, sizeof(int), 1, fp);
@@ -417,10 +399,10 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     ofs << "theta_inc" << delim << get_theta_inc() << std::endl;
     ofs << "nrhos" << delim << std::setprecision(1) << get_nrhos() << std::endl;
     ofs << "nthetas" << delim << std::setprecision(1) << get_nthetas() << std::endl;
-    ofs << "x_min" << delim << std::setprecision(1) << get_x_min() << std::endl;
-    ofs << "x_max" << delim << std::setprecision(1) << get_x_max() << std::endl;
-    ofs << "y_min" << delim << std::setprecision(1) << get_y_min() << std::endl;
-    ofs << "y_max" << delim << std::setprecision(1) << get_y_max() << std::endl;
+    ofs << "min_x" << delim << std::setprecision(1) << get_min_x() << std::endl;
+    ofs << "max_x" << delim << std::setprecision(1) << get_max_x() << std::endl;
+    ofs << "min_y" << delim << std::setprecision(1) << get_min_y() << std::endl;
+    ofs << "max_y" << delim << std::setprecision(1) << get_max_y() << std::endl;
     ofs << "pixel_threshold" << delim << pixel_threshold << std::endl;
     ofs << "unit" << delim << unit << std::endl;
     ofs << delim;
@@ -430,7 +412,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     }
     ofs << std::endl;
     int theta_inc = get_theta_inc();
-    for (int theta = 0; theta < theta_max; theta += theta_inc) {
+    for (int theta = get_min_theta(); theta < get_max_theta(); theta += theta_inc) {
         int theta_index = polar_trig->to_theta_index(theta);
         ofs << polar_trig->to_theta(theta_index) << delim;
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {

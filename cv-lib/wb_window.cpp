@@ -14,13 +14,13 @@ WB_window::WB_window(Point &point_min, Point &point_max) :
     WB_window(point_min.x, point_min.y, point_max.x, point_max.y) {}
 /**
  * @brief
- * @param m_x_min
- * @param m_y_min
- * @param m_x_max
- * @param m_y_max
+ * @param m_min_x
+ * @param m_min_y
+ * @param m_max_x
+ * @param m_max_y
  */
-WB_window::WB_window(double m_x_min, double m_y_min, double m_x_max, double m_y_max) :
-    x_min(m_x_min), y_min(m_y_min), x_max(m_x_max), y_max(m_y_max) {}
+WB_window::WB_window(double m_min_x, double m_min_y, double m_max_x, double m_max_y) :
+    min_x(m_min_x), min_y(m_min_y), max_x(m_max_x), max_y(m_max_y) {}
 /**
  * @brief
  * @param point
@@ -38,35 +38,35 @@ void WB_window::add(Point &point) {
  * @return line segment of endpoint on the window, or nullptr if none -- the latter won't occur for Hough lines
  */
 bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) {
-    // clip left: x_min
+    // clip left: min_x
     double y_left;
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_min);
-        Point left_point(x_min, y_left);
+        y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), min_x);
+        Point left_point(min_x, y_left);
         if (inside(left_point))
             add(left_point);
     }
-    // clip right: x_max
+    // clip right: max_x
     double y_right;
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), x_max);
-        Point right_point(x_max, y_right);
+        y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), max_x);
+        Point right_point(max_x, y_right);
         if (inside(right_point))
             add(right_point);
     }
-    // clip top: y_min
+    // clip top: min_y
     double x_top;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_min);
-        Point top_point(x_top, y_min);
+        x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), min_y);
+        Point top_point(x_top, min_y);
         if (inside(top_point))
             add(top_point);
     }
-    // clip bottom: y_max
+    // clip bottom: max_y
     double x_bottom;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), y_max);
-        Point bottom_point(x_bottom, y_max);
+        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), max_y);
+        Point bottom_point(x_bottom, max_y);
         if (inside(bottom_point))
             add(bottom_point);
     }
@@ -79,9 +79,9 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
 }
 
 bool WB_window::inside(Point &point) const {
-    if (point.x < x_min || point.x > x_max)
+    if (point.x < min_x || point.x > max_x)
         return false;
-    if (point.y < y_min || point.y > y_max)
+    if (point.y < min_y || point.y > max_y)
         return false;
     return true;
 }
@@ -91,6 +91,6 @@ bool WB_window::inside(Point &point) const {
  */
 std::string WB_window::to_string() const {
     std::ostringstream os;
-    os << "(" << x_min << ", " << y_min << ") - (" << x_max << ", " << y_max << ")";
+    os << "(" << min_x << ", " << min_y << ") - (" << max_x << ", " << max_y << ")";
     return os.str();
 }

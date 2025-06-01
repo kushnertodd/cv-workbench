@@ -2,7 +2,11 @@
 #define SRC__OPERATOR_HOUGH_IMAGE_CREATE_HPP_
 
 #include "operator.hpp"
+#include "polar_trig.hpp"
 #include "wb_defs.hpp"
+
+const int default_min_theta = 0;
+const int default_max_theta = theta_max;
 
 class Operator_hough_image_create : public Operator {
 public:

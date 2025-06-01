@@ -11,14 +11,14 @@
  */
 class WB_window {
     std::vector<Point> intersections;
-    double x_min;
-    double y_min;
-    double x_max;
-    double y_max;
+    double min_x;
+    double min_y;
+    double max_x;
+    double max_y;
 
 public:
     WB_window(Point &point_min, Point &point_max);
-    WB_window(double m_x_min, double m_y_min, double m_x_max, double m_y_max);
+    WB_window(double m_min_x, double m_min_y, double m_max_x, double m_max_y);
     void add(Point &point);
     bool clip_window(Polar_line &polar_line, Line_segment &line_segment);
     bool inside(Point &point) const;

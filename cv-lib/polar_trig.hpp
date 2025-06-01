@@ -39,17 +39,20 @@ const int theta_max = 180;
  */
 class Polar_trig {
     friend class Hough;
-    double x_min{};
-    double x_max{};
-    double y_min{};
-    double y_max{};
+    double min_x{};
+    double max_x{};
+    double min_y{};
+    double max_y{};
     int rho_inc{};
     int theta_inc{};
+    double max_theta{};
+    double min_theta{};
     double x_range{};
     double y_range{};
     double rho_range{};
-    double rho_max{};
-    double rho_min{};
+    double max_rho{};
+    double min_rho{};
+    double theta_range{};
     int nrhos{};
     int nthetas{};
     static const double polar_cos[theta_max];
@@ -57,15 +60,18 @@ class Polar_trig {
 
 public:
     Polar_trig();
-    Polar_trig(double m_x_min, double m_x_max, double m_y_min, double m_y_max, int m_rho_inc, int m_theta_inc);
+    Polar_trig(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
+               int m_max_theta, int m_min_theta);
+    int get_max_theta() const;
+    double get_max_x() const;
+    double get_max_y() const;
+    int get_min_theta() const;
+    double get_min_x() const;
+    double get_min_y() const;
     int get_nrhos() const;
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
-    double get_x_min() const;
-    double get_x_max() const;
-    double get_y_min() const;
-    double get_y_max() const;
     bool is_rho_index_valid(int rho_index) const;
     bool is_theta_index_valid(int theta_index) const;
     double point_theta_index_to_rho(Point &point, int theta_index);
