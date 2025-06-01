@@ -1,104 +1,105 @@
 {
-    "experiment": {
-        "run": {
-            "script-path": "script-path",
-            "run-time": "timestamp",
-            "username": "username",
-            "version": "program-version"
-        },
-        "steps": [
-            {
-                "id": 1,
-                "operator": "transform-intensity-convert",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5",
-                        "ext": "bin"
-                    }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
-                        "ext": "bin"
-                    }
-                ],
-                "parameters": {
-                    "function": "abs"
-                }
+    {
+        "experiment": {
+            "run": {
+                "script-path": "script-path",
+                "run-time": "timestamp",
+                "username": "username",
+                "version": "program-version"
             },
-            {
-                "id": 2,
-                "operator": "transform-intensity-map",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
-                        "ext": "bin"
+            "steps": [
+                {
+                    "id": 1,
+                    "operator": "transform-intensity-convert",
+                    "input-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "binary",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5",
+                            "ext": "bin"
+                        }
+                    ],
+                    "output-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "binary",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
+                            "ext": "bin"
+                        }
+                    ],
+                    "parameters": {
+                        "function": "abs"
                     }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
-                        "ext": "jpg"
+                },
+                {
+                    "id": 2,
+                    "operator": "transform-intensity-map",
+                    "input-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "binary",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
+                            "ext": "bin"
+                        }
+                    ],
+                    "output-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "jpeg",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
+                            "ext": "jpg"
+                        }
+                    ],
+                    "parameters": {
+                        "depth": "CV_8U",
+                        "standard-deviations": "2.0"
                     }
-                ],
-                "parameters": {
-                    "depth": "CV_8U",
-                    "standard-deviations": "2.0"
+                },
+                {
+                    "id": 3,
+                    "operator": "transform-intensity-map",
+                    "input-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "binary",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
+                            "ext": "bin"
+                        }
+                    ],
+                    "output-data": [
+                        {
+                            "id": 1,
+                            "type": "image",
+                            "repository": "filesystem",
+                            "format": "jpeg",
+                            "directory": ".",
+                            "filename": "image_grayscale_edge_dog_3x3_5x5_abs_threshold",
+                            "ext": "jpg"
+                        }
+                    ],
+                    "parameters": {
+                        "depth": "CV_8U",
+                        "lower-in": "13",
+                        "upper-in": "13",
+                        "lower-out": "0",
+                        "upper-out": "255"
+                    }
                 }
-            },
-            {
-                "id": 3,
-                "operator": "transform-intensity-map",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5_abs",
-                        "ext": "bin"
-                    }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge_dog_3x3_5x5_abs_threshold",
-                        "ext": "jpg"
-                    }
-                ],
-                "parameters": {
-                    "depth": "CV_8U",
-                    "lower-in": "13",
-                    "upper-in": "13",
-                    "lower-out": "0",
-                    "upper-out": "255"
-                }
-            }
-        ]
+            ]
+        }
     }
-}

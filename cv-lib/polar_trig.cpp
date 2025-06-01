@@ -63,7 +63,7 @@ Polar_trig::Polar_trig(double m_min_x, double m_min_y, double m_max_x, double m_
     max_rho = rho_range / 2.0;
     min_rho = -max_rho;
     nrhos = rho_range / rho_inc;
-    nthetas = (max_theta - min_theta) / theta_inc;
+    nthetas = (max_theta - min_theta) / theta_inc + 1;
 }
 int Polar_trig::get_max_theta() const { return max_theta; }
 double Polar_trig::get_max_x() const { return max_x; }

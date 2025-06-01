@@ -405,6 +405,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     ofs << "max_y" << delim << std::setprecision(1) << get_max_y() << std::endl;
     ofs << "pixel_threshold" << delim << pixel_threshold << std::endl;
     ofs << "unit" << delim << unit << std::endl;
+    ofs << "max" << delim << accumulator_stats.get_max_value() << std::endl;
     ofs << delim;
     for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
         double rho = polar_trig->to_rho(rho_index);

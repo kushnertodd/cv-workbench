@@ -36,8 +36,8 @@
                     "operation": "close",
                     "height": "5",
                     "width": "5",
-                    "structuring-element" : "cross",
-                    "thickness" : "3"
+                    "structuring-element": "cross",
+                    "thickness": "3"
                 }
             },
             {
