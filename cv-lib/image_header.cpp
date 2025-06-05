@@ -134,7 +134,7 @@ double Image_header::to_row(double y, int nrows) { return nrows / 2.0 - y - 0.5;
  * @return
  */
 std::string Image_header::to_string(const std::string &prefix) const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << prefix << std::setw(20) << std::left << "ncols " << get_ncols() << std::endl
        << prefix << std::setw(20) << std::left << "nrows " << get_nrows() << std::endl
        << prefix << std::setw(20) << std::left << "ncomponents " << ncomponents << std::endl

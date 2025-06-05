@@ -19,7 +19,7 @@ void Pixel::init(int m_col, int m_row) {
  * @return
  */
 std::string Pixel::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "col " << col << " row " << row;
     return os.str();
 }

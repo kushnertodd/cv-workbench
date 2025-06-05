@@ -19,7 +19,7 @@ bool error_check_type(const std::string &module, const std::string &key, json_ob
         std::cout << "error_check_type: key '" << key << "' expected type '" << json_type_to_name(expected_type)
                   << "' actual type '" << json_type_to_name(actual_type) << "'" << std::endl;
     if (expected_type != actual_type) {
-        std::ostringstream os;
+        std::ostringstream os{};
         os << module << ": invalid '" << key << "' type, expected " << json_type_to_name(expected_type) << " not "
            << json_type_to_name(actual_type) << ".";
         errors.add("error_check_type", "", os.str());
@@ -69,7 +69,7 @@ json_object *get_json_object(const std::string &module, json_object *jobj, const
  */
 bool json_parse_step_item_type_check(const std::string &item, json_type type_expected, json_type type_found,
                                      Errors &errors) {
-    std::ostringstream os;
+    std::ostringstream os{};
     if (type_expected != type_found) {
         os << "step "
            //<< i

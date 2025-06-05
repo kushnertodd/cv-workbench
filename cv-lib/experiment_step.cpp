@@ -169,7 +169,7 @@ void Experiment_step::run(Errors &errors) {
  * @return
  */
 std::string Experiment_step::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "Experiment_step::run: id " << id << " operator " << operator_name << std::endl;
     os << "Experiment_step::run: input data sources" << std::endl;
     for (Data_source_descriptor *descriptor: input_data_sources) {

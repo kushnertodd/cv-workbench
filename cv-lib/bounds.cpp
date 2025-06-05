@@ -57,7 +57,7 @@ double Bounds::map_input_to_output_bounds(double value, Bounds &input_bounds, Bo
  * @return
  */
 std::string Bounds::to_string(const std::string &prefix) const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "bounds: " << std::endl
        << prefix << "    " << std::setw(20) << std::left << "min_value " << min_value << std::endl
        << prefix << "    " << std::setw(20) << std::left << "max_value " << max_value << std::endl;

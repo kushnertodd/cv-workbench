@@ -156,7 +156,7 @@ void Image_line_segment::plot_line() {
  * @return
  */
 std::string Image_line_segment::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "pixel 1 " << pixel1.to_string() << " pixel 2 " << pixel2.to_string();
     return os.str();
 }

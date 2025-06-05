@@ -17,6 +17,16 @@
 #include "wb_defs.hpp"
 #include "wb_utils.hpp"
 
+class Hough_peak {
+public:
+    int height;
+    double rho;
+    int theta;
+    Hough_peak(int m_height, double m_rho, int m_theta);
+    static bool Hough_peak_comp(Hough_peak &x, Hough_peak &y);
+    std::string to_string() const;
+};
+
 class Hough {
     friend class Histogram;
     int pixel_threshold{};

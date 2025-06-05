@@ -55,7 +55,7 @@ void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
  * @return
  */
 std::string Line_segment::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "point1 (" << point1.to_string() << ") point2 (" << point2.to_string() << ")";
     return os.str();
 }

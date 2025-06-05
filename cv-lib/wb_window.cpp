@@ -90,7 +90,7 @@ bool WB_window::inside(Point &point) const {
  * @return
  */
 std::string WB_window::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "(" << min_x << ", " << min_y << ") - (" << max_x << ", " << max_y << ")";
     return os.str();
 }

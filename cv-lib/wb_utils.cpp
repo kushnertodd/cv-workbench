@@ -64,7 +64,7 @@ int wb_utils::double_to_int_round(double value) { return static_cast<int>(round(
  * @return
  */
 std::string wb_utils::double_to_string(double x, int width) {
-    std::ostringstream os;
+    std::ostringstream os{};
     if (width == -1) {
         os << x;
     } else {
@@ -131,7 +131,7 @@ float wb_utils::int_to_float(int value) { return static_cast<float>(value); }
  * @return int formatted in field of width (if specified)
  */
 std::string wb_utils::int_to_hex_string(unsigned long long i, int width) {
-    std::ostringstream os;
+    std::ostringstream os{};
     if (width == -1) {
         os << std::setbase(16) << i;
     } else {
@@ -146,7 +146,7 @@ std::string wb_utils::int_to_hex_string(unsigned long long i, int width) {
  * @return int formatted in field of width (if specified)
  */
 std::string wb_utils::int_to_string(int i, int width) {
-    std::ostringstream os;
+    std::ostringstream os{};
     if (width == -1) {
         os << i;
     } else {
@@ -448,7 +448,7 @@ void wb_utils::read_int_buffer(FILE *fp, int *buf, int count, const std::string 
  * @return int formatted in field of width (if specified)
  */
 std::string wb_utils::real_to_string(double i, int width) {
-    std::ostringstream os;
+    std::ostringstream os{};
     if (width == -1) {
         os << i;
     } else {

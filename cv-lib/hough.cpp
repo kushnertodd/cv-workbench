@@ -1,4 +1,5 @@
 #include "hough.hpp"
+#include <algorithm>
 #include <cstring>
 #include <iomanip>
 #include <iostream>
@@ -7,6 +8,15 @@
 #include "wb_window.hpp"
 
 extern bool debug;
+
+Hough_peak::Hough_peak(int m_height, double m_rho, int m_theta) : height(m_height), rho(m_rho), theta(m_theta) {}
+std::string Hough_peak::to_string() const {
+    std::ostringstream os{};
+    os << "height=" << height << " rho=" << rho << " theta=" << theta;
+    return os.str();
+}
+
+bool Hough_peak::Hough_peak_comp(Hough_peak &x, Hough_peak &y) { return x.height < y.height; }
 
 /**
  * @brief

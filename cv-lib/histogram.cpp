@@ -283,7 +283,7 @@ Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) { return nul
  * @return
  */
 std::string Histogram::to_string(const std::string &prefix) {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "histogram:" << std::endl
        << prefix << "    " << std::setw(20) << std::left << "nbins " << nbins << std::endl
        << prefix << "    " << std::setw(20) << std::left << "lower_value " << lower_value << std::endl
