@@ -19,11 +19,11 @@
 
 class Hough_peak {
 public:
-    int height;
+    double count_percentile;
     double rho;
     int theta;
-    Hough_peak(int m_height, double m_rho, int m_theta);
-    static bool Hough_peak_comp(Hough_peak &x, Hough_peak &y);
+    Hough_peak(double m_count_percentile, double m_rho, int m_theta);
+    static bool comp(Hough_peak &x, Hough_peak &y);
     std::string to_string() const;
 };
 
@@ -46,7 +46,8 @@ public:
     Hough(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
           int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta);
     void clear();
-    void find_peaks(std::list<Polar_line> &lines, double threshold) const;
+    void find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold, double rho_suppress,
+                    int theta_suppress) const;
     int get(int rho_index, int theta_index) const;
     int get_max_theta() const;
     double get_max_x() const;
@@ -66,6 +67,7 @@ public:
     int rho_index_theta_index_to_index(int rho_index, int theta_index) const;
     void set(int rho_index, int theta_index, int value);
     int to_rho_index(double rho) const;
+    int to_theta_index(int theta) const;
     void update(int rho_index, int theta_index, int value) const;
     void update_accumulator_stats();
     void write(const std::string &path, Errors &errors) const;

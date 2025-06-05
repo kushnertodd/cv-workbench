@@ -77,7 +77,8 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
             threshold = histogram->to_value(i);
         }
     }
-    hough->find_peaks(hough->lines, threshold);
+    // TODO: define
+    //hough->find_peaks(hough->lines, threshold);
 }
 /**
  * @brief

@@ -9,14 +9,14 @@
 
 extern bool debug;
 
-Hough_peak::Hough_peak(int m_height, double m_rho, int m_theta) : height(m_height), rho(m_rho), theta(m_theta) {}
+Hough_peak::Hough_peak(double m_count_percentile, double m_rho, int m_theta) :
+    count_percentile(m_count_percentile), rho(m_rho), theta(m_theta) {}
 std::string Hough_peak::to_string() const {
     std::ostringstream os{};
-    os << "height=" << height << " rho=" << rho << " theta=" << theta;
+    os << "count_percentile=" << count_percentile << " rho=" << rho << " theta=" << theta;
     return os.str();
 }
-
-bool Hough_peak::Hough_peak_comp(Hough_peak &x, Hough_peak &y) { return x.height < y.height; }
+bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile < y.count_percentile; }
 
 /**
  * @brief
@@ -60,16 +60,28 @@ void Hough::clear() {
  * @param lines
  * @param threshold
  */
-void Hough::find_peaks(std::list<Polar_line> &lines, double threshold) const {
+void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold, double rho_suppress,
+                       int theta_suppress) const {
+    std::vector<Hough_peak> peaks;
+    for (auto &line: lines) {
+        double rho = line.get_rho();
+        int theta = line.get_theta();
+        int count = get(to_rho_index(rho), to_theta_index(theta));
+        double count_percentile = count / accumulator_stats.get_max_value();
+        Hough_peak peak(count, rho, theta);
+        peaks.push_back(peak);
+    }
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
             int count = get(rho_index, theta_index);
-            if (count > threshold) {
-                Polar_line line(rho_index, theta_index);
-                lines.push_back(line);
+            double count_percentile = count / accumulator_stats.get_max_value();
+            if (count_percentile > threshold) {
+                Hough_peak peak(count_percentile, rho_index, theta_index);
+                peaks.push_back(peak);
             }
         }
     }
+    std::sort(peaks.begin(), peaks.end(), Hough_peak::comp);
 }
 /**
  * @brief
@@ -249,6 +261,12 @@ void Hough::set(int rho_index, int theta_index, int value) {
  * @return
  */
 int Hough::to_rho_index(double rho) const { return polar_trig->to_rho_index(rho); }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+int Hough::to_theta_index(int theta) const { return polar_trig->to_theta_index(theta); }
 /**
  * @brief
  * @param rho_index
