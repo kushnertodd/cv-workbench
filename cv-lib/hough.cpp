@@ -133,7 +133,7 @@ void Hough::initialize(Image *image, int pixel_threshold, bool unit) {
  * @brief
  * @param log_entries
  */
-void Hough::log(std::list<WB_log_entry> &log_entries) {
+void Hough::log(std::vector<WB_log_entry> &log_entries) {
     WB_log_entry log_entry_rho_inc("rho inc", wb_utils::int_to_string(get_rho_inc()));
     log_entries.push_back(log_entry_rho_inc);
     WB_log_entry log_entry_theta_inc("theta inc", wb_utils::int_to_string(get_theta_inc()));

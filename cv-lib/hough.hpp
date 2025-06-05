@@ -37,8 +37,8 @@ class Hough {
     std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;
     Variance_stats accumulator_stats;
-    std::list<Polar_line> lines;
-    std::list<Image_line_segment> image_line_segments;
+    std::vector<Polar_line> lines;
+    std::vector<Image_line_segment> image_line_segments;
 
 public:
     ~Hough();
@@ -60,7 +60,7 @@ public:
     int get_rho_inc() const;
     int get_theta_inc() const;
     void initialize(Image *image, int pixel_threshold, bool unit);
-    void log(std::list<WB_log_entry> &log_entries);
+    void log(std::vector<WB_log_entry> &log_entries);
     static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);

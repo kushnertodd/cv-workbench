@@ -17,9 +17,9 @@ Operator_transform_image_combine::~Operator_transform_image_combine() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                           std::list<Data_source_descriptor *> &output_data_stores,
-                                           String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_image_combine::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                           std::vector<Data_source_descriptor *> &output_data_stores,
+                                           String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                            Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_image_combine::run:parameters: "
@@ -76,7 +76,7 @@ void Operator_transform_image_combine::run(std::list<Data_source_descriptor *> &
         if (!errors.has_error() && input_image1_ptr != nullptr && input_image2_ptr != nullptr)
             output_image = Image::combine(input_image1_ptr, input_image2_ptr, scale1, scale2, offset, errors);
         if (!errors.has_error()) {
-            Data_source_descriptor *output_data_store = output_data_stores.front();
+            Data_source_descriptor *output_data_store = output_data_stores[0];
             output_data_store->write_operator_image(output_image, "Operator_transform_image_combine::run", errors);
         }
         delete input_image1_ptr;

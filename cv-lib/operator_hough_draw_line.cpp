@@ -1,5 +1,6 @@
 #include "operator_hough_draw_line.hpp"
 #include <iostream>
+#include <vector>
 #include "hough.hpp"
 #include "operator_utils.hpp"
 #include "wb_window.hpp"
@@ -18,9 +19,9 @@ Operator_hough_draw_line::~Operator_hough_draw_line() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                   std::list<Data_source_descriptor *> &output_data_stores,
-                                   String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                   std::vector<Data_source_descriptor *> &output_data_stores,
+                                   String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                    Errors &errors) {
     if (debug)
         std::cout << "Operator_hough_draw_line::run parameters: "
@@ -33,10 +34,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     Data_source_descriptor *input_image_source = nullptr;
     Data_source_descriptor *output_image_store = nullptr;
     if (!errors.has_error()) {
-        input_data_source = input_data_sources.front();
-        input_data_sources.pop_front();
-        input_image_source = input_data_sources.front();
-        output_image_store = output_data_stores.front();
+        input_data_source = input_data_sources[0];
+        input_image_source = input_data_sources[1];
+        output_image_store = output_data_stores[0];
     }
     double pixel_value = 255.0;
     int out_component = 1;

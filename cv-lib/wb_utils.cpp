@@ -492,7 +492,7 @@ bool wb_utils::string_find(const std::string &text, std::string &prefix, std::st
  * @param
  * @return
  */
-bool wb_utils::string_in_list(const std::string find_string, const std::list<std::string> string_list) {
+bool wb_utils::string_in_list(const std::string find_string, const std::vector<std::string> string_list) {
     return std::find(string_list.begin(), string_list.end(), find_string) != string_list.end();
 }
 /**

@@ -3,6 +3,7 @@
 
 #include <json-c/json.h>
 #include <string>
+#include <vector>
 #include "data.hpp"
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"

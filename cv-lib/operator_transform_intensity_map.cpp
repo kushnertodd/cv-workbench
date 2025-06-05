@@ -35,9 +35,9 @@ Operator_transform_intensity_map::~Operator_transform_intensity_map() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                           std::list<Data_source_descriptor *> &output_data_stores,
-                                           String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_intensity_map::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                           std::vector<Data_source_descriptor *> &output_data_stores,
+                                           String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                            Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_intensity_map::run:parameters: "
@@ -94,7 +94,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
                                            upper_out, errors);
     }
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_transform_intensity_map::run", errors));
         if (!errors.has_error())
@@ -119,7 +119,7 @@ void Operator_transform_intensity_map::run(std::list<Data_source_descriptor *> &
                 if (!saw_upper_in)
                     upper_in = stats.get_max_value();
             }
-            Data_source_descriptor *output_data_store = output_data_stores.front();
+            Data_source_descriptor *output_data_store = output_data_stores[0];
             if (output_data_store->data_format == WB_data_format::Data_format::JPEG) {
                 std::unique_ptr<Image> output_image(Image::scale_image(input_image.get(), lower_in, upper_in, lower_out,
                                                                        upper_out, Image_depth::CV_8U));

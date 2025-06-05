@@ -17,9 +17,9 @@ Operator_hough_image_create::~Operator_hough_image_create() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                      std::list<Data_source_descriptor *> &output_data_stores,
-                                      String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                      std::vector<Data_source_descriptor *> &output_data_stores,
+                                      String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                       Errors &errors) {
     if (debug) {
         std::cout << "Operator_hough_image_create::run parameters: "
@@ -55,7 +55,7 @@ void Operator_hough_image_create::run(std::list<Data_source_descriptor *> &input
     if (have_accumulate && !wb_utils::string_in_list(accumulate_str, {"unit", "value"}))
         errors.add("Operator_hough_image_create::run", "", "orientation not unit or value");
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_hough_image_create::run", errors));
         if (!errors.has_error())

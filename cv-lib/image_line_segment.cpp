@@ -59,7 +59,7 @@ void Image_line_segment::init(const Pixel &m_pixel1, const Pixel &m_pixel2) {
  * @brief
  * @param log_entries
  */
-void Image_line_segment::log(std::list<WB_log_entry> &log_entries) const {
+void Image_line_segment::log(std::vector<WB_log_entry> &log_entries) const {
     WB_log_entry log_entry_start_row("start row", wb_utils::int_to_string(pixel1.row));
     log_entries.push_back(log_entry_start_row);
     WB_log_entry log_entry_start_col("start col", wb_utils::int_to_string(pixel1.col));

@@ -48,7 +48,7 @@ public:
                           bool saw_upper_value);
     void initialize_image(Image *image, double lower_value, bool saw_lower_value, double upper_value,
                           bool saw_upper_value);
-    void log(std::list<WB_log_entry> &log_entries);
+    void log(std::vector<WB_log_entry> &log_entries);
     static Histogram *read(std::string &path, Errors &errors);
     static Histogram *read(FILE *fp, Errors &errors);
     static Histogram *read_text(const std::string &path, Errors &errors);

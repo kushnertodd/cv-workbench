@@ -553,7 +553,7 @@ void Image::draw_line_segment(int col1, int row1, int col2, int row2, double val
  * @param value
  * @param component
  */
-void Image::draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
+void Image::draw_line_segments(const std::vector<Image_line_segment> &image_line_segments, double value,
                                int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -847,7 +847,7 @@ bool Image::is_pixel_valid(int col, int row) const {
  * @brief
  * @param log_entries
  */
-void Image::log(std::list<WB_log_entry> &log_entries) const {
+void Image::log(std::vector<WB_log_entry> &log_entries) const {
     Variance_stats stats;
     get_stats(stats);
     WB_log_entry log_entry_ncols("ncols", wb_utils::int_to_string(get_ncols()));

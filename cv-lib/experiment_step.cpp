@@ -1,6 +1,7 @@
 #include "experiment_step.hpp"
 #include <iostream>
 #include <memory>
+#include <vector>
 #include <sstream>
 #include "data_source_descriptor.hpp"
 #include "operator.hpp"
@@ -116,7 +117,7 @@ Experiment_step *Experiment_step::from_json(json_object *json_experiment_step, E
  * @param log_entries
  * @param errors
  */
-void Experiment_step::log_experiment_step(const std::list<WB_log_entry> &log_entries, Errors &errors) const {
+void Experiment_step::log_experiment_step(const std::vector<WB_log_entry> &log_entries, Errors &errors) const {
     if (errors.has_error()) {
         json_object *json_error_list = json_object_new_array();
         for (const std::string &error: errors.error_list) {
@@ -158,7 +159,7 @@ void Experiment_step::run(Errors &errors) {
                           << std::endl;
             }
         }
-        std::list<WB_log_entry> log_entries;
+        std::vector<WB_log_entry> log_entries;
         step_operator->run(input_data_sources, output_data_stores, operator_parameters, log_entries, errors);
         log_experiment_step(log_entries, errors);
         delete step_operator;
