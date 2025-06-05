@@ -17,7 +17,37 @@ std::string Hough_peak::to_string() const {
     return os.str();
 }
 bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile < y.count_percentile; }
-
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
+void Hough_peak::write(FILE *fp, Errors &errors) const {
+    fwrite(&count_percentile, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough_peak::write", "", "cannot write Hough peak count_percentile");
+        return;
+    }
+    fwrite(&rho, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough_peak::write", "", "cannot write Hough peak rho");
+        return;
+    }
+    fwrite(&theta, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough_peak::write", "", "cannot write Hough peak theta");
+        return;
+    }
+}
+/**
+ * @brief
+ * @param ofs
+ * @param delim
+ * @param errors
+ */
+void Hough_peak::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+    ofs << rho << delim << theta << delim << count_percentile << std::endl;
+}
 /**
  * @brief
  */
@@ -63,14 +93,6 @@ void Hough::clear() {
 void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold, double rho_suppress,
                        int theta_suppress) const {
     std::vector<Hough_peak> peaks;
-    for (auto &line: lines) {
-        double rho = line.get_rho();
-        int theta = line.get_theta();
-        int count = get(to_rho_index(rho), to_theta_index(theta));
-        double count_percentile = count / accumulator_stats.get_max_value();
-        Hough_peak peak(count, rho, theta);
-        peaks.push_back(peak);
-    }
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
             int count = get(rho_index, theta_index);
@@ -82,6 +104,14 @@ void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold
         }
     }
     std::sort(peaks.begin(), peaks.end(), Hough_peak::comp);
+    for (auto &peak: peaks) {
+        for (auto &filtered_peak: filtered_peaks) {
+            if (abs(peak.rho - filtered_peak.rho) < rho_suppress ||
+                abs(peak.theta - filtered_peak.theta) < theta_suppress)
+                continue;
+            filtered_peaks.push_back(peak);
+        }
+    }
 }
 /**
  * @brief
@@ -365,7 +395,7 @@ void Hough::write(FILE *fp, Errors &errors) const {
  * @param errors
  */
 void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
-    size_t npeaks = lines.size();
+    size_t npeaks = peaks.size();
     fwrite(&npeaks, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Hough::write_peak_lines", "", "cannot write Hough peak line count");
@@ -383,8 +413,8 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
         errors.add("Hough::write_peak_lines", "", "cannot write Hough nrhos ");
         return;
     }
-    for (Polar_line line: lines) {
-        line.write(fp, errors);
+    for (auto peak: peaks) {
+        peak.write(fp, errors);
         if (errors.has_error())
             break;
     }
@@ -396,8 +426,8 @@ void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
  * @param errors
  */
 void Hough::write_peak_lines_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    for (Polar_line line: lines) {
-        line.write_text(ofs, delim, errors);
+    for (auto &peak: peaks) {
+        peak.write_text(ofs, delim, errors);
         if (errors.has_error())
             break;
     }

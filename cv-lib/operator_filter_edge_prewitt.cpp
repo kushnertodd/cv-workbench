@@ -37,7 +37,7 @@ void Operator_filter_edge_prewitt::run(std::vector<Data_source_descriptor *> &in
     if (!have_orientation && orientation_str != "0" && orientation_str != "90")
         errors.add("Operator_filter_edge_prewitt::run", "", "orientation not 0 or 90");
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors));
         if (!errors.has_error())

@@ -42,7 +42,7 @@ void Operator_filter_edge_kirsch::run(std::vector<Data_source_descriptor *> &inp
     if (have_orientation && !wb_utils::string_in_list(orientation_str, {"E", "N", "NE", "NW", "S", "SE", "SW", "W"}))
         errors.add("Operator_filter_edge_kirsch::run", "", "orientation not E, N, NE, NW, S, SE, SW, or W");
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_filter_edge_kirsch::run", errors));
         if (!errors.has_error())

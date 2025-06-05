@@ -25,6 +25,8 @@ public:
     Hough_peak(double m_count_percentile, double m_rho, int m_theta);
     static bool comp(Hough_peak &x, Hough_peak &y);
     std::string to_string() const;
+    void write(FILE *fp, Errors &errors) const;
+    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
 };
 
 class Hough {
@@ -37,10 +39,11 @@ class Hough {
     std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;
     Variance_stats accumulator_stats;
-    std::vector<Polar_line> lines;
     std::vector<Image_line_segment> image_line_segments;
 
 public:
+    // TODO: make private
+    std::vector<Hough_peak> peaks;
     ~Hough();
     Hough();
     Hough(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
