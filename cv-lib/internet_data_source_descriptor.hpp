@@ -8,12 +8,8 @@
 #include "errors.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
-#include "image.hpp"
-#include "image_depth.hpp"
 #include "wb_data_format.hpp"
 #include "wb_data_type.hpp"
-#include "wb_defs.hpp"
-#include "wb_repository_types.hpp"
 /**
  * @brief
  */

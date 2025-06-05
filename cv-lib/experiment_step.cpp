@@ -6,7 +6,6 @@
 #include "data_source_descriptor.hpp"
 #include "operator.hpp"
 #include "operator_dispatcher.hpp"
-#include "wb_data_type.hpp"
 #include "wb_json_utils.hpp"
 
 extern bool debug;

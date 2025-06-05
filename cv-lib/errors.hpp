@@ -1,7 +1,6 @@
 #ifndef CV_WORKBENCH_SRC_ERRORS_HPP_
 #define CV_WORKBENCH_SRC_ERRORS_HPP_
 
-#include <list>
 #include <string>
 #include <vector>
 

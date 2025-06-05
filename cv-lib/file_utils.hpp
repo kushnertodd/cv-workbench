@@ -1,7 +1,6 @@
 #ifndef CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_
 #define CV_WORKBENCH_CONFIG_FILE_UTILS_HPP_
 
-#include <vector>
 #include "errors.hpp"
 
 namespace file_utils {

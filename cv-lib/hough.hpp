@@ -8,26 +8,12 @@
 #include "bounds.hpp"
 #include "errors.hpp"
 #include "file_utils.hpp"
+#include "hough_peak.hpp"
 #include "image.hpp"
 #include "image_line_segment.hpp"
-#include "pixel.hpp"
-#include "polar_line.hpp"
 #include "polar_trig.hpp"
 #include "variance_stats.hpp"
-#include "wb_defs.hpp"
 #include "wb_utils.hpp"
-
-class Hough_peak {
-public:
-    double count_percentile;
-    double rho;
-    int theta;
-    Hough_peak(double m_count_percentile, double m_rho, int m_theta);
-    static bool comp(Hough_peak &x, Hough_peak &y);
-    std::string to_string() const;
-    void write(FILE *fp, Errors &errors) const;
-    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
-};
 
 class Hough {
     friend class Histogram;

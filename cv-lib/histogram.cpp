@@ -4,7 +4,6 @@
 #include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
-#include "polar_trig.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;

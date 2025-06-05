@@ -6,9 +6,6 @@
 #include <string>
 #include "data_source_descriptor.hpp"
 #include "errors.hpp"
-#include "histogram.hpp"
-#include "hough.hpp"
-#include "image.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
 

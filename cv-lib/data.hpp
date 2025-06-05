@@ -1,14 +1,11 @@
 #ifndef CV_WORKBENCH_SRC_DATA_HPP_
 #define CV_WORKBENCH_SRC_DATA_HPP_
 
-#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
 #include "errors.hpp"
 #include "wb_data_format.hpp"
-#include "wb_defs.hpp"
-#include "wb_log.hpp"
 
 class Data {
 

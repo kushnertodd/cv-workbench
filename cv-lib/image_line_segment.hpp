@@ -1,7 +1,6 @@
 #ifndef SRC__IMAGE_LINE_SEGMENT_HPP_
 #define SRC__IMAGE_LINE_SEGMENT_HPP_
 
-#include <list>
 #include "pixel.hpp"
 #include "wb_log.hpp"
 

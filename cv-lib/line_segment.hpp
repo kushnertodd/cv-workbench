@@ -1,7 +1,6 @@
 #ifndef SRC__LINE_SEGMENT_HPP_
 #define SRC__LINE_SEGMENT_HPP_
 
-#include <list>
 #include <vector>
 #include "point.hpp"
 #include "wb_log.hpp"

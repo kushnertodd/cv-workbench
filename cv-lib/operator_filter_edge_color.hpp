@@ -1,7 +1,6 @@
 #ifndef CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_COLOR_HPP_
 #define CV_WORKBENCH_SRC_OPERATOR_FILTER_EDGE_COLOR_HPP_
 
-#include "image_depth.hpp"
 #include "operator.hpp"
 #include "wb_defs.hpp"
 
