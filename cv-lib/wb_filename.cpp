@@ -131,12 +131,12 @@ std::string Wb_filename::to_log() const { return root + ".log"; }
  * @brief
  * @return
  */
-std::string Wb_filename::to_peaks() const { return root + ".peaks.bin"; }
+std::string Wb_filename::to_peaks() const { return root + ".bin"; }
 /**
  * @brief
  * @return
  */
-std::string Wb_filename::to_peaks_text() const { return root + ".peaks.txt"; }
+std::string Wb_filename::to_peaks_text() const { return root + ".txt"; }
 /**
  * @brief
  * @return

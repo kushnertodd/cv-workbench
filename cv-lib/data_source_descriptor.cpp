@@ -179,6 +179,14 @@ void Data_source_descriptor::write_operator_hough(Hough *output, const std::stri
     else
         errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }
+void Data_source_descriptor::write_operator_hough_peaks(Hough *output, const std::string &module, Errors &errors) {
+    if (data_format == WB_data_format::Data_format::BINARY)
+        write_hough_peaks(output, errors);
+    else if (data_format == WB_data_format::Data_format::TEXT)
+        write_hough_peaks_text(output, errors);
+    else
+        errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
+}
 /**
  * @brief
  * @param output
