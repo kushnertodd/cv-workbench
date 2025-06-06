@@ -45,8 +45,8 @@ class Polar_trig {
     double max_y{};
     int rho_inc{};
     int theta_inc{};
-    double max_theta{};
-    double min_theta{};
+    int max_theta{};
+    int min_theta{};
     double x_range{};
     double y_range{};
     double rho_range{};

@@ -57,21 +57,25 @@ void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
             int count = get(rho_index, theta_index);
-            double count_percentile = count / accumulator_stats.get_max_value();
+            double count_percentile = (100.0 * count) / accumulator_stats.get_max_value();
             if (count_percentile > threshold) {
-                Hough_peak peak(count_percentile, rho_index, theta_index);
+                Hough_peak peak(count_percentile, polar_trig->to_rho(rho_index), polar_trig->to_theta(theta_index));
                 peaks.push_back(peak);
             }
         }
     }
     std::sort(peaks.begin(), peaks.end(), Hough_peak::comp);
     for (auto &peak: peaks) {
+        bool reject = false;
         for (auto &filtered_peak: filtered_peaks) {
-            if (abs(peak.rho - filtered_peak.rho) < rho_suppress ||
-                abs(peak.theta - filtered_peak.theta) < theta_suppress)
-                continue;
-            filtered_peaks.push_back(peak);
+            if (abs(peak.rho - filtered_peak.rho) < rho_suppress &&
+                abs(peak.theta - filtered_peak.theta) < theta_suppress) {
+                reject = true;
+                break;
+            }
         }
+        if (!reject)
+            filtered_peaks.push_back(peak);
     }
 }
 /**
@@ -189,10 +193,16 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
     int int_unit;
     if (!errors.has_error())
         wb_utils::read_int(fp, int_unit, "Hough::read", "", "missing hough unit", errors);
+    int min_theta;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, min_theta, "Hough::read", "", "missing hough min_theta", errors);
+    int max_theta;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, max_theta, "Hough::read", "", "missing hough max_theta", errors);
     Hough *hough = nullptr;
     if (!errors.has_error()) {
-        hough = new Hough(min_x, max_x, min_y, max_y, rho_inc, theta_inc, pixel_threshold, (int_unit == 1),
-                          hough->get_min_theta(), hough->get_max_theta());
+        hough = new Hough(min_x, max_x, min_y, max_y, rho_inc, theta_inc, pixel_threshold, (int_unit == 1), min_theta,
+                          max_theta);
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
         if (!errors.has_error())
@@ -341,6 +351,18 @@ void Hough::write(FILE *fp, Errors &errors) const {
     fwrite(&int_unit, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Hough::write", "", "cannot write Hough accumulator unit");
+        return;
+    }
+    int min_theta = get_min_theta();
+    fwrite(&min_theta, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator min_theta");
+        return;
+    }
+    int max_theta = get_max_theta();
+    fwrite(&max_theta, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Hough::write", "", "cannot write Hough accumulator max_theta");
         return;
     }
     size_t newLen;

@@ -1,8 +1,8 @@
-#include "hough.hpp"
 #include <cstring>
 #include <iomanip>
 #include <iostream>
 #include "errors.hpp"
+#include "hough.hpp"
 
 extern bool debug;
 
@@ -13,7 +13,7 @@ std::string Hough_peak::to_string() const {
     os << "count_percentile=" << count_percentile << " rho=" << rho << " theta=" << theta;
     return os.str();
 }
-bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile < y.count_percentile; }
+bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile > y.count_percentile; }
 /**
  * @brief
  * @param fp
@@ -43,5 +43,5 @@ void Hough_peak::write(FILE *fp, Errors &errors) const {
  * @param errors
  */
 void Hough_peak::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << rho << delim << theta << delim << count_percentile << std::endl;
+    ofs << std::fixed << std::setprecision(1) << rho << delim << theta << delim << count_percentile << std::endl;
 }

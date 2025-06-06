@@ -65,8 +65,8 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                 double max_x = input_image->to_x(ncols - 1);
                 double min_y = input_image->to_y(nrows - 1);
                 for (std::string line: input_data->lines) {
-                    std::vector<std::string> params = wb_utils::tokenize(line, " ");
-                    if (params.size() != 2)
+                    std::vector<std::string> params = wb_utils::tokenize(line, "\t");
+                    if (params.size() < 2)
                         errors.add("Operator_hough_draw_line::run", "", "invalid draw command: '" + line + "'");
                     double rho{};
                     int theta{};
