@@ -1,10 +1,8 @@
 #ifndef CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 #define CV_WORKBENCH_SRC_IMAGE_HEADER_HPP_
 
-#include <cstdio>
 #include "errors.hpp"
 #include "image_depth.hpp"
-#include "image_line_segment.hpp"
 #include "line_segment.hpp"
 #include "pixel.hpp"
 #include "point.hpp"

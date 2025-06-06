@@ -65,7 +65,7 @@ void Berkeley_db_data_source_descriptor::write_json(std::string &json, Errors &e
  * @return
  */
 std::string Berkeley_db_data_source_descriptor::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << Data_source_descriptor::to_string() << " ref id " << ref_id;
     return os.str();
 }

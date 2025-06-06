@@ -68,7 +68,7 @@ public:
     Image *copy(int min_col, int min_row, int max_col, int max_row, Errors &errors) const;
     void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;
     void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
-    void draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
+    void draw_line_segments(const std::vector<Image_line_segment> &image_line_segments, double value,
                             int component = 0) const;
     void draw_rectangle(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     void draw_rectangle_filled(int col1, int row1, int col2, int row2, double value, int component = 0) const;
@@ -95,7 +95,7 @@ public:
     bool is_color() const;
     bool is_grayscale() const;
     bool is_pixel_valid(int col, int row) const;
-    void log(std::list<WB_log_entry> &log_entries) const;
+    void log(std::vector<WB_log_entry> &log_entries) const;
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);

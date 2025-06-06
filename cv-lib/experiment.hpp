@@ -2,18 +2,15 @@
 #define CV_WORKBENCH_SRC_EXPERIMENT_HPP_
 
 #include <json-c/json.h>
-#include <list>
 #include <string>
+#include <vector>
 #include "errors.hpp"
 #include "experiment_step.hpp"
 #include "histogram.hpp"
-#include "hough.hpp"
-#include "image.hpp"
-#include "wb_defs.hpp"
 #include "wb_json_utils.hpp"
 
 class Experiment {
-    std::list<Experiment_step *> experiment_steps;
+    std::vector<Experiment_step *> experiment_steps;
     std::string path{};
 
 public:

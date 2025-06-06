@@ -96,7 +96,7 @@ std::string Internet_data_source_descriptor::read_json(Errors &errors) { return 
  * @return
  */
 std::string Internet_data_source_descriptor::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << Data_source_descriptor::to_string() << " url " << url << " depth " << depth << " ncols " << ncols << " nrows "
        << nrows;
     return os.str();

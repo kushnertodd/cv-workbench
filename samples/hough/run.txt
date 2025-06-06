@@ -6,4 +6,5 @@ image_grayscale_edge.json
 image_grayscale_edge_sqr.json
 image_grayscale_edge_sqr_threshold.json
 image_grayscale_edge_sqr_threshold_hough.json
+image_grayscale_edge_sqr_threshold_hough_peak_lines.json
 image_grayscale_edge_sqr_threshold_hough_draw_line.json

@@ -41,7 +41,7 @@ bool Errors::has_error() const { return error_ct != 0; }
  * @return
  */
 std::string Errors::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     for (const std::string &error: error_list) {
         os << error << std::endl;
     }

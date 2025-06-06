@@ -8,8 +8,6 @@
 #include "errors.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
-#include "image.hpp"
-#include "wb_defs.hpp"
 
 class Filesystem_data_source_descriptor : public Data_source_descriptor {
     std::string directory{};

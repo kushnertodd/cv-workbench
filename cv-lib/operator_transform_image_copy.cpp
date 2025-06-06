@@ -13,9 +13,9 @@ Operator_transform_image_copy::~Operator_transform_image_copy() = default;
  * @param log_entries
  * @param errors
  */
-void Operator_transform_image_copy::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                        std::list<Data_source_descriptor *> &output_data_stores,
-                                        String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_image_copy::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                        std::vector<Data_source_descriptor *> &output_data_stores,
+                                        String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                         Errors &errors) {
     if (input_data_sources.size() != 1)
         errors.add("Operator_transform_image_copy::run", "", "one input data source required");
@@ -50,7 +50,7 @@ void Operator_transform_image_copy::run(std::list<Data_source_descriptor *> &inp
                                           errors);
     }
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_transform_image_copy::run", errors));
         if (!errors.has_error())

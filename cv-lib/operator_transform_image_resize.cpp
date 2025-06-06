@@ -19,9 +19,9 @@ Operator_transform_image_resize::~Operator_transform_image_resize() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                          std::list<Data_source_descriptor *> &output_data_stores,
-                                          String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_image_resize::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                          std::vector<Data_source_descriptor *> &output_data_stores,
+                                          String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                           Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_image_resize::run:parameters: "
@@ -64,7 +64,7 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
             errors.add("Operator_transform_image_resize::run", "", "invalid 'resize-type' parameter");
     }
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_transform_image_resize::run", errors));
         if (!errors.has_error())
@@ -72,7 +72,7 @@ void Operator_transform_image_resize::run(std::list<Data_source_descriptor *> &i
         if (!errors.has_error()) {
             std::unique_ptr<Image> output_image(
                     Image::resize(input_image.get(), area_ncols, area_nrows, WB_resize_types::Resize_type::MAX));
-            output_data_stores.front()->write_image(output_image.get(), errors);
+            output_data_stores[0]->write_image(output_image.get(), errors);
         }
     }
 }

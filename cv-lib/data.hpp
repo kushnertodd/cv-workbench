@@ -3,16 +3,15 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 #include "errors.hpp"
 #include "wb_data_format.hpp"
-#include "wb_defs.hpp"
-#include "wb_log.hpp"
 
 class Data {
 
 public:
     WB_data_format::Data_format format;
-    std::list<std::string> lines;
+    std::vector<std::string> lines;
     std::unique_ptr<char *> binary_data;
     int length{};
     virtual ~Data();

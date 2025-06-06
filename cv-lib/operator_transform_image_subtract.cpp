@@ -17,9 +17,9 @@ Operator_transform_image_subtract::~Operator_transform_image_subtract() = defaul
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_image_subtract::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                            std::list<Data_source_descriptor *> &output_data_stores,
-                                            String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_image_subtract::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                            std::vector<Data_source_descriptor *> &output_data_stores,
+                                            String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                             Errors &errors) {
     if (debug) {
         std::cout << "Operator_transform_image_subtract::run:parameters: "
@@ -57,7 +57,7 @@ void Operator_transform_image_subtract::run(std::list<Data_source_descriptor *> 
         if (!errors.has_error()) {
             std::unique_ptr<Image> output_image(Image::subtract(input_image1_ptr, input_image2_ptr, errors));
             if (!errors.has_error()) {
-                Data_source_descriptor *output_data_store = output_data_stores.front();
+                Data_source_descriptor *output_data_store = output_data_stores[0];
                 output_data_store->write_operator_image(output_image.get(), "Operator_transform_image_subtract::run",
                                                         errors);
                 if (!errors.has_error())

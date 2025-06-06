@@ -23,9 +23,9 @@ Operator_filter_edge_prewitt::~Operator_filter_edge_prewitt() = default;
  * @param operator_parameters parameters
  * @param errors any run errors
  */
-void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                       std::list<Data_source_descriptor *> &output_data_stores,
-                                       String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_filter_edge_prewitt::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                       std::vector<Data_source_descriptor *> &output_data_stores,
+                                       String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                        Errors &errors) {
     if (input_data_sources.size() != 1)
         errors.add("Operator_filter_edge_prewitt::run", "", "one input data source required");
@@ -37,7 +37,7 @@ void Operator_filter_edge_prewitt::run(std::list<Data_source_descriptor *> &inpu
     if (!have_orientation && orientation_str != "0" && orientation_str != "90")
         errors.add("Operator_filter_edge_prewitt::run", "", "orientation not 0 or 90");
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
                 input_data_source->read_operator_image("Operator_filter_edge_prewitt::run", errors));
         if (!errors.has_error())

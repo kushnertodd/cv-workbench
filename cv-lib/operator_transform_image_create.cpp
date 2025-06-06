@@ -17,9 +17,9 @@ Operator_transform_image_create::~Operator_transform_image_create() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                          std::list<Data_source_descriptor *> &output_data_stores,
-                                          String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_transform_image_create::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                          std::vector<Data_source_descriptor *> &output_data_stores,
+                                          String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                           Errors &errors) {
     if (input_data_sources.size() != 1)
         errors.add("Operator_transform_image_create::run", "", "one input data source required");
@@ -51,7 +51,7 @@ void Operator_transform_image_create::run(std::list<Data_source_descriptor *> &i
         errors.add("Operator_transform_image_create::run", "", "missing ncols parameter");
     if (!saw_nrows)
         errors.add("Operator_transform_image_create::run", "", "missing nrows parameter");
-    Data_source_descriptor *input_data_source = input_data_sources.front();
+    Data_source_descriptor *input_data_source = input_data_sources[0];
     if (!errors.has_error()) {
         std::unique_ptr<Data> input_data(
                 input_data_source->read_operator_data("Operator_transform_image_create::run", errors));

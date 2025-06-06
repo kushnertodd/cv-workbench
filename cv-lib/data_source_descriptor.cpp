@@ -85,7 +85,7 @@ Data_source_descriptor *Data_source_descriptor::from_json(json_object *json_data
  * @return
  */
 std::string Data_source_descriptor::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "id " << id << "' data format '" << WB_data_type::to_string(data_type) << "' data type '"
        << WB_data_type::to_string(data_type) << " repository '" << WB_repository_types::to_string(repository_type)
        << "'";
@@ -176,6 +176,14 @@ void Data_source_descriptor::write_operator_hough(Hough *output, const std::stri
         write_hough(output, errors);
     else if (data_format == WB_data_format::Data_format::TEXT)
         write_hough_text(output, errors);
+    else
+        errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
+}
+void Data_source_descriptor::write_operator_hough_peaks(Hough *output, const std::string &module, Errors &errors) {
+    if (data_format == WB_data_format::Data_format::BINARY)
+        write_hough_peaks(output, errors);
+    else if (data_format == WB_data_format::Data_format::TEXT)
+        write_hough_peaks_text(output, errors);
     else
         errors.add(module, "", "invalid output data format " + WB_data_format::to_string(data_format));
 }

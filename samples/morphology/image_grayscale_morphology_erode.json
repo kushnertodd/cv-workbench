@@ -36,8 +36,8 @@
                     "operation": "erode",
                     "height": "3",
                     "width": "3",
-                    "structuring-element" : "cross",
-                    "thickness" : "3"
+                    "structuring-element": "cross",
+                    "thickness": "3"
                 }
             },
             {

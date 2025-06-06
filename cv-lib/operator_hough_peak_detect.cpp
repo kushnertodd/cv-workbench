@@ -16,9 +16,9 @@ Operator_hough_peak_detect::~Operator_hough_peak_detect() = default;
  * @param log_entries
  * @param errors
  */
-void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                     std::list<Data_source_descriptor *> &output_data_stores,
-                                     String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_hough_peak_detect::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                     std::vector<Data_source_descriptor *> &output_data_stores,
+                                     String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                      Errors &errors) {
     if (debug) {
         std::cout << "Operator_hough_peak_detect::run parameters: "
@@ -29,27 +29,26 @@ void Operator_hough_peak_detect::run(std::list<Data_source_descriptor *> &input_
     else if (output_data_stores.empty())
         errors.add("Operator_hough_peak_detect::run", "", "output data source required");
 
-    int npeaks = 0;
-    Operator_utils::get_int_parameter("Operator_hough_peak_detect::run", operator_parameters, "npeaks", npeaks, errors);
+    double threshold = 0.0;
+    Operator_utils::get_real_parameter("Operator_hough_peak_detect::run", operator_parameters, "threshold", threshold,
+                                       errors);
+    double rho_suppress = 0.0;
+    Operator_utils::get_real_parameter("Operator_hough_peak_detect::run", operator_parameters, "rho_suppress",
+                                       rho_suppress, errors);
+    int theta_suppress = 0;
+    Operator_utils::get_int_parameter("Operator_hough_peak_detect::run", operator_parameters, "theta_suppress",
+                                      theta_suppress, errors);
     if (!errors.has_error()) {
-        Data_source_descriptor *input_data_source = input_data_sources.front();
+        Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Hough> hough(input_data_source->read_operator_hough("Operator_hough_peak_detect::run", errors));
         if (!errors.has_error()) {
-            Histogram::find_hough_peaks(hough.get(), npeaks);
+            hough->find_peaks(hough->peaks, threshold, rho_suppress, theta_suppress);
             if (!errors.has_error())
-                for (Data_source_descriptor *hough_output_data_store: output_data_stores) {
-                    if (hough_output_data_store->data_format == WB_data_format::Data_format::BINARY) {
-                        hough_output_data_store->write_hough_peaks(hough.get(), errors);
-                    } else if (hough_output_data_store->data_format == WB_data_format::Data_format::TEXT) {
-                        hough_output_data_store->write_hough_peaks_text(hough.get(), errors);
-                    } else {
-                        errors.add("Operator_hough_peak_detect::run", "",
-                                   "invalid data format " +
-                                           WB_data_format::to_string(hough_output_data_store->data_format));
-                    }
-                    if (errors.has_error())
-                        break;
-                }
+                for (Data_source_descriptor *hough_output_data_store: output_data_stores)
+                    hough_output_data_store->write_operator_hough_peaks(hough.get(), "Operator_hough_peak_detect::run",
+                                                                  errors);
+            if (!errors.has_error())
+                hough->log(log_entries);
         }
     }
 }

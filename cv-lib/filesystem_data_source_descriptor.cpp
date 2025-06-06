@@ -165,7 +165,7 @@ std::string Filesystem_data_source_descriptor::to_path_noext() const {
  * @return
  */
 std::string Filesystem_data_source_descriptor::to_string() {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << Data_source_descriptor::to_string() << " file format '" << WB_data_format::to_string(data_format)
        << "' directory '" << directory << "' filename '" << filename << "' ext '" << ext << "'";
     return os.str();

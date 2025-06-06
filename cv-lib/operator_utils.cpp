@@ -94,7 +94,7 @@ bool Operator_utils::has_parameter(String_map &parameters, const std::string &pa
  * @return
  */
 std::string Operator_utils::parameters_to_string(String_map &parameters) {
-    std::ostringstream os;
+    std::ostringstream os{};
     String_map::iterator it;
     for (it = parameters.begin(); it != parameters.end(); it++) {
         os << it->first // string (key)

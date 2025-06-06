@@ -332,7 +332,7 @@ Image *Image::combine(Image *input1, Image *input2, double scale1, double scale2
     nrows1 = input1->get_nrows();
     nrows2 = input2->get_nrows();
     if (ncols1 != ncols2 || nrows1 != nrows2) {
-        std::ostringstream os;
+        std::ostringstream os{};
         os << "input1 size (" << ncols1 << ", " << nrows1 << ") not the same as input2 size (" << ncols2 << ", "
            << nrows2 << ")";
         errors.add("Operator_transform_image_combine::run", "", os.str());
@@ -553,7 +553,7 @@ void Image::draw_line_segment(int col1, int row1, int col2, int row2, double val
  * @param value
  * @param component
  */
-void Image::draw_line_segments(const std::list<Image_line_segment> &image_line_segments, double value,
+void Image::draw_line_segments(const std::vector<Image_line_segment> &image_line_segments, double value,
                                int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
@@ -847,7 +847,7 @@ bool Image::is_pixel_valid(int col, int row) const {
  * @brief
  * @param log_entries
  */
-void Image::log(std::list<WB_log_entry> &log_entries) const {
+void Image::log(std::vector<WB_log_entry> &log_entries) const {
     Variance_stats stats;
     get_stats(stats);
     WB_log_entry log_entry_ncols("ncols", wb_utils::int_to_string(get_ncols()));
@@ -1037,7 +1037,7 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
             ncols = values.size();
             lines.push_back(values);
         } else if (values.size() != ncols) {
-            std::ostringstream os;
+            std::ostringstream os{};
             os << "invalid image file: initial column length " << ncols << " nrow " << nrows << " column length "
                << values.size();
             errors.add("Image::read_text", "", os.str());
@@ -1358,7 +1358,7 @@ void Image::to_point(Point &point, Pixel &pixel) { image_header.to_point(point, 
  * @return
  */
 std::string Image::to_string(const std::string &prefix) const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << prefix << image_header.to_string(prefix + "    ");
     return os.str();
 }

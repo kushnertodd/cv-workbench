@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_draw_line",
+                        "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator_peaks",
                         "ext": "txt"
                     },
                     {
@@ -56,7 +56,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_draw_line",
+                        "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator_peaks",
                         "ext": "txt"
                     },
                     {

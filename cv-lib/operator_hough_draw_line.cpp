@@ -1,5 +1,6 @@
 #include "operator_hough_draw_line.hpp"
 #include <iostream>
+#include <vector>
 #include "hough.hpp"
 #include "operator_utils.hpp"
 #include "wb_window.hpp"
@@ -18,9 +19,9 @@ Operator_hough_draw_line::~Operator_hough_draw_line() = default;
  * @param operator_parameters
  * @param errors
  */
-void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_data_sources,
-                                   std::list<Data_source_descriptor *> &output_data_stores,
-                                   String_map &operator_parameters, std::list<WB_log_entry> &log_entries,
+void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_data_sources,
+                                   std::vector<Data_source_descriptor *> &output_data_stores,
+                                   String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
                                    Errors &errors) {
     if (debug)
         std::cout << "Operator_hough_draw_line::run parameters: "
@@ -33,10 +34,9 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
     Data_source_descriptor *input_image_source = nullptr;
     Data_source_descriptor *output_image_store = nullptr;
     if (!errors.has_error()) {
-        input_data_source = input_data_sources.front();
-        input_data_sources.pop_front();
-        input_image_source = input_data_sources.front();
-        output_image_store = output_data_stores.front();
+        input_data_source = input_data_sources[0];
+        input_image_source = input_data_sources[1];
+        output_image_store = output_data_stores[0];
     }
     double pixel_value = 255.0;
     int out_component = 1;
@@ -60,13 +60,13 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
             if (!errors.has_error()) {
                 int ncols = input_image->get_ncols();
                 int nrows = input_image->get_nrows();
-                double x_min = input_image->to_x(0);
-                double y_max = input_image->to_y(0);
-                double x_max = input_image->to_x(ncols - 1);
-                double y_min = input_image->to_y(nrows - 1);
+                double min_x = input_image->to_x(0);
+                double max_y = input_image->to_y(0);
+                double max_x = input_image->to_x(ncols - 1);
+                double min_y = input_image->to_y(nrows - 1);
                 for (std::string line: input_data->lines) {
-                    std::vector<std::string> params = wb_utils::tokenize(line, " ");
-                    if (params.size() != 2)
+                    std::vector<std::string> params = wb_utils::tokenize(line, "\t");
+                    if (params.size() < 2)
                         errors.add("Operator_hough_draw_line::run", "", "invalid draw command: '" + line + "'");
                     double rho{};
                     int theta{};
@@ -77,7 +77,7 @@ void Operator_hough_draw_line::run(std::list<Data_source_descriptor *> &input_da
                         if (!wb_utils::string_to_int(params[1], theta))
                             errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
                     if (!errors.has_error()) {
-                        WB_window window(x_min, y_min, x_max, y_max);
+                        WB_window window(min_x, min_y, max_x, max_y);
                         Polar_line polar_line(rho, theta);
                         Line_segment line_segment;
                         if (!window.clip_window(polar_line, line_segment))

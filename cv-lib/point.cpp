@@ -54,7 +54,7 @@ void Point::init(double m_x, double m_y) {
  * @return
  */
 std::string Point::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "x " << x << " y " << y;
     return os.str();
 }

@@ -40,7 +40,7 @@ void Line_segment::init(const Point &m_point1, const Point &m_point2) {
  * @brief
  * @param log_entries
  */
-void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
+void Line_segment::log(std::vector<WB_log_entry> &log_entries) const {
     WB_log_entry log_entry_start_y("start y", wb_utils::int_to_string(point1.y));
     log_entries.push_back(log_entry_start_y);
     WB_log_entry log_entry_start_x("start x", wb_utils::int_to_string(point1.x));
@@ -55,7 +55,7 @@ void Line_segment::log(std::list<WB_log_entry> &log_entries) const {
  * @return
  */
 std::string Line_segment::to_string() const {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "point1 (" << point1.to_string() << ") point2 (" << point2.to_string() << ")";
     return os.str();
 }

@@ -8,9 +8,6 @@
 #include "errors.hpp"
 #include "histogram.hpp"
 #include "hough.hpp"
-#include "image.hpp"
-#include "image_depth.hpp"
-#include "wb_defs.hpp"
 
 class Berkeley_db_data_source_descriptor : public Data_source_descriptor {
     int ref_id; // database key

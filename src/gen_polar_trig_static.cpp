@@ -1,15 +1,13 @@
-#include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 
 const int theta_max = 180;
 
 // Function to convert degrees to radians
-double degreesToRadians(double degrees) {
-    return degrees * M_PI / theta_max;
-}
+double degreesToRadians(double degrees) { return degrees * M_PI / theta_max; }
 
 int main() {
     // Print the header for the table
@@ -24,11 +22,12 @@ int main() {
         double cosineValue = cos(radians);
 
         // Print the degree and its corresponding cosine value, formatted for readability
-        cout << "    " << setw(7) << fixed << setprecision(6) << cosineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+        cout << "    " << setw(7) << fixed << setprecision(6) << cosineValue << (degrees < theta_max - 1 ? ", " : "  ")
+             << "// " << degrees << endl;
     }
 
-    cout << "};" << endl; 
-    cout << endl; 
+    cout << "};" << endl;
+    cout << endl;
 
     cout << "const double Polar_trig::polar_sin[theta_max] = {" << endl;
 
@@ -41,10 +40,11 @@ int main() {
         double sineValue = sin(radians);
 
         // Print the degree and its corresponding sine value, formatted for readability
-        cout << "    " << setw(7) << fixed << setprecision(6) << sineValue << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+        cout << "    " << setw(7) << fixed << setprecision(6) << sineValue << (degrees < theta_max - 1 ? ", " : "  ")
+             << "// " << degrees << endl;
     }
 
-    cout << "};" << endl; 
-    cout << endl; 
+    cout << "};" << endl;
+    cout << endl;
     return 0;
 }

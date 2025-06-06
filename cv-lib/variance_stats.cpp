@@ -121,7 +121,7 @@ void Variance_stats::read(FILE *fp, const std::string &path, Errors &errors) {
  * @return
  */
 std::string Variance_stats::to_string(const std::string &prefix) {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "stats: " << std::endl
        << prefix << "    " << std::setw(20) << std::left << "count " << count << std::endl
        << prefix << "    " << std::setw(20) << std::left << "mean " << get_mean() << std::endl

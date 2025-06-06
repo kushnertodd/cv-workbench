@@ -21,6 +21,8 @@ add_library(cv-lib STATIC
         histogram.hpp
         hough.cpp
         hough.hpp
+        hough_peak.cpp
+        hough_peak.hpp
         image.cpp
         image_depth.cpp
         image_depth.hpp

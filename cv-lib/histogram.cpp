@@ -4,7 +4,6 @@
 #include <iostream>
 #include "errors.hpp"
 #include "file_utils.hpp"
-#include "polar_trig.hpp"
 #include "wb_utils.hpp"
 
 extern bool debug;
@@ -77,7 +76,8 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
             threshold = histogram->to_value(i);
         }
     }
-    hough->find_peaks(hough->lines, threshold);
+    // TODO: define
+    //hough->find_peaks(hough->lines, threshold);
 }
 /**
  * @brief
@@ -184,7 +184,7 @@ void Histogram::initialize_image(Image *image, double in_lower_value, bool saw_l
  * @brief
  * @param log_entries
  */
-void Histogram::log(std::list<WB_log_entry> &log_entries) {
+void Histogram::log(std::vector<WB_log_entry> &log_entries) {
     WB_log_entry log_entry_lower_value("lower-value", wb_utils::double_to_string(lower_value));
     log_entries.push_back(log_entry_lower_value);
     WB_log_entry log_entry_upper_value("upper_value", wb_utils::double_to_string(upper_value));
@@ -283,7 +283,7 @@ Histogram *Histogram::read_text(std::ifstream &ifs, Errors &errors) { return nul
  * @return
  */
 std::string Histogram::to_string(const std::string &prefix) {
-    std::ostringstream os;
+    std::ostringstream os{};
     os << "histogram:" << std::endl
        << prefix << "    " << std::setw(20) << std::left << "nbins " << nbins << std::endl
        << prefix << "    " << std::setw(20) << std::left << "lower_value " << lower_value << std::endl
