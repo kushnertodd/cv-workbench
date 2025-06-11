@@ -4,16 +4,17 @@
 
 using namespace std;
 
-const int theta_max = 180;
+const int theta_max = 360;
+const int half_theta_max = theta_max / 2;
 
 // Function to convert degrees to radians
-double degreesToRadians(double degrees) { return degrees * M_PI / theta_max; }
+double degreesToRadians(double degrees) { return degrees * M_PI / half_theta_max; }
 
 int main() {
     // Print the header for the table
-    cout << "const double Polar_trig::polar_cos[theta_max] = {" << endl;
+    cout << "const double Polar_trig::polar_cos[" << theta_max << "] = {" << endl;
 
-    // Loop through angles from 0 to 179 degrees
+    // Loop through angles from 0 to 359 degrees
     for (int degrees = 0; degrees < theta_max; ++degrees) {
         // Convert the degree value to radians
         double radians = degreesToRadians(degrees);
@@ -29,9 +30,9 @@ int main() {
     cout << "};" << endl;
     cout << endl;
 
-    cout << "const double Polar_trig::polar_sin[theta_max] = {" << endl;
+    cout << "const double Polar_trig::polar_sin[" << theta_max << "] = {" << endl;
 
-    // Loop through angles from 0 to 179 degrees
+    // Loop through angles from 0 to 359 degrees
     for (int degrees = 0; degrees < theta_max; ++degrees) {
         // Convert the degree value to radians
         double radians = degreesToRadians(degrees);

@@ -128,9 +128,8 @@ cv-workbench : cv-workbench.o $(SRCOBJS)
 
 gen_polar_trig_static: gen_polar_trig_static.o
 	$(CXX) $< -o $@ 
-
-polar_trig_static.hpp: gen_polar_trig_static
 	./gen_polar_trig_static >polar_trig_static.hpp
+	cp polar_trig_static.hpp ../cv-lib
 
 objs:
 	@echo $(OBJS)
