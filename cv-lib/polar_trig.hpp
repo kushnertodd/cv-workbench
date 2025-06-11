@@ -2,6 +2,8 @@
 #define SRC__POLAR_TRIG_HPP_
 
 #include <cassert>
+#include <map>
+#include <memory>
 #include "point.hpp"
 
 /**
@@ -56,6 +58,8 @@ class Polar_trig {
     double theta_range{};
     int nrhos{};
     int nthetas{};
+    std::unique_ptr<int[]> thetas;
+    std::map<int, int> theta_indexes;
     static const double polar_cos[theta_max_2pi];
     static const double polar_sin[theta_max_2pi];
 
@@ -73,9 +77,9 @@ public:
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
+    void initialize_thetas();
     bool is_rho_index_valid(int rho_index) const;
     bool is_theta_index_valid(int theta_index) const;
-    double normalized_theta(int theta) const;
     double point_theta_index_to_rho(Point &point, int theta_index) const;
     double point_theta_index_to_rho(double x, double y, int theta_index) const;
     int point_theta_index_to_rho_index(Point &point, int theta_index) const;
@@ -92,13 +96,13 @@ public:
     bool singular_sin_index(int theta_index) const;
     double to_cos_index(int theta_index) const;
     static double to_cos(int theta);
-    void to_index(Polar_index &polar_index, Polar_point &polar_point) const;
+    void to_index(Polar_index &polar_index, Polar_point &polar_point);
     void to_point(Polar_point &polar_point, Polar_index &polar_index) const;
     double to_rho(int rho_index) const;
     int to_rho_index(double rho) const;
     static double to_sin(int theta);
     double to_sin_index(int theta_index) const;
     int to_theta(int theta_index) const;
-    int to_theta_index(int theta) const;
+    int to_theta_index(int theta);
 };
 #endif // SRC__POLAR_TRIG_HPP_

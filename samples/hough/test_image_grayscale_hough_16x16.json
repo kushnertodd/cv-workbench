@@ -44,7 +44,9 @@
                 "parameters": {
                     "accumulate": "unit",
                     "rho-inc": "1",
-                    "theta-inc": "45",
+                    "theta-inc": "1",
+                    "min-theta": "40",
+                    "max-theta": "50",
                     "pixel-threshold": "0"
                 }
             }
