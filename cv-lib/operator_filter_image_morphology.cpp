@@ -77,7 +77,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                      height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(erode_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     erode_image->log(log_entries);
             } else if (operator_str == "dilate") {
@@ -85,7 +85,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                        height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(dilate_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     dilate_image->log(log_entries);
             } else if (operator_str == "open") {
@@ -93,7 +93,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                    width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(open_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     open_image->log(log_entries);
             } else if (operator_str == "close") {
@@ -101,7 +101,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                      height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(close_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     close_image->log(log_entries);
             } else if (operator_str == "gradient") {
@@ -109,7 +109,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                            height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(gradient_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     gradient_image->log(log_entries);
             } else if (operator_str == "top-hat") {
@@ -117,7 +117,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                                                                          height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(top_hat_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     top_hat_image->log(log_entries);
             } else if (operator_str == "black-hat") {
@@ -125,7 +125,7 @@ void Operator_filter_image_morphology::run(std::vector<Data_source_descriptor *>
                         input_image.get(), structuring_element_type, height, width, thickness, errors));
                 if (!errors.has_error())
                     output_data_stores[0]->write_operator_image(black_hat_image.get(),
-                                                                     "Operator_filter_image_morphology::run", errors);
+                                                                "Operator_filter_image_morphology::run", errors);
                 if (!errors.has_error())
                     black_hat_image->log(log_entries);
             } else

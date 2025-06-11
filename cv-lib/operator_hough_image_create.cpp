@@ -10,6 +10,38 @@ extern bool debug;
  */
 Operator_hough_image_create::~Operator_hough_image_create() = default;
 /**
+ * @brief
+ * @param theta
+ * @return theta in range -360..359
+ */
+bool Operator_hough_image_create::is_valid_min_nax_theta(int theta) {
+    return (theta >= -theta_max_2pi && theta < theta_max_2pi);
+}
+/**
+ * @brief
+ * @param theta
+ * @return theta in range 0..359
+ */
+bool Operator_hough_image_create::is_valid_theta_2pi(int theta) { return (theta >= 0 && theta < theta_max_2pi); }
+/**
+ * @brief
+ * @param map min_max_theta in range -360..359 to 0..359
+ * @return
+ */
+int Operator_hough_image_create::min_max_theta_to_theta_2pi(int min_max_theta) {
+    assert(is_valid_min_nax_theta(min_max_theta));
+    return (min_max_theta + theta_max_2pi) % theta_max_2pi;
+}
+/**
+ * @brief
+ * @param theta in range 0..359
+ * @return theta in range 0..177
+ */
+int Operator_hough_image_create::theta_2pi_to_theta(int theta_2pi) {
+    assert(is_valid_theta_2pi(theta_2pi));
+    return theta_2pi > theta_max ? theta_2pi - theta_max : theta_2pi;
+}
+/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source
@@ -41,19 +73,23 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
     if (Operator_utils::has_parameter(operator_parameters, "pixel-threshold"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "pixel-threshold",
                                           pixel_threshold, errors);
-    int min_theta = default_min_theta;
+    int min_theta_input = default_min_theta;
     if (Operator_utils::has_parameter(operator_parameters, "min-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "min-theta",
-                                          min_theta, errors);
-    int max_theta = default_max_theta;
+                                          min_theta_input, errors);
+    int max_theta_input = default_max_theta;
     if (Operator_utils::has_parameter(operator_parameters, "max-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "max-theta",
-                                          max_theta, errors);
+                                          max_theta_input, errors);
     std::string accumulate_str = "unit";
     bool have_accumulate = Operator_utils::get_string_parameter("Operator_hough_image_create::run", operator_parameters,
                                                                 "accumulate", accumulate_str, errors);
     if (have_accumulate && !wb_utils::string_in_list(accumulate_str, {"unit", "value"}))
-        errors.add("Operator_hough_image_create::run", "", "orientation not unit or value");
+        errors.add("Operator_hough_image_create::run", "", "accumulatation not unit or value");
+    if (!is_valid_theta_2pi(min_theta_input))
+        errors.add("Operator_hough_image_create::run", "", "min-theta must be in range -360..359");
+    if (!is_valid_theta_2pi(max_theta_input))
+        errors.add("Operator_hough_image_create::run", "", "max-theta must be in range -360..359");
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
@@ -62,6 +98,10 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
             input_image->check_grayscale("Operator_hough_image_create::run", errors);
         if (!errors.has_error()) {
             bool unit = accumulate_str == "unit";
+            int min_theta_2pi = min_max_theta_to_theta_2pi(min_theta_input);
+            int max_theta_2pi = min_max_theta_to_theta_2pi(max_theta_input);
+            int min_theta = theta_2pi_to_theta(min_theta_2pi);
+            int max_theta = theta_2pi_to_theta(max_theta_2pi);
             std::unique_ptr<Hough> hough =
                     std::unique_ptr<Hough>(new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()),
                                                      input_image->to_y(input_image->get_nrows()), input_image->to_y(0),

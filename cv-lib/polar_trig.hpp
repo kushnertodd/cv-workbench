@@ -33,6 +33,7 @@ public:
 
 const int rho_pad = 10;
 const int theta_max = 180;
+const int theta_max_2pi = 360;
 
 /**
  * @brief
@@ -55,8 +56,8 @@ class Polar_trig {
     double theta_range{};
     int nrhos{};
     int nthetas{};
-    static const double polar_cos[theta_max];
-    static const double polar_sin[theta_max];
+    static const double polar_cos[theta_max_2pi];
+    static const double polar_sin[theta_max_2pi];
 
 public:
     Polar_trig();

@@ -42,8 +42,6 @@ Image *Kernel::convolve(Image *src, Image_depth out_depth, WB_morphology_types::
         int src_components = src->get_ncomponents();
         int ncols = get_ncols();
         int nrows = get_nrows();
-        // output image is Image_depth::CV_32F if either the image and kernel are Image_depth::CV_32F, else it is
-        // Image_depth::CV_32S
         auto *convolve_image = new Image(src_ncols, src_nrows, src_components, out_depth);
         int ncols_half = (ncols + 1) / 2;
         int nrows_half = (nrows + 1) / 2;

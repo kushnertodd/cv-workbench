@@ -276,7 +276,7 @@ void Filesystem_data_source_descriptor::write_image(Image *image, Errors &errors
  */
 void Filesystem_data_source_descriptor::write_image_text(Image *image, Errors &errors) {
     std::string path = to_path_noext();
-    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
+    Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::TEXT);
     std::string data_filename = wb_filename.to_text();
     std::ofstream ofs = file_utils::open_file_write_text(data_filename, errors);
     if (!errors.has_error()) {

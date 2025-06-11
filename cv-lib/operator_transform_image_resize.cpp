@@ -70,8 +70,7 @@ void Operator_transform_image_resize::run(std::vector<Data_source_descriptor *> 
         if (!errors.has_error())
             input_image->check_grayscale("Operator_transform_image_resize::run", errors);
         if (!errors.has_error()) {
-            std::unique_ptr<Image> output_image(
-                    Image::resize(input_image.get(), area_ncols, area_nrows, WB_resize_types::Resize_type::MAX));
+            std::unique_ptr<Image> output_image(Image::resize(input_image.get(), area_ncols, area_nrows, resize_type));
             output_data_stores[0]->write_image(output_image.get(), errors);
         }
     }
