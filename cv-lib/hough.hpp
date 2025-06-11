@@ -19,8 +19,6 @@ class Hough {
     friend class Histogram;
     int pixel_threshold{};
     int unit{};
-    int min_theta{};
-    int max_theta{};
     int nbins{};
     std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;

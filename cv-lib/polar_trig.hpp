@@ -61,7 +61,7 @@ class Polar_trig {
 public:
     Polar_trig();
     Polar_trig(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
-               int m_max_theta, int m_min_theta);
+               int m_min_theta, int m_max_theta);
     int get_max_theta() const;
     double get_max_x() const;
     double get_max_y() const;
@@ -74,14 +74,15 @@ public:
     int get_theta_inc() const;
     bool is_rho_index_valid(int rho_index) const;
     bool is_theta_index_valid(int theta_index) const;
-    double point_theta_index_to_rho(Point &point, int theta_index);
-    double point_theta_index_to_rho(double x, double y, int theta_index);
-    int point_theta_index_to_rho_index(Point &point, int theta_index);
-    int point_theta_index_to_rho_index(double x, double y, int theta_index);
+    double normalized_theta(int theta) const;
+    double point_theta_index_to_rho(Point &point, int theta_index) const;
+    double point_theta_index_to_rho(double x, double y, int theta_index) const;
+    int point_theta_index_to_rho_index(Point &point, int theta_index) const;
+    int point_theta_index_to_rho_index(double x, double y, int theta_index) const;
     static double point_theta_to_rho(Point &point, int theta);
     static double point_theta_to_rho(double x, double y, int theta);
-    int point_theta_to_rho_index(Point &point, int theta);
-    int point_theta_to_rho_index(double x, double y, int theta);
+    int point_theta_to_rho_index(Point &point, int theta) const;
+    int point_theta_to_rho_index(double x, double y, int theta) const;
     static double rho_theta_x_to_y(double rho, int theta, double x);
     static double rho_theta_y_to_x(double rho, int theta, double y);
     static bool singular_cos(int theta);
