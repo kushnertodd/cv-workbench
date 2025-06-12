@@ -113,7 +113,7 @@ void Hough::initialize(Image *image, int pixel_threshold, bool unit) {
                 Point point;
                 image->to_point(point, col, row);
                 int theta_inc = get_theta_inc();
-                for (int theta = get_min_theta(); theta < get_max_theta(); theta += theta_inc) {
+                for (int theta = get_min_theta(); theta <= get_max_theta(); theta += theta_inc) {
                     double rho = polar_trig->point_theta_to_rho(point, theta);
                     int rho_index = polar_trig->to_rho_index(rho);
                     int theta_index = polar_trig->to_theta_index(theta);
@@ -454,7 +454,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     }
     ofs << std::endl;
     int theta_inc = get_theta_inc();
-    for (int theta = get_min_theta(); theta < get_max_theta(); theta += theta_inc) {
+    for (int theta = get_min_theta(); theta <= get_max_theta(); theta += theta_inc) {
         int theta_index = polar_trig->to_theta_index(theta);
         ofs << polar_trig->to_theta(theta_index) << delim;
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {

@@ -67,11 +67,13 @@ Polar_trig::Polar_trig(double m_min_x, double m_min_y, double m_max_x, double m_
     max_rho = rho_range / 2.0;
     min_rho = -max_rho;
     nrhos = rho_range / rho_inc;
-    if (max_theta >= min_theta)
-        theta_range = (max_theta - min_theta) + 1;
-    else
-        theta_range = (theta_max - min_theta + max_theta) + 1;
-    nthetas = theta_range / theta_inc;
+    if (max_theta >= min_theta) {
+        theta_range = max_theta - min_theta;
+        nthetas = theta_range / theta_inc + 1;
+    } else {
+        theta_range = theta_max - min_theta + max_theta + 1;
+        nthetas = theta_range / theta_inc;
+    }
     initialize_thetas();
 }
 int Polar_trig::get_max_theta() const { return max_theta; }
@@ -91,16 +93,16 @@ void Polar_trig::initialize_thetas() {
     thetas = std::make_unique<int[]>(nthetas);
     int theta_index = 0;
     if (max_theta > min_theta) {
-        for (int theta = min_theta; theta <= max_theta; theta++, theta_index++) {
+        for (int theta = min_theta; theta <= max_theta; theta += theta_inc, theta_index++) {
             theta_indexes[theta] = theta_index;
             thetas[theta_index] = theta;
         }
     } else {
-        for (int theta = min_theta; theta < theta_max; theta++, theta_index++) {
+        for (int theta = min_theta; theta < theta_max; theta += theta_inc, theta_index++) {
             theta_indexes[theta] = theta_index;
             thetas[theta_index] = theta;
         }
-        for (int theta = 0; theta <= max_theta; theta++, theta_index++) {
+        for (int theta = 0; theta <= max_theta; theta += theta_inc, theta_index++) {
             theta_indexes[theta] = theta_index;
             thetas[theta_index] = theta;
         }
