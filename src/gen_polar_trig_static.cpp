@@ -4,18 +4,18 @@
 
 using namespace std;
 
-const int theta_max = 360;
-const int half_theta_max = theta_max / 2;
+const int theta_pi = 360;
+const int half_theta_max = theta_pi / 2;
 
 // Function to convert degrees to radians
 double degreesToRadians(double degrees) { return degrees * M_PI / half_theta_max; }
 
 int main() {
     // Print the header for the table
-    cout << "const double Polar_trig::polar_cos[" << theta_max << "] = {" << endl;
+    cout << "const double Polar_trig::polar_cos[" << theta_pi << "] = {" << endl;
 
     // Loop through angles from 0 to 359 degrees
-    for (int degrees = 0; degrees < theta_max; ++degrees) {
+    for (int degrees = 0; degrees < theta_pi; ++degrees) {
         // Convert the degree value to radians
         double radians = degreesToRadians(degrees);
 
@@ -24,16 +24,16 @@ int main() {
 
         // Print the degree and its corresponding cosine value, formatted for readability
         cout << "        " << setw(7) << fixed << setprecision(6) << cosineValue
-             << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+             << (degrees < theta_pi - 1 ? ", " : "  ") << "// " << degrees << endl;
     }
 
     cout << "};" << endl;
     cout << endl;
 
-    cout << "const double Polar_trig::polar_sin[" << theta_max << "] = {" << endl;
+    cout << "const double Polar_trig::polar_sin[" << theta_pi << "] = {" << endl;
 
     // Loop through angles from 0 to 359 degrees
-    for (int degrees = 0; degrees < theta_max; ++degrees) {
+    for (int degrees = 0; degrees < theta_pi; ++degrees) {
         // Convert the degree value to radians
         double radians = degreesToRadians(degrees);
 
@@ -42,7 +42,7 @@ int main() {
 
         // Print the degree and its corresponding sine value, formatted for readability
         cout << "        " << setw(7) << fixed << setprecision(6) << sineValue
-             << (degrees < theta_max - 1 ? ", " : "  ") << "// " << degrees << endl;
+             << (degrees < theta_pi - 1 ? ", " : "  ") << "// " << degrees << endl;
     }
 
     cout << "};" << endl;

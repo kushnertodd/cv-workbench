@@ -71,8 +71,8 @@ Polar_trig::Polar_trig(double m_min_x, double m_min_y, double m_max_x, double m_
         theta_range = max_theta - min_theta;
         nthetas = theta_range / theta_inc + 1;
     } else {
-        theta_range = theta_max - min_theta + max_theta + 1;
-        nthetas = theta_range / theta_inc;
+        theta_range = theta_pi - min_theta + max_theta;
+        nthetas = theta_range / theta_inc + 1;
     }
     initialize_thetas();
 }
@@ -98,13 +98,14 @@ void Polar_trig::initialize_thetas() {
             thetas[theta_index] = theta;
         }
     } else {
-        for (int theta = min_theta; theta < theta_max; theta += theta_inc, theta_index++) {
+        int theta = 0;
+        for (theta = min_theta; theta < theta_pi; theta += theta_inc, theta_index++) {
             theta_indexes[theta] = theta_index;
             thetas[theta_index] = theta;
         }
-        for (int theta = 0; theta <= max_theta; theta += theta_inc, theta_index++) {
-            theta_indexes[theta] = theta_index;
-            thetas[theta_index] = theta;
+        for (theta -= theta_pi; theta <= max_theta; theta += theta_inc, theta_index++) {
+            theta_indexes[theta + theta_pi] = theta_index;
+            thetas[theta_index] = theta + theta_pi;
         }
     }
     assert(theta_index == nthetas);
@@ -234,7 +235,7 @@ double Polar_trig::rho_theta_y_to_x(double rho, int theta, double y) {
  * @param theta
  * @return
  */
-bool Polar_trig::singular_cos(int theta) { return theta == theta_max / 2; }
+bool Polar_trig::singular_cos(int theta) { return theta == theta_pi / 2; }
 /**
  * @brief
  * @param theta_index

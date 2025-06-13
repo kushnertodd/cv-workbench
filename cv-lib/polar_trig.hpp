@@ -34,7 +34,7 @@ public:
 };
 
 const int rho_pad = 10;
-const int theta_max = 180;
+const int theta_pi = 180;
 const int theta_max_2pi = 360;
 
 /**

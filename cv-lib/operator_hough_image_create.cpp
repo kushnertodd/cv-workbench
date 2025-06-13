@@ -39,7 +39,7 @@ int Operator_hough_image_create::min_max_theta_to_theta_2pi(int min_max_theta) {
  */
 int Operator_hough_image_create::theta_2pi_to_theta(int theta_2pi) {
     assert(is_valid_theta_2pi(theta_2pi));
-    return theta_2pi > theta_max ? theta_2pi - theta_max : theta_2pi;
+    return theta_2pi > theta_pi ? theta_2pi - theta_pi : theta_2pi;
 }
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
