@@ -131,9 +131,10 @@ void Hough::initialize(Image *image, int pixel_threshold, bool unit) {
                         update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
                     }
                     for (theta -= theta_pi; theta <= max_theta; theta += theta_inc) {
-                        double rho = polar_trig->point_theta_to_rho(point, theta);
+                        int theta_adj = theta + theta_pi;
+                        double rho = polar_trig->point_theta_to_rho(point, theta_adj);
                         int rho_index = polar_trig->to_rho_index(rho);
-                        int theta_index = polar_trig->to_theta_index(theta);
+                        int theta_index = polar_trig->to_theta_index(theta_adj);
                         update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
                     }
                 }

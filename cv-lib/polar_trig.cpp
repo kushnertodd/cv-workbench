@@ -104,8 +104,9 @@ void Polar_trig::initialize_thetas() {
             thetas[theta_index] = theta;
         }
         for (theta -= theta_pi; theta <= max_theta; theta += theta_inc, theta_index++) {
-            theta_indexes[theta + theta_pi] = theta_index;
-            thetas[theta_index] = theta + theta_pi;
+            int theta_adj = theta + theta_pi;
+            theta_indexes[theta_adj] = theta_index;
+            thetas[theta_index] = theta_adj;
         }
     }
     assert(theta_index == nthetas);
