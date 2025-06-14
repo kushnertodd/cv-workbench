@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "filter-edge-roberts",
+                "operator": "filter-edge-sobel",
                 "input-data": [
                     {
                         "id": 1,
@@ -33,7 +33,7 @@
                     }
                 ],
                 "parameters": {
-                    "orientation": "0"
+                    "orientation": "90"
                 }
             },
             {

@@ -102,46 +102,69 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
  * @brief
  * @param image_theshold
  */
-void Hough::initialize(Image *image, int pixel_threshold, bool unit) {
+void Hough::initialize(Image *image, int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row,
+                       bool saw_min_row, int max_col, bool saw_max_col, int max_row, bool saw_max_row, Errors &errors) {
     clear();
+    if (!saw_min_col)
+        min_col = 0;
+    if (!saw_min_row)
+        min_row = 0;
+    if (!saw_max_col)
+        max_col = image->get_ncols() - 1;
+    if (!saw_max_row)
+        max_row = image->get_nrows() - 1;
+    if (min_col < 0)
+        errors.add("Hough::initialize", "", "min-col must be positive");
+    if (min_row < 0)
+        errors.add("Hough::initialize", "", "min-row must be positive");
     int ncols = image->get_ncols();
     int nrows = image->get_nrows();
-    for (int col = 0; col < ncols; col++) {
-        for (int row = 0; row < nrows; row++) {
-            double value = std::abs(image->get(col, row));
-            if (value > pixel_threshold) {
-                Point point;
-                image->to_point(point, col, row);
-                int theta_inc = get_theta_inc();
-                int min_theta = get_min_theta();
-                int max_theta = get_max_theta();
-                if (max_theta > min_theta) {
-                    for (int theta = min_theta; theta <= max_theta; theta += theta_inc) {
-                        double rho = polar_trig->point_theta_to_rho(point, theta);
-                        int rho_index = polar_trig->to_rho_index(rho);
-                        int theta_index = polar_trig->to_theta_index(theta);
-                        update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
-                    }
-                } else {
-                    int theta = 0;
-                    for (theta = min_theta; theta < theta_pi; theta += theta_inc) {
-                        double rho = polar_trig->point_theta_to_rho(point, theta);
-                        int rho_index = polar_trig->to_rho_index(rho);
-                        int theta_index = polar_trig->to_theta_index(theta);
-                        update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
-                    }
-                    for (theta -= theta_pi; theta <= max_theta; theta += theta_inc) {
-                        int theta_adj = theta + theta_pi;
-                        double rho = polar_trig->point_theta_to_rho(point, theta_adj);
-                        int rho_index = polar_trig->to_rho_index(rho);
-                        int theta_index = polar_trig->to_theta_index(theta_adj);
-                        update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
+    if (max_col >= ncols)
+        errors.add("Hough::initialize", "", "max-col must be within image");
+    if (max_row >= nrows)
+        errors.add("Hough::initialize", "", "max-row must be within image");
+    if (max_col < min_col)
+        errors.add("Hough::initialize", "", "max-col must be at least as large as mi-col");
+    if (max_row < min_row)
+        errors.add("Hough::initialize", "", "min-row must be at least as large as max-row");
+    if (!errors.has_error()) {
+        for (int col = min_col; col <= max_col; col++) {
+            for (int row = min_row; row <= max_row; row++) {
+                double value = std::abs(image->get(col, row));
+                if (value > pixel_threshold) {
+                    Point point;
+                    image->to_point(point, col, row);
+                    int theta_inc = get_theta_inc();
+                    int min_theta = get_min_theta();
+                    int max_theta = get_max_theta();
+                    if (max_theta > min_theta) {
+                        for (int theta = min_theta; theta <= max_theta; theta += theta_inc) {
+                            double rho = polar_trig->point_theta_to_rho(point, theta);
+                            int rho_index = polar_trig->to_rho_index(rho);
+                            int theta_index = polar_trig->to_theta_index(theta);
+                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
+                        }
+                    } else {
+                        int theta = 0;
+                        for (theta = min_theta; theta < theta_pi; theta += theta_inc) {
+                            double rho = polar_trig->point_theta_to_rho(point, theta);
+                            int rho_index = polar_trig->to_rho_index(rho);
+                            int theta_index = polar_trig->to_theta_index(theta);
+                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
+                        }
+                        for (theta -= theta_pi; theta <= max_theta; theta += theta_inc) {
+                            int theta_adj = theta + theta_pi;
+                            double rho = polar_trig->point_theta_to_rho(point, theta_adj);
+                            int rho_index = polar_trig->to_rho_index(rho);
+                            int theta_index = polar_trig->to_theta_index(theta_adj);
+                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
+                        }
                     }
                 }
             }
         }
+        update_accumulator_stats();
     }
-    update_accumulator_stats();
 }
 /**
  * @brief
