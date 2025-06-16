@@ -105,26 +105,26 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
 void Hough::initialize(Image *image, int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row,
                        bool saw_min_row, int max_col, bool saw_max_col, int max_row, bool saw_max_row, Errors &errors) {
     clear();
+    int ncols = image->get_ncols();
+    int nrows = image->get_nrows();
     if (!saw_min_col)
         min_col = 0;
     if (!saw_min_row)
         min_row = 0;
     if (!saw_max_col)
-        max_col = image->get_ncols() - 1;
+        max_col = ncols-1;
     if (!saw_max_row)
-        max_row = image->get_nrows() - 1;
+        max_row = nrows-1;
     if (min_col < 0)
         errors.add("Hough::initialize", "", "min-col must be positive");
     if (min_row < 0)
         errors.add("Hough::initialize", "", "min-row must be positive");
-    int ncols = image->get_ncols();
-    int nrows = image->get_nrows();
     if (max_col >= ncols)
         errors.add("Hough::initialize", "", "max-col must be within image");
     if (max_row >= nrows)
         errors.add("Hough::initialize", "", "max-row must be within image");
     if (max_col < min_col)
-        errors.add("Hough::initialize", "", "max-col must be at least as large as mi-col");
+        errors.add("Hough::initialize", "", "max-col must be at least as large as min-col");
     if (max_row < min_row)
         errors.add("Hough::initialize", "", "min-row must be at least as large as max-row");
     if (!errors.has_error()) {

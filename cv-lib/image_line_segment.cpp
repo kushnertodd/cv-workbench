@@ -160,3 +160,10 @@ std::string Image_line_segment::to_string() const {
     os << "pixel 1 " << pixel1.to_string() << " pixel 2 " << pixel2.to_string();
     return os.str();
 }
+void Image_line_segment::translate(int col, int row) {
+    pixel1.translate(col, row);
+    pixel2.translate(col, row);
+    for (Pixel pixel: line_pixels)
+        pixel.translate(col, row);
+}
+void Image_line_segment::translate(Pixel pixel) { translate(pixel.col, pixel.row); }

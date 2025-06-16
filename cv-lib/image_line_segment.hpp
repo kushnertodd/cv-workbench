@@ -23,6 +23,8 @@ public:
     void plot_line_high(int col1, int row1, int col2, int row2);
     void plot_line();
     std::string to_string() const;
+    void translate(int col, int row);
+    void translate(Pixel pixel);
 };
 
 #endif // SRC__IMAGE_LINE_SEGMENT_HPP_

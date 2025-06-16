@@ -43,7 +43,11 @@
                 ],
                 "parameters": {
                     "pixel-value": "128",
-                    "out-component": "1"
+                    "out-component": "1",
+                    "min-col": "50",
+                    "max-col": "150",
+                    "min-row": "0",
+                    "max-row": "100"
                 }
             },
             {
@@ -82,7 +86,11 @@
                 ],
                 "parameters": {
                     "pixel-value": "128",
-                    "out-component": "1"
+                    "out-component": "1",
+                    "min-col": "50",
+                    "max-col": "150",
+                    "min-row": "0",
+                    "max-row": "100"
                 }
             }
         ]

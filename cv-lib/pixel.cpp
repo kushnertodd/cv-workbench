@@ -23,3 +23,7 @@ std::string Pixel::to_string() const {
     os << "col " << col << " row " << row;
     return os.str();
 }
+void Pixel::translate(int m_col, int m_row) {
+    col += m_col;
+    row += m_row;
+}

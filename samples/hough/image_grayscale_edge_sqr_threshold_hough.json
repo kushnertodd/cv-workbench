@@ -46,7 +46,7 @@
                     "rho-inc": "1",
                     "theta-inc": "3",
                     "pixel-threshold": "128",
-					"min-col": "50",
+                    "min-col": "50",
                     "max-col": "150",
                     "min-row": "0",
                     "max-row": "100"

@@ -40,6 +40,14 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
     }
     double pixel_value = 255.0;
     int out_component = 1;
+    int min_col;
+    int min_row;
+    int max_col;
+    int max_row;
+    bool saw_min_col = false;
+    bool saw_min_row = false;
+    bool saw_max_col = false;
+    bool saw_max_row = false;
     if (!errors.has_error()) {
         if (Operator_utils::has_parameter(operator_parameters, "pixel-value"))
             Operator_utils::get_real_parameter("Operator_hough_draw_line::run", operator_parameters, "pixel-value",
@@ -47,6 +55,26 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
         if (Operator_utils::has_parameter(operator_parameters, "out-component"))
             Operator_utils::get_int_parameter("Operator_hough_draw_line::run", operator_parameters, "out-component",
                                               out_component, errors);
+        if (Operator_utils::has_parameter(operator_parameters, "min-col")) {
+            saw_min_col = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-col",
+                                              min_col, errors);
+        }
+        if (Operator_utils::has_parameter(operator_parameters, "min-row")) {
+            saw_min_row = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-row",
+                                              min_row, errors);
+        }
+        if (Operator_utils::has_parameter(operator_parameters, "max-col")) {
+            saw_max_col = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-col",
+                                              max_col, errors);
+        }
+        if (Operator_utils::has_parameter(operator_parameters, "max-row")) {
+            saw_max_row = true;
+            Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-row",
+                                              max_row, errors);
+        }
     }
     if (!errors.has_error()) {
         std::unique_ptr<Data> input_data(
@@ -60,10 +88,26 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
             if (!errors.has_error()) {
                 int ncols = input_image->get_ncols();
                 int nrows = input_image->get_nrows();
-                double min_x = input_image->to_x(0);
-                double max_y = input_image->to_y(0);
-                double max_x = input_image->to_x(ncols - 1);
-                double min_y = input_image->to_y(nrows - 1);
+                if (!saw_min_col)
+                    min_col = 0;
+                if (!saw_min_row)
+                    min_row = 0;
+                if (!saw_max_col)
+                    max_col = ncols - 1;
+                if (!saw_max_row)
+                    max_row = nrows - 1;
+                if (min_col < 0)
+                    errors.add("Hough::initialize", "", "min-col must be positive");
+                if (min_row < 0)
+                    errors.add("Hough::initialize", "", "min-row must be positive");
+                if (max_col >= ncols)
+                    errors.add("Hough::initialize", "", "max-col must be within image");
+                if (max_row >= nrows)
+                    errors.add("Hough::initialize", "", "max-row must be within image");
+                if (max_col < min_col)
+                    errors.add("Hough::initialize", "", "max-col must be at least as large as min-col");
+                if (max_row < min_row)
+                    errors.add("Hough::initialize", "", "min-row must be at least as large as max-row");
                 for (std::string line: input_data->lines) {
                     std::vector<std::string> params = wb_utils::tokenize(line, "\t");
                     if (params.size() < 2)
@@ -77,20 +121,21 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                         if (!wb_utils::string_to_int(params[1], theta))
                             errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
                     if (!errors.has_error()) {
+                        double min_x = input_image->to_x(min_col);
+                        double max_y = input_image->to_y(min_row);
+                        double max_x = input_image->to_x(max_col);
+                        double min_y = input_image->to_y(max_row);
                         WB_window window(min_x, min_y, max_x, max_y);
                         Polar_line polar_line(rho, theta);
                         Line_segment line_segment;
                         if (!window.clip_window(polar_line, line_segment))
-                            // errors.add("Operator_hough_draw_line::run", "",
-                            //            "failed clipping polar line (" + polar_line.to_string() + ") against window "
-                            //            +
-                            //                    window->to_string());
                             std::cout << "Operator_hough_draw_line::run: failed clipping polar line (" +
                                                  polar_line.to_string() + ") against window " + window.to_string()
                                       << std::endl;
                         else {
                             Image_line_segment image_line_segment;
                             input_image->to_image_line_segment(image_line_segment, line_segment);
+                            image_line_segment.translate(min_col, min_row);
                             input_image->draw_line_segment(image_line_segment, pixel_value);
                         }
                     }
