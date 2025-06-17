@@ -39,33 +39,27 @@ void WB_window::add(Point &point) {
  */
 bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) {
     // clip left: min_x
-    double y_left;
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), min_x);
-        Point left_point(min_x, y_left);
-        if (inside(left_point))
+        double y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), min_x);
+        if (Point left_point(min_x, y_left); inside(left_point))
             add(left_point);
     }
     // clip right: max_x
-    double y_right;
     if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), max_x);
+        double y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), max_x);
         Point right_point(max_x, y_right);
         if (inside(right_point))
             add(right_point);
     }
     // clip top: min_y
-    double x_top;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), min_y);
-        Point top_point(x_top, min_y);
-        if (inside(top_point))
+        double x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), min_y);
+        if (Point top_point(x_top, min_y); inside(top_point))
             add(top_point);
     }
     // clip bottom: max_y
-    double x_bottom;
     if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), max_y);
+        double x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), max_y);
         Point bottom_point(x_bottom, max_y);
         if (inside(bottom_point))
             add(bottom_point);
@@ -79,9 +73,12 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
 }
 
 bool WB_window::inside(Point &point) const {
-    if (point.x < min_x || point.x > max_x)
+    return inside(point.x, point.y);
+}
+bool WB_window::inside(double x, double y) const {
+    if (x < min_x || x > max_x)
         return false;
-    if (point.y < min_y || point.y > max_y)
+    if (y < min_y || y > max_y)
         return false;
     return true;
 }
