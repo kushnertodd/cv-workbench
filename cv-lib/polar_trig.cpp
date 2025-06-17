@@ -26,21 +26,131 @@ void Polar_index::init(int m_rho_index, int m_theta_index) {
 /**
  * @brief
  */
-Polar_point::Polar_point() = default;
+Polar_line::Polar_line() = default;
 /**
  * @brief
  * @param m_rho
  * @param m_theta
  */
-Polar_point::Polar_point(double m_rho, double m_theta) : rho(m_rho), theta(m_theta) {}
+Polar_line::Polar_line(double m_rho, double m_theta) : rho(m_rho), theta(m_theta) {}
+/**
+ * @brief
+ * @return
+ */
+double Polar_line::get_rho() const { return rho; }
+/**
+ * @brief
+ * @return
+ */
+double Polar_line::get_theta() const { return theta; }
 /**
  * @brief
  * @param m_rho
  * @param m_theta
  */
-void Polar_point::init(double m_rho, double m_theta) {
+void Polar_line::init(double m_rho, double m_theta) {
     rho = m_rho;
     theta = m_theta;
+    cos_t = to_cos(theta);
+    sin_t = to_sin(theta);
+}
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+bool Polar_line::singular_cos() { return singular_cos(theta); }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+bool Polar_line::singular_cos(double theta) { return theta == theta_pi / 2; }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+bool Polar_line::singular_sin() { return singular_sin(theta); }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+bool Polar_line::singular_sin(double theta) { return theta == 0; }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+double Polar_line::to_cos(int theta) { return polar_cos[theta]; }
+/**
+ * @brief
+ * @param theta
+ * @return
+ */
+double Polar_line::to_sin(int theta) { return polar_sin[theta]; }
+/**
+ * @brief
+ * @return
+ */
+std::string Polar_line::to_string() const {
+    std::ostringstream os{};
+    os << "rho=" << rho << " theta=" << theta << " cos_t=" << cos_t << " sin_t=" << sin_t;
+    return os.str();
+}
+/**
+ * @brief
+ * @param fp
+ * @param errors
+ */
+void Polar_line::write(FILE *fp, Errors &errors) const {
+    fwrite(&rho, sizeof(double), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Polar_line::write", "", "cannot write Hough rho");
+        return;
+    }
+    fwrite(&theta, sizeof(int), 1, fp);
+    if (ferror(fp) != 0) {
+        errors.add("Polar_line::write", "", "cannot write Hough theta");
+        return;
+    }
+}
+/**
+ * @brief
+ * @param ofs
+ * @param delim
+ * @param errors
+ */
+void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
+    ofs << theta << delim << rho << delim << rho << std::endl;
+}
+/**
+ * can have a singularity if theta ~= 180, sin ~= 0
+ * @brief
+ * @param rho
+ * @param theta
+ * @param x
+ * @return
+ */
+double Polar_line::x_to_y(double x) {
+    assert(!singular_sin(theta));
+    double y = (rho - x * cos_t) / sin_t;
+    return y;
+}
+
+/**
+ * can have a singularity if theta ~= 90, cos ~= 0
+ * @brief
+ * @param rho
+ * @param theta
+ * @param y
+ * @return
+ */
+double Polar_line::y_to_x(double y) {
+    assert(!singular_cos(theta));
+    double x = (rho - y * sin_t) / cos_t;
+    return x;
 }
 /**
  * @brief
@@ -174,8 +284,8 @@ double Polar_trig::point_theta_to_rho(Point &point, int theta) {
  * @return
  */
 double Polar_trig::point_theta_to_rho(double x, double y, int theta) {
-    double cos_t = Polar_trig::to_cos(theta);
-    double sin_t = Polar_trig::to_sin(theta);
+    double cos_t = Polar_line::to_cos(theta);
+    double sin_t = Polar_line::to_sin(theta);
     double rho = x * cos_t + y * sin_t;
     return rho;
 }
@@ -201,87 +311,38 @@ int Polar_trig::point_theta_to_rho_index(double x, double y, int theta) const {
     return rho_index;
 }
 /**
- * can have a singularity if theta ~= 180, sin ~= 0
  * @brief
- * @param rho
- * @param theta
- * @param x
+ * @param theta_index
  * @return
  */
-double Polar_trig::rho_theta_x_to_y(double rho, int theta, double x) {
-    assert(!singular_sin(theta));
-    double cos_t = Polar_trig::to_cos(theta);
-    double sin_t = Polar_trig::to_sin(theta);
-    double y = (rho - x * cos_t) / sin_t;
-    return y;
-}
-
-/**
- * can have a singularity if theta ~= 90, cos ~= 0
- * @brief
- * @param rho
- * @param theta
- * @param y
- * @return
- */
-double Polar_trig::rho_theta_y_to_x(double rho, int theta, double y) {
-    assert(!singular_cos(theta));
-    double cos_t = Polar_trig::to_cos(theta);
-    double sin_t = Polar_trig::to_sin(theta);
-    double x = (rho - y * sin_t) / cos_t;
-    return x;
-}
-/**
- * @brief
- * @param theta
- * @return
- */
-bool Polar_trig::singular_cos(int theta) { return theta == theta_pi / 2; }
+// bool Polar_trig::singular_cos_index(int theta_index) const { return singular_cos(to_theta(theta_index)); }
 /**
  * @brief
  * @param theta_index
  * @return
  */
-bool Polar_trig::singular_cos_index(int theta_index) const { return singular_cos(to_theta(theta_index)); }
-/**
- * @brief
- * @param theta
- * @return
- */
-bool Polar_trig::singular_sin(int theta) { return theta == 0; }
+// bool Polar_trig::singular_sin_index(int theta_index) const { return singular_sin(to_theta(theta_index)); }
 /**
  * @brief
  * @param theta_index
  * @return
  */
-bool Polar_trig::singular_sin_index(int theta_index) const { return singular_sin(to_theta(theta_index)); }
-/**
- * @brief
- * @param theta
- * @return
- */
-double Polar_trig::to_cos(int theta) { return polar_cos[theta]; }
-/**
- * @brief
- * @param theta_index
- * @return
- */
-double Polar_trig::to_cos_index(int theta_index) const { return to_cos(to_theta(theta_index)); }
+double Polar_trig::to_cos_index(int theta_index) const { return Polar_line::to_cos(to_theta(theta_index)); }
 /**
  * @brief
  * @param polar_index
- * @param polar_point
+ * @param polar_line
  */
-void Polar_trig::to_index(Polar_index &polar_index, Polar_point &polar_point) {
-    polar_index.init(to_rho_index(polar_point.rho), to_theta_index(polar_point.theta));
+void Polar_trig::to_index(Polar_index &polar_index, Polar_line &polar_line) {
+    polar_index.init(to_rho_index(polar_line.rho), to_theta_index(polar_line.theta));
 }
 /**
  * @brief
- * @param polar_point
+ * @param polar_line
  * @param polar_index
  */
-void Polar_trig::to_point(Polar_point &polar_point, Polar_index &polar_index) const {
-    polar_point.init(to_rho(polar_index.rho_index), to_theta(polar_index.theta_index));
+void Polar_trig::to_point(Polar_line &polar_line, Polar_index &polar_index) const {
+    polar_line.init(to_rho(polar_index.rho_index), to_theta(polar_index.theta_index));
 }
 /**
  * @brief
@@ -303,16 +364,10 @@ int Polar_trig::to_rho_index(double rho) const {
 }
 /**
  * @brief
- * @param theta
- * @return
- */
-double Polar_trig::to_sin(int theta) { return polar_sin[theta]; }
-/**
- * @brief
  * @param theta_index
  * @return
  */
-double Polar_trig::to_sin_index(int theta_index) const { return to_sin(to_theta(theta_index)); }
+double Polar_trig::to_sin_index(int theta_index) const { return Polar_line::to_sin(to_theta(theta_index)); }
 /**
  * @brief
  * @param theta_index

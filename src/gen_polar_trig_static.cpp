@@ -12,7 +12,7 @@ double degreesToRadians(double degrees) { return degrees * M_PI / half_theta_max
 
 int main() {
     // Print the header for the table
-    cout << "const double Polar_trig::polar_cos[" << theta_pi << "] = {" << endl;
+    cout << "const double Polar_line::polar_cos[" << theta_pi << "] = {" << endl;
 
     // Loop through angles from 0 to 359 degrees
     for (int degrees = 0; degrees < theta_pi; ++degrees) {
@@ -30,7 +30,7 @@ int main() {
     cout << "};" << endl;
     cout << endl;
 
-    cout << "const double Polar_trig::polar_sin[" << theta_pi << "] = {" << endl;
+    cout << "const double Polar_line::polar_sin[" << theta_pi << "] = {" << endl;
 
     // Loop through angles from 0 to 359 degrees
     for (int degrees = 0; degrees < theta_pi; ++degrees) {
@@ -41,8 +41,8 @@ int main() {
         double sineValue = sin(radians);
 
         // Print the degree and its corresponding sine value, formatted for readability
-        cout << "        " << setw(7) << fixed << setprecision(6) << sineValue
-             << (degrees < theta_pi - 1 ? ", " : "  ") << "// " << degrees << endl;
+        cout << "        " << setw(7) << fixed << setprecision(6) << sineValue << (degrees < theta_pi - 1 ? ", " : "  ")
+             << "// " << degrees << endl;
     }
 
     cout << "};" << endl;

@@ -1,10 +1,18 @@
 #ifndef SRC__POLAR_TRIG_HPP_
 #define SRC__POLAR_TRIG_HPP_
 
+#include <algorithm>
 #include <cassert>
+#include <fstream>
+#include <iostream>
 #include <map>
 #include <memory>
+#include <sstream>
+#include "errors.hpp"
 #include "point.hpp"
+#include "polar_trig.hpp"
+
+const int theta_max_2pi = 360;
 
 /**
  * @brief
@@ -22,20 +30,36 @@ public:
 /**
  * @brief
  */
-class Polar_point {
+class Polar_line {
     friend class Polar_trig;
     double rho{};
     double theta{};
+    double cos_t{};
+    double sin_t{};
+    static const double polar_cos[theta_max_2pi];
+    static const double polar_sin[theta_max_2pi];
 
 public:
-    Polar_point();
-    Polar_point(double m_rho, double m_theta);
+    Polar_line();
+    Polar_line(double m_rho, double m_theta);
+    double get_rho() const;
+    double get_theta() const;
     void init(double m_rho, double m_theta);
+    bool singular_cos();
+    static bool singular_cos(double theta);
+    bool singular_sin();
+    static bool singular_sin(double theta);
+    static double to_cos(int theta);
+    std::string to_string() const;
+    static double to_sin(int theta);
+    void write(FILE *fp, Errors &errors) const;
+    void write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const;
+    double x_to_y(double x);
+    double y_to_x(double y);
 };
 
 const int rho_pad = 10;
 const int theta_pi = 180;
-const int theta_max_2pi = 360;
 
 /**
  * @brief
@@ -60,8 +84,6 @@ class Polar_trig {
     int nthetas{};
     std::unique_ptr<int[]> thetas;
     std::map<int, int> theta_indexes;
-    static const double polar_cos[theta_max_2pi];
-    static const double polar_sin[theta_max_2pi];
 
 public:
     Polar_trig();
@@ -88,19 +110,13 @@ public:
     static double point_theta_to_rho(double x, double y, int theta);
     int point_theta_to_rho_index(Point &point, int theta) const;
     int point_theta_to_rho_index(double x, double y, int theta) const;
-    static double rho_theta_x_to_y(double rho, int theta, double x);
-    static double rho_theta_y_to_x(double rho, int theta, double y);
-    static bool singular_cos(int theta);
-    bool singular_cos_index(int theta_index) const;
-    static bool singular_sin(int theta);
-    bool singular_sin_index(int theta_index) const;
+    // bool singular_cos_index(int theta_index) const;
+    // bool singular_sin_index(int theta_index) const;
     double to_cos_index(int theta_index) const;
-    static double to_cos(int theta);
-    void to_index(Polar_index &polar_index, Polar_point &polar_point);
-    void to_point(Polar_point &polar_point, Polar_index &polar_index) const;
+    void to_index(Polar_index &polar_index, Polar_line &polar_line);
+    void to_point(Polar_line &polar_line, Polar_index &polar_index) const;
     double to_rho(int rho_index) const;
     int to_rho_index(double rho) const;
-    static double to_sin(int theta);
     double to_sin_index(int theta_index) const;
     int to_theta(int theta_index) const;
     int to_theta_index(int theta);

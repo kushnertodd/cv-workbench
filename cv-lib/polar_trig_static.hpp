@@ -1,4 +1,4 @@
-const double Polar_trig::polar_cos[360] = {
+const double Polar_line::polar_cos[360] = {
         1.000000, // 0
         0.999848, // 1
         0.999391, // 2
@@ -358,10 +358,10 @@ const double Polar_trig::polar_cos[360] = {
         0.997564, // 356
         0.998630, // 357
         0.999391, // 358
-        0.999848 // 359
+        0.999848  // 359
 };
 
-const double Polar_trig::polar_sin[360] = {
+const double Polar_line::polar_sin[360] = {
         0.000000, // 0
         0.017452, // 1
         0.034899, // 2
@@ -721,5 +721,6 @@ const double Polar_trig::polar_sin[360] = {
         -0.069756, // 356
         -0.052336, // 357
         -0.034899, // 358
-        -0.017452 // 359
+        -0.017452  // 359
 };
+

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "line_segment.hpp"
-#include "polar_line.hpp"
 #include "polar_trig.hpp"
 
 /**

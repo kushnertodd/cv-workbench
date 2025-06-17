@@ -39,27 +39,27 @@ void WB_window::add(Point &point) {
  */
 bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) {
     // clip left: min_x
-    if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        double y_left = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), min_x);
+    if (!polar_line.singular_sin()) {
+        double y_left = polar_line.x_to_y(min_x);
         if (Point left_point(min_x, y_left); inside(left_point))
             add(left_point);
     }
     // clip right: max_x
-    if (!Polar_trig::singular_sin(polar_line.get_theta())) {
-        double y_right = Polar_trig::rho_theta_x_to_y(polar_line.get_rho(), polar_line.get_theta(), max_x);
+    if (!polar_line.singular_sin()) {
+        double y_right = polar_line.x_to_y(max_x);
         Point right_point(max_x, y_right);
         if (inside(right_point))
             add(right_point);
     }
     // clip top: min_y
-    if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        double x_top = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), min_y);
+    if (!polar_line.singular_cos()) {
+        double x_top = polar_line.y_to_x(min_y);
         if (Point top_point(x_top, min_y); inside(top_point))
             add(top_point);
     }
     // clip bottom: max_y
-    if (!Polar_trig::singular_cos(polar_line.get_theta())) {
-        double x_bottom = Polar_trig::rho_theta_y_to_x(polar_line.get_rho(), polar_line.get_theta(), max_y);
+    if (polar_line.singular_cos()) {
+        double x_bottom = polar_line.y_to_x(max_y);
         Point bottom_point(x_bottom, max_y);
         if (inside(bottom_point))
             add(bottom_point);
@@ -72,9 +72,7 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
         return false;
 }
 
-bool WB_window::inside(Point &point) const {
-    return inside(point.x, point.y);
-}
+bool WB_window::inside(Point &point) const { return inside(point.x, point.y); }
 bool WB_window::inside(double x, double y) const {
     if (x < min_x || x > max_x)
         return false;
