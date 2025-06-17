@@ -99,6 +99,8 @@ add_library(cv-lib STATIC
         pixel.hpp
         point.cpp
         point.hpp
+        polar_line.cpp
+        polar_line.hpp
         polar_trig.cpp
         polar_trig.hpp
         polar_trig_static.hpp
