@@ -59,7 +59,7 @@ void Polar_line::init(double m_rho, double m_theta) {
  * @param theta
  * @return
  */
-bool Polar_line::singular_cos() { return singular_cos(theta); }
+bool Polar_line::singular_cos() const { return singular_cos(theta); }
 /**
  * @brief
  * @param theta
@@ -71,7 +71,7 @@ bool Polar_line::singular_cos(double theta) { return theta == theta_pi / 2; }
  * @param theta
  * @return
  */
-bool Polar_line::singular_sin() { return singular_sin(theta); }
+bool Polar_line::singular_sin() const { return singular_sin(theta); }
 /**
  * @brief
  * @param theta
@@ -133,7 +133,7 @@ void Polar_line::write_text(std::ofstream &ofs, const std::string &delim, Errors
  * @param x
  * @return
  */
-double Polar_line::x_to_y(double x) {
+double Polar_line::x_to_y(double x) const {
     assert(!singular_sin(theta));
     double y = (rho - x * cos_t) / sin_t;
     return y;
@@ -147,7 +147,7 @@ double Polar_line::x_to_y(double x) {
  * @param y
  * @return
  */
-double Polar_line::y_to_x(double y) {
+double Polar_line::y_to_x(double y) const {
     assert(!singular_cos(theta));
     double x = (rho - y * sin_t) / cos_t;
     return x;
@@ -310,18 +310,6 @@ int Polar_trig::point_theta_to_rho_index(double x, double y, int theta) const {
     int rho_index = to_rho_index(point_theta_to_rho(x, y, theta));
     return rho_index;
 }
-/**
- * @brief
- * @param theta_index
- * @return
- */
-// bool Polar_trig::singular_cos_index(int theta_index) const { return singular_cos(to_theta(theta_index)); }
-/**
- * @brief
- * @param theta_index
- * @return
- */
-// bool Polar_trig::singular_sin_index(int theta_index) const { return singular_sin(to_theta(theta_index)); }
 /**
  * @brief
  * @param theta_index
