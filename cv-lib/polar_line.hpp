@@ -1,15 +1,11 @@
 #ifndef SRC__POLAR_LINE_HPP_
 #define SRC__POLAR_LINE_HPP_
 
-#include <algorithm>
 #include <cassert>
 #include <fstream>
-#include <iostream>
-#include <map>
 #include <memory>
 #include <sstream>
 #include "errors.hpp"
-#include "point.hpp"
 
 const int theta_pi = 180;
 const int theta_max_2pi = 360;

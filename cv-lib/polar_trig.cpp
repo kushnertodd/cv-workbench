@@ -1,6 +1,6 @@
 #include "polar_trig.hpp"
 #include <cmath>
-#include "pixel.hpp"
+//#include "pixel.hpp"
 #include "wb_utils.hpp"
 
 /**

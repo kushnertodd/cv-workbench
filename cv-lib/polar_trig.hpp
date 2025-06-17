@@ -1,14 +1,8 @@
 #ifndef SRC__POLAR_TRIG_HPP_
 #define SRC__POLAR_TRIG_HPP_
 
-#include <algorithm>
-#include <cassert>
-#include <fstream>
-#include <iostream>
 #include <map>
 #include <memory>
-#include <sstream>
-#include "errors.hpp"
 #include "point.hpp"
 #include "polar_line.hpp"
 
