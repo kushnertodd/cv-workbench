@@ -13,7 +13,7 @@ Polar_line::Polar_line() = default;
  * @param m_rho
  * @param m_theta
  */
-Polar_line::Polar_line(double m_rho, double m_theta) : rho(m_rho), theta(m_theta) {}
+Polar_line::Polar_line(double m_rho, double m_theta) { init(m_rho, m_theta); }
 /**
  * @brief
  * @return
