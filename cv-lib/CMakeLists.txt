@@ -106,8 +106,12 @@ add_library(cv-lib STATIC
         polar_trig_static.hpp
         runtime.cpp
         runtime.hpp
+        sub_image.cpp
+        sub_image.hpp
         variance_stats.cpp
         variance_stats.hpp
+        view.cpp
+        view.hpp
         wb_convert_types.cpp
         wb_convert_types.hpp
         wb_data_format.cpp

@@ -8,6 +8,7 @@
 #include "image_line_segment.hpp"
 #include "pixel.hpp"
 #include "variance_stats.hpp"
+#include "view.hpp"
 #include "wb_convert_types.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
@@ -34,7 +35,7 @@ public:
     double diff(const Pixel_RGB &other) const;
 };
 
-class Image {
+class Image : public View {
     friend class Kernel;
     Image_header image_header;
     int next_pixel{};

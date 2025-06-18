@@ -7,6 +7,7 @@
 class Image_line_segment {
     friend class Image;
     friend class Image_header;
+    friend class Sub_image;
     Pixel pixel1;
     Pixel pixel2;
     std::vector<Pixel> line_pixels;

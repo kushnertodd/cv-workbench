@@ -6,6 +6,7 @@ class Pixel {
     friend class Image;
     friend class Image_header;
     friend class Image_line_segment;
+    friend class Sub_image;
     int col{};
     int row{};
 

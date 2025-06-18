@@ -100,23 +100,23 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
     bool saw_max_row = false;
     if (Operator_utils::has_parameter(operator_parameters, "min-col")) {
         saw_min_col = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-col", min_col,
-                                          errors);
+        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-col",
+                                          min_col, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "min-row")) {
         saw_min_row = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-row", min_row,
-                                          errors);
+        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-row",
+                                          min_row, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "max-col")) {
         saw_max_col = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-col", max_col,
-                                          errors);
+        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-col",
+                                          max_col, errors);
     }
     if (Operator_utils::has_parameter(operator_parameters, "max-row")) {
         saw_max_row = true;
-        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-row", max_row,
-                                          errors);
+        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-row",
+                                          max_row, errors);
     }
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources[0];
@@ -130,12 +130,15 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
             int max_theta_2pi = min_max_theta_to_theta_2pi(max_theta_input);
             int min_theta = theta_2pi_to_theta(min_theta_2pi);
             int max_theta = theta_2pi_to_theta(max_theta_2pi);
-            std::unique_ptr<Hough> hough =
-                    std::unique_ptr<Hough>(new Hough(input_image->to_x(0), input_image->to_x(input_image->get_ncols()),
-                                                     input_image->to_y(input_image->get_nrows()), input_image->to_y(0),
-                                                     rho_inc, theta_inc, pixel_threshold, unit, min_theta, max_theta));
-            hough->initialize(input_image.get(), pixel_threshold, unit, min_col, saw_min_col, min_row, saw_min_row,
-                              max_col, saw_max_col, max_row, saw_max_row, errors);
+            // View *view = input_image.get();
+            Image *image = input_image.get();
+            View *view = image;
+            std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
+                    new Hough(view, input_image->to_x(0), input_image->to_x(input_image->get_ncols()),
+                              input_image->to_y(input_image->get_nrows()), input_image->to_y(0), rho_inc, theta_inc,
+                              pixel_threshold, unit, min_theta, max_theta));
+            hough->initialize(pixel_threshold, unit, min_col, saw_min_col, min_row, saw_min_row, max_col, saw_max_col,
+                              max_row, saw_max_row, errors);
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)
                     hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run",

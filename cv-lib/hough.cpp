@@ -31,8 +31,9 @@ Hough::Hough() = default;
  * @param m_min_theta
  * @param m_max_theta
  */
-Hough::Hough(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
+Hough::Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
              int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta) :
+    view(m_view),
     pixel_threshold(m_pixel_threshold), unit(m_unit) {
     polar_trig = std::unique_ptr<Polar_trig>(
             new Polar_trig(m_min_x, m_min_y, m_max_x, m_max_y, m_rho_inc, m_theta_inc, m_min_theta, m_max_theta));
@@ -102,11 +103,11 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
  * @brief
  * @param image_theshold
  */
-void Hough::initialize(Image *image, int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row,
+void Hough::initialize(int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row,
                        bool saw_min_row, int max_col, bool saw_max_col, int max_row, bool saw_max_row, Errors &errors) {
     clear();
-    int ncols = image->get_ncols();
-    int nrows = image->get_nrows();
+    int ncols = view->get_ncols();
+    int nrows = view->get_nrows();
     if (!saw_min_col)
         min_col = 0;
     if (!saw_min_row)
@@ -130,10 +131,10 @@ void Hough::initialize(Image *image, int pixel_threshold, bool unit, int min_col
     if (!errors.has_error()) {
         for (int col = min_col; col <= max_col; col++) {
             for (int row = min_row; row <= max_row; row++) {
-                double value = std::abs(image->get(col, row));
+                double value = std::abs(view->get(col, row));
                 if (value > pixel_threshold) {
                     Point point;
-                    image->to_point(point, col, row);
+                    view->to_point(point, col, row);
                     int theta_inc = get_theta_inc();
                     int min_theta = get_min_theta();
                     int max_theta = get_max_theta();
@@ -243,7 +244,8 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         wb_utils::read_int(fp, max_theta, "Hough::read", "", "missing hough max_theta", errors);
     Hough *hough = nullptr;
     if (!errors.has_error()) {
-        hough = new Hough(min_x, max_x, min_y, max_y, rho_inc, theta_inc, pixel_threshold, (int_unit == 1), min_theta,
+        View *view{};
+        hough = new Hough(view, min_x, max_x, min_y, max_y, rho_inc, theta_inc, pixel_threshold, (int_unit == 1), min_theta,
                           max_theta);
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
