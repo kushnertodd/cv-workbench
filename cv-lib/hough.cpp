@@ -102,31 +102,11 @@ int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
  * @brief
  * @param image_theshold
  */
-void Hough::initialize(int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row, bool saw_min_row,
-                       int max_col, bool saw_max_col, int max_row, bool saw_max_row, Errors &errors) {
+void Hough::initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row,
+                       Errors &errors) {
     clear();
     int ncols = view->get_ncols();
     int nrows = view->get_nrows();
-    if (!saw_min_col)
-        min_col = 0;
-    if (!saw_min_row)
-        min_row = 0;
-    if (!saw_max_col)
-        max_col = ncols - 1;
-    if (!saw_max_row)
-        max_row = nrows - 1;
-    if (min_col < 0)
-        errors.add("Hough::initialize", "", "min-col must be positive");
-    if (min_row < 0)
-        errors.add("Hough::initialize", "", "min-row must be positive");
-    // if (max_col >= ncols)
-    //     errors.add("Hough::initialize", "", "max-col must be within image");
-    // if (max_row >= nrows)
-    //     errors.add("Hough::initialize", "", "max-row must be within image");
-    if (max_col < min_col)
-        errors.add("Hough::initialize", "", "max-col must be at least as large as min-col");
-    if (max_row < min_row)
-        errors.add("Hough::initialize", "", "min-row must be at least as large as max-row");
     if (!errors.has_error()) {
         for (int col = min_col; col <= max_col; col++) {
             for (int row = min_row; row <= max_row; row++) {
@@ -146,14 +126,14 @@ void Hough::initialize(int pixel_threshold, bool unit, int min_col, bool saw_min
                         }
                     } else {
                         int theta = 0;
-                        for (theta = min_theta; theta < theta_pi; theta += theta_inc) {
+                        for (theta = min_theta; theta < theta_2pi; theta += theta_inc) {
                             double rho = polar_trig->point_theta_to_rho(point, theta);
                             int rho_index = polar_trig->to_rho_index(rho);
                             int theta_index = polar_trig->to_theta_index(theta);
                             update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
                         }
-                        for (theta -= theta_pi; theta <= max_theta; theta += theta_inc) {
-                            int theta_adj = theta + theta_pi;
+                        for (theta -= theta_2pi; theta <= max_theta; theta += theta_inc) {
+                            int theta_adj = theta + theta_2pi;
                             double rho = polar_trig->point_theta_to_rho(point, theta_adj);
                             int rho_index = polar_trig->to_rho_index(rho);
                             int theta_index = polar_trig->to_theta_index(theta_adj);
@@ -511,7 +491,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
         ofs << std::endl;
     } else {
         int theta = min_theta;
-        for (; theta < theta_pi; theta += theta_inc) {
+        for (; theta < theta_2pi; theta += theta_inc) {
             int theta_index = polar_trig->to_theta_index(theta);
             ofs << polar_trig->to_theta(theta_index) << delim;
             for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
@@ -519,7 +499,7 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
             }
             ofs << std::endl;
         }
-        for (; theta < max_theta + theta_pi; theta += theta_inc) {
+        for (; theta < max_theta + theta_2pi; theta += theta_inc) {
             int theta_index = polar_trig->to_theta_index(theta);
             ofs << polar_trig->to_theta(theta_index) << delim;
             for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {

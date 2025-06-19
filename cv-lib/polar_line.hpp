@@ -8,7 +8,7 @@
 #include "errors.hpp"
 
 const int theta_pi = 180;
-const int theta_max_2pi = 360;
+const int theta_2pi = 360;
 
 /**
  * @brief
@@ -16,22 +16,22 @@ const int theta_max_2pi = 360;
 class Polar_line {
     friend class Polar_trig;
     double rho{};
-    double theta{};
+    int theta{};
     double cos_t{};
     double sin_t{};
-    static const double polar_cos[theta_max_2pi];
-    static const double polar_sin[theta_max_2pi];
+    static const double polar_cos[theta_2pi];
+    static const double polar_sin[theta_2pi];
 
 public:
     Polar_line();
-    Polar_line(double m_rho, double m_theta);
+    Polar_line(double m_rho, int m_theta);
     double get_rho() const;
     double get_theta() const;
-    void init(double m_rho, double m_theta);
+    void init(double m_rho, int m_theta);
     bool singular_cos() const;
-    static bool singular_cos(double theta);
+    static bool singular_cos(int theta);
     bool singular_sin() const;
-    static bool singular_sin(double theta);
+    static bool singular_sin(int theta);
     static double to_cos(int theta);
     std::string to_string() const;
     static double to_sin(int theta);

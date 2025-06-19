@@ -13,7 +13,7 @@ Polar_line::Polar_line() = default;
  * @param m_rho
  * @param m_theta
  */
-Polar_line::Polar_line(double m_rho, double m_theta) { init(m_rho, m_theta); }
+Polar_line::Polar_line(double m_rho, int m_theta) { init(m_rho, m_theta); }
 /**
  * @brief
  * @return
@@ -29,7 +29,7 @@ double Polar_line::get_theta() const { return theta; }
  * @param m_rho
  * @param m_theta
  */
-void Polar_line::init(double m_rho, double m_theta) {
+void Polar_line::init(double m_rho, int m_theta) {
     rho = m_rho;
     theta = m_theta;
     cos_t = to_cos(theta);
@@ -46,7 +46,7 @@ bool Polar_line::singular_cos() const { return singular_cos(theta); }
  * @param theta
  * @return
  */
-bool Polar_line::singular_cos(double theta) { return theta == theta_pi / 2; }
+bool Polar_line::singular_cos(int theta) { return theta == theta_pi / 2; }
 /**
  * @brief
  * @param theta
@@ -58,7 +58,7 @@ bool Polar_line::singular_sin() const { return singular_sin(theta); }
  * @param theta
  * @return
  */
-bool Polar_line::singular_sin(double theta) { return theta == 0; }
+bool Polar_line::singular_sin(int theta) { return theta == 0; }
 /**
  * @brief
  * @param theta

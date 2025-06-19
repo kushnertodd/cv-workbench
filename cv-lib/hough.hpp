@@ -46,8 +46,7 @@ public:
     int get_nthetas() const;
     int get_rho_inc() const;
     int get_theta_inc() const;
-    void initialize(int pixel_threshold, bool unit, int min_col, bool saw_min_col, int min_row, bool saw_min_row,
-                    int max_col, bool saw_max_col, int max_row, bool saw_max_row, Errors &errors);
+    void initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row, Errors &errors);
     void log(std::vector<WB_log_entry> &log_entries);
     static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);

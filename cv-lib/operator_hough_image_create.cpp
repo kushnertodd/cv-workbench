@@ -16,14 +16,14 @@ Operator_hough_image_create::~Operator_hough_image_create() = default;
  * @return theta in range -360..359
  */
 bool Operator_hough_image_create::is_valid_min_nax_theta(int theta) {
-    return (theta >= -theta_max_2pi && theta < theta_max_2pi);
+    return (theta >= -theta_2pi && theta < theta_2pi);
 }
 /**
  * @brief
  * @param theta
  * @return theta in range 0..359
  */
-bool Operator_hough_image_create::is_valid_theta_2pi(int theta) { return (theta >= 0 && theta < theta_max_2pi); }
+bool Operator_hough_image_create::is_valid_theta_2pi(int theta) { return (theta >= 0 && theta < theta_2pi); }
 /**
  * @brief
  * @param map min_max_theta in range -360..359 to 0..359
@@ -31,7 +31,7 @@ bool Operator_hough_image_create::is_valid_theta_2pi(int theta) { return (theta 
  */
 int Operator_hough_image_create::min_max_theta_to_theta_2pi(int min_max_theta) {
     assert(is_valid_min_nax_theta(min_max_theta));
-    return (min_max_theta + theta_max_2pi) % theta_max_2pi;
+    return (min_max_theta + theta_2pi) % theta_2pi;
 }
 /**
  * @brief
@@ -40,7 +40,7 @@ int Operator_hough_image_create::min_max_theta_to_theta_2pi(int min_max_theta) {
  */
 int Operator_hough_image_create::theta_2pi_to_theta(int theta_2pi) {
     assert(is_valid_theta_2pi(theta_2pi));
-    return theta_2pi > theta_pi ? theta_2pi - theta_pi : theta_2pi;
+    return theta_2pi > theta_2pi ? theta_2pi - theta_2pi : theta_2pi;
 }
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
@@ -145,8 +145,7 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
                     new Hough(input_sub_image.get(), input_sub_image->to_x(min_col), input_sub_image->to_x(max_col),
                               input_sub_image->to_y(min_row), input_sub_image->to_y(max_row), rho_inc, theta_inc,
                               pixel_threshold, unit, min_theta, max_theta));
-            hough->initialize(pixel_threshold, unit, min_col, saw_min_col, min_row, saw_min_row, max_col, saw_max_col,
-                              max_row, saw_max_row, errors);
+            hough->initialize(pixel_threshold, unit, min_col, min_row, max_col, max_row, errors);
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)
                     hough_output_data_store->write_operator_hough(hough.get(), "Operator_hough_image_create::run",

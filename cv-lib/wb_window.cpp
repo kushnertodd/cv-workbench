@@ -58,7 +58,7 @@ bool WB_window::clip_window(Polar_line &polar_line, Line_segment &line_segment) 
             add(top_point);
     }
     // clip bottom: max_y
-    if (polar_line.singular_cos()) {
+    if (!polar_line.singular_cos()) {
         double x_bottom = polar_line.y_to_x(max_y);
         Point bottom_point(x_bottom, max_y);
         if (inside(bottom_point))
