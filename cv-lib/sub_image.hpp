@@ -15,12 +15,16 @@
 // #include "wb_resize_types.hpp"
 #include "view.hpp"
 
-class Sub_image : View {
+class Sub_image : public View {
     Image *image;
     int min_col;
     int min_row;
     int max_col;
     int max_row;
+    int ncols;
+    int nrows;
+    double col_offset{};
+    double row_offset{};
 
 public:
     virtual ~Sub_image();
@@ -39,13 +43,23 @@ public:
     int get_nrows() const;
     void set(int col, int row, double value, int component = 0) const;
     void set(const Pixel &pixel, double value, int component = 0) const;
+    double to_col(double x) const;
+    static double to_col(double x, int ncols);
+    int to_image_col(int col) const;
+    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
+    void to_image_pixel(Pixel &image_pixel, Pixel &pixel);
+    int to_image_row(int row) const;
+    void to_pixel(Pixel &pixel, double x, double y) const;
+    void to_pixel(Pixel &pixel, Point &point);
     void to_point(Point &point, int col, int row);
     void to_point(Point &point, Pixel &pixel);
-    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
+    double to_row(double y) const;
+    static double to_row(double y, int nrows);
+    void to_sub_image_pixel(Pixel &pixel, Pixel &image_pixel) const;
     double to_x(int col) const;
-    double to_x(int col, int ncols);
+    static double to_x(int col, int ncols);
     double to_y(int row) const;
-    double to_y(int row, int nrows);
+    static double to_y(int row, int nrows);
 };
 
 #endif // CV_WORKBENCH_SRC_SUBIMAGE_HPP_

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "hough.hpp"
 #include "operator_utils.hpp"
+#include "sub_image.hpp"
 
 extern bool debug;
 
@@ -130,12 +131,19 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
             int max_theta_2pi = min_max_theta_to_theta_2pi(max_theta_input);
             int min_theta = theta_2pi_to_theta(min_theta_2pi);
             int max_theta = theta_2pi_to_theta(max_theta_2pi);
-            // View *view = input_image.get();
-            Image *image = input_image.get();
-            View *view = image;
+            if (!saw_min_col)
+                min_col = 0;
+            if (!saw_min_row)
+                min_row = 0;
+            if (!saw_max_col)
+                max_col = input_image->get_ncols() - 1;
+            if (!saw_max_row)
+                max_row = input_image->get_nrows() - 1;
+            std::unique_ptr<Sub_image> input_sub_image(
+                    new Sub_image(input_image.get(), min_col, min_row, max_col, max_row));
             std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
-                    new Hough(view, input_image->to_x(0), input_image->to_x(input_image->get_ncols()),
-                              input_image->to_y(input_image->get_nrows()), input_image->to_y(0), rho_inc, theta_inc,
+                    new Hough(input_sub_image.get(), input_sub_image->to_x(min_col), input_sub_image->to_x(max_col),
+                              input_sub_image->to_y(min_row), input_sub_image->to_y(max_row), rho_inc, theta_inc,
                               pixel_threshold, unit, min_theta, max_theta));
             hough->initialize(pixel_threshold, unit, min_col, saw_min_col, min_row, saw_min_row, max_col, saw_max_col,
                               max_row, saw_max_row, errors);

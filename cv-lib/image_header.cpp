@@ -101,14 +101,14 @@ void Image_header::to_pixel(Pixel &pixel, double x, double y) const { pixel.init
  * @param pixel
  * @param point
  */
-void Image_header::to_pixel(Pixel &pixel, Point &point) { to_pixel(pixel, point.x, point.y); }
+void Image_header::to_pixel(Pixel &pixel, Point &point) const { to_pixel(pixel, point.x, point.y); }
 /**
  * @brief
  * @param point
  * @param col
  * @param row
  */
-void Image_header::to_point(Point &point, int col, int row) { point.init(to_x(col), to_y(row)); }
+void Image_header::to_point(Point &point, int col, int row) const { point.init(to_x(col), to_y(row)); }
 /**
  * @brief
  * @param point
