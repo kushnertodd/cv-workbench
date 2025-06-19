@@ -119,10 +119,10 @@ void Hough::initialize(int pixel_threshold, bool unit, int min_col, bool saw_min
         errors.add("Hough::initialize", "", "min-col must be positive");
     if (min_row < 0)
         errors.add("Hough::initialize", "", "min-row must be positive");
-    if (max_col >= ncols)
-        errors.add("Hough::initialize", "", "max-col must be within image");
-    if (max_row >= nrows)
-        errors.add("Hough::initialize", "", "max-row must be within image");
+    // if (max_col >= ncols)
+    //     errors.add("Hough::initialize", "", "max-col must be within image");
+    // if (max_row >= nrows)
+    //     errors.add("Hough::initialize", "", "max-row must be within image");
     if (max_col < min_col)
         errors.add("Hough::initialize", "", "max-col must be at least as large as min-col");
     if (max_row < min_row)

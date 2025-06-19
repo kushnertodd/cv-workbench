@@ -5,11 +5,9 @@
 #include <fstream>
 #include <memory>
 #include <string>
-#include "bounds.hpp"
 #include "errors.hpp"
 #include "file_utils.hpp"
 #include "hough_peak.hpp"
-// #include "image.hpp"
 #include "image_line_segment.hpp"
 #include "polar_trig.hpp"
 #include "variance_stats.hpp"

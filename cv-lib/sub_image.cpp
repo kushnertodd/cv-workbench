@@ -53,7 +53,9 @@ bool Sub_image::check_grayscale(const std::string &module, Errors &errors) const
  * @param value
  * @param component
  */
-void Sub_image::draw_line_segment(const Image_line_segment &image_line_segment, double value, int component) const {
+void Sub_image::draw_line_segment(Image_line_segment &view_line_segment, double value, int component) {
+    Image_line_segment image_line_segment;
+    to_image_line_segment(image_line_segment, view_line_segment);
     image->draw_line_segment(image_line_segment, value, component);
 }
 /**
@@ -126,10 +128,14 @@ int Sub_image::to_image_col(int col) const { return col + min_col; }
  * @param image_line_segment
  * @param line_segment
  */
-void Sub_image::to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment) {
-    image->to_image_line_segment(image_line_segment, line_segment);
+void Sub_image::to_image_line_segment(Image_line_segment &image_line_segment, Image_line_segment &view_line_segment) {
+    Pixel pixel1 = view_line_segment.pixel1;
+    Pixel pixel2 = view_line_segment.pixel2;
+    pixel1.translate(min_col, min_row);
+    pixel2.translate(min_col, min_row);
+    image_line_segment.init(pixel1, pixel2);
 }
-void Sub_image::to_image_pixel(Pixel &image_pixel, Pixel &pixel) {
+void Sub_image::to_image_pixel(Pixel &image_pixel, Pixel &pixel) const {
     pixel.init(to_image_col(image_pixel.col), to_image_row(image_pixel.row));
 }
 int Sub_image::to_image_row(int row) const { return row + min_row; }

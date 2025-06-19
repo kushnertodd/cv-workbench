@@ -109,8 +109,6 @@ Hough *Filesystem_data_source_descriptor::read_hough(Errors &errors) {
  */
 Image *Filesystem_data_source_descriptor::read_image(Errors &errors) {
     std::string path = to_path();
-    // Wb_filename wb_filename(path, path, "", WB_data_format::Data_format::BINARY);
-    // std::string data_filename = wb_filename.to_bin();
     return Image::read(path, errors);
 }
 /**

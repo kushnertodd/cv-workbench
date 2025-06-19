@@ -1,18 +1,10 @@
 #ifndef CV_WORKBENCH_SRC_SUBIMAGE_HPP_
 #define CV_WORKBENCH_SRC_SUBIMAGE_HPP_
 
-// #include <memory>
-// #include <string>
 #include "errors.hpp"
 #include "image.hpp"
 #include "image_line_segment.hpp"
 #include "line_segment.hpp"
-// #include "pixel.hpp"
-// #include "variance_stats.hpp"
-// #include "wb_convert_types.hpp"
-// #include "wb_defs.hpp"
-// #include "wb_log.hpp"
-// #include "wb_resize_types.hpp"
 #include "view.hpp"
 
 class Sub_image : public View {
@@ -31,7 +23,7 @@ public:
     Sub_image();
     Sub_image(Image *m_image, int m_min_col, int m_min_row, int m_max_col, int m_max_row);
     bool check_grayscale(const std::string &module, Errors &errors) const;
-    void draw_line_segment(const Image_line_segment &image_line_segment, double value, int component = 0) const;
+    void draw_line_segment(Image_line_segment &view_line_segment, double value, int component = 0);
     void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
     double get(int col, int row, int component = 0) const;
     double get(const Pixel &pixel, int component = 0) const;
@@ -46,8 +38,8 @@ public:
     double to_col(double x) const;
     static double to_col(double x, int ncols);
     int to_image_col(int col) const;
-    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
-    void to_image_pixel(Pixel &image_pixel, Pixel &pixel);
+    void to_image_line_segment(Image_line_segment &image_line_segment, Image_line_segment &view_line_segment);
+    void to_image_pixel(Pixel &image_pixel, Pixel &pixel) const;
     int to_image_row(int row) const;
     void to_pixel(Pixel &pixel, double x, double y) const;
     void to_pixel(Pixel &pixel, Point &point);

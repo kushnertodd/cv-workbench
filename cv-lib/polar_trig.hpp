@@ -20,7 +20,7 @@ public:
     void init(int m_rho_index, int m_theta_index);
 };
 
-const int rho_pad = 10;
+const int rho_pad = 20;
 
 /**
  * @brief

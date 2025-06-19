@@ -24,11 +24,11 @@ Image_line_segment::Image_line_segment(const Pixel &m_pixel1, const Pixel &m_pix
  * @param row2
  */
 Image_line_segment::Image_line_segment(int col1, int row1, int col2, int row2) {
-    pixel1.init(col1, row1);
-    pixel2.init(col2, row2);
     if (debug)
         std::cout << "Image_line_segment::Image_line_segment pixel1 (" << pixel1.to_string() << ") pixel2 ("
                   << pixel2.to_string() << ")" << std::endl;
+    pixel1.init(col1, row1);
+    pixel2.init(col2, row2);
     init(pixel1, pixel2);
 }
 /**
