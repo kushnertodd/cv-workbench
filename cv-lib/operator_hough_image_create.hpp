@@ -6,7 +6,7 @@
 #include "wb_defs.hpp"
 
 const int default_min_theta = 0;
-const int default_max_theta = theta_2pi;
+const int default_max_theta = theta_2pi-1;
 
 class Operator_hough_image_create : public Operator {
 public:

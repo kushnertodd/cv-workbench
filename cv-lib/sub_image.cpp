@@ -86,8 +86,8 @@ int Sub_image::get_max_col() const { return max_col; }
  * @return
  */
 int Sub_image::get_max_row() const { return max_row; }
-int Sub_image::get_max_x() const { return to_x(ncols - 1); }
-int Sub_image::get_max_y() const { return to_y(nrows - 1); }
+double Sub_image::get_max_x() const { return to_x(ncols - 1); }
+double Sub_image::get_max_y() const { return to_y(nrows - 1); }
 /**
  * @brief
  * @return
@@ -98,8 +98,8 @@ int Sub_image::get_min_col() const { return min_col; }
  * @return
  */
 int Sub_image::get_min_row() const { return min_row; }
-int Sub_image::get_min_x() const { return to_x(0); }
-int Sub_image::get_min_y() const { return to_y(0); }
+double Sub_image::get_min_x() const { return to_x(0); }
+double Sub_image::get_min_y() const { return to_y(0); }
 /**
  * @brief
  * @return

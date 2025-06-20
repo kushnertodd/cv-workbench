@@ -29,12 +29,12 @@ public:
     double get(const Pixel &pixel, int component = 0) const;
     int get_max_col() const;
     int get_max_row() const;
-    int get_max_x() const;
-    int get_max_y() const;
+    double get_max_x() const;
+    double get_max_y() const;
     int get_min_col() const;
     int get_min_row() const;
-    int get_min_x() const;
-    int get_min_y() const;
+    double get_min_x() const;
+    double get_min_y() const;
     int get_ncols() const;
     int get_nrows() const;
     void set(int col, int row, double value, int component = 0) const;
