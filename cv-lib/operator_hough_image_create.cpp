@@ -142,8 +142,8 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
             std::unique_ptr<Sub_image> input_sub_image(
                     new Sub_image(input_image.get(), min_col, min_row, max_col, max_row));
             std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
-                    new Hough(input_sub_image.get(), input_sub_image->to_x(min_col), input_sub_image->to_x(max_col),
-                              input_sub_image->to_y(min_row), input_sub_image->to_y(max_row), rho_inc, theta_inc,
+                    new Hough(input_sub_image.get(), input_sub_image->get_min_x(), input_sub_image->get_max_x(),
+                              input_sub_image->get_min_y(), input_sub_image->get_max_y(), rho_inc, theta_inc,
                               pixel_threshold, unit, min_theta, max_theta));
             hough->initialize(pixel_threshold, unit, min_col, min_row, max_col, max_row, errors);
             if (!errors.has_error())

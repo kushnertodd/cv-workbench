@@ -114,7 +114,7 @@ void Image_header::to_point(Point &point, int col, int row) const { point.init(t
  * @param point
  * @param pixel
  */
-void Image_header::to_point(Point &point, Pixel &pixel) { to_point(point, pixel.col, pixel.row); }
+void Image_header::to_point(Point &point, Pixel &pixel) const { to_point(point, pixel.col, pixel.row); }
 /**
  * @brief
  * @param y
