@@ -51,9 +51,9 @@ void Hough::clear() {
  * @param lines
  * @param threshold
  */
-void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold, double rho_suppress,
-                       int theta_suppress) const {
-    std::vector<Hough_peak> peaks;
+void Hough::find_peaks(double threshold, double rho_suppress,
+                       int theta_suppress)  {
+    std::vector<Hough_peak> filtered_peaks;
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
             int count = get(rho_index, theta_index);
@@ -75,7 +75,7 @@ void Hough::find_peaks(std::vector<Hough_peak> &filtered_peaks, double threshold
             }
         }
         if (!reject)
-            filtered_peaks.push_back(peak);
+            peaks.push_back(peak);
     }
 }
 /**
@@ -114,31 +114,10 @@ void Hough::initialize(int pixel_threshold, bool unit, int min_col, int min_row,
                 if (value > pixel_threshold) {
                     Point point;
                     view->to_point(point, col, row);
-                    int theta_inc = get_theta_inc();
-                    int min_theta = get_min_theta();
-                    int max_theta = get_max_theta();
-                    if (max_theta > min_theta) {
-                        for (int theta = min_theta; theta <= max_theta; theta += theta_inc) {
-                            double rho = polar_trig->point_theta_to_rho(point, theta);
-                            int rho_index = polar_trig->to_rho_index(rho);
-                            int theta_index = polar_trig->to_theta_index(theta);
-                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
-                        }
-                    } else {
-                        int theta = 0;
-                        for (theta = min_theta; theta < theta_2pi; theta += theta_inc) {
-                            double rho = polar_trig->point_theta_to_rho(point, theta);
-                            int rho_index = polar_trig->to_rho_index(rho);
-                            int theta_index = polar_trig->to_theta_index(theta);
-                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
-                        }
-                        for (theta -= theta_2pi; theta <= max_theta; theta += theta_inc) {
-                            int theta_adj = theta + theta_2pi;
-                            double rho = polar_trig->point_theta_to_rho(point, theta_adj);
-                            int rho_index = polar_trig->to_rho_index(rho);
-                            int theta_index = polar_trig->to_theta_index(theta_adj);
-                            update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
-                        }
+                    for (int theta_index = 0; theta_index <= get_nthetas(); theta_index++) {
+                        double rho = polar_trig->point_theta_index_to_rho(point, theta_index);
+                        int rho_index = polar_trig->to_rho_index(rho);
+                        update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));
                     }
                 }
             }
@@ -479,34 +458,12 @@ void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &err
     int theta_inc = get_theta_inc();
     int min_theta = get_min_theta();
     int max_theta = get_max_theta();
-    if (max_theta > min_theta) {
-        for (int theta = min_theta; theta <= max_theta; theta += theta_inc) {
-            int theta_index = polar_trig->to_theta_index(theta);
-            ofs << polar_trig->to_theta(theta_index) << delim;
-            for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-                ofs << std::setprecision(1) << get(rho_index, theta_index) << delim;
-            }
-            ofs << std::endl;
+    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
+        ofs << polar_trig->to_theta(theta_index) << delim;
+        for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
+            ofs << std::setprecision(1) << get(rho_index, theta_index) << delim;
         }
         ofs << std::endl;
-    } else {
-        int theta = min_theta;
-        for (; theta < theta_2pi; theta += theta_inc) {
-            int theta_index = polar_trig->to_theta_index(theta);
-            ofs << polar_trig->to_theta(theta_index) << delim;
-            for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-                ofs << std::setprecision(1) << get(rho_index, theta_index) << delim;
-            }
-            ofs << std::endl;
-        }
-        for (; theta < max_theta + theta_2pi; theta += theta_inc) {
-            int theta_index = polar_trig->to_theta_index(theta);
-            ofs << polar_trig->to_theta(theta_index) << delim;
-            for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {
-                ofs << std::setprecision(1) << get(rho_index, theta_index) << delim;
-            }
-            ofs << std::endl;
-        }
     }
     ofs << std::endl;
 }

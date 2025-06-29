@@ -15,32 +15,8 @@ Operator_hough_image_create::~Operator_hough_image_create() = default;
  * @param theta
  * @return theta in range -360..359
  */
-bool Operator_hough_image_create::is_valid_min_nax_theta(int theta) {
-    return (theta >= -theta_2pi && theta < theta_2pi);
-}
-/**
- * @brief
- * @param theta
- * @return theta in range 0..359
- */
-bool Operator_hough_image_create::is_valid_theta_2pi(int theta) { return (theta >= 0 && theta < theta_2pi); }
-/**
- * @brief
- * @param map min_max_theta in range -360..359 to 0..359
- * @return
- */
-int Operator_hough_image_create::min_max_theta_to_theta_2pi(int min_max_theta) {
-    assert(is_valid_min_nax_theta(min_max_theta));
-    return (min_max_theta + theta_2pi) % theta_2pi;
-}
-/**
- * @brief
- * @param theta in range 0..359
- * @return theta in range 0..177
- */
-int Operator_hough_image_create::theta_2pi_to_theta(int theta_2pi) {
-    assert(is_valid_theta_2pi(theta_2pi));
-    return theta_2pi > theta_2pi ? theta_2pi - theta_2pi : theta_2pi;
+bool Operator_hough_image_create::is_valid_min_max_theta(int theta) {
+    return (theta >= -theta_pi && theta <= theta_pi);
 }
 /**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
@@ -74,18 +50,18 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
     if (Operator_utils::has_parameter(operator_parameters, "pixel-threshold"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "pixel-threshold",
                                           pixel_threshold, errors);
-    int min_theta_input = default_min_theta;
+    int min_theta = default_min_theta;
     if (Operator_utils::has_parameter(operator_parameters, "min-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "min-theta",
-                                          min_theta_input, errors);
-    if (!is_valid_theta_2pi(min_theta_input))
-        errors.add("Operator_hough_image_create::run", "", "min-theta must be in range -360..359");
-    int max_theta_input = default_max_theta;
+                                          min_theta, errors);
+    if (!is_valid_min_max_theta(min_theta))
+        errors.add("Operator_hough_image_create::run", "", "min-theta must be in range -180..180");
+    int max_theta = default_max_theta;
     if (Operator_utils::has_parameter(operator_parameters, "max-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "max-theta",
-                                          max_theta_input, errors);
-    if (!is_valid_theta_2pi(max_theta_input))
-        errors.add("Operator_hough_image_create::run", "", "max-theta must be in range -360..359");
+                                          max_theta, errors);
+    if (!is_valid_min_max_theta(max_theta))
+        errors.add("Operator_hough_image_create::run", "", "max-theta must be in range -180..180");
     std::string accumulate_str = "unit";
     bool have_accumulate = Operator_utils::get_string_parameter("Operator_hough_image_create::run", operator_parameters,
                                                                 "accumulate", accumulate_str, errors);
@@ -127,10 +103,6 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
             input_image->check_grayscale("Operator_hough_image_create::run", errors);
         if (!errors.has_error()) {
             bool unit = accumulate_str == "unit";
-            int min_theta_2pi = min_max_theta_to_theta_2pi(min_theta_input);
-            int max_theta_2pi = min_max_theta_to_theta_2pi(max_theta_input);
-            int min_theta = theta_2pi_to_theta(min_theta_2pi);
-            int max_theta = theta_2pi_to_theta(max_theta_2pi);
             if (!saw_min_col)
                 min_col = 0;
             if (!saw_min_row)

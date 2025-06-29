@@ -42,7 +42,7 @@ void Operator_hough_peak_detect::run(std::vector<Data_source_descriptor *> &inpu
         Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Hough> hough(input_data_source->read_operator_hough("Operator_hough_peak_detect::run", errors));
         if (!errors.has_error()) {
-            hough->find_peaks(hough->peaks, threshold, rho_suppress, theta_suppress);
+            hough->find_peaks(threshold, rho_suppress, theta_suppress);
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)
                     hough_output_data_store->write_operator_hough_peaks(hough.get(), "Operator_hough_peak_detect::run",
