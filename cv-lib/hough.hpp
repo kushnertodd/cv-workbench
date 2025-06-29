@@ -33,8 +33,7 @@ public:
     Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
           int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta);
     void clear();
-    void find_peaks(double threshold, double rho_suppress,
-                    int theta_suppress) ;
+    void find_peaks(double threshold, double rho_suppress, int theta_suppress);
     int get(int rho_index, int theta_index) const;
     int get_max_theta() const;
     double get_max_x() const;

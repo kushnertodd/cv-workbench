@@ -51,8 +51,7 @@ void Hough::clear() {
  * @param lines
  * @param threshold
  */
-void Hough::find_peaks(double threshold, double rho_suppress,
-                       int theta_suppress)  {
+void Hough::find_peaks(double threshold, double rho_suppress, int theta_suppress) {
     std::vector<Hough_peak> filtered_peaks;
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < get_nrhos(); rho_index++) {

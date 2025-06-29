@@ -46,7 +46,7 @@ void Operator_hough_peak_detect::run(std::vector<Data_source_descriptor *> &inpu
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)
                     hough_output_data_store->write_operator_hough_peaks(hough.get(), "Operator_hough_peak_detect::run",
-                                                                  errors);
+                                                                        errors);
             if (!errors.has_error())
                 hough->log(log_entries);
         }
