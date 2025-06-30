@@ -82,8 +82,10 @@ void Polar_trig::initialize_rhos() {
 void Polar_trig::initialize_thetas() {
     int theta_index = 0;
     bool done = false;
+    bool one_more_time = false;
     int theta = min_theta;
     while (!done) {
+        done = one_more_time;
         if ((theta % theta_inc) == 0) {
             theta_to_index[theta] = theta_index;
             index_to_theta[theta_index] = theta;
@@ -93,7 +95,7 @@ void Polar_trig::initialize_thetas() {
             theta = -(theta_pi - 1);
         else
             theta++;
-        done = (theta == max_theta);
+        one_more_time = (theta == max_theta);
     }
     nthetas = theta_index;
 }

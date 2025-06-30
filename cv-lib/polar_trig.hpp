@@ -14,6 +14,7 @@ class Polar_index {
     int rho_index{};
     int theta_index{};
 
+
 public:
     Polar_index();
     Polar_index(int m_rho_index, int m_theta_index);

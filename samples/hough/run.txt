@@ -4,6 +4,8 @@ create_hough_test_image_8x8.json
 test_image_grayscale_hough_8x8.json
 create_hough_test_image_16x16.json
 test_image_grayscale_hough_16x16.json
+create_hough_test_image_16x16_view.json
+test_image_grayscale_hough_16x16_view.json
 image_grayscale_edge.json
 image_grayscale_edge_sqr.json
 image_grayscale_edge_sqr_threshold.json
