@@ -87,25 +87,26 @@ void Polar_trig::initialize_thetas() {
         if ((theta % theta_inc) == 0) {
             theta_to_index[theta] = theta_index;
             index_to_theta[theta_index] = theta;
-        theta_index++;
+            theta_index++;
         }
-        if  (theta == theta_pi)
+        if (theta == theta_pi)
             theta = -(theta_pi - 1);
-        else theta++;
+        else
+            theta++;
         done = (theta == max_theta);
     }
     nthetas = theta_index;
 }
 bool Polar_trig::is_rho_index_valid(int rho_index) const { return rho_index >= 0 && rho_index < nrhos; }
 bool Polar_trig::is_theta_index_valid(int theta_index) const { return theta_index >= 0 && theta_index < nthetas; }
-bool Polar_trig::is_theta_valid(int theta) const { return theta>= 0 && theta< theta_pi; }
+bool Polar_trig::is_theta_valid(int theta) const { return theta >= 0 && theta < theta_pi; }
 /**
  * @brief
  * @param point
  * @param theta_index
  * @return
  */
-double Polar_trig::point_theta_index_to_rho(Point &point, int theta_index)  {
+double Polar_trig::point_theta_index_to_rho(Point &point, int theta_index) {
     return point_theta_index_to_rho(point.x, point.y, theta_index);
 }
 /**
@@ -115,7 +116,7 @@ double Polar_trig::point_theta_index_to_rho(Point &point, int theta_index)  {
  * @param theta_index
  * @return
  */
-double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index)  {
+double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index) {
     double rho = point_theta_to_rho(x, y, to_theta(theta_index));
     return rho;
 }
@@ -125,7 +126,7 @@ double Polar_trig::point_theta_index_to_rho(double x, double y, int theta_index)
  * @param theta_index
  * @return
  */
-int Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index)  {
+int Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index) {
     return point_theta_index_to_rho_index(point.x, point.y, theta_index);
 }
 /**
@@ -135,7 +136,7 @@ int Polar_trig::point_theta_index_to_rho_index(Point &point, int theta_index)  {
  * @param theta_index
  * @return
  */
-int Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_index)  {
+int Polar_trig::point_theta_index_to_rho_index(double x, double y, int theta_index) {
     int rho_index = to_rho_index(point_theta_to_rho(x, y, to_theta(theta_index)));
     assert(is_rho_index_valid(rho_index));
     return rho_index;
@@ -171,7 +172,7 @@ double Polar_trig::point_theta_to_rho(double x, double y, int theta) const {
  * @param theta
  * @return
  */
-int Polar_trig::point_theta_to_rho_index(Point &point, int theta)  {
+int Polar_trig::point_theta_to_rho_index(Point &point, int theta) {
     int rho_index = point_theta_to_rho_index(point.x, point.y, theta);
     return rho_index;
 }
@@ -182,7 +183,7 @@ int Polar_trig::point_theta_to_rho_index(Point &point, int theta)  {
  * @param theta
  * @return
  */
-int Polar_trig::point_theta_to_rho_index(double x, double y, int theta)  {
+int Polar_trig::point_theta_to_rho_index(double x, double y, int theta) {
     int rho_index = to_rho_index(point_theta_to_rho(x, y, theta));
     return rho_index;
 }
@@ -191,13 +192,13 @@ int Polar_trig::point_theta_to_rho_index(double x, double y, int theta)  {
  * @param theta_index
  * @return
  */
-double Polar_trig::to_cos_index(int theta_index)  { return Polar_line::to_cos(to_theta(theta_index)); }
+double Polar_trig::to_cos_index(int theta_index) { return Polar_line::to_cos(to_theta(theta_index)); }
 /**
  * @brief
  * @param rho_index
  * @return
  */
-double Polar_trig::to_rho(int rho_index) const  {
+double Polar_trig::to_rho(int rho_index) const {
     assert(is_rho_index_valid(rho_index));
     double rho = rho_index * rho_inc + min_rho;
     return rho;
@@ -207,7 +208,7 @@ double Polar_trig::to_rho(int rho_index) const  {
  * @param rho
  * @return
  */
-int Polar_trig::to_rho_index(double rho) const  {
+int Polar_trig::to_rho_index(double rho) const {
     assert(rho >= min_rho);
     int rho_index = wb_utils::double_to_int_round((rho - min_rho) / rho_inc);
     return rho_index;
@@ -217,13 +218,13 @@ int Polar_trig::to_rho_index(double rho) const  {
  * @param theta_index
  * @return
  */
-double Polar_trig::to_sin_index(int theta_index)  { return Polar_line::to_sin(to_theta(theta_index)); }
+double Polar_trig::to_sin_index(int theta_index) { return Polar_line::to_sin(to_theta(theta_index)); }
 /**
  * @brief
  * @param theta_index
  * @return
  */
-int Polar_trig::to_theta(int theta_index)  {
+int Polar_trig::to_theta(int theta_index) {
     assert(is_theta_index_valid(theta_index));
     return index_to_theta[theta_index];
 }
