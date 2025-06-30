@@ -107,13 +107,13 @@ void Hough::initialize(int pixel_threshold, bool unit, int min_col, int min_row,
     int ncols = view->get_ncols();
     int nrows = view->get_nrows();
     if (!errors.has_error()) {
-        for (int col = min_col; col <= max_col; col++) {
-            for (int row = min_row; row <= max_row; row++) {
+        for (int col = 0; col <= ncols; col++) {
+            for (int row = 0; row <= nrows; row++) {
                 double value = std::abs(view->get(col, row));
                 if (value > pixel_threshold) {
                     Point point;
                     view->to_point(point, col, row);
-                    for (int theta_index = 0; theta_index <= get_nthetas(); theta_index++) {
+                    for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
                         double rho = polar_trig->point_theta_index_to_rho(point, theta_index);
                         int rho_index = polar_trig->to_rho_index(rho);
                         update(rho_index, theta_index, (unit ? 1 : wb_utils::double_to_int_round(value)));

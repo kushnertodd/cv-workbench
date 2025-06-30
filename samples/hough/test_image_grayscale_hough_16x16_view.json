@@ -1,0 +1,59 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "hough-image-create",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_16x16",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_accumulator_16x16",
+                        "ext": "bin"
+                    },
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_accumulator_16x16",
+                        "ext": "txt"
+                    }
+                ],
+                "parameters": {
+                    "accumulate": "unit",
+                    "rho-inc": "1",
+                    "theta-inc": "5",
+                    "min-theta": "30",
+                    "max-theta": "60",
+                    "min-col": "4",
+                    "min-row": "4",
+                    "max-col": "11",
+                    "max-row": "11",
+                    "pixel-threshold": "0"
+                }
+            }
+        ]
+    }
+}
