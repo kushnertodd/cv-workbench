@@ -38,10 +38,10 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
         errors.add("Operator_hough_image_create::run", "", "one input data source required");
     else if (output_data_stores.empty())
         errors.add("Operator_hough_image_create::run", "", "output data source required");
-    int rho_inc = 1;
+    double rho_inc = 1;
     if (Operator_utils::has_parameter(operator_parameters, "rho-inc"))
-        Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "rho-inc", rho_inc,
-                                          errors);
+        Operator_utils::get_real_parameter("Operator_hough_image_create::run", operator_parameters, "rho-inc", rho_inc,
+                                           errors);
     int theta_inc = 3;
     if (Operator_utils::has_parameter(operator_parameters, "theta-inc"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "theta-inc",

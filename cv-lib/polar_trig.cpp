@@ -36,8 +36,8 @@ Polar_trig::Polar_trig() = default;
  * @param m_min_theta
  * @param m_max_theta
  */
-Polar_trig::Polar_trig(double m_min_x, double m_min_y, double m_max_x, double m_max_y, int m_rho_inc, int m_theta_inc,
-                       int m_min_theta, int m_max_theta) :
+Polar_trig::Polar_trig(double m_min_x, double m_min_y, double m_max_x, double m_max_y, double m_rho_inc,
+                       int m_theta_inc, int m_min_theta, int m_max_theta) :
     min_x(m_min_x), max_x(m_max_x), min_y(m_min_y), max_y(m_max_y), rho_inc(m_rho_inc), theta_inc(m_theta_inc),
     min_theta(m_min_theta), max_theta(m_max_theta) {
     initialize_thetas();
@@ -51,7 +51,7 @@ double Polar_trig::get_min_x() const { return min_x; }
 double Polar_trig::get_min_y() const { return min_y; }
 int Polar_trig::get_nrhos() const { return nrhos; }
 int Polar_trig::get_nthetas() const { return nthetas; }
-int Polar_trig::get_rho_inc() const { return rho_inc; }
+double Polar_trig::get_rho_inc() const { return rho_inc; }
 int Polar_trig::get_theta_inc() const { return theta_inc; }
 void Polar_trig::check_rho(double rho) {
     min_rho = std::min(rho, min_rho);

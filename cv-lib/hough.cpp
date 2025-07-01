@@ -31,7 +31,7 @@ Hough::Hough() = default;
  * @param m_min_theta
  * @param m_max_theta
  */
-Hough::Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc,
+Hough::Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, double m_rho_inc,
              int m_theta_inc, int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta) :
     view(m_view), pixel_threshold(m_pixel_threshold), unit(m_unit) {
     polar_trig = std::unique_ptr<Polar_trig>(
@@ -95,7 +95,7 @@ double Hough::get_min_x() const { return polar_trig->get_min_x(); }
 double Hough::get_min_y() const { return polar_trig->get_min_y(); }
 int Hough::get_nrhos() const { return polar_trig->get_nrhos(); }
 int Hough::get_nthetas() const { return polar_trig->get_nthetas(); }
-int Hough::get_rho_inc() const { return polar_trig->get_rho_inc(); }
+double Hough::get_rho_inc() const { return polar_trig->get_rho_inc(); }
 int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
 /**
  * @brief
@@ -187,9 +187,9 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
  * @return
  */
 Hough *Hough::read(FILE *fp, Errors &errors) {
-    int rho_inc;
+    double rho_inc;
     if (!errors.has_error())
-        wb_utils::read_int(fp, rho_inc, "Hough::read", "", "missing hough rho_inc", errors);
+        wb_utils::read_double(fp, rho_inc, "Hough::read", "", "missing hough rho_inc", errors);
     int theta_inc;
     if (!errors.has_error())
         wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough theta_inc", errors);
@@ -325,8 +325,8 @@ void Hough::write(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Hough::write(FILE *fp, Errors &errors) const {
-    int rho_inc = get_rho_inc();
-    fwrite(&rho_inc, sizeof(int), 1, fp);
+    double rho_inc = get_rho_inc();
+    fwrite(&rho_inc, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Hough::write", "", "cannot write Hough accumulator rho_inc");
         return;

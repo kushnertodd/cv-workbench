@@ -32,7 +32,7 @@ class Polar_trig {
     double max_x{};
     double min_y{};
     double max_y{};
-    int rho_inc{};
+    double rho_inc{};
     int theta_inc{};
     int max_theta{};
     int min_theta{};
@@ -45,7 +45,7 @@ class Polar_trig {
 
 public:
     Polar_trig();
-    Polar_trig(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
+    Polar_trig(double m_min_x, double m_max_x, double m_min_y, double m_max_y, double m_rho_inc, int m_theta_inc,
                int m_min_theta, int m_max_theta);
     void check_rho(double rho);
     int get_max_theta() const;
@@ -56,7 +56,7 @@ public:
     double get_min_y() const;
     int get_nrhos() const;
     int get_nthetas() const;
-    int get_rho_inc() const;
+    double get_rho_inc() const;
     int get_theta_inc() const;
     void initialize_rhos();
     void initialize_thetas();

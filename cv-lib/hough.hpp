@@ -30,8 +30,8 @@ public:
     std::vector<Hough_peak> peaks;
     ~Hough();
     Hough();
-    Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_rho_inc, int m_theta_inc,
-          int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta);
+    Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, double m_rho_inc,
+          int m_theta_inc, int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta);
     void clear();
     void find_peaks(double threshold, double rho_suppress, int theta_suppress);
     int get(int rho_index, int theta_index) const;
@@ -43,7 +43,7 @@ public:
     double get_min_y() const;
     int get_nrhos() const;
     int get_nthetas() const;
-    int get_rho_inc() const;
+    double get_rho_inc() const;
     int get_theta_inc() const;
     void initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row, Errors &errors);
     void log(std::vector<WB_log_entry> &log_entries);
