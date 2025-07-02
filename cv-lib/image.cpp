@@ -1215,8 +1215,8 @@ void Image::set_8U(int col, int row, pixel_8U value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    assert(col <= get_ncols());
-    assert(row <= get_nrows());
+    assert(col < get_ncols());
+    assert(row < get_nrows());
     int index = col_row_to_index(col, row, component);
     assert(index <= get_npixels());
     buf_8U[index] = value;
@@ -1232,8 +1232,8 @@ void Image::set_32F(int col, int row, pixel_32F value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    assert(col <= get_ncols());
-    assert(row <= get_nrows());
+    assert(col < get_ncols());
+    assert(row < get_nrows());
     int index = col_row_to_index(col, row, component);
     assert(index <= get_npixels());
     buf_32F[index] = value;
@@ -1249,8 +1249,8 @@ void Image::set_32S(int col, int row, pixel_32S value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    assert(col <= get_ncols());
-    assert(row <= get_nrows());
+    assert(col < get_ncols());
+    assert(row < get_nrows());
     int index = col_row_to_index(col, row, component);
     assert(index <= get_npixels());
     buf_32S[index] = value;

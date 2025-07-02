@@ -129,8 +129,8 @@ void Hough::initialize(int pixel_threshold, bool unit, int min_col, int min_row,
     clear();
     int ncols = view->get_ncols();
     int nrows = view->get_nrows();
-    for (int col = 0; col <= ncols; col++) {
-        for (int row = 0; row <= nrows; row++) {
+    for (int col = 0; col < ncols; col++) {
+        for (int row = 0; row < nrows; row++) {
             double value = std::abs(view->get(col, row));
             if (value > pixel_threshold) {
                 Point point;
@@ -239,7 +239,6 @@ int Hough::point_theta_index_to_rho_index(Point &point, int theta_index) {
  */
 int Hough::point_theta_index_to_rho_index(double x, double y, int theta_index) {
     int rho_index = rho_to_rho_index(point_theta_to_rho(x, y, theta_index_to_theta(theta_index)));
-    assert(is_rho_index_valid(rho_index));
     return rho_index;
 }
 /**
@@ -415,6 +414,7 @@ double Hough::rho_index_to_rho(int rho_index) const {
 int Hough::rho_to_rho_index(double rho) const {
     assert(rho >= min_rho && rho <= max_rho);
     int rho_index = wb_utils::double_to_int_round((rho - min_rho) / rho_inc);
+    assert(is_rho_index_valid(rho_index));
     return rho_index;
 }
 /**

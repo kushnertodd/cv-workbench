@@ -43,7 +43,7 @@
                 ],
                 "parameters": {
                     "accumulate": "unit",
-                    "rho-inc": "1",
+                    "nrhos": "20",
                     "theta-inc": "3",
                     "pixel-threshold": "128",
                     "min-col": "50",

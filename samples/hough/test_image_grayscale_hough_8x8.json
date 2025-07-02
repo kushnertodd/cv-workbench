@@ -45,7 +45,7 @@
                     "accumulate": "unit",
                     "min-theta": "30",
                     "max-theta": "60",
-                    "rho-inc": "1",
+                    "nrhos": "20",
                     "theta-inc": "5",
                     "pixel-threshold": "0"
                 }
