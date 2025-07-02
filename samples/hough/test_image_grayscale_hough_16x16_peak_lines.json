@@ -1,0 +1,43 @@
+{
+    "experiment": {
+        "run": {
+            "script-path": "script-path",
+            "run-time": "timestamp",
+            "username": "username",
+            "version": "program-version"
+        },
+        "steps": [
+            {
+                "id": 1,
+                "operator": "hough-peak-detect",
+                "input-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_accumulator_16x16_view",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "hough_test_image_grayscale_accumulator_16x16_view_peaks",
+                        "ext": "txt"
+                    }
+                ],
+                "parameters": {
+                    "threshold": "80.0",
+                    "rho_suppress": "3",
+                    "theta_suppress": "6"
+                }
+            }
+        ]
+    }
+}
