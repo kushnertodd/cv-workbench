@@ -353,6 +353,7 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         View *view{};
         hough = new Hough(view, min_x, max_x, min_y, max_y, saw_nrhos, nrhos, saw_rho_inc, rho_inc, theta_inc,
                           pixel_threshold, (int_unit == 1), min_theta, max_theta);
+        hough->initialize_accumulator();
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
         if (!errors.has_error())
