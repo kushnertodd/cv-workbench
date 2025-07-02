@@ -318,8 +318,8 @@ void wb_utils::json_print_value(json_object *jobj) {
  * @param error
  * @param errors
  */
-void wb_utils::read_bool(FILE *fp, bool &var, const std::string &module, const std::string &id, const std::string &error,
-                        Errors &errors) {
+void wb_utils::read_bool(FILE *fp, bool &var, const std::string &module, const std::string &id,
+                         const std::string &error, Errors &errors) {
     size_t newLen = fread(&var, sizeof(bool), 1, fp);
     if (ferror(fp) != 0 || newLen != 1) {
         errors.add(module, id, error);
@@ -610,7 +610,7 @@ std::vector<std::string> wb_utils::tokenize(std::string const &str, const std::s
  * @param errors
  */
 void wb_utils::write_bool(FILE *fp, bool value, const std::string &module, const std::string &id,
-                         const std::string &error, Errors &errors) {
+                          const std::string &error, Errors &errors) {
     fwrite(&value, sizeof(bool), 1, fp);
     if (ferror(fp) != 0) {
         errors.add(module, id, error);

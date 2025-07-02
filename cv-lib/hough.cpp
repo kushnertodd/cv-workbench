@@ -478,86 +478,43 @@ void Hough::write(const std::string &path, Errors &errors) const {
  */
 void Hough::write(FILE *fp, Errors &errors) const {
     // TODO: use wb_utils::write_bool/double/int(...)
-    fwrite(&saw_rho_inc, sizeof(bool), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator saw_rho_inc");
-        return;
-    }
-    double rho_inc = rho_inc;
-    fwrite(&rho_inc, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator rho_inc");
-        return;
-    }
-    fwrite(&saw_nrhos, sizeof(bool), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator saw_nrhos");
-        return;
-    }
-    fwrite(&nrhos, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator nrhos");
-        return;
-    }
+    wb_utils::write_bool(fp, saw_rho_inc, "Hough::write", "", "cannot write Hough accumulator saw_rho_inc", errors);
+    if (!errors.has_error())
+        wb_utils::write_double(fp, rho_inc, "Hough::write", "", "cannot write Hough accumulator rho_inc", errors);
+    if (!errors.has_error())
+        wb_utils::write_bool(fp, saw_nrhos, "Hough::write", "", "cannot write Hough accumulator saw_nrhos", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, nrhos, "Hough::write", "", "cannot write Hough accumulator nrhos", errors);
     int theta_inc = get_theta_inc();
-    fwrite(&theta_inc, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator theta_inc");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_int(fp, theta_inc, "Hough::write", "", "cannot write Hough accumulator theta_inc", errors);
     double min_x = get_min_x();
-    fwrite(&min_x, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator min_x");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_double(fp, min_x, "Hough::write", "", "cannot write Hough accumulator min_x", errors);
     double max_x = get_max_x();
-    fwrite(&max_x, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator get_max_x");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_double(fp, max_x, "Hough::write", "", "cannot write Hough accumulator max_x", errors);
     double min_y = get_min_y();
-    fwrite(&min_y, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator min_y");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_double(fp, min_y, "Hough::write", "", "cannot write Hough accumulator min_y", errors);
     double max_y = get_max_y();
-    fwrite(&max_y, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator max_y");
-        return;
-    }
-    fwrite(&pixel_threshold, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator pixel_threshold");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_double(fp, max_y, "Hough::write", "", "cannot write Hough accumulator max_y", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, pixel_threshold, "Hough::write", "", "cannot write Hough accumulator pixel_threshold",
+                            errors);
     int int_unit = (unit ? 1 : 0);
-    fwrite(&int_unit, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator unit");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_int(fp, int_unit, "Hough::write", "", "cannot write Hough accumulator unit", errors);
     int min_theta = get_min_theta();
-    fwrite(&min_theta, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator min_theta");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_int(fp, min_theta, "Hough::write", "", "cannot write Hough accumulator min_theta", errors);
     int max_theta = get_max_theta();
-    fwrite(&max_theta, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator max_theta");
-        return;
-    }
-    size_t newLen;
-    newLen = fwrite(accumulator.get(), sizeof(int), nbins, fp);
-    if (ferror(fp) != 0 || newLen != nbins) {
-        errors.add("Hough::write", "", "cannot write Hough accumulator data ");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_int(fp, max_theta, "Hough::write", "", "cannot write Hough accumulator max_theta", errors);
+    if (!errors.has_error())
+        wb_utils::write_int_buffer(fp, accumulator.get(), nbins, "Hough::write", "",
+                                   "cannot write Hough accumulator data ", errors);
 }
 /**
  * @brief
@@ -566,22 +523,12 @@ void Hough::write(FILE *fp, Errors &errors) const {
  */
 void Hough::write_peak_lines(FILE *fp, Errors &errors) const {
     size_t npeaks = peaks.size();
-    fwrite(&npeaks, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write_peak_lines", "", "cannot write Hough peak line count");
-        return;
-    }
+    wb_utils::write_int(fp, npeaks, "Hough::write_peak_lines", "", "cannot write Hough peak line count", errors);
     int theta_inc = get_theta_inc();
-    fwrite(&theta_inc, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write_peak_lines", "", "cannot write Hough theta_inc  ");
-        return;
-    }
-    fwrite(&nrhos, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough::write_peak_lines", "", "cannot write Hough nrhos ");
-        return;
-    }
+    if (!errors.has_error())
+        wb_utils::write_int(fp, theta_inc, "Hough::write_peak_lines", "", "cannot write Hough theta_inc", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, nrhos, "Hough::write_peak_lines", "", "cannot write Hough nrhos", errors);
     for (auto peak: peaks) {
         peak.write(fp, errors);
         if (errors.has_error())

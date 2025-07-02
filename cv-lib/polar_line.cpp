@@ -86,17 +86,9 @@ std::string Polar_line::to_string() const {
  * @param errors
  */
 void Polar_line::write(FILE *fp, Errors &errors) const {
-    // TODO: use wb_utils::write_bool/double/int(...)
-    fwrite(&rho, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Polar_line::write", "", "cannot write Hough rho");
-        return;
-    }
-    fwrite(&theta, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Polar_line::write", "", "cannot write Hough theta");
-        return;
-    }
+    wb_utils::write_double(fp, rho, "Hough::write", "", "cannot write Polar_line rho", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, theta, "Hough::write", "", "cannot write Polar_line theta", errors);
 }
 /**
  * @brief
