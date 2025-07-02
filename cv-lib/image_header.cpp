@@ -187,6 +187,7 @@ double Image_header::to_y(int row, int nrows) {
  * @param errors
  */
 void Image_header::write(FILE *fp, Errors &errors) const {
+    // TODO: use wb_utils::write_bool/double/int(...)
     fwrite(&ncols, sizeof(int), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Image_header::write_header", "", "cannot write image nrows");

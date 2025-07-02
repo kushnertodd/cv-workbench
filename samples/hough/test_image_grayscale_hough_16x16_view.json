@@ -43,7 +43,7 @@
                 ],
                 "parameters": {
                     "accumulate": "unit",
-                    "rho-inc": "0.1",
+                    "nrhos": "10",
                     "theta-inc": "5",
                     "min-theta": "30",
                     "max-theta": "60",

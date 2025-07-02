@@ -1405,6 +1405,7 @@ void Image::write(const std::string &path, Errors &errors) const {
  * @param errors
  */
 void Image::write(FILE *fp, Errors &errors) const {
+    // TODO: use wb_utils::write_bool/double/int(...)
     image_header.write(fp, errors);
     if (errors.has_error())
         return;

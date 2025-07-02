@@ -14,11 +14,31 @@
 #include "view.hpp"
 #include "wb_utils.hpp"
 
+/**
+ * @brief
+ */
+class Polar_index {
+    friend class Polar_trig;
+    int rho_index{};
+    int theta_index{};
+
+public:
+    Polar_index();
+    Polar_index(int m_rho_index, int m_theta_index);
+    void init(int m_rho_index, int m_theta_index);
+};
+
 class Hough {
     friend class Histogram;
     int pixel_threshold{};
     int unit{};
     int nbins{};
+    bool saw_nrhos{};
+    int nrhos{};
+    bool saw_rho_inc{};
+    double rho_inc{};
+    double max_rho{};
+    double min_rho{};
     View *view;
     std::unique_ptr<Polar_trig> polar_trig;
     std::unique_ptr<int[]> accumulator;
@@ -30,8 +50,9 @@ public:
     std::vector<Hough_peak> peaks;
     ~Hough();
     Hough();
-    Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, double m_rho_inc,
-          int m_theta_inc, int m_pixel_threshold, bool m_unit, int m_min_theta, int m_max_theta);
+    Hough(View *m_view, double m_min_x, double m_max_x, double m_min_y, double m_max_y, bool m_saw_nrhos, int m_nrhos,
+          bool m_saw_rho_inc, double m_rho_inc, int m_theta_inc, int m_pixel_threshold, bool m_unit, int m_min_theta,
+          int m_max_theta);
     void clear();
     void find_peaks(double threshold, double rho_suppress, int theta_suppress);
     int get(int rho_index, int theta_index) const;
@@ -43,17 +64,29 @@ public:
     double get_min_y() const;
     int get_nrhos() const;
     int get_nthetas() const;
-    double get_rho_inc() const;
     int get_theta_inc() const;
+    bool is_rho_index_valid(int rho_index) const;
     void initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row, Errors &errors);
+    void initialize_accumulator();
+    void initialize_rhos();
     void log(std::vector<WB_log_entry> &log_entries);
+    double point_theta_index_to_rho(Point &point, int theta_index);
+    double point_theta_index_to_rho(double x, double y, int theta_index) const;
+    int point_theta_index_to_rho_index(Point &point, int theta_index);
+    int point_theta_index_to_rho_index(double x, double y, int theta_index);
+    double point_theta_to_rho(Point &point, int theta) const;
+    double point_theta_to_rho(double x, double y, int theta) const;
+    int point_theta_to_rho_index(Point &point, int theta);
+    int point_theta_to_rho_index(double x, double y, int theta);
     static Hough *read(const std::string &path, Errors &errors);
     static Hough *read(FILE *fp, Errors &errors);
     Hough *read_text(std::ifstream &ifs, Errors &errors);
     int rho_index_theta_index_to_index(int rho_index, int theta_index) const;
+    double rho_index_to_rho(int rho_index) const;
+    int rho_to_rho_index(double rho) const;
     void set(int rho_index, int theta_index, int value);
-    int to_rho_index(double rho) const;
-    int to_theta_index(int theta) const;
+    int theta_index_to_theta(int theta_index) const;
+    int theta_to_theta_index(int theta) const;
     void update(int rho_index, int theta_index, int value) const;
     void update_accumulator_stats();
     void write(const std::string &path, Errors &errors) const;

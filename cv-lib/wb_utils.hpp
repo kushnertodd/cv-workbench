@@ -36,6 +36,8 @@ namespace wb_utils {
     void json_parse(json_object *jobj);
     void json_parse_array(json_object *jobj, char *key);
     void json_print_value(json_object *jobj);
+    void read_bool(FILE *fp, bool &var, const std::string &module, const std::string &id, const std::string &error,
+                  Errors &errors);
     void read_byte(FILE *fp, pixel_8U &var, const std::string &module, const std::string &id, const std::string &error,
                    Errors &errors);
     void read_byte_buffer(FILE *fp, pixel_8U *buf, int count, const std::string &module, const std::string &id,
@@ -62,6 +64,8 @@ namespace wb_utils {
     bool string_to_int(const std::string &str, int &value);
     std::string timestamp();
     std::vector<std::string> tokenize(std::string const &str, const std::string &delims);
+    void write_bool(FILE *fp, bool value, const std::string &module, const std::string &id, const std::string &error,
+                   Errors &errors);
     void write_double(FILE *fp, double value, const std::string &module, const std::string &id,
                       const std::string &error, Errors &errors);
     void write_double_buffer(FILE *fp, double *buf, int count, const std::string &module, const std::string &id,

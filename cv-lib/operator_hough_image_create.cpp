@@ -38,10 +38,6 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
         errors.add("Operator_hough_image_create::run", "", "one input data source required");
     else if (output_data_stores.empty())
         errors.add("Operator_hough_image_create::run", "", "output data source required");
-    double rho_inc = 1;
-    if (Operator_utils::has_parameter(operator_parameters, "rho-inc"))
-        Operator_utils::get_real_parameter("Operator_hough_image_create::run", operator_parameters, "rho-inc", rho_inc,
-                                           errors);
     int theta_inc = 3;
     if (Operator_utils::has_parameter(operator_parameters, "theta-inc"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "theta-inc",
@@ -67,34 +63,50 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
                                                                 "accumulate", accumulate_str, errors);
     if (have_accumulate && !wb_utils::string_in_list(accumulate_str, {"unit", "value"}))
         errors.add("Operator_hough_image_create::run", "", "accumulatation not unit or value");
+    int nrhos{};
+    bool saw_nrhos = false;
+    if (Operator_utils::has_parameter(operator_parameters, "nrhos")) {
+        saw_nrhos = true;
+        Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "nrhos", nrhos,
+                                          errors);
+    }
+    double rho_inc{};
+    bool saw_rho_inc = false;
+    if (Operator_utils::has_parameter(operator_parameters, "rho-inc")) {
+        saw_rho_inc = true;
+        Operator_utils::get_real_parameter("Operator_transform_image_create::run", operator_parameters, "rho-inc",
+                                           rho_inc, errors);
+    }
     int min_col;
-    int min_row;
-    int max_col;
-    int max_row;
     bool saw_min_col = false;
-    bool saw_min_row = false;
-    bool saw_max_col = false;
-    bool saw_max_row = false;
     if (Operator_utils::has_parameter(operator_parameters, "min-col")) {
         saw_min_col = true;
         Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-col",
                                           min_col, errors);
     }
+    int min_row;
+    bool saw_min_row = false;
     if (Operator_utils::has_parameter(operator_parameters, "min-row")) {
         saw_min_row = true;
         Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "min-row",
                                           min_row, errors);
     }
+    int max_col;
+    bool saw_max_col = false;
     if (Operator_utils::has_parameter(operator_parameters, "max-col")) {
         saw_max_col = true;
         Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-col",
                                           max_col, errors);
     }
+    int max_row;
+    bool saw_max_row = false;
     if (Operator_utils::has_parameter(operator_parameters, "max-row")) {
         saw_max_row = true;
         Operator_utils::get_int_parameter("Operator_transform_image_create::run", operator_parameters, "max-row",
                                           max_row, errors);
     }
+    if ((!saw_nrhos && !saw_rho_inc) || (saw_nrhos && saw_rho_inc))
+        errors.add("Operator_hough_image_create::run", "", "one of nrhos and row-inc must be specified");
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
@@ -111,12 +123,14 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
                 max_col = input_image->get_ncols() - 1;
             if (!saw_max_row)
                 max_row = input_image->get_nrows() - 1;
-            std::unique_ptr<Sub_image> input_sub_image(
-                    new Sub_image(input_image.get(), min_col, min_row, max_col, max_row));
-            std::unique_ptr<Hough> hough = std::unique_ptr<Hough>(
-                    new Hough(input_sub_image.get(), input_sub_image->get_min_x(), input_sub_image->get_max_x(),
-                              input_sub_image->get_min_y(), input_sub_image->get_max_y(), rho_inc, theta_inc,
-                              pixel_threshold, unit, min_theta, max_theta));
+            std::unique_ptr<Sub_image> input_sub_image =
+                    std::make_unique<Sub_image>(input_image.get(), min_col, min_row, max_col, max_row);
+            std::unique_ptr<Hough> hough = std::make_unique<Hough>(
+                    input_sub_image.get(), input_sub_image->get_min_x(), input_sub_image->get_max_x(),
+                    input_sub_image->get_min_y(), input_sub_image->get_max_y(), saw_nrhos, nrhos, saw_rho_inc, rho_inc,
+                    theta_inc, pixel_threshold, unit, min_theta, max_theta);
+            hough->initialize_rhos();
+            hough->initialize_accumulator();
             hough->initialize(pixel_threshold, unit, min_col, min_row, max_col, max_row, errors);
             if (!errors.has_error())
                 for (Data_source_descriptor *hough_output_data_store: output_data_stores)

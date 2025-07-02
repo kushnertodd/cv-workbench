@@ -3,9 +3,10 @@
 #include <string>
 
 class Point {
-    friend class Polar_trig;
+    friend class Hough;
     friend class Image_header;
     friend class Line_segment;
+    friend class Polar_trig;
     friend class Sub_image;
     friend class WB_window;
     const double close_distance = 1.0;

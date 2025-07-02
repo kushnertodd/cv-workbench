@@ -20,6 +20,7 @@ bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile 
  * @param errors
  */
 void Hough_peak::write(FILE *fp, Errors &errors) const {
+    // TODO: use wb_utils::write_bool/double/int(...)
     fwrite(&count_percentile, sizeof(double), 1, fp);
     if (ferror(fp) != 0) {
         errors.add("Hough_peak::write", "", "cannot write Hough peak count_percentile");
