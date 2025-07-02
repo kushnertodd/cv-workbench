@@ -1171,8 +1171,8 @@ void Image::set(int col, int row, double value, int component) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(component <= get_ncomponents());
 #endif
-    assert(col <= get_ncols());
-    assert(row <= get_nrows());
+    assert(col < get_ncols());
+    assert(row < get_nrows());
     int index = col_row_to_index(col, row, component);
     assert(index <= get_npixels());
     switch (get_depth()) {

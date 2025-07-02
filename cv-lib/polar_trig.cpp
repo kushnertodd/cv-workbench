@@ -54,7 +54,7 @@ void Polar_trig::initialize_thetas() {
     nthetas = theta_index;
 }
 bool Polar_trig::is_theta_index_valid(int theta_index) const { return theta_index >= 0 && theta_index < nthetas; }
-bool Polar_trig::is_theta_valid(int theta) const { return theta >= 0 && theta < theta_pi; }
+bool Polar_trig::is_theta_valid(int theta) const { return theta >= -theta_pi && theta <= theta_pi; }
 /**
  * @brief
  * @param theta_index

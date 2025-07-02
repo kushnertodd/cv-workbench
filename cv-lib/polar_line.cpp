@@ -58,19 +58,19 @@ bool Polar_line::singular_sin() const { return singular_sin(theta); }
  * @param theta
  * @return
  */
-bool Polar_line::singular_sin(int theta) { return theta == 0; }
+bool Polar_line::singular_sin(int theta) { return ((theta + theta_pi) % theta_pi) == 0; }
 /**
  * @brief
  * @param theta
  * @return
  */
-double Polar_line::to_cos(int theta) { return polar_cos[theta]; }
+double Polar_line::to_cos(int theta) { return polar_cos[(theta + theta_pi) % theta_pi]; }
 /**
  * @brief
  * @param theta
  * @return
  */
-double Polar_line::to_sin(int theta) { return polar_sin[theta]; }
+double Polar_line::to_sin(int theta) { return polar_sin[(theta + theta_pi) % theta_pi]; }
 /**
  * @brief
  * @return

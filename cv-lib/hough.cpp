@@ -154,8 +154,8 @@ void Hough::initialize_rhos() {
     int nrows = view->get_nrows();
     min_rho = DBL_MAX;
     max_rho = -DBL_MAX;
-    for (int col = 0; col <= ncols; col++) {
-        for (int row = 0; row <= nrows; row++) {
+    for (int col = 0; col < ncols; col++) {
+        for (int row = 0; row < nrows; row++) {
             double value = std::abs(view->get(col, row));
             if (value > pixel_threshold) {
                 Point point;

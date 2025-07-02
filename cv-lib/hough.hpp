@@ -65,10 +65,10 @@ public:
     int get_nrhos() const;
     int get_nthetas() const;
     int get_theta_inc() const;
-    bool is_rho_index_valid(int rho_index) const;
     void initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row, Errors &errors);
     void initialize_accumulator();
     void initialize_rhos();
+    bool is_rho_index_valid(int rho_index) const;
     void log(std::vector<WB_log_entry> &log_entries);
     double point_theta_index_to_rho(Point &point, int theta_index);
     double point_theta_index_to_rho(double x, double y, int theta_index) const;
