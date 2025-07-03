@@ -76,29 +76,29 @@ void Hough::clear() {
  * @param threshold
  */
 void Hough::find_peaks(double threshold, double rho_suppress, int theta_suppress) {
-    std::vector<Hough_peak> filtered_peaks;
+    std::vector<Hough_peak> initial_peaks;
     for (int theta_index = 0; theta_index < get_nthetas(); theta_index++) {
         for (int rho_index = 0; rho_index < nrhos; rho_index++) {
             int count = get(rho_index, theta_index);
             double count_percentile = (100.0 * count) / accumulator_stats.get_max_value();
             if (count_percentile > threshold) {
                 Hough_peak peak(count_percentile, rho_index_to_rho(rho_index), theta_index_to_theta(theta_index));
-                peaks.push_back(peak);
+                initial_peaks.push_back(peak);
             }
         }
     }
     std::sort(peaks.begin(), peaks.end(), Hough_peak::comp);
-    for (auto &peak: peaks) {
+    for (auto &initial_peak: initial_peaks) {
         bool reject = false;
-        for (auto &filtered_peak: filtered_peaks) {
-            if (abs(peak.rho - filtered_peak.rho) < rho_suppress &&
-                abs(peak.theta - filtered_peak.theta) < theta_suppress) {
+        for (auto &peak: peaks) {
+            if (abs(peak.rho - initial_peak.rho) < rho_suppress &&
+                abs(peak.theta - initial_peak.theta) < theta_suppress) {
                 reject = true;
                 break;
             }
         }
         if (!reject)
-            peaks.push_back(peak);
+            peaks.push_back(initial_peak);
     }
 }
 /**
