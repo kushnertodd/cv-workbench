@@ -67,6 +67,7 @@ public:
     int get_theta_inc() const;
     void initialize(int pixel_threshold, bool unit, int min_col, int min_row, int max_col, int max_row, Errors &errors);
     void initialize_accumulator();
+    void initialize_nrhos();
     void initialize_rhos();
     bool is_rho_index_valid(int rho_index) const;
     void log(std::vector<WB_log_entry> &log_entries);

@@ -123,10 +123,10 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                     if (!errors.has_error()) {
                         int area_cols = max_col - min_col + 1;
                         int area_rows = max_row - min_row + 1;
-                        double min_x = input_image->to_x(min_col, area_cols);
-                        double max_y = input_image->to_y(min_row, area_rows);
-                        double max_x = input_image->to_x(max_col, area_cols);
-                        double min_y = input_image->to_y(max_row, area_rows);
+                        double min_x = input_image->to_x(0, area_cols);
+                        double max_y = input_image->to_y(0, area_rows);
+                        double max_x = input_image->to_x(area_cols - 1, area_cols);
+                        double min_y = input_image->to_y(area_rows - 1, area_rows);
                         WB_window window(min_x, min_y, max_x, max_y);
                         Polar_line polar_line(rho, theta);
                         Line_segment line_segment;

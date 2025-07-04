@@ -50,7 +50,7 @@
                     "max-col": "150",
                     "min-row": "0",
                     "max-row": "100",
-		    "min-theta": "167",
+		                "min-theta": "167",
                     "max-theta": "177"
                 }
             }

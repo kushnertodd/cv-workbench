@@ -87,7 +87,7 @@ void Hough::find_peaks(double threshold, double rho_suppress, int theta_suppress
             }
         }
     }
-    std::sort(peaks.begin(), peaks.end(), Hough_peak::comp);
+    std::sort(initial_peaks.begin(), initial_peaks.end(), Hough_peak::comp);
     for (auto &initial_peak: initial_peaks) {
         bool reject = false;
         for (auto &peak: peaks) {
@@ -148,6 +148,12 @@ void Hough::initialize_accumulator() {
     nbins = nrhos * get_nthetas();
     accumulator = std::make_unique<int[]>(nbins);
 }
+void Hough::initialize_nrhos() {
+    if (saw_nrhos)
+        rho_inc = (max_rho - min_rho) / (nrhos - 1);
+    else if (saw_rho_inc)
+        nrhos = wb_utils::double_to_int_round((max_rho - min_rho) / rho_inc);
+}
 void Hough::initialize_rhos() {
     assert((!saw_nrhos && saw_rho_inc) || (saw_nrhos && !saw_rho_inc));
     int ncols = view->get_ncols();
@@ -168,10 +174,7 @@ void Hough::initialize_rhos() {
             }
         }
     }
-    if (saw_nrhos)
-        rho_inc = (max_rho - min_rho) / (nrhos - 1);
-    else if (saw_rho_inc)
-        nrhos = wb_utils::double_to_int_round((max_rho - min_rho) / rho_inc);
+    initialize_nrhos();
 }
 bool Hough::is_rho_index_valid(int rho_index) const { return rho_index >= 0 && rho_index < nrhos; }
 /**
@@ -310,8 +313,7 @@ Hough *Hough::read(const std::string &path, Errors &errors) {
  */
 Hough *Hough::read(FILE *fp, Errors &errors) {
     bool saw_rho_inc;
-    if (!errors.has_error())
-        wb_utils::read_bool(fp, saw_rho_inc, "Hough::read", "", "missing hough saw_rho_inc", errors);
+    wb_utils::read_bool(fp, saw_rho_inc, "Hough::read", "", "missing hough saw_rho_inc", errors);
     double rho_inc;
     if (!errors.has_error())
         wb_utils::read_double(fp, rho_inc, "Hough::read", "", "missing hough rho_inc", errors);
@@ -321,6 +323,12 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
     int nrhos;
     if (!errors.has_error())
         wb_utils::read_int(fp, nrhos, "Hough::read", "", "missing hough nrhos", errors);
+    int min_rho;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, min_rho, "Hough::read", "", "missing hough min_rho", errors);
+    int max_rho;
+    if (!errors.has_error())
+        wb_utils::read_int(fp, max_rho, "Hough::read", "", "missing hough max_rho", errors);
     int theta_inc;
     if (!errors.has_error())
         wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough theta_inc", errors);
@@ -353,6 +361,8 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
         View *view{};
         hough = new Hough(view, min_x, max_x, min_y, max_y, saw_nrhos, nrhos, saw_rho_inc, rho_inc, theta_inc,
                           pixel_threshold, (int_unit == 1), min_theta, max_theta);
+        hough->min_rho = min_rho;
+        hough->max_rho = max_rho;
         hough->initialize_accumulator();
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
@@ -486,6 +496,10 @@ void Hough::write(FILE *fp, Errors &errors) const {
         wb_utils::write_bool(fp, saw_nrhos, "Hough::write", "", "cannot write Hough accumulator saw_nrhos", errors);
     if (!errors.has_error())
         wb_utils::write_int(fp, nrhos, "Hough::write", "", "cannot write Hough accumulator nrhos", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, min_rho, "Hough::write", "", "cannot write Hough accumulator min_rho", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, max_rho, "Hough::write", "", "cannot write Hough accumulator max_rho", errors);
     int theta_inc = get_theta_inc();
     if (!errors.has_error())
         wb_utils::write_int(fp, theta_inc, "Hough::write", "", "cannot write Hough accumulator theta_inc", errors);
