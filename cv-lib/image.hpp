@@ -97,6 +97,7 @@ public:
     bool is_grayscale() const;
     bool is_pixel_valid(int col, int row) const;
     void log(std::vector<WB_log_entry> &log_entries) const;
+    Image *sobel_non_maxima_suppression(Errors &errors) const;
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);

@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr",
+                        "filename": "image_grayscale_edge",
                         "ext": "bin"
                     }
                 ],
@@ -28,14 +28,14 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "filename": "image_grayscale_edge_threshold",
                         "ext": "binary"
                     }
                 ],
                 "parameters": {
                     "depth": "CV_8U",
-                    "lower-in": "3000",
-                    "upper-in": "3000",
+                    "lower-in": "200",
+                    "upper-in": "200",
                     "lower-out": "0",
                     "upper-out": "255"
                 }
@@ -50,7 +50,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr",
+                        "filename": "image_grayscale_edge",
                         "ext": "bin"
                     }
                 ],
@@ -61,14 +61,14 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "filename": "image_grayscale_edge_threshold",
                         "ext": "jpg"
                     }
                 ],
                 "parameters": {
                     "depth": "CV_8U",
-                    "lower-in": "3000",
-                    "upper-in": "3000",
+                    "lower-in": "200",
+                    "upper-in": "200",
                     "lower-out": "0",
                     "upper-out": "255"
                 }

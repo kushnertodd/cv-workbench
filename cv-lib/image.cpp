@@ -871,6 +871,96 @@ void Image::log(std::vector<WB_log_entry> &log_entries) const {
     log_entries.push_back(log_entry_max_value);
 }
 /**
+ * @brief color edge detection
+ * @param errors
+ * @return
+ */
+Image *Image::sobel_non_maxima_suppression(Errors &errors) const {
+#ifdef IMAGE_COMPONENT_CHECK
+    assert(is_grayscale());
+#endif
+    int ncols = get_ncols();
+    int nrows = get_nrows();
+    // Image to store gradient magnitudes
+    Image gradientImage(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+    // Image to store quantized gradient directions for non-maximum suppression
+    Image directionImage(ncols, nrows, COMPONENTS_GRAYSCALE, Image_depth::CV_32F);
+
+    // Sobel kernels for horizontal (Gx) and vertical (Gy) gradients
+    int Gx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
+    int Gy[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
+
+    // Iterate over image pixels, skipping borders where kernels cannot be applied
+    for (int col = 1; col < ncols - 1; ++col) {
+        for (int row = 1; row < nrows - 1; ++row) {
+            double sumGx = 0; // Sum of products for Gx kernel
+            double sumGy = 0; // Sum of products for Gy kernel
+
+            // Apply Sobel kernels
+            for (int i = -1; i <= 1; ++i) {
+                for (int j = -1; j <= 1; ++j) {
+                    double pixel = get(col + j, row + i);
+                    sumGx += pixel * Gx[i + 1][j + 1];
+                    sumGy += pixel * Gy[i + 1][j + 1];
+                }
+            }
+
+            // Calculate gradient magnitude
+            double magnitude = std::sqrt(sumGx * sumGx + sumGy * sumGy);
+            // Clamp magnitude to 0-255 range
+            //magnitude = std::min(255, std::max(0, magnitude));
+            gradientImage.set(col, row, magnitude);
+
+            // Calculate gradient direction (angle) and quantize it
+            double angle = std::atan2(sumGy, sumGx) * 180.0 / M_PI; // Convert radians to degrees
+            // Quantize angle to 0, 45, 90, 135 degrees for non-maximum suppression
+            if ((angle >= -22.5 && angle < 22.5) || (angle >= 157.5) || (angle < -157.5)) {
+                directionImage.set(col, row, 0); // 0 degrees (horizontal)
+            } else if ((angle >= 22.5 && angle < 67.5) || (angle < -112.5 && angle >= -157.5)) {
+                directionImage.set(col, row, 45); // 45 degrees
+            } else if ((angle >= 67.5 && angle < 112.5) || (angle < -67.5 && angle >= -112.5)) {
+                directionImage.set(col, row, 90); // 90 degrees (vertical)
+            } else {
+                directionImage.set(col, row, 135); // 135 degrees
+            }
+        }
+    }
+
+    // Perform Non-Maximum Suppression (NMS)
+    // This step thins the edges by only keeping local maxima in the gradient direction.
+    Image* suppressedImage = new Image(gradientImage); // Start with the full gradient magnitude image
+    for (int col = 1; col < ncols - 1; ++col) {
+        for (int row = 1; row < nrows - 1; ++row) {
+            double currentMagnitude = gradientImage.get(col, row);
+            double direction = directionImage.get(col, row);
+
+            double neighbor1 = 0;
+            double neighbor2 = 0;
+
+            // Check neighbors along the gradient direction
+            if (direction == 0) { // 0 degrees (horizontal)
+                neighbor1 = gradientImage.get(col - 1, row);
+                neighbor2 = gradientImage.get(col + 1, row);
+            } else if (direction == 45) { // 45 degrees
+                neighbor1 = gradientImage.get(col - 1, row + 1);
+                neighbor2 = gradientImage.get(col + 1, row - 1);
+            } else if (direction == 90) { // 90 degrees (vertical)
+                neighbor1 = gradientImage.get(col, row - 1);
+                neighbor2 = gradientImage.get(col, row + 1);
+            } else { // 135 degrees
+                neighbor1 = gradientImage.get(col - 1, row - 1);
+                neighbor2 = gradientImage.get(col + 1, row + 1);
+            }
+
+            // If the current pixel's magnitude is not a local maximum, suppress it (set to 0)
+            if (currentMagnitude < neighbor1 || currentMagnitude < neighbor2) {
+                suppressedImage->set(col, row, 0);
+            }
+        }
+    }
+    return suppressedImage;
+}
+/**
  * @brief
  * @param path
  * @param errors
