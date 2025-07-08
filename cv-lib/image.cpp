@@ -908,7 +908,7 @@ Image *Image::sobel_non_maxima_suppression(Errors &errors) const {
             // Calculate gradient magnitude
             double magnitude = std::sqrt(sumGx * sumGx + sumGy * sumGy);
             // Clamp magnitude to 0-255 range
-            //magnitude = std::min(255, std::max(0, magnitude));
+            // magnitude = std::min(255, std::max(0, magnitude));
             gradientImage.set(col, row, magnitude);
 
             // Calculate gradient direction (angle) and quantize it
@@ -928,7 +928,7 @@ Image *Image::sobel_non_maxima_suppression(Errors &errors) const {
 
     // Perform Non-Maximum Suppression (NMS)
     // This step thins the edges by only keeping local maxima in the gradient direction.
-    Image* suppressedImage = new Image(gradientImage); // Start with the full gradient magnitude image
+    Image *suppressedImage = new Image(gradientImage); // Start with the full gradient magnitude image
     for (int col = 1; col < ncols - 1; ++col) {
         for (int row = 1; row < nrows - 1; ++row) {
             double currentMagnitude = gradientImage.get(col, row);
