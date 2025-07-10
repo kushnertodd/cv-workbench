@@ -37,6 +37,7 @@ class Hough {
     int nrhos{};
     bool saw_rho_inc{};
     double rho_inc{};
+    double rho_range{};
     double max_rho{};
     double min_rho{};
     View *view;

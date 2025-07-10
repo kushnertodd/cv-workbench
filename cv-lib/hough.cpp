@@ -117,7 +117,7 @@ double Hough::get_max_y() const { return polar_trig->get_max_y(); }
 int Hough::get_min_theta() const { return polar_trig->get_min_theta(); }
 double Hough::get_min_x() const { return polar_trig->get_min_x(); }
 double Hough::get_min_y() const { return polar_trig->get_min_y(); }
-int Hough::get_nrhos() const { return polar_trig->get_nthetas(); }
+int Hough::get_nrhos() const { return nrhos; }
 int Hough::get_nthetas() const { return polar_trig->get_nthetas(); }
 int Hough::get_theta_inc() const { return polar_trig->get_theta_inc(); }
 /**
@@ -174,6 +174,7 @@ void Hough::initialize_rhos() {
             }
         }
     }
+    rho_range = max_rho - min_rho;
     initialize_nrhos();
 }
 bool Hough::is_rho_index_valid(int rho_index) const { return rho_index >= 0 && rho_index < nrhos; }
@@ -323,12 +324,15 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
     int nrhos;
     if (!errors.has_error())
         wb_utils::read_int(fp, nrhos, "Hough::read", "", "missing hough nrhos", errors);
-    int min_rho;
+    double min_rho;
     if (!errors.has_error())
-        wb_utils::read_int(fp, min_rho, "Hough::read", "", "missing hough min_rho", errors);
-    int max_rho;
+        wb_utils::read_double(fp, min_rho, "Hough::read", "", "missing hough min_rho", errors);
+    double max_rho;
     if (!errors.has_error())
-        wb_utils::read_int(fp, max_rho, "Hough::read", "", "missing hough max_rho", errors);
+        wb_utils::read_double(fp, max_rho, "Hough::read", "", "missing hough max_rho", errors);
+    double rho_range;
+    if (!errors.has_error())
+        wb_utils::read_double(fp, rho_range, "Hough::read", "", "missing hough rho_range", errors);
     int theta_inc;
     if (!errors.has_error())
         wb_utils::read_int(fp, theta_inc, "Hough::read", "", "missing hough theta_inc", errors);
@@ -363,6 +367,7 @@ Hough *Hough::read(FILE *fp, Errors &errors) {
                           pixel_threshold, (int_unit == 1), min_theta, max_theta);
         hough->min_rho = min_rho;
         hough->max_rho = max_rho;
+        hough->rho_range = max_rho - min_rho;
         hough->initialize_accumulator();
         wb_utils::read_int_buffer(fp, hough->accumulator.get(), hough->nbins, "Hough::read", "",
                                   "cannot read hough accumulator data", errors);
@@ -414,7 +419,7 @@ int Hough::rho_index_theta_index_to_index(int rho_index, int theta_index) const 
  */
 double Hough::rho_index_to_rho(int rho_index) const {
     assert(is_rho_index_valid(rho_index));
-    double rho = rho_index * rho_inc + min_rho;
+    double rho = (rho_index * rho_range) / (nrhos - 1) + min_rho;
     return rho;
 }
 /**
@@ -424,7 +429,8 @@ double Hough::rho_index_to_rho(int rho_index) const {
  */
 int Hough::rho_to_rho_index(double rho) const {
     assert(rho >= min_rho && rho <= max_rho);
-    int rho_index = wb_utils::double_to_int_round((rho - min_rho) / rho_inc);
+    double rho_index_double = (nrhos - 1) * (rho - min_rho) / rho_range;
+    int rho_index = wb_utils::double_to_int_round(rho_index_double);
     assert(is_rho_index_valid(rho_index));
     return rho_index;
 }
@@ -497,9 +503,11 @@ void Hough::write(FILE *fp, Errors &errors) const {
     if (!errors.has_error())
         wb_utils::write_int(fp, nrhos, "Hough::write", "", "cannot write Hough accumulator nrhos", errors);
     if (!errors.has_error())
-        wb_utils::write_int(fp, min_rho, "Hough::write", "", "cannot write Hough accumulator min_rho", errors);
+        wb_utils::write_double(fp, min_rho, "Hough::write", "", "cannot write Hough accumulator min_rho", errors);
     if (!errors.has_error())
-        wb_utils::write_int(fp, max_rho, "Hough::write", "", "cannot write Hough accumulator max_rho", errors);
+        wb_utils::write_double(fp, max_rho, "Hough::write", "", "cannot write Hough accumulator max_rho", errors);
+    if (!errors.has_error())
+        wb_utils::write_double(fp, rho_range, "Hough::write", "", "cannot write Hough accumulator rho_range", errors);
     int theta_inc = get_theta_inc();
     if (!errors.has_error())
         wb_utils::write_int(fp, theta_inc, "Hough::write", "", "cannot write Hough accumulator theta_inc", errors);
@@ -584,21 +592,26 @@ void Hough::write_text(const std::string &path, const std::string &delim, Errors
  */
 void Hough::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) {
     ofs << std::fixed;
-    ofs << "rho_inc" << delim << rho_inc << std::endl;
+    ofs << "min_x" << delim << std::setprecision(2) << get_min_x() << std::endl;
+    ofs << "max_x" << delim << std::setprecision(2) << get_max_x() << std::endl;
+    ofs << "min_y" << delim << std::setprecision(2) << get_min_y() << std::endl;
+    ofs << "max_y" << delim << std::setprecision(2) << get_max_y() << std::endl;
+    ofs << "nrhos" << delim << nrhos << std::endl;
+    ofs << "min_rho" << delim << std::setprecision(2) << min_rho << std::endl;
+    ofs << "max_rho" << delim << std::setprecision(2) << max_rho << std::endl;
+    ofs << "rho_inc" << delim << std::setprecision(2) << rho_inc << std::endl;
+    ofs << "rho_range" << delim << std::setprecision(2) << rho_range << std::endl;
+    ofs << "nthetas" << delim << get_nthetas() << std::endl;
+    ofs << "min_theta" << delim << std::setprecision(2) << get_min_theta() << std::endl;
+    ofs << "max_theta" << delim << std::setprecision(2) << get_max_theta() << std::endl;
     ofs << "theta_inc" << delim << get_theta_inc() << std::endl;
-    ofs << "nrhos" << delim << std::setprecision(1) << nrhos << std::endl;
-    ofs << "nthetas" << delim << std::setprecision(1) << get_nthetas() << std::endl;
-    ofs << "min_x" << delim << std::setprecision(1) << get_min_x() << std::endl;
-    ofs << "max_x" << delim << std::setprecision(1) << get_max_x() << std::endl;
-    ofs << "min_y" << delim << std::setprecision(1) << get_min_y() << std::endl;
-    ofs << "max_y" << delim << std::setprecision(1) << get_max_y() << std::endl;
+    ofs << "max" << delim << accumulator_stats.get_max_value() << std::endl;
     ofs << "pixel_threshold" << delim << pixel_threshold << std::endl;
     ofs << "unit" << delim << unit << std::endl;
-    ofs << "max" << delim << accumulator_stats.get_max_value() << std::endl;
     ofs << delim;
     for (int rho_index = 0; rho_index < nrhos; rho_index++) {
         double rho = rho_index_to_rho(rho_index);
-        ofs << std::setprecision(1) << rho << delim;
+        ofs << std::setprecision(2) << rho << delim;
     }
     ofs << std::endl;
     int theta_inc = get_theta_inc();

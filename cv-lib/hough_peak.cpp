@@ -34,5 +34,6 @@ void Hough_peak::write(FILE *fp, Errors &errors) const {
  * @param errors
  */
 void Hough_peak::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << std::fixed << std::setprecision(1) << rho << delim << theta << delim << count_percentile << std::endl;
+    ofs << std::setprecision(3) << rho << delim << theta << delim << std::setprecision(5) << count_percentile
+        << std::endl;
 }
