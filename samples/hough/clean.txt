@@ -23,11 +23,9 @@ test_16x16_hough.log
 test_16x16.jpg
 test_16x16.txt
 test_16x16_view_8x8.bin
-test_16x16_view_8x8_hough_accumulator,.bin
 test_16x16_view_8x8_hough_accumulator.bin
 test_16x16_view_8x8_hough_accumulator_peak_lines.log
 test_16x16_view_8x8_hough_accumulator_peaks.txt
-test_16x16_view_8x8_hough_accumulator,.txt
 test_16x16_view_8x8_hough_accumulator.txt
 test_16x16_view_8x8_hough.log
 test_16x16_view_8x8.jpg
