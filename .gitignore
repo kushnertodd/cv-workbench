@@ -3,7 +3,7 @@
 archive/
 .idea/
 .*swp
-~*/
+~*
 build/
 cmake-build-debug/
 background/
