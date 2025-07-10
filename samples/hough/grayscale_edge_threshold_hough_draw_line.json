@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_accumulator_peaks",
                         "ext": "txt"
                     },
                     {
@@ -26,7 +26,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold",
+                        "filename": "grayscale_edge_threshold",
                         "ext": "jpg"
                     }
                 ],
@@ -37,7 +37,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_draw_line",
+                        "filename": "grayscale_edge_threshold_draw_line",
                         "ext": "jpg"
                     }
                 ],
@@ -60,7 +60,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_accumulator_peaks",
                         "ext": "txt"
                     },
                     {
@@ -69,7 +69,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale",
+                        "filename": "grayscale",
                         "ext": "jpg"
                     }
                 ],
@@ -80,7 +80,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_draw_line",
+                        "filename": "grayscale_draw_line",
                         "ext": "jpg"
                     }
                 ],

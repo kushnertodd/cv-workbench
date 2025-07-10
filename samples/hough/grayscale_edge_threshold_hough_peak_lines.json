@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator",
+                        "filename": "grayscale_edge_threshold_hough_accumulator",
                         "ext": "bin"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_accumulator_peaks",
                         "ext": "txt"
                     }
                 ],

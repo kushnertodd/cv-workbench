@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_accumulator_16x16_view_8x8",
+                        "filename": "test_16x16_view_8x8_hough_accumulator",
                         "ext": "bin"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_accumulator_16x16_view_8x8_peaks",
+                        "filename": "test_16x16_view_8x8_hough_accumulator_peaks",
                         "ext": "txt"
                     }
                 ],

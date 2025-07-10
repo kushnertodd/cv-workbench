@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold",
+                        "filename": "test_16x16_view_8x8",
                         "ext": "bin"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator",
+                        "filename": "test_16x16_view_8x8_hough_accumulator",
                         "ext": "bin"
                     },
                     {
@@ -37,21 +37,21 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_threshold_hough_accumulator",
+                        "filename": "test_16x16_view_8x8_hough_accumulator",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
                     "accumulate": "unit",
-                    "nrhos": "20",
-                    "theta-inc": "3",
-                    "pixel-threshold": "128",
-                    "min-col": "50",
-                    "max-col": "150",
-                    "min-row": "0",
-                    "max-row": "100",
-		                "min-theta": "167",
-                    "max-theta": "177"
+                    "nrhos": "10",
+                    "theta-inc": "5",
+                    "min-theta": "30",
+                    "max-theta": "60",
+                    "min-col": "4",
+                    "min-row": "4",
+                    "max-col": "11",
+                    "max-row": "11",
+                    "pixel-threshold": "0"
                 }
             }
         ]

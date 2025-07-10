@@ -9,16 +9,16 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-image-create",
+                "operator": "transform-image-create",
                 "input-data": [
                     {
                         "id": 1,
-                        "type": "image",
+                        "type": "data",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_16x16_view_8x8",
-                        "ext": "bin"
+                        "filename": "create_test_4x4",
+                        "ext": "txt"
                     }
                 ],
                 "output-data": [
@@ -28,30 +28,33 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_accumulator_16x16_view_8x8",
+                        "filename": "test_4x4",
                         "ext": "bin"
                     },
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "test_4x4",
+                        "ext": "jpg"
+                    },
+                    {
+                        "id": 2,
+                        "type": "image",
+                        "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_accumulator_16x16_view_8x8",
+                        "filename": "test_4x4",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "accumulate": "unit",
-                    "nrhos": "10",
-                    "theta-inc": "5",
-                    "min-theta": "30",
-                    "max-theta": "60",
-                    "min-col": "4",
-                    "min-row": "4",
-                    "max-col": "11",
-                    "max-row": "11",
-                    "pixel-threshold": "0"
+                    "foreground": "1",
+                    "background": "0",
+                    "ncols": "4",
+                    "nrows": "4"
                 }
             }
         ]

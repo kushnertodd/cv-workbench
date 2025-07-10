@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "create_hough_test_image_4x4",
+                        "filename": "create_test_16x16_view_8x8",
                         "ext": "txt"
                     }
                 ],
@@ -28,7 +28,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_4x4",
+                        "filename": "test_16x16_view_8x8",
                         "ext": "bin"
                     },
                     {
@@ -37,7 +37,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_4x4",
+                        "filename": "test_16x16_view_8x8",
                         "ext": "jpg"
                     },
                     {
@@ -46,15 +46,15 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "hough_test_image_grayscale_4x4",
+                        "filename": "test_16x16_view_8x8",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
                     "foreground": "1",
                     "background": "0",
-                    "ncols": "4",
-                    "nrows": "4"
+                    "ncols": "16",
+                    "nrows": "16"
                 }
             }
         ]

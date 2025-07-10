@@ -9,16 +9,16 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "filter-edge-sobel-maximal",
+                "operator": "hough-image-create",
                 "input-data": [
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale",
-                        "ext": "jpg"
+                        "filename": "test_4x4",
+                        "ext": "bin"
                     }
                 ],
                 "output-data": [
@@ -28,41 +28,24 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge",
+                        "filename": "test_4x4_hough_accumulator",
                         "ext": "bin"
-                    }
-                ],
-                "parameters": {
-                }
-            },
-            {
-                "id": 2,
-                "operator": "transform-intensity-map",
-                "input-data": [
+                    },
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge",
-                        "ext": "bin"
-                    }
-                ],
-                "output-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge",
-                        "ext": "jpg"
+                        "filename": "test_4x4_hough_accumulator",
+                        "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "depth": "CV_8U",
-                    "standard-deviations": "2.0"
+                    "accumulate": "unit",
+                    "nrhos": "20",
+                    "theta-inc": "45",
+                    "pixel-threshold": "0"
                 }
             }
         ]
