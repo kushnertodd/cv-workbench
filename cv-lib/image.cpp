@@ -875,7 +875,7 @@ void Image::log(std::vector<WB_log_entry> &log_entries) const {
  * @param errors
  * @return
  */
-Image *Image::sobel_non_maxima_suppression(Errors &errors) const {
+Image *Image::sobel_maximal(Errors &errors) const {
 #ifdef IMAGE_COMPONENT_CHECK
     assert(is_grayscale());
 #endif

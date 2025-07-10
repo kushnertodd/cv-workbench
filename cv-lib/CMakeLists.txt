@@ -56,6 +56,8 @@ add_library(cv-lib STATIC
         operator_filter_edge_roberts.hpp
         operator_filter_edge_sobel.cpp
         operator_filter_edge_sobel.hpp
+        operator_filter_edge_sobel_maximal.cpp
+        operator_filter_edge_sobel_maximal.hpp
         operator_filter_image_morphology.cpp
         operator_filter_image_morphology.hpp
         operator_filter_smooth_average.cpp

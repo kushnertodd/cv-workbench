@@ -31,6 +31,11 @@ void Operator_filter_edge_sobel::run(std::vector<Data_source_descriptor *> &inpu
         errors.add("Operator_filter_edge_sobel::run", "", "one input data source required");
     if (output_data_stores.empty())
         errors.add("Operator_filter_edge_sobel::run", "", "output data source required");
+    std::string orientation_str{};
+    bool have_orientation = Operator_utils::get_string_parameter("Operator_filter_edge_sobel::run", operator_parameters,
+                                                                 "orientation", orientation_str, errors);
+    if (have_orientation && orientation_str != "0" && orientation_str != "90")
+        errors.add("Operator_filter_edge_sobel::run", "", "orientation not 0 or 90");
     if (!errors.has_error()) {
         Data_source_descriptor *input_data_source = input_data_sources[0];
         std::unique_ptr<Image> input_image(
@@ -38,13 +43,31 @@ void Operator_filter_edge_sobel::run(std::vector<Data_source_descriptor *> &inpu
         if (!errors.has_error())
             input_image->check_grayscale("Operator_filter_edge_sobel::run", errors);
         if (!errors.has_error()) {
-            std::unique_ptr<Image> output_image(input_image->sobel_non_maxima_suppression(errors));
+            Kernel *sobel_kernel_row_ptr = nullptr;
+            Kernel *sobel_kernel_col_ptr = nullptr;
+            if (orientation_str == "90") {
+                pixel_32F coeffs_32F_row[] = {1, 0, -1};
+                sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
+                pixel_32F coeffs_32F_col[] = {0.25, 0.5, 0.25};
+                sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
+            } else if (orientation_str == "0") {
+                pixel_32F coeffs_32F_row[] = {0.25, 0.5, 0.25};
+                sobel_kernel_row_ptr = Kernel::create_32F(3, 1, coeffs_32F_row);
+                // this is reversed from the separable filter reference
+                pixel_32F coeffs_32F_col[] = {-1.0, 0, 1.0};
+                sobel_kernel_col_ptr = Kernel::create_32F(1, 3, coeffs_32F_col);
+            }
+            std::unique_ptr<Kernel> sobel_kernel_row(sobel_kernel_row_ptr);
+            std::unique_ptr<Kernel> sobel_kernel_col(sobel_kernel_col_ptr);
+            std::unique_ptr<Image> output1_image(sobel_kernel_row->convolve_numeric(input_image.get(), errors));
             if (!errors.has_error()) {
-                for (Data_source_descriptor *output_data_store: output_data_stores)
-                    output_data_store->write_operator_image(output_image.get(), "Operator_filter_edge_sobel::run",
-                                                            errors);
+                std::unique_ptr<Image> output2_image(sobel_kernel_col->convolve_numeric(output1_image.get(), errors));
                 if (!errors.has_error())
-                    output_image->log(log_entries);
+                    for (Data_source_descriptor *output_data_store: output_data_stores)
+                        output_data_store->write_operator_image(output2_image.get(), "Operator_filter_edge_sobel::run",
+                                                                errors);
+                if (!errors.has_error())
+                    output2_image->log(log_entries);
             }
         }
     }

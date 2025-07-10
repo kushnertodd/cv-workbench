@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "filter-edge-sobel",
+                "operator": "filter-edge-sobel-maximal",
                 "input-data": [
                     {
                         "id": 1,
