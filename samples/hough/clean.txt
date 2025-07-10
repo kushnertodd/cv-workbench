@@ -3,6 +3,7 @@ create_test_16x16_view_8x8.log
 create_test_4x4.log
 create_test_8x8.log
 grayscale_draw_line.jpg
+grayscale_draw_line.txt
 grayscale_edge.bin
 grayscale_edge.jpg
 grayscale_edge.log
@@ -23,7 +24,10 @@ test_16x16_hough.log
 test_16x16.jpg
 test_16x16.txt
 test_16x16_view_8x8.bin
+test_16x16_view_8x8_draw_line.jpg
+test_16x16_view_8x8_draw_line.txt
 test_16x16_view_8x8_hough_accumulator.bin
+test_16x16_view_8x8_hough_accumulator_draw_line.log
 test_16x16_view_8x8_hough_accumulator_peak_lines.log
 test_16x16_view_8x8_hough_accumulator_peaks.txt
 test_16x16_view_8x8_hough_accumulator.txt

@@ -7,6 +7,7 @@ test_16x16_hough.json
 create_test_16x16_view_8x8.json
 test_16x16_view_8x8_hough.json
 test_16x16_view_8x8_hough_accumulator_peak_lines.json
+test_16x16_view_8x8_hough_accumulator_draw_line.json
 grayscale_edge.json
 grayscale_edge_threshold.json
 grayscale_edge_threshold_hough.json
