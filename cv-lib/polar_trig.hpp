@@ -26,6 +26,7 @@ public:
     Polar_trig();
     Polar_trig(double m_min_x, double m_max_x, double m_min_y, double m_max_y, int m_theta_inc, int m_min_theta,
                int m_max_theta);
+    int add_thetas(int start_theta, int end_theta, int theta_index);
     int get_max_theta() const;
     double get_max_x() const;
     double get_max_y() const;
@@ -37,6 +38,8 @@ public:
     void initialize_thetas();
     bool is_theta_index_valid(int theta_index) const;
     bool is_theta_valid(int theta_index) const;
+    static bool is_min_max_theta_valid(int theta);
+    static int map_theta_pi(int theta);
     double theta_index_to_cos(int theta_index);
     double theta_index_to_sin(int theta_index);
     int theta_index_to_theta(int theta_index);

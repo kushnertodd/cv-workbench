@@ -11,14 +11,6 @@ extern bool debug;
  */
 Operator_hough_image_create::~Operator_hough_image_create() = default;
 /**
- * @brief
- * @param theta
- * @return theta in range -360..359
- */
-bool Operator_hough_image_create::is_valid_min_max_theta(int theta) {
-    return (theta >= -theta_pi && theta <= theta_pi);
-}
-/**
  * theta_inc: hough accumulator theta increment (no. thetas = 180/theta_inc)
  *
  * @param input_data_source
@@ -50,14 +42,16 @@ void Operator_hough_image_create::run(std::vector<Data_source_descriptor *> &inp
     if (Operator_utils::has_parameter(operator_parameters, "min-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "min-theta",
                                           min_theta, errors);
-    if (!is_valid_min_max_theta(min_theta))
-        errors.add("Operator_hough_image_create::run", "", "min-theta must be in range -180..180");
+    if (!Polar_trig::is_min_max_theta_valid(min_theta))
+        errors.add("Operator_hough_image_create::run", "", "min-theta must be in range -180..179");
     int max_theta = default_max_theta;
     if (Operator_utils::has_parameter(operator_parameters, "max-theta"))
         Operator_utils::get_int_parameter("Operator_hough_image_create::run", operator_parameters, "max-theta",
                                           max_theta, errors);
-    if (!is_valid_min_max_theta(max_theta))
-        errors.add("Operator_hough_image_create::run", "", "max-theta must be in range -180..180");
+    if (!Polar_trig::is_min_max_theta_valid(max_theta))
+        errors.add("Operator_hough_image_create::run", "", "max-theta must be in range -180..179");
+    if (min_theta > max_theta)
+        errors.add("Operator_hough_image_create::run", "", "min-theta must be at most max-theta");
     std::string accumulate_str = "unit";
     bool have_accumulate = Operator_utils::get_string_parameter("Operator_hough_image_create::run", operator_parameters,
                                                                 "accumulate", accumulate_str, errors);

@@ -24,9 +24,9 @@ Operator_filter_edge_sobel_maximal::~Operator_filter_edge_sobel_maximal() = defa
  * @param errors
  */
 void Operator_filter_edge_sobel_maximal::run(std::vector<Data_source_descriptor *> &input_data_sources,
-                                     std::vector<Data_source_descriptor *> &output_data_stores,
-                                     String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
-                                     Errors &errors) {
+                                             std::vector<Data_source_descriptor *> &output_data_stores,
+                                             String_map &operator_parameters, std::vector<WB_log_entry> &log_entries,
+                                             Errors &errors) {
     if (input_data_sources.size() != 1)
         errors.add("Operator_filter_edge_sobel_maximal::run", "", "one input data source required");
     if (output_data_stores.empty())
@@ -41,8 +41,8 @@ void Operator_filter_edge_sobel_maximal::run(std::vector<Data_source_descriptor 
             std::unique_ptr<Image> output_image(input_image->sobel_maximal(errors));
             if (!errors.has_error()) {
                 for (Data_source_descriptor *output_data_store: output_data_stores)
-                    output_data_store->write_operator_image(output_image.get(), "Operator_filter_edge_sobel_maximal::run",
-                                                            errors);
+                    output_data_store->write_operator_image(output_image.get(),
+                                                            "Operator_filter_edge_sobel_maximal::run", errors);
                 if (!errors.has_error())
                     output_image->log(log_entries);
             }
