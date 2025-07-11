@@ -150,9 +150,9 @@ void Hough::initialize_accumulator() {
 }
 void Hough::initialize_nrhos() {
     if (saw_nrhos)
-        rho_inc = (max_rho - min_rho) / (nrhos - 1);
+        rho_inc = rho_range / (nrhos - 1);
     else if (saw_rho_inc)
-        nrhos = wb_utils::double_to_int_round((max_rho - min_rho) / rho_inc);
+        nrhos = wb_utils::double_to_int_round(rho_range / rho_inc);
 }
 void Hough::initialize_rhos() {
     assert((!saw_nrhos && saw_rho_inc) || (saw_nrhos && !saw_rho_inc));
@@ -429,6 +429,8 @@ double Hough::rho_index_to_rho(int rho_index) const {
  */
 int Hough::rho_to_rho_index(double rho) const {
     assert(rho >= min_rho && rho <= max_rho);
+    if (rho_range == 0.0)
+        return 0;
     double rho_index_double = (nrhos - 1) * (rho - min_rho) / rho_range;
     int rho_index = wb_utils::double_to_int_round(rho_index_double);
     assert(is_rho_index_valid(rho_index));
