@@ -28,7 +28,7 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     if (input_data_sources.size() != 2)
         errors.add("Operator_hough_draw_line::run", "", "two input data sources required");
-    if (output_data_stores.size() != 1 && output_data_stores.size() != 2)
+    if (output_data_stores.size() < 1)
         errors.add("Operator_hough_draw_line::run", "", "one output data source required");
     Data_source_descriptor *input_data_source = nullptr;
     Data_source_descriptor *input_image_source = nullptr;
