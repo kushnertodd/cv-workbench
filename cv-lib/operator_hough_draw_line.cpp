@@ -142,12 +142,12 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                         }
                     }
                 }
-            if (!errors.has_error())
-                for (Data_source_descriptor *hough_output_data_store: output_data_stores)
-                    hough_output_data_store->write_operator_image(input_image.get(), "Operator_hough_image_create::run",
-                                                                  errors);
-            if (!errors.has_error())
-                input_image->log(log_entries);
+                if (!errors.has_error())
+                    for (Data_source_descriptor *hough_output_data_store: output_data_stores)
+                        hough_output_data_store->write_operator_image(input_image.get(),
+                                                                      "Operator_hough_image_create::run", errors);
+                if (!errors.has_error())
+                    input_image->log(log_entries);
             }
         }
     }
