@@ -28,7 +28,7 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                   << Operator_utils::parameters_to_string(operator_parameters) << std::endl;
     if (input_data_sources.size() != 2)
         errors.add("Operator_hough_draw_line::run", "", "two input data sources required");
-    else if (output_data_stores.size() != 1)
+    if (output_data_stores.size() != 1 && output_data_stores.size() != 2)
         errors.add("Operator_hough_draw_line::run", "", "one output data source required");
     Data_source_descriptor *input_data_source = nullptr;
     Data_source_descriptor *input_image_source = nullptr;
@@ -142,16 +142,12 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                         }
                     }
                 }
-                if (!errors.has_error())
-                    if (input_image_source->data_format == WB_data_format::Data_format::JPEG) {
-                        output_image_store->write_image_jpeg(input_image.get(), errors);
-                    } else if (input_image_source->data_format == WB_data_format::Data_format::BINARY) {
-                        output_image_store->write_image(input_image.get(), errors);
-                    } else {
-                        errors.add("Operator_hough_draw_line::run", "",
-                                   "invalid data format '" +
-                                           WB_data_format::to_string(output_image_store->data_format) + "'");
-                    }
+            if (!errors.has_error())
+                for (Data_source_descriptor *hough_output_data_store: output_data_stores)
+                    hough_output_data_store->write_operator_image(input_image.get(), "Operator_hough_image_create::run",
+                                                                  errors);
+            if (!errors.has_error())
+                input_image->log(log_entries);
             }
         }
     }

@@ -9,16 +9,25 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-image-create",
+                "operator": "hough-draw-line",
                 "input-data": [
+                    {
+                        "id": 1,
+                        "type": "data",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "test_8x8_hough_accumulator_peaks",
+                        "ext": "txt"
+                    },
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
                         "filename": "test_8x8",
-                        "ext": "bin"
+                        "ext": "jpg"
                     }
                 ],
                 "output-data": [
@@ -26,28 +35,24 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
-                        "filename": "test_8x8_hough_accumulator",
-                        "ext": "bin"
+                        "filename": "test_8x8_draw_line",
+                        "ext": "jpg"
                     },
                     {
-                        "id": 1,
+                        "id": 2,
                         "type": "image",
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "test_8x8_hough_accumulator",
+                        "filename": "test_8x8_draw_line",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "accumulate": "unit",
-                    "min-theta": "30",
-                    "max-theta": "60",
-                    "nrhos": "10",
-                    "theta-inc": "5",
-                    "pixel-threshold": "0"
+                    "pixel-value": "128",
+                    "out-component": "1"
                 }
             }
         ]

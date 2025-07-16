@@ -1,7 +1,10 @@
 create_test_4x4.json
 test_4x4_hough.json
+test_4x4_hough_accumulator_peak_lines.json
 create_test_8x8.json
 test_8x8_hough.json
+test_8x8_hough_accumulator_peak_lines.json
+test_8x8_hough_accumulator_draw_line.json
 create_test_16x16.json
 test_16x16_hough.json
 create_test_16x16_view_8x8.json
@@ -13,3 +16,4 @@ grayscale_edge_threshold.json
 grayscale_edge_threshold_hough.json
 grayscale_edge_threshold_hough_peak_lines.json
 grayscale_edge_threshold_hough_draw_line.json
+
