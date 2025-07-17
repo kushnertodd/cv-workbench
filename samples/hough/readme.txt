@@ -79,7 +79,7 @@ outputs:
   test_16x16_hough_accumulator.bin
   test_16x16_hough_accumulator.txt
 
-- perform hough on test 16x16 image with 8x8 subimage and draw peak lines
+- perform hough on test 16x16 image with 8x8 subimage and draw peaks lines
 
 script files:
   create_test_16x16_view_8x8.json
@@ -106,7 +106,7 @@ outputs:
   test_16x16_view_8x8_hough_accumulator.bin
   test_16x16_view_8x8_hough_accumulator.txt
 
-test_16x16_view_8x8_hough_accumulator_peak_lines.json
+test_16x16_view_8x8_hough_peaks.json
 
 Grayscale image
 
@@ -148,26 +148,26 @@ outputs:
   grayscale_edge_threshold_hough_accumulator.bin
   
 script file:
-  grayscale_edge_threshold_hough_peak_lines.json
+  grayscale_edge_threshold_hough_peaks.json
 function:
-  performs peak line extraction from hough accumulator:
+  performs peaks line extraction from hough accumulator:
   - percentile threshold 65%
   - rho suppresion 3 pixels
   - theta suppression 6 degrees
 inputs:
   grayscale_edge_threshold_hough_accumulator.bin
 outputs:
-  grayscale_edge_threshold_hough_accumulator_peaks.bin
-  grayscale_edge_threshold_hough_accumulator_peaks.txt
+  grayscale_edge_threshold_hough_peaks.bin
+  grayscale_edge_threshold_hough_peaks.txt
   
 script file:
   grayscale_edge_threshold_hough_draw_line.json
 function:
-  draws peak lines from hough accumulator:
+  draws peaks lines from hough accumulator:
   - pixel value 128
   - for subimage from (50,0) to (150,100)
 inputs:
-  grayscale_edge_threshold_hough_accumulator_peaks.txt
+  grayscale_edge_threshold_hough_peaks.txt
   grayscale.jpg
   grayscale_edge_threshold.jpg
 outputs:

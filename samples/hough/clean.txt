@@ -13,7 +13,7 @@ grayscale_edge_threshold_hough_accumulator.bin
 grayscale_edge_threshold_hough_accumulator.txt
 grayscale_edge_threshold_hough_draw_line.log
 grayscale_edge_threshold_hough.log
-grayscale_edge_threshold_hough_peak_lines.log
+grayscale_edge_threshold_hough_peaks.log
 grayscale_edge_threshold_hough_peaks.txt
 grayscale_edge_threshold.jpg
 grayscale_edge_threshold.log
@@ -30,7 +30,7 @@ test_16x16_view_8x8_0_hough_accumulator.bin
 test_16x16_view_8x8_0_hough_accumulator.txt
 test_16x16_view_8x8_0_hough_draw_line.log
 test_16x16_view_8x8_0_hough.log
-test_16x16_view_8x8_0_hough_peak_lines.log
+test_16x16_view_8x8_0_hough_peaks.log
 test_16x16_view_8x8_0_hough_peaks.txt
 test_16x16_view_8x8_0.jpg
 test_16x16_view_8x8_0.txt
@@ -41,7 +41,7 @@ test_16x16_view_8x8_hough_accumulator.bin
 test_16x16_view_8x8_hough_accumulator.txt
 test_16x16_view_8x8_hough_draw_line.log
 test_16x16_view_8x8_hough.log
-test_16x16_view_8x8_hough_peak_lines.log
+test_16x16_view_8x8_hough_peaks.log
 test_16x16_view_8x8_hough_peaks.txt
 test_16x16_view_8x8.jpg
 test_16x16_view_8x8.txt
@@ -49,7 +49,7 @@ test_4x4.bin
 test_4x4_hough_accumulator.bin
 test_4x4_hough_accumulator.txt
 test_4x4_hough.log
-test_4x4_hough_peak_lines.log
+test_4x4_hough_peaks.log
 test_4x4_hough_peaks.txt
 test_4x4.jpg
 test_4x4.txt
@@ -60,7 +60,7 @@ test_8x8_hough_accumulator.bin
 test_8x8_hough_accumulator.txt
 test_8x8_hough_draw_line.log
 test_8x8_hough.log
-test_8x8_hough_peak_lines.log
+test_8x8_hough_peaks.log
 test_8x8_hough_peaks.txt
 test_8x8.jpg
 test_8x8.txt
