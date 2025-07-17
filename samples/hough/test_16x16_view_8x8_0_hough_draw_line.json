@@ -53,10 +53,10 @@
                 "parameters": {
                     "pixel-value": "128",
                     "out-component": "1",
-           					"min-col": "4",
+					"min-col": "4",
                     "min-row": "4",
                     "max-col": "11",
-                    "max-row": "11"
+                    "max-row": "11",
                 }
             }
         ]
