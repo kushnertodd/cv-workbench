@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_peaks",
                         "ext": "txt"
                     },
                     {
@@ -60,7 +60,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_peaks",
                         "ext": "txt"
                     },
                     {

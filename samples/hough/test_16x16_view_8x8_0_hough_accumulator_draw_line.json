@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "test_8x8_hough_accumulator_peaks",
+                        "filename": "test_16x16_view_8x8_0_hough_peaks",
                         "ext": "txt"
                     },
                     {
@@ -26,7 +26,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "test_8x8",
+                        "filename": "test_16x16_view_8x8_0",
                         "ext": "jpg"
                     }
                 ],
@@ -37,7 +37,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "test_8x8_draw_line",
+                        "filename": "test_16x16_view_8x8_0_draw_line",
                         "ext": "jpg"
                     },
                     {
@@ -46,13 +46,17 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "test_8x8_draw_line",
+                        "filename": "test_16x16_view_8x8_0_draw_line",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
                     "pixel-value": "128",
-                    "out-component": "1"
+                    "out-component": "1",
+					"min-col": "4",
+                    "min-row": "4",
+                    "max-col": "11",
+                    "max-row": "11",
                 }
             }
         ]

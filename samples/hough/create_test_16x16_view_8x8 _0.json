@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-draw-line",
+                "operator": "transform-image-create",
                 "input-data": [
                     {
                         "id": 1,
@@ -17,17 +17,8 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "test_16x16_view_8x8_hough_accumulator_peaks",
+                        "filename": "create_test_16x16_view_8x8_0",
                         "ext": "txt"
-                    },
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "test_16x16_view_8x8",
-                        "ext": "jpg"
                     }
                 ],
                 "output-data": [
@@ -35,9 +26,18 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "test_16x16_view_8x8_0",
+                        "ext": "bin"
+                    },
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "test_16x16_view_8x8_draw_line",
+                        "filename": "test_16x16_view_8x8_0",
                         "ext": "jpg"
                     },
                     {
@@ -46,13 +46,15 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "test_16x16_view_8x8_draw_line",
+                        "filename": "test_16x16_view_8x8_0",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "pixel-value": "128",
-                    "out-component": "1"
+                    "foreground": "1",
+                    "background": "0",
+                    "ncols": "16",
+                    "nrows": "16"
                 }
             }
         ]
