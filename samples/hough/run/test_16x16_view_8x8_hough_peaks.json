@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
+                        "filename": "test_16x16_view_8x8_hough_accumulator",
                         "ext": "bin"
                     }
                 ],
@@ -28,12 +28,12 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_peaks",
+                        "filename": "test_16x16_view_8x8_hough_peaks",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "threshold": "90.0",
+                    "threshold": "80.0",
                     "rho_suppress": "3",
                     "theta_suppress": "6"
                 }

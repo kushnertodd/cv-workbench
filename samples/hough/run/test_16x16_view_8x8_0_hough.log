@@ -1,0 +1,71 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"test_16x16_view_8x8_0_hough.json",
+      "run-time":"º/\u001eë\u0005",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-image-create",
+        "input-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_0",
+            "ext":"bin"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_0_hough_accumulator",
+            "ext":"bin"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_0_hough_accumulator",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "accumulate":"unit",
+          "nrhos":"10",
+          "theta-inc":"30",
+          "min-theta":"0",
+          "max-theta":"150",
+          "min-col":"4",
+          "min-row":"4",
+          "max-col":"11",
+          "max-row":"11",
+          "pixel-threshold":"0"
+        },
+        "results":{
+          "saw rho inc":"0",
+          "rho inc":"0",
+          "theta inc":"30",
+          "saw_nrhos":"1",
+          "nrhos":"10",
+          "nthetas":"6",
+          "pixel mean":"0.8",
+          "pixel standard deviation":"1.14685",
+          "min pixel value":"0",
+          "max pixel value":"8"
+        }
+      }
+    ]
+  }
+}

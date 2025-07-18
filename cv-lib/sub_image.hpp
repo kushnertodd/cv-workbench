@@ -47,6 +47,7 @@ public:
     int to_base_image_row(int row) const;
     double to_col(double x) const;
     static double to_col(double x, int ncols);
+    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
     void to_pixel(Pixel &pixel, double x, double y) const;
     void to_pixel(Pixel &pixel, Point &point) const;
     void to_point(Point &point, int col, int row) const;

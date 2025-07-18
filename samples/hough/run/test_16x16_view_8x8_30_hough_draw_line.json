@@ -9,16 +9,25 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-image-create",
+                "operator": "hough-draw-line",
                 "input-data": [
+                    {
+                        "id": 1,
+                        "type": "data",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "test_16x16_view_8x8_30_hough_peaks",
+                        "ext": "txt"
+                    },
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold",
-                        "ext": "bin"
+                        "filename": "test_16x16_view_8x8_30",
+                        "ext": "jpg"
                     }
                 ],
                 "output-data": [
@@ -26,32 +35,24 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
-                        "ext": "bin"
+                        "filename": "test_16x16_view_8x8_30_draw_line",
+                        "ext": "jpg"
                     },
                     {
-                        "id": 1,
+                        "id": 2,
                         "type": "image",
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
+                        "filename": "test_16x16_view_8x8_30_draw_line",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "accumulate": "unit",
-                    "nrhos": "20",
-                    "theta-inc": "5",
-                    "pixel-threshold": "128",
-                    "min-col": "50",
-                    "min-row": "0",
-                    "max-col": "150",
-                    "max-row": "100",
-		                "min-theta": "80",
-                    "max-theta": "100"
+                    "pixel-value": "128",
+                    "out-component": "1"
                 }
             }
         ]

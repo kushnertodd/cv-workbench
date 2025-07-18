@@ -1,0 +1,55 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"test_4x4_hough_peaks.json",
+      "run-time":"test_4x4_hough_peaks",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_4x4_hough_accumulator",
+            "ext":"bin"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_4x4_hough_peaks",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "threshold":"80.0",
+          "rho_suppress":"1",
+          "theta_suppress":"1"
+        },
+        "results":{
+          "saw rho inc":"0",
+          "rho inc":"0",
+          "theta inc":"45",
+          "saw_nrhos":"1",
+          "nrhos":"20",
+          "nthetas":"4",
+          "pixel mean":"0.2",
+          "pixel standard deviation":"0.560289",
+          "min pixel value":"0",
+          "max pixel value":"4"
+        }
+      }
+    ]
+  }
+}

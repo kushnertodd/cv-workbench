@@ -9,7 +9,7 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-peak-detect",
+                "operator": "hough-image-create",
                 "input-data": [
                     {
                         "id": 1,
@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
+                        "filename": "test_16x16_view_8x8_30",
                         "ext": "bin"
                     }
                 ],
@@ -26,16 +26,28 @@
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
+                        "format": "binary",
+                        "directory": ".",
+                        "filename": "test_16x16_view_8x8_30_hough_accumulator",
+                        "ext": "bin"
+                    },
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_peaks",
+                        "filename": "test_16x16_view_8x8_30_hough_accumulator",
                         "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "threshold": "90.0",
-                    "rho_suppress": "3",
-                    "theta_suppress": "6"
+                    "accumulate": "unit",
+                    "nrhos": "10",
+                    "theta-inc": "10",
+                    "min-theta": "0",
+                    "max-theta": "150",
+                    "pixel-threshold": "0"
                 }
             }
         ]

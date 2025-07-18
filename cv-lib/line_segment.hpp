@@ -9,6 +9,7 @@
  */
 class Line_segment {
     friend class Image;
+    friend class Sub_image;
     Point point1;
     Point point2;
 

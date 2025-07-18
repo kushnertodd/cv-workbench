@@ -1,0 +1,55 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"grayscale_edge_threshold_hough_peaks.json",
+      "run-time":"í‘OÊ\u0005",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-peak-detect",
+        "input-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"grayscale_edge_threshold_hough_accumulator",
+            "ext":"bin"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"grayscale_edge_threshold_hough_peaks",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "threshold":"90.0",
+          "rho_suppress":"3",
+          "theta_suppress":"6"
+        },
+        "results":{
+          "saw rho inc":"0",
+          "rho inc":"5",
+          "theta inc":"5",
+          "saw_nrhos":"1",
+          "nrhos":"20",
+          "nthetas":"5",
+          "pixel mean":"55.6",
+          "pixel standard deviation":"40.9651",
+          "min pixel value":"0",
+          "max pixel value":"133"
+        }
+      }
+    ]
+  }
+}

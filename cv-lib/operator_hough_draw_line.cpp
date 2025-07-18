@@ -3,6 +3,7 @@
 #include <vector>
 #include "hough.hpp"
 #include "operator_utils.hpp"
+#include "sub_image.hpp"
 #include "wb_window.hpp"
 
 extern bool debug;
@@ -121,12 +122,14 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                         if (!wb_utils::string_to_int(params[1], theta))
                             errors.add("Operator_hough_draw_line::run", "", "invalid point parameter theta value");
                     if (!errors.has_error()) {
+                        std::unique_ptr<Sub_image> input_sub_image =
+                                std::make_unique<Sub_image>(input_image.get(), min_col, min_row, max_col, max_row);
                         int area_cols = max_col - min_col + 1;
                         int area_rows = max_row - min_row + 1;
-                        double min_x = input_image->to_x(0, area_cols);
-                        double max_y = input_image->to_y(0, area_rows);
-                        double max_x = input_image->to_x(area_cols - 1, area_cols);
-                        double min_y = input_image->to_y(area_rows - 1, area_rows);
+                        double min_x = Image::to_x(0, area_cols);
+                        double max_y = Image::to_y(0, area_rows);
+                        double max_x = Image::to_x(area_cols - 1, area_cols);
+                        double min_y = Image::to_y(area_rows - 1, area_rows);
                         WB_window window(min_x, min_y, max_x, max_y);
                         Polar_line polar_line(rho, theta);
                         Line_segment line_segment;

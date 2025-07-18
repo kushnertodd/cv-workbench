@@ -1,0 +1,67 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"test_16x16_hough.json",
+      "run-time":"script-path",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-image-create",
+        "input-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_16x16",
+            "ext":"bin"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_16x16_hough_accumulator",
+            "ext":"bin"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_16x16_hough_accumulator",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "accumulate":"unit",
+          "nrhos":"20",
+          "theta-inc":"1",
+          "min-theta":"40",
+          "max-theta":"50",
+          "pixel-threshold":"0"
+        },
+        "results":{
+          "saw rho inc":"0",
+          "rho inc":"1",
+          "theta inc":"1",
+          "saw_nrhos":"1",
+          "nrhos":"20",
+          "nthetas":"11",
+          "pixel mean":"2",
+          "pixel standard deviation":"1.11445",
+          "min pixel value":"0",
+          "max pixel value":"4"
+        }
+      }
+    ]
+  }
+}

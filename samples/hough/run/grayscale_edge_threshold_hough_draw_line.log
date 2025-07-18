@@ -1,0 +1,120 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"grayscale_edge_threshold_hough_draw_line.json",
+      "run-time":"\u0005/\u001b‚\u0005",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-draw-line",
+        "input-data":[
+          {
+            "id":1,
+            "type":"data",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"grayscale_edge_threshold_hough_peaks",
+            "ext":"txt"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"grayscale_edge_threshold",
+            "ext":"jpg"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"grayscale_edge_threshold_draw_line",
+            "ext":"jpg"
+          }
+        ],
+        "parameters":{
+          "pixel-value":"128",
+          "out-component":"1",
+          "min-col":"50",
+          "max-col":"150",
+          "min-row":"0",
+          "max-row":"100"
+        },
+        "results":{
+          "ncols":"151",
+          "nrows":"225",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"33975",
+          "pixel mean":"22.586",
+          "pixel standard deviation":"71.0823",
+          "min pixel value":"0",
+          "max pixel value":"255"
+        }
+      },
+      {
+        "id":1,
+        "operator":"hough-draw-line",
+        "input-data":[
+          {
+            "id":1,
+            "type":"data",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"grayscale_edge_threshold_hough_peaks",
+            "ext":"txt"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"grayscale",
+            "ext":"jpg"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"grayscale_draw_line",
+            "ext":"jpg"
+          }
+        ],
+        "parameters":{
+          "pixel-value":"128",
+          "out-component":"1",
+          "min-col":"50",
+          "max-col":"150",
+          "min-row":"0",
+          "max-row":"100"
+        },
+        "results":{
+          "ncols":"151",
+          "nrows":"225",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"33975",
+          "pixel mean":"154.716",
+          "pixel standard deviation":"54.6308",
+          "min pixel value":"0",
+          "max pixel value":"255"
+        }
+      }
+    ]
+  }
+}

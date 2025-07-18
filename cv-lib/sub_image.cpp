@@ -130,6 +130,13 @@ void Sub_image::to_base_image_pixel(Pixel &base_image_pixel, int col, int row) c
 int Sub_image::to_base_image_row(int row) const { return row + min_row; }
 double Sub_image::to_col(double x) const { return x + col_offset - 0.5; }
 double Sub_image::to_col(double x, int ncols) { return x + ncols / 2.0 - 0.5; }
+void Sub_image::to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment) {
+    Pixel pixel1;
+    Pixel pixel2;
+    to_pixel(pixel1, line_segment.point1);
+    to_pixel(pixel2, line_segment.point2);
+    image_line_segment.init(pixel1, pixel2);
+}
 void Sub_image::to_pixel(Pixel &pixel, double x, double y) const { pixel.init(to_col(x), to_row(y)); }
 void Sub_image::to_pixel(Pixel &pixel, Point &point) const { to_pixel(pixel, point.x, point.y); }
 void Sub_image::to_point(Point &point, int col, int row) const { point.init(to_x(col), to_y(row)); }

@@ -9,16 +9,16 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "hough-image-create",
+                "operator": "filter-edge-sobel-maximal",
                 "input-data": [
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "binary",
+                        "format": "jpeg",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold",
-                        "ext": "bin"
+                        "filename": "grayscale",
+                        "ext": "jpg"
                     }
                 ],
                 "output-data": [
@@ -28,30 +28,41 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
+                        "filename": "grayscale_edge",
                         "ext": "bin"
-                    },
+                    }
+                ],
+                "parameters": {
+                }
+            },
+            {
+                "id": 2,
+                "operator": "transform-intensity-map",
+                "input-data": [
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "text",
+                        "format": "binary",
                         "directory": ".",
-                        "filename": "grayscale_edge_threshold_hough_accumulator",
-                        "ext": "txt"
+                        "filename": "grayscale_edge",
+                        "ext": "bin"
+                    }
+                ],
+                "output-data": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "jpeg",
+                        "directory": ".",
+                        "filename": "grayscale_edge",
+                        "ext": "jpg"
                     }
                 ],
                 "parameters": {
-                    "accumulate": "unit",
-                    "nrhos": "20",
-                    "theta-inc": "5",
-                    "pixel-threshold": "128",
-                    "min-col": "50",
-                    "min-row": "0",
-                    "max-col": "150",
-                    "max-row": "100",
-		                "min-theta": "80",
-                    "max-theta": "100"
+                    "depth": "CV_8U",
+                    "standard-deviations": "2.0"
                 }
             }
         ]

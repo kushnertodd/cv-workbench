@@ -1,0 +1,71 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"test_16x16_view_8x8_30_hough_draw_line.json",
+      "run-time":"\u001e\u0018\u000e\u0016\u0006",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"hough-draw-line",
+        "input-data":[
+          {
+            "id":1,
+            "type":"data",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_30_hough_peaks",
+            "ext":"txt"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_30",
+            "ext":"jpg"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_30_draw_line",
+            "ext":"jpg"
+          },
+          {
+            "id":2,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_16x16_view_8x8_30_draw_line",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "pixel-value":"128",
+          "out-component":"1"
+        },
+        "results":{
+          "ncols":"16",
+          "nrows":"16",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"256",
+          "pixel mean":"7.05078",
+          "pixel standard deviation":"29.1489",
+          "min pixel value":"0",
+          "max pixel value":"128"
+        }
+      }
+    ]
+  }
+}

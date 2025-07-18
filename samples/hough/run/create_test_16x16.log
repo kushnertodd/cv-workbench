@@ -1,0 +1,73 @@
+{
+  "experiment":{
+    "run":{
+      "script-path":"create_test_16x16.json",
+      "run-time":"script-path",
+      "username":"kushn",
+      "version":"0.1.18"
+    },
+    "steps":[
+      {
+        "id":1,
+        "operator":"transform-image-create",
+        "input-data":[
+          {
+            "id":1,
+            "type":"data",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"create_test_16x16",
+            "ext":"txt"
+          }
+        ],
+        "output-data":[
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"binary",
+            "directory":".",
+            "filename":"test_16x16",
+            "ext":"bin"
+          },
+          {
+            "id":1,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"jpeg",
+            "directory":".",
+            "filename":"test_16x16",
+            "ext":"jpg"
+          },
+          {
+            "id":2,
+            "type":"image",
+            "repository":"filesystem",
+            "format":"text",
+            "directory":".",
+            "filename":"test_16x16",
+            "ext":"txt"
+          }
+        ],
+        "parameters":{
+          "foreground":"1",
+          "background":"0",
+          "ncols":"16",
+          "nrows":"16"
+        },
+        "results":{
+          "ncols":"16",
+          "nrows":"16",
+          "components":"1",
+          "depth":"CV_8U",
+          "pixel count":"256",
+          "pixel mean":"0.15625",
+          "pixel standard deviation":"0.363803",
+          "min pixel value":"0",
+          "max pixel value":"1"
+        }
+      }
+    ]
+  }
+}
