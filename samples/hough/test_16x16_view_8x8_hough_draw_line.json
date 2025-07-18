@@ -21,27 +21,18 @@
                         "ext": "txt"
                     },
                     {
-                        "id": 1,
+                        "id": 2,
                         "type": "image",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "text",
                         "directory": ".",
                         "filename": "test_16x16_view_8x8",
-                        "ext": "jpg"
+                        "ext": "txt"
                     }
                 ],
                 "output-data": [
                     {
                         "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "jpeg",
-                        "directory": ".",
-                        "filename": "test_16x16_view_8x8_draw_line",
-                        "ext": "jpg"
-                    },
-                    {
-                        "id": 2,
                         "type": "image",
                         "repository": "filesystem",
                         "format": "text",

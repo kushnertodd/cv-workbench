@@ -43,10 +43,10 @@
                 ],
                 "parameters": {
                     "accumulate": "unit",
-                    "nrhos": "20",
-                    "theta-inc": "45",
+                    "nrhos": "10",
+                    "theta-inc": "5",
                     "min-theta": "0",
-                    "max-theta": "179",
+                    "max-theta": "175",
                     "pixel-threshold": "0"
                 }
             }

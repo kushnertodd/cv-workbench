@@ -1137,12 +1137,12 @@ Image *Image::read_text(std::ifstream &ifs, Errors &errors) {
         }
         nrows++;
     }
-    auto *input_image = new Image(ncols, nrows, 1, Image_depth::CV_32S);
-    pixel_32S *buf_ptr = input_image->buf_32S.get();
+    auto *input_image = new Image(ncols, nrows, 1, Image_depth::CV_32F);
+    pixel_32F *buf_ptr = input_image->buf_32F.get();
     for (const std::vector<std::string> &row_values: lines) {
         for (const std::string &value_str: row_values) {
-            int value;
-            if (wb_utils::string_to_int(value_str, value)) {
+            double value;
+            if (wb_utils::string_to_double(value_str, value)) {
                 *buf_ptr++ = value;
             } else {
                 errors.add("Image::read_text", "", "invalid value '" + value_str + "'");
