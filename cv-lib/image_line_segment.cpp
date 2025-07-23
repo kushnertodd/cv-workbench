@@ -163,7 +163,7 @@ std::string Image_line_segment::to_string() const {
 void Image_line_segment::translate(int col, int row) {
     pixel1.translate(col, row);
     pixel2.translate(col, row);
-    for (Pixel pixel: line_pixels)
+    for (Pixel &pixel: line_pixels)
         pixel.translate(col, row);
 }
 void Image_line_segment::translate(Pixel pixel) { translate(pixel.col, pixel.row); }

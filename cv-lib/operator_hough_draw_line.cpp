@@ -80,7 +80,6 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
     if (!errors.has_error()) {
         std::unique_ptr<Data> input_data(
                 input_data_source->read_operator_data("Operator_hough_draw_line::run", errors));
-        Image *input_image_ptr = nullptr;
         if (!errors.has_error()) {
             std::unique_ptr<Image> input_image(
                     input_image_source->read_operator_image("Operator_hough_draw_line::run", errors));
@@ -139,7 +138,7 @@ void Operator_hough_draw_line::run(std::vector<Data_source_descriptor *> &input_
                                       << std::endl;
                         else {
                             Image_line_segment image_line_segment;
-                            input_image->to_image_line_segment(image_line_segment, line_segment);
+                            input_sub_image->to_image_line_segment(image_line_segment, line_segment);
                             image_line_segment.translate(min_col, min_row);
                             input_image->draw_line_segment(image_line_segment, pixel_value);
                         }
