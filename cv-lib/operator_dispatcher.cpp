@@ -5,6 +5,7 @@
 #include "operator_filter_edge_prewitt.hpp"
 #include "operator_filter_edge_roberts.hpp"
 #include "operator_filter_edge_sobel.hpp"
+#include "operator_filter_edge_sobel_maximal.hpp"
 #include "operator_filter_image_morphology.hpp"
 #include "operator_filter_smooth_average.hpp"
 #include "operator_filter_smooth_gaussian.hpp"
@@ -51,6 +52,8 @@ Operator *Operator_dispatcher::create_operator(const std::string &operator_name)
         pOperator = new Operator_filter_edge_roberts();
     else if (operator_name == "filter-edge-sobel")
         pOperator = new Operator_filter_edge_sobel();
+    else if (operator_name == "filter-edge-sobel-maximal")
+        pOperator = new Operator_filter_edge_sobel_maximal();
     else if (operator_name == "filter-image-morphology")
         pOperator = new Operator_filter_image_morphology();
     else if (operator_name == "filter-smooth-average")

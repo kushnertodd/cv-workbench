@@ -56,6 +56,8 @@ add_library(cv-lib STATIC
         operator_filter_edge_roberts.hpp
         operator_filter_edge_sobel.cpp
         operator_filter_edge_sobel.hpp
+        operator_filter_edge_sobel_maximal.cpp
+        operator_filter_edge_sobel_maximal.hpp
         operator_filter_image_morphology.cpp
         operator_filter_image_morphology.hpp
         operator_filter_smooth_average.cpp
@@ -106,8 +108,12 @@ add_library(cv-lib STATIC
         polar_trig_static.hpp
         runtime.cpp
         runtime.hpp
+        sub_image.cpp
+        sub_image.hpp
         variance_stats.cpp
         variance_stats.hpp
+        view.cpp
+        view.hpp
         wb_convert_types.cpp
         wb_convert_types.hpp
         wb_data_format.cpp

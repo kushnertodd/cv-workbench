@@ -1,0 +1,63 @@
+#ifndef CV_WORKBENCH_SRC_SUBIMAGE_HPP_
+#define CV_WORKBENCH_SRC_SUBIMAGE_HPP_
+
+#include "errors.hpp"
+#include "image.hpp"
+#include "image_line_segment.hpp"
+#include "line_segment.hpp"
+#include "view.hpp"
+
+class Sub_image : public View {
+    Image *image;
+    int min_col;
+    int min_row;
+    int max_col;
+    int max_row;
+    int ncols;
+    int nrows;
+    double col_offset{};
+    double row_offset{};
+
+public:
+    virtual ~Sub_image();
+    Sub_image();
+    Sub_image(Image *m_image, int m_min_col, int m_min_row, int m_max_col, int m_max_row);
+    bool check_grayscale(const std::string &module, Errors &errors) const;
+    void draw_line_segment(Image_line_segment &view_line_segment, double value, int component = 0);
+    void draw_line_segment(int col1, int row1, int col2, int row2, double value, int component = 0) const;
+    double get(int col, int row, int component = 0) const;
+    double get(const Pixel &pixel, int component = 0) const;
+    int get_max_col() const;
+    int get_max_row() const;
+    double get_max_x() const;
+    double get_max_y() const;
+    int get_min_col() const;
+    int get_min_row() const;
+    double get_min_x() const;
+    double get_min_y() const;
+    int get_ncols() const;
+    int get_nrows() const;
+    void set(int col, int row, double value, int component = 0) const;
+    void set(const Pixel &pixel, double value, int component = 0) const;
+    int to_base_image_col(int col) const;
+    void to_base_image_line_segment(Image_line_segment &base_image_line_segment,
+                                    Image_line_segment &sub_image_line_segment) const;
+    void to_base_image_pixel(Pixel &base_image_pixel, Pixel &sub_image_pixel) const;
+    void to_base_image_pixel(Pixel &base_image_pixel, int col, int row) const;
+    int to_base_image_row(int row) const;
+    double to_col(double x) const;
+    static double to_col(double x, int ncols);
+    void to_image_line_segment(Image_line_segment &image_line_segment, Line_segment &line_segment);
+    void to_pixel(Pixel &pixel, double x, double y) const;
+    void to_pixel(Pixel &pixel, Point &point) const;
+    void to_point(Point &point, int col, int row) const;
+    void to_point(Point &point, Pixel &pixel) const;
+    double to_row(double y) const;
+    static double to_row(double y, int nrows);
+    double to_x(int col) const;
+    static double to_x(int col, int ncols);
+    double to_y(int row) const;
+    static double to_y(int row, int nrows);
+};
+
+#endif // CV_WORKBENCH_SRC_SUBIMAGE_HPP_

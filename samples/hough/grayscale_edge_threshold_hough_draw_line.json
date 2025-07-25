@@ -17,7 +17,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_peaks",
                         "ext": "txt"
                     },
                     {
@@ -26,7 +26,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold",
+                        "filename": "grayscale_edge_threshold",
                         "ext": "jpg"
                     }
                 ],
@@ -37,13 +37,17 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold_draw_line",
+                        "filename": "grayscale_edge_threshold_draw_line",
                         "ext": "jpg"
                     }
                 ],
                 "parameters": {
                     "pixel-value": "128",
-                    "out-component": "1"
+                    "out-component": "1",
+                    "min-col": "50",
+                    "max-col": "150",
+                    "min-row": "0",
+                    "max-row": "100"
                 }
             },
             {
@@ -56,7 +60,7 @@
                         "repository": "filesystem",
                         "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale_edge_sqr_threshold_hough_accumulator_peaks",
+                        "filename": "grayscale_edge_threshold_hough_peaks",
                         "ext": "txt"
                     },
                     {
@@ -65,7 +69,7 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale",
+                        "filename": "grayscale",
                         "ext": "jpg"
                     }
                 ],
@@ -76,13 +80,17 @@
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_draw_line",
+                        "filename": "grayscale_draw_line",
                         "ext": "jpg"
                     }
                 ],
                 "parameters": {
                     "pixel-value": "128",
-                    "out-component": "1"
+                    "out-component": "1",
+                    "min-col": "50",
+                    "max-col": "150",
+                    "min-row": "0",
+                    "max-row": "100"
                 }
             }
         ]

@@ -8,6 +8,7 @@
 #include "image_line_segment.hpp"
 #include "pixel.hpp"
 #include "variance_stats.hpp"
+#include "view.hpp"
 #include "wb_convert_types.hpp"
 #include "wb_defs.hpp"
 #include "wb_log.hpp"
@@ -34,7 +35,7 @@ public:
     double diff(const Pixel_RGB &other) const;
 };
 
-class Image {
+class Image : public View {
     friend class Kernel;
     Image_header image_header;
     int next_pixel{};
@@ -96,6 +97,7 @@ public:
     bool is_grayscale() const;
     bool is_pixel_valid(int col, int row) const;
     void log(std::vector<WB_log_entry> &log_entries) const;
+    Image *sobel_maximal(Errors &errors) const;
     static Image *read(const std::string &path, Errors &errors);
     static Image *read(FILE *fp, Errors &errors);
     static Image *read_jpeg(const std::string &path, Errors &errors);
@@ -116,8 +118,8 @@ public:
     void to_pixel(Pixel &pixel, double x, double y);
     void to_pixel(Pixel &pixel, Point &point);
     void to_pixel_RGB(Pixel_RGB &pixel_RGB, int col, int row) const;
-    void to_point(Point &point, int col, int row);
-    void to_point(Point &point, Pixel &pixel);
+    void to_point(Point &point, int col, int row) const;
+    void to_point(Point &point, Pixel &pixel) const;
     std::string to_string(const std::string &prefix = "") const;
     double to_x(int col) const;
     static double to_x(int col, int ncols);

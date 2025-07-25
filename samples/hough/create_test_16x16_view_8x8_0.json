@@ -9,16 +9,16 @@
         "steps": [
             {
                 "id": 1,
-                "operator": "filter-edge-roberts",
+                "operator": "transform-image-create",
                 "input-data": [
                     {
                         "id": 1,
-                        "type": "image",
+                        "type": "data",
                         "repository": "filesystem",
-                        "format": "jpeg",
+                        "format": "text",
                         "directory": ".",
-                        "filename": "image_grayscale",
-                        "ext": "jpg"
+                        "filename": "create_test_16x16_view_8x8_0",
+                        "ext": "txt"
                     }
                 ],
                 "output-data": [
@@ -28,42 +28,33 @@
                         "repository": "filesystem",
                         "format": "binary",
                         "directory": ".",
-                        "filename": "image_grayscale_edge",
+                        "filename": "test_16x16_view_8x8_0",
                         "ext": "bin"
-                    }
-                ],
-                "parameters": {
-                    "orientation": "0"
-                }
-            },
-            {
-                "id": 2,
-                "operator": "transform-intensity-map",
-                "input-data": [
-                    {
-                        "id": 1,
-                        "type": "image",
-                        "repository": "filesystem",
-                        "format": "binary",
-                        "directory": ".",
-                        "filename": "image_grayscale_edge",
-                        "ext": "bin"
-                    }
-                ],
-                "output-data": [
+                    },
                     {
                         "id": 1,
                         "type": "image",
                         "repository": "filesystem",
                         "format": "jpeg",
                         "directory": ".",
-                        "filename": "image_grayscale_edge",
+                        "filename": "test_16x16_view_8x8_0",
                         "ext": "jpg"
+                    },
+                    {
+                        "id": 2,
+                        "type": "image",
+                        "repository": "filesystem",
+                        "format": "text",
+                        "directory": ".",
+                        "filename": "test_16x16_view_8x8_0",
+                        "ext": "txt"
                     }
                 ],
                 "parameters": {
-                    "depth": "CV_8U",
-                    "standard-deviations": "2.0"
+                    "foreground": "1",
+                    "background": "0",
+                    "ncols": "16",
+                    "nrows": "16"
                 }
             }
         ]

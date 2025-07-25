@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "line_segment.hpp"
-#include "polar_line.hpp"
 #include "polar_trig.hpp"
 
 /**
@@ -22,6 +21,7 @@ public:
     void add(Point &point);
     bool clip_window(Polar_line &polar_line, Line_segment &line_segment);
     bool inside(Point &point) const;
+    bool inside(double x, double y) const;
     std::string to_string() const;
 };
 

@@ -20,21 +20,12 @@ bool Hough_peak::comp(Hough_peak &x, Hough_peak &y) { return x.count_percentile 
  * @param errors
  */
 void Hough_peak::write(FILE *fp, Errors &errors) const {
-    fwrite(&count_percentile, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough_peak::write", "", "cannot write Hough peak count_percentile");
-        return;
-    }
-    fwrite(&rho, sizeof(double), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough_peak::write", "", "cannot write Hough peak rho");
-        return;
-    }
-    fwrite(&theta, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Hough_peak::write", "", "cannot write Hough peak theta");
-        return;
-    }
+    wb_utils::write_double(fp, count_percentile, "Hough_peak::write", "", "cannot write Hough peak count_percentile",
+                           errors);
+    if (!errors.has_error())
+        wb_utils::write_double(fp, rho, "Hough_peak::write", "", "cannot write Hough peak rho", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, theta, "Hough_peak::write", "", "cannot write Hough peak theta", errors);
 }
 /**
  * @brief
@@ -43,5 +34,6 @@ void Hough_peak::write(FILE *fp, Errors &errors) const {
  * @param errors
  */
 void Hough_peak::write_text(std::ofstream &ofs, const std::string &delim, Errors &errors) const {
-    ofs << std::fixed << std::setprecision(1) << rho << delim << theta << delim << count_percentile << std::endl;
+    ofs << std::fixed << std::setprecision(2) << rho << delim << theta << delim << std::setprecision(5) << count_percentile
+        << std::endl;
 }

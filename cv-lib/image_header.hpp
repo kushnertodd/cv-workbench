@@ -31,9 +31,9 @@ public:
     double to_col(double x) const;
     static double to_col(double x, int ncols);
     void to_pixel(Pixel &pixel, double x, double y) const;
-    void to_pixel(Pixel &pixel, Point &point);
-    void to_point(Point &point, int col, int row);
-    void to_point(Point &point, Pixel &pixel);
+    void to_pixel(Pixel &pixel, Point &point) const;
+    void to_point(Point &point, int col, int row) const;
+    void to_point(Point &point, Pixel &pixel) const;
     double to_row(double y) const;
     static double to_row(double y, int nrows);
     std::string to_string(const std::string &prefix = "") const;

@@ -12,9 +12,7 @@ image_grayscale_edge_prewitt_0.json
 image_grayscale_edge_prewitt_90.json
 image_grayscale_edge_roberts_0.json
 image_grayscale_edge_roberts_90.json
-image_grayscale_edge_sobel_0.json
-image_grayscale_edge_sobel_0_abs.json
-image_grayscale_edge_sobel_90.json
+image_grayscale_edge_sobel.json
 image_grayscale_smooth_gaussian_3x3.json
 image_grayscale_smooth_gaussian_5x5.json
 image_grayscale_edge_dog.json

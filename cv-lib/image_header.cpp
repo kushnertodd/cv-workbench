@@ -101,20 +101,20 @@ void Image_header::to_pixel(Pixel &pixel, double x, double y) const { pixel.init
  * @param pixel
  * @param point
  */
-void Image_header::to_pixel(Pixel &pixel, Point &point) { to_pixel(pixel, point.x, point.y); }
+void Image_header::to_pixel(Pixel &pixel, Point &point) const { to_pixel(pixel, point.x, point.y); }
 /**
  * @brief
  * @param point
  * @param col
  * @param row
  */
-void Image_header::to_point(Point &point, int col, int row) { point.init(to_x(col), to_y(row)); }
+void Image_header::to_point(Point &point, int col, int row) const { point.init(to_x(col), to_y(row)); }
 /**
  * @brief
  * @param point
  * @param pixel
  */
-void Image_header::to_point(Point &point, Pixel &pixel) { to_point(point, pixel.col, pixel.row); }
+void Image_header::to_point(Point &point, Pixel &pixel) const { to_point(point, pixel.col, pixel.row); }
 /**
  * @brief
  * @param y
@@ -187,24 +187,13 @@ double Image_header::to_y(int row, int nrows) {
  * @param errors
  */
 void Image_header::write(FILE *fp, Errors &errors) const {
-    fwrite(&ncols, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Image_header::write_header", "", "cannot write image nrows");
-        return;
-    }
-    fwrite(&nrows, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Image_header::write_header", "", "cannot write image ncols");
-        return;
-    }
-    fwrite(&ncomponents, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Image_header::write_header", "", "cannot write image ncomponents");
-        return;
-    }
-    fwrite(&depth, sizeof(int), 1, fp);
-    if (ferror(fp) != 0) {
-        errors.add("Image_header::write_header", "", "cannot write image depth");
-        return;
-    }
+    wb_utils::write_int(fp, ncols, "Image_header::write_header", "", "cannot write image ncols", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, nrows, "Image_header::write_header", "", "cannot write image nrows", errors);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, ncomponents, "Image_header::write_header", "", "cannot write image ncomponents",
+                            errors);
+    int int_depth = static_cast<int>(depth);
+    if (!errors.has_error())
+        wb_utils::write_int(fp, int_depth, "Image_header::write_header", "", "cannot write image depth", errors);
 }

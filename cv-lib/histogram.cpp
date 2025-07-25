@@ -77,7 +77,7 @@ void Histogram::find_hough_peaks(Hough *hough, int npeaks) {
         }
     }
     // TODO: define
-    //hough->find_peaks(hough->lines, threshold);
+    // hough->find_peaks(hough->lines, threshold);
 }
 /**
  * @brief
@@ -360,7 +360,6 @@ void Histogram::write_text(std::string &path, const std::string &delim, Errors &
     std::ofstream ofs = file_utils::open_file_write_text(wb_filename.to_hist_text(), errors);
     if (errors.has_error())
         return;
-    // ofs << "bin" << delim << "count" << std::endl;
     int start_bin = to_bin(lower_value);
     int end_bin = to_bin(upper_value);
     for (int i = start_bin; i < end_bin; i++) {
